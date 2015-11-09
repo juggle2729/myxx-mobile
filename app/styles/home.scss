@@ -1,0 +1,11 @@
+@import 'partials/reset';
+@import 'partials/var';
+@import 'partials/common';
+
+h1 {
+    color: map-get($colors, 'white');
+}
+ul li > a {
+    color: map-get($colors, 'white');
+    text-decoration: none;
+}

@@ -1,0 +1,30 @@
+// font size
+$sizes: (30, 28, 26, 24, 22, 20, 18, 16, 14, 13, 12, 11, 10);
+
+
+// colors
+$colors: (
+    // theme color
+    bg-gold: #cbab72,
+    bg-red: #a70011,
+    bg-gray: #f2f2f2,
+    bg-light-gray: #e5e5e5,
+    bg-white: #ffffff,
+    // text color
+    light-gray: #cccccc,
+    gray: #999999,
+    dark-gray: #333333,
+    gold: #a98544,
+    middle-gray: #666666,
+    red: #e33a3a,
+    blue: #4268ba,
+    white: #ffffff,
+    dark-red: #a70011,
+    light-red: #fe5445
+);
+// list color
+$border-gray: #dcdcdc;
+
+// dimensions
+$padding: 10px;
+$margin: 10px;

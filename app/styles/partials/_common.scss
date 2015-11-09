@@ -1,0 +1,130 @@
+@each $size in $sizes {
+    .font-#{$size} {
+        font-size: #{$size}px;
+    }
+}
+
+@each $clazz,
+$color in $colors {
+    $index: str-index('"' + $clazz + '"', 'bg-');
+    .#{$clazz} {
+        @if not $index {
+            color: #{$color};
+        } @else {
+            background-color: #{$color};
+        }
+    }
+}
+
+//Position
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.center {
+    @extend .center-horizontal;
+    @extend .center-vertical;
+}
+
+.center-horizontal {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-vertical {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.relative {
+    position: relative;
+}
+
+////Padding & Margin
+@each $clazz in padding,
+padding-top,
+padding-bottom,
+padding-left,
+padding-right {
+    .#{$clazz} {
+        #{$clazz}: $padding;
+    }
+}
+
+.padding-vertical {
+    @extend .padding-top;
+    @extend .padding-bottom;
+}
+
+.padding-horizontal {
+    @extend .padding-left;
+    @extend .padding-right;
+}
+
+@each $clazz in margin,
+margin-top,
+margin-bottom,
+margin-left,
+margin-right {
+    .#{$clazz} {
+        #{$clazz}: $margin;
+    }
+}
+
+.margin-vertical {
+    @extend .margin-top;
+    @extend .margin-bottom;
+}
+
+.margin-horizontal {
+    @extend .margin-left;
+    @extend .margin-right;
+}
+
+//Component
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.invisible {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    &:before,
+    &:after {
+        content: ' ';
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
