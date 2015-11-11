@@ -1,0 +1,3 @@
+@function px-to-rem($dimension, $specSize:640) {
+    @return ($dimension / ((640 / $specSize) * 10)) * 0.625 + rem;
+}

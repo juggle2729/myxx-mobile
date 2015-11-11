@@ -1,3 +1,5 @@
+@import "function";
+
 // font size
 $sizes: (30, 28, 26, 24, 22, 20, 18, 16, 14, 13, 12, 11, 10);
 
@@ -26,5 +28,5 @@ $colors: (
 $border-gray: #dcdcdc;
 
 // dimensions
-$padding: 10px;
-$margin: 10px;
+$padding: px-to-rem(10);
+$margin: px-to-rem(10);
