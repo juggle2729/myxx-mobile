@@ -50,7 +50,7 @@ gulp.task('styles', function() {
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         .pipe($.sourcemaps.write())
         .pipe($.px2rem({
-            rootValue: 6.4,
+            rootValue: 16,
             unitPrecision: 4,
             propertyBlackList: [],
             propertyWhiteList: [],
@@ -104,6 +104,15 @@ gulp.task('html', function() {
         }));
 });
 
+// Copy Web Fonts To Dist
+gulp.task('fonts', function() {
+    return gulp.src(['app/fonts/**'])
+        .pipe(gulp.dest('dist/fonts'))
+        .pipe($.size({
+            title: 'fonts'
+        }));
+});
+
 // Clean output directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {
     dot: true
@@ -129,5 +138,5 @@ gulp.task('serve', function() {
 
 gulp.task('build', ['clean'], function(cb) {
     optimize.on = true;
-    runSequence('scripts', ['styles', 'html', 'copy'], cb);
+    runSequence('scripts', ['styles', 'html', 'copy', 'fonts'], cb);
 });

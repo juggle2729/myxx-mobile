@@ -28,7 +28,10 @@ $colors: (
 $border-gray: #dcdcdc;
 
 // border color
-$border-color: #808080;
+$border-color: #D8D7DC;
+
+// separator color
+$separator-color: map-get($colors, 'light-gray');;
 
 // dimensions
 $padding: 10px;
