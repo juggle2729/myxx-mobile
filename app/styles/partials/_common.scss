@@ -1,6 +1,6 @@
 @each $size in $sizes {
     .font-#{$size} {
-        font-size: px-to-rem($size);
+        font-size: #{$size}px;
     }
 }
 

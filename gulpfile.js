@@ -37,7 +37,7 @@ gulp.task('copy', function() {
 // Compile and automatically prefix stylesheets
 gulp.task('styles', function() {
     var AUTOPREFIXER_BROWSERS = ['ios >= 7', 'android >= 4.1'];
-    return gulp.src(['app/styles/**/*.scss', '!app/**/partials/*.scss'])
+    return gulp.src(['app/styles/**/*.scss', '!app/**/partials/*.scss', '!app/**/mixins/*.scss'])
         .pipe($.newer({
             dest: '.tmp/styles',
             ext: '.css'
@@ -49,6 +49,14 @@ gulp.task('styles', function() {
         }).on('error', $.sass.logError))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         .pipe($.sourcemaps.write())
+        .pipe($.px2rem({
+            rootValue: 6.4,
+            unitPrecision: 4,
+            propertyBlackList: [],
+            propertyWhiteList: [],
+            replace: true,
+            mediaQuery: false,
+            minPx: 1}, {}))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.if(optimize.css, $.minifyCss()))
         .pipe($.if(optimize.on, $.sourcemaps.write('.')))

@@ -1,6 +1,4 @@
-@import 'partials/reset';
-@import 'partials/var';
-// @import 'partials/common';
+@import "partials/myxx-ui";
 
 body {
     background-color: map-get($colors, 'bg-red');
