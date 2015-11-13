@@ -30,7 +30,6 @@
   "globals": {
     "$": true,
     "_": true,
-    "lcs": true,
     "Handlebars": true
   },
   "plugins": [

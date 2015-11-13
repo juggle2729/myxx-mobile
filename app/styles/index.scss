@@ -1,18 +1,18 @@
-@import 'partials/myxx-ui';
-
+@import 'partials/myxx';
 body {
-    background-color: map-get($colors, 'bg-red');
-    color: map-get($colors, bg-white);
+    background-color: map-get($colors, 'bg-tomato');
+    color: map-get($colors, 'bg-white');
 }
 
 h1 {
     color: map-get($colors, 'white');
     margin: 10px 0;
 }
+
 ul li {
     margin-bottom: 10px;
-}
-ul li > a {
-    color: map-get($colors, 'white');
-    text-decoration: none;
+    > a {
+        color: map-get($colors, 'white');
+        text-decoration: none;
+    }
 }

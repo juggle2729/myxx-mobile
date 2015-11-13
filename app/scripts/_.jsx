@@ -7,7 +7,7 @@
         return console.warn('_ 已经存在!');
     }
 
-    const helper = {
+    var helper = {
         clickOrTap: ('ontouchend' in w ? 'tap' : 'click')
     };
     if (/licaishi/.test(location.host)) {

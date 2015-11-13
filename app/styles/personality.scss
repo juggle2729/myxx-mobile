@@ -1,6 +1,6 @@
-@import 'partials/myxx-ui';
+@import 'partials/myxx';
 .account {
-    background: map-get($colors, bg-white);
+    background-color: map-get($colors, bg-white);
     display: -webkit-box;
     height: 120px;
     padding: 24px 30px;
@@ -19,7 +19,7 @@
     }
 }
 .item {
-    border: 1px solid #dcdcdc;
+    border: 1px solid map-get($colors, 'gray');
     border-bottom: 0;
     height: 36px;
     line-height: 36px;
@@ -27,7 +27,7 @@
         text-align: center;
         width: 50%;
         &:not(:last-child) {
-            border-right: 1px solid #dcdcdc;
+            border-right: 1px solid map-get($colors, 'gray');
         }
     }
 }
