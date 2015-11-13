@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>大师官网</title>
+    <meta name="description" content="大师官网"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <link href="/styles/artist/index.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="artist-page"></div>
+<script id="artist-template" type="text/x-handlebars-template">
+    <div class="theme"><img src="{{theme}}" alt="美玉秀秀"/></div>
+    <div class="person-info">
+        <div class="head float-left"><img src="{{head}}" alt="{{name}}"/></div>
+        <div class="name float-left">{{name}}</div>
+        <div class="grade float-left">{{grade}}</div>
+        <div class="clearfix"></div>
+    </div>
+
+</script>
+<script defer type="text/javascript" src="/scripts/zepto.js"></script>
+<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="/scripts/tabs.js"></script>
+<script defer type="text/javascript" src="/scripts/slider.js"></script>
+<script defer type="text/javascript" src="/pages/artist/js/artist.js"></script>
+</body>
+</html>
