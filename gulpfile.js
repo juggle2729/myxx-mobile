@@ -38,10 +38,6 @@ gulp.task('copy', function() {
 gulp.task('styles', function() {
     var AUTOPREFIXER_BROWSERS = ['ios >= 7', 'android >= 4.1'];
     return gulp.src(['app/styles/**/*.scss', '!app/**/partials/*.scss', '!app/**/mixins/*.scss'])
-        //.pipe($.newer({
-        //    dest: '.tmp/styles',
-        //    ext: '.css'
-        //}))
         .pipe($.scssLint())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -68,7 +64,7 @@ gulp.task('styles', function() {
 
 //scripts
 gulp.task("scripts", function() {
-    return gulp.src(["app/**/*.jsx", "app/**/*.js"])
+    return gulp.src(["app/**/*.jsx", "app/**/*.js", "!app/scripts/handlebars.js"])
         .pipe($.newer({
             dest: '.tmp',
             ext: '.js'
