@@ -2,13 +2,14 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var gutil = require('gulp-util');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 var optimize = {
-    on: true,
+    on: false,
     js: function(file) {
         return optimize.on && optimize._is(file, 'js');
     },
@@ -21,6 +22,25 @@ var optimize = {
         return ext === type;
     }
 }
+
+// Scan your HTML for assets & optimize them
+gulp.task('html', function() {
+    return gulp.src('app/**/*.html')
+        .pipe($.minifyHtml())
+        .pipe(gulp.dest('dist'))
+        .pipe($.size({
+            title: 'html'
+        }));
+});
+
+// Copy Web Fonts To Dist
+gulp.task('fonts', function() {
+    return gulp.src(['app/fonts/**'])
+        .pipe(gulp.dest('dist/fonts'))
+        .pipe($.size({
+            title: 'fonts'
+        }));
+});
 
 // Copy all files at the root level (app)
 gulp.task('copy', function() {
@@ -41,18 +61,20 @@ gulp.task('styles', function() {
         .pipe($.scssLint())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
-            precision: 10
-        }).on('error', $.sass.logError))
+            precision: 2,
+            errLogToConsole: true
+        }))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         .pipe($.sourcemaps.write())
         .pipe($.px2rem({
-            rootValue: 16,
+            rootValue: 7.5,
             unitPrecision: 4,
             propertyBlackList: [],
             propertyWhiteList: [],
             replace: true,
             mediaQuery: false,
-            minPx: 1}, {}))
+            minPx: 1
+        }, {}))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.if(optimize.css, $.minifyCss()))
         .pipe($.if(optimize.on, $.sourcemaps.write('.')))
@@ -74,7 +96,7 @@ gulp.task("scripts", function() {
         .pipe($.eslint.format())
         .pipe($.eslint.failOnError())
         .pipe($.babel())
-        .on('error', console.error.bind(console))
+        .on('error', gutil.log)
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(".tmp"))
         .pipe($.size({
@@ -82,35 +104,8 @@ gulp.task("scripts", function() {
         }));
 });
 
-
-// Scan your HTML for assets & optimize them
-gulp.task('html', function() {
-    var assets = $.useref.assets({
-        searchPath: '.tmp'
-    });
-    return gulp.src('app/**/*.html')
-        .pipe(assets)
-        .pipe($.if(optimize.js, $.uglify()))
-        .pipe(assets.restore())
-        .pipe($.useref())
-        .pipe($.if('*.html', $.minifyHtml()))
-        .pipe(gulp.dest('dist'))
-        .pipe($.size({
-            title: 'html'
-        }));
-});
-
-// Copy Web Fonts To Dist
-gulp.task('fonts', function() {
-    return gulp.src(['app/fonts/**'])
-        .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({
-            title: 'fonts'
-        }));
-});
-
 // Copy and Compressed images
-gulp.task('images', function () {
+gulp.task('images', function() {
     return gulp.src('app/images/**')
         .pipe($.cache($.imagemin({ //缓存图片,只处理修改过的,包括新增的
             optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
@@ -148,5 +143,5 @@ gulp.task('serve', function() {
 
 gulp.task('build', ['clean'], function(cb) {
     optimize.on = true;
-    runSequence('scripts', ['styles', 'html', 'copy', 'fonts', 'images'], cb);
+    runSequence('scripts', ['styles', 'copy', 'fonts', 'images'], cb);
 });

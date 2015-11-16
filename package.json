@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "devDependencies": {
+    "babel-core": "^6.1.21",
     "browser-sync": "^2.6.4",
     "del": "^1.1.0",
     "eslint": "^1.8.0",
