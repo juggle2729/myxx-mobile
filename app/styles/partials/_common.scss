@@ -16,6 +16,10 @@ $color in $colors {
     }
 }
 
+.horizontal {
+    display: -webkit-box;
+}
+
 //Position
 .float-left {
     float: left;

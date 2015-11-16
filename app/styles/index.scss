@@ -7,12 +7,15 @@ body {
 h1 {
     color: map-get($colors, 'white');
     margin: 10px 0;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 ul li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     > a {
         color: map-get($colors, 'white');
         text-decoration: none;
+        font-size: 10px;
     }
 }

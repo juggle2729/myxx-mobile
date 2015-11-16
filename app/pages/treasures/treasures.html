@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>鉴宝专区</title>
+    <meta name="description" content="美玉秀秀"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <link href="/styles/treasures.css" type="text/css" rel="stylesheet"/>
+</head>
+<body style="background-color:#efefef">
+  <script id="treasures-template" type="text/x-handlebars-template">
+     {{#each posts}}
+      <div class="card bg-white">
+          <div class="horizontal">
+              <img src="/images/ic_default_avatar.png" class="avatar-user"/>
+              <div class="profile"><p class="font-26 dark-gray">{{publisher}}</p><p class="font-22 light-gray">{{publishTime}}</p></div>
+          </div>
+          <p class="font-30 dark-gray">{{content}}</p>
+          <table cellspacing="4" cellpadding="4">
+              <tr><td><div style="background-image: url({{{img1}}})"></div></td><td><div style="background-image: url({{{img2}}})"></div></td><td rowspan='2'><div class="video" style="background-image: url({{{img3}}})"></div></td></tr>
+              <tr><td><div style="background-image: url({{{img4}}})"></div></td><td><div style="background-image: url({{{img5}}})"></div></td></tr>
+          </table>
+          {{#each master}}
+          <div class="horizontal master">
+              <img src="/images/ic_default_avatar.png" class="avatar-master"/>
+              <div class="profile"><p class="font-26 dark-gray">{{name}}</p><p class="font-22 light-gray">{{title}}</p></div>
+              <div class="horizontal right">
+                <img src="/images/icon/ico_identify.png" class="identify" />
+                <p class="font-22 dark-gray">{{status}}</p>
+              </div>
+          </div>
+          {{/each}}
+      </div>
+      <div class="horizontal info bg-white">
+          <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{attention}}</span></div>
+          <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{comment}}</span></div>
+      </div>
+      {{/each}}
+</script>
+<script defer type="text/javascript" src="/scripts/zepto.js"></script>
+<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="./js/treasures.js"></script>
+</body>

@@ -143,5 +143,5 @@ gulp.task('serve', function() {
 
 gulp.task('build', ['clean'], function(cb) {
     optimize.on = true;
-    runSequence('scripts', ['styles', 'copy', 'fonts', 'images'], cb);
+    runSequence('scripts', ['styles', 'html', 'copy', 'fonts'], cb);
 });
