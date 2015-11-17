@@ -1,0 +1,46 @@
+@import 'partials/myxx';
+p,
+h3,
+button {
+    padding: 0;
+    margin: 0;
+}
+
+.master {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: justify;
+    -webkit-box-align: stretch;
+    border: 1px dashed tomato;
+    > * {
+        padding: 1em;
+        border: 1px solid blue;
+    }
+}
+
+
+img {
+    height: 500px;
+}
+
+.desc {
+    -webkit-box-flex: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: end;
+    -webkit-box-align: end;
+    > * {
+        border: 1px dashed green;
+    }
+}
+
+.info {
+    -webkit-box-flex: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    > * {
+        border: 1px dashed green;
+    }
+}
