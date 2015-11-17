@@ -25,7 +25,7 @@ var optimize = {
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function() {
-    return gulp.src('app/**/*.html')
+    return gulp.src(['app/**/*.html', '**.html'])
         .pipe($.minifyHtml())
         .pipe(gulp.dest('dist'))
         .pipe($.size({
@@ -33,18 +33,9 @@ gulp.task('html', function() {
         }));
 });
 
-// Copy Web Fonts To Dist
-gulp.task('fonts', function() {
-    return gulp.src(['app/fonts/**'])
-        .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({
-            title: 'fonts'
-        }));
-});
-
 // Copy all files at the root level (app)
 gulp.task('copy', function() {
-    return gulp.src(['app/**/images/**/*', '.tmp/**/*.js'], {
+    return gulp.src(['app/**/images/**/*', '.tmp/**/*.js', 'app/**/*.css', 'app/fonts/**'], {
             dot: true
         })
         .pipe(gulp.dest('dist'))
@@ -67,7 +58,7 @@ gulp.task('styles', function() {
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         .pipe($.sourcemaps.write())
         .pipe($.px2rem({
-            rootValue: 7.5,
+            rootValue: 75,
             unitPrecision: 4,
             propertyBlackList: [],
             propertyWhiteList: [],
@@ -86,7 +77,7 @@ gulp.task('styles', function() {
 
 //scripts
 gulp.task("scripts", function() {
-    return gulp.src(["app/**/*.jsx", "app/**/*.js", "!app/scripts/handlebars.js"])
+    return gulp.src(["app/**/*.jsx", "app/**/*.js"])
         .pipe($.newer({
             dest: '.tmp',
             ext: '.js'
@@ -95,7 +86,7 @@ gulp.task("scripts", function() {
         .pipe($.eslint())
         .pipe($.eslint.format())
         .pipe($.eslint.failOnError())
-        .pipe($.babel())
+        .pipe($.if('*.jsx', $.babel()))
         .on('error', gutil.log)
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(".tmp"))
@@ -143,5 +134,5 @@ gulp.task('serve', function() {
 
 gulp.task('build', ['clean'], function(cb) {
     optimize.on = true;
-    runSequence('scripts', ['styles', 'html', 'copy', 'fonts'], cb);
+    runSequence('scripts', ['styles', 'html', 'copy', 'images'], cb);
 });

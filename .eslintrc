@@ -30,6 +30,7 @@
   "globals": {
     "$": true,
     "_": true,
+    "myxx": true,
     "Swiper": true,
     "Handlebars": true
   },

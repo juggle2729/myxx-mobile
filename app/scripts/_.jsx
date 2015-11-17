@@ -4,10 +4,10 @@
 
 (function(w) {
     if (w._) {
-        return console.warn('_ 已经存在!');
+        throw new Error('_ 已经存在!');
     }
 
-    var helper = {
+    const helper = {
         clickOrTap: ('ontouchend' in w ? 'tap' : 'click')
     };
     if (/licaishi/.test(location.host)) {
@@ -23,9 +23,9 @@
             token: '05bd3744-ee7f-4ce1-bb97-00092fe46f6a'
         };
     }
-    if (w.lcs) {
-        helper.user.id = lcs.getUserId();
-        helper.user.token = lcs.getToken();
+    if (w.myxx) {
+        helper.user.id = myxx.getUserId();
+        helper.user.token = myxx.getToken();
     }
     w._ = helper;
     //  数据请求
@@ -44,21 +44,42 @@
         };
         return $.ajax(options).done(function(res) {
             if (res.status !== 0 && !res.message) {
-                if(w.lcs) {
-                    w.lcs.onJsFailed('请检查网络后下拉刷新');
+                if(w.myxx) {
+                    w.myxx.onJsFailed('请检查网络后下拉刷新');
                 } else {
                     helper.toast('请检查网络后下拉刷新');
                 }
             }
         }).fail(function() {
-            if(w.lcs) {
-                w.lcs.onJsFailed('请检查网络后下拉刷新');
+            if(w.myxx) {
+                w.myxx.onJsFailed('请检查网络后下拉刷新');
             } else {
                 // helper.toast('💔请求失败！');
                 helper.toast('请检查网络后下拉刷新');
             }
         });
     };
+
+    //  拼接url地址
+    function _getUrl(href) {
+        if (href.split('#').shift().indexOf('://') !== -1) {
+            return href;
+        } else if (href.indexOf('/') === 0) {
+            return location.origin + href;
+        }
+        const uri = location.href.split('#').shift().split('/');
+        const h = href.split('/');
+
+        uri.pop();
+        for (let i = 0, l = h.length; i < l; i++) {
+            if (h[i] === '..') {
+                uri.pop();
+            } else if (h[i] !== '.') {
+                uri.push(h[i]);
+            }
+        }
+        return uri.join('/');
+    }
 
     //  事件发布和订阅
     helper._topics = {};
@@ -96,8 +117,8 @@
 
         href = /^http?/.test(href) ? href : _getUrl(href);
 
-        if (w.lcs) {
-            w.lcs.go(href);
+        if (w.myxx) {
+            w.myxx.go(href);
         } else {
             location.href = href;
         }
@@ -105,9 +126,9 @@
     };
 
     helper.action = function(action) {
-        if (w.lcs) {
+        if (w.myxx) {
             const params = Array.prototype.slice.call(arguments, 1);
-            lcs[action].apply(lcs, params);
+            myxx[action].apply(myxx, params);
         } else {
             this.toast('😁请在APP里玩！');
         }
@@ -123,29 +144,6 @@
         });
         return key ? query[key] : query;
     };
-
-    //  拼接url地址
-    function _getUrl(href) {
-        if (href.split('#').shift().indexOf('://') !== -1) {
-            return href;
-        } else if (href.indexOf('/') === 0) {
-            return location.origin + href;
-        }
-        const uri = location.href.split('#').shift().split('/');
-        const h = href.split('/');
-
-        uri.pop();
-        for (let i = 0, l = h.length; i < l; i++) {
-            if (h[i] === '..') {
-                uri.pop();
-            } else if (h[i] === '.') {
-                continue;
-            } else {
-                uri.push(h[i]);
-            }
-        }
-        return uri.join('/');
-    }
 
     Handlebars.registerHelper({
         date: (milliseconds, fmt) => {
@@ -174,7 +172,7 @@
         let resizing = null;
         function adjustBase() {
             const clientWidth = document.body.clientWidth;
-            document.querySelector('html').style['font-size'] = (clientWidth / 100) + 'px';
+            document.querySelector('html').style['font-size'] = (clientWidth / 10) + 'px';
             resizing = null;
         }
         adjustBase();
