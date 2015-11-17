@@ -8,33 +8,43 @@
     <meta content="telephone=no" name="format-detection"/>
     <meta content="email=no" name="format-detection" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-    <link href="/styles/treasures.css" type="text/css" rel="stylesheet"/>
+    <link href="/styles/jade.list.css" type="text/css" rel="stylesheet"/>
 </head>
-<body style="background-color:#efefef">
+<body class="bg-theme">
+  <div class="horizontal operation bg-white">
+      <div class="new dark-gray dark-red"><span class="font-24">最新</span></div>
+      <div class="hot dark-gray"><span class="font-24">热门</span></div>
+  </div>
   <script id="treasures-template" type="text/x-handlebars-template">
      {{#each posts}}
+      <div class="separator"></div>
       <div class="card bg-white">
-          <div class="horizontal">
-              <img src="/images/ic_default_avatar.png" class="avatar-user"/>
+          <div class="horizontal margin-bottom">
+              <img src="/images/ic_default_avatar.jpg" class="avatar-user"/>
               <div class="profile"><p class="font-26 dark-gray">{{publisher}}</p><p class="font-22 light-gray">{{publishTime}}</p></div>
           </div>
           <p class="font-30 dark-gray">{{content}}</p>
-          <table cellspacing="4" cellpadding="4">
-              <tr><td><div style="background-image: url({{{img1}}})"></div></td><td><div style="background-image: url({{{img2}}})"></div></td><td rowspan='2'><div class="video" style="background-image: url({{{img3}}})"></div></td></tr>
-              <tr><td><div style="background-image: url({{{img4}}})"></div></td><td><div style="background-image: url({{{img5}}})"></div></td></tr>
+          <table cellspacing="4" cellpadding="0" class="margin-top">
+              <tr><td><div style="background-image: url({{{bgs.[0]}}})"></div></td><td><div style="background-image: url({{{bgs.[1]}}})"></div></td><td rowspan='2'><div class="video" style="background-image: url({{{video}}})">
+                  <img src="/images/icon/ico_video.png" /></div></td></tr>
+              <tr><td><div style="background-image: url({{{bgs.[2]}}})"></div></td><td><div style="background-image: url({{{bgs.[3]}}})"></div></td></tr>
           </table>
+          {{#if master}}
           {{#each master}}
           <div class="horizontal master">
-              <img src="/images/ic_default_avatar.png" class="avatar-master"/>
+              <img src="/images/ic_default_avatar.jpg" class="avatar-master margin-top"/>
               <div class="profile"><p class="font-26 dark-gray">{{name}}</p><p class="font-22 light-gray">{{title}}</p></div>
-              <div class="horizontal right">
+              <div class="horizontal result">
                 <img src="/images/icon/ico_identify.png" class="identify" />
                 <p class="font-22 dark-gray">{{status}}</p>
               </div>
           </div>
           {{/each}}
+          {{~^~}}
+          <div class="separator"></div>
+          {{/if}}
       </div>
-      <div class="horizontal info bg-white">
+      <div class="horizontal operation bg-white">
           <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{attention}}</span></div>
           <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{comment}}</span></div>
       </div>

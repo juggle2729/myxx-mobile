@@ -1,29 +1,36 @@
 @import 'partials/myxx';
 .card {
+    @include border($border-color, top);
     padding: 24px 32px;
-    margin-top: 24px;
-    @include border($border-color,top);
+    padding-bottom: 0;
     .avatar-user {
         height: 72px;
         width: 72px;
         border-radius: 50%;
-        margin: 24px 0;
     }
     .profile {
-        padding: 35px 0 0 20px;
+        padding: 11px 0 0 20px;
         p {
             margin-bottom: 12px;
         }
     }
-    table {
-        margin-top: 24px;
-        div {
-            height: 171px;
-            width: 220px;
-            background-size: cover;
-            background-position: center;
-            &.video {
-                height: 351px;
+    table div {
+        height: 171px;
+        width: 220px;
+        background-size: cover;
+        background-position: center;
+        &.video {
+            height: 351px;
+            position: relative;
+            img {
+                height: 60px;
+                width: 60px;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -30px;
+                margin-left: -30px;
             }
         }
     }
@@ -39,7 +46,6 @@
             height: 60px;
             width: 60px;
             border-radius: 50%;
-            margin-top: 24px;
         }
         .identify {
             height: 24px;
@@ -47,26 +53,28 @@
             margin-top: 7px;
         }
         .profile {
-            padding-top: 25px;
+            padding-top: 26px;
         }
-        .right {
+        .result {
             position: absolute;
             right: 32px;
-            margin-top: 38px;
             p {
-                margin: 8px 0 0 12px;
+                margin: 40px 0 0 12px;
             }
         }
     }
+    &:active {
+        background-color: #d9d9d9;
+    }
 }
-.info {
-    height: 80px;
+.operation {
     @include border($border-color, top-bottom);
-    div {
+    height: 80px;
+    & > div {
+        @include border($border-color, right);
         width: 50%;
         text-align: center;
         margin: 24px 0;
-        @include border($border-color, right);
     }
     span[class~='light-gray'] {
         margin-left: 12px;

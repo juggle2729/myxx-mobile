@@ -1,37 +1,34 @@
 .row {
-    background-color: map-get($colors, bg-white);
+    background-color: map-get($colors, 'bg-white');
     color: map-get($colors, 'dark-gray');
-    font-size: 1rem;
-    line-height: 2.5rem;
-    padding-left: 1rem;
+    font-size: 30px;
+    line-height: 100px;
+    padding: 0 32px;
+    margin-top: 40px;
     position: relative;
     width: 100%;
     .icon-arrow-right {
-        color: map-get($colors, 'dark-gray');
-        font-size: 1.5rem;
-        margin-top: -.75rem;
+        color: map-get($colors, 'light-gray');
+        font-size: 32px;
+        margin-top: -16px;
         position: absolute;
-        right: 1rem;
+        right: 32px;
         top: 50%;
     }
 }
 .row-block {
-    //padding: 0 16px;
+    .row:not(:first-child){
+      margin-top: 0;
+    }
     .row:not(:last-child) {
         @include border($border-color, bottom)
-    }
-    .row {
-        padding-left: 1rem;
-        .icon-arrow-right {
-            right: 1rem;
-        }
     }
 }
 
 .separator {
-    //background: map-get($colors, bg-gray);
+    background: map-get($colors, bg-gray);
     display: block;
-    height: 10px;
+    height: 24px;
     width: 100%;
 }
 .border-top {

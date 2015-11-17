@@ -5,11 +5,10 @@ const data = {
             publisher: '苏沐风',
             publishTime: '30分钟前',
             content: '朋友刚入的和田玉，帮忙看看，急',
-            img1: '/images/1.jpg',
-            img2: '/images/2.jpg',
-            img3: '/images/3.jpg',
-            img4: '/images/4.jpg',
-            img5: '/images/5.jpg',
+            bgs: [
+                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
+            ],
+            video: '/images/5.jpg',
             master: [
                 {
                     avatar: '',
@@ -35,11 +34,10 @@ const data = {
             publisher: '苏沐风',
             publishTime: '30分钟前',
             content: '朋友刚入的和田玉，帮忙看看，急',
-            img1: '/images/1.jpg',
-            img2: '/images/2.jpg',
-            img3: '/images/3.jpg',
-            img4: '/images/4.jpg',
-            img5: '/images/5.jpg',
+            bgs: [
+                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
+            ],
+            video: '/images/5.jpg',
             master: [],
             attention: 3,
             comment: 6
@@ -48,11 +46,10 @@ const data = {
             publisher: '苏沐风',
             publishTime: '30分钟前',
             content: '朋友刚入的和田玉，帮忙看看，急',
-            img1: '/images/1.jpg',
-            img2: '/images/2.jpg',
-            img3: '/images/3.jpg',
-            img4: '/images/4.jpg',
-            img5: '/images/5.jpg',
+            bgs: [
+                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
+            ],
+            video: '/images/5.jpg',
             master: [],
             attention: 3,
             comment: 6
@@ -62,3 +59,11 @@ const data = {
 
 const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
 $('body').append($(TreasuresTemplate));
+$('.hot').on(_.clickOrTap, function() {
+    $('.new').removeClass('dark-red');
+    $(this).addClass('dark-red');
+});
+$('.new').on(_.clickOrTap, function() {
+    $('.hot').removeClass('dark-red');
+    $(this).addClass('dark-red');
+});
