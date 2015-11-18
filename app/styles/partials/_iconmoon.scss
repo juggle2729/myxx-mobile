@@ -9,7 +9,7 @@
     font-style: normal;
 }
 
-[class^='icon-'], [class*=' icon-'] {
+.icon {
     font-family: 'icomoon';
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased; // Better Font Rendering
@@ -19,27 +19,30 @@
     line-height: 1;
     speak: none;
     text-transform: none;
+    &::before {
+        vertical-align: middle;
+    }
 }
 
 .icon-arrow-right:before {
     content: '\e900';
 }
-.icon-eye:before {
+.icon-view:before {
     content: '\e901';
 }
-.icon-five-star:before {
+.icon-star:before {
     content: '\e902';
 }
 .icon-location:before {
     content: '\e903';
 }
-.icon-more-horiz:before {
+.icon-more:before {
     content: '\e904';
 }
-.icon-star:before {
+.icon-favor:before {
     content: '\e905';
 }
-.icon-update:before {
+.icon-refresh:before {
     content: '\e906';
 }
 
