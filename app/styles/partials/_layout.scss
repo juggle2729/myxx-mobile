@@ -25,10 +25,19 @@
     }
 }
 
+$gridColumns: 12;
+@for $i from 1 through $gridColumns {
+    .col-#{$i+1} {
+        float: left;
+        width: percentage(($i+1)/$gridColumns);
+    }
+}
+
 .separator {
-    background: map-get($colors, bg-gray);
+    @include border($border-color, top-bottom);
+    background-color: $separator-color;
     display: block;
-    height: 24px;
+    height: 22px;
     width: 100%;
 }
 .border-top {
