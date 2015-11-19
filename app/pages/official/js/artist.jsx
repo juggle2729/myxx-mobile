@@ -17,15 +17,15 @@
         actors: [['江苏省工艺大师', '江苏省工艺大师'], ['江苏省工艺大师']],
         operList: [
             {
-                iconName: 'concern',
+                iconName: 'favor',
                 label: 300
             },
             {
-                iconName: 'attention',
+                iconName: 'edit',
                 label: 'TA的关注'
             },
             {
-                iconName: 'store',
+                iconName: 'shop',
                 label: '进入店铺'
             }
         ],

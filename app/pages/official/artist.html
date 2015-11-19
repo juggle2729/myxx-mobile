@@ -23,7 +23,10 @@
         <div class="detail-info">
             <div class="first-line clearfix">
                 <span class="name float-left">{{name}}</span>
-                <span class="browser-cnt float-right">{{browserCnt}}</span>
+                <span class="browser-cnt float-right">
+                    <span class="icon icon-view"></span>
+                    {{browserCnt}}
+                </span>
             </div>
             <div class="actors clearfix">
                 {{#each actors}}
@@ -49,7 +52,7 @@
     <div class="separator"></div>
     <div class="simple-intro">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">人物简介</span>
         </div>
         <div class="second-line">
@@ -63,7 +66,7 @@
             <div class="line"></div>
             {{#each prizes}}
             <div class="prize-item {{#unless show}}hide rest{{/unless}}">
-                <span class="horizontal-line"></span>
+                <span class="icon-dot-middle"></span>
                 <span class="text">{{text}}</span>
             </div>
             {{/each}}
@@ -76,27 +79,29 @@
     <div class="separator"></div>
     <div class="jade block">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">大师鉴宝</span>
-            <span class="icon icon-arrow-right"></span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="jade-content block-content clearfix">
             {{#each jades}}
             <div class="jade-item block-item col-6">
-                <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
-                <div class="name">{{name}}</div>
-                <div class="records clearfix">
-                    <div class="visit col-4">
-                        <span class="icon icon-visit"></span>
-                        <span>{{visitCount}}</span>
-                    </div>
-                    <div class="attention col-4">
-                        <span class="icon icon-attention"></span>
-                        <span>{{attentionCount}}</span>
-                    </div>
-                    <div class="comment col-4">
-                        <span class="icon icon-comment"></span>
-                        <span>{{commentCount}}</span>
+                <div class="bg-item">
+                    <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+                    <div class="name">{{name}}</div>
+                    <div class="records clearfix">
+                        <div class="visit col-4">
+                            <span class="icon icon-view"></span>
+                            <span>{{visitCount}}</span>
+                        </div>
+                        <div class="attention col-4">
+                            <span class="icon icon-favor"></span>
+                            <span>{{attentionCount}}</span>
+                        </div>
+                        <div class="comment col-4">
+                            <span class="icon icon-comment"></span>
+                            <span>{{commentCount}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,9 +111,9 @@
     <div class="separator"></div>
     <div class="craft block">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">获奖作品展示</span>
-            <span class="icon icon-arrow-right"></span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="craft-content block-content clearfix">
             {{#each crafts}}
@@ -121,14 +126,17 @@
     <div class="separator"></div>
     <div class="article block">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">大师工艺展示</span>
-            <span class="icon icon-arrow-right"></span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="article-content block-content clearfix">
             {{#each articles}}
             <div class="article-item block-item col-6">
-                <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+                <div class="bg-item">
+                    <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+                    <div class="name">{{name}}</div>
+                </div>
             </div>
             {{/each}}
         </div>
@@ -136,9 +144,9 @@
     <div class="separator"></div>
     <div class="store block">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">店铺展示</span>
-            <span class="icon icon-arrow-right"></span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="store-content block-content clearfix">
             <div class="col-6">
@@ -150,7 +158,9 @@
                     <div class="desc">{{result}}</div>
                 {{/truncateStr}}
                 <div class="address">
-                    <span class="icon icon-address"></span>
+                    <span class="icon icon-location">
+				        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+				    </span>
                     <span class="text">{{store.address}}</span>
                 </div>
                 <div class="phone">
@@ -163,9 +173,9 @@
     <div class="separator"></div>
     <div class="treasure block">
         <div class="block-title">
-            <span class="icon icon-line-yellow"></span>
+            <span class="icon-line-yellow"></span>
             <span class="title">镇店之宝</span>
-            <span class="icon icon-arrow-right"></span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="treasure-content">
             {{#each treasures}}
@@ -181,7 +191,7 @@
         </div>
     </div>
     <div class="separator"></div>
-    <div class="comment">
+    <div class="comments">
         <div class="block-title clearfix">
             <span class="title">留言 {{comment.count}}</span>
             <div class="float-right">

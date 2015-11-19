@@ -70,7 +70,7 @@
 .operation {
     @include border($border-color, top-bottom);
     height: 80px;
-    & > div {
+    > div {
         @include border($border-color, right);
         width: 50%;
         text-align: center;

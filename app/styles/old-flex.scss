@@ -57,7 +57,7 @@ img {
     -webkit-box-pack: justify;
     -webkit-box-align: center;
     padding: 0 25%;
-    & > div {
+    > div {
         -webkit-flex: 1;
         text-align: center;
     }

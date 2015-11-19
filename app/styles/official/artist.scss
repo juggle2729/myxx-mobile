@@ -5,6 +5,14 @@
     color: $color;
 }
 
+.icon-dot-middle {
+    background-color: #bababa;
+    border-radius: 12px;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+}
+
 .official-artist {
     @include border($border-color, top);
     padding-top: 0;
@@ -52,18 +60,22 @@
         .actors {
             @include font-color(22px, #4d4d4d);
             margin-top: 18px;
+            height: 56px;
 
             .actor-row:not(:first-child) {
                 margin-top: 12px;
             }
+        }
 
-            .actor-row {
-                li:nth-child(1) {
-                    @extend .float-left;
-                }
-                li:nth-child(2) {
-                    @extend .float-right;
-                }
+        .actor-row {
+            li:nth-child(1) {
+                @extend .float-left;
+            }
+            li:nth-child(2) {
+                @extend .float-right;
+            }
+            li {
+                line-height: 22px;
             }
         }
 
@@ -105,11 +117,14 @@
         .text {
             margin-left: 12px;
         }
-        .icon-arrow-right {
+        .icon-enter {
             position: absolute;
             right: 28px;
             top: 50%;
             margin-top: -10px;
+        }
+        .title {
+            margin-left: 13px;
         }
     }
 
@@ -125,17 +140,17 @@
         }
 
         .desc {
+            @include font-color(26px, #4d4d4d);
             padding: 0 32px;
             line-height: 38px;
             margin-top: 18px;
-            @include font-color(26px, #4d4d4d);
         }
 
         .prizes {
+            @include font-color(26px, #4d4d4d);
             padding: 0 32px;
             margin-top: 24px;
             position: relative;
-            @include font-color(26px, #4d4d4d);
 
             .prize-item:not(:first-child) {
                 margin-top: 20px;
@@ -144,17 +159,26 @@
             .line {
                 position: absolute;
                 width: 1px;
-                height: 87%;
+                height: 91.8%;
                 background: $dot-color;
-                top: 5.6%;
-                left: 5.2%;
+                top: 1%;
+                left: 37px;
+                overflow: hidden;
             }
         }
 
         .prize-item {
+            position: relative;
             .text {
                 margin-left: 20px;
             }
+        }
+
+        .icon-dot-middle {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -6px;
         }
 
         .horizontal-line {
@@ -168,13 +192,12 @@
 
         .expand {
             @include font-color(22px, #929292);
-            margin: 28px 0 35px 0;
+            margin: 28px 0 35px;
             text-align: center;
             cursor: pointer;
-        }
-
-        .expand .text {
-            margin-left: 12px;
+            .text {
+                margin-left: 12px;
+            }
         }
     }
 
@@ -210,10 +233,6 @@
             padding-left: 18px;
             margin-top: 18px;
         }
-
-        .records > div {
-            text-align: center;
-        }
     }
 
     .store {
@@ -234,10 +253,6 @@
         .address {
             @include font-color(26px, #c6c6c6);
             margin-top: 32px;
-        }
-
-        .text {
-            margin-left: 12px;
         }
 
         .phone {
@@ -277,10 +292,9 @@
             width: 14px;
             height: 14px;
             display: inline-block;
-        }
-
-        .dot.active {
-            background-color: #f3ac1c;
+            .active {
+                background-color: #f3ac1c;
+            }
         }
 
         .dot:not(:first-child) {
@@ -288,10 +302,14 @@
         }
     }
 
-    .comment {
+    .comments {
         .float-right {
             color: #d04c5b;
             line-height: 80px;
+        }
+
+        .icon-comment {
+            color: #d04c5b;
         }
     }
 
@@ -326,5 +344,23 @@
             width: 60px;
             height: 60px;
         }
+    }
+
+    .icon {
+        color: #bababa;
+        vertical-align: -6%;
+    }
+
+    .icon-line-yellow {
+        width: 3px;
+        height: 25px;
+        display: inline-block;
+        background-color: #f3ac1c;
+        vertical-align: -15%;
+    }
+
+    .bg-item {
+        background-color: #fafafa;
+        padding-bottom: 18px;
     }
 }
