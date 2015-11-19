@@ -145,9 +145,11 @@
         return key ? query[key] : query;
     };
 
-    const ONE_MINUTE = 1000 * 60, TWO_MINUTES = 2 * ONE_MINUTE,
-        ONE_HOUR = 60 * ONE_MINUTE, ONE_DAY = ONE_HOUR * 24,
-        TWO_DAYS = 2 * ONE_DAY;
+    const ONE_MINUTE = 1000 * 60;
+    const TWO_MINUTES = 2 * ONE_MINUTE;
+    const ONE_HOUR = 60 * ONE_MINUTE;
+    const ONE_DAY = ONE_HOUR * 24;
+    const TWO_DAYS = 2 * ONE_DAY;
     Handlebars.registerHelper({
         date: (milliseconds, fmt) => {
             const date = new Date(milliseconds);
@@ -189,7 +191,7 @@
 
                 if (isNaN(currentDate.valueOf())) {
                     res = '';
-                } else  {
+                } else {
                     const diff = now.getTime() - currentDate.getTime();
                     if (diff <= ONE_MINUTE) {
                         res = '刚刚';

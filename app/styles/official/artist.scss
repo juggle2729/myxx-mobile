@@ -5,14 +5,6 @@
     color: $color;
 }
 
-.icon-dot-middle {
-    background-color: #bababa;
-    border-radius: 12px;
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-}
-
 .official-artist {
     @include border($border-color, top);
     padding-top: 0;
@@ -158,12 +150,11 @@
 
             .line {
                 position: absolute;
-                width: 1px;
-                height: 91.8%;
-                background: $dot-color;
-                top: 1%;
+                width: 2px;
+                height: 94.8%;
+                background: map-get($colors, 'light-gray');
+                top: 0.1rem;
                 left: 37px;
-                overflow: hidden;
             }
         }
 
@@ -172,13 +163,6 @@
             .text {
                 margin-left: 20px;
             }
-        }
-
-        .icon-dot-middle {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            margin-top: -6px;
         }
 
         .horizontal-line {
@@ -219,7 +203,7 @@
             width: 100%;
             height: 256px;
         }
-
+        
         .name {
             color: #4d4d4d;
             padding-left: 18px;

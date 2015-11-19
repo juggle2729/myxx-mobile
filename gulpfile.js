@@ -56,7 +56,6 @@ gulp.task('styles', function() {
             errLogToConsole: true
         }))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-        .pipe($.sourcemaps.write())
         .pipe($.px2rem({
             rootValue: 75,
             unitPrecision: 4,
@@ -66,6 +65,7 @@ gulp.task('styles', function() {
             mediaQuery: false,
             minPx: 1
         }, {}))
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.if(optimize.css, $.minifyCss()))
         .pipe($.if(optimize.on, $.sourcemaps.write('.')))
