@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>大师官网</title>
+    <meta name="description" content="美玉秀秀"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <link href="/styles/official/artist.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="official-artist">
+
+</div>
+<script id="official-artist-template" type="text/x-handlebars-template">
+    <div class="theme">
+        <img src="{{theme}}"/>
+    </div>
+    <div class="personal-info">
+        <span class="head"><img src="{{head}}"/></span>
+        <div class="detail-info">
+            <div class="first-line clearfix">
+                <span class="name float-left">{{name}}</span>
+                <span class="browser-cnt float-right">{{browserCnt}}</span>
+            </div>
+            <div class="actors clearfix">
+                {{#each actors}}
+                    <nav class="actor-row clearfix">
+                        {{#each this}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </nav>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="oper-list">
+        {{#each operList}}
+        <div class="container col-4">
+            <div class="item">
+                <span class="icon icon-{{this.iconName}}"></span>
+                <span class="text">{{this.label}}</span>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="separator"></div>
+    <div class="simple-intro">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">人物简介</span>
+        </div>
+        <div class="second-line">
+            <span class="name">{{name}}</span>
+            <span class="alias">号{{alias}}</span>
+        </div>
+        <div class="desc">
+            {{desc}}
+        </div>
+        <div class="prizes">
+            <div class="line"></div>
+            {{#each prizes}}
+            <div class="prize-item {{#unless show}}hide rest{{/unless}}">
+                <span class="horizontal-line"></span>
+                <span class="text">{{text}}</span>
+            </div>
+            {{/each}}
+        </div>
+        <div class="expand">
+            <span class="icon icon-arrow-up"></span>
+            <span class="text">展开</span>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="jade block">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">大师鉴宝</span>
+            <span class="icon icon-arrow-right"></span>
+        </div>
+        <div class="jade-content block-content clearfix">
+            {{#each jades}}
+            <div class="jade-item block-item col-6">
+                <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+                <div class="name">{{name}}</div>
+                <div class="records clearfix">
+                    <div class="visit col-4">
+                        <span class="icon icon-visit"></span>
+                        <span>{{visitCount}}</span>
+                    </div>
+                    <div class="attention col-4">
+                        <span class="icon icon-attention"></span>
+                        <span>{{attentionCount}}</span>
+                    </div>
+                    <div class="comment col-4">
+                        <span class="icon icon-comment"></span>
+                        <span>{{commentCount}}</span>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="craft block">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">获奖作品展示</span>
+            <span class="icon icon-arrow-right"></span>
+        </div>
+        <div class="craft-content block-content clearfix">
+            {{#each crafts}}
+            <div class="craft-item block-item col-6">
+                <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="article block">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">大师工艺展示</span>
+            <span class="icon icon-arrow-right"></span>
+        </div>
+        <div class="article-content block-content clearfix">
+            {{#each articles}}
+            <div class="article-item block-item col-6">
+                <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="store block">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">店铺展示</span>
+            <span class="icon icon-arrow-right"></span>
+        </div>
+        <div class="store-content block-content clearfix">
+            <div class="col-6">
+                <img src="{{store.url}}"/>
+            </div>
+            <div class="info col-6">
+                <div class="store-name">{{store.name}}</div>
+                {{#truncateStr store.desc 24}}
+                    <div class="desc">{{result}}</div>
+                {{/truncateStr}}
+                <div class="address">
+                    <span class="icon icon-address"></span>
+                    <span class="text">{{store.address}}</span>
+                </div>
+                <div class="phone">
+                    <span class="icon icon-phone"></span>
+                    <span class="text">{{store.phone}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="treasure block">
+        <div class="block-title">
+            <span class="icon icon-line-yellow"></span>
+            <span class="title">镇店之宝</span>
+            <span class="icon icon-arrow-right"></span>
+        </div>
+        <div class="treasure-content">
+            {{#each treasures}}
+                <div class="treasure-item">
+                    <img src="{{this}}"/>
+                </div>
+            {{/each}}
+            <nav class="pagination">
+                {{#each treasures}}
+                    <li class="dot{{#if @first}} active{{/if}}"></li>
+                {{/each}}
+            </nav>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="comment">
+        <div class="block-title clearfix">
+            <span class="title">留言 {{comment.count}}</span>
+            <div class="float-right">
+                <span class="icon icon-comment"></span>
+                <span class="text">我要留言</span>
+            </div>
+        </div>
+        <div class="comment-content">
+            {{#each comment.data}}
+                <div class="comment-item">
+                    <div class="first-line clearfix">
+                        <div class="float-left">
+                            <img src="{{head}}">
+                        </div>
+                        <div class="float-left name-date">
+                            <div class="name">{{name}}</div>
+                            {{#dateAlias date}}
+                                <div class="date">{{dateStr}}</div>
+                            {{/dateAlias}}
+                        </div>
+                    </div>
+                    <div class="content">
+                        {{#if reply}}
+                            <span>回复 <span class="name">{{reply.name}}</span> : </span>
+                            {{reply.content}}
+                        {{else}}
+                            {{content}}
+                        {{/if}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+     </div>
+</script>
+<script defer type="text/javascript" src="/scripts/zepto.js"></script>
+<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="./js/artist.js"></script>
+</body>

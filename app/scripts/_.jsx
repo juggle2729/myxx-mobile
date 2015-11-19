@@ -145,6 +145,9 @@
         return key ? query[key] : query;
     };
 
+    const ONE_MINUTE = 1000 * 60, TWO_MINUTES = 2 * ONE_MINUTE,
+        ONE_HOUR = 60 * ONE_MINUTE, ONE_DAY = ONE_HOUR * 24,
+        TWO_DAYS = 2 * ONE_DAY;
     Handlebars.registerHelper({
         date: (milliseconds, fmt) => {
             const date = new Date(milliseconds);
@@ -165,6 +168,51 @@
                 }
             }
             return fmt;
+        },
+        truncateStr: (str, count, options) => {
+            let res = str;
+            if (!str) {
+                res = '';
+            }
+            res = res.length > count ? res.substr(0, count) + '...' : res;
+            return options.fn({
+                result: res
+            });
+        },
+        dateAlias: (dateStr, options) => {
+            let res = '';
+            if (!dateStr) {
+                res = '';
+            } else {
+                const currentDate = new Date(dateStr.replace(/\-/g, '/'));
+                const now = new Date();
+
+                if (isNaN(currentDate.valueOf())) {
+                    res = '';
+                } else  {
+                    const diff = now.getTime() - currentDate.getTime();
+                    if (diff <= ONE_MINUTE) {
+                        res = '刚刚';
+                    } else if (diff <= TWO_MINUTES) {
+                        res = '一分钟前';
+                    } else if (diff <= ONE_HOUR) {
+                        const diffMinutes = Math.floor(diff / ONE_MINUTE);
+                        res = diffMinutes + '分钟前';
+                    } else if (diff <= ONE_DAY) {
+                        const diffHours = Math.floor(diff / ONE_HOUR);
+                        res = diffHours + '小时前';
+                    } else if (diff <= TWO_DAYS) {
+                        res = '昨天';
+                    } else {
+                        const diffDays = Math.floor(diff / ONE_DAY);
+                        res = diffDays + '天前';
+                    }
+                }
+            }
+
+            return options.fn({
+                dateStr: res
+            });
         }
     });
     // reset base font size
