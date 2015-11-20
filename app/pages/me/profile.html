@@ -11,43 +11,59 @@
     <link href="/styles/profile.css" type="text/css" rel="stylesheet"/>
 </head>
 <body class="bg-theme">
-    <div class="account bg-white margin-top">
-      <img src="/images/ic_default_avatar.jpg" class="margin-top"/>
+  <div class="profile">
+    <script id="profile-template" type="text/x-handlebars-template">
+    <div class="account bg-white">
+      <img src="{{avatar}}" class="margin-top"/>
       <div class="user">
-          <div class="horizontal"><p class="font-30 dark-gray margin-right">美小玉</p><p class="font-26 light-gray">普通用户</p></div>
-          <button>编辑</button>
+          <div class="horizontal"><p class="font-30 dark-gray margin-right">{{name}}</p><p class="font-26 light-gray">{{type}}</p></div>
+          <button><span class="icon icon-edit font-22"></span>编辑</button>
       </div>
-      <span class="icon-arrow-right font-32"></span>
+      <span class="icon icon-enter font-26"></span>
     </div>
-    <div class="row border">
-        <span class="icon-five-star"></span>
+    <div class="separator-40"></div>
+    <div class="row">
+        <span class="icon icon-alarm"></span>
         <span class="text">消息通知</span>
-        <span class="icon-arrow-right"></span>
+        <span class="icon icon-enter"></span>
     </div>
-    <div class="row border">
-        <span class="icon-five-star"></span>
-        <span class="text">我的鉴宝</span>
-        <span class="icon-arrow-right"></span>
-    </div>
-    <div class="row-block border-tb">
+    <div class="separator-40"></div>
+    <div class="row-block">
         <div class="row">
-            <span class="icon-five-star"></span>
-            <span class="text">申请开店/我的店铺</span>
-            <span class="icon-arrow-right"></span>
+            <span class="icon icon-favor-active"></span>
+            <span class="text">我的关注</span>
+            <span class="icon icon-enter"></span>
         </div>
         <div class="row">
-            <span class="icon-five-star"></span>
-            <span class="text">申请开通官网/我的官网</span>
-            <span class="icon-arrow-right"></span>
+            <span class="icon icon-review"></span>
+            <span class="text">我的鉴宝</span>
+            <span class="icon icon-enter"></span>
         </div>
     </div>
-    <div class="row border">
-        <span class="icon-five-star"></span>
+    <div class="separator-40"></div>
+    <div class="row-block">
+        <div class="row">
+            <span class="icon icon-shop"></span>
+            <span class="text">我的店铺</span>
+            <span class="icon icon-enter"></span>
+        </div>
+        <div class="row">
+            <span class="icon icon-home"></span>
+            <span class="text">我的官网</span>
+            <span class="icon icon-enter"></span>
+        </div>
+    </div>
+    <div class="separator-40"></div>
+    <div class="row">
+        <span class="icon icon-settings"></span>
         <span>设置</span>
-        <span class="icon-arrow-right"></span>
+        <span class="icon icon-enter"></span>
     </div>
+    </script>
+</div>
 <script defer type="text/javascript" src="/scripts/zepto.js"></script>
 <script defer type="text/javascript" src="/scripts/handlebars.js"></script>
 <script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="./js/profile.js"></script>
 </body>
 </html>

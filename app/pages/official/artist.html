@@ -22,13 +22,13 @@
         <span class="head"><img src="{{head}}"/></span>
         <div class="detail-info">
             <div class="first-line clearfix">
-                <span class="name float-left">{{name}}</span>
-                <span class="browser-cnt float-right">
+                <span class="font-30 dark-gray float-left">{{name}}</span>
+                <span class="font-26 light-gray float-right">
                     <span class="icon icon-view"></span>
                     {{browserCnt}}
                 </span>
             </div>
-            <div class="actors clearfix">
+            <div class="actors clearfix font-22 dark-gray">
                 {{#each actors}}
                     <nav class="actor-row clearfix">
                         {{#each this}}
@@ -39,10 +39,10 @@
             </div>
         </div>
     </div>
-    <div class="oper-list">
+    <div class="oper-list font-26 light-gray">
         {{#each operList}}
         <div class="container col-4">
-            <div class="item">
+            <div class="item text-center">
                 <span class="icon icon-{{this.iconName}}"></span>
                 <span class="text">{{this.label}}</span>
             </div>
@@ -51,18 +51,18 @@
     </div>
     <div class="separator"></div>
     <div class="simple-intro">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">人物简介</span>
         </div>
         <div class="second-line">
-            <span class="name">{{name}}</span>
-            <span class="alias">号{{alias}}</span>
+            <span class="font-30 dark-gray">{{name}}</span>
+            <span class="font-26 light-gray">号{{alias}}</span>
         </div>
-        <div class="desc">
+        <div class="desc font-26 dark-gray">
             {{desc}}
         </div>
-        <div class="prizes">
+        <div class="prizes font-26 dark-gray">
             <div class="line"></div>
             {{#each prizes}}
             <div class="prize-item {{#unless show}}hide rest{{/unless}}">
@@ -70,14 +70,14 @@
             </div>
             {{/each}}
         </div>
-        <div class="expand">
+        <div class="expand font-22 title-gray text-center">
             <span class="icon icon-arrow-up"></span>
             <span class="text">展开</span>
         </div>
     </div>
     <div class="separator"></div>
     <div class="jade block">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">大师鉴宝</span>
             <span class="icon icon-enter"></span>
@@ -87,8 +87,8 @@
             <div class="jade-item block-item col-6">
                 <div class="bg-item">
                     <div class="resource"><a href="{{link}}"><img src="{{url}}"/></a></div>
-                    <div class="name">{{name}}</div>
-                    <div class="records clearfix">
+                    <div class="name dark-gray">{{name}}</div>
+                    <div class="records clearfix light-gray">
                         <div class="visit col-4">
                             <span class="icon icon-view"></span>
                             <span>{{visitCount}}</span>
@@ -109,7 +109,7 @@
     </div>
     <div class="separator"></div>
     <div class="craft block">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">获奖作品展示</span>
             <span class="icon icon-enter"></span>
@@ -124,7 +124,7 @@
     </div>
     <div class="separator"></div>
     <div class="article block">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">大师工艺展示</span>
             <span class="icon icon-enter"></span>
@@ -142,7 +142,7 @@
     </div>
     <div class="separator"></div>
     <div class="store block">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">店铺展示</span>
             <span class="icon icon-enter"></span>
@@ -152,17 +152,17 @@
                 <img src="{{store.url}}"/>
             </div>
             <div class="info col-6">
-                <div class="store-name">{{store.name}}</div>
+                <div class="font-30 dark-gray">{{store.name}}</div>
                 {{#truncateStr store.desc 24}}
-                    <div class="desc">{{result}}</div>
+                    <div class="desc font-26 light-gray">{{result}}</div>
                 {{/truncateStr}}
-                <div class="address">
+                <div class="address font-26 light-gray">
                     <span class="icon icon-location">
 				        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
 				    </span>
                     <span class="text">{{store.address}}</span>
                 </div>
-                <div class="phone">
+                <div class="phone font-26 light-gray">
                     <span class="icon icon-phone"></span>
                     <span class="text">{{store.phone}}</span>
                 </div>
@@ -171,7 +171,7 @@
     </div>
     <div class="separator"></div>
     <div class="treasure block">
-        <div class="block-title">
+        <div class="block-title font-22 title-gray">
             <span class="icon-line-yellow"></span>
             <span class="title">镇店之宝</span>
             <span class="icon icon-enter"></span>
@@ -191,14 +191,14 @@
     </div>
     <div class="separator"></div>
     <div class="comments">
-        <div class="block-title clearfix">
+        <div class="block-title clearfix font-22 title-gray">
             <span class="title">留言 {{comment.count}}</span>
             <div class="float-right">
                 <span class="icon icon-comment"></span>
                 <span class="text">我要留言</span>
             </div>
         </div>
-        <div class="comment-content">
+        <div class="comment-content font-26">
             {{#each comment.data}}
                 <div class="comment-item">
                     <div class="first-line clearfix">
@@ -208,11 +208,11 @@
                         <div class="float-left name-date">
                             <div class="name">{{name}}</div>
                             {{#dateAlias date}}
-                                <div class="date">{{dateStr}}</div>
+                                <div class="light-gray">{{dateStr}}</div>
                             {{/dateAlias}}
                         </div>
                     </div>
-                    <div class="content">
+                    <div class="content dark-gray">
                         {{#if reply}}
                             <span>回复 <span class="name">{{reply.name}}</span> : </span>
                             {{reply.content}}

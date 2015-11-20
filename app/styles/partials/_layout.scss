@@ -1,15 +1,25 @@
+%separator {
+  @include border($border-color, top-bottom);
+  background-color: $separator-color;
+  display: block;
+  width: 100%;
+}
+
+@mixin separator($height) {
+    @extend %separator;
+    height: $height;
+}
 .row {
     background-color: map-get($colors, 'bg-white');
     color: map-get($colors, 'dark-gray');
     font-size: 30px;
     line-height: 100px;
     padding: 0 32px;
-    margin-top: 40px;
     position: relative;
     width: 100%;
-    .icon-arrow-right {
+    .icon-enter {
         color: map-get($colors, 'light-gray');
-        font-size: 32px;
+        font-size: 26px;
         margin-top: -16px;
         position: absolute;
         right: 32px;
@@ -17,14 +27,13 @@
     }
 }
 .row-block {
-    .row:not(:first-child){
-      margin-top: 0;
+    .row:not(:first-child) {
+        margin-top: 0;
     }
     .row:not(:last-child) {
         @include border($border-color, bottom)
     }
 }
-
 $gridColumns: 12;
 @for $i from 1 through $gridColumns {
     .col-#{$i+1} {
@@ -32,13 +41,11 @@ $gridColumns: 12;
         width: percentage(($i+1)/$gridColumns);
     }
 }
-
+.separator-40 {
+    @include separator(40px);
+}
 .separator {
-    @include border($border-color, top-bottom);
-    background-color: $separator-color;
-    display: block;
-    height: 22px;
-    width: 100%;
+    @include separator(22px);
 }
 .border-top {
     @include border($border-color, top)

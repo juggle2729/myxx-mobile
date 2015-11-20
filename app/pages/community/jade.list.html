@@ -12,13 +12,13 @@
 </head>
 <body class="bg-theme">
   <div class="horizontal operation bg-white">
-      <div class="new dark-gray dark-red"><span class="font-24">最新</span></div>
-      <div class="hot dark-gray"><span class="font-24">热门</span></div>
+      <div class="new dark-gray font-24 dark-red"><span>最新</span></div>
+      <div class="hot dark-gray font-24"><span>热门</span></div>
   </div>
   <script id="treasures-template" type="text/x-handlebars-template">
      {{#each posts}}
       <div class="separator"></div>
-      <div class="card bg-white">
+      <div class="jade-list bg-white">
           <div class="horizontal margin-bottom">
               <img src="/images/ic_default_avatar.jpg" class="avatar-user"/>
               <div class="profile"><p class="font-26 dark-gray">{{publisher}}</p><p class="font-22 light-gray">{{publishTime}}</p></div>
@@ -29,7 +29,6 @@
                   <img src="/images/icon/ico_video.png" /></div></td></tr>
               <tr><td><div style="background-image: url({{{bgs.[2]}}})"></div></td><td><div style="background-image: url({{{bgs.[3]}}})"></div></td></tr>
           </table>
-          {{#if master}}
           {{#each master}}
           <div class="horizontal master">
               <img src="/images/ic_default_avatar.jpg" class="avatar-master margin-top"/>
@@ -40,13 +39,10 @@
               </div>
           </div>
           {{/each}}
-          {{~^~}}
-          <div class="separator"></div>
-          {{/if}}
       </div>
       <div class="horizontal operation bg-white">
-          <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{attention}}</span></div>
-          <div><span class="icon-five-star font-24"></span><span class="font-24 light-gray">{{comment}}</span></div>
+          <div class="font-24"><span class="icon icon-thumb light-gray"></span><span class="light-gray">{{attention}}</span></div>
+          <div class="font-24"><span class="icon icon-favor light-gray"></span><span class="light-gray">{{comment}}</span></div>
       </div>
       {{/each}}
 </script>

@@ -1,6 +1,5 @@
 @import 'partials/myxx';
-.card {
-    @include border($border-color, top);
+.jade-list {
     padding: 24px 32px;
     padding-bottom: 0;
     .avatar-user {
@@ -9,7 +8,7 @@
         border-radius: 50%;
     }
     .profile {
-        padding: 11px 0 0 20px;
+        padding-left: 20px;
         p {
             margin-bottom: 12px;
         }
@@ -50,10 +49,10 @@
         .identify {
             height: 24px;
             width: 24px;
-            margin-top: 7px;
+            margin-top: .57rem;
         }
         .profile {
-            padding-top: 26px;
+            padding-top: 20px;
         }
         .result {
             position: absolute;
@@ -68,15 +67,15 @@
     }
 }
 .operation {
-    @include border($border-color, top-bottom);
+    @include border($border-color, top);
     height: 80px;
     > div {
         @include border($border-color, right);
         width: 50%;
         text-align: center;
         margin: 24px 0;
-    }
-    span[class~='light-gray'] {
-        margin-left: 12px;
+        span:first-child {
+            margin-right: 12px;
+        }
     }
 }

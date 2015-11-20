@@ -14,17 +14,19 @@
         name: '杨曦',
         alias: '南石',
         browserCnt: 3089,
-        actors: [['江苏省工艺大师', '江苏省工艺大师'], ['江苏省工艺大师']],
+        actors: [
+            [
+                '江苏省工艺大师', '江苏省工艺大师'
+            ], ['江苏省工艺大师']
+        ],
         operList: [
             {
                 iconName: 'favor',
                 label: 300
-            },
-            {
+            }, {
                 iconName: 'edit',
                 label: 'TA的关注'
-            },
-            {
+            }, {
                 iconName: 'shop',
                 label: '进入店铺'
             }
@@ -35,23 +37,19 @@
                 dotSize: dotSize(),
                 text: '2005年被苏州市宣传部授苏州民间工艺家称号',
                 show: true
-            },
-            {
+            }, {
                 dotSize: dotSize(),
                 text: '2006年被授予中国玉石雕刻大师称号',
                 show: true
-            },
-            {
+            }, {
                 dotSize: dotSize(),
                 text: '2007年被授予中国玉石雕刻大师称号',
                 show: false
-            },
-            {
+            }, {
                 dotSize: dotSize(),
                 text: '2008年被授予中国玉石雕刻大师称号',
                 show: false
-            },
-            {
+            }, {
                 dotSize: dotSize(),
                 text: '2009年被授予中国玉石雕刻大师称号',
                 show: false
@@ -65,8 +63,7 @@
                 visitCount: 301,
                 attentionCount: 100,
                 commentCount: 30
-            },
-            {
+            }, {
                 url: '/images/artist/jade-two.png',
                 link: '',
                 name: '和田玉把件 貔貅鉴赏',
@@ -79,8 +76,7 @@
             {
                 url: '/images/artist/craft-one.jpg',
                 link: ''
-            },
-            {
+            }, {
                 url: '/images/artist/craft-two.jpg',
                 link: ''
             }
@@ -90,8 +86,7 @@
                 url: '/images/artist/article-one.jpg',
                 link: '',
                 name: '和田玉雕琢工艺全展示'
-            },
-            {
+            }, {
                 url: '/images/artist/article-two.jpg',
                 link: '',
                 name: '雕琢工艺记录'
@@ -105,9 +100,7 @@
             phone: '18011112222'
         },
         treasures: [
-            '/images/artist/treasure.jpg',
-            '/images/artist/treasure.jpg',
-            '/images/artist/treasure.jpg'
+            '/images/artist/treasure.jpg', '/images/artist/treasure.jpg', '/images/artist/treasure.jpg'
         ],
         comment: {
             count: 33,
@@ -117,14 +110,12 @@
                     name: '苗宇轩',
                     date: '2015-11-19 12:01:00',
                     content: '东西产自新疆和田,水料,皮肉较好,质地三品,市场估价在2.5W左右,很不错!'
-                },
-                {
+                }, {
                     head: '/images/artist/message-two.png',
                     name: '苗宇轩',
                     date: '2015-11-18 12:01:00',
                     content: '东西很不错哦,是真品,2W左右'
-                },
-                {
+                }, {
                     head: '/images/artist/message-three.jpg',
                     name: '苗宇轩',
                     date: '2015-11-19 11:01:00',
@@ -141,7 +132,7 @@
     const container = $('.official-artist');
 
     container.append($(officialArtistTemplate));
-    container.find('.expand').click(function() {
+    container.find('.expand').on(_.clickOrTap, function() {
         const restItems = container.find('.rest');
         if (restItems.hasClass('hide')) {
             restItems.removeClass('hide');

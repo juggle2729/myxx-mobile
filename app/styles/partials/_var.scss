@@ -3,15 +3,18 @@ $sizes: (32, 30, 28, 26, 24, 22, 20, 18, 16, 15, 14, 13, 12, 11, 10);
 
 
 // colors
+$white: #ffffff;
 $colors: (
     // theme color
     bg-theme: #efefef,
-    bg-white: #ffffff,
+    bg-white: $white,
     bg-tomato: tomato,
     // text color
     light-gray: #c6c6c6,
     dark-gray: #393939,
-    dark-red: #cc3f4f
+    dark-red: #cc3f4f,
+    title-gray: #929292,
+    white: $white
 );
 // list color
 $border-gray: #dcdcdc;

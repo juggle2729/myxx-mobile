@@ -1,37 +1,46 @@
 @import 'partials/myxx';
-.account {
-    @include border($border-color, top-bottom);
-    display: -webkit-box;
-    height: 192px;
-    padding-left: 32px;
-    position: relative;
-    img {
-        height: 120px;
-        width: 120px;
-        border-radius: 50%;
-    }
-    .user {
-        margin: 40px 0 24px 28px;
-        button {
-            @include border($border-color);
-            background-color: map-get($colors, 'bg-white');
-            color: map-get($colors, 'dark-red');
-            font-size: 26px;
-            height: 42px;
-            padding: 5px 14px;
-            margin-top: 24px;
-            border: 0;
-            border-radius: 5px;
+.profile {
+    .account {
+        //@include border($border-color, top-bottom);
+        display: -webkit-box;
+        height: 192px;
+        padding-left: 32px;
+        position: relative;
+        img {
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
         }
-        p:nth-child(2) {
-            margin-top: 1px;
+        .user {
+            margin: 40px 0 24px 28px;
+            .icon-edit {
+                margin-right: 12px;
+            }
+            button {
+                @include border($border-color);
+                background-color: map-get($colors, 'bg-white');
+                color: map-get($colors, 'dark-red');
+                font-size: 26px;
+                height: 42px;
+                line-height: 42px;
+                padding: 0 14px;
+                margin-top: 24px;
+                border: 0;
+                border-radius: 5px;
+            }
+            p:nth-child(2) {
+                margin-top: 1px;
+            }
+        }
+        .icon-enter {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            margin-top: -16px;
+            color: map-get($colors, 'light-gray');
         }
     }
-    span {
-        position: absolute;
-        right: 32px;
-        top: 50%;
-        margin-top: -16px;
-        color: map-get($colors, light-gray);
+    .icon:not(.icon-enter) {
+        color: map-get($colors, 'dark-red');
     }
 }

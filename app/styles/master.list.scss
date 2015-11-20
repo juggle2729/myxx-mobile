@@ -1,0 +1,90 @@
+@import 'partials/myxx';
+@mixin common-master($bgcolor, $height, $width, $border-radius) {
+    background-color: $bgcolor;
+    height: $height;
+    width: $width;
+    border-radius: $border-radius;
+}
+.master-list {
+    .search {
+        @include border($border-color, top-bottom);
+        input {
+            @include border($border-color);
+            @include common-master(#eaeaea, 60px, 686px, 8px);
+            margin: 13px 32px;
+            padding: 0 64px;
+            border: 0;
+        }
+        .icon-favor {
+            position: absolute;
+            top: 33px;
+            left: 52px;
+        }
+        .icon-shop {
+            display: none;
+            position: absolute;
+            top: 33px;
+            right: 52px;
+        }
+    }
+    .filter {
+        @include common-master(black, 100%, 100%, '');
+        display: none;
+        position: absolute;
+        top: 87px;
+        left: 0;
+        z-index: 1001;
+        opacity: 0.5;
+    }
+    .master {
+        @include border($border-color, bottom);
+        background-color: map-get($colors, 'bg-white');
+        padding: 0 32px;
+        img {
+            @include common-master('', 120px, 120px, 50%);
+            margin: 45px 30px 0 0;
+        }
+    }
+    .master-profile {
+        margin: 18px 0;
+        > div {
+            display: -webkit-box;
+            color: map-get($colors, 'dark-gray');
+            font-size: 22px;
+            &:nth-child(2n+1) {
+                margin-bottom: 18px;
+            }
+            .honor {
+                margin: 0 32px 12px 0;
+            }
+            span {
+                display: inherit;
+                padding-top: 3px;
+            }
+        }
+        input[type='button'] {
+            @include border($border-color);
+            @include common-master(#f3ac1c, '', '', 5px);
+            line-height: 32px;
+            padding: 0 5px;
+            border: 0;
+            margin-left: 12px;
+        }
+        .identify-number {
+            margin-right: 50px;
+            &::before {
+                content: '鉴宝数 ';
+            }
+        }
+        .fans::before {
+            content: '粉丝 ';
+        }
+    }
+    .hiding {
+        background-color: rgba(0, 0, 0, .5);
+    }
+     ::-webkit-input-placeholder {
+        color: map-get($colors, 'light-gray');
+        font-size: 22px;
+    }
+}

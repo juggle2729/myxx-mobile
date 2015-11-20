@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>大师专区</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="/styles/master.list.css"/>
+</head>
+<body>
+  <div class="master-list">
+    <div class="search">
+        <input type="text" class="font-22 dark-gray" placeholder="请输入您想查找的姓名、头衔等关键字" value='' />
+        <span class="icon icon-favor font-22 light-gray"></span>
+        <span class="icon icon-shop font-22 light-gray"></span>
+    </div>
+    <script id="master-list-template" type="text/x-handlebars-template">
+    <div class="filter"></div>
+    {{#each masters}}
+    <div class="master horizontal">
+        <img src="{{avatar}}" />
+        <div class="master-profile">
+            <div>
+                 <span class="font-30">{{name}}</span>
+                 {{#if homepage}}
+                 <input class="font-22 white" type="button" value="大师官网">
+                 {{/if}}
+            </div>
+            <div><p class="honor">{{honor.[0]}}</p><p>{{honor.[1]}}</p></div>
+            <div><p>{{honor.[2]}}</p></div>
+            <div><span class="identify-number light-gray">{{identifyNumber}}</span><span class="fans light-gray">{{fans}}</span></div>
+        </div>
+    </div>
+    {{/each}}
+    </script>
+</div>
+<script defer type="text/javascript" src="/scripts/zepto.js"></script>
+<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="./js/master.list.js"></script>
+</body>
+</html>
