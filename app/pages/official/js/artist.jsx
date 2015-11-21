@@ -59,17 +59,13 @@
             {
                 url: '/images/artist/jade-one.png',
                 link: '',
-                name: '和田玉把件 貔貅鉴赏',
-                visitCount: 301,
-                attentionCount: 100,
-                commentCount: 30
+                identificationResult: '真',
+                likedCount: 126
             }, {
                 url: '/images/artist/jade-two.png',
                 link: '',
-                name: '和田玉把件 貔貅鉴赏',
-                visitCount: 301,
-                attentionCount: 100,
-                commentCount: 30
+                identificationResult: '假',
+                likedCount: 126
             }
         ],
         crafts: [

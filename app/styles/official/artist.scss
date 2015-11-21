@@ -72,6 +72,7 @@
 
     .oper-list {
         @extend .clearfix;
+        margin-top: -1px;
 
         .item {
             line-height: 50px;
@@ -82,7 +83,11 @@
         }
 
         .container {
+            cursor: pointer;
             padding: 16px 0;
+            &:active {
+                background-color: $menu-active-color;
+            }
         }
 
         .container:not(:last-child) {
@@ -193,7 +198,7 @@
 
     .jade {
         .records {
-            padding-left: 18px;
+            padding: 0 18px;
             margin-top: 18px;
         }
     }
