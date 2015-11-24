@@ -24,7 +24,6 @@
             token: '8ef96ac4-bd70-48ff-98eb-b0bcbb122c2a'
         };
     }
-
     if (w.myxx) {
         helper.user.id = myxx.getUserId();
         helper.user.token = myxx.getToken();

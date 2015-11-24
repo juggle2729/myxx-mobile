@@ -6,7 +6,7 @@ const data = {
     slides: [
         {
             owner: '落水三千丈',
-            desc: '新疆和田玉帮忙看看品吧，从一个朋友那骗来的',
+            desc: '新疆和田玉帮忙看看品质吧，从一个朋友那骗来的',
             bg: '/images/1.jpg'
         }, {
             owner: '二胡卵子',
@@ -14,7 +14,7 @@ const data = {
             bg: '/images/2.jpg'
         }, {
             owner: '克里姆林',
-            desc: '大家帮忙看看是不是发财了？',
+            desc: '新手，大家帮忙看看是不是要发',
             bg: '/images/3.jpg'
         }
     ],
