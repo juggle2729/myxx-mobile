@@ -149,9 +149,7 @@
             </div>
             <div class="info col-6">
                 <div class="font-30 dark-gray">{{store.name}}</div>
-                {{#truncateStr store.desc 24}}
-                    <div class="desc font-26 light-gray">{{result}}</div>
-                {{/truncateStr}}
+                <div class="desc font-26 light-gray">{{truncate store.desc 24}}</div>
                 <div class="address font-26 light-gray">
                     <span class="icon icon-location">
 				        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
@@ -203,9 +201,7 @@
                         </div>
                         <div class="float-left name-date">
                             <div class="name">{{name}}</div>
-                            {{#dateAlias date}}
-                                <div class="light-gray">{{dateStr}}</div>
-                            {{/dateAlias}}
+                            <div class="light-gray">{{moment date}}</div>
                         </div>
                     </div>
                     <div class="content dark-gray">

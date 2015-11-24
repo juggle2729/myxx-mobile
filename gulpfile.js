@@ -52,7 +52,7 @@ gulp.task('styles', function() {
         .pipe($.scssLint())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
-            precision: 2,
+            precision: 5,
             errLogToConsole: true
         }))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
