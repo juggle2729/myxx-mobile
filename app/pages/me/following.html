@@ -11,6 +11,30 @@
     <link href="/styles/following.css" type="text/css" rel="stylesheet"/>
 </head>
 <body class="bg-gray">
-  <h1>我的关注</h1>
+  <div class="following">
+    <script id="following-template" type="text/x-handlebars-template">
+    {{#each userList}}
+    <div class="{{t}}">
+      <img src="{{{avatar}}}" class="margin-top"/>
+      <div class="list">
+          <div class="info">
+          	<p class="font-30 dark-gray margin-right">{{name}}</p>
+         	<p class="font-26 light-gray">{{userType}}</p>
+         	{{#if price}}
+         	<p class="font-26 dark-red">￥{{price}}</p>
+         	{{/if}}
+          </div>
+       	  <button><span>{{type}}</span></button>
+      </div>
+      
+    </div>
+    <div class="separator-20"></div>
+    {{/each}}
+    </script>
+</div>
+<script defer type="text/javascript" src="/scripts/zepto.js"></script>
+<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script defer type="text/javascript" src="./js/following.js"></script>
 </body>
 </html>

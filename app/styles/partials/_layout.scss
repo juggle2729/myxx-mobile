@@ -47,6 +47,9 @@ $gridColumns: 12;
 .separator-40 {
     @include separator(40px);
 }
+.separator-20 {
+    @include separator(20px);
+}
 .separator {
     @include separator(22px);
 }
