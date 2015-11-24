@@ -3,7 +3,7 @@
 .block {
     background: map-get($colors, 'bg-white');
     border: 1px solid map-get($colors, 'gray');
-    font-size: 14px;
+    font-size: 26px;
     height: 40px;
     line-height: 40px;
     margin-top: 12px;
@@ -29,7 +29,7 @@ ul {
     border: 1px solid map-get($colors, 'gray');
     margin: 4px 0;
     li {
-        font-size: 14px;
+        font-size: 26px;
         height: 36px;
         line-height: 36px;
         padding: 0 16px;
@@ -51,4 +51,18 @@ input [type=button] {
     line-height: 36px;
     margin-top: 10px;
     width: 120px;
+}
+
+.exit-btn {
+    margin:32px;
+    button{
+        font-size: 30px;
+        color: white;
+        background-color: #cc3f4f;
+        height: 80px;
+        width: 100%;
+        border-radius: 10px;
+        border: 0;
+        cursor: pointer;
+    }
 }

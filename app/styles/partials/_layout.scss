@@ -17,7 +17,7 @@
     padding: 0 32px;
     position: relative;
     width: 100%;
-    .icon-enter {
+    .icon-enter,.icon-text,.icon-text-enter{
         color: map-get($colors, 'light-gray');
         font-size: 26px;
         margin-top: -16px;
@@ -40,6 +40,9 @@ $gridColumns: 12;
         float: left;
         width: percentage(($i+1)/$gridColumns);
     }
+}
+.separator-80 {
+    @include separator(80px);
 }
 .separator-40 {
     @include separator(40px);

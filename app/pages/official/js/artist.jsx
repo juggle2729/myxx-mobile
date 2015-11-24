@@ -130,10 +130,13 @@
     container.append($(officialArtistTemplate));
     container.find('.expand').on(_.clickOrTap, function() {
         const restItems = container.find('.rest');
+        const openButton = container.find('.open');
         if (restItems.hasClass('hide')) {
             restItems.removeClass('hide');
+            openButton.html('收起');
         } else {
             restItems.addClass('hide');
+            openButton.html('展开');
         }
     });
 })();
