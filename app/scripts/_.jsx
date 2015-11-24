@@ -8,6 +8,8 @@
     }
 
     const helper = {
+        VIDEO: 'http://7xo88d.media1.z0.glb.clouddn.com/',
+        IMG: 'http://7xo8aj.com2.z0.glb.qiniucdn.com/', //IMG root
         clickOrTap: ('ontouchend' in w ? 'tap' : 'click')
     };
     if (/licaishi/.test(location.host)) {
@@ -17,10 +19,9 @@
             token: '5f3b848f-5983-4485-a124-2e1265a6101a'
         };
     } else {  // 线下
-        helper.API = 'http://10.11.255.106:9092/api/v1/lcs/'; // API root
+        helper.API = 'http://192.168.199.143:8000/'; // API root
         helper.user = {
-            id: '128',
-            token: '05bd3744-ee7f-4ce1-bb97-00092fe46f6a'
+            token: '8ef96ac4-bd70-48ff-98eb-b0bcbb122c2a'
         };
     }
     if (w.myxx) {
@@ -37,7 +38,6 @@
             // application/x-www-form-urlencoded; charset=utf-8
             headers: {
                 'Content-Type': 'application/json',
-                'X-Auth-User': this.user.id,
                 'X-Auth-Token': this.user.token
             },
             type: (method || 'GET')
@@ -145,11 +145,6 @@
         return key ? query[key] : query;
     };
 
-    const ONE_MINUTE = 1000 * 60;
-    const TWO_MINUTES = 2 * ONE_MINUTE;
-    const ONE_HOUR = 60 * ONE_MINUTE;
-    const ONE_DAY = ONE_HOUR * 24;
-    const TWO_DAYS = 2 * ONE_DAY;
     Handlebars.registerHelper({
         date: (milliseconds, fmt) => {
             const date = new Date(milliseconds);
@@ -171,50 +166,37 @@
             }
             return fmt;
         },
-        truncateStr: (str, count, options) => {
-            let res = str;
-            if (!str) {
-                res = '';
-            }
-            res = res.length > count ? res.substr(0, count) + '...' : res;
-            return options.fn({
-                result: res
-            });
+        truncate: (str='', count) => {
+            return str.length > count ? str.substr(0, count) + '...' : str;
         },
-        dateAlias: (dateStr, options) => {
-            let res = '';
-            if (!dateStr) {
-                res = '';
+        img: (id) => {
+            let src;
+            if (id) {
+                src = /^https?/.test(id) ? id : _.IMG + id;
             } else {
-                const currentDate = new Date(dateStr.replace(/\-/g, '/'));
-                const now = new Date();
-
-                if (isNaN(currentDate.valueOf())) {
-                    res = '';
+                src = '/images/avatar--defaut.jpg';
+            }
+            return src;
+        },
+        moment: (dateStr) => {
+            const MINUTE = 1000 * 60;
+            const HOUR = 60 * MINUTE;
+            const DAY = HOUR * 24;
+            const date = new Date(dateStr);
+            const diff = new Date() - new Date(dateStr);
+            let m = '';
+            if (!isNaN(date.valueOf())) {
+                if (diff <= MINUTE) {
+                    m = '刚刚';
+                } else if (diff <= HOUR) {
+                    m = Math.floor(diff / MINUTE) + '分钟前';
+                } else if (diff <= DAY) {
+                    m = Math.floor(diff / HOUR) + '小时前';
                 } else {
-                    const diff = now.getTime() - currentDate.getTime();
-                    if (diff <= ONE_MINUTE) {
-                        res = '刚刚';
-                    } else if (diff <= TWO_MINUTES) {
-                        res = '一分钟前';
-                    } else if (diff <= ONE_HOUR) {
-                        const diffMinutes = Math.floor(diff / ONE_MINUTE);
-                        res = diffMinutes + '分钟前';
-                    } else if (diff <= ONE_DAY) {
-                        const diffHours = Math.floor(diff / ONE_HOUR);
-                        res = diffHours + '小时前';
-                    } else if (diff <= TWO_DAYS) {
-                        res = '昨天';
-                    } else {
-                        const diffDays = Math.floor(diff / ONE_DAY);
-                        res = diffDays + '天前';
-                    }
+                    m = Math.floor(diff / DAY) + '天前';
                 }
             }
-
-            return options.fn({
-                dateStr: res
-            });
+            return m;
         }
     });
     // reset base font size

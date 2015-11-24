@@ -1,3 +1,7 @@
+// _.request('jianbao/applies/2')
+//     .then(resp => {
+//         console.log(resp);
+//     });
 const data = {
     slides: [
         {
@@ -156,6 +160,7 @@ const swiperV = new Swiper('.swiper-container-v', {
     initialSlide: 0,
     spaceBetween: 0
 });
+let delta = 0;
 const swiperS = new Swiper('.swiper-container-scroll', {
     scrollbar: '.swiper-scrollbar',
     direction: 'vertical',
@@ -163,7 +168,10 @@ const swiperS = new Swiper('.swiper-container-scroll', {
     mousewheelControl: true,
     freeMode: true,
     onSetTranslate: (swiper, translate) => {
-        if(translate > 70) {
+        delta = translate;
+    },
+    onTouchEnd: (swiper) => {
+        if(delta > 70) {
             swiperV.slidePrev();
         }
     }
