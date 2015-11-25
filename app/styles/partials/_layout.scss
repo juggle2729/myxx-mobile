@@ -1,10 +1,9 @@
 %separator {
-  @include border($border-color, top-bottom);
-  background-color: $separator-color;
-  display: block;
-  width: 100%;
+    @include border($border-color, top-bottom);
+    background-color: $separator-color;
+    display: block;
+    width: 100%;
 }
-
 @mixin separator($height) {
     @extend %separator;
     height: $height;

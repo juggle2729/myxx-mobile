@@ -15,7 +15,7 @@
     }
     table div {
         height: 171px;
-        width: 220px;
+        width: 218px;
         background-size: cover;
         background-position: center;
         &.video {
@@ -70,12 +70,17 @@
     @include border($border-color, top);
     height: 80px;
     > div {
-        @include border($border-color, right);
         width: 50%;
         text-align: center;
-        margin: 24px 0;
+        padding: 24px 0;
         span:first-child {
             margin-right: 12px;
+        }
+        > div {
+            @include border($border-color, right);
+        }
+        &:active {
+            background-color: #d9d9d9;
         }
     }
 }

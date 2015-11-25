@@ -12,39 +12,51 @@
 </head>
 <body class="bg-theme">
   <div class="horizontal operation bg-white">
-      <div class="new dark-gray font-24 dark-red"><span>最新</span></div>
-      <div class="hot dark-gray font-24"><span>热门</span></div>
+      <div class="time dark-gray font-24 dark-red"><div><span>最新</span></div></div>
+      <div class="hot dark-gray font-24"><div><span>热门</span></div></div>
   </div>
   <script id="treasures-template" type="text/x-handlebars-template">
-     {{#each posts}}
+    <div class="jade-list-page">
+     {{#each applies}}
       <div class="separator"></div>
       <div class="jade-list bg-white">
           <div class="horizontal margin-bottom">
               <img src="/images/ic_default_avatar.jpg" class="avatar-user"/>
-              <div class="profile"><p class="font-26 dark-gray">{{publisher}}</p><p class="font-22 light-gray">{{publishTime}}</p></div>
+              <div class="profile"><p class="font-26 dark-gray">{{applier.name}}</p><p class="font-22 light-gray">{{moment create_at}}</p></div>
           </div>
-          <p class="font-30 dark-gray">{{content}}</p>
-          <table cellspacing="4" cellpadding="0" class="margin-top">
-              <tr><td><div style="background-image: url({{{bgs.[0]}}})"></div></td><td><div style="background-image: url({{{bgs.[1]}}})"></div></td><td rowspan='2'><div class="video" style="background-image: url({{{video}}})">
+          <p class="font-30 dark-gray">{{description}}</p>
+          <table cellspacing="5" class="margin-top">
+              <tr><td><div style="background-image: url({{{img pictures.[0]}}})"></div></td><td><div style="background-image: url({{{img pictures.[1]}}})"></div></td><td rowspan='2'><div class="video" style="background-image: url('http://218.92.209.25/7xo88d.media1.z0.glb.clouddn.com/a5ad0094-487a-4d3f-ae8a-499ec2354e5e?vframe/jpg/offset/2/w/540/h/540/rotate/90/')">
                   <img src="/images/icon/ico_video.png" /></div></td></tr>
-              <tr><td><div style="background-image: url({{{bgs.[2]}}})"></div></td><td><div style="background-image: url({{{bgs.[3]}}})"></div></td></tr>
+              <tr><td><div style="background-image: url({{{img pictures.[2]}}})"></div></td><td><div style="background-image: url({{{img pictures.[3]}}})"></div></td></tr>
           </table>
-          {{#each master}}
+          {{#each results}}
           <div class="horizontal master">
               <img src="/images/ic_default_avatar.jpg" class="avatar-master margin-top"/>
-              <div class="profile"><p class="font-26 dark-gray">{{name}}</p><p class="font-22 light-gray">{{title}}</p></div>
+              <div class="profile"><p class="font-26 dark-gray">{{identifier.name}}</p><p class="font-22 light-gray">{{identifier.title}}</p></div>
               <div class="horizontal result">
                 <img src="/images/icon/ico_identify.png" class="identify" />
-                <p class="font-22 dark-gray">{{status}}</p>
+                <p class="font-22 dark-gray">已鉴定</p>
               </div>
           </div>
           {{/each}}
       </div>
       <div class="horizontal operation bg-white">
-          <div class="font-24"><span class="icon icon-thumb light-gray"></span><span class="light-gray">{{attention}}</span></div>
-          <div class="font-24"><span class="icon icon-favor light-gray"></span><span class="light-gray">{{comment}}</span></div>
+          {{#if isFolllowed}}
+          <div class="font-24">
+              <div><span class="icon icon-favor-active dark-red"></span><span class="dark-red">{{follow}}</span></div>
+          </div>
+          {{~^~}}
+          <div class="font-24">
+              <div><span class="icon icon-favor light-gray"></span><span class="light-gray">{{follow}}</span></div>
+          </div>
+          {{/if}}
+          <div class="font-24">
+              <div><span class="icon icon-comment light-gray"></span><span class="light-gray">{{comment}}</span></div>
+          </div>
       </div>
       {{/each}}
+  </div>
 </script>
 <script defer type="text/javascript" src="/scripts/zepto.js"></script>
 <script defer type="text/javascript" src="/scripts/handlebars.js"></script>

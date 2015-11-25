@@ -9,7 +9,7 @@
 
     const helper = {
         VIDEO: 'http://7xo88d.media1.z0.glb.clouddn.com/',
-        IMG: 'http://7xo8aj.com2.z0.glb.qiniucdn.com/', //IMG root
+        IMG: 'http://7xo8aj.com2.z0.glb.qiniucdn.com/', // IMG root
         clickOrTap: ('ontouchend' in w ? 'tap' : 'click')
     };
     if (/licaishi/.test(location.host)) {
@@ -19,7 +19,7 @@
             token: '5f3b848f-5983-4485-a124-2e1265a6101a'
         };
     } else {  // 线下
-        helper.API = 'http://192.168.199.143:8000/'; // API root
+        helper.API = 'http://120.26.113.13/'; // API root
         helper.user = {
             token: '8ef96ac4-bd70-48ff-98eb-b0bcbb122c2a'
         };
@@ -166,7 +166,7 @@
             }
             return fmt;
         },
-        truncate: (str='', count) => {
+        truncate: (str = '', count) => {
             return str.length > count ? str.substr(0, count) + '...' : str;
         },
         img: (id) => {

@@ -1,69 +1,35 @@
-const data = {
-    posts: [
-        {
-            avatar: '',
-            publisher: '苏沐风',
-            publishTime: '30分钟前',
-            content: '朋友刚入的和田玉，帮忙看看，急',
-            bgs: [
-                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
-            ],
-            video: '/images/5.jpg',
-            master: [
-                {
-                    avatar: '',
-                    name: '张志忠',
-                    title: '国家级雕刻大师',
-                    status: '已鉴定'
-                }, {
-                    avatar: '',
-                    name: '林晓',
-                    title: '美工大师',
-                    status: '已鉴定'
-                }, {
-                    avatar: '',
-                    name: '张志忠',
-                    title: '国家级雕刻大师',
-                    status: '已鉴定'
-                }
-            ],
-            attention: 3,
-            comment: 6
-        }, {
-            avatar: '',
-            publisher: '苏沐风',
-            publishTime: '30分钟前',
-            content: '朋友刚入的和田玉，帮忙看看，急',
-            bgs: [
-                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
-            ],
-            video: '/images/5.jpg',
-            master: [],
-            attention: 3,
-            comment: 6
-        }, {
-            avatar: '',
-            publisher: '苏沐风',
-            publishTime: '30分钟前',
-            content: '朋友刚入的和田玉，帮忙看看，急',
-            bgs: [
-                '/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg'
-            ],
-            video: '/images/5.jpg',
-            master: [],
-            attention: 3,
-            comment: 6
-        }
-    ]
-};
+const hot = $('.hot');
+const time = $('.time');
 
-const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
-$('body').append($(TreasuresTemplate));
-$('.hot').on(_.clickOrTap, function() {
-    $('.new').removeClass('dark-red');
-    $(this).addClass('dark-red');
+_.request('jianbao/applies').then(resp => {
+    const data = resp.data;
+    $('.jade-list-page').remove();
+    const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
+    $('body').append($(TreasuresTemplate));
+    data.applies.forEach(apply => {
+        if (apply.results.length === 0) {
+            $('table').css('padding-bottom', '24px');
+        }
+    });
 });
-$('.new').on(_.clickOrTap, function() {
-    $('.hot').removeClass('dark-red');
-    $(this).addClass('dark-red');
+
+hot.on(_.clickOrTap, function() {
+    time.removeClass('dark-red');
+    hot.addClass('dark-red');
+    _.request('jianbao/applies?popularity=1').then(resp => {
+        const data = resp.data;
+        $('.jade-list-page').remove();
+        const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
+        $('body').append($(TreasuresTemplate));
+    });
+});
+time.on(_.clickOrTap, function() {
+    hot.removeClass('dark-red');
+    time.addClass('dark-red');
+    _.request('jianbao/applies?time=1').then(resp => {
+        const data = resp.data;
+        $('.jade-list-page').remove();
+        const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
+        $('body').append($(TreasuresTemplate));
+    });
 });
