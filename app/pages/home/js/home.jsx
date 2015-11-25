@@ -7,15 +7,15 @@ const data = {
         {
             owner: '落水三千丈',
             desc: '新疆和田玉帮忙看看品质吧，从一个朋友那骗来的',
-            bg: '/images/1.jpg'
+            bg: '1.jpg'
         }, {
             owner: '二胡卵子',
             desc: '不知道能值多少钱',
-            bg: '/images/2.jpg'
+            bg: '2.jpg'
         }, {
             owner: '克里姆林',
-            desc: '新手，大家帮忙看看是不是要发',
-            bg: '/images/3.jpg'
+            desc: '新手，大家帮忙看看是不是要发？',
+            bg: '3.jpg'
         }
     ],
     list: [
@@ -23,122 +23,122 @@ const data = {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/1.jpg'
+            img: '1.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/3.jpg'
+            img: '3.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/4.jpg'
+            img: '4.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/5.jpg'
+            img: '5.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/1.jpg'
+            img: '1.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/3.jpg'
+            img: '3.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/4.jpg'
+            img: '4.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/5.jpg'
+            img: '5.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/1.jpg'
+            img: '1.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/3.jpg'
+            img: '3.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/4.jpg'
+            img: '4.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/5.jpg'
+            img: '5.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/1.jpg'
+            img: '1.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/3.jpg'
+            img: '3.jpg'
         }, {
             owner: '貔貅',
             desc: '和田玉手把件',
             price: 20000,
-            img: '/images/4.jpg'
+            img: '4.jpg'
         }, {
             owner: '二胡卵子',
             desc: '砖头一块',
             price: 18000,
-            img: '/images/5.jpg'
+            img: '5.jpg'
         }, {
             owner: '克里姆林',
             desc: '狮子头',
             price: 4133,
-            img: '/images/2.jpg'
+            img: '2.jpg'
         }
     ]
 };
@@ -152,7 +152,9 @@ $('.swiper-container-scroll .swiper-slide').append($(jadeTemplate));
 const swiperH = new Swiper('.swiper-container-h', {
     paginationClickable: true,
     spaceBetween: 0,
-    slidesPerView: 1.1
+    initialSlide: 0,
+    centeredSlides: true,
+    slidesPerView: 'auto'
 });
 const swiperV = new Swiper('.swiper-container-v', {
     paginationClickable: true,
@@ -170,7 +172,7 @@ const swiperS = new Swiper('.swiper-container-scroll', {
     onSetTranslate: (swiper, translate) => {
         delta = translate;
     },
-    onTouchEnd: (swiper) => {
+    onTouchEnd: () => {
         if(delta > 70) {
             swiperV.slidePrev();
         }

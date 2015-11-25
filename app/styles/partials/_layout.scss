@@ -1,6 +1,6 @@
 %separator {
-    @include border($border-color, top-bottom);
-    background-color: $separator-color;
+    @include border(map-get($colors, 'border-primary'), top-bottom);
+    background-color: map-get($colors, 'border-primary');
     display: block;
     width: 100%;
 }
@@ -9,16 +9,11 @@
     height: $height;
 }
 .row {
-    background-color: map-get($colors, 'bg-white');
-    color: map-get($colors, 'dark-gray');
-    font-size: 30px;
     line-height: 100px;
     padding: 0 32px;
     position: relative;
     width: 100%;
-    .icon-enter,.icon-text,.icon-text-enter{
-        color: map-get($colors, 'light-gray');
-        font-size: 26px;
+    .icon-enter {
         margin-top: -16px;
         position: absolute;
         right: 32px;
@@ -30,14 +25,14 @@
         margin-top: 0;
     }
     .row:not(:last-child) {
-        @include border($border-color, bottom)
+        @include border(map-get($colors, 'border-gray'), bottom)
     }
 }
-$gridColumns: 12;
-@for $i from 1 through $gridColumns {
+$grid-columns: 12;
+@for $i from 1 through $grid-columns {
     .col-#{$i+1} {
         float: left;
-        width: percentage(($i+1)/$gridColumns);
+        width: percentage(($i+1)/$grid-columns);
     }
 }
 .separator-80 {
@@ -53,14 +48,14 @@ $gridColumns: 12;
     @include separator(22px);
 }
 .border-top {
-    @include border($border-color, top)
+    @include border(map-get($colors, 'border-gray'), top)
 }
 .border-bottom {
-    @include border($border-color, bottom)
+    @include border(map-get($colors, 'border-gray'), bottom)
 }
 .border-tb {
-    @include border($border-color, top-bottom)
+    @include border(map-get($colors, 'border-gray'), top-bottom)
 }
 .border {
-    @include border($border-color)
+    @include border(map-get($colors, 'border-gray'))
 }

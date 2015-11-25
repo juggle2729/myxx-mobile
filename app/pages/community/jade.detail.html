@@ -22,10 +22,8 @@
             <p class="desc">
                 {{description}}
             </p>
-            <div class="video" style="background-image: url('/images/1.jpg')"></div>
-            <ul class="images">
-                {{#each pictures}}<li class="img" style="background-image: url('{{img this}}')"></li>{{/each}}
-            </ul>
+            <div class="video" style="background-image: url('http://7xo88d.media1.z0.glb.clouddn.com/{{video}}?vframe/jpg/offset/2/w/540/h/540/rotate/90/')"></div>
+            <ul class="images">{{#each pictures}}<li class="img" style="background-image: url('{{img this}}')"></li>{{/each}}</ul>
         </div>
         <div class="space"></div>
         <p class="evaluation-summary">
@@ -45,13 +43,14 @@
                 <div class="video" style="background-image: url('/images/1.jpg')"></div>
                 <div class="desc">
                     <div class="txt">
-                        <p>鉴定结果：<span>{{result}}</span>
+                        <p><span {{#if value_min}}class="txt-red"{{/if}}>{{result}}</span>
+                        {{#if value_min}}
                             <br>
-                            <br><span>估价：{{value_min}}~{{value_max}}</span></p>
+                            <br><span>{{money value_min}}~{{money value_max}}</span></p>
+                        {{/if}}
                     </div>
                     <div class="social">
-                        <span class="favor"><i class="icon icon-favor"></i>{{like}}</span>
-                        <!--remove space--><span class="comment"><i class="icon icon-star"></i></span>
+                        <span data-thumb="{{id}}"" class="favor {{#if isLike}}txt-red{{/if}}"><i class="icon-thumb{{#if isLike}}-active{{/if}}"></i>{{like}}</span><!--remove space--><span class="comment"><i class="icon-comment"></i></span>
                     </div>
                 </div>
             </div>
@@ -61,70 +60,40 @@
             <button>我来鉴定</button>
         </div>
         <div class="space"></div>
-        <div class="comments">
-            <div class="header">
-                <div class="count">评论33</div>
-                <div class="comment-btn"><i class="icon icon-view"></i>我要评论</div>
-            </div>
-            <ul>
-                <li>
-                    <div class="author">
-                        <img class="avatar" src="/images/logo.jpeg" alt="author">
-                        <div>
-                            <h3>苗玉仙</h3>
-                            <p class="moments">3天前</p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <span class="label">回复<span class="name">李青</span>:</span>
-                        <span>谢谢谢谢亲阿发。</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="author">
-                        <img class="avatar" src="/images/logo.jpeg" alt="author">
-                        <div>
-                            <h3>苗玉仙</h3>
-                            <p class="moments">3天前</p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <span class="label">回复<span class="name">李青</span>:</span>
-                        <span>东西产自新疆和田，水疗，不错，估价100万，你发了！</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="author">
-                        <img class="avatar" src="/images/logo.jpeg" alt="author">
-                        <div>
-                            <h3>余长春</h3>
-                            <p class="moments">3天前</p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <span class="label">回复<span class="name">李青</span>:</span>
-                        <span>东西产自新疆和田，水苏打水疗，不错，估价100万，你发了！</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="author">
-                        <img class="avatar" src="/images/logo.jpeg" alt="author">
-                        <div>
-                            <h3>我问问</h3>
-                            <p class="moments">3天前</p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <span class="label">回复<span class="name">李青</span>:</span>
-                        <span>东西产自新疆和田，水疗，不错，估价100万，你发了！</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="social-actions">
-            <span><i class="icon icon-favor"></i>关注(24)</span><span><i class="icon icon-view"></i>分享</span>
-        </div>
     </script>
+    <script id="comments-template" type="text/x-handlebars-template">
+        <div class="header">
+            <div class="count">评论{{total}}</div>
+            <div class="comment-btn" data-reply><i class="icon icon-view"></i>我要评论</div>
+        </div>
+        <ul>
+            {{#each comments}}
+            <li>
+                <div class="author">
+                    <img class="avatar" src="/images/logo.jpeg" alt="author">
+                    <div>
+                        <h3 data-reply="{{reply_from.id}}">{{reply_from.nickname}}</h3>
+                        <p class="moments">{{moment create_at}}</p>
+                    </div>
+                </div>
+                <div class="desc">
+                    {{#if reply_to}}
+                    <span class="label">回复<span class="name" data-reply="{{reply_to.id}}">{{reply_to.nickname}}</span>:</span>
+                    {{/if}}
+                    <span>{{content}}</span>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+    <script id="social-template" type="text/x-handlebars-template">
+        <span><i data-follow={{id}} class="icon icon-favor{{#if isFolllowed}}-active txt-red{{/if}}"></i>关注({{follow}})</span><span><i class="icon icon-view"></i>分享</span>
+    </script>
+    <div class="comments"></div>
+    <!-- <form action="" class="comment-form font-32 bg-gray">
+        <input class="font-32" type="text" placeholder="xxx">
+    </form> -->
+    <div class="social-actions"></div>
     <script defer type="text/javascript" src="/scripts/zepto.js"></script>
     <script defer type="text/javascript" src="/scripts/handlebars.js"></script>
     <script defer type="text/javascript" src="/scripts/_.js"></script>

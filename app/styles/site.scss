@@ -1,4 +1,4 @@
-@import '../partials/myxx';
+@import './partials/myxx';
 
 .icon-dot-middle {
     background-color: #bababa;
@@ -9,7 +9,7 @@
 }
 
 .official-artist {
-    @include border($border-color, top);
+    @include border(map-get($colors, 'border-primary'), top);
     padding-top: 0;
     width: 750px;
     margin: 0 auto;
@@ -19,7 +19,7 @@
     }
 
     .personal-info {
-        @include border($border-color, bottom);
+        @include border(map-get($colors, 'border-primary'), bottom);
         position: relative;
         padding-bottom: 20px;
         .head {
@@ -87,19 +87,19 @@
             cursor: pointer;
             padding: 16px 0;
             &:active {
-                background-color: $menu-active-color;
+                // background-color: $border-gray;
             }
         }
 
         .container:not(:last-child) {
             .item {
-                @include border($border-color, right);
+                @include border(map-get($colors, 'border-primary'), right);
             }
         }
     }
 
     .block-title {
-        @include border($border-color, bottom);
+        @include border(map-get($colors, 'border-primary'), bottom);
         line-height: 80px;
         padding: 0 32px;
         position: relative;
@@ -141,7 +141,7 @@
                 position: absolute;
                 width: 2px;
                 height: 94.8%;
-                background: map-get($colors, 'light-gray');
+                // background: $light-gray;
                 top: 0.1rem;
                 left: 37px;
             }
@@ -157,7 +157,7 @@
         .horizontal-line {
             width: 20px;
             height: 1px;
-            background-color: $dot-color;
+            // background-color: $bg-light-gray;
             display: inline-block;
             margin-bottom: 11.5px;
             margin-left: 7px;
@@ -249,13 +249,13 @@
         }
 
         .dot {
-            @include border(#cbcbcb);
+            // @include border(#cbcbcb);
             border-radius: 14px;
             width: 14px;
             height: 14px;
             display: inline-block;
             .active {
-                background-color: #f3ac1c;
+                // background-color: $yellow;
             }
         }
 
@@ -266,12 +266,12 @@
 
     .comments {
         .float-right {
-            color: #d04c5b;
+            // color: $red;
             line-height: 80px;
         }
 
         .icon-comment {
-            color: #d04c5b;
+            // color: $red;+
         }
     }
 
@@ -293,7 +293,7 @@
         }
 
         .name {
-            color: #33a1c9;
+            // color: $blue;
         }
 
         img {
@@ -304,7 +304,7 @@
     }
 
     .icon {
-        color: #bababa;
+        // color: $bg-light-gray;
         vertical-align: -6%;
     }
 
@@ -312,12 +312,12 @@
         width: 3px;
         height: 25px;
         display: inline-block;
-        background-color: #f3ac1c;
+        // background-color: $yellow;
         vertical-align: -15%;
     }
 
     .bg-item {
-        background-color: #fafafa;
+        // background-color: $bg-light-gray;
         padding-bottom: 18px;
     }
 }

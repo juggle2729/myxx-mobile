@@ -12,6 +12,7 @@
 [class^='icon-'],
 [class*=' icon-'] {
     font-family: 'icomoon';
+    padding: 0 12px;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -21,6 +22,7 @@
     // Better Font Rendering
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    vertical-align: baseline;
 }
 
 .icon-phone:before {
@@ -81,7 +83,7 @@
 
 .icon-play .path1:before {
     content: '\e909';
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, .9);
 }
 
 .icon-play .path2:before {

@@ -21,7 +21,7 @@
     } else {  // 线下
         helper.API = 'http://120.26.113.13/'; // API root
         helper.user = {
-            token: '8ef96ac4-bd70-48ff-98eb-b0bcbb122c2a'
+            token: 'f87e7796-9896-4a6f-997e-11b48aebd347'
         };
     }
     if (w.myxx) {
@@ -30,24 +30,29 @@
     }
     w._ = helper;
     //  数据请求
-    helper.request = function(path, method) {
+    helper.request = function(path, method = 'GET', data = {}) {
         const options = {
             url: /^https?/.test(path) ? path : this.API + path,
             dataType: 'json',
             cache: false,
-            // application/x-www-form-urlencoded; charset=utf-8
             headers: {
-                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'X-Auth-Token': this.user.token
             },
-            type: (method || 'GET')
+            type: method,
+            data
         };
+        // if(data) {
+        //     options.data = data;
+        //     options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        // }
         return $.ajax(options).done(function(res) {
-            if (res.status !== 0 && !res.message) {
+            if (res.status !== 200) {
                 if(w.myxx) {
                     w.myxx.onJsFailed('请检查网络后下拉刷新');
                 } else {
-                    helper.toast('请检查网络后下拉刷新');
+                    helper.toast(res.message);
                 }
             }
         }).fail(function() {
@@ -177,6 +182,9 @@
                 src = '/images/avatar--defaut.jpg';
             }
             return src;
+        },
+        money: (number) => {
+            return number / 10000 + '万';
         },
         moment: (dateStr) => {
             const MINUTE = 1000 * 60;

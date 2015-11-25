@@ -1,13 +1,11 @@
 @import 'partials/myxx';
 
 
-.page-list {
+body {
     background-color: #607d8b;
-    color: map-get($colors, 'bg-white');
 }
 
 h1 {
-    color: map-get($colors, 'white');
     margin: 10px 0;
     margin-bottom: 10px;
 }
@@ -15,7 +13,7 @@ h1 {
 ul li {
     margin-top: .8em;
     > a {
-        color: map-get($colors, 'bg-white');
+        @extend .txt-white;
         text-decoration: none;
     }
 }

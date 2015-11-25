@@ -7,10 +7,10 @@
 }
 .master-list {
     .search {
-        @include border($border-color, top-bottom);
+        @include border(map-get($colors, 'border-primary'), top-bottom);
         input {
-            @include border($border-color);
-            @include common-master(#eaeaea, 60px, 686px, 8px);
+            @include border(map-get($colors, 'border-primary'));
+            @include common-master(map-get($colors, 'border-primary'), 60px, 686px, 8px);
             margin: 13px 32px;
             padding: 0 64px;
             border: 0;
@@ -34,11 +34,10 @@
         top: 87px;
         left: 0;
         z-index: 1001;
-        opacity: 0.5;
+        opacity: .5;
     }
     .master {
-        @include border($border-color, bottom);
-        background-color: map-get($colors, 'bg-white');
+        @include border(map-get($colors, 'border-primary'), bottom);
         padding: 0 32px;
         img {
             @include common-master('', 120px, 120px, 50%);
@@ -49,7 +48,6 @@
         margin: 18px 0;
         > div {
             display: -webkit-box;
-            color: map-get($colors, 'dark-gray');
             font-size: 22px;
             &:nth-child(2n+1) {
                 margin-bottom: 18px;
@@ -63,8 +61,8 @@
             }
         }
         input[type='button'] {
-            @include border($border-color);
-            @include common-master(#f3ac1c, '', '', 5px);
+            @include border(map-get($colors, 'border-primary'));
+            @include common-master(map-get($colors, 'yellow'), '', '', 5px);
             line-height: 32px;
             padding: 0 5px;
             border: 0;
@@ -83,8 +81,7 @@
     .hiding {
         background-color: rgba(0, 0, 0, .5);
     }
-     ::-webkit-input-placeholder {
-        color: map-get($colors, 'light-gray');
+    ::-webkit-input-placeholder {
         font-size: 22px;
     }
 }

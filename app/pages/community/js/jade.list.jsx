@@ -14,8 +14,8 @@ _.request('jianbao/applies').then(resp => {
 });
 
 hot.on(_.clickOrTap, function() {
-    time.removeClass('dark-red');
-    hot.addClass('dark-red');
+    time.removeClass('txt-red');
+    hot.addClass('txt-red');
     _.request('jianbao/applies?popularity=1').then(resp => {
         const data = resp.data;
         $('.jade-list-page').remove();
@@ -24,8 +24,8 @@ hot.on(_.clickOrTap, function() {
     });
 });
 time.on(_.clickOrTap, function() {
-    hot.removeClass('dark-red');
-    time.addClass('dark-red');
+    hot.removeClass('txt-red');
+    time.addClass('txt-red');
     _.request('jianbao/applies?time=1').then(resp => {
         const data = resp.data;
         $('.jade-list-page').remove();

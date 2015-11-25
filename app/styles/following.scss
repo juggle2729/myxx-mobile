@@ -15,11 +15,10 @@
             margin: 56px 0 24px 60px;
             width :380px;
             button {
-                @include border($border-color);
-                background-color: map-get($colors, 'bt-yellow');
+                @include border(map-get($colors, 'border-gray'));
                 height: 36px;
                 width: 80px;
-                line-height: 0px;                
+                line-height: 0px;
                 border: 0;
                 border-radius: 4px;
 				margin-top: -18px;
@@ -49,11 +48,10 @@
             margin: 56px 0 24px 60px;
             width :380px;
             button {
-                @include border($border-color);
-                background-color: map-get($colors, 'bt-green');
+                @include border(map-get($colors, 'border-gray'));
                 height: 36px;
                 width: 80px;
-                line-height: 0px;                
+                line-height: 0px;
                 border: 0;
                 border-radius: 4px;
 				margin-top: -18px;
@@ -62,7 +60,6 @@
         		top: 50%;
 
         		font-size: 22px;
-        		color: map-get($colors, 'bt-white');
             }
             p:nth-child(2) {
                 margin-top: 12px;
@@ -84,11 +81,10 @@
             margin: 28px 0 24px 60px;
             width :380px;
             button {
-                @include border($border-color);
-                background-color: map-get($colors, 'bt-pink');
+                @include border(map-get($colors, 'border-gray'));
                 height: 36px;
                 width: 80px;
-                line-height: 0px;                
+                line-height: 0px;
                 border: 0;
                 border-radius: 4px;
 				margin-top: -18px;
@@ -97,7 +93,6 @@
         		top: 50%;
 
         		font-size: 22px;
-        		color: map-get($colors, 'bt-white');
             }
             p:nth-child(2) {
                 margin-top: 12px;
@@ -120,13 +115,12 @@
         .list {
 
             margin: 28px 0 24px 60px;
-            width :380px;
+            width: 380px;
             button {
-                @include border($border-color);
-                background-color: map-get($colors, 'bt-blue');
+                @include border(map-get($colors, 'border-gray'));
                 height: 36px;
                 width: 80px;
-                line-height: 0px;                
+                line-height: 0px;
                 border: 0;
                 border-radius: 4px;
 				margin-top: -18px;

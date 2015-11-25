@@ -24,10 +24,6 @@
             right: 32px;
             top: 50%;
             margin-top: -16px;
-            color: map-get($colors, 'light-gray');
         }
-    }
-    .icon:not(.icon-enter) {
-        color: map-get($colors, 'dark-red');
     }
 }

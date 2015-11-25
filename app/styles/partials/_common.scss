@@ -29,15 +29,15 @@ $color in $colors {
     float: right;
 }
 
-.text-center {
+.txt-center {
     text-align: center;
 }
 
-.text-left {
+.txt-left {
     text-align: left;
 }
 
-.text-right {
+.txt-right {
     text-align: right;
 }
 
@@ -62,7 +62,7 @@ $color in $colors {
     position: relative;
 }
 
-////Padding & Margin
+//Padding & Margin
 @each $clazz in padding,
 padding-top,
 padding-bottom,
@@ -131,4 +131,15 @@ margin-right {
     &:after {
         clear: both;
     }
+}
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 5px;
+    color: #ffffff;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    padding: 10px;
 }

@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="/styles/swiper.css">
     <link rel="stylesheet" type="text/css" href="/styles/home.css">
 </head>
-<body>
+<body class="bg-primary">
 	<script id="h-slides-template" type="text/x-handlebars-template">
 		{{#each slides}}
 			<div class="swiper-slide">
-		    	<div class="content" style="background-image: url({{{bg}}})">
-		    		<div class="owner">
+		    	<div class="content font-26" style="background-image: url({{{img bg}}})">
+		    		<div class="owner txt-white">
 		    			<div class="icon">
 		    				<img src="/images/logo.jpeg" alt="author">
 		    			</div>
@@ -21,10 +21,10 @@
 		    				<p>{{desc}}</p>
 		    			</div>
 		    		</div>
-		    		<div class="social-status">
+		    		<div class="social-status txt-gray">
 		    			<span>
-	    					<span class="like">214</span>
-		    				<span class="comment">167</span>
+	    					<span class="like"><i class="icon-thumb txt-white"></i>214</span>
+		    				<span class="comment"><i class="icon-comment txt-white"></i>167</span>
 		    			</span>
 		    			<span class="result">已有2位大师点评</span>
 	    			</div>
@@ -33,27 +33,25 @@
 	    {{/each}}
 	</script>
 	<script id="jade-template" type="text/x-handlebars-template">
-		{{#each list}}
-			<div class="jade">
-		    	<div class="img-placeholder" style="background-image: url({{{img}}})"></div>
-		    	<p class="title">{{desc}} {{owner}}</p>
-		    	<p class="price">￥{{price}}</p>
-		    </div>
-	    {{/each}}
+		{{#each list}}<div class="jade bg-white">
+		    	<div class="img-placeholder" style="background-image: url({{img img}})"></div>
+		    	<p class="title font-26 txt-primary txt-left">{{desc}} {{owner}}</p>
+		    	<p class="price font-26 txt-red txt-left">￥{{price}}</p>
+		    </div>{{/each}}<!-- get rid of space between inline blocks-->
 	</script>
     <div class="swiper-container swiper-container-v">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="swiper-container swiper-container-h">
                     <div class="swiper-wrapper"></div>
-                    <div class="swiper-pagination swiper-pagination-h">向上滑动，查看美玉商品</div>
+                    <div class="swiper-pagination swiper-pagination-h down-hint font-22 txt-gray">向上滑动，查看美玉商品</div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="swiper-container swiper-container-scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                        	<div class="up-hint">向下滑动，查看推荐</div>
+                        	<div class="up-hint font-22 txt-gray">向下滑动，查看推荐</div>
                         </div>
                     </div>
                     <!-- Add Scroll Bar -->
