@@ -14,24 +14,24 @@
                 <div class="swiper-container swiper-container-h">
                     <div class="swiper-wrapper">
                         <div v-for="item in promotes" class="swiper-slide">
-                        	<div class="content font-26" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}">
-                        		<div class="owner txt-white">
-                        			<div class="icon">
-                        				<img :src="item.user.photo | img" class="avatar-user"/>
-                        			</div>
-                        			<div class="desc">
-                        				<h3>{{item.user.name}}</h3>
-                        				<p>{{item.desc}}</p>
-                        			</div>
-                        		</div>
-                        		<div class="social-status txt-gray">
-                        			<span>
-                    					<span class="like"><i class="icon-thumb txt-white"></i>{{item.follow}}</span>
-                        				<span class="comment"><i class="icon-comment txt-white"></i>{{item.comments}}</span>
-                        			</span>
-                        			<span class="result">已有{{item.reviews}}位大师点评</span>
-                    			</div>
-                        	</div>
+                            <div @click="go('/community/jade.detail.html?id=' + item.id)" class="content font-26" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}">
+                                <div class="owner txt-white">
+                                    <div class="icon">
+                                        <img :src="item.user.photo | img" class="avatar-user" />
+                                    </div>
+                                    <div class="desc">
+                                        <h3>{{item.user.name}}</h3>
+                                        <p>{{item.desc}}</p>
+                                    </div>
+                                </div>
+                                <div class="social-status txt-gray">
+                                    <span>
+                                        <span class="like"><i class="icon-thumb txt-white"></i>{{item.follow}}</span>
+                                        <span class="comment"><i class="icon-comment txt-white"></i>{{item.comments}}</span>
+                                    </span>
+                                    <span class="result">已有{{item.reviews}}位大师点评</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-pagination swiper-pagination-h down-hint font-22 txt-gray">向上滑动，查看美玉商品</div>
@@ -43,10 +43,10 @@
                         <div class="swiper-slide">
                             <div class="up-hint font-22 txt-gray">向下滑动，查看推荐</div>
                             <div v-for="item in list" class="jade bg-white">
-                		    	<div class="img-placeholder" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}"></div>
-                		    	<p class="title font-26 txt-primary txt-left">{{item.desc}} {{item.title}}</p>
-                		    	<p class="price font-26 txt-red txt-left">￥{{item.price}}</p>
-                		    </div>
+                                <div class="img-placeholder" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}"></div>
+                                <p class="title font-26 txt-primary txt-left">{{item.desc}} {{item.title}}</p>
+                                <p class="price font-26 txt-red txt-left">￥{{item.price}}</p>
+                            </div>
                         </div>
                     </div>
                     <!-- Add Scroll Bar -->
@@ -62,5 +62,4 @@
     <script defer type="text/javascript" src="/scripts/swiper.js"></script>
     <script defer type="text/javascript" src="./js/home.js"></script>
 </body>
-
 </html>

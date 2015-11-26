@@ -10,22 +10,21 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
     <link href="/styles/profile.css" type="text/css" rel="stylesheet"/>
 </head>
-<body class="bg-theme">
+<body class="bg-primary" id="app">
   <div class="profile">
-    <script id="profile-template" type="text/x-handlebars-template">
     <div class="account bg-white">
-      <img src="{{img avatar}}"/>
+      <img :src="photo | img"/>
       <div class="user">
-          <p class="font-30 dark-gray margin-right">{{nickname}}</p>
-          <p class="font-26 light-gray margin-top">{{roleDesc}}</p>
+          <p class="font-30 txt-primary margin-right">{{nickname}}</p>
+          <p class="font-26 txt-gray margin-top">{{roleName}}</p>
       </div>
-      <span class="icon icon-enter font-26"></span>
+      <span class="icon-enter font-26 txt-gray"></span>
     </div>
     <div class="separator-40"></div>
-    <div class="row">
-        <span class="icon icon-alarm"></span>
+    <div class="row bg-white txt-primary font-30">
+        <span class="icon-alarm txt-red"></span>
         <span class="text">消息通知</span>
-        <span class="icon icon-enter"></span>
+        <span class="icon-enter txt-gray"></span>
     </div>
     <div class="separator-40"></div>
     <div class="row-block">
@@ -42,36 +41,28 @@
     </div>
     <div class="separator-40"></div>
     <div class="row-block">
-        <div class="row">
-            <span class="icon icon-shop"></span>
-            {{#if has_shop}}
-            <span class="text">申请开通店铺</span>
-            {{~^~}}
-            <span class="text">我的店铺</span>
-            {{/if}}
-            <span class="icon icon-enter"></span>
+        <div class="row bg-white txt-primary font-30">
+            <span class="icon-shop txt-red"></span>
+            <span class="text">{{has_shop ? '我的店铺' : '申请开通店铺'}}</span>
+            <span class="icon-enter txt-gray"></span>
         </div>
-        <div class="row">
-            <span class="icon icon-home"></span>
-            {{#if has_website}}
-            <span class="text">申请开通官网</span>
-            {{~^~}}
-            <span class="text">我的官网</span>
-            {{/if}}
-            <span class="icon icon-enter"></span>
+        <div class="row bg-white txt-primary font-30">
+            <span class="icon-home txt-red"></span>
+            <span class="text">{{has_website ? '我的官网' : '申请开通官网'}}</span>
+            <span class="icon-enter txt-gray"></span>
         </div>
     </div>
     <div class="separator-40"></div>
     <div class="row bg-white txt-primary font-30">
         <span class="txt-red icon-settings"></span>
         <span>设置</span>
-        <span class="icon-enter txt-gray font-26"></span>
+        <span class="icon-enter txt-gray"></span>
     </div>
-    </script>
 </div>
-<script defer type="text/javascript" src="/scripts/zepto.js"></script>
-<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
-<script defer type="text/javascript" src="/scripts/_.js"></script>
+<script src="/scripts/resize.js"></script>
+<script defer src="/scripts/vue.js"></script>
+<script defer src="/scripts/vue-resource.min.js"></script>
+<script defer src="/scripts/_.js"></script>
 <script defer type="text/javascript" src="./js/profile.js"></script>
 </body>
 </html>

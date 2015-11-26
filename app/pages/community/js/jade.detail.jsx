@@ -43,7 +43,7 @@ const vm = new Vue({
     },
     events: {
         scroll(direction, position) {
-            if(position > 300) {
+            if(position > 100) {
                 this.scroll.down = direction === 'down';
             }
         }

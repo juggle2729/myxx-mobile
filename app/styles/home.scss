@@ -90,6 +90,19 @@ body {
     background-size: cover;
     background-position: center;
     text-align: left;
+    &::after {
+        content: '';
+        background-position: right 32px top 32px;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-size: 1.2rem;
+        mix-blend-mode: overlay;
+        background-image: url('/images/icon/ico_video.png');
+    }
     .owner {
         display: flex;
         justify-content: space-around;

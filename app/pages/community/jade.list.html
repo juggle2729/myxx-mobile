@@ -11,9 +11,9 @@
     <link href="/styles/jade.list.css" type="text/css" rel="stylesheet"/>
 </head>
 <body id="app" class="bg-primary">
-  <div class="horizontal operation bg-white">
-      <div class="time font-26 txt-red"><div><span>最新</span></div></div>
-      <div class="hot txt-primary font-26"><div><span>热门</span></div></div>
+  <div class="horizontal operation bg-white tabs">
+      <div :class="{'active': tab=='time'}" class="font-26 txt-primary"><div><label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab"></div></div>
+      <div :class="{'active': tab=='popularity'}" class="txt-primary font-26"><div><label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab"></div></div>
   </div>
   <div class="jade-list-page">
       <template v-for="apply in applies">
@@ -27,7 +27,7 @@
                   </div>
               </div>
               <p class="font-30 txt-black">{{apply.description}}</p>
-              <table class="margin-top">
+              <table @click="go('jade.detail.html?id=' + apply.id)" class="margin-top">
                   <tr>
                       <td>
                           <div :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + apply.pictures[0] + ')'}"></div>
@@ -63,7 +63,8 @@
           </div>
           <div class="horizontal operation bg-white">
               <div class="follow font-26">
-                  <span @click="toggleFollow(apply.id, apply.isFollowed)" class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor txt-gray follow-icon'}}"></span><span class="txt-gray follow-number">{{apply.follow}}</span>
+                  <span @click="toggleFollow(apply.id, apply.isFollowed)" class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor txt-gray follow-icon'}}"></span>
+                  <span class="txt-gray follow-number">{{apply.follow}}</span>
               </div>
               <div class="font-26">
                   <div><span class="icon-comment txt-gray"></span><span class="txt-gray">{{apply.comment}}</span></div>

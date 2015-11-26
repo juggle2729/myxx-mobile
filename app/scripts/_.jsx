@@ -1,6 +1,6 @@
 // Vue configurations
 Vue.config.debug = true;
-Vue.http.options.root = 'http://120.26.113.13/';
+Vue.http.options.root = 'http://120.26.113.13';
 Vue.http.headers.common['X-Auth-Token'] = 'f87e7796-9896-4a6f-997e-11b48aebd347';
 Vue.filter('moment', (dateStr) => {
     const MINUTE = 1000 * 60;
@@ -25,7 +25,9 @@ Vue.filter('moment', (dateStr) => {
 Vue.filter('img', (id) => {
     let src;
     if (id) {
-        src = /^https?/.test(id) ? id : _.IMG + id;
+        src = /^https?/.test(id)
+            ? id
+            : _.IMG + id;
     } else {
         src = '/images/avatar--defaut.jpg';
     }
@@ -34,7 +36,20 @@ Vue.filter('img', (id) => {
 Vue.filter('money', (number) => {
     return number / 10000 + '万';
 });
-
+Vue.mixin({
+    methods: {
+        toast(msg, delay = 2000) {
+            const span = document.createElement('span');
+            span.innerText = msg;
+            span.className = 'toast visible';
+            document.body.appendChild(span);
+            setTimeout(() => span.parentNode.removeChild(span), delay);
+        },
+        go(href) {
+            location.href = href;
+        }
+    }
+});
 // helper functions
 (function(w) {
     w._ = {};
@@ -50,17 +65,22 @@ Vue.filter('money', (number) => {
     //  获取地址栏参数
     _.query = function(key) {
         const query = {};
-        const pairs = (location.search ? decodeURI(location.search).substr(1).split('&') : []);
+        const pairs = (location.search
+            ? decodeURI(location.search).substr(1).split('&')
+            : []);
         pairs.forEach(pair => {
-            const [k, v] = pair.split('=');
+            const [k,
+                v] = pair.split('=');
             query[k] = v;
         });
-        return key ? query[key] : query;
+        return key
+            ? query[key]
+            : query;
     };
 })(window);
 
 const scrollHandler = window.document.body.dataset.scroll;
-if(scrollHandler !== undefined) {
+if (scrollHandler !== undefined) {
     // 处理滚动
     const scrollListener = (function(w) {
         let lastPos = w.scrollY;
@@ -68,9 +88,9 @@ if(scrollHandler !== undefined) {
             clearTimeout(timer);
             let timer = setTimeout(function() {
                 const delta = w.scrollY - lastPos;
-                if(delta > 0) {
+                if (delta > 0) {
                     w[scrollHandler].$emit('scroll', 'down', w.scrollY);
-                } else if(delta < 0) {
+                } else if (delta < 0) {
                     w[scrollHandler].$emit('scroll', 'up', w.scrollY);
                 }
                 lastPos = window.scrollY;

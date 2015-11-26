@@ -1,4 +1,7 @@
 @import 'partials/myxx';
+.tabs .active {
+    @extend .txt-red;
+}
 .jade-list {
     padding: 24px 32px;
     padding-bottom: 0;

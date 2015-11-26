@@ -1,4 +1,5 @@
 const data = {
+    tab: 'time',
     applies: [],
     total: 12
 };
@@ -6,9 +7,15 @@ const vm = new Vue({
     el: '#app',
     data,
     created() {
-        this.$http.get(`jianbao/applies?time=1`, resp => {
-            this.$data.applies = resp.data.applies;
-            this.$data.total = resp.data.total;
+        this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
+            this.applies = resp.data.applies;
+            this.total = resp.data.total;
+        });
+        this.$watch('tab', function(tab) {
+            this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
+                this.applies = resp.data.applies;
+                this.total = resp.data.total;
+            });
         });
     },
     methods: {
