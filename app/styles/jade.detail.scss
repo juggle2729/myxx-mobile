@@ -1,8 +1,7 @@
 @import 'partials/myxx';
 // components
-.space {
-    height: 24px;
-    background-color: #efefef;
+.separator-20.last {
+    padding-bottom: 128px;    // the height of social action bar
 }
 .avatar {
     height: 72px;
@@ -73,12 +72,12 @@
 }
 
 .evaluation-summary {
+    @include border(map-get($colors, 'border-primary'), bottom);
     font-size: 22px;
     color: #888888;
     margin: 0 32px;
     height: 80px;
     line-height: 80px;
-    border-bottom: 1px solid #888888;
 }
 
 .evaluation {
@@ -186,14 +185,13 @@
 }
 .comments {
     margin: 32px;
-    padding-bottom: 110px;
     .header {
+        @include border(map-get($colors, 'border-primary'), bottom);
         display: -webkit-box;
         -webkit-box-align: center;
         -webkit-box-pack: justify;
         height: 80px;
         font-size: 22px;
-        border-bottom: 1px solid #888888;
         .count {
             color: #c9c9c9;
         }
@@ -226,19 +224,9 @@ li {
         }
     }
 }
-// .comment-form {
-//     z-index: 99;
-//     width: 100%;
-//     padding-bottom: 110px;
-//     input {
-//         width: 100%;
-//         padding: 5px;
-//         &:active, &:focus {
-//             background-color: red;
-//         }
-//     }
-// }
+
 .social-actions {
+    @include border(map-get($colors, 'border-primary'), top);
     position: fixed;
     z-index: 9;
     bottom: 0;
@@ -247,14 +235,12 @@ li {
     line-height: 98px;
     font-size: 26px;
     color: #888888;
-    background-color: #eeeeee;
-    border-top: 1px solid #888888;
     > span {
         display: inline-block;
         width: 50%;
         text-align: center;
         &:first-of-type {
-            border-right: 1px solid #888888;
+            @include border(map-get($colors, 'border-primary'), right);
         }
     }
 }

@@ -28,7 +28,7 @@
     "browser": true
   },
   "globals": {
-    "$": true,
+    "Vue": true,
     "_": true,
     "myxx": true,
     "Swiper": true,

@@ -1,40 +1,39 @@
-const hot = $('.hot');
-const time = $('.time');
-_.request('jianbao/applies?time=1').then(resp => {
-    const data = resp.data;
-    $('.jade-list-page').remove();
-    const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
-    $('body').append($(TreasuresTemplate));
-    const followIcon = $('.follow-icon');
-    const followNumber = $('.follow-number');
-    $('.follow').on(_.clickOrTap, function() {
-        if(followIcon.hasClass('icon-favor-active')) {
-            followIcon.removeClass('icon-favor-active dark-red').addClass('icon-favor');
-        } else {
-            followIcon.removeClass('icon-favor').addClass('icon-favor-active dark-red');
+const data = {
+    applies: [],
+    total: 12
+};
+const vm = new Vue({
+    el: '#app',
+    data,
+    created() {
+        this.$http.get(`jianbao/applies?time=1`, resp => {
+            this.$data.applies = resp.data.applies;
+            this.$data.total = resp.data.total;
+        });
+    },
+    methods: {
+        toggleFollow(applyId, followed) {
+            const apply = this.applies.filter(a => a.id === applyId).pop();
+            if (followed) {
+                this.$http.delete(` jianbao/applies/${applyId}/follows`, () => {
+                    apply.isFollowed = false;
+                    apply.follow -= 1;
+                });
+            } else {
+                this.$http.post(`jianbao/applies/${applyId}/follows`, () => {
+                    apply.isFollowed = true;
+                    apply.follow += 1;
+                });
+            }
+        },
+        share() {
+            _.toast('分享');
+        },
+        comment(userId) {
+            _.toast(typeof userId === 'number' ? '回复' : '评论');
+        },
+        evaluate() {
+            _.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
         }
-    });
-    $('[href],[data-href]').on(_.clickOrTap, _.go);
-});
-hot.on(_.clickOrTap, function() {
-    time.removeClass('txt-red');
-    hot.addClass('txt-red');
-    _.request('jianbao/applies?popularity=1').then(resp => {
-        const data = resp.data;
-        $('.jade-list-page').remove();
-        const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
-        $('body').append($(TreasuresTemplate));
-        $('[href],[data-href]').on(_.clickOrTap, _.go);
-    });
-});
-time.on(_.clickOrTap, function() {
-    hot.removeClass('txt-red');
-    time.addClass('txt-red');
-    _.request('jianbao/applies?time=1').then(resp => {
-        const data = resp.data;
-        $('.jade-list-page').remove();
-        const TreasuresTemplate = Handlebars.compile($('#treasures-template').html())(data);
-        $('body').append($(TreasuresTemplate));
-        $('[href],[data-href]').on(_.clickOrTap, _.go);
-    });
+    }
 });

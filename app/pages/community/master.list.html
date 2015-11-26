@@ -10,28 +10,28 @@
 <body>
   <div class="master-list">
     <div class="search">
-        <input type="text" class="font-22 dark-gray" placeholder="请输入您想查找的姓名、头衔等关键字" value='' />
-        <span class="icon icon-favor font-22 light-gray"></span>
-        <span class="icon icon-shop font-22 light-gray"></span>
+        <input type="text" class="font-22 txt-primary" placeholder="请输入您想查找的姓名、头衔等关键字" value='' />
+        <span class="icon-favor font-22 txt-gray"></span>
+        <span class="icon-shop font-22 txt-gray"></span>
     </div>
     <script id="master-list-template" type="text/x-handlebars-template">
-    <div class="filter"></div>
-    {{#each masters}}
-    <div class="master horizontal">
-        <img src="{{avatar}}" />
-        <div class="master-profile">
-            <div>
-                 <span class="font-30">{{name}}</span>
-                 {{#if homepage}}
-                 <input class="font-22 white" type="button" value="大师官网">
-                 {{/if}}
+        <div class="filter"></div>
+        {{#each masters}}
+        <div class="master horizontal">
+            <img src="{{avatar}}" />
+            <div class="master-profile">
+                <div>
+                     <span class="font-30">{{name}}</span>
+                     {{#if homepage}}
+                     <input class="font-22 txt-white bg-yellow" type="button" value="大师官网">
+                     {{/if}}
+                </div>
+                <div><p class="honor">{{honor.[0]}}</p><p>{{honor.[1]}}</p></div>
+                <div><p>{{honor.[2]}}</p></div>
+                <div><span class="identify-number txt-gray">{{identifyNumber}}</span><span class="fans txt-gray">{{fans}}</span></div>
             </div>
-            <div><p class="honor">{{honor.[0]}}</p><p>{{honor.[1]}}</p></div>
-            <div><p>{{honor.[2]}}</p></div>
-            <div><span class="identify-number light-gray">{{identifyNumber}}</span><span class="fans light-gray">{{fans}}</span></div>
         </div>
-    </div>
-    {{/each}}
+        {{/each}}
     </script>
 </div>
 <script defer type="text/javascript" src="/scripts/zepto.js"></script>

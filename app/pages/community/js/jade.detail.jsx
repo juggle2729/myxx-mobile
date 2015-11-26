@@ -1,53 +1,100 @@
-const id = _.query('id') || 1;
-_.request(`jianbao/applies/${id}`)
-.then(jianbao => {
-    const jadeTemplate = Handlebars.compile($('#jade-template').html())(jianbao.data);
-    $(jadeTemplate).prependTo('body');
-
-    const socialTemplate = Handlebars.compile($('#social-template').html())(jianbao.data);
-    $(socialTemplate).appendTo('.social-actions');
-
-    _.request(`jianbao/applies/${id}/comments`).then(comments => {
-        const commentsTemplate = Handlebars.compile($('#comments-template').html())(comments.data);
-        $(commentsTemplate).appendTo('.comments');
-    });
-
-    $('[data-thumb]').click(event => {
-        const target = event.target;
-        const currentTarget = event.currentTarget;
-        const resultId = currentTarget.dataset.thumb;
-        const thumbActive = currentTarget.classList.contains('txt-red');
-        _.request(`jianbao/results/${resultId}/like`, thumbActive ? 'DELETE' : 'POST').then(thumb => {
-            if(thumb.status === 200) {
-                if(thumbActive) {
-                    currentTarget.classList.remove('txt-red');
-                    target.classList.remove('icon-thumb-active');
-                    target.classList.add('icon-thumb');
-                } else {
-                    currentTarget.classList.add('txt-red');
-                    target.classList.add('icon-thumb-active');
-                    target.classList.remove('icon-thumb');
-                }
-            }
+const jadeId = _.query('id') || 1;
+const data = {
+    detail: {
+        'click': 0,
+        'applier': {
+            'photo': '',
+            'name': '',
+            'id': 1
+        },
+        'create_at': '',
+        'status': 2,
+        'identifiable': false,
+        'comment': 13,
+        'description': '',
+        'isFollowed': true,
+        'pictures': [],
+        'isMaster': true,
+        'id': 1,
+        'follow': 3,
+        'results': [],
+        'video': 'a5ad0094-487a-4d3f-ae8a-499ec2354e5e'
+    },
+    comments: {
+        total: 0,
+        list: []
+    },
+    scroll: {
+        down: false,
+        up: false
+    }
+};
+const vm = new Vue({
+    el: '#app',
+    data,
+    created() {
+        this.$http.get(`jianbao/applies/${jadeId}`, detail => {
+            this.$data.detail = detail.data;
         });
-    });
-
-    $('[data-follow]').click(event => {
-        const target = event.target;
-        const currentTarget = event.currentTarget;
-        const followActive = currentTarget.classList.contains('txt-red');
-        _.request(`jianbao/applies/${jianbao.data.id}/follows`, followActive ? 'DELETE' : 'POST').then(follow => {
-            if(follow.status === 200) {
-                if(followActive) {
-                    currentTarget.classList.remove('txt-red');
-                    target.classList.remove('icon-favor-active');
-                    target.classList.add('icon-favor');
-                } else {
-                    currentTarget.classList.add('txt-red');
-                    target.classList.add('icon-favor-active');
-                    target.classList.remove('icon-favor');
-                }
-            }
+        this.$http.get(`jianbao/applies/${jadeId}/comments`, comments => {
+            this.$data.comments.list = comments.data.comments;
+            this.$data.comments.total = comments.data.total;
         });
-    });
+    },
+    events: {
+        scroll(direction, position) {
+            if(position > 300) {
+                this.scroll.down = direction === 'down';
+            }
+        }
+    },
+    methods: {
+        play(videoId) {
+            _.toast(`播放视频${videoId}`);
+        },
+        toggleThumb(resultId) {
+            const result = this.detail.results.filter(r => r.id === resultId).pop();
+            if (result.isLike) {
+                this.$http.delete(`jianbao/results/${resultId}/like`, (resp) => {
+                    if (resp.status === 200) {
+                        result.isLike = false;
+                        result.like -= 1;
+                    } else {
+                        _.toast(resp.message);
+                    }
+                });
+            } else {
+                this.$http.post(`jianbao/results/${resultId}/like`, (resp) => {
+                    if (resp.status === 200) {
+                        result.isLike = true;
+                        result.like += 1;
+                    } else {
+                        _.toast(resp.message);
+                    }
+                });
+            }
+        },
+        toggleFollow() {
+            if (this.detail.isFollowed) {
+                this.$http.delete(`jianbao/applies/${jadeId}/follows`, () => {
+                    this.detail.isFollowed = false;
+                    this.detail.follow -= 1;
+                });
+            } else {
+                this.$http.post(`jianbao/applies/${jadeId}/follows`, () => {
+                    this.detail.isFollowed = true;
+                    this.detail.follow += 1;
+                });
+            }
+        },
+        share() {
+            _.toast('分享');
+        },
+        comment(userId) {
+            _.toast(typeof userId === 'number' ? '回复' : '评论');
+        },
+        evaluate() {
+            _.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
+        }
+    }
 });

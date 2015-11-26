@@ -7,95 +7,83 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
     <link rel="stylesheet" href="/styles/jade.detail.css" />
 </head>
-<body>
-    <script id="jade-template" type="text/x-handlebars-template">
-        <div class="jade">
-            <div class="header">
-                <img class="avatar" src="{{img applier.photo}}" alt="author">
-                <div>
-                    <h3>{{applier.name}}</h3>
-                    <p>
-                        <span>{{moment create_at}}</span><span class="gutter">|</span><span>{{click}}人浏览</span>
-                    </p>
-                </div>
-            </div>
-            <p class="desc">
-                {{description}}
-            </p>
-            <div class="video" style="background-image: url('http://7xo88d.media1.z0.glb.clouddn.com/{{video}}?vframe/jpg/offset/2/w/540/h/540/rotate/90/')"></div>
-            <ul class="images">{{#each pictures}}<li class="img" style="background-image: url('{{img this}}')"></li>{{/each}}</ul>
-        </div>
-        <div class="space"></div>
-        <p class="evaluation-summary">
-            大师鉴定{{results.length}}
-        </p>
-        {{#each results}}
-        <div class="evaluation">
-            <div class="header">
-                <img class="avatar" src="{{img identifier.photo}}" alt="author">
-                <div>
-                    <h3>{{identifier.name}}<span>个人官网</span></h3>
-                    <p>浙江省工艺美术大师</p>
-                </div>
-                <p class="moments">{{moment create_at}}</p>
-            </div>
-            <div class="result">
-                <div class="video" style="background-image: url('/images/1.jpg')"></div>
-                <div class="desc">
-                    <div class="txt">
-                        <p><span {{#if value_min}}class="txt-red"{{/if}}>{{result}}</span>
-                        {{#if value_min}}
-                            <br>
-                            <br><span>{{money value_min}}~{{money value_max}}</span></p>
-                        {{/if}}
-                    </div>
-                    <div class="social">
-                        <span data-thumb="{{id}}"" class="favor {{#if isLike}}txt-red{{/if}}"><i class="icon-thumb{{#if isLike}}-active{{/if}}"></i>{{like}}</span><!--remove space--><span class="comment"><i class="icon-comment"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{/each}}
-        <div class="evaluation-btn">
-            <button>我来鉴定</button>
-        </div>
-        <div class="space"></div>
-    </script>
-    <script id="comments-template" type="text/x-handlebars-template">
+<body id="app" data-scroll="vm">
+    <div class="jade">
         <div class="header">
-            <div class="count">评论{{total}}</div>
-            <div class="comment-btn" data-reply><i class="icon icon-view"></i>我要评论</div>
+            <img class="avatar" :src="detail.applier.photo | img" alt="author">
+            <div>
+                <h3>{{detail.applier.name}}</h3>
+                <p>
+                    <span>{{detail.create_at | moment}}</span><span class="gutter">|</span><span>{{detail.click}}人浏览</span>
+                </p>
+            </div>
+        </div>
+        <p class="desc">
+            {{detail.description}}
+        </p>
+        <div class="video" @click="play(detail.video)" v-bind:style="{backgroundImage: 'url(http://7xo88d.media1.z0.glb.clouddn.com/' + detail.video+ '?vframe/jpg/offset/2/w/540/h/540/rotate/90/)'}"></div>
+        <ul class="images"><li v-for="picture in detail.pictures" class="img" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + picture + ')'}">{{picture}}</li></ul>
+    </div>
+    <div class="separator-20"></div>
+    <p class="evaluation-summary">
+        大师鉴定{{detail.results.length}}
+    </p>
+    <div v-for="result in detail.results" class="evaluation">
+        <div class="header">
+            <img class="avatar" :src="result.identifier.photo | img'" alt="author">
+            <div>
+                <h3>{{result.identifier.name}}<span>个人官网</span></h3>
+                <p>浙江省工艺美术大师</p>
+            </div>
+            <p class="moments">{{result.create_at | moment}}</p>
+        </div>
+        <div class="result">
+            <div class="video" @click="play(result.video)" v-bind:style="{backgroundImage: 'url(http://7xo88d.media1.z0.glb.clouddn.com/' + result.video+ '?vframe/jpg/offset/2/w/540/h/540/rotate/90/)'}"></div>
+            <div class="desc">
+                <div class="txt">
+                    <p>鉴宝结果：<span :class="{'txt-red': result.result=='真货' }">{{result.result}}</span>
+                    <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span></p>
+                </div>
+                <div class="social">
+                    <span @click="toggleThumb(result.id)" class="favor"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment"><i class="icon-comment"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-show="!detail.results.length" class="txt-center txt-gray font-26 margin-top">还没有大师来鉴定</div>
+    <div class="evaluation-btn">
+        <button v-if="detail.identifiable" @click="evaluate">我来鉴定</button>
+    </div>
+    <div class="separator-20"></div>
+    <div class="comments">
+        <div class="header">
+            <div class="count">评论{{comments.total}}</div>
+            <div @click="comment" class="comment-btn"><i class="icon-comment"></i>我要评论</div>
         </div>
         <ul>
-            {{#each comments}}
-            <li>
+            <li v-for="c in comments.list">
                 <div class="author">
-                    <img class="avatar" src="/images/logo.jpeg" alt="author">
+                    <img class="avatar" :src="c.reply_from.photo | img'" alt="author">
                     <div>
-                        <h3 data-reply="{{reply_from.id}}">{{reply_from.nickname}}</h3>
-                        <p class="moments">{{moment create_at}}</p>
+                        <h3 @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <p class="moments">{{c.create_at | moment}}</p>
                     </div>
                 </div>
                 <div class="desc">
-                    {{#if reply_to}}
-                    <span class="label">回复<span class="name" data-reply="{{reply_to.id}}">{{reply_to.nickname}}</span>:</span>
-                    {{/if}}
-                    <span>{{content}}</span>
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="name">{{c.reply_to.nickname}}</span>:</span>
+                    <span>{{c.content}}</span>
                 </div>
             </li>
-            {{/each}}
+            <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
         </ul>
-    </script>
-    <script id="social-template" type="text/x-handlebars-template">
-        <span><i data-follow={{id}} class="icon icon-favor{{#if isFolllowed}}-active txt-red{{/if}}"></i>关注({{follow}})</span><span><i class="icon icon-view"></i>分享</span>
-    </script>
-    <div class="comments"></div>
-    <!-- <form action="" class="comment-form font-32 bg-gray">
-        <input class="font-32" type="text" placeholder="xxx">
-    </form> -->
-    <div class="social-actions"></div>
-    <script defer type="text/javascript" src="/scripts/zepto.js"></script>
-    <script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+    </div>
+    <div class="separator-20 last"></div>
+    <div class="social-actions bg-white animated" :class="{'slide-in-up': scroll.down, 'slide-out-down': !scroll.down }">
+        <span @click="toggleFollow"><i class="{{detail.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{detail.follow}})</span><span @click="share"><i class="icon-share"></i>分享</span>
+    </div>
+    <script src="/scripts/resize.js"></script>
+    <script defer src="/scripts/vue.js"></script>
+    <script defer src="/scripts/vue-resource.min.js"></script>
     <script defer type="text/javascript" src="/scripts/_.js"></script>
     <script defer type="text/javascript" src="./js/jade.detail.js"></script>
 </body>

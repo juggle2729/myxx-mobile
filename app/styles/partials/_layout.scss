@@ -25,7 +25,7 @@
         margin-top: 0;
     }
     .row:not(:last-child) {
-        @include border(map-get($colors, 'border-gray'), bottom)
+        @include border(map-get($colors, 'border-gray'), bottom);
     }
 }
 $grid-columns: 12;
