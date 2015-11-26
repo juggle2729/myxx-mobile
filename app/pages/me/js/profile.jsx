@@ -1,14 +1,8 @@
-const data = {
-    avatar: '/images/ic_default_avatar.jpg',
-    nickname: '沥青烟',
-    type: '普通用户'
-}
-const ProfileTemplate = Handlebars.compile($('#profile-template').html())(data);
-$('.profile').append($(ProfileTemplate));
-
-// _.request('users/1').then(resp => {
-//     const data = resp.data;
-//     //console.log(data);
-//     const ProfileTemplate = Handlebars.compile($('#profile-template').html())(data);
-//     $('.profile').append($(ProfileTemplate));
-// });
+const userId = _.query('id') || 1;
+_.request(`users/info/${userId}`).then(resp => {
+    const data = resp.data;
+    const roles = ['普通用户', '商家', '藏家', '大师', '权威'];
+    data.roleDesc = roles[data.role];
+    const ProfileTemplate = Handlebars.compile($('#profile-template').html())(data);
+    $('.profile').append($(ProfileTemplate));
+});
