@@ -1,180 +1,58 @@
-// _.request('jianbao/applies/2')
-//     .then(resp => {
-//         console.log(resp);
-//     });
 const data = {
-    slides: [
-        {
-            owner: '落水三千丈',
-            desc: '新疆和田玉帮忙看看品质吧，从一个朋友那骗来的',
-            bg: '1.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '不知道能值多少钱',
-            bg: '2.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '新手，大家帮忙看看是不是要发？',
-            bg: '3.jpg'
-        }
-    ],
-    list: [
-        {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '1.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '2.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '3.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '4.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '5.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '2.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '1.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '2.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '3.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '4.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '5.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '2.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '1.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '2.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '3.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '4.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '5.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '2.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '1.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '2.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '3.jpg'
-        }, {
-            owner: '貔貅',
-            desc: '和田玉手把件',
-            price: 20000,
-            img: '4.jpg'
-        }, {
-            owner: '二胡卵子',
-            desc: '砖头一块',
-            price: 18000,
-            img: '5.jpg'
-        }, {
-            owner: '克里姆林',
-            desc: '狮子头',
-            price: 4133,
-            img: '2.jpg'
-        }
-    ]
+    promotes: [],
+    list: [],
+    x: 0
 };
 
-const hSlidesTemplate = Handlebars.compile($('#h-slides-template').html())(data);
-$('.swiper-container-h .swiper-wrapper').append($(hSlidesTemplate));
-
-const jadeTemplate = Handlebars.compile($('#jade-template').html())(data);
-$('.swiper-container-scroll .swiper-slide').append($(jadeTemplate));
-
-const swiperH = new Swiper('.swiper-container-h', {
-    paginationClickable: true,
-    spaceBetween: 0,
-    initialSlide: 0,
-    centeredSlides: true,
-    slidesPerView: 'auto'
-});
-const swiperV = new Swiper('.swiper-container-v', {
-    paginationClickable: true,
-    direction: 'vertical',
-    initialSlide: 0,
-    spaceBetween: 0
-});
-let delta = 0;
-const swiperS = new Swiper('.swiper-container-scroll', {
-    scrollbar: '.swiper-scrollbar',
-    direction: 'vertical',
-    slidesPerView: 'auto',
-    mousewheelControl: true,
-    freeMode: true,
-    onSetTranslate: (swiper, translate) => {
-        delta = translate;
+const vm = new Vue({
+    el: '#app',
+    data,
+    created() {
+        this.$watch('x', function(x) {
+            if(x === 2) {
+                this.render();
+            }
+        });
+        this.$http.get(`http://192.168.199.205:8001/cms/promotes?section=cy031`, resp => {
+            this.promotes = resp.data.promotes;
+            this.x += 1;
+        });
+        this.$http.get(`http://192.168.199.205:8001/cms/promotes?section=cy051`, resp => {
+            this.list = resp.data.exbition;
+            this.x += 1;
+        });
     },
-    onTouchEnd: () => {
-        if(delta > 70) {
-            swiperV.slidePrev();
+    methods: {
+        render() {
+            const swiperH = new Swiper('.swiper-container-h', {
+                paginationClickable: true,
+                spaceBetween: 0,
+                initialSlide: 0,
+                centeredSlides: true,
+                slidesPerView: 'auto'
+            });
+            const swiperV = new Swiper('.swiper-container-v', {
+                paginationClickable: true,
+                direction: 'vertical',
+                initialSlide: 0,
+                spaceBetween: 0
+            });
+            let delta = 0;
+            const swiperS = new Swiper('.swiper-container-scroll', {
+                scrollbar: '.swiper-scrollbar',
+                direction: 'vertical',
+                slidesPerView: 'auto',
+                mousewheelControl: true,
+                freeMode: true,
+                onSetTranslate: (swiper, translate) => {
+                    delta = translate;
+                },
+                onTouchEnd: () => {
+                    if(delta > 70) {
+                        swiperV.slidePrev();
+                    }
+                }
+            });
         }
     }
 });
