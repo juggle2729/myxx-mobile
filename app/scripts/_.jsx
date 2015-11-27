@@ -1,6 +1,14 @@
 // Vue configurations
 Vue.config.debug = true;
 Vue.http.options.root = 'http://120.26.113.13';
+Vue.http.options.success = function(resp) {
+    if(resp.status !== 200) {
+        this.toast(resp.message);
+    }
+};
+Vue.http.options.error = function() {
+    this.toast('后台出错了~');
+};
 Vue.http.headers.common['X-Auth-Token'] = 'f87e7796-9896-4a6f-997e-11b48aebd347';
 Vue.filter('moment', (dateStr) => {
     const MINUTE = 1000 * 60;
@@ -37,7 +45,18 @@ Vue.filter('money', (number) => {
     return number / 10000 + '万';
 });
 Vue.mixin({
+    created() {
+        const result = this.init();
+        if(typeof result === 'object' && result.then) {
+            result.then(() => {
+                this.$el.classList.remove('loading');
+            });
+        }
+    },
     methods: {
+        init() {
+            console.warn('init not implemented!');
+        },
         toast(msg, delay = 2000) {
             const span = document.createElement('span');
             span.innerText = msg;
@@ -53,15 +72,6 @@ Vue.mixin({
 // helper functions
 (function(w) {
     w._ = {};
-    //  提示消息
-    _.toast = function(msg, delay = 2000) {
-        const span = document.createElement('span');
-        span.innerText = msg;
-        span.className = 'toast visible';
-        document.body.appendChild(span);
-        setTimeout(() => span.parentNode.removeChild(span), delay);
-    };
-
     //  获取地址栏参数
     _.query = function(key) {
         const query = {};
@@ -80,13 +90,14 @@ Vue.mixin({
 })(window);
 
 const scrollHandler = window.document.body.dataset.scroll;
-if (scrollHandler !== undefined) {
+if (scrollHandler) {
     // 处理滚动
     const scrollListener = (function(w) {
         let lastPos = w.scrollY;
+        let timer;
         return function() {
-            clearTimeout(timer);
-            let timer = setTimeout(function() {
+            timer && clearTimeout(timer);
+            timer = setTimeout(function() {
                 const delta = w.scrollY - lastPos;
                 if (delta > 0) {
                     w[scrollHandler].$emit('scroll', 'down', w.scrollY);

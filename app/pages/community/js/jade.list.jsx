@@ -7,18 +7,18 @@ const vm = new Vue({
     el: '#app',
     data,
     created() {
-        this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
-            this.applies = resp.data.applies;
-            this.total = resp.data.total;
-        });
-        this.$watch('tab', function(tab) {
-            this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
+        this.$watch('tab', this.fetch);
+    },
+    methods: {
+        init() {
+            return this.fetch();
+        },
+        fetch() {
+            return this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
                 this.applies = resp.data.applies;
                 this.total = resp.data.total;
             });
-        });
-    },
-    methods: {
+        },
         toggleFollow(applyId, followed) {
             const apply = this.applies.filter(a => a.id === applyId).pop();
             if (followed) {

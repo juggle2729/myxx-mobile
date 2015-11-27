@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
     <link href="/styles/jade.list.css" type="text/css" rel="stylesheet"/>
 </head>
-<body id="app" class="bg-primary">
+<body id="app" class="bg-primary loading">
   <div class="horizontal operation bg-white tabs">
       <div :class="{'active': tab=='time'}" class="font-26 txt-primary"><div><label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab"></div></div>
       <div :class="{'active': tab=='popularity'}" class="txt-primary font-26"><div><label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab"></div></div>

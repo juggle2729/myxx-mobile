@@ -1,28 +1,23 @@
 const data = {
     promotes: [],
-    list: [],
-    x: 0
+    list: []
 };
 
 const vm = new Vue({
     el: '#app',
     data,
     created() {
-        this.$watch('x', function(x) {
-            if(x === 2) {
-                this.render();
-            }
-        });
-        this.$http.get(`http://192.168.199.205:8001/cms/promotes?section=cy031`, resp => {
-            this.promotes = resp.data.promotes;
-            this.x += 1;
-        });
-        this.$http.get(`http://192.168.199.205:8001/cms/promotes?section=cy051`, resp => {
-            this.list = resp.data.exbition;
-            this.x += 1;
-        });
     },
     methods: {
+        init() {
+            const getBanners = this.$http.get(`cms/promotes?section=cy031`, resp => {
+                this.promotes = resp.data.promotes;
+            });
+            const getJades = this.$http.get(`cms/promotes?section=cy051`, resp => {
+                this.list = resp.data.exbition;
+            });
+            return Promise.all([getBanners, getJades]).then(this.render);
+        },
         render() {
             const swiperH = new Swiper('.swiper-container-h', {
                 paginationClickable: true,

@@ -1,138 +1,134 @@
 @import 'partials/myxx';
 .user {
-        //@include border($border-color, top-bottom);
-        display: -webkit-box;
-        height: 180px;
-        padding-left: 32px;
-        position: relative;
-        img {
-            height: 120px;
-            width: 120px;
-            border-radius: 50%;
+    //@include border($border-color, top-bottom);
+    display: -webkit-box;
+    height: 180px;
+    padding-left: 32px;
+    position: relative;
+    img {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+    }
+    .list {
+        margin: 56px 0 24px 60px;
+        width: 380px;
+        button {
+            @include border(map-get($colors, 'border-gray'));
+            height: 36px;
+            width: 80px;
+            line-height: 0;
+            border: 0;
+            border-radius: 4px;
+            margin-top: -18px;
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            font-size: 22px;
+            color: map-get($colors, 'bt-white');
         }
-        .list {
-
-            margin: 56px 0 24px 60px;
-            width :380px;
-            button {
-                @include border(map-get($colors, 'border-gray'));
-                height: 36px;
-                width: 80px;
-                line-height: 0px;
-                border: 0;
-                border-radius: 4px;
-				margin-top: -18px;
-        		position: absolute;
-        		right: 32px;
-        		top: 50%;
-
-        		font-size: 22px;
-        		color: map-get($colors, 'bt-white');
-            }
-            p:nth-child(2) {
-                margin-top: 12px;
-            }
+        p:nth-child(2) {
+            margin-top: 12px;
         }
     }
+}
 .store {
-        //@include border($border-color, top-bottom);
-        display: -webkit-box;
-        height: 180px;
-        padding-left: 32px;
-        position: relative;
-        img {
-            height: 120px;
-            width: 120px;
-        }
-        .list {
-            margin: 56px 0 24px 60px;
-            width :380px;
-            button {
-                @include border(map-get($colors, 'border-gray'));
-                height: 36px;
-                width: 80px;
-                line-height: 0px;
-                border: 0;
-                border-radius: 4px;
-				margin-top: -18px;
-        		position: absolute;
-        		right: 32px;
-        		top: 50%;
 
-        		font-size: 22px;
-            }
-            p:nth-child(2) {
-                margin-top: 12px;
-            }
+    //@include border($border-color, top-bottom);
+    display: -webkit-box;
+    height: 180px;
+    padding-left: 32px;
+    position: relative;
+    img {
+        height: 120px;
+        width: 120px;
+    }
+    .list {
+        margin: 56px 0 24px 60px;
+        width: 380px;
+        button {
+            @include border(map-get($colors, 'border-gray'));
+            height: 36px;
+            width: 80px;
+            line-height: 0;
+            border: 0;
+            border-radius: 4px;
+            margin-top: -18px;
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            font-size: 22px;
+        }
+        p:nth-child(2) {
+            margin-top: 12px;
         }
     }
+}
 .baobei {
-        //@include border($border-color, top-bottom);
-        display: -webkit-box;
-        height: 180px;
-        padding-left: 32px;
-        position: relative;
-        img {
-            height: 120px;
-            width: 120px;
+
+    //@include border($border-color, top-bottom);
+    display: -webkit-box;
+    height: 180px;
+    padding-left: 32px;
+    position: relative;
+    img {
+        height: 120px;
+        width: 120px;
+    }
+    .list {
+        margin: 28px 0 24px 60px;
+        width: 380px;
+        button {
+            @include border(map-get($colors, 'border-gray'));
+            height: 36px;
+            width: 80px;
+            line-height: 0;
+            border: 0;
+            border-radius: 4px;
+            margin-top: -18px;
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            font-size: 22px;
         }
-        .list {
-
-            margin: 28px 0 24px 60px;
-            width :380px;
-            button {
-                @include border(map-get($colors, 'border-gray'));
-                height: 36px;
-                width: 80px;
-                line-height: 0px;
-                border: 0;
-                border-radius: 4px;
-				margin-top: -18px;
-        		position: absolute;
-        		right: 32px;
-        		top: 50%;
-
-        		font-size: 22px;
-            }
-            p:nth-child(2) {
-                margin-top: 12px;
-            }
-            p:nth-child(3) {
-                margin-top: 40px;
-            }
+        p:nth-child(2) {
+            margin-top: 12px;
+        }
+        p:nth-child(3) {
+            margin-top: 40px;
         }
     }
+}
 .jianbao {
-        //@include border($border-color, top-bottom);
-        display: -webkit-box;
-        height: 180px;
-        padding-left: 32px;
-        position: relative;
-        img {
-            height: 120px;
-            width: 120px;
+
+    //@include border($border-color, top-bottom);
+    display: -webkit-box;
+    height: 180px;
+    padding-left: 32px;
+    position: relative;
+    img {
+        height: 120px;
+        width: 120px;
+    }
+    .list {
+        margin: 28px 0 24px 60px;
+        width: 380px;
+        button {
+            @include border(map-get($colors, 'border-gray'));
+            height: 36px;
+            width: 80px;
+            line-height: 0;
+            border: 0;
+            border-radius: 4px;
+            margin-top: -18px;
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            font-size: 22px;
+            color: map-get($colors, 'bt-white');
         }
-        .list {
-
-            margin: 28px 0 24px 60px;
-            width: 380px;
-            button {
-                @include border(map-get($colors, 'border-gray'));
-                height: 36px;
-                width: 80px;
-                line-height: 0px;
-                border: 0;
-                border-radius: 4px;
-				margin-top: -18px;
-        		position: absolute;
-        		right: 32px;
-        		top: 50%;
-
-        		font-size: 22px;
-        		color: map-get($colors, 'bt-white');
-            }
-            p:nth-child(2) {
-                margin-top: 40px;
-            }
+        p:nth-child(2) {
+            margin-top: 40px;
         }
     }
+}

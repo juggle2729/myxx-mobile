@@ -33,13 +33,6 @@ const vm = new Vue({
     el: '#app',
     data,
     created() {
-        this.$http.get(`jianbao/applies/${jadeId}`, detail => {
-            this.$data.detail = detail.data;
-        });
-        this.$http.get(`jianbao/applies/${jadeId}/comments`, comments => {
-            this.$data.comments.list = comments.data.comments;
-            this.$data.comments.total = comments.data.total;
-        });
     },
     events: {
         scroll(direction, position) {
@@ -49,8 +42,18 @@ const vm = new Vue({
         }
     },
     methods: {
+        init() {
+            const getDetail = this.$http.get(`jianbao/applies/${jadeId}`, detail => {
+                this.$data.detail = detail.data;
+            });
+            const getComments = this.$http.get(`jianbao/applies/${jadeId}/comments`, comments => {
+                this.$data.comments.list = comments.data.comments;
+                this.$data.comments.total = comments.data.total;
+            });
+            return Promise.all([getDetail, getComments]);
+        },
         play(videoId) {
-            _.toast(`播放视频${videoId}`);
+            this.toast(`播放视频${videoId}`);
         },
         toggleThumb(resultId) {
             const result = this.detail.results.filter(r => r.id === resultId).pop();
@@ -60,7 +63,7 @@ const vm = new Vue({
                         result.isLike = false;
                         result.like -= 1;
                     } else {
-                        _.toast(resp.message);
+                        this.toast(resp.message);
                     }
                 });
             } else {
@@ -69,7 +72,7 @@ const vm = new Vue({
                         result.isLike = true;
                         result.like += 1;
                     } else {
-                        _.toast(resp.message);
+                        this.toast(resp.message);
                     }
                 });
             }
@@ -88,13 +91,13 @@ const vm = new Vue({
             }
         },
         share() {
-            _.toast('分享');
+            this.toast('分享');
         },
         comment(userId) {
-            _.toast(typeof userId === 'number' ? '回复' : '评论');
+            this.toast(typeof userId === 'number' ? '回复' : '评论');
         },
         evaluate() {
-            _.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
+            this.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
         }
     }
 });

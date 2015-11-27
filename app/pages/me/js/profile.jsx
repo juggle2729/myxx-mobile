@@ -15,9 +15,16 @@ const vm = new Vue({
     el: '#app',
     data,
     created() {
-        this.$http.get(`users/info/${userId}`, resp => {
-            this.$data = resp.data;
-            this.roleName = roles[this.role];
-        });
+        console.log('own created');
+    },
+    methods: {
+        init() {
+            const promise = this.$http.get(`users/info/${userId}`);
+            promise.success(resp => {
+                this.$data = resp.data;
+                this.roleName = roles[this.role];
+            });
+            return promise;
+        }
     }
 });

@@ -60,7 +60,7 @@
                 padding-top: 3px;
             }
         }
-        input[type='button'] {
+        [type='button'] {
             @include border(map-get($colors, 'border-primary'));
             @include common-master(map-get($colors, 'yellow'), '', '', 5px);
             line-height: 32px;
