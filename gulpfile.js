@@ -35,7 +35,7 @@ gulp.task('html', function() {
 
 // Copy all files at the root level (app)
 gulp.task('copy', function() {
-    return gulp.src(['app/**/images/**/*', '.tmp/**/*.js', 'app/**/*.css', 'app/fonts/**'], {
+    return gulp.src(['app/**/images/**/*', '.tmp/**/*.js', 'app/**/*.css', 'app/**/fonts/**'], {
             dot: true
         })
         .pipe(gulp.dest('dist'))

@@ -22,7 +22,9 @@ const data = {
     },
     comments: {
         total: 0,
-        list: []
+        list: [],
+        loading: false,
+        hasMore: true
     },
     scroll: {
         down: false,
@@ -39,18 +41,38 @@ const vm = new Vue({
             if(position > 100) {
                 this.scroll.down = direction === 'down';
             }
+            const indicator = this.$el.querySelector('#more');
+            if(this.$el.clientHeight + window.pageYOffset > indicator.offsetTop) {
+                this._loadComments();
+            }
         }
     },
     methods: {
+        _loadComments: (function() {
+            let offset = 0;
+            const limit = 5;
+            return function() {
+                if(this.comments.loading) {
+                    return false;
+                }
+                this.comments.loading = true;
+                return this.$http.get(`jianbao/applies/${jadeId}/comments?offset=${offset}&limit=${limit}`, function(resp) {
+                    this.comments.list.splice(this.comments.list.length - 1, 0, ...resp.data.comments);
+                    this.comments.total = resp.data.total;
+                    offset = offset + limit;
+                    if (resp.data.comments.length < limit || offset > resp.data.total) {
+                        this.comments.hasMore = false;
+                    } else {
+                        this.comments.loading = false;
+                    }
+                });
+            };
+        })(),
         init() {
             const getDetail = this.$http.get(`jianbao/applies/${jadeId}`, detail => {
                 this.$data.detail = detail.data;
             });
-            const getComments = this.$http.get(`jianbao/applies/${jadeId}/comments`, comments => {
-                this.$data.comments.list = comments.data.comments;
-                this.$data.comments.total = comments.data.total;
-            });
-            return Promise.all([getDetail, getComments]);
+            return Promise.all([getDetail, this._loadComments()]);
         },
         play(videoId) {
             this.toast(`播放视频${videoId}`);
@@ -61,7 +83,7 @@ const vm = new Vue({
                 this.$http.delete(`jianbao/results/${resultId}/like`, (resp) => {
                     if (resp.status === 200) {
                         result.isLike = false;
-                        result.like -= 1;
+                        result.like = result.like - 1;
                     } else {
                         this.toast(resp.message);
                     }
@@ -70,7 +92,7 @@ const vm = new Vue({
                 this.$http.post(`jianbao/results/${resultId}/like`, (resp) => {
                     if (resp.status === 200) {
                         result.isLike = true;
-                        result.like += 1;
+                        result.like = result.like + 1;
                     } else {
                         this.toast(resp.message);
                     }
@@ -81,12 +103,12 @@ const vm = new Vue({
             if (this.detail.isFollowed) {
                 this.$http.delete(`jianbao/applies/${jadeId}/follows`, () => {
                     this.detail.isFollowed = false;
-                    this.detail.follow -= 1;
+                    this.detail.follow = this.detail.follow - 1;
                 });
             } else {
                 this.$http.post(`jianbao/applies/${jadeId}/follows`, () => {
                     this.detail.isFollowed = true;
-                    this.detail.follow += 1;
+                    this.detail.follow = this.detail.follow + 1;
                 });
             }
         },

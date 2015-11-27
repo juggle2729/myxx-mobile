@@ -7,35 +7,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
     <link rel="stylesheet" href="/styles/master.list.css"/>
 </head>
-<body>
+<body id="app">
   <div class="master-list">
     <div class="search">
         <input type="text" class="font-22 txt-primary" placeholder="请输入您想查找的姓名、头衔等关键字" value='' />
         <span class="icon-favor font-22 txt-gray"></span>
         <span class="icon-shop font-22 txt-gray"></span>
     </div>
-    <script id="master-list-template" type="text/x-handlebars-template">
-        <div class="filter"></div>
-        {{#each masters}}
-        <div class="master horizontal">
-            <img src="{{avatar}}" />
-            <div class="master-profile">
-                <div>
-                     <span class="font-30">{{name}}</span>
-                     {{#if homepage}}
-                     <input class="font-22 txt-white bg-yellow" type="button" value="大师官网">
-                     {{/if}}
-                </div>
-                <div><p class="honor">{{honor.[0]}}</p><p>{{honor.[1]}}</p></div>
-                <div><p>{{honor.[2]}}</p></div>
-                <div><span class="identify-number txt-gray">{{identifyNumber}}</span><span class="fans txt-gray">{{fans}}</span></div>
+    <div class="filter"></div>
+    <div v-for="master in masters" class="master horizontal">
+        <img :src="master.avatar | img" />
+        <div class="master-profile">
+            <div>
+                 <span class="font-30">{{master.name}}</span>
+                 <input v-if="master.homepage" class="font-22 txt-white bg-yellow" type="button" value="大师官网">
             </div>
+            <div><p class="honor">{{master.honor[0]}}</p><p>{{master.honor[1]}}</p></div>
+            <div><p>{{master.honor[2]}}</p></div>
+            <div><span class="identify-number txt-gray">{{master.identifyNumber}}</span><span class="fans txt-gray">{{master.fans}}</span></div>
         </div>
-        {{/each}}
-    </script>
+    </div>
 </div>
-<script defer type="text/javascript" src="/scripts/zepto.js"></script>
-<script defer type="text/javascript" src="/scripts/handlebars.js"></script>
+<script src="/scripts/resize.js"></script>
+<script defer src="/scripts/vue.js"></script>
+<script defer src="/scripts/vue-resource.min.js"></script>
 <script defer type="text/javascript" src="/scripts/_.js"></script>
 <script defer type="text/javascript" src="./js/master.list.js"></script>
 </body>

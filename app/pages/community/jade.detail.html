@@ -22,7 +22,7 @@
             {{detail.description}}
         </p>
         <div class="video clickable" @click="play(detail.video)" v-bind:style="{backgroundImage: 'url(http://7xo88d.media1.z0.glb.clouddn.com/' + detail.video+ '?vframe/jpg/offset/2/w/540/h/540/rotate/90/)'}"></div>
-        <ul class="images"><li v-for="picture in detail.pictures" class="img" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + picture + ')'}">{{picture}}</li></ul>
+        <ul class="images"><li v-for="picture in detail.pictures" track-by="$index" class="img" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + picture + ')'}">{{picture}}</li></ul>
     </div>
     <div class="separator-20"></div>
     <p class="evaluation-summary">
@@ -75,6 +75,7 @@
                 </div>
             </li>
             <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
+            <li id="more"  class="txt-gray txt-center font-26">{{comments.hasMore ? '加载更多。。。' : '没有了'}}</li>
         </ul>
     </div>
     <div class="separator-20 last"></div>

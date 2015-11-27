@@ -99,11 +99,25 @@ if (scrollHandler) {
         return function() {
             timer && clearTimeout(timer);
             timer = setTimeout(function() {
+                // 滚动方向检测
                 const delta = w.scrollY - lastPos;
                 if (delta > 0) {
                     w[scrollHandler].$emit('scroll', 'down', w.scrollY);
                 } else if (delta < 0) {
                     w[scrollHandler].$emit('scroll', 'up', w.scrollY);
+                }
+                // 滚动触底检测
+                function getDocHeight() {
+                    const doc = w.document;
+                    return Math.max(
+                        doc.body.scrollHeight, doc.documentElement.scrollHeight,
+                        doc.body.offsetHeight, doc.documentElement.offsetHeight,
+                        doc.body.clientHeight, doc.documentElement.clientHeight
+                    );
+                }
+                const bottom = getDocHeight() - w.scrollY - w.document.body.clientHeight;
+                if(delta > 0 && bottom <= 50) {
+                    w[scrollHandler].$emit('scroll', 'down', w.scrollY);
                 }
                 lastPos = window.scrollY;
             }, 50);
