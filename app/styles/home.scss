@@ -91,6 +91,7 @@ body {
     background-position: center;
     text-align: left;
     &::after {
+        pointer-events: none;
         content: '';
         background-position: right 32px top 32px;
         background-repeat: no-repeat;

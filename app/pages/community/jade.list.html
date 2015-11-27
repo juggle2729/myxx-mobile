@@ -12,22 +12,22 @@
 </head>
 <body id="app" class="bg-primary loading">
   <div class="horizontal operation bg-white tabs">
-      <div :class="{'active': tab=='time'}" class="font-26 txt-primary"><div><label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab"></div></div>
-      <div :class="{'active': tab=='popularity'}" class="txt-primary font-26"><div><label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab"></div></div>
+      <div :class="{'active': tab=='time'}" class="clickable font-26 txt-primary"><div><label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab"></div></div>
+      <div :class="{'active': tab=='popularity'}" class="clickable txt-primary font-26"><div><label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab"></div></div>
   </div>
   <div class="jade-list-page">
       <template v-for="apply in applies">
           <div class="separator"></div>
           <div class="jade-list bg-white">
               <div class="horizontal margin-bottom">
-                  <img :src="apply.applier.photo | img" class="avatar-user"/>
+                  <img @click="go('../me/profile.html?id=' + apply.id)" :src="apply.applier.photo | img" class="clickable avatar-user"/>
                   <div class="profile">
                       <p class="font-26 txt-primary">{{apply.applier.name}}</p>
                       <p class="font-22 txt-gray">{{apply.create_at | moment}}</p>
                   </div>
               </div>
               <p class="font-30 txt-black">{{apply.description}}</p>
-              <table @click="go('jade.detail.html?id=' + apply.id)" class="margin-top">
+              <table @click="go('jade.detail.html?id=' + apply.id)" class="clickable margin-top">
                   <tr>
                       <td>
                           <div :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + apply.pictures[0] + ')'}"></div>
@@ -50,7 +50,7 @@
                   </tr>
               </table>
               <div v-for="result in apply.results" class="horizontal master">
-                <img src="/images/ic_default_avatar.jpg" class="avatar-master margin-top"/>
+                <img @click="go('../me/profile.html?id=' + result.identifier.id)" :src="result.identifier.photo | img" class="clickable avatar-master margin-top"/>
                   <div class="profile">
                       <p class="font-26 txt-black">{{result.identifier.name}}</p>
                       <p class="font-22 txt-gray">{{result.identifier.title}}</p>
@@ -62,8 +62,8 @@
               </div>
           </div>
           <div class="horizontal operation bg-white">
-              <div class="follow font-26">
-                  <span @click="toggleFollow(apply.id, apply.isFollowed)" class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor txt-gray follow-icon'}}"></span>
+              <div @click="toggleFollow(apply.id, apply.isFollowed)" class="clickable follow font-26">
+                  <span class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor txt-gray follow-icon'}}"></span>
                   <span class="txt-gray follow-number">{{apply.follow}}</span>
               </div>
               <div class="font-26">

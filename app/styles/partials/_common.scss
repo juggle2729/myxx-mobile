@@ -193,3 +193,6 @@ margin-right {
         background-size: 20px 20px;
     }
 }
+.clickable:active {
+    background-color: map-get($colors, 'txt-red');
+}

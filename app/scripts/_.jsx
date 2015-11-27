@@ -9,7 +9,7 @@ Vue.http.options.success = function(resp) {
 Vue.http.options.error = function() {
     this.toast('后台出错了~');
 };
-Vue.http.headers.common['X-Auth-Token'] = 'f87e7796-9896-4a6f-997e-11b48aebd347';
+Vue.http.headers.common['X-Auth-Token'] = 'edb85165-b4b6-46f0-89db-3067e5c51742';
 Vue.filter('moment', (dateStr) => {
     const MINUTE = 1000 * 60;
     const HOUR = 60 * MINUTE;
@@ -64,6 +64,7 @@ Vue.mixin({
             document.body.appendChild(span);
             setTimeout(() => span.parentNode.removeChild(span), delay);
         },
+        // 页面跳转
         go(href) {
             location.href = href;
         }

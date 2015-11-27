@@ -14,9 +14,9 @@
                 <div class="swiper-container swiper-container-h">
                     <div class="swiper-wrapper">
                         <div v-for="item in promotes" class="swiper-slide">
-                            <div @click="go('/community/jade.detail.html?id=' + item.id)" class="content font-26" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}">
+                            <div @click="go('../community/jade.detail.html?id=' + item.id)" class="clickable content font-26" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}">
                                 <div class="owner txt-white">
-                                    <div class="icon">
+                                    <div @click.stop="go('../me/profile.html?id=' + item.user.id)" class="clickable icon">
                                         <img :src="item.user.photo | img" class="avatar-user" />
                                     </div>
                                     <div class="desc">
