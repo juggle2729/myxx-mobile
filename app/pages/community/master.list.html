@@ -10,7 +10,7 @@
 <body id="app">
   <div class="master-list">
     <div class="search">
-        <input type="text" class="font-22 txt-primary" placeholder="请输入您想查找的姓名、头衔等关键字" value='' />
+        <input type="text" class="font-22 txt-primary" placeholder="请输入您想查找的姓名、头衔等关键字" v-on:keyup.enter="searchEnter" v-model="searchText" />
         <span class="icon-favor font-22 txt-gray"></span>
         <span class="icon-shop font-22 txt-gray"></span>
     </div>

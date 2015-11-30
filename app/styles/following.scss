@@ -1,20 +1,23 @@
 @import 'partials/myxx';
-.user {
-    //@include border($border-color, top-bottom);
+%staticstyle {
     display: -webkit-box;
     height: 180px;
-    padding-left: 32px;
+    padding-left: 34px;
     position: relative;
     img {
         height: 120px;
         width: 120px;
+    }
+}
+.user {
+    @extend %staticstyle;
+    img {
         border-radius: 50%;
     }
-    .list {
+    .info {
         margin: 56px 0 24px 60px;
         width: 380px;
         button {
-            @include border(map-get($colors, 'border-gray'));
             height: 36px;
             width: 80px;
             line-height: 0;
@@ -25,7 +28,8 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: map-get($colors, 'bt-white');
+            color: #ffffff;
+            background-color: #ecc976;
         }
         p:nth-child(2) {
             margin-top: 12px;
@@ -33,21 +37,11 @@
     }
 }
 .store {
-
-    //@include border($border-color, top-bottom);
-    display: -webkit-box;
-    height: 180px;
-    padding-left: 32px;
-    position: relative;
-    img {
-        height: 120px;
-        width: 120px;
-    }
-    .list {
+    @extend %staticstyle;
+    .info {
         margin: 56px 0 24px 60px;
         width: 380px;
         button {
-            @include border(map-get($colors, 'border-gray'));
             height: 36px;
             width: 80px;
             line-height: 0;
@@ -58,6 +52,8 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
+            color: #ffffff;
+            background-color: #9bde6a;
         }
         p:nth-child(2) {
             margin-top: 12px;
@@ -65,21 +61,11 @@
     }
 }
 .baobei {
-
-    //@include border($border-color, top-bottom);
-    display: -webkit-box;
-    height: 180px;
-    padding-left: 32px;
-    position: relative;
-    img {
-        height: 120px;
-        width: 120px;
-    }
-    .list {
+    @extend %staticstyle;
+    .info {
         margin: 28px 0 24px 60px;
         width: 380px;
         button {
-            @include border(map-get($colors, 'border-gray'));
             height: 36px;
             width: 80px;
             line-height: 0;
@@ -90,31 +76,23 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
+            color: #ffffff;
+            background-color: #c68cb1;
         }
         p:nth-child(2) {
             margin-top: 12px;
         }
         p:nth-child(3) {
-            margin-top: 40px;
+            margin-top: 32px;
         }
     }
 }
 .jianbao {
-
-    //@include border($border-color, top-bottom);
-    display: -webkit-box;
-    height: 180px;
-    padding-left: 32px;
-    position: relative;
-    img {
-        height: 120px;
-        width: 120px;
-    }
-    .list {
+    @extend %staticstyle;
+    .info {
         margin: 28px 0 24px 60px;
         width: 380px;
         button {
-            @include border(map-get($colors, 'border-gray'));
             height: 36px;
             width: 80px;
             line-height: 0;
@@ -125,7 +103,8 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: map-get($colors, 'bt-white');
+            color: #ffffff;
+            background-color: #5baee7;
         }
         p:nth-child(2) {
             margin-top: 40px;

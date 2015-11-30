@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>消息通知</title>
+    <meta name="description" content="美玉秀秀" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <link href="/styles/notification.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body id="app" class="bg-gray">
+    <div class="notification">
+        <template v-for="notice in notificationList">
+            <div class="{{notice.type}}">
+                <div class="sender">
+                    <img src="{{{notice.avatar}}}" />
+                    <p class="font-26 txt-primary">{{notice.name}}</p>
+                    <p class="txt-gray">{{notice.time}}</p>
+                </div>
+                <div v-if="notice.text" class="info">
+                    <p>{{{notice.text}}}</p>
+                </div>
+                <div v-if="notice.hrefImg" class="hrefimg">
+                    <img src="{{{notice.hrefImg}}}" />
+                    <p class="txt-primary">{{{notice.hrefTitle}}}</p>
+                    <p v-if="notice.hrefText" class="txt-gray">{{{notice.hrefText}}}</p>
+                </div>
+            </div>
+            <div class="separator-20"></div>
+        </template>
+    </div>
+    <script src="/scripts/resize.js"></script>
+    <script defer src="/scripts/vue.js"></script>
+    <script defer src="/scripts/vue-resource.min.js"></script>
+    <script defer type="text/javascript" src="/scripts/_.js"></script>
+    <script defer type="text/javascript" src="./js/notification.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+@import 'partials/myxx';
+.banner {
+    display: -webkit-box;
+    height: 600px;
+    position: relative;
+    background-color: #3865a7;
+    > img {
+        height: 260px;
+        width: 340px;
+        position: absolute;
+        left: 50%;
+        margin-left: -170px;
+        margin-top: 120px;
+    }
+    > p {
+        position: absolute;
+        margin-top: 438px;
+        width: 340px;
+        left: 50%;
+        margin-left: -170px;
+        text-align: center;
+        font-size: 30px;
+        color: #4cd18e;
+    }
+    > button {
+        position: absolute;
+        color: #ffffff;
+        height: 90px;
+        width: 392px;
+        border: 0;
+        left: 50%;
+        margin-left: -196px;
+        margin-top: 526px;
+        font-size: 30px;
+        background-color: #4cd18e;
+    }
+}
+.textarea {
+    > p:nth-of-type(1) {
+        font-size: 22px;
+        color: #3865a7;
+        margin-top: 32px;
+        width: 100%;
+        text-align: center;
+    }
+    .inner1 {
+        margin: 64px 7px 0 92px;
+        > p {
+            margin: -6px 0;
+            font-size: 30px;
+            color: #393939;
+            line-height: 42px;
+            width: 100%;
+        }
+    }
+    .inner2 {
+        font-size: 26px;
+        color: #393939;
+        margin-top: 36px;
+        padding-left: 96px;
+        padding-right: 96px;
+        width: 100%;
+    }
+    .title {
+        margin-top: 84px;
+        > p {
+            font-size: 30px;
+            color: #393939;
+            padding-left: 32px;
+            width: 100%;
+        }
+        > hr {
+            margin: 24px 32px 0;
+        }
+    }
+    .text {
+        padding-left: 96px;
+        margin-top: 50px;
+        height: 108px;
+        position: relative;
+        > img {
+            margin-left: 10px;
+            width: 72px;
+            height: 72px;
+        }
+        > div {
+            display: table;
+            margin-left: 188px;
+            height: 106px;
+            position: absolute;
+            p {
+                display: table-cell;
+                vertical-align: middle;
+                line-height: 38px;
+                font-size: 26px;
+                color: #393939;
+            }
+        }
+        > p {
+            position: absolute;
+            margin-top: 86px;
+            font-size: 22px;
+            color: #393939;
+        }
+    }
+    .bottom {
+        height: 382px;
+        position: relative;
+        margin: 50px 96px 0;
+        img {
+            width: 558px;
+            height: 182px;
+        }
+    }
+}
+.separ {
+    background-color: #184b96;
+    display: block;
+    width: 100%;
+    height: 16px;
+}

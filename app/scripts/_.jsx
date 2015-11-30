@@ -35,7 +35,7 @@ Vue.filter('img', (id) => {
     if (id) {
         src = /^https?/.test(id)
             ? id
-            : _.IMG + id;
+            : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
     } else {
         src = '/images/avatar--defaut.jpg';
     }
