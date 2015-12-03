@@ -28,11 +28,6 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: #ffffff;
-            background-color: #ecc976;
-        }
-        p:nth-child(2) {
-            margin-top: 12px;
         }
     }
 }
@@ -52,7 +47,6 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: #ffffff;
             background-color: #9bde6a;
         }
         p:nth-child(2) {
@@ -76,7 +70,6 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: #ffffff;
             background-color: #c68cb1;
         }
         p:nth-child(2) {
@@ -103,7 +96,7 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
-            color: #ffffff;
+            color: map-get($colors, 'txt-white');
             background-color: #5baee7;
         }
         p:nth-child(2) {

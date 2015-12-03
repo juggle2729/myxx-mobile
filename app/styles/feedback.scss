@@ -12,10 +12,9 @@
         padding-left: 30px;
         padding-top: 30px;
         resize: none;
-        border-color: #d9d9d9;
         border-width: 1px;
         position: absolute;
-        color: #393939;
+        color: map-get($colors, 'txt-primary');
         overflow: hidden;
     }
     .info {
@@ -32,7 +31,6 @@
             padding-left: 30px;
             padding-top: 30px;
             resize: none;
-            border-color: #d9d9d9;
             border-width: 1px;
             color: #393939;
             overflow: hidden;
@@ -46,10 +44,10 @@
             border-radius: 8px;
             margin-top: 130px;
             font-size: 30px;
-            background-color: #cc3f4f;
+            background-color: map-get($colors, 'txt-red');
         }
     }
     ::-webkit-input-placeholder {
-        color: #c6c6c6;
+        color: map-get($colors, 'txt-gray');
     }
 }

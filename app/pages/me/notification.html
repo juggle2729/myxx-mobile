@@ -17,16 +17,21 @@
         <template v-for="notice in notificationList">
             <div class="{{notice.type}}">
                 <div class="sender">
-                    <img src="{{{notice.avatar}}}" />
-                    <p class="font-26 txt-primary">{{notice.name}}</p>
+                    <img :src="notice.avatar" @click="go('../me/homepage.html?id=' + notice.userId)"/>
+                    <p class="font-26 txt-primary" @click="go('../me/profile.html?id=' + notice.userId)" >{{notice.name}}</p>
                     <p class="txt-gray">{{notice.time}}</p>
                 </div>
                 <div v-if="notice.text" class="info">
                     <p>{{{notice.text}}}</p>
                 </div>
-                <div v-if="notice.hrefImg" class="hrefimg">
-                    <img src="{{{notice.hrefImg}}}" />
-                    <p class="txt-primary">{{{notice.hrefTitle}}}</p>
+                <div v-if="notice.hrefImg && notice.hrefText" class="hrefimg" @click="go('../community/jade.detail.html?id=' + notice.jadeId)">
+                    <img :src="notice.hrefImg" />
+                    <p class="txt-primary" >{{{notice.hrefTitle}}}</p>
+                    <p v-if="notice.hrefText" class="txt-gray">{{{notice.hrefText}}}</p>
+                </div>
+                <div v-else v-if="notice.hrefImg" class="hrefimg">
+                    <img :src="notice.hrefImg" />
+                    <p class="txt-primary" >{{{notice.hrefTitle}}}</p>
                     <p v-if="notice.hrefText" class="txt-gray">{{{notice.hrefText}}}</p>
                 </div>
             </div>
