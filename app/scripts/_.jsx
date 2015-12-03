@@ -2,14 +2,30 @@
 Vue.config.debug = true;
 Vue.http.options.root = 'http://120.26.113.13';
 Vue.http.options.success = function(resp) {
-    if(resp.status !== 200) {
-        this.toast(resp.message);
-    }
+    // if(resp.status !== 200) {
+    this.toast('global resp hanlder', resp.message);
+    // }
 };
+let appCookie = {};
+if(document.cookie) {
+    let token = 'edb85165-b4b6-46f0-89db-3067e5c51742';
+    try {
+        document.cookie.split(/;\s+/).forEach((pair) => {
+            let [k, v] = pair.split('='); 
+            appCookie[k] = v;
+        });
+        if(appCookie.token) {
+            token = appCookie.token;
+        }
+    } catch(e) {
+        console.log('no user token found!');
+    }
+    Vue.http.headers.common['X-Auth-Token'] = token;
+}
 Vue.http.options.error = function() {
     this.toast('后台出错了~');
 };
-Vue.http.headers.common['X-Auth-Token'] = 'edb85165-b4b6-46f0-89db-3067e5c51742';
+
 Vue.filter('moment', (dateStr) => {
     const MINUTE = 1000 * 60;
     const HOUR = 60 * MINUTE;
@@ -35,7 +51,7 @@ Vue.filter('img', (id) => {
     if (id) {
         src = /^https?/.test(id)
             ? id
-            : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
+            : _.IMG + id;
     } else {
         src = '/images/avatar--defaut.jpg';
     }
@@ -57,7 +73,15 @@ Vue.mixin({
         init() {
             console.warn('init not implemented!');
         },
+        action(action, params = '', callback = x => console.log(x)) {
+            if (window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler(action, params, callback);
+            } else {
+                this.toast('😁请在APP里玩！');
+            }
+        },
         toast(msg, delay = 2000) {
+            console.log('resp message', msg);
             const span = document.createElement('span');
             span.innerText = msg;
             span.className = 'toast visible';
@@ -65,8 +89,32 @@ Vue.mixin({
             setTimeout(() => span.parentNode.removeChild(span), delay);
         },
         // 页面跳转
-        go(href) {
-            location.href = href;
+        go(path) {
+            if(window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler('go', {url: _getUrl(path)});
+            } else {
+                location.href = path;
+            }
+
+            function _getUrl(href) {
+                if (href.split('#').shift().indexOf('://') !== -1) {
+                    return href;
+                } else if (href.indexOf('/') === 0) {
+                    return location.origin + href;
+                }
+                let uri = location.href.split('#').shift().split('/'),
+                    h = href.split('/');
+                uri.pop();
+                for (let i = 0, l = h.length; i < l; i++) {
+                    if (h[i] === '..') {
+                        uri.pop();
+                    } else if (h[i] !== '.') {
+                        uri.push(h[i]);
+                    }
+                }
+                return uri.join('/');
+            }
+
         }
     }
 });

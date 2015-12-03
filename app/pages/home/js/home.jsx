@@ -14,7 +14,7 @@ const vm = new Vue({
                 this.promotes = resp.data.promotes;
             });
             const getJades = this.$http.get(`cms/promotes?section=cy051`, resp => {
-                this.list = resp.data.exbition;
+                this.list = resp.data.promotes;
             });
             return Promise.all([getBanners, getJades]).then(this.render);
         },

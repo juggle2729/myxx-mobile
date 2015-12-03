@@ -37,7 +37,7 @@ const vm = new Vue({
             _.toast('分享');
         },
         comment(userId) {
-            _.toast(typeof userId === 'number' ? '回复' : '评论');
+            this.toast('cookie:' + appCookie.user_id);
         },
         evaluate() {
             _.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');

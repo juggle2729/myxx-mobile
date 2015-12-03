@@ -9,7 +9,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 var optimize = {
-    on: false,
+    on: true,
     js: function(file) {
         return optimize.on && optimize._is(file, 'js');
     },
@@ -67,8 +67,8 @@ gulp.task('styles', function() {
         }, {}))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest('.tmp/styles'))
-        .pipe($.if(optimize.css, $.minifyCss()))
-        .pipe($.if(optimize.on, $.sourcemaps.write('.')))
+        //.pipe($.if(optimize.css, $.minifyCss()))
+        //.pipe($.if(optimize.on, $.sourcemaps.write('.')))
         .pipe($.if(optimize.on, gulp.dest('dist/styles')))
         .pipe($.size({
             title: 'styles'
@@ -117,6 +117,7 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {
 // Watch files for changes & reload
 gulp.task('serve', function() {
     var options = {
+        port: '80',
         notify: false,
         logPrefix: 'RELOAD',
         server: ['.tmp', 'app']

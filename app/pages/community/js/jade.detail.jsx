@@ -1,4 +1,4 @@
-const jadeId = _.query('id') || 1;
+const jadeId = _.query('id');
 const data = {
     detail: {
         'click': 0,
@@ -75,7 +75,7 @@ const vm = new Vue({
             return Promise.all([getDetail, this._loadComments()]);
         },
         play(videoId) {
-            this.toast(`播放视频${videoId}`);
+            this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
         },
         toggleThumb(resultId) {
             const result = this.detail.results.filter(r => r.id === resultId).pop();
@@ -101,19 +101,30 @@ const vm = new Vue({
         },
         toggleFollow() {
             if (this.detail.isFollowed) {
-                this.$http.delete(`jianbao/applies/${jadeId}/follows`, () => {
-                    this.detail.isFollowed = false;
-                    this.detail.follow = this.detail.follow - 1;
+                this.$http.delete(`jianbao/applies/${jadeId}/follows`, (resp) => {
+                    if(resp.status === 200) {
+                        this.detail.isFollowed = false;
+                        this.detail.follow = this.detail.follow - 1;
+                    } else if(resp.status === 605) {
+                        this.toast(resp.message);
+                        this.action('login');
+                    }
                 });
             } else {
-                this.$http.post(`jianbao/applies/${jadeId}/follows`, () => {
-                    this.detail.isFollowed = true;
-                    this.detail.follow = this.detail.follow + 1;
+                this.$http.post(`jianbao/applies/${jadeId}/follows`, (resp) => {
+                    if(resp.status === 200) {
+                        this.detail.isFollowed = true;
+                        this.detail.follow = this.detail.follow + 1;
+                    } else if(resp.status === 605) {
+                        this.toast(resp.message);
+                        this.action('login');
+                    }
                 });
             }
         },
         share() {
             this.toast('分享');
+            this.action('share', {'title': '分享标题', 'icon': 'bar', 'desc': '分享描述', 'url': 'http://www.baidu.com'});
         },
         comment(userId) {
             this.toast(typeof userId === 'number' ? '回复' : '评论');
