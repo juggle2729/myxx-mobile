@@ -14,7 +14,7 @@ const vm = new Vue({
             return this.fetch();
         },
         fetch() {
-            return this.$http.get(`jianbao/applies?${this.tab}=1`, resp => {
+            return this.$http.get('jianbao/applies', {[this.tab]: 1, offset: 0, limit: 3}, resp => {
                 this.applies = resp.data.applies;
                 this.total = resp.data.total;
             });
