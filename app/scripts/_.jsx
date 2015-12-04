@@ -6,22 +6,20 @@ Vue.http.options.success = function(resp) {
     this.toast('global resp hanlder', resp.message);
     // }
 };
-let appCookie = {};
+let appCookie = {
+    token: 'edb85165-b4b6-46f0-89db-3067e5c51742'
+};
 if(document.cookie) {
-    let token = 'edb85165-b4b6-46f0-89db-3067e5c51742';
     try {
         document.cookie.split(/;\s+/).forEach((pair) => {
             let [k, v] = pair.split('='); 
             appCookie[k] = v;
         });
-        if(appCookie.token) {
-            token = appCookie.token;
-        }
     } catch(e) {
         console.log('no user token found!');
     }
-    Vue.http.headers.common['X-Auth-Token'] = token;
 }
+Vue.http.headers.common['X-Auth-Token'] = appCookie.token;
 Vue.http.options.error = function() {
     this.toast('后台出错了~');
 };
