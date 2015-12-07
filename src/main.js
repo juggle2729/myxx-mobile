@@ -85,6 +85,9 @@ router.map({
     },
     '/self': {
         component: require('./components/SelfView.vue')
+    },
+    '/profile': {
+        component: require('./components/ProfileView.vue')
     }
 })
 

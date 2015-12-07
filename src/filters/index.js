@@ -23,7 +23,7 @@ export function moment(dateStr) {
 export function img(id) {
     let src;
     if (id) {
-        src = /^https?/.test(id) ? id : _.IMG + id;
+        src = /^https?/.test(id) ? id : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
     } else {
         src = 'static/images/avatar--defaut.jpg';
     }

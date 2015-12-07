@@ -11,7 +11,8 @@ export default {
         };
     },
     route: {
-        data({ to, from }) {
+        data(transition) {
+            debugger;
         }
     }
 }

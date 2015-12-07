@@ -102,7 +102,7 @@ mian > div {
 </template>
 <script>
 require('style!css!../styles/swiper.css');
-require('script!../scripts/swiper.js');
+require('../scripts/swiper.js');
 import Slide from './Slide.vue';
 export default {
   name: 'Home',
