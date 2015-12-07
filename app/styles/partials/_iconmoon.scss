@@ -1,14 +1,13 @@
 @font-face {
     font-family: 'icomoon';
-    src: url('/styles/fonts/icomoon.eot?rxxaif');
-    src: url('/styles/fonts/icomoon.eot?rxxaif#iefix') format('embedded-opentype'),
-        url('/styles/fonts/icomoon.ttf?rxxaif') format('truetype'),
-        url('/styles/fonts/icomoon.woff?rxxaif') format('woff'),
-        url('/styles/fonts/icomoon.svg?rxxaif#icomoon') format('svg');
+    src: url('/styles/fonts/icomoon.eot?p1vt9c');
+    src: url('/styles/fonts/icomoon.eot?p1vt9c#iefix') format('embedded-opentype'),
+    url('/styles/fonts/icomoon.ttf?p1vt9c') format('truetype'),
+    url('/styles/fonts/icomoon.woff?p1vt9c') format('woff'),
+    url('/styles/fonts/icomoon.svg?p1vt9c#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
-
 [class^='icon-'],
 [class*=' icon-'] {
     font-family: 'icomoon';
@@ -19,115 +18,125 @@
     font-variant: normal;
     text-transform: none;
     line-height: 1;
+
     // Better Font Rendering
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     vertical-align: baseline;
 }
-
-.icon-phone:before {
-    content: '\e916';
-}
-
-.icon-enter:before {
-    content: '\e917';
-}
-
-.icon-text-enter:after {
-    content: '\e917';
-}
-
 .icon-location .path1:before {
     content: '\e900';
     color: rgb(198, 198, 198);
 }
-
 .icon-location .path2:before {
     content: '\e901';
     margin-left: -1em;
     color: rgb(255, 255, 255);
 }
-
 .icon-location .path3:before {
     content: '\e902';
     margin-left: -1em;
     color: rgb(198, 198, 198);
 }
-
-.icon-menu:before {
+.icon-alarm:before {
     content: '\e903';
 }
-
-.icon-share:before {
+.icon-auto-change-1:before {
     content: '\e904';
 }
-
-.icon-shop:before {
+.icon-auto-change-2:before {
     content: '\e905';
 }
-
-.icon-favor:before {
+.icon-comment:before {
     content: '\e906';
 }
-
-.icon-record .path1:before {
+.icon-enter:before {
     content: '\e907';
-    color: rgb(255, 255, 255);
 }
-
-.icon-record .path2:before {
+.icon-edit:before {
     content: '\e908';
-    margin-left: -1em;
-    color: rgb(104, 104, 104);
 }
-
-.icon-play .path1:before {
+.icon-favor:before {
     content: '\e909';
+}
+.icon-favor-active:before {
+    content: '\e90a';
+}
+.icon-favor-master:before {
+    content: '\e90b';
+}
+.icon-menu:before {
+    content: '\e90c';
+}
+.icon-item:before {
+    content: '\e90d';
+}
+.icon-my-favor:before {
+    content: '\e90e';
+}
+.icon-review:before {
+    content: '\e90f';
+}
+.icon-my-shop:before {
+    content: '\e910';
+}
+.icon-my-site:before {
+    content: '\e911';
+}
+.icon-phone:before {
+    content: '\e912';
+}
+.icon-play .path1:before {
+    content: '\e913';
     color: rgba(255, 255, 255, .9);
 }
-
 .icon-play .path2:before {
-    content: '\e90a';
+    content: '\e914';
     margin-left: -1em;
     color: rgb(0, 0, 0);
 }
-
-.icon-favor-active:before {
-    content: '\e90b';
-}
-
-.icon-thumb-active:before {
-    content: '\e90c';
-}
-
-.icon-thumb:before {
-    content: '\e90d';
-}
-
-.icon-home:before {
-    content: '\e90e';
-}
-
-.icon-review:before {
-    content: '\e910';
-}
-
-.icon-view:before {
-    content: '\e911';
-}
-
-.icon-alarm:before {
-    content: '\e912';
-}
-
-.icon-edit:before {
-    content: '\e913';
-}
-
-.icon-settings:before {
-    content: '\e914';
-}
-
-.icon-comment:before {
+.icon-resume-big:before {
     content: '\e915';
+}
+.icon-resume-mid:before {
+    content: '\e916';
+}
+.icon-resume-small:before {
+    content: '\e917';
+}
+.icon-search-master:before {
+    content: '\e918';
+}
+.icon-settings:before {
+    content: '\e919';
+}
+.icon-shop:before {
+    content: '\e91a';
+}
+.icon-thumb:before {
+    content: '\e91b';
+}
+.icon-thumb-active:before {
+    content: '\e91c';
+}
+.icon-record .path1:before {
+    content: '\e91d';
+    color: rgb(255, 255, 255);
+}
+.icon-record .path2:before {
+    content: '\e91e';
+    margin-left: -1em;
+    color: rgb(104, 104, 104);
+}
+.icon-video-play .path1:before {
+    content: '\e91f';
+    color: rgba(255, 255, 255, .9);
+}
+.icon-video-play .path2:before {
+    content: '\e920';
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-view:before {
+    content: '\e921';
 }

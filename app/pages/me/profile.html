@@ -23,19 +23,19 @@
     <div class="separator-40"></div>
     <div class="row bg-white txt-primary font-30">
         <span class="icon-alarm txt-red"></span>
-        <span class="text">消息通知</span>
+        <span class="text" @click="go('../me/notification.html?id=' + 3)">消息通知</span>
         <span class="icon-enter txt-gray"></span>
     </div>
     <div class="separator-40"></div>
     <div class="row-block">
         <div class="row bg-white txt-primary font-30">
             <span class="txt-red icon-favor-active font-30"></span>
-            <span class="text">我的关注</span>
+            <span class="text" @click="go('../me/following.html')">我的关注</span>
             <span class="icon-enter txt-gray font-26"></span>
         </div>
         <div class="row bg-white txt-primary font-30">
             <span class="txt-red icon-review"></span>
-            <span class="text">我的鉴宝</span>
+            <span class="text" @click="go('../community/jade.list.html')">我的鉴宝</span>
             <span class="icon-enter txt-gray font-26"></span>
         </div>
     </div>

@@ -24,7 +24,7 @@
     }
     > button {
         position: absolute;
-        color: #ffffff;
+        color: map-get($colors, 'txt-white');
         height: 90px;
         width: 392px;
         border: 0;
@@ -48,14 +48,14 @@
         > p {
             margin: -6px 0;
             font-size: 30px;
-            color: #393939;
+            color: map-get($colors, 'txt-primary');
             line-height: 42px;
             width: 100%;
         }
     }
     .inner2 {
         font-size: 26px;
-        color: #393939;
+        color: map-get($colors, 'txt-primary');
         margin-top: 36px;
         padding-left: 96px;
         padding-right: 96px;
@@ -65,7 +65,7 @@
         margin-top: 84px;
         > p {
             font-size: 30px;
-            color: #393939;
+            color: map-get($colors, 'txt-primary');
             padding-left: 32px;
             width: 100%;
         }
@@ -89,13 +89,12 @@
             line-height: 38px;
             position: absolute;
             font-size: 26px;
-            color: #393939;
+            color: map-get($colors, 'txt-primary');
         }
         > p:nth-of-type(2) {
             position: absolute;
             margin-top: 86px;
             font-size: 22px;
-            color: #393939;
         }
     }
     .bottom {

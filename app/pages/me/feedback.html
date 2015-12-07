@@ -15,12 +15,12 @@
 <body class="bg-gray" id="app">
     <div class="feedback">
         <div>
-            <textarea placeholder="写下你对美玉秀秀的建议吧"></textarea>
+            <textarea placeholder="写下你对美玉秀秀的建议吧" v-model="advice" v-on:keyup.enter="adviceEnter" ></textarea>
         </div>
         <div class="info">
             <p class="font-30 txt-primary">联系方式</p>
-            <textarea placeholder="留下您的邮箱或电话号码" ></textarea>
-            <button>
+            <textarea placeholder="留下您的邮箱或电话号码" v-model="contact" v-on:keyup.enter="contactEnter"></textarea>
+            <button @click="submit">
                 <span>提交</span>
             </button>
         </div>
