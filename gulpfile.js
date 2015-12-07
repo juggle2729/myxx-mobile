@@ -88,6 +88,7 @@ gulp.task("scripts", function() {
         .pipe($.eslint.failOnError())
         .pipe($.if('*.jsx', $.babel()))
         .on('error', gutil.log)
+        .pipe($.if(optimize.js, $.uglify()))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(".tmp"))
         .pipe($.size({
@@ -121,6 +122,8 @@ gulp.task('serve', function() {
         notify: false,
         logPrefix: 'RELOAD',
         server: ['.tmp', 'app']
+
+        
     };
 
     runSequence('styles', ['scripts'], function() {

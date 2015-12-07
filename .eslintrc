@@ -25,7 +25,8 @@
     "jsx": true
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "globals": {
     "Vue": true,

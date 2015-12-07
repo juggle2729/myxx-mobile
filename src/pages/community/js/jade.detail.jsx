@@ -75,7 +75,10 @@ const vm = new Vue({
             return Promise.all([getDetail, this._loadComments()]);
         },
         play(videoId) {
-            this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
+            this.toast(`播放视频${videoId}`);
+            if(window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler('play', videoId, x => x);
+            }
         },
         toggleThumb(resultId) {
             const result = this.detail.results.filter(r => r.id === resultId).pop();
@@ -124,7 +127,9 @@ const vm = new Vue({
         },
         share() {
             this.toast('分享');
-            this.action('share', {'title': '分享标题', 'icon': 'bar', 'desc': '分享描述', 'url': 'http://www.baidu.com'});
+            if(window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler('share', {'title': '分享标题', 'icon': 'bar', 'desc': '分享描述', 'url': 'http://www.baidu.com'}, x => x);
+            }
         },
         comment(userId) {
             this.toast(typeof userId === 'number' ? '回复' : '评论');
