@@ -66,7 +66,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/evaluation'
-});
+    '*': '/profile'
+})
 
 router.start(App, '#app');

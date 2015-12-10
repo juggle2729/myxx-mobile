@@ -28,6 +28,8 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
+            color: map-get($colors, 'txt-white');
+            background-color: #ecc976;
         }
     }
 }
@@ -47,6 +49,7 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
+            color: map-get($colors, 'txt-white');
             background-color: #9bde6a;
         }
         p:nth-child(2) {
@@ -70,6 +73,7 @@
             right: 32px;
             top: 50%;
             font-size: 22px;
+            color: map-get($colors, 'txt-white');
             background-color: #c68cb1;
         }
         p:nth-child(2) {
