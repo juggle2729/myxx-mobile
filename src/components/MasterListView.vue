@@ -86,8 +86,8 @@
     <div class="master-list">
       <div class="search">
           <input type="text" class="font-22 txt-primary" placeholder="请输入您想查找的姓名、头衔等关键字" v-on:keyup.enter="searchEnter" v-model="searchText" />
-          <span class="icon-favor font-22 txt-gray"></span>
-          <span class="icon-shop font-22 txt-gray"></span>
+          <span class="icon-favor font-22 light"></span>
+          <span class="icon-shop font-22 light"></span>
       </div>
       <div class="filter"></div>
       <div v-for="master in masters" class="master horizontal  border-bottom">
@@ -99,7 +99,7 @@
               </div>
               <div><p class="honor">{{master.honor[0]}}</p><p>{{master.honor[1]}}</p></div>
               <div><p>{{master.honor[2]}}</p></div>
-              <div><span class="identify-number txt-gray">{{master.identifyNumber}}</span><span class="fans txt-gray">{{master.fans}}</span></div>
+              <div><span class="identify-number light">{{master.identifyNumber}}</span><span class="fans light">{{master.fans}}</span></div>
           </div>
       </div>
   </div>

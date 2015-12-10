@@ -10,7 +10,7 @@
               <p>{{item.item.desc}}</p>
             </div>
         </div>
-        <div class="social-status txt-gray">
+        <div class="social-status light">
                 <span>
                   <span class="like"><i class="icon-thumb txt-white"></i>{{item.item.follow}}</span>
                   <span class="comment"><i class="icon-comment txt-white"></i>{{item.item.comments}}</span>

@@ -51,7 +51,7 @@
                 <img :src="user.photo | img" v-link="{ name: 'homepage', params: { id: user.userId }}"/>
                 <div class="info" v-link="{ name: 'homepage', params: { id: user.userId }}">
                     <p class="font-30 txt-primary">{{user.nickname}}</p>
-                    <p class="font-22 txt-gray" style="margin-top:8px;">{{user.title}}</p>
+                    <p class="font-22 light" style="margin-top:8px;">{{user.title}}</p>
                 </div>
                 <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">取消关注</button>
                 <button v-if="!user.followed" @click="toggleFollow(user)" style="display: flex;align-items: center;">

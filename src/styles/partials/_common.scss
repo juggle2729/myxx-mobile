@@ -1,111 +1,79 @@
-@each $size in $sizes {
+/************************
+*   遍历变量，生成class    *
+* **********************/
+@import 'var';
+@each $size in $fonts {
     .font-#{$size} {
         font-size: #{$size}px;
     }
 }
 
-@each $clazz,
-$color in $colors {
-    $index: str-index('"' + $clazz + '"', 'bg-');
+@each $clazz, $color in $colors {
+    $bg: str-index('"' + $clazz + '"', 'bg-');
+    $border: str-index('"' + $clazz + '"', 'border-');
     .#{$clazz} {
-        @if not $index {
-            color: #{$color};
-        } @else {
+        @if $bg {
             background-color: #{$color};
+        } @else if $border {
+            border: 1px solid #{$color};
+        } @else {   // 默认为字体颜色
+            color: #{$color};
         }
     }
 }
-.txt-bold {
-    font-weight: bold;
+.bold {font-weight: bold;}
+.italic {font-style: italic;}
+.center {text-align: center;}
+
+@each $size in $avatars {
+    .avatar-#{$size} {
+        width: #{$size}px;
+        height: #{$size}px;
+        border-radius: 50%;
+        background-size: cover;
+    }
 }
-.horizontal {
-    display: -webkit-box;
+.avatar {
+    @extend .avatar-68;
 }
 
-//Position
-.float-left {
-    float: left;
+@each $direction in (all, top, right, bottom, left, vertical, horizontal) {
+    .border-#{$direction} {
+        @include border(#{$direction});
+    }
 }
+/**********************************
+*   常用间距，和设计规范紧密相关,待调整  *
+* ********************************/
+margin-top {margin-top: 12px;}
+margin-left {margin-left: 20px;}
+margin-right {margin-right: 20px;}
+padding {padding: 8px;}
+padding-top {padding-top: 8px;}
+padding-right {padding-right: 8px;}
+padding-bottom {padding-bottom: 8px;}
+padding-left {padding-left: 8px;}
+padding-vertical {padding-left: 8px; padding-right: 8px;}
+padding-horizontal {padding-top: 8px; padding-bottom: 8px;}
 
-.float-right {
-    float: right;
+/****************************
+*           常用功能          *
+* **************************/
+@each $position in (relative, absolute, fixed) {
+    .#{$position} {
+        position: #{$position};
+    }
 }
-
-.txt-center {
-    text-align: center;
-}
-
-.txt-left {
-    text-align: left;
-}
-
-.txt-right {
-    text-align: right;
-}
-
-.center {
-    @extend .center-horizontal;
-    @extend .center-vertical;
-}
-
 .center-horizontal {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
 .center-vertical {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
 }
-
-.relative {
-    position: relative;
-}
-
-//Padding & Margin
-@each $clazz in padding,
-padding-top,
-padding-bottom,
-padding-left,
-padding-right {
-    .#{$clazz} {
-        #{$clazz}: $padding;
-    }
-}
-
-.padding-vertical {
-    @extend .padding-top;
-    @extend .padding-bottom;
-}
-
-.padding-horizontal {
-    @extend .padding-left;
-    @extend .padding-right;
-}
-
-@each $clazz in margin,
-margin-top,
-margin-bottom,
-margin-left,
-margin-right {
-    .#{$clazz} {
-        #{$clazz}: $margin;
-    }
-}
-
-.margin-vertical {
-    @extend .margin-top;
-    @extend .margin-bottom;
-}
-
-.margin-horizontal {
-    @extend .margin-left;
-    @extend .margin-right;
-}
-
-//Component
 .show {
     display: block;
 }
@@ -123,7 +91,6 @@ margin-right {
     opacity: 0;
     visibility: hidden;
 }
-
 .clearfix {
     &:before,
     &:after {
@@ -134,91 +101,75 @@ margin-right {
         clear: both;
     }
 }
+/****************************
+*           常用组件          *
+* **************************/
 .toast {
     position: fixed;
     top: 50%;
     left: 50%;
     background-color: rgba(0, 0, 0, .6);
     border-radius: 5px;
-    color: #ffffff;
+    color: map-get($colors, 'txt-white');
     transform: translate(-50%, -50%);
     font-size: 20px;
     padding: 10px;
 }
-// bottom bar animation
-.animated {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-.slide-in-up {
-    animation-name: slideInUp;
-}
-.slide-out-down {
-    animation-name: slideOutDown;
-}
-@keyframes slideInUp {
-    from {
-        transform: translate3d(0, 100%, 0);
-        visibility: visible;
-    }
-    to {
-        transform: translate3d(0, 0, 0);
-    }
-}
-@keyframes slideOutDown {
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-
-    to {
-        visibility: hidden;
-        transform: translate3d(0, 100%, 0);
-    }
-}
-
-.video {
-    position: relative;
-    background-color: #d9d9d9;
-    &::after {
-        content: '';
-        background-position: center;
-        background-repeat: no-repeat;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-size: 1.2rem;
-        mix-blend-mode: overlay;
-        background-image: url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png');
-    }
-}
-
-// page loading
+// 页面加载效果
 .loading {
     overflow: hidden;
     &::before {
         content: '';
         position: absolute;
         z-index: 999;
-        background: map-get($colors, 'bg-white') url('/images/loading.gif') no-repeat center;
+        background: map-get($colors, 'bg-white') url('//7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif') no-repeat center;
         width: 100%;
         height: 100%;
-        background-size: 20px 20px;
+        background-size: 120px 68px;
     }
 }
-// video img placeholder
-.img, .video {
-    background-color: #e0e0e0;
-    background-position: center;
+// 视频占位
+.video {
+    position: relative;
     background-size: cover;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        mix-blend-mode: overlay;
+        background-size: 1.2rem;
+        background: map-get($colors, 'bg-default') url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat center;
+    }
 }
-.avatar {
-    height: 68px;
-    width: 68px;
-    border-radius: 50%;
-    background-size: cover;
-    vertical-align: middle;
+.row {
+    line-height: 100px;
+    padding: 0 32px;
+    position: relative;
+    width: 100%;
+    .icon-enter {
+        margin-top: -16px;
+        position: absolute;
+        right: 32px;
+        top: 50%;
+    }
 }
+.row-block {
+    .row:nth-of-type(2n+1) {
+        @extend .border-top;
+        margin-top: 0;
+    }
+}
+.separator, .separator-20 {
+    @extend .border-vertical;
+    @extend .bg-default;
+    height: 20px;
+}
+.separator-40 {
+    @extend .border-vertical;
+    @extend .bg-default;
+    height: 40px;
+}
+

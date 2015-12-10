@@ -1,2 +1,43 @@
-// Utilities
-@import '../mixins/border';
+@mixin border($direction:all, $color:map-get($colors, 'border-default')) {
+    @if ($direction==top) {
+        background-image: linear-gradient(180deg, $color 51%, transparent 51%);
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: 100% 1px;
+        padding-top: 1px;
+    } @else if ($direction==bottom) {
+        background-image: linear-gradient(0deg, transparent 50%, $color 50%);
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: 100% 1px;
+        padding-bottom: 1px;
+    } @else if ($direction==left) {
+        background-image: linear-gradient(90deg, $color 51%, transparent 51%);
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: 1px 100%;
+        padding-left: 1px;
+    } @else if ($direction==right) {
+        background-image: linear-gradient(270deg, $color 51%, transparent 51%);
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 1px 100%;
+        padding-right: 1px;
+    } @else if ($direction==vertical) {
+        background-image: linear-gradient(180deg, $color 51%, transparent 51%), linear-gradient(0deg, transparent 50%, $color 50%);
+        background-position: center top, center bottom;
+        background-repeat: no-repeat, no-repeat;
+        background-size: 100% 1px, 100% 1px;
+        padding-bottom: 1px;
+        padding-top: 1px;
+    } @else if ($direction==horizontal) {
+        background-image: linear-gradient(90deg, $color 51%, transparent 51%), linear-gradient(270deg, $color 50%, transparent 50%);
+        background-position: left center, right center;
+        background-repeat: no-repeat, no-repeat;
+        background-size: 1px 100%, 1px 100%;
+        padding-left: 1px;
+        padding-right: 1px;
+    } @else if ($direction==all) {
+        box-shadow: 0 0 1px 0 $color;
+    }
+}

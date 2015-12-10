@@ -53,7 +53,7 @@
             }
         }
     }
-    
+
     .social-actions {
         position: fixed;
         z-index: 9;
@@ -74,8 +74,8 @@
         <div class="user">
             <div class="avatar" v-bg.sm="apply.applier.photo"></div>
             <div class="name">
-                <p class="font-26 txt-primary">{{apply.applier.name}}</p>
-                <p class="moment font-22 txt-gray"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
+                <p class="font-26">{{apply.applier.name}}</p>
+                <p class="moment font-22 light"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
             </div>
         </div>
         <div class="desc font-30">{{apply.description}}</div>
@@ -87,29 +87,29 @@
     <div class="separator"></div>
     <div class="comments">
         <div class="header border-bottom font-22">
-            <div class="txt-primary">评论{{comments.total}}</div>
-            <div @click="comment" class="txt-red"><i class="icon-comment"></i>我要评论</div>
+            <div>评论{{comments.total}}</div>
+            <div @click="comment" class="red"><i class="icon-comment"></i>我要评论</div>
         </div>
         <ul>
             <li class="margin-bottom" v-for="c in comments.list">
                 <div class="author">
                     <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
                     <div>
-                        <h3 class="font-26 txt-blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
-                        <p class="font-22 txt-gray margin-top">{{c.create_at | moment}}</p>
+                        <h3 class="font-26 blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                     </div>
                 </div>
-                <div class="font-30 txt-gray">
-                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="txt-blue">{{c.reply_to.nickname}}</span>:</span>
+                <div class="font-30 light">
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
-            <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
+            <li v-show="!comments.list.length" class="center light font-26 margin-top">还没有人评论</li>
         </ul>
     </div>
     <div class="separator"></div>
-    <div class="social-actions bg-white border-top font-26 txt-black">
-        <span class="txt-center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="txt-center"><i class="icon-thumb"></i>分享</span>
+    <div class="social-actions bg-white border-top font-26 gray">
+        <span class="center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="center"><i class="icon-thumb"></i>分享</span>
     </div>
 </div>
 </template>

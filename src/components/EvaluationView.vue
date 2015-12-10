@@ -78,7 +78,7 @@
             background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
             background-position: left center;
         }
-        &:nth-of-type(2n+1) {   
+        &:nth-of-type(2n+1) {
             // FIXME this rule will be swallowed somehow,
             // use v-for $index as a walkaround
             @extend .border-top;
@@ -86,29 +86,28 @@
     }
     .social {
         height: 60px;
-        @extend .border-top;
     }
 }
 </style>
 <template>
     <div class="evaluation">
     <div class="tabs">
-        <div :class="{'txt-red': tab=='time'}" class="font-26 txt-primary txt-center border-right">
+        <div :class="{'red': tab=='time'}" class="font-26 center border-right">
             <label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab">
         </div>
-        <div :class="{'txt-red': tab=='popularity'}" class="txt-primary font-26 txt-center">
+        <div :class="{'red': tab=='popularity'}" class="font-26 center">
             <label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab">
         </div>
     </div>
     <template v-for="item in items">
         <div class="separator"></div>
-        <div class="item">     
+        <div class="item">
             <div class="header">
                 <div class="user">
                     <div class="avatar" v-bg.sm="item.applier.photo"></div>
                     <div class="name">
-                        <p class="font-26 txt-primary">{{item.applier.name}}</p>
-                        <p class="moment font-22 txt-gray">{{item.create_at | moment}}</p>
+                        <p class="font-26">{{item.applier.name}}</p>
+                        <p class="moment font-22 gray">{{item.create_at | moment}}</p>
                   </div>
                 </div>
                 <div class="desc font-30">{{item.description}}</div>
@@ -137,8 +136,8 @@
             <div v-for="result in item.results" class="result">
                 <div class="avatar" v-bg.sm="result.identifier.photo"></div>
                 <div class="master">
-                    <p class="name font-26 txt-black">{{result.identifier.name}}</p>
-                    <p class="title font-22 txt-gray">{{result.identifier.title}}</p>
+                    <p class="name font-26 gray">{{result.identifier.name}}</p>
+                    <p class="title font-22 gray">{{result.identifier.title}}</p>
                 </div>
                 <div class="mark font-22">已鉴定</div>
             </div>

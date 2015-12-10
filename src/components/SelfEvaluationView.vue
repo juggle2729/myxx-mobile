@@ -94,7 +94,7 @@
                         <p class="font-26 txt-primary">
                             小玉小
                         </p>
-                        <p class="txt-gray">{{jade.date | moment}}</p>
+                        <p class="light">{{jade.date | moment}}</p>
                     </div>
                 </div>
                 <div class="image">
@@ -117,7 +117,7 @@
                                 <p class="font-26 txt-primary">
                                     {{result.identifier.name}}
                                 </p>
-                                <p class="txt-gray">{{result.identifier.title}}</p>
+                                <p class="light">{{result.identifier.title}}</p>
                             </div>
                             <p>已鉴定</p>
                         </div>

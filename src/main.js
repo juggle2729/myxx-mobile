@@ -1,4 +1,3 @@
-require('./styles/partials/myxx.scss');
 require('./scripts/resize');
 import config from './config';
 import Vue from 'vue';

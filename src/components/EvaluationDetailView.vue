@@ -124,7 +124,7 @@
             }
         }
     }
-    
+
     .social-actions {
         position: fixed;
         z-index: 9;
@@ -145,16 +145,9 @@
         <div class="user">
             <div class="avatar" v-bg.sm="apply.applier.photo"></div>
             <div class="name">
-                <p class="font-26 txt-primary">{{apply.applier.name}}</p>
-                <p class="moment font-22 txt-gray"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
+                <p class="font-26">{{apply.applier.name}}</p>
+                <p class="moment font-22 gray"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
             </div>
-            <p class="desc">
-                {{detail.description}}
-            </p>
-            <div class="video clickable" @click="play(detail.video)" v-bind:style="{backgroundImage: 'url(http://7xo88d.media1.z0.glb.clouddn.com/' + detail.video+ '?vframe/jpg/offset/2/w/540/h/540/rotate/90/)'}"></div>
-            <ul class="images">
-                <li v-for="picture in detail.pictures" track-by="$index" class="img" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + picture + ')'}">{{picture}}</li>
-            </ul>
         </div>
         <div class="desc font-30">{{apply.description}}</div>
     </div>
@@ -163,61 +156,84 @@
         <ul class="images"><li v-for="picture in apply.pictures" track-by="$index" class="img" v-bg.md="picture"></li></ul>
     </div>
     <div class="separator"></div>
-    <div class="results">
-        <div class="font-30 txt-gray border-bottom padding-vertical">大师鉴定 {{apply.results ? apply.results.length : 0}}</div>
-        <div v-for="result in apply.results" class="result">
-            <div class="header">
-                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
-                <div class="master padding-left">
-                    <h3 class="font-30 txt-gray">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow txt-white">个人官网</span></h3>
-                    <p class="font-22 txt-black margin-top">浙江省工艺美术大师</p>
-                </div>
-                <div class="font-22 txt-gray">{{result.create_at | moment}}</div>
-            </div>
-            <div class="card bg-gray border-all font-30">
-                <div class="video" @click="play(result.video)" v-bg.video="result.video"></div>
-                <div class="conclusion">
-                    <div class="txt">
-                        <p class="center-vertical txt-center">鉴宝结果：<span :class="{'txt-red': result.result=='真货' }">{{result.result}}</span>
-                        <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span></p>
-                    </div>
-                    <div class="social border-top font-22">
-                        <span @click="toggleThumb(result.id)" class="favor txt-center border-right"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment txt-center txt-gray"><i class="icon-comment"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div v-show="!apply.results.length" class="txt-center txt-gray font-26 margin-top">还没有大师来鉴定</div>
-        <div class="evaluation-btn">
-            <button class="txt-white bg-red font-30" @click="evaluate">我来鉴定</button>
-        </div>
-    </div>
-    <div class="separator"></div>
     <div class="comments">
         <div class="header border-bottom font-22">
-            <div class="txt-primary">评论{{comments.total}}</div>
-            <div @click="comment" class="txt-red"><i class="icon-comment"></i>我要评论</div>
+            <div>评论{{comments.total}}</div>
+            <div @click="comment" class="red"><i class="icon-comment"></i>我要评论</div>
         </div>
         <ul>
             <li class="margin-bottom" v-for="c in comments.list">
                 <div class="author">
                     <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
                     <div>
-                        <h3 class="font-26 txt-blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
-                        <p class="font-22 txt-gray margin-top">{{c.create_at | moment}}</p>
+                        <h3 class="font-26 blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                     </div>
                 </div>
-                <div class="font-30 txt-gray">
-                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="txt-blue">{{c.reply_to.nickname}}</span>:</span>
+                <div class="font-30 light">
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
-            <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
+            <li v-show="!comments.list.length" class="center light font-26 margin-top">还没有人评论</li>
+        </ul>
+    </div>
+    <div class="separator"></div>
+    <div class="results">
+        <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{apply.results ? apply.results.length : 0}}</div>
+        <div v-for="result in apply.results" class="result">
+            <div class="header">
+                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
+                <div class="master padding-left">
+                    <h3 class="font-30 light">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow white">个人官网</span></h3>
+                    <p class="font-22 txt-black margin-top">浙江省工艺美术大师</p>
+                </div>
+                <div class="font-22 light">{{result.create_at | moment}}</div>
+            </div>
+            <div class="card bg-gray border-all font-30">
+                <div class="video" @click="play(result.video)" v-bg.video="result.video"></div>
+                <div class="conclusion">
+                    <div class="txt">
+                        <p class="center-vertical center">鉴宝结果：<span :class="{'red': result.result=='真货' }">{{result.result}}</span>
+                        <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span></p>
+                    </div>
+                    <div class="social border-top font-22">
+                        <span @click="toggleThumb(result.id)" class="favor center border-right"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment center light"><i class="icon-comment"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-show="!apply.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
+        <div class="evaluation-btn">
+            <button class="white bg-red font-30" @click="evaluate">我来鉴定</button>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="comments">
+        <div class="header border-bottom font-22">
+            <div>评论{{comments.total}}</div>
+            <div @click="comment" class="red"><i class="icon-comment"></i>我要评论</div>
+        </div>
+        <ul>
+            <li class="margin-bottom" v-for="c in comments.list">
+                <div class="author">
+                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
+                    <div>
+                        <h3 class="font-26 blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
+                    </div>
+                </div>
+                <div class="font-30 light">
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span>{{c.content}}</span>
+                </div>
+            </li>
+            <li v-show="!comments.list.length" class="center light font-26 margin-top">还没有人评论</li>
         </ul>
     </div>
     <div class="separator last"></div>
-    <div class="social-actions bg-white border-top font-26 txt-black">
-        <span class="txt-center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="txt-center"><i class="icon-thumb"></i>分享</span>
+    <div class="social-actions bg-white border-top font-26 gray">
+        <span class="center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="center"><i class="icon-thumb"></i>分享</span>
     </div>
 </template>
 <script>
@@ -313,81 +329,7 @@ export default {
                         this.toast(resp.message);
                         this.action('login');
                     }
-                    this.comments.loading = true;
-                    return this.$http.get(`jianbao/applies/${jadeId}/comments?offset=${offset}&limit=${limit}`, function(resp) {
-                        this.comments.list.splice(this.comments.list.length - 1, 0, ...resp.data.comments);
-                        this.comments.total = resp.data.total;
-                        offset = offset + limit;
-                        if (resp.data.comments.length < limit || offset > resp.data.total) {
-                            this.comments.hasMore = false;
-                        } else {
-                            this.comments.loading = false;
-                        }
-                    });
-                };
-            })(),
-            play(videoId) {
-                this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
-            },
-            toggleThumb(resultId) {
-                const result = this.detail.results.filter(r => r.id === resultId).pop();
-                if (result.isLike) {
-                    this.$http.delete(`jianbao/results/${resultId}/like`, (resp) => {
-                        if (resp.status === 200) {
-                            result.isLike = false;
-                            result.like = result.like - 1;
-                        } else {
-                            this.toast(resp.message);
-                        }
-                    });
-                } else {
-                    this.$http.post(`jianbao/results/${resultId}/like`, (resp) => {
-                        if (resp.status === 200) {
-                            result.isLike = true;
-                            result.like = result.like + 1;
-                        } else {
-                            this.toast(resp.message);
-                        }
-                    });
-                }
-            },
-            toggleFollow() {
-                if (this.detail.isFollowed) {
-                    this.$http.delete(`jianbao/applies/${jadeId}/follows`, (resp) => {
-                        if (resp.status === 200) {
-                            this.detail.isFollowed = false;
-                            this.detail.follow = this.detail.follow - 1;
-                        } else if (resp.status === 605) {
-                            this.toast(resp.message);
-                            this.action('login');
-                        }
-                    });
-                } else {
-                    this.$http.post(`jianbao/applies/${jadeId}/follows`, (resp) => {
-                        if (resp.status === 200) {
-                            this.detail.isFollowed = true;
-                            this.detail.follow = this.detail.follow + 1;
-                        } else if (resp.status === 605) {
-                            this.toast(resp.message);
-                            this.action('login');
-                        }
-                    });
-                }
-            },
-            share() {
-                this.toast('分享');
-                this.action('share', {
-                    'title': '分享标题',
-                    'icon': 'bar',
-                    'desc': '分享描述',
-                    'url': 'http://www.baidu.com'
                 });
-            },
-            comment(userId) {
-                this.toast(typeof userId === 'number' ? '回复' : '评论');
-            },
-            evaluate() {
-                this.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
             }
         },
         share() {
@@ -400,4 +342,5 @@ export default {
             this.toast(this.apply.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
         }
     }
+}
 </script>

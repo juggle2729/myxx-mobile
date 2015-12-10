@@ -1,5 +1,8 @@
+<style lang="sass">
+    @import '../styles/myxx';
+</style>
 <template>
-  <main>
+  <main :class="{'loading': $loadingRouteData}">
     <!-- main view -->
     <router-view></router-view>
   </main>

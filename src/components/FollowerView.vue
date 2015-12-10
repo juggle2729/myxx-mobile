@@ -62,7 +62,7 @@
                     <div class="info" v-link="{ name: 'homepage', params: { id: user.userId }}">
                         <div>
                             <p class="font-30 txt-primary">{{user.nickname}}</p>
-                            <p class="font-26 txt-gray" style="margin-top:12px;">{{user.title}}</p>
+                            <p class="font-26 light" style="margin-top:12px;">{{user.title}}</p>
                         </div>
                     </div>
                     <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">
@@ -84,7 +84,7 @@
                     <div class="info" v-link="{ name: 'homepage', params: { id: user.userId }}">
                         <div>
                             <p class="font-30 txt-primary">{{user.nickname}}</p>
-                            <p class="font-26 txt-gray" style="margin-top:8px;">{{user.title}}</p>
+                            <p class="font-26 light" style="margin-top:8px;">{{user.title}}</p>
                         </div>
                     </div>
                     <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">

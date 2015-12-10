@@ -1,26 +1,29 @@
 // font size
-$sizes: (34, 30, 26, 24, 22);
+$fonts: (34, 30, 26, 22);
 // colors
 $colors: (
     // text color
-    txt-primary: #393939,
-    txt-black: #888888,
-    txt-blue: #33a1c9,
-    txt-red: #cc3f4f,
-    txt-gray: #c6c6c6,
-    txt-white: #ffffff,
+    // primary: #393939,    // 默认字体颜色已做全局设置
+    light: #c6c6c6,
+    gray: #888888,
+    blue: #33a1c9,
+    red: #cc3f4f,
+    white: #ffffff,
 
     // background color
-    bg-primary: #efefef,
+    bg-default: #efefef,
+    bg-light: #f9f9f9,
     bg-red: #cc3f4f,
     bg-yellow: #f3ac1c,
-    bg-gray: #f9f9f9,
+    bg-blue: #469de7,
     bg-white: #ffffff,
+    bg-disable: #b2b2b2,
+    // bg--active: #d9d9d9, // 全局active状态设置
 
     // border color
-    border-primary: #d9d9d9
+    border-default: #d9d9d9,
+    border-red: #cc3f4f,
+    border-gray: #888888
 );
 
-// dimensions
-$padding: 24px;
-$margin: 24px;
+$avatars: (240, 180, 120, 68, 50, 36);

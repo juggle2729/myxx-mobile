@@ -52,9 +52,9 @@
 </style>
 <template>
     <div class="featured-view">
-        <div class="item txt-white" v-for="item in items" v-bg.lg='item.image'>
-            <div class="title font-30 txt-bold">{{item.item.desc}}</div>
-            <div class="user font-26 txt-gray">
+        <div class="item white" v-for="item in items" v-bg.lg='item.image'>
+            <div class="title font-30 bold">{{item.item.desc}}</div>
+            <div class="user font-26 gray">
                 <div class="avatar" v-bg.sm='item.item.user.photo'></div>
                 <div class="name">{{item.item.user.name}}</div>
             </div>

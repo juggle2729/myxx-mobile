@@ -69,12 +69,12 @@
                     <p class="font-26 txt-primary" v-bind:class="{ 'font-red': jade.title, 'font-blue': !jade.title}">
                         {{jade.title? '我发起的鉴宝':'我参与的鉴宝'}}
                     </p>
-                    <p class="font-26 txt-gray">{{jade.date}}</p>
+                    <p class="font-26 light">{{jade.date}}</p>
                 </div>
                 <div class="info" v-link="{ name: 'evaluation-detail', params: { id: jade.id }}">
                     <img :src="jade.imgUrl | img" :title="jade.imgUrl" />
                     <p class="font-26 txt-primary">{{{jade.description}}}</p>
-                    <p class="font-26 txt-gray">{{{jade.resultTotal}}}条鉴定结果</p>
+                    <p class="font-26 light">{{{jade.resultTotal}}}条鉴定结果</p>
                 </div>
             </div>
             <div class="separator-20"></div>
