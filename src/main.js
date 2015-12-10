@@ -1,25 +1,30 @@
 require('./styles/partials/myxx.scss');
 require('./scripts/resize');
+import config from './config';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
+import routes from './routes';
 import mixins from './mixins';
-import { domain, fromNow, moment, img, money } from './filters';
+import { bg } from './directives';
+import { moment, img, money } from './filters';
 import App from './components/App.vue';
 
-// install router
 Vue.use(Router);
 Vue.use(Resource);
 
+// mixins
+Vue.mixin(mixins);
+// directives
+Vue.directive('bg', bg);
 // filters
 Vue.filter('moment', moment);
 Vue.filter('img', img);
-Vue.filter('moeny', money);
-// mixins
-Vue.mixin(mixins);
+Vue.filter('money', money);
+
 // Vue configurations
 Vue.config.debug = true;
-Vue.http.options.root = 'http://120.26.113.13';
+Vue.http.options.root = config.api.dev;
 Vue.http.options.success = function(resp) {
     if (resp.status !== 200) {
         console.error(resp.message);
@@ -54,49 +59,14 @@ router.afterEach(function ({ to }) {
         document.title = to.title;
     }
 });
-router.map({
-    '/featured': {
-        name: 'featured',
-        component: require('./components/FeaturedView.vue')
-    },
-    '/evaluation': {
-        name: 'evaluation',
-        component: require('./components/EvaluationView.vue')
-    },
-    '/evaluation/:id': {
-        name: 'evaluation-detail',
-        component: require('./components/EvaluationDetailView.vue')
-    },
-    '/story': {
-        name: 'story',
-        component: require('./components/StoryView.vue')
-    },
-    '/story/:id': {
-        name: 'story-detail',
-        component: require('./components/StoryDetailView.vue')
-    },
-    '/discover': {
-        name: 'discover',
-        component: require('./components/DiscoverView.vue')
-    },
-    '/message': {
-        name: 'message',
-        component: require('./components/MessageView.vue')
-    },
-    '/self': {
-        component: require('./components/SelfView.vue')
-    },
-    '/profile': {
-        component: require('./components/ProfileView.vue')
-    }
-})
+router.map(routes);
 
 router.beforeEach(function() {
     window.scrollTo(0, 0);
-})
+});
 
 router.redirect({
-    '*': '/featured'
-})
+    '*': '/evaluation'
+});
 
 router.start(App, '#app');

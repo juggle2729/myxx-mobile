@@ -1,140 +1,108 @@
-<style>
-html,
-body,
-main, 
-mian > div {
-    position: relative;
-    height: 100%;
-}
-
-.swiper-container {
-    width: 100%;
-    height: 100%;
-}
-.swiper-slide {
-    width: 90%;
-    text-align: center;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    &:first-of-type, &:last-of-type {
-        width: 705px;
-    }
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    border-radius: 10px;
-    position: absolute;
-    left: 15px;
-    top: 90px;
-    right: 15px;
-    bottom: 130px;
-    background-size: cover;
-    background-position: center;
-    text-align: left;
-    &::after {
-        pointer-events: none;
-        content: '';
-        background-position: right 32px top 32px;
+<style lang="sass">
+.featured-view {
+    .item {
+        height: 350px;
+        margin: 20px;
         background-repeat: no-repeat;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-size: 1.2rem;
-        mix-blend-mode: overlay;
-        background-image: url('/static/images/icon/ico_video.png');
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        position: relative;
+        padding: 24px 20px 20px;
     }
-    .owner {
-        display: flex;
-        justify-content: space-around;
-        padding: 0 32px;
-        img {
-            width: 72px;
-            height: 72px;
+    .user {
+        height: 36px;
+        padding-top: 16px;
+        .avatar {
+            display: inline-block;
+            height: 36px;
+            width: 36px;
             border-radius: 50%;
-            margin-right: 20px;
+            background-size: cover;
+            vertical-align: middle;
         }
-        .desc {
-            flex: 1;
-            font-size: 32px;
-            p {
-                overflow: hidden;
-                width: 100%;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
+        .name {
+            display: inline-block;
+            line-height: 36px;
         }
     }
-    .social-status {
-        padding: 10px 0;
-        display: flex;
-        justify-content: space-around;
-        font-size: 28px;
-        margin: 0 32px 0 60px;
-        .result {
-            flex: 1;
-            text-align: right;
+    .social {
+        position: absolute;
+        bottom: 20px;
+        .favor {
+            display: inline-block;
         }
+        .comment {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        i {
+            vertical-align: middle;
+        }
+    }
+    .type {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 36px;
+        padding: 10px 5px;
+        border-radius: 15px;
     }
 }
 </style>
 <template>
-    <div class="swiper-container swiper-container-banners">
-        <div class="swiper-wrapper">
-            <slide
-              v-for="item in items"
-              :item="item"
-              track-by="id">
-            </slide>
+    <div class="featured-view">
+        <div class="item txt-white" v-for="item in items" v-bg.lg='item.image'>
+            <div class="title font-30 txt-bold">{{item.item.desc}}</div>
+            <div class="user font-26 txt-gray">
+                <div class="avatar" v-bg.sm='item.item.user.photo'></div>
+                <div class="name">{{item.item.user.name}}</div>
+            </div>
+            <div class="social font-22">
+                <div class="favor">
+                    <i class="icon-favor"></i>
+                    <span>{{item.item.follow}}</span>
+                </div>
+                <div class="comment">
+                    <i class="icon-comment"></i>
+                    <span>{{item.item.reviews}}</span>
+                </div>
+            </div>
+            <div class="type bg-red font-26">{{item.type}}</div>
         </div>
     </div>
 </template>
 <script>
-require('style!css!../styles/swiper.css');
-require('../scripts/swiper.js');
-import Slide from './Slide.vue';
+import config from '../config';
 export default {
-  name: 'Home',
-  components: {
-    Slide
-  },
-  data() {
-    return {
-        items: []
-    };
-  },
-  route: {
+    name: 'FeaturedView',
     data() {
-        return this.$http
-            .get('cms/promotes?section=cy031')
-            .success(({data: {promotes: items}}) => {
-                this.$data.items = items;
-                // 添加延时，让vue渲染完成后，再做slider初始化
-                setTimeout(this.render, 100);
-            });
+        return {
+            items: []
+        };
+    },
+    route: {
+        data() {
+            return this.$http
+                .get('cms/promotes?section=cy031')
+                .success(({data: {promotes: items}}) => {
+                    this.items = items.map((item) => {
+                        item.type = config.types[item.type];
+                        return item;
+                    });
+                });
+        }
+    },
+    computed: {
+        tag() {
+            console.debug(arguments);
+            return 'tagx';
+        }
+    },
+    methods: {
+        render() {
+            console.log(this.items);
+        }
     }
-  },
-  methods: {
-    render() {
-        console.debug(this.items);
-        const swiper = new Swiper('.swiper-container-banners', {
-            spaceBetween: 0,
-            initialSlide: 0,
-            centeredSlides: true,
-            slidesPerView: 'auto'
-        });
-    }
-  }
 }
 </script>

@@ -47,15 +47,9 @@ $grid-columns: 12;
 .separator {
     @include separator(22px);
 }
-.border-top {
-    @include border(map-get($colors, 'border-gray'), top)
-}
-.border-bottom {
-    @include border(map-get($colors, 'border-gray'), bottom)
-}
-.border-tb {
-    @include border(map-get($colors, 'border-gray'), top-bottom)
-}
-.border {
-    @include border(map-get($colors, 'border-gray'))
+// border classes
+@each $direction in (all, top, right, bottom, left, vertical, horizontal) {
+    .border-#{$direction} {
+        @include border(#{$direction});
+    }
 }

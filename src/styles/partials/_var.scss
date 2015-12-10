@@ -1,16 +1,5 @@
 // font size
 $sizes: (34, 30, 26, 22);
-//    light-gray: #c6c6c6,
-//    dark-gray: #393939,
-//    dark-red: #cc3f4f,
-//    title-gray: #929292,
-//    // button color
-//    bt-yellow: #ecc976,
-//    bt-white: $white,
-//    bt-green: #9bde6a,
-//    bt-pink: #c68cb1,
-//    bt-blue: #5baee7,
-//    white: $white
 // colors
 $colors: (
     // text color
@@ -23,6 +12,7 @@ $colors: (
 
     // background color
     bg-primary: #efefef,
+    bg-red: #cc3f4f,
     bg-yellow: #f3ac1c,
     bg-gray: #f9f9f9,
     bg-white: #ffffff,
@@ -30,21 +20,6 @@ $colors: (
     // border color
     border-primary: #d9d9d9,
 );
-
-
-// list color
-// $border-gray: #dcdcdc;
-
-// border color
-// $border-gray: #d9d9d9;
-
-// dot color
-// $dot-color: #bababa;
-
-// $menu-active-color: #d9d9d9;
-
-// separator color
-// $separator-color: #eeeeee;
 
 // dimensions
 $padding: 24px;

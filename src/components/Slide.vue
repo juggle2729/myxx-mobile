@@ -2,7 +2,7 @@
 <div class="swiper-slide">
     <div v-link="{name: 'evaluation-detail', params: {id: item.id}}" class="content font-26" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + item.image + ')'}">
         <div class="owner txt-white">
-            <div @click.stop="go('../me/profile.html?id=' + item.item.user.id)" class="clickable icon">
+            <div class="clickable icon">
               <img :src="item.item.user.photo | img" class="avatar-user" />
             </div>
             <div class="desc">

@@ -30,7 +30,7 @@ module.exports = {
             loader: 'babel'
         }, {
             test: /\.scss$/,
-            loader: 'style!css!autoprefixer?{browsers:["ios >= 7", "android >= 4.1"]}!px2rem?remUnit=75&remPrecision=8!sass?outputStyle=expanded'
+            loader: 'style!css!autoprefixer?{browsers:["ios >= 7", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass?outputStyle=expanded'
         }, {
             test: /\.(ttf|eot|svg|woff?)(\?[a-z0-9]+)?$/,
             loader: 'file-loader?name=fonts/[name].[ext]'
@@ -38,7 +38,7 @@ module.exports = {
     },
     vue: {
         loaders: {
-            sass: 'style!css!autoprefixer?{browsers:["ios >= 7", "android >= 4.1"]}!px2rem?remUnit=75&remPrecision=8!sass?outputStyle=expanded'
+            sass: 'style!css!autoprefixer?{browsers:["ios >= 7", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass?outputStyle=expanded'
         }
     },
     babel: {
