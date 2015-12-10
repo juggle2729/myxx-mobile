@@ -13,7 +13,7 @@ export default {
         },
         md(id) {
             if(id) {
-                return this.root + id + '?imageView2/1/w/300/h/150/interlace/1';
+                return this.root + id + '?imageView2/1/w/300/h/300/interlace/1';
             } else {
                 return 'http://7xp1h7.com2.z0.glb.qiniucdn.com/img-placeholder.png';
             }

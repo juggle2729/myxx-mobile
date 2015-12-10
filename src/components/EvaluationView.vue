@@ -1,5 +1,20 @@
 <style lang="sass">
 .evaluation {
+    .tabs {
+        display: -webkit-box;
+        height: 80px;
+        > div {
+            -webkit-box-flex: 1;
+            margin: 24px 0;
+        }
+        label {
+            width: 100%;
+            display: inline-block;
+        }
+        [type='radio'] {
+            display: none;
+        }
+    }
     .item {
         padding: 24px 32px;
         margin-bottom: 40px;
@@ -59,10 +74,9 @@
             }
         }
         .mark {
-            height: 100%;
-            img {
-                margin-right: 12px;
-            }
+            padding: 5px 0 5px 35px;
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
+            background-position: left center;
         }
         &:nth-of-type(2n+1) {   
             // FIXME this rule will be swallowed somehow,
@@ -78,7 +92,16 @@
 </style>
 <template>
     <div class="evaluation">
+    <div class="tabs">
+        <div :class="{'txt-red': tab=='time'}" class="font-26 txt-primary txt-center border-right">
+            <label for="tab-time">最新</label><input id="tab-time" type="radio" value="time" v-model="tab">
+        </div>
+        <div :class="{'txt-red': tab=='popularity'}" class="txt-primary font-26 txt-center">
+            <label for="tab-popularity">热门</label><input id="tab-popularity" value="popularity" type="radio" v-model="tab">
+        </div>
+    </div>
     <template v-for="item in items">
+        <div class="separator"></div>
         <div class="item">     
             <div class="header">
                 <div class="user">
@@ -90,7 +113,7 @@
                 </div>
                 <div class="desc font-30">{{item.description}}</div>
             </div>
-            <table>
+            <table v-link="{name: 'evaluation-detail', params: {id: item.id}}">
                 <tr>
                     <td>
                         <div v-bg.lg="item.pictures[0]"></div>
@@ -111,29 +134,16 @@
                     </td>
                 </tr>
             </table>
-            <div class="result">
-                <div class="avatar" v-bg.sm="item.applier.photo"></div>
+            <div v-for="result in item.results" class="result">
+                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
                 <div class="master">
-                    <p class="name font-26 txt-black">{{item.applier.name}}{{$index}}</p>
-                    <p class="title font-22 txt-gray">{{item.applier.id}}</p>
+                    <p class="name font-26 txt-black">{{result.identifier.name}}</p>
+                    <p class="title font-22 txt-gray">{{result.identifier.title}}</p>
                 </div>
-                <div class="mark">
-                    <span class="font-22 txt-black"><img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png" />已鉴定</span>
-                </div>
-            </div>
-            <div class="result">
-                <div class="avatar" v-bg.sm="item.applier.photo"></div>
-                <div class="master">
-                    <p class="font-26 txt-black">{{item.applier.name}}</p>
-                    <p class="font-22 txt-gray">{{item.applier.id}}</p>
-                </div>
-                <div class="mark">
-                    <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png" /><span class="font-22 txt-black">已鉴定</span>
-                </div>
+                <div class="mark font-22">已鉴定</div>
             </div>
             <div class="social border-top"></div>
         </div>
-        <div class="separator-80"></div>
     </template>
     </div>
 </template>
@@ -142,18 +152,26 @@ export default {
     name: 'EvaluationView',
     data() {
         return {
+            tab: 'time',
             items: [],
             total: 0
         };
     },
     route: {
         data() {
-            const params = {'hot': 1, offset: 0, limit: 5};
+            return this.fetch();
+        }
+    },
+    created() {
+        this.$watch('tab', this.fetch);
+    },
+    methods: {
+        fetch() {
+            const params = {[this.tab]: 1, offset: 0, limit: 5};
             return this.$http
                     .get('jianbao/applies', params, ({data}) => {
                         this.items = data.applies;
                         this.total = data.total;
-                        console.log(this.items[0].applier);
                     });
         }
     }

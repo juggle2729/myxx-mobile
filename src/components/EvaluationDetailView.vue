@@ -1,125 +1,65 @@
 <style lang="sass">
-    @import '../styles/mixins/_border.scss';
-    @import '../styles/partials/_var.scss';
-    .jade_detail {
-        .separator-20.last {
-            padding-bottom: 128px; // the height of social action bar
-        }
-        .avatar {
-            height: 72px;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-        .video {
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            &::after {
-                content: '';
-                background-position: center;
-                background-repeat: no-repeat;
-                position: absolute;
-                left: 0;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                background-size: 120px;
-                mix-blend-mode: overlay;
-                background-image: url('/static/images/icon/ico_video.png');
-            }
-        }
-        .jade {
-            margin: 32px;
-            .header {
-                display: -webkit-box;
-                -webkit-box-align: center;
-                h3 {
-                    font-size: 30px;
-                }
-                p {
+.evaluation-detail {
+    padding-bottom: 95px;
+    > div:not(.social-actions) {
+        padding: 24px 32px;
+    }
+    .header {
+        .user {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            .name {
+                margin-left: 20px;
+                .moment {
                     margin-top: 12px;
-                    font-size: 22px;
-                    color: #c6c6c6;
-                    .gutter {
-                        margin: 0 16px;
-                        color: #d9d9d9;
-                    }
-                }
-            }
-            .desc {
-                margin: 32px 0;
-                font-size: 30px;
-                color: #393939;
-            }
-            .video {
-                width: 100%;
-                padding-top: percentage(1/1.3);
-            }
-            .images {
-                font-size: 0;
-                margin: 5px -5px -5px;
-                > li {
-                    display: inline-block;
-                    position: relative;
-                    width: 338px;
-                    padding: percentage(1/2.6) 0 0;
-                    margin: 5px;
-                    background-size: cover;
-                    background-position: center;
                 }
             }
         }
-        .evaluation-summary {
-            @include border(map-get($colors, 'border-primary'),
-            bottom);
-            font-size: 22px;
-            color: #888888;
-            margin: 0 32px;
-            height: 80px;
-            line-height: 80px;
+        .desc {
+            margin: 30px 0 24px;
         }
-        .evaluation {
-            margin: 32px;
+    }
+    .media {
+        .video {
+            width: 100%;
+            padding-top: percentage(1/1.3);
+        }
+        .images {
+            font-size: 0;
+            margin: 5px -5px -5px;
+            > li {
+                display: inline-block;
+                position: relative;
+                width: 338px;
+                padding: percentage(1/2.6) 0 0;
+                margin: 5px;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
+    .results {
+        .result {
             .header {
                 display: -webkit-box;
                 -webkit-box-align: center;
                 height: 120px;
-                > div {
+                .master {
                     -webkit-box-flex: 1;
                 }
-                h3 {
-                    font-size: 30px;
-                    color: #393939;
-                    span {
-                        display: inline-block;
-                        height: 36px;
-                        line-height: 36px;
-                        border-radius: 5px;
-                        padding: 0 12px;
-                        margin-left: 16px;
-                        font-size: 22px;
-                        color: white;
-                        background-color: #e79016;
-                    }
-                }
-                p {
-                    font-size: 22px;
-                    color: #888888;
-                    margin-top: 12px;
-                }
-                .moments {
-                    font-size: 22px;
-                    color: #c6c6c6;
-                    margin-top: 0;
+                .site-mark {
+                    display: inline-block;
+                    height: 36px;
+                    line-height: 36px;
+                    border-radius: 5px;
+                    padding: 0 12px;
+                    margin-left: 16px;
                 }
             }
-            .result {
+            .card {
                 display: -webkit-box;
                 -webkit-box-pack: justify;
                 -webkit-box-align: stretch;
-                background-color: #f9f9f9;
-                border: 1px solid #d9d9d9;
-                font-size: 30px;
             }
             .video {
                 width: 343px;
@@ -128,7 +68,7 @@
                     background-size: 60px;
                 }
             }
-            .desc {
+            .conclusion {
                 display: -webkit-box;
                 position: relative;
                 -webkit-box-orient: vertical;
@@ -141,123 +81,72 @@
                     > p {
                         width: 343px;
                         position: absolute;
-                        text-align: center;
-                        top: 50%;
-                        transform: translateY(-50%);
                     }
                 }
                 .social {
                     height: 80px;
                     line-height: 80px;
                     width: 343px;
-                    border-top: 1px solid #d9d9d9;
-                    font-size: 22px;
                     .favor {
                         width: 50%;
                         display: inline-block;
-                        text-align: center;
-                        border-right: 1px solid #d9d9d9;
                     }
                     .comment {
-                        color: #d9d9d9;
                         width: 50%;
                         display: inline-block;
-                        text-align: center;
                     }
-                }
-            }
-        }
-        .evaluation-btn {
-            margin: 32px;
-            button {
-                font-size: 30px;
-                color: white;
-                background-color: #cc3f4f;
-                height: 80px;
-                width: 100%;
-                border-radius: 10px;
-                border: 0;
-                cursor: pointer;
-            }
-        }
-        .comments {
-            margin: 32px;
-            .header {
-                @include border(map-get($colors, 'border-primary'),
-                bottom);
-                display: -webkit-box;
-                -webkit-box-align: center;
-                -webkit-box-pack: justify;
-                height: 80px;
-                font-size: 22px;
-                .count {
-                    color: #c9c9c9;
-                }
-                .comment-btn {
-                    color: #cc3f4f;
-                }
-            }
-        }
-        li {
-            margin-bottom: 8px;
-            .author {
-                display: -webkit-box;
-                -webkit-box-align: center;
-                height: 108px;
-                h3 {
-                    font-size: 26px;
-                    color: #33a1c9;
-                }
-                .moments {
-                    font-size: 22px;
-                    color: #c6c6c6;
-                    margin-top: 12px;
-                }
-            }
-            .desc {
-                font-size: 30px;
-                color: #393939;
-                .name {
-                    color: #33a1c9;
-                }
-            }
-        }
-        .social-actions {
-            @include border(map-get($colors, 'border-primary'),
-            top);
-            position: fixed;
-            z-index: 9;
-            bottom: 0;
-            width: 100%;
-            height: 98px;
-            line-height: 98px;
-            font-size: 26px;
-            color: #888888;
-            > span {
-                display: inline-block;
-                width: 50%;
-                text-align: center;
-                &:first-of-type {
-                    @include border(map-get($colors, 'border-primary'),
-                    right);
                 }
             }
         }
     }
+    .evaluation-btn {
+        margin: 32px;
+        button {
+            height: 80px;
+            width: 100%;
+            border-radius: 10px;
+            border: 0;
+            cursor: pointer;
+        }
+    }
+    .comments {
+        .header {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: justify;
+            height: 80px;
+        }
+        li {
+            .author {
+                display: -webkit-box;
+                -webkit-box-align: center;
+                height: 108px;
+            }
+        }
+    }
+    
+    .social-actions {
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
+        height: 98px;
+        line-height: 98px;
+        > span {
+            display: inline-block;
+            width: 50%;
+        }
+    }
+}
 </style>
 <template>
-    <div class="jade_detail">
-        <div class="jade">
-            <div class="header">
-                <img class="avatar" :src="detail.applier.photo | img" alt="author">
-                <div>
-                    <h3>{{detail.applier.name}}</h3>
-                    <p>
-                        <span>{{detail.create_at | moment}}</span>
-                        <span class="gutter">|</span>
-                        <span>{{detail.click}}人浏览</span>
-                    </p>
-                </div>
+<div class="evaluation-detail">
+    <div class="header">
+        <div class="user">
+            <div class="avatar" v-bg.sm="apply.applier.photo"></div>
+            <div class="name">
+                <p class="font-26 txt-primary">{{apply.applier.name}}</p>
+                <p class="moment font-22 txt-gray"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
             </div>
             <p class="desc">
                 {{detail.description}}
@@ -267,139 +156,162 @@
                 <li v-for="picture in detail.pictures" track-by="$index" class="img" :style="{backgroundImage: 'url(http://7xo8aj.com2.z0.glb.qiniucdn.com/' + picture + ')'}">{{picture}}</li>
             </ul>
         </div>
-        <div class="separator-20"></div>
-        <p class="evaluation-summary">
-            大师鉴定{{detail.results ? detail.results.length : 0}}
-        </p>
-        <div v-for="result in detail.results" class="evaluation">
+        <div class="desc font-30">{{apply.description}}</div>
+    </div>
+    <div class="media">
+        <div class="video" @click="play(apply.video)" v-bg.video="apply.video"></div>
+        <ul class="images"><li v-for="picture in apply.pictures" track-by="$index" class="img" v-bg.md="picture"></li></ul>
+    </div>
+    <div class="separator"></div>
+    <div class="results">
+        <div class="font-30 txt-gray border-bottom padding-vertical">大师鉴定 {{apply.results ? apply.results.length : 0}}</div>
+        <div v-for="result in apply.results" class="result">
             <div class="header">
-                <img class="avatar" :src="result.identifier.photo | img'" alt="author">
-                <div>
-                    <h3>{{result.identifier.name}}
-                        <span>个人官网</span>
-                    </h3>
-                    <p>浙江省工艺美术大师</p>
+                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
+                <div class="master padding-left">
+                    <h3 class="font-30 txt-gray">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow txt-white">个人官网</span></h3>
+                    <p class="font-22 txt-black margin-top">浙江省工艺美术大师</p>
                 </div>
-                <p class="moments">{{result.create_at | moment}}</p>
+                <div class="font-22 txt-gray">{{result.create_at | moment}}</div>
             </div>
-            <div class="result">
-                <div class="video clickable" @click="play(result.video)" v-bind:style="{backgroundImage: 'url(http://7xo88d.media1.z0.glb.clouddn.com/' + result.video+ '?vframe/jpg/offset/2/w/540/h/540/rotate/90/)'}"></div>
-                <div class="desc">
+            <div class="card bg-gray border-all font-30">
+                <div class="video" @click="play(result.video)" v-bg.video="result.video"></div>
+                <div class="conclusion">
                     <div class="txt">
-                        <p>鉴宝结果：
-                            <span :class="{'txt-red': result.result=='真货' }">{{result.result}}</span>
-                            <span v-if="result.value_min">
-                                <br>
-                                <br>
-                                <span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span>
-                            </span>
-                        </p>
+                        <p class="center-vertical txt-center">鉴宝结果：<span :class="{'txt-red': result.result=='真货' }">{{result.result}}</span>
+                        <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span></p>
                     </div>
-                    <div class="social">
-                        <span @click="toggleThumb(result.id)" class="favor clickable"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span>
-                        <!--remove space-->
-                        <span @click="comment(result.identifier.id)" class="comment"><i class="icon-comment"></i></span>
+                    <div class="social border-top font-22">
+                        <span @click="toggleThumb(result.id)" class="favor txt-center border-right"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment txt-center txt-gray"><i class="icon-comment"></i></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div v-show="!detail.results.length" class="txt-center txt-gray font-26 margin-top">还没有大师来鉴定</div>
+        <div v-show="!apply.results.length" class="txt-center txt-gray font-26 margin-top">还没有大师来鉴定</div>
         <div class="evaluation-btn">
-            <button class="clickable" v-if="detail.identifiable" @click="evaluate">我来鉴定</button>
+            <button class="txt-white bg-red font-30" @click="evaluate">我来鉴定</button>
         </div>
-        <div class="separator-20"></div>
-        <div class="comments">
-            <div class="header">
-                <div class="count">评论{{comments.total}}</div>
-                <div @click="comment" class="clickable comment-btn"><i class="icon-comment"></i>我要评论</div>
-            </div>
-            <ul>
-                <li v-for="c in comments.list">
-                    <div class="author">
-                        <img class="avatar" :src="c.reply_from.photo | img'" alt="author">
-                        <div>
-                            <h3 class="clickable" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
-                            <p class="moments">{{c.create_at | moment}}</p>
-                        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="comments">
+        <div class="header border-bottom font-22">
+            <div class="txt-primary">评论{{comments.total}}</div>
+            <div @click="comment" class="txt-red"><i class="icon-comment"></i>我要评论</div>
+        </div>
+        <ul>
+            <li class="margin-bottom" v-for="c in comments.list">
+                <div class="author">
+                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
+                    <div>
+                        <h3 class="font-26 txt-blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <p class="font-22 txt-gray margin-top">{{c.create_at | moment}}</p>
                     </div>
-                    <div class="desc">
-                        <span v-if="c.reply_to" class="label">回复
-                            <span @click="comment(c.reply_to.id)" class="name clickable">{{c.reply_to.nickname}}</span>:</span>
-                        <span>{{c.content}}</span>
-                    </div>
-                </li>
-                <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
-                <li id="more" class="txt-gray txt-center font-26">{{comments.hasMore ? '加载更多。。。' : '没有了'}}</li>
-            </ul>
-        </div>
-        <div class="separator-20 last"></div>
-        <div class="social-actions bg-white animated" :class="{'slide-in-up': scroll.down, 'slide-out-down': !scroll.down }">
-            <span @click="toggleFollow" class="clickable"><i class="{{detail.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{detail.follow}})</span>
-            <span @click="share" class="clickable"><i class="icon-share"></i>分享</span>
-        </div>
+                </div>
+                <div class="font-30 txt-gray">
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="txt-blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span>{{c.content}}</span>
+                </div>
+            </li>
+            <li v-show="!comments.list.length" class="txt-center txt-gray font-26 margin-top">还没有人评论</li>
+        </ul>
+    </div>
+    <div class="separator last"></div>
+    <div class="social-actions bg-white border-top font-26 txt-black">
+        <span class="txt-center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="txt-center"><i class="icon-thumb"></i>分享</span>
     </div>
 </template>
 <script>
-    let Promise = require('es6-promise').Promise;
-    export default {
-        name: 'EvaluationDetailView',
-        data() {
-            return {
-                detail: {
-                    'click': 0,
-                    'applier': {
-                        'photo': '',
-                        'name': '',
-                        'id': 1
-                    },
-                    'create_at': '',
-                    'status': 2,
-                    'identifiable': false,
-                    'comment': 13,
-                    'description': '',
-                    'isFollowed': true,
-                    'pictures': [],
-                    'isMaster': true,
-                    'id': 1,
-                    'follow': 3,
-                    'results': [],
-                    'video': 'a5ad0094-487a-4d3f-ae8a-499ec2354e5e'
+export default {
+    name: 'EvaluationDetailView',
+    data() {
+        return {
+            apply: {
+                'click': 0,
+                'applier': {
+                    'photo': '',
+                    'name': '',
+                    'id': 1
                 },
-                comments: {
-                    total: 0,
-                    list: [],
-                    loading: false,
-                    hasMore: true
-                },
-                scroll: {
-                    down: false,
-                    up: false
-                }
-            };
-        },
-        route: {
-            activate(transition) {
-                const {
-                    to, next
-                } = transition;
-                return this.$http
-                    .get(`jianbao/applies/${to.params.id}`)
-                    .success(detail => {
-                        console.debug('detail', detail.data);
-                        this.detail = detail.data;
-                        // transition.next();
+                'create_at': '',
+                'status': 2,
+                'identifiable': false,
+                'comment': 13,
+                'description': '',
+                'isFollowed': true,
+                'pictures': [],
+                'isMaster': true,
+                'id': 1,
+                'follow': 3,
+                'results': [],
+                'video': 'a5ad0094-487a-4d3f-ae8a-499ec2354e5e'
+            },
+            comments: {
+                list: [],
+                total: 0
+            }
+        };
+    },
+    route: {
+        data({to}) {
+            const applyId = to.params.id;
+            const getApply = this.$http.get(`jianbao/applies/${applyId}`);
+            this.$http.get(`jianbao/applies/${applyId}/comments?offset=0&limit=5`)
+                .success(comments => {
+                    this.comments.list = comments.data.comments;
+                    this.comments.total = comments.data.total;
+                    getApply.success(apply => {
+                        console.debug('apply', apply.data);
+                        this.apply = apply.data;
                     });
-
-                // return Promise.all([getDetail, this._loadComments(to.params.id)]);
+                });
+            return getApply;
+        }
+    },
+    methods: {
+        play(videoId) {
+            this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
+        },
+        toggleThumb(resultId) {
+            const result = this.apply.results.filter(r => r.id === resultId).pop();
+            if (result.isLike) {
+                this.$http.delete(`jianbao/results/${resultId}/like`, (resp) => {
+                    if (resp.status === 200) {
+                        result.isLike = false;
+                        result.like = result.like - 1;
+                    } else {
+                        this.toast(resp.message);
+                    }
+                });
+            } else {
+                this.$http.post(`jianbao/results/${resultId}/like`, (resp) => {
+                    if (resp.status === 200) {
+                        result.isLike = true;
+                        result.like = result.like + 1;
+                    } else {
+                        this.toast(resp.message);
+                    }
+                });
             }
         },
-        methods: {
-            _loadComments: (function() {
-                let offset = 0;
-                const limit = 5;
-                return function(jadeId) {
-                    if (this.comments.loading) {
-                        return false;
+        toggleFollow() {
+            if (this.apply.isFollowed) {
+                this.$http.delete(`jianbao/applies/${jadeId}/follows`, (resp) => {
+                    if(resp.status === 200) {
+                        this.apply.isFollowed = false;
+                        this.apply.follow = this.apply.follow - 1;
+                    } else if(resp.status === 605) {
+                        this.toast(resp.message);
+                        this.action('login');
+                    }
+                });
+            } else {
+                this.$http.post(`jianbao/applies/${jadeId}/follows`, (resp) => {
+                    if(resp.status === 200) {
+                        this.apply.isFollowed = true;
+                        this.apply.follow = this.apply.follow + 1;
+                    } else if(resp.status === 605) {
+                        this.toast(resp.message);
+                        this.action('login');
                     }
                     this.comments.loading = true;
                     return this.$http.get(`jianbao/applies/${jadeId}/comments?offset=${offset}&limit=${limit}`, function(resp) {
@@ -477,6 +389,15 @@
             evaluate() {
                 this.toast(this.detail.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
             }
+        },
+        share() {
+            this.toast('分享');
+        },
+        comment(userId) {
+            this.toast(typeof userId === 'number' ? '回复' : '评论');
+        },
+        evaluate() {
+            this.toast(this.apply.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
         }
     }
 </script>

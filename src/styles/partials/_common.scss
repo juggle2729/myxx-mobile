@@ -212,4 +212,13 @@ margin-right {
 // video img placeholder
 .img, .video {
     background-color: #e0e0e0;
+    background-position: center;
+    background-size: cover;
+}
+.avatar {
+    height: 68px;
+    width: 68px;
+    border-radius: 50%;
+    background-size: cover;
+    vertical-align: middle;
 }

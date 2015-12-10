@@ -66,7 +66,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/profile'
-})
+    '*': '/featured'
+});
 
 router.start(App, '#app');
