@@ -45,16 +45,16 @@
 /**********************************
 *   常用间距，和设计规范紧密相关,待调整  *
 * ********************************/
-margin-top {margin-top: 12px;}
-margin-left {margin-left: 20px;}
-margin-right {margin-right: 20px;}
-padding {padding: 8px;}
-padding-top {padding-top: 8px;}
-padding-right {padding-right: 8px;}
-padding-bottom {padding-bottom: 8px;}
-padding-left {padding-left: 8px;}
-padding-vertical {padding-left: 8px; padding-right: 8px;}
-padding-horizontal {padding-top: 8px; padding-bottom: 8px;}
+.margin-top {margin-top: 12px;}
+.margin-left {margin-left: 20px;}
+.margin-right {margin-right: 20px;}
+.padding {padding: 8px;}
+.padding-top {padding-top: 8px;}
+.padding-right {padding-right: 8px;}
+.padding-bottom {padding-bottom: 8px;}
+.padding-left {padding-left: 8px;}
+.padding-horizontal {padding-left: 8px; padding-right: 8px;}
+.padding-vertical {padding-top: 8px; padding-bottom: 8px;}
 
 /****************************
 *           常用功能          *
@@ -140,8 +140,8 @@ padding-horizontal {padding-top: 8px; padding-bottom: 8px;}
         right: 0;
         bottom: 0;
         mix-blend-mode: overlay;
-        background-size: 1.2rem;
-        background: map-get($colors, 'bg-default') url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat center;
+        background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat right 30px top 30px;
+        background-size: 1rem;
     }
 }
 .row {

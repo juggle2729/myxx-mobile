@@ -7,6 +7,7 @@ export const bg = {
     },
     update(imgId) {
         const bgUrl = config.img[this.modifier](imgId || undefined);
-        this.el.style.backgroundImage = `url(${bgUrl})`;
+        const placeholderUrl = this.modifier === 'video' ? config.img.video_placeholder : config.img.img_placeholder; 
+        this.el.style.backgroundImage = `url(${bgUrl}), url(${placeholderUrl})`;
     }
 };

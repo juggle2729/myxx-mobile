@@ -8,15 +8,9 @@
         .user {
             display: -webkit-box;
             -webkit-box-align: center;
-            .name {
-                margin-left: 20px;
-                .moment {
-                    margin-top: 12px;
-                }
-            }
         }
         .desc {
-            margin: 30px 0 24px;
+            margin: 30px 0 0;
         }
     }
     .media {
@@ -138,22 +132,35 @@
         }
     }
 }
+.clone {
+    position: absolute;
+    background-color: red;
+    background-size: contain;
+    background-position: center;
+    transition: none;
+    &.enlarge {
+        transition: all .3s ease;
+        /*background-size: contain;*/
+    }
+}
 </style>
 <template>
 <div class="evaluation-detail">
     <div class="header">
         <div class="user">
             <div class="avatar" v-bg.sm="apply.applier.photo"></div>
-            <div class="name">
-                <p class="font-26">{{apply.applier.name}}</p>
-                <p class="moment font-22 gray"><span>{{apply.create_at | moment}}</span><span class="gutter">|</span><span>{{apply.click}}人浏览</span></p>
+            <div class="margin-left">
+                <div class="font-26">{{apply.applier.name}}</div>
+                <div class="padding-top font-22 gray">
+                    <span>{{apply.create_at | moment}}</span><span class="padding-vertical">|</span><span>{{apply.click}}人浏览</span>
+                </div>
             </div>
         </div>
         <div class="desc font-30">{{apply.description}}</div>
     </div>
     <div class="media">
         <div class="video" @click="play(apply.video)" v-bg.video="apply.video"></div>
-        <ul class="images"><li v-for="picture in apply.pictures" track-by="$index" class="img" v-bg.md="picture"></li></ul>
+        <ul class="images"><li @click="enlarge" v-for="picture in apply.pictures" class="img" v-bg.md="picture"></li></ul>
     </div>
     <div class="separator"></div>
     <div class="comments">
@@ -186,7 +193,7 @@
                 <div class="avatar" v-bg.sm="result.identifier.photo"></div>
                 <div class="master padding-left">
                     <h3 class="font-30 light">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow white">个人官网</span></h3>
-                    <p class="font-22 txt-black margin-top">浙江省工艺美术大师</p>
+                    <p class="font-22 gray margin-top">浙江省工艺美术大师</p>
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
@@ -198,7 +205,7 @@
                         <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span></p>
                     </div>
                     <div class="social border-top font-22">
-                        <span @click="toggleThumb(result.id)" class="favor center border-right"><i class="{{result.isLike ? 'txt-red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment center light"><i class="icon-comment"></i></span>
+                        <span @click="toggleThumb(result.id)" class="favor center border-right"><i class="{{result.isLike ? 'red icon-thumb-active' : 'icon-thumb'}}"></i>{{result.like}}</span><!--remove space--><span @click="comment(result.identifier.id)" class="comment center light"><i class="icon-comment"></i></span>
                     </div>
                 </div>
             </div>
@@ -224,7 +231,7 @@
                     </div>
                 </div>
                 <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label">回复<span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span v-if="c.reply_to" class="label"><span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
@@ -233,10 +240,12 @@
     </div>
     <div class="separator last"></div>
     <div class="social-actions bg-white border-top font-26 gray">
-        <span class="center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active txt-red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="center"><i class="icon-thumb"></i>分享</span>
+        <span class="center border-right" @click="toggleFollow"><i class="{{apply.isFollowed ? 'icon-favor-active red' : 'icon-favor'}}"></i>关注({{apply.follow}})</span><span @click="share" class="center"><i class="icon-thumb"></i>分享</span>
     </div>
+</div>
 </template>
 <script>
+import config from '../config';
 export default {
     name: 'EvaluationDetailView',
     data() {
@@ -284,6 +293,9 @@ export default {
         }
     },
     methods: {
+        enlarge() {
+            this.toast('查看大图');
+        },
         play(videoId) {
             this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
         },

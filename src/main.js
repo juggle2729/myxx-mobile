@@ -44,7 +44,7 @@ router.alias({
 
 //设置页面title
 router.beforeEach(function (transition) {
-    console.debug('go to', location.href);
+    // console.debug('go to', location.href);
     // if(Math.random() > .5) {
     //     console.debug('abort!!!');
     //     transition.abort();
@@ -65,7 +65,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/featured'
+    '*': '/evaluation'
 });
 
 router.start(App, '#app');

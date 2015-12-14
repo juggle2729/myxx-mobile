@@ -12,8 +12,8 @@ export default {
         component: require('./components/EvaluationDetailView.vue'),
         xxx: 123
     },
-    '/story': {
-        name: 'story',
+    '/stories': {
+        name: 'stories',
         component: require('./components/StoryView.vue')
     },
     '/story/:id': {
@@ -38,9 +38,9 @@ export default {
     '/profile': {
         component: require('./components/ProfileView.vue')
     },
-    '/self/evaluation': {
-        component: require('./components/SelfEvaluationView.vue')
-    },
+    // '/*user/evaluation': {
+    //     component: require('./components/EvaluationListView.vue')
+    // },
     '/self/following': {
         name: 'following',
         component: require('./components/FollowingView.vue')
