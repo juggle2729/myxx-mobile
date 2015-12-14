@@ -16,7 +16,7 @@
             .info {
                 margin-left: 60px;
             }
-            > button {
+            button {
                 position: absolute;
                 right: 32px;
                 top: 50%;
@@ -53,16 +53,17 @@
                     <p class="font-30 txt-primary">{{user.nickname}}</p>
                     <p class="font-22 light" style="margin-top:8px;">{{user.title}}</p>
                 </div>
-                <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">取消关注</button>
-                <button v-if="!user.followed" @click="toggleFollow(user)" style="display: flex;align-items: center;">
-                    <img src="/static/images/profile/follow.png" >
-                    <p>加关注</p>
-                </button>
+                    <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">取消关注</button>
+                    <button v-if="!user.followed" @click="toggleFollow(user)" style="display: flex;align-items: center;">
+                        <img src="/static/images/profile/follow.png" >
+                        <p>加关注</p>
+                    </button>
             </div>
         </template>
     </div>
 </template>
 <script>
+    const roles = ['普通用户', '商家', '藏家', '大师', '权威'];
     export default {
         name: 'SelfFollowing',
         methods: {
@@ -74,48 +75,40 @@
                     user.followed = !user.followed;
                     this.toast('关注成功');
                 }
+                console.log(user.followed, this.userList);
             }
         },
         data() {
             return {
-                userList: [{
-                    nickname: '徐太宇',
-                    photo: '',
-                    email: 'abc@qq.com',
-                    title: '普通用户',
-                    type: '用户',
-                    userId: 5,
-                    followed: true
-                }, {
-                    nickname: '许七',
-                    photo: '',
-                    email: 'abc@qq.com',
-                    title: '工艺大师',
-                    type: '用户',
-                    userId: 3,
-                    followed: true
-                }, {
-                    nickname: '二胡卵子',
-                    photo: '',
-                    email: 'abc@qq.com',
-                    title: '工艺大师',
-                    type: '用户',
-                    userId: 4,
-                    followed: false
-                }]
+                userList: []
             };
+        },
+        route: {
+            data({
+                to
+            }) {
+                const userId = to.query.id || 1;
+                return this.$http
+                    .get('users/my_follow')
+                    .success(function(resp) {
+                        console.log(resp.data.entries);
+                        resp.data.entries.forEach((entry) => {
+                            entry.title = roles[entry.role];
+                            entry.followed = true;
+                            this.userList.push(entry);
+                        });
+                        // this.userList = resp.data.entries.map((entry) => {
+                        //     entry.title = roles[entry.role];
+                        //     entry.followed = true;
+                        //     return entry;
+                        // });
+                        // this.userList = resp.data.entries;
+                        // for(var x of resp.data.entries){
+                        //     this.userList[x].title = roles[resp.data.entries[x].role];
+                        //     this.userList[x].followed = true;
+                        // }
+                    });
+            }
         }
-        // ,
-        // route: {
-        //     data({
-        //         to
-        //     }) {
-        //         const userId = to.query.id || 1;
-        //         return this.$http
-        //             .get('')
-        //             .success(function(resp) {
-        //             });
-        //     }
-        // }
     }
 </script>

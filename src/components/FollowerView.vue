@@ -65,11 +65,11 @@
                             <p class="font-26 light" style="margin-top:12px;">{{user.title}}</p>
                         </div>
                     </div>
-                    <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">
+                    <button v-if="user.follow" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">
                         <img src="/static/images/profile/unfollow.png" >
                         <p>已关注</p>
                     </button>
-                    <button v-if="!user.followed" @click="toggleFollow(user)" style="display:flex;">
+                    <button v-if="!user.follow" @click="toggleFollow(user)" style="display:flex;">
                         <img src="/static/images/profile/follow.png" >
                         <p>加关注</p>
                     </button>
@@ -87,11 +87,11 @@
                             <p class="font-26 light" style="margin-top:8px;">{{user.title}}</p>
                         </div>
                     </div>
-                    <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">
+                    <button v-if="user.follow" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">
                         <img src="/static/images/profile/unfollow.png" >
                         <p>已关注</p>
                     </button>
-                    <button v-if="!user.followed" @click="toggleFollow(user)" >
+                    <button v-if="!user.follow" @click="toggleFollow(user)" >
                         <img src="/static/images/profile/follow.png" >
                         <p>加关注</p>
                     </button>
@@ -101,15 +101,16 @@
     </div>
 </template>
 <script>
+    const roles = ['普通用户', '商家', '藏家', '大师', '权威'];
     export default {
         name: 'Selffollower',
         methods: {
             toggleFollow(user) {
-                if (user.followed) {
-                    user.followed = !user.followed;
+                if (user.follow) {
+                    user.follow = !user.follow;
                     this.toast('取消关注成功');
                 } else {
-                    user.followed = !user.followed;
+                    user.follow = !user.follow;
                     this.toast('关注成功');
                 }
             }
@@ -120,59 +121,58 @@
                     nickname: '新徐太宇',
                     photo: '',
                     title: '普通用户',
-                    type: '用户',
                     userId: 8,
-                    followed: false
+                    follow: false
                 }, {
                     nickname: '许七',
                     photo: '',
                     title: '工艺大师',
-                    type: '用户',
                     userId: 9,
-                    followed: false
+                    follow: false
                 }, {
                     nickname: '二胡卵子',
                     photo: '',
                     title: '工艺大师',
-                    type: '用户',
                     userId: 4,
-                    followed: true
+                    follow: true
                 }],
                 oldList: [{
                     nickname: '老徐太宇',
                     photo: '',
                     title: '普通用户',
-                    type: '用户',
                     userId: 5,
-                    followed: true
+                    follow: true
                 }, {
                     nickname: '许七',
                     photo: '',
                     title: '工艺大师',
-                    type: '用户',
                     userId: 6,
-                    followed: false
+                    follow: false
                 }, {
                     nickname: '二胡卵子',
                     photo: '',
                     title: '工艺大师',
-                    type: '用户',
                     userId: 7,
-                    followed: false
+                    follow: false
                 }]
             };
+        },
+        route: {
+            data({
+                to
+            }) {
+                const userId = to.query.id || 1;
+                return this.$http
+                    .get('users/my_fans')
+                    .success(function(resp) {
+                        console.log(resp.data);
+                        resp.data.entries.forEach((entry) => {
+                            entry.title = roles[entry.role];
+                            console.log(entry.follow);
+                            this.oldList.push(entry);
+                        });
+                    });
+            }
         }
-        // ,
-        // route: {
-        //     data({
-        //         to
-        //     }) {
-        //         const userId = to.query.id || 1;
-        //         return this.$http
-        //             .get('')
-        //             .success(function(resp) {
-        //             });
-        //     }
-        // }
     }
 </script>

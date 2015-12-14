@@ -1,5 +1,5 @@
 <template>
-    <div>Profile View</div>
+    <div>Self View</div>
 </template>
 <script>
 export default {

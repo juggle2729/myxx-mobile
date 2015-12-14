@@ -60,19 +60,19 @@
             <div class="notice">
                 <div class="sender">
                     <p class="font-30 txt-black">
-                        赞了一个鉴宝
+                        赞了一个{{thumb.title}}
                     </p>
                 </div>
-                <div class="info" v-link="{ name: 'evaluation-detail', params: { id: thumb.id }}">
+                <div class="info" v-link="{ name: 'evaluation-detail', params: { id: thumb.post_id }}">
                     <div>
                         <div>
                             <img :src="thumb.applier.photo | img" />
-                            <p class="font-26 txt-black">{{thumb.applier.name}}</p>
+                            <p class="font-26 gray">{{thumb.applier.name}}</p>
                         </div>
-                        <p class="font-30 txt-primary">{{{thumb.description}}}</p>
-                        <p class="font-22 txt-black">{{{thumb.resultTotal}}}条鉴定结果</p>
+                        <p class="font-30">{{{thumb.description}}}</p>
+                        <p v-if="thumb.result" class="font-22 gray">{{{thumb.result}}}</p>
                     </div>
-                    <img :src="thumb.imgUrl | img" :title="thumb.imgUrl" />
+                    <img :src="thumb.pictures[0] | img" :title="thumb.pictures[0]" />
                 </div>
             </div>
             <div class="separator-20"></div>
@@ -92,31 +92,40 @@
                 to
             }) {
                 const userId = to.query.id || 1;
+                const titles = ['xxx', '鉴宝', '大师鉴定', '话题', '宝贝'];
                 return this.$http
-                    .get('jianbao/users/' + userId + '/applies')
+                    .get('users/likes')
                     .success(function(resp) {
-                        var applies = resp.data.applies;
-                        this.thumbs = applies;
-                        for (var x in applies) {
-                            if (applies[x].applier.id === userId) {
-                                this.$data.thumbs[x].title = true;
-                                if (this.photo === '') {
-                                    this.photo = applies[x].applier.photo;
-                                }
-                            } else {
-                                this.$data.thumbs[x].title = false;
-                                if (this.photo === '') {
-                                    for (var n in applies[x].results) {
-                                        if (applies[x].results[n].identifier.id === userId)
-                                            this.photo = applies[x].results[0].identifier.photo;
-                                    }
-                                }
+                        var entries = resp.data.entries;
+                        var index = 0;
+                        //this.thumbs = new Array(entries.length);
+                        for (var x in entries) {
+                            this.thumbs[index] = {};
+                            this.thumbs[index].pictures = {};
+                            this.thumbs[index].title = titles[entries[x].type/10];
+                            if (entries[x].type === 10) {
+                                this.thumbs[index].description = entries[x].entry.description;
+                                this.thumbs[index].applier = entries[x].entry.applier;
+                                this.thumbs[index].result = entries[x].entry.status+'条鉴定结果';
+                                index++;
+                            }else if(entries[x].type === 20){
+                                this.thumbs[index].applier = entries[x].entry.identifier;
+                                this.thumbs[index].description = '鉴定了 '
+                                    +entries[x].entry.jianbao.applier.nickname+' 的宝贝';
+                                this.thumbs[index].result = '鉴定结果为 '+entries[x].entry.result;
+                                index++;
+                            }else if(entries[x].type === 30){
+                                if(entries[x].entry.applier == undefined)
+                                    continue;
+                                else
+                                    this.thumbs[index].applier  = entries[x].entry.applier;
+                                this.thumbs[index].description = entries[x].entry.title;
+                                index++;
+                            }else if(entries[x].type === 80){
+                                this.thumbs[index].applier = entries[x].entry.identifier;
+                                this.thumbs[index].result = 1106;
+                                index++;
                             }
-                            this.thumbs[x].id = applies[x].id;
-                            this.thumbs[x].imgUrl = applies[x].pictures[0];
-                            this.thumbs[x].resultTotal = applies[x].results.length;
-                            this.thumbs[x].date = applies[x].create_at.substring(5, 10);
-                            this.thumbs[x].applier = applies[x].applier;
                         }
                     });
             }

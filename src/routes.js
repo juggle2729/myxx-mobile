@@ -24,6 +24,18 @@ export default {
         name: 'discover',
         component: require('./components/DiscoverView.vue')
     },
+    '/discover/treasure': {
+        name: 'treasure',
+        component: require('./components/TreasureView.vue')
+    },
+    '/discover/treasure/:id': {
+        name: 'treasure-detail',
+        component: require('./components/TreasureDetailView.vue')
+    },
+    '/discover/site': {
+        name: 'site',
+        component: require('./components/SiteView.vue')
+    },
     '/masters': {
         name: 'masterList',
         component: require('./components/MasterListView.vue')
@@ -68,6 +80,10 @@ export default {
     '/self/homepage/:id': {
         name: 'homepage',
         component: require('./components/HomePageView.vue')
+    },
+    '/css': {
+        name: 'cssview',
+        component: require('./components/CssView.vue')
     },
     // not found handler
     '*': {

@@ -110,7 +110,7 @@
     left: 50%;
     background-color: rgba(0, 0, 0, .6);
     border-radius: 5px;
-    color: map-get($colors, 'txt-white');
+    color: map-get($colors, white);
     transform: translate(-50%, -50%);
     font-size: 20px;
     padding: 10px;
@@ -172,4 +172,3 @@
     @extend .bg-default;
     height: 40px;
 }
-

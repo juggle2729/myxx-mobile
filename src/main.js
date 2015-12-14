@@ -34,7 +34,6 @@ Vue.http.options.error = function() {
 };
 Vue.http.headers.common['X-Auth-Token'] = 'edb85165-b4b6-46f0-89db-3067e5c51742';
 
-
 // routing
 var router = new Router();
 router.alias({
@@ -65,7 +64,9 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/evaluation'
+    //'*': '/evaluation'
+    //'*': '/discover/treasure/3'
+    '*': '/self/follower'
 });
 
 router.start(App, '#app');
