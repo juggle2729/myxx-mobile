@@ -32,7 +32,11 @@ Vue.http.options.success = function(resp) {
 Vue.http.options.error = function() {
     console.error('后台出错了~');
 };
-Vue.http.headers.common['X-Auth-Token'] = 'edb85165-b4b6-46f0-89db-3067e5c51742';
+Vue.http.headers.common['X-Auth-Token'] = 'edb85165-b4b6-46f0-89db-3067e5c51742';//uid为1
+//Vue.http.headers.common['X-Auth-Token'] = '57331162-00b8-4df7-987e-17ed9a4e99a4';
+//Vue.http.headers.common['X-Auth-Token'] = 'f87e7796-9896-4a6f-997e-11b48aebd347';//zl
+//Vue.http.headers.common['X-Auth-Token'] = '4220fab2-6021-4cbe-a7df-7f7abd33c65f';
+//Vue.http.headers.common['X-Auth-Token'] = '8ef96ac4-bd70-48ff-98eb-b0bcbb122c2a';//uid为3
 
 // routing
 var router = new Router();
@@ -66,7 +70,8 @@ router.beforeEach(function() {
 router.redirect({
     //'*': '/evaluation'
     //'*': '/discover/treasure/3'
-    '*': '/self/follower'
+    '*': '/discover/treasure'
+    //'*': '/profile'
 });
 
 router.start(App, '#app');

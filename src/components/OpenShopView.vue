@@ -118,14 +118,83 @@
         width: 100%;
         height: 16px;
     }
+    .out {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .6);
+        .apply {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 540px;
+            height: 615px;
+            border-radius: 10px;
+            transform: translate(-50%, -50%);
+            .top {
+                padding: 32px 61px;
+                height: 520px;
+                .text{
+                    height: 64px;
+                    margin-bottom: 32px;
+                    > p {
+                        line-height: 38px;
+                    }
+                }
+                .input {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    margin-top: 0;
+                    width: 418px;
+                    height: 360px;
+                    > input {
+                        width: 418px;
+                        border-radius: 4px;
+                        border-style: solid;
+                        border-width: 1px;
+                        border-color: #d9d9d9;
+                        height: 80px;
+                        padding: 32px;
+                        font-size: 26px;
+                    }
+                    > textarea {
+                        padding: 28px 32px;
+                        font-size: 26px;
+                        height: 160px;
+                        resize: none;
+                        border-radius: 4px;
+                        border-color: #d9d9d9;
+                    }
+                }
+            }
+            .bottom {
+                border-radius: 0 0 10px 10px;
+                height: 95px;
+                width: 100%;
+                padding: 13px 0;
+                > div {
+                    float: left;
+                    width: 50%;
+                    height: 100%;
+                }
+            }
+            ::-webkit-input-placeholder {
+                color: #c6c6c6;
+                font-size: 26px;
+            }
+        }
+    }
 }
 </style>
 <template>
     <div class="openshop">
         <div class="banner">
-            <img src="{{avatar}}" />
-            <p class="">{{nickname}}</p>
-            <button @click="submit">
+            <img :src="banner" />
+            <p>{{title}}</p>
+            <button @click="toggleApply">
                 <span>立即申请</span>
             </button>
         </div>
@@ -185,6 +254,24 @@
                 <img src="/static/images/open/od5.png" />
             </div>
         </div>
+        <div class="out" v-show="applyShow">
+            <div class="apply bg-white" >
+                <div class="top border-bottom">
+                    <div class="text">
+                        <p class="font-26" align="center">您正在申请开通店铺,请填写以下信息,我们会在两个工作日内联系您。</p>
+                    </div>
+                    <div class="input">
+                        <input type="text" placeholder="手机号" value="15012345678">
+                        <input type="text" placeholder="姓名">
+                        <textarea placeholder="简介，50字以内"></textarea>
+                    </div>
+                </div>
+                <div class="bottom" >
+                    <div class="border-right" @click="submit"><p class="font-26 center center-vertical" style="color:#2ab869">确认申请</p></div>
+                    <div @click="toggleApply" ><p class="font-26 center center-vertical">取消</p></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -192,13 +279,17 @@
         name: 'SelfEvaluation',
         data() {
             return {
-                avatar: '/static/images/open/odbanner.png',
-                nickname: '【人人皆可拥有】'
+                banner: '/static/images/open/odbanner.png',
+                title: '【人人皆可拥有】',
+                applyShow: false
             };
         },
         methods: {
           submit() {
-              this.toast("申请店铺");
+              this.toast('申请店铺', 1000);
+          },
+          toggleApply() {
+              this.applyShow = !this.applyShow;
           }
         }
     }

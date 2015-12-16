@@ -23,12 +23,9 @@
                 margin-top: -20px;
                 width: 112px;
                 height: 40px;
-                color: #cc3f4f;
-                font-size: 22px;
                 background-color: #fff;
-                border-color: #cc3f4f;
                 border-radius: 8px;
-                border-width: 4px;
+                border-width: 1px;
                 border-style: solid;
                 > img {
                     width: 20px;
@@ -48,13 +45,13 @@
     <div class="following">
         <template v-for="user in userList">
             <div class="user border-bottom">
-                <img :src="user.photo | img" v-link="{ name: 'homepage', params: { id: user.userId }}"/>
+                <img :src="user.photo | img" v-link="{ name: 'homepage', params: { id: user.user_id }}"/>
                 <div class="info" v-link="{ name: 'homepage', params: { id: user.userId }}">
                     <p class="font-30 txt-primary">{{user.nickname}}</p>
-                    <p class="font-22 light" style="margin-top:8px;">{{user.title}}</p>
+                    <p class="font-26 light" style="margin-top:8px;">{{user.title}}</p>
                 </div>
-                    <button v-if="user.followed" @click="toggleFollow(user)" style="border-color: #595959;color:#595959;">取消关注</button>
-                    <button v-if="!user.followed" @click="toggleFollow(user)" style="display: flex;align-items: center;">
+                    <button class="gray font-22 border-gray" v-if="user.followed" @click="toggleFollow(user)">取消关注</button>
+                    <button class="red font-22 border-red" v-if="!user.followed" @click="toggleFollow(user)" style="display: flex;align-items: center;">
                         <img src="/static/images/profile/follow.png" >
                         <p>加关注</p>
                     </button>
@@ -69,13 +66,30 @@
         methods: {
             toggleFollow(user) {
                 if (user.followed) {
-                    user.followed = !user.followed;
+                    // this.$http.delete(`users/follow/`+user.user_id, (resp) => {
+                    //     if(resp.status === 200) {
+                    //         user.followed = false;
+                    //         this.toast('取消关注成功');
+                    //     } else if(resp.status === 605) {
+                    //         this.toast(resp.message);
+                    //         this.action('login');
+                    //     }
+                    // });
+                    user.followed = false;
                     this.toast('取消关注成功');
                 } else {
-                    user.followed = !user.followed;
+                    // this.$http.post(`users/follow/`+user.user_id, (resp) => {
+                    //     if(resp.status === 200) {
+                    //         user.followed = true;
+                    //         this.toast('关注成功');
+                    //     } else if(resp.status === 605) {
+                    //         this.toast(resp.message);
+                    //         this.action('login');
+                    //     }
+                    // });
+                    user.followed = true;
                     this.toast('关注成功');
                 }
-                console.log(user.followed, this.userList);
             }
         },
         data() {
@@ -84,14 +98,11 @@
             };
         },
         route: {
-            data({
-                to
-            }) {
+            data({ to }) {
                 const userId = to.query.id || 1;
                 return this.$http
                     .get('users/my_follow')
                     .success(function(resp) {
-                        console.log(resp.data.entries);
                         resp.data.entries.forEach((entry) => {
                             entry.title = roles[entry.role];
                             entry.followed = true;
@@ -103,9 +114,14 @@
                         //     return entry;
                         // });
                         // this.userList = resp.data.entries;
-                        // for(var x of resp.data.entries){
+                        // for(var x in resp.data.entries){
                         //     this.userList[x].title = roles[resp.data.entries[x].role];
                         //     this.userList[x].followed = true;
+                        // }
+                        // for(var entry of resp.data.entries){
+                        //     entry.title = roles[entry.role];
+                        //     entry.followed = true;
+                        //     this.userList.push(entry);
                         // }
                     });
             }
