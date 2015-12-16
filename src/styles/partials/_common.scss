@@ -64,6 +64,13 @@
         position: #{$position};
     }
 }
+.flex {
+    display: -webkit-box;
+    -webkit-box-align: center;
+    .flex-1 {
+        -webkit-box-flex: 1;
+    }
+}
 .center-horizontal {
     display: block;
     margin-left: auto;
@@ -144,6 +151,20 @@
         background-size: 1rem;
     }
 }
+.play {
+    position: relative;
+    background-size: cover;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #e0e0e0 url('//7xp1h7.com2.z0.glb.qiniucdn.com/play.svg') no-repeat center;
+        background-size: 1rem;
+    }
+}
 .row {
     line-height: 100px;
     padding: 0 32px;
@@ -171,4 +192,7 @@
     @extend .border-vertical;
     @extend .bg-default;
     height: 40px;
+}
+[class^='icon-'] + span, [class*=' icon-'] + span {
+    vertical-align: text-top;
 }

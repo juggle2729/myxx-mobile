@@ -1,64 +1,64 @@
 <style lang="sass">
-    .topics {
-        .notice {
-            padding-left: 32px;
+.topics {
+    .notice {
+        padding-left: 32px;
+        position: relative;
+        .sender {
+            display: -webkit-box;
+            height: 114px;
             position: relative;
-            .sender {
-                display: -webkit-box;
-                height: 114px;
-                position: relative;
-                img {
-                    position: absolute;
-                    height: 68px;
-                    width: 68px;
-                    top: 26px;
-                    border-radius: 50%;
-                }
-                > p:nth-of-type(1) {
-                    position: absolute;
-                    top: 47px;
-                    left: 88px;
-                }
-                > p:nth-of-type(2) {
-                    position: absolute;
-                    top: 48px;
-                    right: 32px;
-                    font-size: 24px;
-                }
+            img {
+                position: absolute;
+                height: 68px;
+                width: 68px;
+                top: 26px;
+                border-radius: 50%;
             }
-            .info {
-                display: -webkit-box;
-                position: relative;
-                margin-bottom: 30px;
-                margin-top: 6px;
-                margin-right: 32px;
-                height: 149px;
-                background-color: #efeff4;
-                img {
-                    position: absolute;
-                    margin: 12px 0 12px 12px;
-                    height: 125px;
-                    width: 125px;
-                }
-                p:nth-of-type(1) {
-                    position: absolute;
-                    font-size: 30px;
-                    left: 173px;
-                    margin-top: 38px;
-                    width: 500px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-                p:nth-of-type(2) {
-                    position: absolute;
-                    font-size: 26px;
-                    margin-top: 84px;
-                    left: 173px;
-                }
+            > p:nth-of-type(1) {
+                position: absolute;
+                top: 47px;
+                left: 88px;
+            }
+            > p:nth-of-type(2) {
+                position: absolute;
+                top: 48px;
+                right: 32px;
+                font-size: 24px;
+            }
+        }
+        .info {
+            display: -webkit-box;
+            position: relative;
+            margin-bottom: 30px;
+            margin-top: 6px;
+            margin-right: 32px;
+            height: 149px;
+            background-color: #efeff4;
+            img {
+                position: absolute;
+                margin: 12px 0 12px 12px;
+                height: 125px;
+                width: 125px;
+            }
+            p:nth-of-type(1) {
+                position: absolute;
+                font-size: 30px;
+                left: 173px;
+                margin-top: 38px;
+                width: 500px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            p:nth-of-type(2) {
+                position: absolute;
+                font-size: 26px;
+                margin-top: 84px;
+                left: 173px;
             }
         }
     }
+}
 </style>
 <template>
     <div class="topics">
@@ -83,7 +83,7 @@
 </template>
 <script>
     export default {
-        name: 'Topic',
+        name: 'Story',
         data() {
             return {
                 photo: '',
@@ -94,7 +94,7 @@
             data({
                 to
             }) {
-                const userId = to.query.id || 1;
+                const userId = to.params.id;
                 return this.$http
                     .get('jianbao/users/' + userId + '/applies')
                     .success(function(resp) {

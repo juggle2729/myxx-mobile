@@ -1,61 +1,62 @@
 <template>
-    <div class="homepage">
-            <div class="account border-bottom">
-                <img :src="photo | img" class="avatar-240"/>
-                <p class="font-30 red">{{nickname}}</p>
-                <button class="bg-red font-26 white icon-favor-active"> 关注</button>
-            </div>
-            <div class="community bg-white">
-              <div v-link="{name: 'topic'}" class="border-right">
-                <p class="font-30" align="center">16</p>
-                <p class="font-26 gray" align="center">话题</p>
-              </div>
-              <div v-link="{name: 'following'}" class="border-right">
-                <p class="font-30" align="center">314</p>
-                <p class="font-26 gray" align="center">关注</p>
-              </div>
-              <div v-link="{name: 'follower'}" class="border-right">
-                <p class="font-30"align="center" >234</p>
-                <p class="font-26 gray" align="center">粉丝</p>
-              </div>
-            </div>
-            <div class="separator" style="height:30px"></div>
-            <div class="his border-bottom">
-                <div class="row font-30 border-bottom" v-link="{name: 'thumb'}">
-                    <span class="icon icon-my-favor"></span>
-                    <span class="">TA的赞</span>
-                    <span class="icon icon-enter gray"></span>
-                </div>
-                <div class="row font-30 border-bottom">
-                    <span class="icon icon-review"></span>
-                    <span class="text">TA的鉴宝{{$route.params.id}}</span>
-                    <span class="icon icon-enter gray"></span>
-                </div>
-                <div class="row font-30">
-                    <span class="icon icon-my-shop"></span>
-                    <span class="text">TA的店铺</span>
-                    <span class="icon icon-enter gray"></span>
-                </div>
-            </div>
+<div class="homepage">
+    <div class="account border-bottom">
+        <div class="avatar-240" v-bg.md="photo"></div>
+        <p class="font-30 red">{{nickname}}</p>
+        <button class="bg-red font-26 white icon-favor-active">关注</button>
     </div>
+    <div class="community bg-white flex">
+      <div v-link="{name: 'story', params: {id: userid}}" class="border-right">
+        <p class="font-30" align="center">16</p>
+        <p class="font-26 gray" align="center">话题</p>
+      </div>
+      <div v-link="{name: 'following'}" class="border-right">
+        <p class="font-30" align="center">314</p>
+        <p class="font-26 gray" align="center">关注</p>
+      </div>
+      <div v-link="{name: 'follower'}" class="border-right">
+        <p class="font-30" align="center" >234</p>
+        <p class="font-26 gray" align="center">粉丝</p>
+      </div>
+    </div>
+    <div class="separator" style="height:30px"></div>
+    <div class="his border-bottom">
+        <div class="row font-30 border-bottom" v-link="{name: 'favor'}">
+            <span class="red icon-my-favor"></span>
+            <span>TA的赞</span>
+            <span class="icon-enter gray"></span>
+        </div>
+        <div class="row font-30 border-bottom">
+            <span class="red icon-review"></span>
+            <span>TA的鉴宝</span>
+            <span class="icon-enter gray"></span>
+        </div>
+        <div class="row font-30">
+            <span class="red icon-my-shop"></span>
+            <span>TA的店铺</span>
+            <span class="icon-enter gray"></span>
+        </div>
+    </div>
+</div>
 </template>
 <script>
-import request from 'superagent';
-const roles = ['普通用户', '商家', '藏家', '大师', '权威'];
+import config from '../config';
 export default {
-    name: 'homepage',
+    name: 'HomePageView',
     data() {
         return {
+            userid: 0
         };
     },
     route: {
-        data(to, from) {
+        data() {
+            this.userid = this.$route.params.id;
             return this.$http
-                .get('users/info/'+this.$route.params.id)
-                .success(function(res) {
-                this.$data = res.data;
-                this.roleName = roles[this.role];
-            });
+                .get('users/info/'+this.userid)
+                .success(function({data}) {
+                    data.roleName = config.roles[data.role];
+                    this.$data = Object.assign(this.$data, data);
+                });
         }
     }
 }
@@ -84,26 +85,8 @@ export default {
         width: 100%;
         padding: 25px 0;
         > div {
-            float: left;
             width: 33.3%;
-            height: 100%;
-            > p:nth-of-type(2) {
-                margin-top:14px;
-            }
         }
-        /*> div {
-            display:table;
-            width: 33.3%;
-            height: 100%;
-            float: left;
-            position: relative;
-            padding-top: 25px;
-            padding-bottom: 25px;
-            > div {
-                display: table-cell;
-                vertical-align: middle;
-            }
-        }*/
     }
     .his {
         padding-left: 32px;
@@ -111,8 +94,8 @@ export default {
             padding-left: 0;
         }
     }
-    .icon:not(.icon-enter) {
-        color: #cc3f4f
+    .icon-enter {
+        transform: rotate(-90deg);
     }
 }
 </style>

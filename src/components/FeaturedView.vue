@@ -1,8 +1,9 @@
 <style lang="sass">
 .featured-view {
+    padding: 20px;
     .item {
         height: 350px;
-        margin: 20px;
+        margin-bottom: 20px;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -10,21 +11,14 @@
         position: relative;
         padding: 24px 20px 20px;
     }
+    .title {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .user {
-        height: 36px;
-        padding-top: 16px;
-        .avatar {
-            display: inline-block;
-            height: 36px;
-            width: 36px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .name {
-            display: inline-block;
-            line-height: 36px;
-        }
+        margin-top: 16px;
     }
     .social {
         position: absolute;
@@ -35,9 +29,6 @@
         .comment {
             display: inline-block;
             margin-left: 20px;
-        }
-        i {
-            vertical-align: middle;
         }
     }
     .type {
@@ -51,12 +42,12 @@
 }
 </style>
 <template>
-    <div class="featured-view">
-        <div class="item white" v-for="item in items" v-bg.lg='item.image'>
+    <div class="featured-view bg-default">
+        <div class="item white" v-link="{name: item.type.route, params: {id: item.id}}" v-for="item in items" v-bg.lg='item.image'>
             <div class="title font-30 bold">{{item.item.desc}}</div>
-            <div class="user font-26 gray">
-                <div class="avatar" v-bg.sm='item.item.user.photo'></div>
-                <div class="name">{{item.item.user.name}}</div>
+            <div class="user flex">
+                <div class="avatar-36" v-bg.sm='item.item.user.photo'></div>
+                <div class="font-26 gray padding-left">{{item.item.user.name}}</div>
             </div>
             <div class="social font-22">
                 <div class="favor">
@@ -68,7 +59,7 @@
                     <span>{{item.item.reviews}}</span>
                 </div>
             </div>
-            <div class="type bg-red font-26">{{item.type}}</div>
+            <div class="type bg-red font-26">{{item.type.name}}</div>
         </div>
     </div>
 </template>
@@ -91,17 +82,6 @@ export default {
                         return item;
                     });
                 });
-        }
-    },
-    computed: {
-        tag() {
-            console.debug(arguments);
-            return 'tagx';
-        }
-    },
-    methods: {
-        render() {
-            console.log(this.items);
         }
     }
 }

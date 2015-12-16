@@ -1,5 +1,5 @@
 <template>
-    <h1>message view</h1>
+    <div class="font-32 gray center">消息</div>
 </template>
 
 <script>

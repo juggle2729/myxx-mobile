@@ -20,15 +20,15 @@ export function moment(dateStr) {
     return m;
 }
 
-export function img(id) {
-    let src;
-    if (id) {
-        src = /^https?/.test(id) ? id : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
-    } else {
-        src = 'static/images/avatar--defaut.jpg';
-    }
-    return src;
-}
+// export function img(id) {
+//     let src;
+//     if (id) {
+//         src = /^https?/.test(id) ? id : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
+//     } else {
+//         src = 'static/images/avatar--defaut.jpg';
+//     }
+//     return src;
+// }
 
 export function money(number) {
     return number / 10000 + '万';
