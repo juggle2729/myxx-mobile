@@ -44,7 +44,7 @@ export default {
             route: ''
         }, {
             name: '鉴宝',
-            route: 'evaluation-detail'
+            route: 'evaluation'
         }, {
             name: '玉石',
             route: ''

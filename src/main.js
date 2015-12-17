@@ -39,7 +39,7 @@ router.alias({
 
 //设置页面title
 router.beforeEach((transition) => {
-    console.debug('goto', transition.to.path);
+    // console.debug('goto', transition.to.path);
     if(window.WebViewJavascriptBridge) {
         transition.abort();
         window.WebViewJavascriptBridge.callHandler('go', {url: location.href});
@@ -60,7 +60,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/profile/2'
+    '*': '/evaluations/time'
 });
 
 router.start(App, '#app');

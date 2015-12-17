@@ -22,9 +22,7 @@ export default {
         this.$http
             .get(`users/info/${bridge.user.user_id}`)
             .success(({data: user}) => {
-                console.debug('user', user);
                 Object.assign(bridge.user, user);
-                console.debug(bridge.user);
             });
         emitter.on('scroll-to-bottom', (e) => {
             this.$broadcast('scrollToBottom', e);

@@ -52,7 +52,7 @@
 <script>
 import emitter from '../utils/emitter';
 export default {
-  name: 'TreasureView',
+  name: 'JadesView',
   data() {
     return {
         promotes:[],

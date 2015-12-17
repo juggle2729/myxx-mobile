@@ -7,7 +7,7 @@
                         赞了一个{{thumb.title}}
                     </p>
                 </div>
-                <div class="info" v-link="{ name: 'evaluation-detail', params: { id: thumb.post_id }}">
+                <div class="info" v-link="{ name: 'evaluation', params: { id: thumb.post_id }}">
                     <div>
                         <div>
                             <img :src="thumb.user.photo | img" class="avatar-50"/>

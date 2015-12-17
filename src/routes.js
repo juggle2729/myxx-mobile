@@ -2,55 +2,59 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/comment': {
-        component: require('./components/CommentView.vue')
-    },
     '/featured': {
         name: 'featured',
         component: require('./components/FeaturedView.vue')
     },
-    '/evaluation': {
+    '/evaluations/:tab': {
+        name: 'evaluations',
+        component: require('./components/EvaluationsView.vue')
+    },
+    '/evaluation/:id': {
         name: 'evaluation',
         component: require('./components/EvaluationView.vue')
     },
-    '/evaluation/:id': {
-        name: 'evaluation-detail',
-        component: require('./components/EvaluationDetailView.vue')
-    },
-    '/story': {
+    '/stories/:tab': {
         name: 'stories',
-        component: require('./components/StoryView.vue')
+        component: require('./components/StoriesView.vue')
     },
     '/story/:id': {
-        name: 'story-detail',
-        component: require('./components/StoryDetailView.vue')
+        name: 'story',
+        component: require('./components/StoryView.vue')
     },
-    '/treasure': {
-        name: 'treasure',
-        component: require('./components/TreasureView.vue')
+    '/jades': {
+        name: 'jades',
+        component: require('./components/JadesView.vue')
     },
-    '/treasure/:id': {
-        name: 'treasure-detail',
-        component: require('./components/TreasureDetailView.vue')
+    '/jade/:id': {
+        name: 'jade',
+        component: require('./components/JadeView.vue')
     },
-    '/site': {
-        name: 'site',
-        component: require('./components/SiteView.vue')
+    '/masters': {
+        name: 'masters',
+        component: require('./components/MastersView.vue')
+    },
+    '/master/:id': {
+        name: 'master',
+        component: {
+            template: '大师官网'
+        }
     },
     '/message': {
         name: 'message',
         component: require('./components/MessageView.vue')
     },
     '/profile': {   // 个人中心
+        name: 'profile',
         component: require('./components/ProfileView.vue')
     },
     '/profile/:id': { // 个人主页
-        name: 'homepage',
+        name: 'user-profile',
         component: require('./components/HomePageView.vue')
     },
     '/profile/:id/story': {
-        name: 'story',
-        component: require('./components/SelfStoryView.vue')
+        name: 'user-story',
+        component: require('./components/UserStoryView.vue')
     },
     '/profile/:id/following': {
         name: 'following',
@@ -60,20 +64,17 @@ export default {
         name: 'follower',
         component: require('./components/FollowerView.vue')
     },
-    // '/profile/:id/evaluation': {
-    //     component: require('./components/EvaluationListView.vue')
-    // },
-    '/profile/:id/favor': {
-        name: 'favor',
-        component: require('./components/SelfThumbView.vue')
+    '/profile/:id/like': {
+        name: 'user-like',
+        component: require('./components/UserLikeView.vue')
     },
-    '/profile/:id/openshop': {
-        name: 'openshop',
-        component: require('./components/OpenShopView.vue')
+    '/profile/:id/shop/request': {
+        name: 'shop-request',
+        component: require('./components/ShopRequestView.vue')
     },
-    '/profile/:id/opensite': {
-        name: 'opensite',
-        component: require('./components/OpenSiteView.vue')
+    '/profile/:id/site/request': {
+        name: 'site-request',
+        component: require('./components/SiteRequestView.vue')
     },
     '/css': {
         name: 'cssview',

@@ -44,12 +44,12 @@
       <div class="separator-40"></div>
 
       <div class="rows">
-          <div class="row bg-white font-30 border-bottom" v-link="{name: 'openshop'}" >
-              <span class="icon-my-shop red "></span>
+          <div class="row bg-white font-30 border-bottom" v-link="{name: 'shop-request'}" >
+              <span class="icon-my-shop red"></span>
               <span>{{has_shop ? '我的店铺' : '申请开通店铺'}}</span>
               <span class="icon-enter gray font-26"></span>
           </div>
-          <div class="row bg-white font-30" v-link="{name: 'opensite'}" >
+          <div class="row bg-white font-30" v-link="{name: 'site-request'}" >
               <span class="icon-my-site red"></span>
               <span>{{has_website ? '我的官网' : '申请开通官网'}}</span>
               <span class="icon-enter gray font-26"></span>

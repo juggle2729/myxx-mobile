@@ -1,5 +1,5 @@
 <template>
-    <div class="treasure-detail">
+    <div class="jade-detail">
         <div class="imgs">
             <img :src="imgs[0]" title="{{$route.params.id}}">
         </div>
@@ -54,7 +54,7 @@
 <script>
 import emitter from '../utils/emitter';
     export default {
-        name: 'TreasureDetailView',
+        name: 'JadeView',
         data() {
             return {
                 shop: { // 所属商家

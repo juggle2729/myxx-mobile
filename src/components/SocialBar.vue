@@ -1,5 +1,5 @@
 <style lang="sass">
-.favor-component {
+.social-bar {
     height: 80px;
     .action {
         padding-left: 12px;
@@ -24,7 +24,7 @@
 }
 </style>
 <template>
-<div class="favor-component font-26 gray flex">
+<div class="social-bar font-26 gray flex">
     <div class="action" @click="toggleFavor">
         <i class="{{active ? 'red icon-favor-active' : 'icon-favor'}}"></i><span>{{total}}</span>
     </div>
@@ -44,7 +44,7 @@
 </template>
 <script>
 export default {
-    name: 'Favor',
+    name: 'SocialBar',
     data() {
         return {};
     },

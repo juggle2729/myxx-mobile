@@ -71,7 +71,7 @@
                     </p>
                     <p class="font-26 light">{{jade.date}}</p>
                 </div>
-                <div class="info" v-link="{ name: 'evaluation-detail', params: { id: jade.id }}">
+                <div class="info" v-link="{ name: 'evaluation', params: { id: jade.id }}">
                     <img :src="jade.imgUrl | img" :title="jade.imgUrl" />
                     <p class="font-26 txt-primary">{{{jade.description}}}</p>
                     <p class="font-26 light">{{{jade.resultTotal}}}条鉴定结果</p>
