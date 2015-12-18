@@ -122,9 +122,9 @@
                     <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span>
                 </div>
             </div>
-            <favor :id="result.id" type="1" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
-                <div @click="comment(result.identifier.id)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
-            </favor>
+            <social-bar :id="result.id" type="1" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
+                <div @click="comment($event, result.identifier.id)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+            </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
         <div class="evaluation-btn">
@@ -135,19 +135,19 @@
     <div class="comments">
         <div class="header border-bottom font-22">
             <div>评论{{comments.total}}</div>
-            <div @click="comment" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
+            <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
         </div>
         <ul>
             <li class="margin-bottom" v-for="c in comments.list">
                 <div class="author">
                     <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
                     <div>
-                        <h3 class="font-26 blue" @click="comment(c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <h3 class="font-26 blue" @click="comment($event, c.reply_from.id)">{{c.reply_from.nickname}}</h3>
                         <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                     </div>
                 </div>
                 <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label"><span @click="comment(c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span v-if="c.reply_to" class="label"><span @click="comment($event, c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
@@ -251,8 +251,9 @@ export default {
         share() {
             this.toast('分享');
         },
-        comment(userId) {
-            this.toast(typeof userId === 'number' ? '回复' : '评论');
+        comment(e, userId) {
+            const position = e.target.getBoundingClientRect().top + window.scrollY;
+            this.action('keyboard', {id: 1, placeholder: "哈哈", position});
         },
         evaluate() {
             this.toast(this.apply.isMaster ? '鉴宝' : '菜鸟不能鉴宝');

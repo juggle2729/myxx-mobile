@@ -1,7 +1,13 @@
 export default {
-    '/': {
-        component: require('./components/IndexView.vue')
+    '/comment': {
+        component: require('./components/CommentView.vue')
     },
+    '/media': {
+        component: require('./components/MediaView.vue')
+    },
+    // '/': {
+    //     component: require('./components/IndexView.vue')
+    // },
     '/featured': {
         name: 'featured',
         component: require('./components/FeaturedView.vue')
@@ -13,6 +19,14 @@ export default {
     '/evaluation/:id': {
         name: 'evaluation',
         component: require('./components/EvaluationView.vue')
+    },
+    '/evaluation/:id/likes': {
+        name: 'evaluation-likes',
+        component: require('./components/EvaluationLikesView.vue')
+    },
+    '/likes/:type/:id': {
+        name: 'likes',
+        component: require('./components/LikesView.vue')
     },
     '/stories/:tab': {
         name: 'stories',

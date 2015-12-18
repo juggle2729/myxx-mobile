@@ -39,9 +39,7 @@ export default {
     methods: {
         c(e) {
             const rect = e.target.getBoundingClientRect();
-            this.top = window.scrollY;
-            this.target = e.target;
-            this.action('keyboard', {id: 1, placeholder: '回复xxx', position: rect.top});
+            this.action('keyboard', {id: 1, placeholder: '回复xxx', position: rect.top + rect.height + window.scrollY});
         }
     }
 }

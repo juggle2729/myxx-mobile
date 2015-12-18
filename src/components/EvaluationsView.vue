@@ -1,5 +1,5 @@
 <style lang="sass">
-.evaluation {
+.evaluations-view {
     .tabs {
         display: -webkit-box;
         height: 80px;
@@ -78,7 +78,7 @@
 }
 </style>
 <template>
-<div class="evaluation">
+<div class="evaluations-view">
     <div class="tabs">
         <div :class="{'red': tab=='time'}" class="font-26 center border-right">
             <label for="tab-time">最新</label><input name="tab" v-model="tab" type="radio" id="tab-time" value="time" />
@@ -110,7 +110,7 @@
                 <div class="mark font-22">已鉴定</div>
             </div>
         </div>
-        <social-bar :id="item.post_id" type="1" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
+        <social-bar :id="item.post_id" type="3" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left light extra-action">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
@@ -167,7 +167,7 @@ export default {
             }
         })());
         if(!this.tab) {
-            this.tab = this.$route.query.tab || 'time';
+            this.tab = this.$route.params.tab || 'time';
         }
     },
     events: {

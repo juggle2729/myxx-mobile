@@ -1,4 +1,4 @@
-// register filters globally
+import config from '../config';
 export function moment(dateStr) {
     const MINUTE = 1000 * 60;
     const HOUR = 60 * MINUTE;
@@ -20,16 +20,14 @@ export function moment(dateStr) {
     return m;
 }
 
-// export function img(id) {
-//     let src;
-//     if (id) {
-//         src = /^https?/.test(id) ? id : 'http://7xo8aj.com2.z0.glb.qiniucdn.com/' + id;
-//     } else {
-//         src = 'static/images/avatar--defaut.jpg';
-//     }
-//     return src;
-// }
-
 export function money(number) {
     return number / 10000 + '万';
+}
+
+export function role(id) {
+    return config.roles[id];
+}
+
+export function type(id) {
+    return config.types[id];
 }

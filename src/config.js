@@ -56,5 +56,15 @@ export default {
             route: ''
         }
     ],
-    roles: ['普通用户', '商家', '藏家', '大师', '权威']
+    roles: ['普通用户', '商家', '藏家', '大师', '权威'],
+    likes: [
+        {
+            name: '鉴宝'
+            //帖子
+            //posts/[post_id]/like
+            ///sns/posts/[post_id]/like/users
+            ////sns/results/{result_id}/like
+            ////mall/products/[product_id]/like
+        }
+    ]
 };

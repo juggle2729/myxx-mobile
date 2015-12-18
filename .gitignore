@@ -27,3 +27,5 @@ log
 **/dist/*
 **/node_modules/*
 .tmp
+/static/app.js
+/static/build.js

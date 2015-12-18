@@ -161,7 +161,8 @@
         top: 0;
         right: 0;
         bottom: 0;
-        background: #e0e0e0 url('//7xp1h7.com2.z0.glb.qiniucdn.com/play.svg') no-repeat center;
+        mix-blend-mode: overlay;
+        background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/play.svg') no-repeat center;
         background-size: 1rem;
     }
 }
