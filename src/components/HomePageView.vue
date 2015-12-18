@@ -1,27 +1,28 @@
 <template>
-<div class="homepage">
-    <div class="account border-bottom">
+<div class="homepage-view">
+    <div class="account border-bottom flex">
         <div class="avatar-240" v-bg.md="photo"></div>
         <p class="font-30 red">{{nickname}}</p>
-        <button class="bg-red font-26 white icon-favor-active">关注</button>
+        <button v-if="!follow && isNotSelf" class="bg-red font-26 white icon-favor-active" @click="toggleFollow">关注</button>
+        <button v-if="follow && isNotSelf" class="bg-gray font-26 white" @click="toggleFollow">已关注</button>
     </div>
     <div class="community bg-white flex">
-      <div v-link="{name: 'story', params: {id: userid}}" class="border-right">
-        <p class="font-30" align="center">16</p>
-        <p class="font-26 gray" align="center">话题</p>
-      </div>
-      <div v-link="{name: 'following'}" class="border-right">
-        <p class="font-30" align="center">314</p>
-        <p class="font-26 gray" align="center">关注</p>
-      </div>
-      <div v-link="{name: 'follower'}" class="border-right">
-        <p class="font-30" align="center" >234</p>
-        <p class="font-26 gray" align="center">粉丝</p>
-      </div>
+        <div v-link="{name: 'story', params: {id: userId}}" class="border-right">
+            <p class="font-30" align="center">{{topic_count}}</p>
+            <p class="font-26 gray" align="center">话题</p>
+        </div>
+        <div v-link="{name: 'following', params: {id: userId }}" class="border-right">
+            <p class="font-30" align="center">{{follow_count}}</p>
+            <p class="font-26 gray" align="center">关注</p>
+        </div>
+        <div v-link="{name: 'follower', params: {id: userId }}" class="border-right">
+            <p class="font-30" align="center">{{fans_count}}</p>
+            <p class="font-26 gray" align="center">粉丝</p>
+        </div>
     </div>
     <div class="separator" style="height:30px"></div>
     <div class="his border-bottom">
-        <div class="row font-30 border-bottom" v-link="{name: 'favor'}">
+        <div class="row font-30 border-bottom" v-link="{name: 'user-like', params: {id: userId}}">
             <span class="red icon-my-favor"></span>
             <span>TA的赞</span>
             <span class="icon-enter gray"></span>
@@ -33,40 +34,63 @@
         </div>
         <div class="row font-30">
             <span class="red icon-my-shop"></span>
-            <span>TA的店铺</span>
+            <span>{{has_shop ? 'TA的店铺' : 'TA没有店铺'}}</span>
             <span class="icon-enter gray"></span>
         </div>
     </div>
 </div>
 </template>
 <script>
-import config from '../config';
 export default {
     name: 'HomePageView',
     data() {
         return {
-            userid: 0
+            photo: null,
+            role: 0,
+            has_shop: false,
+            nickname: '',
+            has_website: false,
+            fans_count: 0,
+            topic_count: 1,
+            follow_count: 2,
+            follow: false,
+            userId: 0,
+            isNotSelf: false
         };
     },
     route: {
         data() {
-            this.userid = this.$route.params.id;
+            this.userId = this.$route.params.id;
+            this.isNotSelf = !(this.userId == this.self.user_id);
             return this.$http
-                .get('users/info/'+this.userid)
-                .success(function({data}) {
-                    data.roleName = config.roles[data.role];
+                .get('users/'+ this.userId +'/profile')
+                .success(({data}) => {
+                    console.log(this.userId);
+                    console.log(this.self.user_id);
+                    console.log(this.isNotSelf);
                     this.$data = Object.assign(this.$data, data);
                 });
+        }
+    },
+    methods: {
+        toggleFollow() {
+            if (this.follow) {
+                this.toast('已关注');
+            } else {
+                this.$http.post(`users/follow/` + this.userId)
+                    .success((resp) => {
+                        this.follow = true;
+                        this.toast('关注成功');
+                    });
+            }
         }
     }
 }
 </script>
 <style lang="sass">
-.homepage {
+.homepage-view {
     .account {
-        display: flex;
         flex-direction: column;
-        align-items: center;
         height: 420px;
         padding-top: 20px;
         > p {
@@ -86,6 +110,9 @@ export default {
         padding: 25px 0;
         > div {
             width: 33.3%;
+            > p:nth-of-type(2) {
+                margin-top: 14px;
+            }
         }
     }
     .his {

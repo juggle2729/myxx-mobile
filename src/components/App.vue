@@ -20,7 +20,7 @@ export default {
     created() {
         // this.action('done');
         this.$http
-            .get(`users/info/${bridge.user.user_id}`)
+            .get(`users/${bridge.user.user_id}/basic`)
             .success(({data: user}) => {
                 Object.assign(bridge.user, user);
             });

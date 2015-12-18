@@ -65,7 +65,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/story/23'
+    '*': '/profile'
 });
 
 router.start(App, '#app');

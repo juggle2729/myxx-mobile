@@ -78,6 +78,10 @@ export default {
         name: 'follower',
         component: require('./components/FollowerView.vue')
     },
+    '/profile/:id/evaluation': {
+        name: 'user-evaluation',
+        component: require('./components/UserEvaluationView.vue')
+    },
     '/profile/:id/like': {
         name: 'user-like',
         component: require('./components/UserLikeView.vue')

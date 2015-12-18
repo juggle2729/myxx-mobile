@@ -1,127 +1,157 @@
-<style lang="sass">
-.topics {
-    .notice {
-        padding-left: 32px;
-        position: relative;
-        .sender {
-            display: -webkit-box;
-            height: 114px;
-            position: relative;
-            img {
-                position: absolute;
-                height: 68px;
-                width: 68px;
-                top: 26px;
-                border-radius: 50%;
-            }
-            > p:nth-of-type(1) {
-                position: absolute;
-                top: 47px;
-                left: 88px;
-            }
-            > p:nth-of-type(2) {
-                position: absolute;
-                top: 48px;
-                right: 32px;
-                font-size: 24px;
-            }
-        }
-        .info {
-            display: -webkit-box;
-            position: relative;
-            margin-bottom: 30px;
-            margin-top: 6px;
-            margin-right: 32px;
-            height: 149px;
-            background-color: #efeff4;
-            img {
-                position: absolute;
-                margin: 12px 0 12px 12px;
-                height: 125px;
-                width: 125px;
-            }
-            p:nth-of-type(1) {
-                position: absolute;
-                font-size: 30px;
-                left: 173px;
-                margin-top: 38px;
-                width: 500px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            p:nth-of-type(2) {
-                position: absolute;
-                font-size: 26px;
-                margin-top: 84px;
-                left: 173px;
-            }
-        }
-    }
-}
-</style>
 <template>
     <div class="topics">
-        <template v-for="jade in jades">
-            <div class="notice">
-                <div class="sender">
-                    <img :src="photo | img" />
-                    <p class="font-26 txt-primary" v-bind:class="{ 'font-red': jade.title, 'font-blue': !jade.title}">
-                        {{jade.title? '我发起的鉴宝':'我参与的鉴宝'}}
-                    </p>
-                    <p class="font-26 light">{{jade.date}}</p>
-                </div>
-                <div class="info" v-link="{ name: 'evaluation', params: { id: jade.id }}">
-                    <img :src="jade.imgUrl | img" :title="jade.imgUrl" />
-                    <p class="font-26 txt-primary">{{{jade.description}}}</p>
-                    <p class="font-26 light">{{{jade.resultTotal}}}条鉴定结果</p>
-                </div>
+        <div class="tabs">
+            <div :class="{'red': tab=='time'}" class="font-26 center border-right">
+                <label for="tab-time">最新</label>
+                <input id="tab-time" type="radio" value="time" v-model="tab">
             </div>
-            <div class="separator-20"></div>
+            <div :class="{'red': tab=='popularity'}" class="font-26 center">
+                <label for="tab-popularity">热门</label>
+                <input id="tab-popularity" value="popularity" type="radio" v-model="tab">
+            </div>
+        </div>
+        <template v-for="item in items">
+            <div class="separator"></div>
+            <div class="item">
+                <div class="header">
+                    <div class="user">
+                        <div class="avatar" v-bg.sm="item.user.photo"></div>
+                        <div class="name">
+                            <p class="font-26">{{item.user.name}}</p>
+                            <p class="moment font-22 light">{{item.create_at | moment}}</p>
+                        </div>
+                    </div>
+                    <div class="desc font-30">{{item.description}}</div>
+                </div>
+                <table v-link="{name: 'story', params: {id: item.id}}">
+                    <tr>
+                        <td>
+                            <div v-bg.lg="item.pictures[0]"></div>
+                        </td>
+                        <td>
+                            <div v-bg.lg="item.pictures[1]"></div>
+                        </td>
+                        <td rowspan='2'>
+                            <div class="video" v-bg.video="item.video">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div v-bg.lg="item.pictures[2]"></div>
+                        </td>
+                        <td>
+                            <div v-bg.lg="item.pictures[3]"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="social border-top"></div>
+                </div>
         </template>
-    </div>
+        </div>
 </template>
 <script>
     export default {
-        name: 'Story',
+        name: 'StoryView',
         data() {
             return {
-                photo: '',
-                jades: []
+                tab: 'time',
+                items: [],
+                total: 0
             };
         },
         route: {
-            data({
-                to
-            }) {
-                const userId = to.params.id;
+            data() {
+                return this.fetch();
+            }
+        },
+        created() {
+            this.$watch('tab', this.fetch);
+        },
+        methods: {
+            fetch() {
+                const params = {
+                    [this.tab]: 1, offset: 0, limit: 5
+                };
                 return this.$http
-                    .get('jianbao/users/' + userId + '/applies')
-                    .success(function(resp) {
-                        var applies = resp.data.applies;
-                        this.jades = applies;
-                        for (var x in applies) {
-                            if (applies[x].applier.id === userId) {
-                                this.$data.jades[x].title = true;
-                                if (this.photo === '') {
-                                    this.photo = applies[x].applier.photo;
+                    .get('sns/users/topics', ({data}) => {
+                        this.items = data.topics;
+                        data.topics.forEach((topic) =>{
+                            topic.pictures = [];
+                            topic.medias.forEach((media) => {
+                                console.log(media);
+                                if(media.type === 'picture'){
+                                    topic.pictures.push(media.id);
+                                }else {
+                                    topic.video = media.id;
                                 }
-                            } else {
-                                this.$data.jades[x].title = false;
-                                if (this.photo === '') {
-                                    for (var n in applies[x].results) {
-                                        if (applies[x].results[n].identifier.id === userId)
-                                            this.photo = applies[x].results[0].identifier.photo;
-                                    }
-                                }
-                            }
-                            this.jades[x].id = applies[x].id;
-                            this.jades[x].imgUrl = applies[x].pictures[0];
-                            this.jades[x].resultTotal = applies[x].results.length;
-                            this.jades[x].date = applies[x].create_at.substring(5, 10);
-                        }
+                            });
+                        });
+                        this.total = data.total;
                     });
             }
         }
     }
 </script>
+<style lang="sass">
+    .topics {
+        .tabs {
+            display: -webkit-box;
+            height: 80px;
+            > div {
+                -webkit-box-flex: 1;
+                margin: 24px 0;
+            }
+            label {
+                width: 100%;
+                display: inline-block;
+            }
+            [type='radio'] {
+                display: none;
+            }
+        }
+        .item {
+            padding: 24px 32px;
+            margin-bottom: 40px;
+        }
+        .user {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            .avatar {
+                height: 68px;
+                width: 68px;
+                border-radius: 50%;
+                background-size: cover;
+                vertical-align: middle;
+            }
+            .name {
+                margin-left: 20px;
+                .moment {
+                    margin-top: 12px;
+                }
+            }
+        }
+        .desc {
+            margin: 30px 0 24px;
+        }
+        table {
+            width: 670px;
+            td {
+                padding: 5px;
+            }
+            div {
+                height: 200%;
+                width: 100%;
+                padding-top: 100%;
+                background-size: cover;
+                background-position: center;
+                &.video {
+                    padding-top: calc(200% + 10px);
+                }
+            }
+        }
+        .social {
+            height: 60px;
+            @extend .border-top;
+        }
+    }
+</style>

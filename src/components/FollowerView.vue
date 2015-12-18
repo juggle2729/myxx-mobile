@@ -1,161 +1,122 @@
-<style lang="sass">
-.follower {
-    .user {
-            display: flex;
-            align-items: center;
-            height: 180px;
-            width: 100%;
-            padding-left: 32px;
-            position: relative;
-            background-color: #ffffff;
-            > img {
-                height: 120px;
-                width: 120px;
-                border-radius: 50%;
-            }
-            .info {
-                margin-left: 64px;
-            }
-            > button {
-                position: absolute;
-                right: 32px;
-                top: 50%;
-                margin-top: -20px;
-                width: 112px;
-                height: 40px;
-                background-color: #fff;
-                border-radius: 8px;
-                border-width: 1px;
-                border-style: solid;
-                display:flex;
-                align-items: center;
-                > img {
-                    width: 20px;
-                    margin-left: 8px;
-                }
-                > p {
-                    margin-left: 0;
-                    display:inline;
-                    margin-left: 8px;
-                }
-            }
-        }
-        .separ {
-            padding-left: 32px;
-            padding-top: 20px;
-            height: 52px;
-        }
-    }
-</style>
 <template>
-    <div class="follower">
-        <div v-if="newList">
-            <div class="separ bg-default border-bottom">
-                <p class="font-26 gray">新的粉丝</p>
+<div class="follower-view">
+    <template v-for="user in userList">
+        <div class="user border-bottom bg-white flex">
+            <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
+            <div class="info flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
+                <p class="font-30">{{user.nickname}}</p>
+                <p class="font-26 light" style="margin-top:8px;">{{user.role | role}}</p>
             </div>
-            <template v-for="user in newList">
-                <div class="user">
-                    <img :src="user.photo | img" v-link="{ name: 'homepage', params: { id: user.user_id }}"/>
-                    <div class="info" v-link="{ name: 'homepage', params: { id: user.user_id }}">
-                        <div>
-                            <p class="font-30">{{user.nickname}}</p>
-                            <p class="font-26 light" style="margin-top:12px;">{{user.title}}</p>
-                        </div>
-                    </div>
-                    <button class="gray font-22 border-gray" v-if="user.follow" @click="toggleFollow(user)">
-                        <img src="/static/images/profile/unfollow.png" >
-                        <p>已关注</p>
-                    </button>
-                    <button class="red font-22 border-red" v-if="!user.follow" @click="toggleFollow(user)" >
-                        <img src="/static/images/profile/follow.png" >
-                        <p>加关注</p>
-                    </button>
-                </div>
-            </template>
-            <div class="separator-20"></div>
+            <button class="gray font-22 border-gray flex bg-white" v-if="user.follow && user.isNotSelf" @click="toggleFollow(user)">
+                <img src="/static/images/profile/unfollow.png">
+                <p>已关注</p>
+            </button>
+            <button class="red font-22 border-red flex bg-white" v-if="!user.follow && user.isNotSelf" @click="toggleFollow(user)">
+                <img src="/static/images/profile/follow.png">
+                <p>加关注</p>
+            </button>
         </div>
-        <div v-if="oldList">
-            <template v-for="user in oldList">
-                <div class="user border-bottom">
-                    <img :src="user.photo | img" v-link="{ name: 'homepage', params: { id: user.user_id }}"/>
-                    <div class="info" v-link="{ name: 'homepage', params: { id: user.user_id }}">
-                        <div>
-                            <p class="font-30">{{user.nickname}}</p>
-                            <p class="font-26 light" style="margin-top:8px;">{{user.title}}</p>
-                        </div>
-                    </div>
-                    <button class="gray font-22 border-gray" v-if="user.follow" @click="toggleFollow(user)">
-                        <img src="/static/images/profile/unfollow.png" >
-                        <p>已关注</p>
-                    </button>
-                    <button class="red font-22 border-red" v-if="!user.follow" @click="toggleFollow(user)">
-                        <img src="/static/images/profile/follow.png" >
-                        <p>加关注</p>
-                    </button>
-                </div>
-            </template>
-        </div>
+    </template>
+    <div class="loadmore center font-22 gray">
+        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <span v-show="!hasMore" class="center-vertical">没有了</span>
     </div>
+</div>
 </template>
 <script>
-    const roles = ['普通用户', '商家', '藏家', '大师', '权威'];
-    export default {
-        name: 'Selffollower',
-        methods: {
-            toggleFollow(user) {
-                if (user.follow) {
-                    this.$http.delete(`users/follow/`+user.user_id, (resp) => {
-                        if(resp.status === 200) {
-                            user.follow = false;
-                            this.toast('取消关注成功');
-                        } else if(resp.status === 605) {
-                            this.toast(resp.message);
-                            this.action('login');
-                        }
-                    });
-                } else {
-                    this.$http.post(`users/follow/`+user.user_id, (resp) => {
-                        if(resp.status === 200) {
-                            user.follow = true;
-                            this.toast('关注成功');
-                        } else if(resp.status === 605) {
-                            this.toast(resp.message);
-                            this.action('login');
-                        }
-                    });
-                }
+export default {
+    name: 'Selffollower',
+    methods: {
+        toggleFollow(user) {
+            if (user.follow) {
+                this.$http.delete(`users/follow/`+user.user_id)
+                .success((resp) => {
+                    user.follow = false;
+                    this.toast('取消关注成功');
+                });
+            } else {
+                this.$http.post(`users/follow/`+user.user_id)
+                .success((resp) => {
+                    user.follow = true;
+                    this.toast('关注成功');
+                });
             }
         },
-        data() {
-            return {
-                newList: [{
-                    nickname: '新徐太宇',
-                    photo: '',
-                    title: '普通用户',
-                    user_id: 8,
-                    follow: false
-                }],
-                oldList: [{
-                    nickname: '老徐太宇',
-                    photo: '',
-                    title: '普通用户',
-                    user_id: 5,
-                    follow: false
-                }]
-            };
-        },
-        route: {
-            data({to}) {
-                const userId = to.query.id || 1;
+        fetch() {
+            const limit = 10;
+            const userid = this.$route.params.id;
+            let offset = this.userList.length;
+            if (this.loading) {
+                this.loading = false;
+                const params = {offset, limit};
                 return this.$http
-                    .get('users/my_fans')
-                    .success(function(resp) {
-                        resp.data.entries.forEach((entry) => {
-                            entry.title = roles[entry.role];
-                            this.oldList.push(entry);
+                    .get('users/' + userid + '/fans_list', params)
+                    .success(({data}) => {
+                        data.entries.forEach((entry) => {
+                            entry.isNotSelf = !(entry.user_id == this.self.user_id);
+                            this.userList.push(entry);
                         });
+                        this.loading = true;
+                        if (data.entries.length < limit) {
+                            this.hasMore = false;
+                            this.loading = false;
+                        }
                     });
             }
         }
+    },
+    data() {
+        return {
+            userList: [],
+            hasMore: true,
+            loading: true
+        };
+    },
+    route: {
+        data() {
+            return this.fetch();
+        }
+    },
+    events: {
+        scrollToBottom(e) {
+            this.fetch();
+        }
     }
+}
 </script>
+<style lang="sass">
+.follower-view {
+    .user {
+        height: 180px;
+        width: 100%;
+        padding: 0 32px;
+        position: relative;
+        .info {
+            margin-left: 64px;
+        }
+        button {
+            width: 112px;
+            height: 40px;
+            border-radius: 8px;
+            border-width: 1px;
+            border-style: solid;
+            > img {
+                width: 20px;
+                height: 20px;
+                margin-left: 8px;
+            }
+            > p {
+                display: inline;
+                margin-left: 8px;
+            }
+        }
+    }
+    .loadmore {
+        height: 68px;
+        > img {
+            width: 120px;
+            height: 68px;
+        }
+    }
+}
+</style>

@@ -143,9 +143,10 @@
             }) {
                 const userId = to.query.id || 1;
                 return this.$http
-                    .get('jianbao/users/' + userId + '/applies')
+                    .get('sns/users/jianbao')
                     .success(function(resp) {
-                        var applies = resp.data.applies;
+                        console.log(resp);
+                        var applies = resp.data.jianbaos;
                         this.jades = applies;
                         for (var x in applies) {
                             if (applies[x].applier.id === userId) {
