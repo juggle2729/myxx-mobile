@@ -80,11 +80,11 @@
                 <div class="mark font-22">已鉴定</div>
             </div>
         </div>
-        <favor :id="item.post_id" type="1" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
+        <social-bar :id="item.post_id" type="1" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left light extra-action">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
-        </favor>
+        </social-bar>
         <div class="separator"></div>
     </template>
 </div>
@@ -101,9 +101,6 @@ export default {
     },
     components: {
         SocialBar
-    },
-    data() {
-        return {};
     }
 }
 </script>

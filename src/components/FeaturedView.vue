@@ -43,7 +43,7 @@
 </style>
 <template>
     <div class="featured-view bg-default">
-        <div class="item white" v-link="{name: item.type.route, params: {id: item.id}}" v-for="item in items" v-bg.lg='item.image'>
+        <div class="item white" v-link="{name: item.type.route, params: {id: item.item.id}}" v-for="item in items" v-bg.lg='item.image'>
             <div class="title font-30 bold">{{item.item.desc}}</div>
             <div class="user flex">
                 <div class="avatar-36" v-bg.sm='item.item.user.photo'></div>
@@ -52,7 +52,7 @@
             <div class="social font-22">
                 <div class="favor">
                     <i class="icon-favor"></i>
-                    <span>{{item.item.follow}}</span>
+                    <span>{{item.item.likes}}</span>
                 </div>
                 <div class="comment">
                     <i class="icon-comment"></i>

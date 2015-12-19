@@ -6,7 +6,7 @@ import Resource from 'vue-resource';
 import routes from './routes';
 import mixins from './mixins';
 import { bg } from './directives';
-import { moment, money, role, type } from './filters';
+import { moment, money, role, type, profile } from './filters';
 import bridge from './utils/jsbridge';
 import App from './components/App.vue';
 
@@ -22,34 +22,44 @@ Vue.filter('moment', moment);
 Vue.filter('money', money);
 Vue.filter('role', role);
 Vue.filter('type', type);
+Vue.filter('profile', profile);
 
 // Vue configurations
 Vue.config.debug = true;
 Vue.http.options.root = config.api.dev;
-Vue.http.options.error = function() {
-    console.error('后台出错了~');
+Vue.http.options.xxx = '123';
+Vue.http.yyy = '123';
+Vue.http.options.error = function(response, status, request) {
+    console.error(status, request.responseURL);
+    this.toast('💔出错了');
+};
+Vue.http.options.success = function(response, status, request) {
+    if(response.status !== 200) {
+        // TODO 取消第二个success callback
+        console.error(response.status, request.responseURL, response.message);
+        this.toast(response.message);
+    }
 };
 
 Vue.http.headers.common['X-Auth-Token'] = bridge.user.token;
 
 // routing
-var router = new Router({hashbang: false});
-router.alias({
-    // 匹配 /a 时就像是匹配 /a/b/c
-    // '/home': '/home/featured'
-});
-
+var router = new Router({hashbang: false, suppressTransitionError: true});
 //设置页面title
-router.beforeEach((transition) => {
-    console.debug('go', transition.to.path);
+router.beforeEach(({from, to, abort, next}) => {
     if(window.WebViewJavascriptBridge) {
-        transition.abort();
-        let url = location.protocol + '//' + location.host + '/#!' + transition.to.path;
-        console.debug('go', {url, target: 'self'});
-        // debugger;
-        window.WebViewJavascriptBridge.callHandler('go', {url, target: 'self'});
+        if(from.fullPath !== to.fullPath) {
+            abort();
+            console.debug('go =>', to.path);
+            window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
+        } else {
+            next();
+        }
     } else {
-        transition.next();
+        if(from.fullPath && from.fullPath !== to.fullPath) {
+            console.debug('go =>', to.path);
+        }
+        next();
     }
 });
 //设置页面title

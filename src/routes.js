@@ -1,13 +1,10 @@
 export default {
+    '/': {
+        component: require('./components/IndexView.vue')
+    },
     '/comment': {
         component: require('./components/CommentView.vue')
     },
-    '/media': {
-        component: require('./components/MediaView.vue')
-    },
-    // '/': {
-    //     component: require('./components/IndexView.vue')
-    // },
     '/featured': {
         name: 'featured',
         component: require('./components/FeaturedView.vue')
@@ -54,9 +51,9 @@ export default {
             template: '大师官网'
         }
     },
-    '/message': {
-        name: 'message',
-        component: require('./components/MessageView.vue')
+    '/messages': {
+        name: 'messages',
+        component: require('./components/MessagesView.vue')
     },
     '/profile': {   // 个人中心
         name: 'profile',

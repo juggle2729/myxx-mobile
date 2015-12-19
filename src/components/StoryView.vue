@@ -1,6 +1,6 @@
 <style lang="sass">
 .story-view {
-    .item {
+    .story {
         padding: 24px 32px;
     }
     .user {
@@ -66,16 +66,16 @@
 </style>
 <template>
 <div class="story-view">
-    <div class="item">
+    <div class="story">
         <div class="header">
             <div class="user">
                 <div class="avatar" v-link="{name: story.user.role=='3' ? 'user-site' : 'user-profile', params: {id: story.user.id}}" v-bg.sm="story.user.photo"></div>
                 <div class="name">
                     <p class="font-26">{{story.user.name}}</p>
                     <p class="moment font-22 gray">{{story.create_at | moment}}</p>
-              </div>
+                </div>
             </div>
-            <div class="desc font-30">{{story.content}}</div>
+            <div class="desc font-30"><span class="gray">#{{story.topic_type}}</span><br/>{{story.content}}</div>
         </div>
         <div class="medias">
             <div class="unique" v-if="story.medias.length===1"></div>
@@ -145,6 +145,7 @@ export default {
                 .success(comments => {
                     this.comments.list = comments.data.comments;
                     this.comments.total = comments.data.total;
+                    debugger;
                     getStory.success(story => {
                         this.story = story.data;
                     });

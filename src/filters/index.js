@@ -24,6 +24,14 @@ export function money(number) {
     return number / 10000 + '万';
 }
 
+export function profile(user) {
+    const route = {name: 'user-profile', params: {id: user.id}};
+    if(+user.role === 3) {
+        route.name = 'master';
+    }
+    return route;
+}
+
 export function role(id) {
     return config.roles[id];
 }

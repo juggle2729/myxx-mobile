@@ -92,7 +92,7 @@
 <div class="evaluation-detail">
     <div class="header">
         <div class="user">
-            <div class="avatar" v-bg.sm="evaluation.user.photo"></div>
+            <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
             <div class="margin-left">
                 <div class="font-26">{{evaluation.user.name}}</div>
                 <div class="padding-top font-22 gray">
@@ -102,13 +102,13 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results">
         <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{evaluation.results.length}}</div>
         <div class="result" v-for="result in evaluation.results">
             <div class="result-header">
-                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
+                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                 <div class="master padding-left">
                     <h3 class="font-26">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow white">个人官网</span></h3>
                     <p class="font-22 gray margin-top">{{result.identifier.title}}</p>
@@ -122,8 +122,8 @@
                     <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span>
                 </div>
             </div>
-            <social-bar :id="result.id" type="1" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
-                <div @click="comment($event, result.identifier.id)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+            <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
+                <div @click="comment($event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
@@ -142,12 +142,12 @@
                 <div class="author">
                     <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
                     <div>
-                        <h3 class="font-26 blue" @click="comment($event, c.reply_from.id)">{{c.reply_from.nickname}}</h3>
+                        <h3 class="font-26 blue" @click="comment($event, c.reply_from)">{{c.reply_from.nickname}}</h3>
                         <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                     </div>
                 </div>
                 <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label"><span @click="comment($event, c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span v-if="c.reply_to" class="label"><span @click="comment($event, c.reply_to)" class="blue">{{c.reply_to.nickname}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
@@ -155,13 +155,12 @@
         </ul>
     </div>
     <div class="separator last"></div>
-    <social-bar :id="evaluation.id" type="1" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
+    <social-bar :id="evaluation.id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
         <div @click="share" class="border-left center light extra-action"><i class="icon-thumb"></i><span>分享</span></div
     </social-bar>
 </div>
 </template>
 <script>
-import config from '../config';
 import SocialBar from './SocialBar.vue';
 export default {
     name: 'EvaluationView',
@@ -185,78 +184,35 @@ export default {
     route: {
         data({to}) {
             const evaluationId = to.params.id;
-            const getEvaluation = this.$http.get(`sns/jianbao/${evaluationId}`);
-            this.$http.get(`sns/posts/${evaluationId}/comments?offset=0&limit=5`)
-                .success(comments => {
-                    this.comments.list = comments.data.comments;
-                    this.comments.total = comments.data.total;
-                    getEvaluation.success(evaluation => {
-                        console.debug('evaluation', evaluation.data);
-                        evaluation.results = evaluation.results || [];
-                        this.evaluation = evaluation.data;
+            return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`, (comments) => {
+                    this.comments.list = comments.comments;
+                    this.comments.total = comments.total;
+                    this.$get(`sns/jianbao/${evaluationId}`, (evaluation) => {
+                        this.evaluation = evaluation;
                     });
                 });
-            return getEvaluation    ;
         }
     },
     methods: {
+        coverflow(index) {
+            this.bridge('coverflow', {ids: this.evaluation.pictures, index});
+        },
         play(videoId) {
-            this.action('play', 'http://7xo88d.media1.z0.glb.clouddn.com/' + videoId);
+            this.bridge('play', videoId);
         },
-        toggleThumb(resultId) {
-            const result = this.apply.results.filter(r => r.id === resultId).pop();
-            if (result.isLike) {
-                this.$http.delete(`sns/posts/${resultId}/like`, (resp) => {
-                    if (resp.status === 200) {
-                        result.isLike = false;
-                        result.like = result.like - 1;
-                    } else {
-                        this.toast(resp.message);
-                    }
-                });
-            } else {
-                this.$http.post(`sns/posts/${resultId}/like`, (resp) => {
-                    if (resp.status === 200) {
-                        result.isLike = true;
-                        result.like = result.like + 1;
-                    } else {
-                        this.toast(resp.message);
-                    }
-                });
-            }
-        },
-        toggleFollow() {
-            if (this.apply.isFollowed) {
-                this.$http.delete(`jianbao/applies/${jadeId}/follows`, (resp) => {
-                    if(resp.status === 200) {
-                        this.apply.isFollowed = false;
-                        this.apply.follow = this.apply.follow - 1;
-                    } else if(resp.status === 605) {
-                        this.toast(resp.message);
-                        this.action('login');
-                    }
-                });
-            } else {
-                this.$http.post(`jianbao/applies/${jadeId}/follows`, (resp) => {
-                    if(resp.status === 200) {
-                        this.apply.isFollowed = true;
-                        this.apply.follow = this.apply.follow + 1;
-                    } else if(resp.status === 605) {
-                        this.toast(resp.message);
-                        this.action('login');
-                    }
-                });
-            }
-        },
-        share() {
-            this.toast('分享');
-        },
-        comment(e, userId) {
-            const position = e.target.getBoundingClientRect().top + window.scrollY;
-            this.action('keyboard', {id: 1, placeholder: "哈哈", position});
+        comment(e, user) {
+            const rect = e.target.getBoundingClientRect();
+            const position = rect.top + rect.height + window.scrollY;
+            const placeholder = user ? '回复' + user.name : '';
+            this.bridge('keyboard', {id: user.id, placeholder, position}, () => {
+                console.debug('callback from keyboard', arguments);
+            });
         },
         evaluate() {
-            this.toast(this.apply.isMaster ? '鉴宝' : '菜鸟不能鉴宝');
+            this.toast(this.evaluation.master ? '鉴宝' : '菜鸟不能鉴宝');
+        },
+        share() {
+            this.bridge('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.picture[0], url: location.href});
         }
     }
 }

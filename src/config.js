@@ -28,7 +28,7 @@ export default {
             }
         },
         video(id) {
-            return 'http://7xo88d.media1.z0.glb.clouddn.com/' + id + '?vframe/jpg/offset/2/w/600/h/500/rotate/auto';
+            return 'http://7xo88d.media1.z0.glb.clouddn.com/' + id + '?vframe/jpg/offset/1/w/600/h/500/rotate/auto';
         }
     },
     video: {
@@ -59,12 +59,17 @@ export default {
     roles: ['普通用户', '商家', '藏家', '大师', '权威'],
     likes: [
         {
-            name: '鉴宝'
-            //帖子
-            //posts/[post_id]/like
-            ///sns/posts/[post_id]/like/users
-            ////sns/results/{result_id}/like
-            ////mall/products/[product_id]/like
+            id: 10,
+            name: '鉴宝',
+        }, {
+            id: 20,
+            name: '结果',
+        }, {
+            id: 30,
+            name: '话题',
+        }, {
+            id: 40,
+            name: '宝贝',
         }
     ]
 };

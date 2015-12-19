@@ -6,6 +6,16 @@
             margin-right: 24px;
         }
     }
+    .follow {
+        padding: 5px;
+        border: 2px solid red;
+        border-radius: 5px;
+    }
+    .unfollow {
+        padding: 5px;
+        border: 2px solid gray;
+        border-radius: 5px;
+    }
 }
 </style>
 <template>
@@ -15,14 +25,14 @@
         <div class="avatar" v-bg.sm="user.photo"></div>
         <div class="flex-1">
             <div class="font-30">{{user.name}}</div>
-            <div class="font-26 gray margin-top">{{user.roleName}}</div>
+            <div class="font-26 gray margin-top">{{user.role | role}}</div>
         </div>
-        <div class="font-26">+加关注</div>
+        <div v-if="user.is_followed" class="font-22 gray unfollow">+已关注</div>
+        <div v-else class="font-22 gray follow">+加关注</div>
     </div>
 </div>
 </template>
 <script>
-import config from '../config';
 export default {
     name: 'LikesView',
     data() {
@@ -42,32 +52,14 @@ export default {
             this.fetch();
         }
     },
-    created() {
-        // this.$watch('tab', (() => {
-        //     const tabs = [];
-        //     return (tab) => {
-        //         this.tab = tab;
-        //         this.$route.router.go({name: 'evaluations', params: {tab}});
-        //         if(tabs.indexOf(tab) === -1) {//tab第一次切换到时，首次加载
-        //             this.fetch();
-        //             tabs.push(tab);
-        //         }
-        //     }
-        // })());
-        // if(!this.tab) {
-        //     this.tab = this.$route.query.tab || 'time';
-        // }
-    },
     events: {
         scrollToBottom(e) {
           this.fetch();
         }
     },
     methods: {
-        // /sns/posts/{post_id}/like/users
-        // /sns/results/{result_id}/like/users
         fetch: (function() {
-            const limit = 2;
+            const limit = 10;
             let loading = false;
             return function() {
                 let offset = this.users.length;
@@ -76,12 +68,9 @@ export default {
                 }
                 console.debug('fetch', offset);
                 loading = true;
-                const params = {};
+                const params = {limit, offset};
                 return this.$http
-                    .get(`sns/posts/${this.id}/like/users`, params, ({data}) => {
-                        data.users.forEach((user) => {
-                            user.roleName = config.roles[user.role];
-                        });
+                    .get(`users/target/${this.id}/type/${this.type}/likers`, params).success(({data}) => {
                         this.users.splice(this.users.length - 1, 0, ...data.users);
                         this.total = data.total;
                         loading = false;

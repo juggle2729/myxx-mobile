@@ -12,61 +12,9 @@
             display: inline-block;
         }
         input {
-            display: none;
-        }
-    }
-    .item {
-        padding: 24px 32px;
-    }
-    .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .name {
-            margin-left: 20px;
-            .moment {
-                margin-top: 12px;
-            }
-        }
-    }
-    .desc {
-        margin: 30px 0 24px;
-    }
-    .video {
-        height: 500px;
-    }
-    .social {
-        padding: 0 32px;
-    }
-    .result {
-        height: 116px;
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .master {
-            -webkit-box-flex: 1;
-            padding-left: 20px;
-            .title {
-                margin-top: 12px;
-            }
-        }
-        .mark {
-            padding: 5px 0 5px 35px;
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
-            background-position: left center;
-            background-size: 26px;
+            /*display: none;*/
+            height: 50px;
+            width: 50px;
         }
     }
     .loadmore {
@@ -88,91 +36,45 @@
         </div>
     </div>
     <div class="separator" v-show="tab"></div>
-    <template v-for="item in current.items">
-        <div class="item">
-            <div class="header">
-                <div class="user">
-                    <div class="avatar" v-link="{name: item.user.role=='3' ? 'user-site' : 'user-profile', params: {id: item.user.id}}" v-bg.sm="item.user.photo"></div>
-                    <div class="name">
-                        <p class="font-26">{{item.user.name}}</p>
-                        <p class="moment font-22 gray">{{item.create_at | moment}}</p>
-                  </div>
-                </div>
-                <div class="desc font-30">{{item.description}}</div>
-            </div>
-            <div class="video" v-bg.bg="item.picture" v-link="{name: 'evaluation', params: {id: item.post_id}}"></div>
-            <div v-for="result in item.results" class="result border-top">
-                <div class="avatar" v-bg.sm="result.identifier.photo"></div>
-                <div class="master">
-                    <p class="name font-26">{{result.identifier.name}}</p>
-                    <p class="title font-22 gray">{{result.identifier.title}}</p>
-                </div>
-                <div class="mark font-22">已鉴定</div>
-            </div>
-        </div>
-        <social-bar :id="item.post_id" type="3" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left light extra-action">
-                <i class="icon-comment"></i><span>{{item.comment}}</span>
-            </div>
-        </social-bar>
-        <div class="separator"></div>
-    </template>
+    <evaluation-list :items="items"></evaluation-list>
     <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="current.hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!current.hasMore">没有了</span>
+        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <span v-show="!hasMore">没有了</span>
     </div>
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
+import EvaluationList from './EvaluationList.vue';
 export default {
-    name: 'EvaluationView',
+    name: 'EvaluationsView',
+    components: {
+        EvaluationList
+    },
     data() {
-        // 不同tab的数据要隔离
         return {
-            tab: '',
-            user:'',
-            time: {
-                items: [],
-                total: 0,
-                hasMore: true,
-                hasNew: false,
-            },
-            popularity: {
-                items: [],
-                total: 0,
-                hasMore: true,
-                hasNew: false
-            },
+            tab: 'time',
+            items: [],
+            total: 0,
+            hasMore: true
         };
     },
-    components: {
-        SocialBar
-    },
-    computed: {
-        current() {
-            return this[this.tab];
+    route: {
+        data({to}) {
+            this.tab = to.params.tab;
+            this.fetch();
+        },
+        canReuse() {
+            return false;
         }
     },
     created() {
-        this.$watch('tab', (() => {
-            const tabs = [];
-            return (tab) => {
-                this.tab = tab;
-                this.$route.router.go({name: 'evaluations', params: {tab}});
-                if(tabs.indexOf(tab) === -1) {//tab第一次切换到时，首次加载
-                    this.fetch();
-                    tabs.push(tab);
-                }
-            }
-        })());
-        if(!this.tab) {
-            this.tab = this.$route.params.tab || 'time';
-        }
+        this.$watch('tab', (tab) => {
+            this.$route.router.go({name: 'evaluations', params: {tab}});
+        });
     },
     events: {
         scrollToBottom(e) {
-          this.fetch();
+            this.fetch();
         }
     },
     methods: {
@@ -180,7 +82,7 @@ export default {
             const limit = 2;
             let loading = false;
             return function() {
-                let offset = this.current.items.length;
+                let offset = this.items.length;
                 if(loading) {
                     return console.debug('skip!!!!!!!!');
                 }
@@ -188,12 +90,12 @@ export default {
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
                 return this.$http
-                    .get('sns/jianbao', params, ({data}) => {
-                        this.current.items.splice(this.current.items.length - 1, 0, ...data.jianbaos);
-                        this.current.total = data.total;
+                    .get('sns/jianbao', params).success(({data}) => {
+                        this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
+                        this.total = data.total;
                         loading = false;
                         if (data.jianbaos.length < limit) {
-                            this.current.hasMore = false;
+                            this.hasMore = false;
                         }
                     });
             }

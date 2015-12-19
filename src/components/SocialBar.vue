@@ -25,14 +25,14 @@
 </style>
 <template>
 <div class="social-bar font-26 gray flex">
-    <div class="action" @click="toggleFavor">
+    <div class="action" @click="like">
         <i class="{{active ? 'red icon-favor-active' : 'icon-favor'}}"></i><span>{{total}}</span>
     </div>
     <div class="users flex flex-1" v-show="total">
         <div v-for="user in list">
             <div class="user" v-bg.sm="user.photo"></div>
         </div>
-        <div v-if="total>7">
+        <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
             <div class="more bg-red"></div>
         </div>
     </div>
@@ -68,28 +68,28 @@ export default {
             default: false
         }
     },
+    computed: {
+        likeApi() {
+            return `users/target/${this.id}/type/${this.type}/like`;
+        }
+    },
     methods: {
-        toggleFavor() {
-            console.debug(this.item);
+        like() {
             if (this.active) {
-                this.$http.delete(`sns/posts/${this.id}/like`, (resp) => {
-                    if (resp.status === 200) {
-                        this.active = false;
-                        this.total -= 1;
-                        this.list.splice(0, 1);
-                    } else {
-                        this.toast(resp.message);
-                    }
+                this.$delete(this.likeApi, (resp) => {
+                    this.active = false;
+                    this.total -= 1;
+                    this.list.forEach((item, index, list) => {
+                        if(item.id == this.self.id) {
+                            list.splice(index, 1);
+                        }
+                    });
                 });
             } else {
-                this.$http.post(`sns/posts/${this.id}/like`, (resp) => {
-                    if (resp.status === 200) {
-                        this.active = true;
-                        this.total += 1;
-                        this.list.splice(0, 0, this.self);
-                    } else {
-                        this.toast(resp.message);
-                    }
+                this.$post(this.likeApi, (resp) => {
+                    this.active = true;
+                    this.total += 1;
+                    this.list.splice(0, 0, this.self);
                 });
             }
         }
