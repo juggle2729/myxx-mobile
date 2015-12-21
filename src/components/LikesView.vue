@@ -69,8 +69,7 @@ export default {
                 console.debug('fetch', offset);
                 loading = true;
                 const params = {limit, offset};
-                return this.$http
-                    .get(`users/target/${this.id}/type/${this.type}/likers`, params).success(({data}) => {
+                return this.$get(`users/target/${this.id}/type/${this.type}/likers`, params).then((data) => {
                         this.users.splice(this.users.length - 1, 0, ...data.users);
                         this.total = data.total;
                         loading = false;

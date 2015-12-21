@@ -12,9 +12,7 @@
             display: inline-block;
         }
         input {
-            /*display: none;*/
-            height: 50px;
-            width: 50px;
+            display: none;
         }
     }
     .loadmore {
@@ -89,8 +87,7 @@ export default {
                 console.debug('fetch', this.tab, offset);
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
-                return this.$http
-                    .get('sns/jianbao', params).success(({data}) => {
+                return this.$get('sns/jianbao', params).then((data) => {
                         this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
                         this.total = data.total;
                         loading = false;

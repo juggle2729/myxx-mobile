@@ -62,9 +62,8 @@ export default {
         data() {
             this.userId = this.$route.params.id;
             this.isNotSelf = !(this.userId == this.self.user_id);
-            return this.$http
-                .get('users/'+ this.userId +'/profile')
-                .success(({data}) => {
+            return this.$get('users/'+ this.userId +'/profile')
+                .then((data) => {
                     console.log(this.userId);
                     console.log(this.self.user_id);
                     console.log(this.isNotSelf);
@@ -77,8 +76,8 @@ export default {
             if (this.follow) {
                 this.toast('已关注');
             } else {
-                this.$http.post(`users/follow/` + this.userId)
-                    .success((resp) => {
+                this.$post(`users/follow/` + this.userId)
+                    .then(() => {
                         this.follow = true;
                         this.toast('关注成功');
                     });

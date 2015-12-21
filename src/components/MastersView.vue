@@ -40,9 +40,8 @@ export default {
             const offset = this.list.length;
             const limit = 3;
             if(this.loading){
-                return this.$http
-                    .get('sites',{offset, limit})
-                    .success(({data}) => {
+                return this.$get('sites',{offset, limit})
+                    .then((data) => {
                         this.loading = false;
                         data.sites.forEach((site) =>{
                             this.list.push(site);

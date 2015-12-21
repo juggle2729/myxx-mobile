@@ -96,7 +96,7 @@
                 </template>
             </div>
         </div>
-        <social-bar :id="item.post_id" type="3" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
+        <social-bar :id="item.post_id" type="30" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left light extra-action">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
@@ -171,8 +171,7 @@ export default {
                 console.debug('fetch', this.tab, offset);
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
-                return this.$http
-                    .get('sns/topics', params, ({data}) => {
+                return this.$get('sns/topics', params).then((data) => {
                         this.current.items.splice(this.current.items.length - 1, 0, ...data.topics);
                         this.current.total = data.total;
                         loading = false;

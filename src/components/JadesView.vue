@@ -47,10 +47,9 @@
                 const limit = 10;
                 if(this.loading){
                     this.loading = false;
-                    this.$http
-                    .get('mall/products', {offset, limit})
-                    .success((res) => {
-                        res.data.products.forEach((promote) => {
+                    this.$get('mall/products', {offset, limit})
+                    .then((data) => {
+                        data.products.forEach((promote) => {
                                 promote.reward = '';
                                 promote.product_rewards.forEach((item) => {
                                     promote.reward += '#' + item.reward.name;
@@ -58,7 +57,7 @@
                                 this.promotes.push(promote);
                         });
                         this.loading = true;
-                        if(res.data.products.length < limit || res.data.total === this.promotes.length){
+                        if(data.products.length < limit || data.total === this.promotes.length){
                             this.loading = false;
                             this.hasMore = false;
                         }

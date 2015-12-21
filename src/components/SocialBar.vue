@@ -30,7 +30,7 @@
     </div>
     <div class="users flex flex-1" v-show="total">
         <div v-for="user in list">
-            <div class="user" v-bg.sm="user.photo"></div>
+            <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
         </div>
         <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
             <div class="more bg-red"></div>
@@ -76,7 +76,7 @@ export default {
     methods: {
         like() {
             if (this.active) {
-                this.$delete(this.likeApi, (resp) => {
+                this.$delete(this.likeApi).then(() => {
                     this.active = false;
                     this.total -= 1;
                     this.list.forEach((item, index, list) => {
@@ -86,7 +86,7 @@ export default {
                     });
                 });
             } else {
-                this.$post(this.likeApi, (resp) => {
+                this.$post(this.likeApi).then((resp) => {
                     this.active = true;
                     this.total += 1;
                     this.list.splice(0, 0, this.self);

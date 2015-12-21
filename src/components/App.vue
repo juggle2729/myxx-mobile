@@ -8,25 +8,27 @@
   </main>
 </template>
 <script>
+import Q from 'q';
 import emitter from '../utils/emitter';
-import bridge from '../utils/jsbridge';
 export default {
     name: 'App',
     data() {
         return {
-            user: bridge.user
+            user: {
+                user_id: 2,
+                token: 'f87e7796-9896-4a6f-997e-11b48aebd347'
+            }
         }
     },
     created() {
-        // this.action('done');
-        this.$http
-            .get(`users/info/${bridge.user.user_id}/basic`)
-            .success(({data: user}) => {
-                Object.assign(bridge.user, user);
-            });
+        // 注册滚动触底事件广播
         emitter.on('scroll-to-bottom', (e) => {
             this.$broadcast('scrollToBottom', e);
         });
+
+        this.$watch('user', (user) => {
+            console.debug('user changed', user);
+        })
     }
 }
 </script>

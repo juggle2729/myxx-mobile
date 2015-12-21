@@ -61,8 +61,7 @@ export default {
                 console.debug('fetch', offset);
                 loading = true;
                 const params = {};
-                return this.$http
-                    .get(`sns/posts/${this.id}/like/users`, params, ({data}) => {
+                return this.$get(`sns/posts/${this.id}/like/users`, params).then((data) => {
                         this.users.splice(this.users.length - 1, 0, ...data.users);
                         this.total = data.total;
                         loading = false;

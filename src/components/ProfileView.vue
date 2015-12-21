@@ -76,9 +76,8 @@ export default {
     route: {
         data() {
             this.userId = this.self.user_id;
-            return this.$http
-                .get('users/'+ this.userId +'/profile')
-                .success(({data}) => {
+            return this.$get('users/'+ this.userId +'/profile')
+                .then((data) => {
                     this.$data = Object.assign(this.$data, data);
                 });
         }

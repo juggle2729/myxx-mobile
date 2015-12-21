@@ -155,7 +155,7 @@
         </ul>
     </div>
     <div class="separator last"></div>
-    <social-bar :id="evaluation.id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
+    <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
         <div @click="share" class="border-left center light extra-action"><i class="icon-thumb"></i><span>分享</span></div
     </social-bar>
 </div>
@@ -179,15 +179,13 @@ export default {
     components: {
         SocialBar
     },
-    computed: {
-    },
     route: {
         data({to}) {
             const evaluationId = to.params.id;
-            return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`, (comments) => {
+            return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`).then((comments) => {
                     this.comments.list = comments.comments;
                     this.comments.total = comments.total;
-                    this.$get(`sns/jianbao/${evaluationId}`, (evaluation) => {
+                    this.$get(`sns/jianbao/${evaluationId}`).then((evaluation) => {
                         this.evaluation = evaluation;
                     });
                 });
@@ -195,24 +193,34 @@ export default {
     },
     methods: {
         coverflow(index) {
-            this.bridge('coverflow', {ids: this.evaluation.pictures, index});
+            this.action('coverflow', {ids: this.evaluation.pictures, index});
         },
-        play(videoId) {
-            this.bridge('play', videoId);
+        play(id) {
+            this.action('play', {id});
         },
         comment(e, user) {
+            const id = user ? user.id : '-1';
             const rect = e.target.getBoundingClientRect();
             const position = rect.top + rect.height + window.scrollY;
             const placeholder = user ? '回复' + user.name : '';
-            this.bridge('keyboard', {id: user.id, placeholder, position}, () => {
-                console.debug('callback from keyboard', arguments);
+            this.action('keyboard', {id, placeholder, position}, (resp) => {
+                console.debug('callback from keyboard', resp);
+                let comment = {
+                    content: resp
+                };
+                if(user) {
+                    comment.reply_to = user.id;
+                }
+                this.$post(`users/target/${this.evaluation.post_id}/type/10/comments`, comment, (resp) => {
+                    this.toast(resp);
+                });
             });
         },
         evaluate() {
             this.toast(this.evaluation.master ? '鉴宝' : '菜鸟不能鉴宝');
         },
         share() {
-            this.bridge('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.picture[0], url: location.href});
+            this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});
         }
     }
 }

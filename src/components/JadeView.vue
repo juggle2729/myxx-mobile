@@ -173,10 +173,8 @@ export default {
     },
     route: {
         data() {
-            return this.$http
-                .get('mall/products/1')
-                .success(({data}) => {
-                    console.debug('data', data.category);
+            return this.$get('mall/products/1')
+                .then((data) => {
                     this.info = data;
                 });
         }

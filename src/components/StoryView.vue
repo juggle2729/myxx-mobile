@@ -87,7 +87,7 @@
             </template>
         </div>
     </div>
-    <social-bar :id="story.post_id" type="3" :active="story.liked" :total="story.like" :list="story.likes" class="border-top social bg-white">
+    <social-bar :id="story.post_id" type="30" :active="story.liked" :total="story.like" :list="story.likes" class="border-top social bg-white">
         <div class="center border-left light extra-action">
             <i class="icon-comment"></i><span>{{story.comment}}</span>
         </div>
@@ -126,7 +126,8 @@ export default {
         return {
             story: {
                 user: {},
-                medias: []
+                medias: [],
+                likes: []
             },
             comments: {
                 list: [],
@@ -140,17 +141,18 @@ export default {
     route: {
         data({to}) {
             const storyId = to.params.id;
-            const getStory = this.$http.get(`sns/topics/${storyId}`);
-            this.$http.get(`sns/posts/${storyId}/comments?offset=0&limit=5`)
-                .success(comments => {
-                    this.comments.list = comments.data.comments;
-                    this.comments.total = comments.data.total;
-                    debugger;
-                    getStory.success(story => {
-                        this.story = story.data;
-                    });
+            return this.$get(`sns/topics/${storyId}`)
+                .then((story) => {
+                    this.story = story;
+                    return this.$get(`users/target/${storyId}/type/30/comments?offset=0&limit=5`)
+                        .then(comments => {
+                            this.comments.list = comments.comments;
+                            this.comments.total = comments.data.total;
+                        });
                 });
-            return getStory;
+        },
+        activate({ next }) {
+            next();
         }
     },
     methods: {

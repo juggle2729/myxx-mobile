@@ -1,5 +1,6 @@
 require('./scripts/resize');
 import config from './config';
+import Q from 'q';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
@@ -26,25 +27,36 @@ Vue.filter('profile', profile);
 
 // Vue configurations
 Vue.config.debug = true;
+Vue.http.options.emulateJSON = true;
 Vue.http.options.root = config.api.dev;
-Vue.http.options.xxx = '123';
-Vue.http.yyy = '123';
-Vue.http.options.error = function(response, status, request) {
-    console.error(status, request.responseURL);
+Vue.http.options.beforeSend = function(req, options) {
+    // if(/mobile/i.test(navigator.userAgent)) {// 在APP里打开
+    //     this.bridge('user', '', () => {
+
+    //     });
+    // } else {
+
+    // }
+    // options.headers['X-Auth-Token'] = 'f87e7796-9896-4a6f-997e-11b48aebd347';
+};
+Vue.http.options.error = function(resp, status, req) {
+    console.error(status, req.responseURL);
     this.toast('💔出错了');
 };
-Vue.http.options.success = function(response, status, request) {
-    if(response.status !== 200) {
-        // TODO 取消第二个success callback
-        console.error(response.status, request.responseURL, response.message);
-        this.toast(response.message);
+Vue.http.options.success = function(resp, status, req) {
+    if(resp.status === 605) {
+        this.action('login', '', (resp) => {
+            console.log('login', resp);
+
+        });
+    } else if(resp.status !== 200) {
+        console.error(resp.status, req.responseURL, resp.message);
+        this.toast(resp.message);
     }
 };
 
-Vue.http.headers.common['X-Auth-Token'] = bridge.user.token;
-
 // routing
-var router = new Router({hashbang: false, suppressTransitionError: true});
+var router = new Router({hashbang: false, suppressTransitionError: false});
 //设置页面title
 router.beforeEach(({from, to, abort, next}) => {
     if(window.WebViewJavascriptBridge) {

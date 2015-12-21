@@ -142,9 +142,8 @@
                 to
             }) {
                 const userId = to.query.id || 1;
-                return this.$http
-                    .get('sns/users/jianbao')
-                    .success(function(resp) {
+                return this.$get('sns/users/jianbao')
+                    .then(function(resp) {
                         console.log(resp);
                         var applies = resp.data.jianbaos;
                         this.jades = applies;
@@ -177,9 +176,6 @@
         methods: {
             play(video) {
                 this.toast(video);
-                if (window.WebViewJavascriptBridge) {
-                    window.WebViewJavascriptBridge.callHandler('play', videoId, x => x);
-                }
             }
         }
     }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --quiet",
+    "start": "webpack-dev-server --inline --hot --quiet --host 192.168.199.188 --port 80",
     "build": "NODE_ENV=production webpack --progress --hide-modules "
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "file-loader": "^0.8.5",
     "node-sass": "^3.4.2",
     "pxtorem-loader": "^0.1.1",
+    "q": "^1.4.1",
     "sass-loader": "^3.1.2",
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",

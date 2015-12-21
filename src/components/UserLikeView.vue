@@ -51,9 +51,8 @@ export default {
             const limit = 10;
             if (this.loading) {
                 this.loading = false;
-                return this.$http
-                    .get('users/' + userId + '/like_list', {offset, limit},
-                        function({data}) {
+                return this.$get('users/' + userId + '/like_list', {offset, limit},
+                        (data) => {
                             data.entries.forEach((item) => {
                                 if (item.type === 10) {//picture
                                     console.log(item.entry.picture);

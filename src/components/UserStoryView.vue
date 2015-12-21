@@ -72,8 +72,7 @@
                 const params = {
                     [this.tab]: 1, offset: 0, limit: 5
                 };
-                return this.$http
-                    .get('sns/users/topics', ({data}) => {
+                return this.$get('sns/users/topics', (data) => {
                         this.items = data.topics;
                         data.topics.forEach((topic) =>{
                             topic.pictures = [];

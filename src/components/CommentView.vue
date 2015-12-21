@@ -42,7 +42,7 @@ export default {
     methods: {
         c(e) {
             const rect = e.target.getBoundingClientRect();
-            this.bridge('keyboard', {id: 1, placeholder: '回复xxx', position: rect.top + rect.height + window.scrollY}, () => {
+            this.action('keyboard', {id: 1, placeholder: '回复xxx', position: rect.top + rect.height + window.scrollY}, () => {
                 console.debug('return from keyboard');
             });
         }

@@ -74,9 +74,7 @@ export default {
     },
     route: {
         data() {
-            return this.$http
-                .get('cms/promotes?section=cy031')
-                .success(({data: {promotes: items}}) => {
+            return this.$get('cms/promotes?section=cy031').then(({promotes: items}) => {
                     this.items = items.map((item) => {
                         item.type = config.types[item.type];
                         return item;

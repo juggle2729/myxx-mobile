@@ -26,14 +26,14 @@ export default {
     methods: {
         toggleFollow(user) {
             if (user.follow) {
-                this.$http.delete(`users/follow/`+user.user_id)
-                .success((resp) => {
+                this.$delete(`users/follow/`+user.user_id)
+                .then(() => {
                     user.follow = false;
                     this.toast('取消关注成功');
                 });
             } else {
-                this.$http.post(`users/follow/`+user.user_id)
-                .success((resp) => {
+                this.$post(`users/follow/`+user.user_id)
+                .success(() => {
                     user.follow = true;
                     this.toast('关注成功');
                 });
@@ -46,9 +46,8 @@ export default {
             if (this.loading) {
                 this.loading = false;
                 const params = {offset, limit};
-                return this.$http
-                    .get('users/' + userid + '/follow_list', params)
-                    .success(({data}) => {
+                return this.$get('users/' + userid + '/follow_list', params)
+                    .then((data) => {
                         data.entries.forEach((entry) => {
                             entry.isNotSelf = !(entry.user_id == this.self.user_id);
                             this.userList.push(entry);

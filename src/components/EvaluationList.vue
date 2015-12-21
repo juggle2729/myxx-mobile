@@ -80,7 +80,7 @@
                 <div class="mark font-22">已鉴定</div>
             </div>
         </div>
-        <social-bar :id="item.post_id" type="1" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
+        <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left light extra-action">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
