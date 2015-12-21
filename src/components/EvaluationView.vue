@@ -182,13 +182,16 @@ export default {
     route: {
         data({to}) {
             const evaluationId = to.params.id;
-            return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`).then((comments) => {
-                    this.comments.list = comments.comments;
-                    this.comments.total = comments.total;
-                    this.$get(`sns/jianbao/${evaluationId}`).then((evaluation) => {
+            return this.$get(`sns/jianbao/${evaluationId}`)
+                    .then((evaluation) => {
                         this.evaluation = evaluation;
+                        return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`)
+                            .then((comments) => {
+                                console.debug(comments);
+                                this.comments.list = comments.comments;
+                                this.comments.total = comments.total;
+                            });
                     });
-                });
         }
     },
     methods: {
@@ -217,7 +220,8 @@ export default {
             });
         },
         evaluate() {
-            this.toast(this.evaluation.master ? '鉴宝' : '菜鸟不能鉴宝');
+            debugger;
+            this.action('evaluation', {id: this.evaluation.id, picId: this.evaluation.pictures[0]});
         },
         share() {
             this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});

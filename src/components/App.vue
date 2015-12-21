@@ -15,8 +15,10 @@ export default {
     data() {
         return {
             user: {
-                user_id: 2,
-                token: 'f87e7796-9896-4a6f-997e-11b48aebd347'
+                id: 2,
+                token: 'f87e7796-9896-4a6f-997e-11b48aebd347',
+                photo: "avatar2.jpg",
+                role: 0
             }
         }
     },
@@ -26,9 +28,15 @@ export default {
             this.$broadcast('scrollToBottom', e);
         });
 
-        this.$watch('user', (user) => {
-            console.debug('user changed', user);
-        })
+        this.$watch('user.id', (idNew, idOld) => {
+            if(idNew - idOld) { // 避免由类型不同造成的change事件   
+                console.debug('user id change', idNew, idOld);
+                this.$get(`users/${idNew}/basic`)
+                    .then((user) => {
+                        this.user = user;
+                    });
+            } 
+        });
     }
 }
 </script>

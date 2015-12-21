@@ -2,8 +2,11 @@
 import Q from 'q';
 export default {
     computed: {
-        self() {
-            return this.$root.user;
+        self: {
+            cache: false,
+            get() {
+                return this.$root.user;
+            }
         }
     },
     methods: {
@@ -28,11 +31,16 @@ export default {
                         }, false);
                     }
                 })(window, (bridge) => {
-                    bridge.init((user) => {
-                        console.debug('bridge init with user:', user);
-                    });
-                    bridge.callHandler('user', '', (user) => {
-                        defer.resolve(JSON.parse(user));
+                    if(!bridge.initalized) {
+                        bridge.initalized = true;
+                        bridge.init((user) => {
+                            console.debug('bridge initalized', user);
+                        });
+                    }
+                    bridge.callHandler('user', '', (userInJson) => {
+                        let user = JSON.parse(userInJson);
+                        this.$root.user = {id: user.user, token: user.token};
+                        defer.resolve({id: user.user, token: user.token});
                     })
                 });
             } else {
@@ -41,6 +49,7 @@ export default {
             return defer.promise;
         },
         action(action, params = {}, callback = false) {
+            console.debug(action, params, callback);
             if (window.WebViewJavascriptBridge) {
                 if(callback) {
                     console.debug(action, params, callback);
@@ -56,13 +65,13 @@ export default {
             const defer = Q.defer();
             this.connect()
                 .then((user) => {
-                    console.debug('user', user);
+                    debugger;
                     if(method !== 'get' && !user.token) {
                         this.action('login', '', () => {});
                     } else {
                         this.$http.headers.common['X-Auth-Token'] = user.token;
                         this.$http[method](url, data).success((resp, status) => {
-                        if(status === 200 & resp.status === 200) {
+                            if(status === 200 & resp.status === 200) {
                                 defer.resolve(resp.data);
                             }
                         });

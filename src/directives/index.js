@@ -6,8 +6,12 @@ export const bg = {
         }).pop() || 'lg';
     },
     update(imgId) {
-        const bgUrl = config.img[this.modifier](imgId || undefined);
-        const placeholderUrl = this.modifier === 'video' ? config.img.video_placeholder : config.img.img_placeholder; 
-        this.el.style.backgroundImage = `url(${bgUrl}), url(${placeholderUrl})`;
+        const placeholderUrl = this.modifier === 'video' ? config.img.video_placeholder : config.img.img_placeholder;
+        if(imgId) {
+            const bgUrl = config.img[this.modifier](imgId);
+            this.el.style.backgroundImage = `url(${bgUrl}), url(${placeholderUrl})`;
+        } else {
+            this.el.style.backgroundImage = `url(${placeholderUrl})`;
+        }
     }
 };

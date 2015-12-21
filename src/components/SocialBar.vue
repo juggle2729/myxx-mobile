@@ -86,9 +86,10 @@ export default {
                     });
                 });
             } else {
-                this.$post(this.likeApi).then((resp) => {
+                this.$post(this.likeApi).then(() => {
                     this.active = true;
                     this.total += 1;
+                    console.debug('self', this.self, this.$root.user);
                     this.list.splice(0, 0, this.self);
                 });
             }

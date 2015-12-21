@@ -15,14 +15,17 @@ export default {
     },
     '/evaluation/:id': {
         name: 'evaluation',
+        title: '鉴宝详情',
         component: require('./components/EvaluationView.vue')
     },
     '/evaluation/:id/likes': {
         name: 'evaluation-likes',
+        title: '点赞',
         component: require('./components/EvaluationLikesView.vue')
     },
     '/likes/:type/:id': {
         name: 'likes',
+        title: '点赞列表',
         component: require('./components/LikesView.vue')
     },
     '/stories/:tab': {
@@ -31,6 +34,7 @@ export default {
     },
     '/story/:id': {
         name: 'story',
+        title: '话题详情',
         component: require('./components/StoryView.vue')
     },
     '/jades': {
@@ -39,6 +43,7 @@ export default {
     },
     '/jade/:id': {
         name: 'jade',
+        title: '宝贝详情',
         component: require('./components/JadeView.vue')
     },
     '/masters': {
@@ -65,30 +70,37 @@ export default {
     },
     '/profile/:id/story': {
         name: 'user-story',
+        title: '我的话题',
         component: require('./components/UserStoryView.vue')
     },
     '/profile/:id/following': {
         name: 'following',
+        title: '我的关注',
         component: require('./components/FollowingView.vue')
     },
     '/profile/:id/follower': {
         name: 'follower',
+        title: '我的粉丝',
         component: require('./components/FollowerView.vue')
     },
     '/profile/:id/evaluation': {
         name: 'user-evaluation',
+        title: '我的鉴宝',
         component: require('./components/UserEvaluationView.vue')
     },
     '/profile/:id/like': {
         name: 'user-like',
+        title: '我的赞',
         component: require('./components/UserLikeView.vue')
     },
     '/profile/:id/shop/request': {
         name: 'shop-request',
+        title: '申请店铺',
         component: require('./components/ShopRequestView.vue')
     },
     '/profile/:id/site/request': {
         name: 'site-request',
+        title: '申请官网',
         component: require('./components/SiteRequestView.vue')
     },
     '/css': {
@@ -97,6 +109,7 @@ export default {
     },
     // not found handler
     '*': {
-      component: require('./components/NotFoundView.vue')
+        title: '找不到北',
+        component: require('./components/NotFoundView.vue')
     }
 }
