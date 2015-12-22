@@ -26,14 +26,14 @@
 <template>
 <div class="social-bar font-26 gray flex">
     <div class="action" @click="like">
-        <i class="{{active ? 'red icon-favor-active' : 'icon-favor'}}"></i><span>{{total}}</span>
+        <i class="{{active ? 'red icon-like-active' : 'icon-like'}}"></i><span>{{total}}</span>
     </div>
     <div class="users flex flex-1" v-show="total">
         <div v-for="user in list">
             <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
         </div>
         <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
-            <div class="more bg-red"></div>
+            <div class="more" style="background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg')"></div>
         </div>
     </div>
     <div class="hint flex-1" v-show="!total">

@@ -1,5 +1,41 @@
+<style lang="sass">
+.jades-view {
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        justify-content: space-between;
+        .outside {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            .cell {
+                border-radius: 8px;
+                .image {
+                    border-radius: 8px 8px 0 0;
+                    height: 0;
+                    width: 100%;
+                    padding-bottom: 77%;
+                    background-image: url('/static/images/artist/treasure.jpg');
+                    background-size: cover;
+                }
+                .txt {
+                    padding: 24px 0 24px 20px;
+                }
+            }
+        }
+    }
+    .loadmore {
+        height: 68px;
+        img {
+            width: 120px;
+            height: 68px;
+        }
+    }
+}
+</style>
 <template>
-    <div class="treasure bg-default">
+    <div class="jades-view bg-default">
         <div class="content">
             <template v-for="promote in promotes" track-by="$index">
                 <div class="outside">
@@ -67,39 +103,3 @@
         }
     }
 </script>
-<style lang="sass">
-    .treasure {
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 10px;
-            justify-content: space-between;
-            .outside {
-                float: left;
-                width: 50%;
-                padding: 10px;
-                .cell {
-                    border-radius: 8px;
-                    .image {
-                        border-radius: 8px 8px 0 0;
-                        height: 0;
-                        width: 100%;
-                        padding-bottom: 77%;
-                        background-image: url('/static/images/artist/treasure.jpg');
-                        background-size: cover;
-                    }
-                    .txt {
-                        padding: 24px 0 24px 20px;
-                    }
-                }
-            }
-        }
-        .loadmore {
-            height: 68px;
-            img {
-                width: 120px;
-                height: 68px;
-            }
-        }
-    }
-</style>

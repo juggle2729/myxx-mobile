@@ -75,10 +75,12 @@ export default {
     },
     route: {
         data() {
-            this.userId = this.self.user_id;
-            return this.$get('users/'+ this.userId +'/profile')
-                .then((data) => {
-                    this.$data = Object.assign(this.$data, data);
+            return this.action('user')
+                .then((user) => {
+                    return this.$get('users/'+ user.id +'/profile')
+                            .then((data) => {
+                                this.$data = Object.assign(this.$data, data);
+                            });
                 });
         }
     }

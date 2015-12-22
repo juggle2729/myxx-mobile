@@ -1,14 +1,13 @@
-require('./scripts/resize');
+require('./utils/resize');
 import config from './config';
 import Q from 'q';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
-import routes from './routes';
-import mixins from './mixins';
-import { bg } from './directives';
-import { moment, money, role, type, profile } from './filters';
-import bridge from './utils/jsbridge';
+import routes from './route';
+import mixins from './mixin';
+import { bg } from './directive';
+import { moment, money, role, type, profile, qn } from './filter';
 import App from './components/App.vue';
 
 Vue.use(Router);
@@ -24,6 +23,7 @@ Vue.filter('money', money);
 Vue.filter('role', role);
 Vue.filter('type', type);
 Vue.filter('profile', profile);
+Vue.filter('qn', qn);
 
 // Vue configurations
 Vue.config.debug = true;

@@ -1,4 +1,4 @@
-import config from '../config';
+import config from './config';
 export function moment(dateStr) {
     const MINUTE = 1000 * 60;
     const HOUR = 60 * MINUTE;
@@ -38,4 +38,9 @@ export function role(id) {
 
 export function type(id) {
     return config.types[id];
+}
+
+export function qn(id) {
+    debugger;
+    return id;
 }

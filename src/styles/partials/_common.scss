@@ -194,6 +194,9 @@
     @extend .bg-default;
     height: 40px;
 }
-[class^='icon-'] + span, [class*=' icon-'] + span {
-    vertical-align: text-top;
+[class^='icon-'], [class*=' icon-'] {
+    padding-right: 10px;
+    &  + span {
+        vertical-align: text-top;
+    }
 }

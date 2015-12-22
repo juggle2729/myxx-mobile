@@ -102,7 +102,7 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.play="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results">
         <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{evaluation.results.length}}</div>
@@ -116,7 +116,7 @@
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
             <div class="flex bg-gray border-all font-30">
-                <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
+                <div class="play w-50" @click="play(result.video)" v-bg.play="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span :class="{'red': result.result=='真货' }">{{result.result}}</span>
                     <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span>
@@ -140,14 +140,14 @@
         <ul>
             <li class="margin-bottom" v-for="c in comments.list">
                 <div class="author">
-                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
+                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
                     <div>
-                        <h3 class="font-26 blue" @click="comment($event, c.reply_from)">{{c.reply_from.nickname}}</h3>
+                        <h3 class="font-26 blue" @click="comment($event, c.reply_from)">{{c.reply_from.name}}</h3>
                         <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                     </div>
                 </div>
                 <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label"><span @click="comment($event, c.reply_to)" class="blue">{{c.reply_to.nickname}}</span>:</span>
+                    <span v-if="c.reply_to" class="label">回复<span @click="comment($event, c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
                     <span>{{c.content}}</span>
                 </div>
             </li>
@@ -156,7 +156,7 @@
     </div>
     <div class="separator last"></div>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center light extra-action"><i class="icon-thumb"></i><span>分享</span></div
+        <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
     </social-bar>
 </div>
 </template>
@@ -185,9 +185,8 @@ export default {
             return this.$get(`sns/jianbao/${evaluationId}`)
                     .then((evaluation) => {
                         this.evaluation = evaluation;
-                        return this.$get(`users/target/${evaluationId}/type/10/comments?offset=0&limit=5`)
+                        return this.$get(`users/target/${evaluationId}/type/10/comments`)
                             .then((comments) => {
-                                console.debug(comments);
                                 this.comments.list = comments.comments;
                                 this.comments.total = comments.total;
                             });
@@ -207,21 +206,24 @@ export default {
             const position = rect.top + rect.height + window.scrollY;
             const placeholder = user ? '回复' + user.name : '';
             this.action('keyboard', {id, placeholder, position}, (resp) => {
-                console.debug('callback from keyboard', resp);
                 let comment = {
                     content: resp
                 };
                 if(user) {
                     comment.reply_to = user.id;
                 }
-                this.$post(`users/target/${this.evaluation.post_id}/type/10/comments`, comment, (resp) => {
-                    this.toast(resp);
-                });
+                this.$post(`users/target/${this.evaluation.post_id}/type/10/comments`, comment)
+                    .then((resp) => {
+                        this.$get(`users/target/${this.evaluation.post_id}/type/10/comments`)
+                            .then((comments) => {
+                                this.comments.list = comments.comments;
+                                this.comments.total = comments.total;
+                            });
+                    });
             });
         },
         evaluate() {
-            debugger;
-            this.action('evaluation', {id: this.evaluation.id, picId: this.evaluation.pictures[0]});
+            this.action('evaluation', {id: this.evaluation.post_id, imgId: this.evaluation.pictures[0]});
         },
         share() {
             this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});

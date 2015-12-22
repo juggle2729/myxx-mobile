@@ -1,5 +1,6 @@
 <style lang="sass">
 .story-view {
+    padding-bottom: 80px;
     .story {
         padding: 24px 32px;
     }
@@ -36,6 +37,10 @@
         .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
             margin-right: percentage(1/3);
         }
+        .unique {
+            width: 100%;
+            padding-top: 60%;
+        }
     }
     .social {
         padding: 0 32px;
@@ -62,6 +67,13 @@
             height: 68px;
         }
     }
+    .social {
+        padding: 0 32px;
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
+    }
 }
 </style>
 <template>
@@ -78,11 +90,11 @@
             <div class="desc font-30"><span class="gray">#{{story.topic_type}}</span><br/>{{story.content}}</div>
         </div>
         <div class="medias">
-            <div class="unique" v-if="story.medias.length===1"></div>
+            <div class="unique" v-if="story.medias.length===1" v-bg.lg="story.medias[0].id"></div>
             <template v-if="story.medias.length!==1">
                 <template v-for="media in story.medias"
                     ><div class="media picture" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                    ><div class="media play" v-if="media.type==='video'" v-bg.video="media.id"></div
+                    ><div class="media play" v-if="media.type==='video'" v-bg.play="media.id"></div
                 ></template>
             </template>
         </div>
@@ -116,6 +128,9 @@
         </ul>
     </div>
     <div class="separator last"></div>
+    <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
+        <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
+    </social-bar>
 </div>
 </template>
 <script>
@@ -147,7 +162,7 @@ export default {
                     return this.$get(`users/target/${storyId}/type/30/comments?offset=0&limit=5`)
                         .then(comments => {
                             this.comments.list = comments.comments;
-                            this.comments.total = comments.data.total;
+                            this.comments.total = comments.total;
                         });
                 });
         },
@@ -161,6 +176,34 @@ export default {
                         .filter(media => media.type==='picture')
                         .map(media => media.id);
             this.action('coverflow', {ids, index});
+        },
+        play(id) {
+            this.action('play', {id});
+        },
+        comment(e, user) {
+            const id = user ? user.id : '-1';
+            const rect = e.target.getBoundingClientRect();
+            const position = rect.top + rect.height + window.scrollY;
+            const placeholder = user ? '回复' + user.name : '';
+            this.action('keyboard', {id, placeholder, position}, (resp) => {
+                let comment = {
+                    content: resp
+                };
+                if(user) {
+                    comment.reply_to = user.id;
+                }
+                this.$post(`users/target/${this.story.post_id}/type/30/comments`, comment)
+                    .then((resp) => {
+                        this.$get(`users/target/${this.story.post_id}/type/30/comments`)
+                            .then((comments) => {
+                                this.comments.list = comments.comments;
+                                this.comments.total = comments.total;
+                            });
+                    });
+            });
+        },
+        share() {
+            this.action('share', {title: '话题', desc: '话题描述', icon: this.story.medias[0].id, url: location.href});
         }
     }
 }
