@@ -102,7 +102,7 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.play="evaluation.video"></li></ul>
+    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results">
         <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{evaluation.results.length}}</div>

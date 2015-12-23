@@ -74,7 +74,6 @@ export default {
                 userDefer.resolve();
             }
             userDefer.promise.then((user) => {
-                debugger;
                 if(method !== 'get' && !user) {
                     this.action('login');
                 } else {

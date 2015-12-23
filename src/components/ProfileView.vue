@@ -76,8 +76,9 @@ export default {
     route: {
         data() {
             return this.action('user')
-                .then((user) => {
-                    return this.$get('users/'+ user.id +'/profile')
+                .then((resp) => {
+                    let user = JSON.parse(resp);
+                    return this.$get('users/'+ user.user_id +'/profile')
                             .then((data) => {
                                 this.$data = Object.assign(this.$data, data);
                             });

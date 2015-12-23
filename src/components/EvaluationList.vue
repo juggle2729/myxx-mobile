@@ -70,7 +70,7 @@
                 </div>
                 <div class="desc font-30">{{item.description}}</div>
             </div>
-            <div class="video" v-bg.bg="item.picture" v-link="{name: 'evaluation', params: {id: item.post_id}}"></div>
+            <div class="video" v-bg="item.picture" v-link="{name: 'evaluation', params: {id: item.post_id}}"></div>
             <div v-for="result in item.results" class="result border-top">
                 <div class="avatar" v-bg.sm="result.identifier.photo"></div>
                 <div class="master">

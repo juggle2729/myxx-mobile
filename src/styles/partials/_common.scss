@@ -30,6 +30,7 @@
         width: #{$size}px;
         height: #{$size}px;
         border-radius: 50%;
+        background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.jpg');
         background-size: cover;
     }
 }
@@ -139,7 +140,7 @@
 .video {
     position: relative;
     background-size: cover;
-    &::after {
+    &::before {
         content: '';
         position: absolute;
         left: 0;
@@ -150,10 +151,30 @@
         background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat right 30px top 30px;
         background-size: 1rem;
     }
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e0e0e0;
+        z-index: -1;
+    }
 }
 .play {
     position: relative;
     background-size: cover;
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e0e0e0;
+        z-index: -1;
+    }
     &::after {
         content: '';
         position: absolute;
@@ -165,6 +186,17 @@
         background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/play.svg') no-repeat center;
         background-size: 1rem;
     }
+}
+.img::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-img.png') no-repeat center;
+    z-index: -1;
 }
 .row {
     line-height: 100px;

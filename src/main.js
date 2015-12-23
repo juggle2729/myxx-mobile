@@ -28,7 +28,7 @@ Vue.filter('qn', qn);
 // Vue configurations
 Vue.config.debug = true;
 Vue.http.options.emulateJSON = true;
-Vue.http.options.root = config.api.dev;
+Vue.http.options.root = config.api;
 Vue.http.options.error = function(resp, status, req) {
     console.error(status, req.responseURL);
     this.toast('💔出错了');
