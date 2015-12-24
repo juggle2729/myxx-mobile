@@ -40,6 +40,7 @@
         .unique {
             width: 100%;
             padding-top: 60%;
+            background-size: cover;
         }
     }
     .social {
@@ -91,7 +92,7 @@
         </div>
         <div class="medias">
             <div class="unique" v-if="story.medias.length===1" v-bg.lg="story.medias[0].id"></div>
-            <template v-if="story.medias.length!==1">
+            <template v-else="story.medias.length!==1">
                 <template v-for="media in story.medias"
                     ><div class="media picture" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
                     ><div class="media play" v-if="media.type==='video'" v-bg.play="media.id"></div
@@ -105,28 +106,7 @@
         </div>
     </social-bar>
     <div class="separator"></div>
-    <div class="comments">
-        <div class="header border-bottom font-22">
-            <div>评论{{comments.total}}</div>
-            <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
-        </div>
-        <ul>
-            <li class="margin-bottom" v-for="c in comments.list">
-                <div class="author">
-                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.nickname}}"></div>
-                    <div>
-                        <h3 class="font-26 blue" @click="comment($event, c.reply_from.id)">{{c.reply_from.nickname}}</h3>
-                        <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
-                    </div>
-                </div>
-                <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label"><span @click="comment($event, c.reply_to.id)" class="blue">{{c.reply_to.nickname}}</span>:</span>
-                    <span>{{c.content}}</span>
-                </div>
-            </li>
-            <li v-show="!comments.list.length" class="center light font-26 margin-top">还没有人评论</li>
-        </ul>
-    </div>
+    <comment :id="story.post_id" type="30"></comment>
     <div class="separator last"></div>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
         <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
@@ -135,6 +115,7 @@
 </template>
 <script>
 import SocialBar from './SocialBar.vue';
+import Comment from './Comment.vue';
 export default {
     name: 'StoryView',
     data() {
@@ -143,15 +124,12 @@ export default {
                 user: {},
                 medias: [],
                 likes: []
-            },
-            comments: {
-                list: [],
-                total: 0
             }
         };
     },
     components: {
-        SocialBar
+        SocialBar,
+        Comment
     },
     route: {
         data({to}) {
@@ -159,15 +137,7 @@ export default {
             return this.$get(`sns/topics/${storyId}`)
                 .then((story) => {
                     this.story = story;
-                    return this.$get(`users/target/${storyId}/type/30/comments?offset=0&limit=5`)
-                        .then(comments => {
-                            this.comments.list = comments.comments;
-                            this.comments.total = comments.total;
-                        });
                 });
-        },
-        activate({ next }) {
-            next();
         }
     },
     methods: {
@@ -179,28 +149,6 @@ export default {
         },
         play(id) {
             this.action('play', {id});
-        },
-        comment(e, user) {
-            const id = user ? user.id : '-1';
-            const rect = e.target.getBoundingClientRect();
-            const position = rect.top + rect.height + window.scrollY;
-            const placeholder = user ? '回复' + user.name : '';
-            this.action('keyboard', {id, placeholder, position}, (resp) => {
-                let comment = {
-                    content: resp
-                };
-                if(user) {
-                    comment.reply_to = user.id;
-                }
-                this.$post(`users/target/${this.story.post_id}/type/30/comments`, comment)
-                    .then((resp) => {
-                        this.$get(`users/target/${this.story.post_id}/type/30/comments`)
-                            .then((comments) => {
-                                this.comments.list = comments.comments;
-                                this.comments.total = comments.total;
-                            });
-                    });
-            });
         },
         share() {
             this.action('share', {title: '话题', desc: '话题描述', icon: this.story.medias[0].id, url: location.href});

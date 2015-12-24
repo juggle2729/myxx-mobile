@@ -17,6 +17,12 @@
             border-radius: 50%;
             background-size: cover;
         }
+        .user {
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.jpg');
+        }
+        .more {
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg');
+        }
     }
     .extra-action {
         width: 108px;
@@ -33,7 +39,7 @@
             <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
         </div>
         <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
-            <div class="more" style="background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg')"></div>
+            <div class="more"></div>
         </div>
     </div>
     <div class="hint flex-1" v-show="!total">

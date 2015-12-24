@@ -1,7 +1,7 @@
 <style lang="sass">
 .evaluation-detail {
     padding-bottom: 80px;
-    .header, .images, .results, .comments {
+    .header, .images, .results {
         padding: 24px 32px;
     }
     .header {
@@ -60,21 +60,6 @@
             cursor: pointer;
         }
     }
-    .comments {
-        .header {
-            display: -webkit-box;
-            -webkit-box-align: center;
-            -webkit-box-pack: justify;
-            height: 80px;
-        }
-        li {
-            .author {
-                display: -webkit-box;
-                -webkit-box-align: center;
-                height: 108px;
-            }
-        }
-    }
 
     .social {
         padding: 0 32px;
@@ -123,7 +108,7 @@
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
-                <div @click="comment($event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
@@ -132,28 +117,7 @@
         </div>
     </div>
     <div class="separator"></div>
-    <div class="comments">
-        <div class="header border-bottom font-22">
-            <div>评论{{comments.total}}</div>
-            <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
-        </div>
-        <ul>
-            <li class="margin-bottom" v-for="c in comments.list">
-                <div class="author">
-                    <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
-                    <div>
-                        <h3 class="font-26 blue" @click="comment($event, c.reply_from)">{{c.reply_from.name}}</h3>
-                        <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
-                    </div>
-                </div>
-                <div class="font-30 light">
-                    <span v-if="c.reply_to" class="label">回复<span @click="comment($event, c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
-                    <span>{{c.content}}</span>
-                </div>
-            </li>
-            <li v-show="!comments.list.length" class="center light font-26 margin-top">还没有人评论</li>
-        </ul>
-    </div>
+    <comment type="10" :id="evaluation.post_id"></comment>
     <div class="separator last"></div>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
         <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
@@ -162,6 +126,7 @@
 </template>
 <script>
 import SocialBar from './SocialBar.vue';
+import Comment from './Comment.vue';
 export default {
     name: 'EvaluationView',
     data() {
@@ -170,14 +135,15 @@ export default {
                 user: {},
                 results: []
             },
-            comments: {
-                list: [],
+            comment: {
+                items: [],
                 total: 0
             }
         };
     },
     components: {
-        SocialBar
+        SocialBar,
+        Comment
     },
     route: {
         data({to}) {
@@ -185,11 +151,6 @@ export default {
             return this.$get(`sns/jianbao/${evaluationId}`)
                     .then((evaluation) => {
                         this.evaluation = evaluation;
-                        return this.$get(`users/target/${evaluationId}/type/10/comments`)
-                            .then((comments) => {
-                                this.comments.list = comments.comments;
-                                this.comments.total = comments.total;
-                            });
                     });
         }
     },
@@ -200,30 +161,8 @@ export default {
         play(id) {
             this.action('play', {id});
         },
-        comment(e, user) {
-            const id = user ? user.id : '-1';
-            const rect = e.target.getBoundingClientRect();
-            const position = rect.top + rect.height + window.scrollY;
-            const placeholder = user ? '回复' + user.name : '';
-            this.action('keyboard', {id, placeholder, position}, (resp) => {
-                let comment = {
-                    content: resp
-                };
-                if(user) {
-                    comment.reply_to = user.id;
-                }
-                this.$post(`users/target/${this.evaluation.post_id}/type/10/comments`, comment)
-                    .then((resp) => {
-                        this.$get(`users/target/${this.evaluation.post_id}/type/10/comments`)
-                            .then((comments) => {
-                                this.comments.list = comments.comments;
-                                this.comments.total = comments.total;
-                            });
-                    });
-            });
-        },
         evaluate() {
-            this.action('evaluation', {id: this.evaluation.post_id, imgId: this.evaluation.pictures[0]});
+            this.action('evaluate', {id: ''+this.evaluation.id, imgId: this.evaluation.pictures[0]});
         },
         share() {
             this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});

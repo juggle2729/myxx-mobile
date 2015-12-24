@@ -68,7 +68,7 @@
                 <div class="unique" v-if="item.medias.length===1" v-bg.lg="item.medias[0].id"></div>
                 <template v-else>
                     <template v-for="media in item.medias"
-                        ><div class="media picture" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                        ><div class="media" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
                         ><div class="media play" v-if="media.type==='video'" v-bg.play="media.id"></div
                     ></template>
                 </template>

@@ -33,7 +33,6 @@ export default {
                     });
                 }
             });
-            debugger;
             return defer.promise;
         },
         action(action, params = '') {
@@ -41,7 +40,7 @@ export default {
             if(/myxx/i.test(navigator.userAgent)) {
                 this.bridge()
                     .then((bridge) => {
-                        if('user,keyboard,login'.indexOf(action)) {
+                        if('user,keyboard,login'.indexOf(action) !== -1) {
                             bridge.callHandler(action, params, (resp) => {
                                 defer.resolve(resp);
                             });
@@ -61,6 +60,9 @@ export default {
             let userDefer = Q.defer();
             if(/myxx/i.test(navigator.userAgent)) {
                 this.action('user').then((user) => {
+                    if(user) {
+                        user = JSON.parse(user);
+                    }
                     userDefer.resolve(user);
                 });
             } else if(/^[\d|.]+$/.test(location.host)){ // 使用IP访问时采用默认用户信息
@@ -87,7 +89,7 @@ export default {
                         } else if(resp.status === 605){
                             this.action('login');
                         } else {
-                            this.toast('姿势不对');
+                            this.toast(resp.message);
                         }
                     });
                 }

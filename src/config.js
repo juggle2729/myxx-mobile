@@ -1,7 +1,7 @@
 export default {
     api: 'http://dev.api.meiyuxiuxiu.net',
     img: 'http://img.meiyuxiuxiu.net/',
-    video: 'http://7xo88d.media1.z0.glb.clouddn.com/',
+    video: 'http://video.meiyuxiuxiu.net/',
     www: 'http://7xp1h7.com2.z0.glb.qiniucdn.com/',
     types: [
         'xxx', 
@@ -21,8 +21,8 @@ export default {
             name: '商家',
             route: ''
         }, {
-            name: '社区',
-            route: ''
+            name: '话题',
+            route: 'story'
         }
     ],
     roles: ['普通用户', '商家', '藏家', '大师', '权威'],

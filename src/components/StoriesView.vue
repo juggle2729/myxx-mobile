@@ -54,6 +54,7 @@
         .unique {
             width: 100%;
             padding-top: 60%;
+            background-size: cover;
         }
     }
     .social {

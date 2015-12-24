@@ -194,7 +194,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background-size: cover;
+    background-size: cover; // FIXME 不起作用
     background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-img.png') no-repeat center;
     z-index: -1;
 }

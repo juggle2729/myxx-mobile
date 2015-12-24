@@ -51,12 +51,12 @@
             </div>
             <div class="social font-22">
                 <div class="favor">
-                    <i class="icon-favor"></i>
+                    <i class="icon-like"></i>
                     <span>{{item.item.likes}}</span>
                 </div>
                 <div class="comment">
                     <i class="icon-comment"></i>
-                    <span>{{item.item.reviews}}</span>
+                    <span>{{item.item.comments}}</span>
                 </div>
             </div>
             <div class="type bg-red font-26">{{item.type.name}}</div>

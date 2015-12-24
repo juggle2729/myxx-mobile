@@ -2,9 +2,6 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/comment': {
-        component: require('./components/CommentView.vue')
-    },
     '/featured': {
         name: 'featured',
         component: require('./components/FeaturedView.vue')
