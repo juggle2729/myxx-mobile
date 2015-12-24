@@ -113,7 +113,7 @@
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
         <div class="evaluation-btn">
-            <button class="white bg-red font-30" @click="evaluate">我来鉴定</button>
+            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
         </div>
     </div>
     <div class="separator"></div>
@@ -125,12 +125,14 @@
 </div>
 </template>
 <script>
+import config from '../config';
 import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
 export default {
     name: 'EvaluationView',
     data() {
         return {
+            user: {},
             evaluation: {
                 user: {},
                 results: []
@@ -144,6 +146,36 @@ export default {
     components: {
         SocialBar,
         Comment
+    },
+    computed: {
+        jb() {
+            let label = '我来鉴定';
+            let action;
+            if(!this.evaluation.unidentified) {
+                label = '你已鉴定过';
+            } else if(!this.evaluation.has_seat) {
+                label = '鉴定已完成';
+            } else if(this.evaluation.master) {
+                action = 'evaluate';
+            } else if(this.user.id){
+                action = 'request';
+            } else {
+                action = 'login';
+            }
+            return {label, action};
+        }
+    },
+    created() {
+        this.action('user')
+            .then((resp) => {
+                if(resp) {
+                    let user = JSON.parse(resp);
+                    this.$get(`users/${user.user_id}/basic`)
+                        .then((u) => {
+                            this.user = u;
+                        })
+                }
+            });
     },
     route: {
         data({to}) {
@@ -161,8 +193,14 @@ export default {
         play(id) {
             this.action('play', {id});
         },
-        evaluate() {
-            this.action('evaluate', {id: ''+this.evaluation.id, imgId: this.evaluation.pictures[0]});
+        evaluate(action) {
+            if(action === 'login') {
+                this.action('login');
+            } else if(action === 'request'){
+                this.$route.router.go({name: 'master-request', params: {id: this.user.id}});
+            } else if(action === 'evaluate'){
+                this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
+            }
         },
         share() {
             this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});

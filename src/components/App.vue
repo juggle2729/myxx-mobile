@@ -12,14 +12,6 @@ import Q from 'q';
 import emitter from '../utils/emitter';
 export default {
     name: 'App',
-    data() {
-        return {
-            user: {
-                user_id: 2,
-                token: 'f87e7796-9896-4a6f-997e-11b48aebd347'
-            }
-        }
-    },
     created() {
         emitter.on('scroll-to-bottom', (e) => {
             this.$broadcast('scrollToBottom', e);

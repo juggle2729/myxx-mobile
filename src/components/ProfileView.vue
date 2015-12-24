@@ -76,16 +76,16 @@ export default {
     route: {
         data() {
             return this.action('user')
-                .then((user) => {
-                    if(user !== undefined){
-                        this.$root.user = JSON.parse(user);
-                    }
-                    this.userId = this.self.user_id;
-                    this.$http.headers.common['X-Auth-Token'] = this.self.token;
-                    return this.$get('users/'+ this.userId +'/profile')
+                .then((resp) => {
+                    if(resp){
+                        let user = JSON.parse(resp);
+                        return this.$get(`users/${user.user_id}/profile`)
                             .then((data) => {
-                                this.$data = Object.assign(this.$data, data);
+                                this.$data = data;
                             });
+                    } else {
+                        return this.action('login');
+                    }
                 });
         }
     }

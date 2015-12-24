@@ -122,7 +122,7 @@ export default {
     },
     methods: {
         fetch: (function() {
-            const limit = 2;
+            const limit = 5;
             let loading = false;
             return function() {
                 let offset = this.items.length;

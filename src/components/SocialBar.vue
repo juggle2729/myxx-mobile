@@ -18,7 +18,7 @@
             background-size: cover;
         }
         .user {
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.jpg');
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.svg');
         }
         .more {
             background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg');

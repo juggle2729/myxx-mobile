@@ -1,10 +1,5 @@
 import Q from 'q';
 export default {
-    computed: {
-        self() {
-            return this.$root.user
-        }
-    },
     methods: {
         toast(msg, delay = 2000) {
             const span = document.createElement('span');
@@ -35,23 +30,27 @@ export default {
             });
             return defer.promise;
         },
-        action(action, params = '') {
+        action(handler, params = '') {
             let defer = Q.defer();
-            if(/myxx/i.test(navigator.userAgent)) {//改成Mobile
+            if(/myxx/i.test(navigator.userAgent)) {
+                //参数转换为字符串类型
+                Object.keys(params).forEach((key) => {
+                    params[key] = '' + params[key];
+                });
                 this.bridge()
                     .then((bridge) => {
-                        if('user,keyboard,login'.indexOf(action) !== -1) {
-                            bridge.callHandler(action, params, (resp) => {
+                        if('user,keyboard,login'.indexOf(handler) !== -1) {
+                            bridge.callHandler(handler, params, (resp) => {
                                 defer.resolve(resp);
                             });
                         } else {
-                            bridge.callHandler(action, params);
+                            bridge.callHandler(handler, params);
                             defer.resolve();
                         }
                     });
             } else {
                 defer.resolve();
-                this.toast('😁请在APP里玩！');
+                this.toast(handler);
             }
             return defer.promise;
         },

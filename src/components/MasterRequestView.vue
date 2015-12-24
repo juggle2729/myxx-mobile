@@ -116,7 +116,7 @@
         },
         methods: {
           submit() {
-              this.toast('提交成功', 1000);
+              this.toast('提交成功');
           }
         }
     }

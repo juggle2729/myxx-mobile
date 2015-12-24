@@ -23,16 +23,16 @@
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="margin-bottom" v-for="c in comments">
+        <li class="margin-bottom" v-for="c in comments" @click="remove(c, $index)">
             <div class="author">
                 <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
                 <div>
-                    <h3 class="font-26 blue" @click="comment($event, c.reply_from)">{{c.reply_from.name}}</h3>
+                    <h3 class="font-26 blue" @click="reply($event, c.reply_from)">{{c.reply_from.name}}</h3>
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
             <div class="font-30 light">
-                <span v-if="c.reply_to" class="label">回复<span @click="comment($event, c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
+                <span v-if="c.reply_to" class="label">回复<span @click="reply($event, c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
                 <span>{{c.content}}</span>
             </div>
         </li>
@@ -53,17 +53,26 @@ export default {
     },
     data() {
         return {
+            uid: 0,
+            user: {},
             total: 0,
             comments: []
         }
     },
     created() {
+        this.uid = ('' + Date.now()).substr(-5);
         this.$watch('id', () => {
             this.fetch();
         });
+        this.action('user')
+            .then((resp) => {
+                if(resp) {
+                    this.user = JSON.parse(resp);
+                }
+            });
         // 监听广播事件
         this.$on('reply', (e, user) => {
-            debugger;
+            this.reply(e, user);
         });
     },
     events: {
@@ -72,31 +81,56 @@ export default {
         }
     },
     methods: {
-        comment(e, user) {
-            const id = user ? user.id : '-1';
-            const rect = e.target.getBoundingClientRect();
-            const position = rect.top + rect.height + window.scrollY;
-            const placeholder = user ? '回复' + user.name : '';
-            this.action('keyboard', {id, placeholder, position})
-                .then((resp) => {
-                    let comment = {
-                        content: resp
-                    };
-                    if(user) {
-                        comment.reply_to = user.id;
-                    }
-                    this.$post(`users/target/${this.id}/type/${this.type}/comments`, comment)
-                        .then(() => {
-                            this.fetch();
-                        });
-                });
-        },
         fetch() {
             this.$get(`users/target/${this.id}/type/${this.type}/comments`)
                 .then((comments) => {
                     this.comments = comments.comments;
                     this.total = comments.total;
                 });
+        },
+        comment(e) {
+            const id = this.uid;
+            const placeholder = '';
+            const rect = e.target.getBoundingClientRect();
+            const position = rect.top + rect.height + window.scrollY;
+            this.action('keyboard', {id, placeholder, position})
+                .then((content) => {
+                    if(content && typeof content === 'string') {
+                        this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content})
+                            .then(() => {
+                                this.fetch();
+                            });
+                    } else {
+                        this.toast('说点什么吧');
+                    }
+                });
+        },
+        reply(e, user) {
+            const id = this.uid + user.id;
+            const placeholder = '回复' + user.name;
+            const rect = e.target.getBoundingClientRect();
+            const position = rect.top + rect.height + window.scrollY;
+            this.action('keyboard', {id, placeholder, position})
+                .then((content) => {
+                    if(content && typeof content === 'string') {
+                        let reply_to = user.id;
+                        this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content, reply_to})
+                            .then(() => {
+                                this.fetch();
+                            });
+                    } else {
+                        this.toast('说点什么吧');
+                    }
+                });
+        },
+        remove(comment, index) {
+            if(this.user.user_id == comment.reply_from.id) {
+                this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
+                    .then(() => {
+                        this.toast('评论删除成功');
+                        this.fetch();
+                    });
+            }
         }
     }
 }

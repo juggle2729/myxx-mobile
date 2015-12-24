@@ -95,7 +95,7 @@
             <template v-else="story.medias.length!==1">
                 <template v-for="media in story.medias"
                     ><div class="media picture" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                    ><div class="media play" v-if="media.type==='video'" v-bg.play="media.id"></div
+                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.play="media.id"></div
                 ></template>
             </template>
         </div>
@@ -148,6 +148,7 @@ export default {
             this.action('coverflow', {ids, index});
         },
         play(id) {
+            debugger;
             this.action('play', {id});
         },
         share() {
