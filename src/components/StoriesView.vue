@@ -133,7 +133,7 @@ export default {
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
                 return this.$get('sns/topics', params).then((data) => {
-                        this.items.splice(this.items.length - 1, 0, ...data.topics);
+                        this.items.splice(this.items.length, 0, ...data.topics);
                         this.total = data.total;
                         loading = false;
                         if (data.topics.length < limit) {

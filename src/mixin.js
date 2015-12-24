@@ -37,7 +37,7 @@ export default {
         },
         action(action, params = '') {
             let defer = Q.defer();
-            if(/myxx/i.test(navigator.userAgent)) {
+            if(/myxx/i.test(navigator.userAgent)) {//改成Mobile
                 this.bridge()
                     .then((bridge) => {
                         if('user,keyboard,login'.indexOf(action) !== -1) {
@@ -62,6 +62,7 @@ export default {
                 this.action('user').then((user) => {
                     if(user) {
                         user = JSON.parse(user);
+                        this.$root.user = user;
                     }
                     userDefer.resolve(user);
                 });

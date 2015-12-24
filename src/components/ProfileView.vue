@@ -1,6 +1,6 @@
 <template>
 <div class="profile">
-    <div class="account bg-white border-bottom flex">
+    <div class="account bg-white border-bottom flex" @click="action('profile')">
         <div class="avatar-120" v-bg.md="photo"></div>
         <div class="user flex-1">
             <p class="font-30">{{nickname}}</p>
@@ -9,7 +9,7 @@
         <span class="icon-enter font-26 gray flex"></span>
     </div>
     <div class="community bg-white flex">
-        <div v-link="{name: 'story', params: {id: userId}}" class="border-right">
+        <div v-link="{name: 'user-story', params: {id: userId}}" class="border-right">
             <p class="font-30" align="center">{{topic_count}}</p>
             <p class="font-26 gray" align="center">话题</p>
         </div>
@@ -25,12 +25,12 @@
     <div class="separator-40"></div>
     <div class="rows">
         <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
-            <span class="red icon-review"></span>
+            <span class="red icon-eval"></span>
             <span>我的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
         <div class="row bg-white font-30" v-link="{name: 'user-like', params:{id: userId}}">
-            <span class="icon-favor red"></span>
+            <span class="icon-like red"></span>
             <span>我的赞</span>
             <span class="icon-enter gray font-26"></span>
         </div>
@@ -38,19 +38,19 @@
     <div class="separator-40"></div>
 
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: 'shop-request'}">
-            <span class="icon-my-shop red"></span>
+        <div class="row bg-white font-30 border-bottom" v-link="{name: 'shop-request', params: {id: userId}}">
+            <span class="icon-store red"></span>
             <span>{{has_shop ? '我的店铺' : '申请开通店铺'}}</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" v-link="{name: 'site-request'}">
-            <span class="icon-my-site red"></span>
+        <div class="row bg-white font-30" v-link="{name: 'site-request', params: {id: userId}}">
+            <span class="icon-site red"></span>
             <span>{{has_website ? '我的官网' : '申请开通官网'}}</span>
             <span class="icon-enter gray font-26"></span>
         </div>
     </div>
     <div class="separator-40"></div>
-    <div class="row bg-white font-30 border-bottom">
+    <div class="row bg-white font-30 border-bottom" @click="action('settings')">
         <span class="red icon-settings"></span>
         <span>设置</span>
         <span class="icon-enter gray"></span>
@@ -76,9 +76,13 @@ export default {
     route: {
         data() {
             return this.action('user')
-                .then((resp) => {
-                    let user = JSON.parse(resp);
-                    return this.$get('users/'+ user.user_id +'/profile')
+                .then((user) => {
+                    if(user !== undefined){
+                        this.$root.user = JSON.parse(user);
+                    }
+                    this.userId = this.self.user_id;
+                    this.$http.headers.common['X-Auth-Token'] = this.self.token;
+                    return this.$get('users/'+ this.userId +'/profile')
                             .then((data) => {
                                 this.$data = Object.assign(this.$data, data);
                             });

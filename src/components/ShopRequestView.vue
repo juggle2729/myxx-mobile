@@ -1,200 +1,10 @@
-<style lang="sass">
-.openshop {
-    .banner {
-        display: -webkit-box;
-        height: 600px;
-        position: relative;
-        background-color: #3865a7;
-        > img {
-            height: 260px;
-            width: 340px;
-            position: absolute;
-            left: 50%;
-            margin-left: -170px;
-            margin-top: 120px;
-        }
-        > p {
-            position: absolute;
-            margin-top: 438px;
-            width: 340px;
-            left: 50%;
-            margin-left: -170px;
-            text-align: center;
-            font-size: 30px;
-            color: #4cd18e;
-        }
-        > button {
-            position: absolute;
-            color: #fff;
-            height: 90px;
-            width: 392px;
-            border: 0;
-            left: 50%;
-            margin-left: -196px;
-            margin-top: 526px;
-            font-size: 30px;
-            background-color: #4cd18e;
-        }
-    }
-    .textarea {
-        > p:nth-of-type(1) {
-            font-size: 22px;
-            color: #3865a7;
-            margin-top: 32px;
-            width: 100%;
-            text-align: center;
-        }
-        .inner1 {
-            margin: 64px 7px 0 92px;
-            > p {
-                margin: -6px 0;
-                font-size: 30px;
-                color: #9d9d9d;
-                line-height: 42px;
-                width: 100%;
-            }
-        }
-        .inner2 {
-            font-size: 26px;
-            margin-top: 36px;
-            padding-left: 96px;
-            padding-right: 96px;
-            width: 100%;
-        }
-        .title {
-            margin-top: 84px;
-            > p {
-                font-size: 30px;
-                color: #9d9d9d;
-                padding-left: 32px;
-                width: 100%;
-            }
-            > hr {
-                margin: 24px 32px 0;
-            }
-        }
-        .text {
-            padding-left: 96px;
-            margin-top: 50px;
-            height: 108px;
-            position: relative;
-            > img {
-                margin-left: 10px;
-                width: 72px;
-                height: 72px;
-            }
-            > div {
-                display: table;
-                margin-left: 188px;
-                height: 106px;
-                position: absolute;
-                p {
-                    display: table-cell;
-                    vertical-align: middle;
-                    line-height: 38px;
-                    margin-top: 86px;
-                    font-size: 26px;
-                }
-            }
-            > p {
-              position: absolute;
-              margin-top: 86px;
-              font-size: 22px;
-            }
-        }
-        .bottom {
-            height: 382px;
-            position: relative;
-            margin: 50px 96px 0;
-            img {
-                width: 558px;
-                height: 182px;
-            }
-        }
-    }
-    .separ {
-        background-color: #184b96;
-        display: block;
-        width: 100%;
-        height: 16px;
-    }
-    .out {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .6);
-        .apply {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 540px;
-            height: 615px;
-            border-radius: 10px;
-            transform: translate(-50%, -50%);
-            .top {
-                padding: 32px 61px;
-                height: 520px;
-                .text{
-                    height: 64px;
-                    margin-bottom: 32px;
-                    > p {
-                        line-height: 38px;
-                    }
-                }
-                .input {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    margin-top: 0;
-                    width: 418px;
-                    height: 360px;
-                    > input {
-                        width: 418px;
-                        border-radius: 4px;
-                        border-style: solid;
-                        border-width: 1px;
-                        border-color: #d9d9d9;
-                        height: 80px;
-                        padding: 32px;
-                        font-size: 26px;
-                    }
-                    > textarea {
-                        padding: 28px 32px;
-                        font-size: 26px;
-                        height: 160px;
-                        resize: none;
-                        border-radius: 4px;
-                        border-color: #d9d9d9;
-                    }
-                }
-            }
-            .bottom {
-                border-radius: 0 0 10px 10px;
-                height: 95px;
-                width: 100%;
-                padding: 13px 0;
-                > div {
-                    float: left;
-                    width: 50%;
-                    height: 100%;
-                }
-            }
-            ::-webkit-input-placeholder {
-                color: #c6c6c6;
-                font-size: 26px;
-            }
-        }
-    }
-}
-</style>
 <template>
-    <div class="openshop">
+<div class="shop-request">
+    <div class="openshop" :class="{'hide': requestShow}">
         <div class="banner">
             <img :src="banner" />
             <p>{{title}}</p>
-            <button @click="toggleApply">
+            <button @click="toggleShow">
                 <span>立即申请</span>
             </button>
         </div>
@@ -254,25 +64,22 @@
                 <img src="/static/images/open/od5.png" />
             </div>
         </div>
-        <div class="out" v-show="applyShow">
-            <div class="apply bg-white" >
-                <div class="top border-bottom">
-                    <div class="text">
-                        <p class="font-26" align="center">您正在申请开通店铺,请填写以下信息,我们会在两个工作日内联系您。</p>
-                    </div>
-                    <div class="input">
-                        <input type="text" placeholder="手机号" value="15012345678">
-                        <input type="text" placeholder="姓名">
-                        <textarea placeholder="简介，50字以内"></textarea>
-                    </div>
-                </div>
-                <div class="bottom" >
-                    <div class="border-right" @click="submit"><p class="font-26 center center-vertical" style="color:#2ab869">确认申请</p></div>
-                    <div @click="toggleApply" ><p class="font-26 center center-vertical">取消</p></div>
-                </div>
-            </div>
+    </div>
+    <div class="request" :class="{'hide': !requestShow}">
+        <div class="text font-30">
+            <p>您正在申请开通店铺，请填写以下信息。</p>
+            <p style="margin-top:8px">我们会在两个工作日内联系你。</p>
+        </div>
+        <div class="input">
+            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="phone">
+            <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name">
+            <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" v-model="content"></textarea>
+            <button @click="submit" class="bg-red white font-30">
+                <span>提交</span>
+            </button>
         </div>
     </div>
+</div>
 </template>
 <script>
     export default {
@@ -281,16 +88,187 @@
             return {
                 banner: '/static/images/open/odbanner.png',
                 title: '【人人皆可拥有】',
-                applyShow: false
+                requestShow: false,
+                type: 'shop',
+                phone: 15012345678,
+                mail: '',
+                name: '',
+                content: ''
             };
         },
         methods: {
           submit() {
-              this.toast('申请店铺', 1000);
+              var msg = this.name + '=' + this.phone + '==' +this.content;
+              this.toast(msg, 1000);
+              this.toggleShow();
           },
-          toggleApply() {
-              this.applyShow = !this.applyShow;
+          toggleShow() {
+              this.requestShow = !this.requestShow;
           }
         }
     }
 </script>
+<style lang="sass">
+.shop-request {
+    .openshop {
+        .banner {
+            display: -webkit-box;
+            height: 600px;
+            position: relative;
+            background-color: #3865a7;
+            > img {
+                height: 260px;
+                width: 340px;
+                position: absolute;
+                left: 50%;
+                margin-left: -170px;
+                margin-top: 120px;
+            }
+            > p {
+                position: absolute;
+                margin-top: 438px;
+                width: 340px;
+                left: 50%;
+                margin-left: -170px;
+                text-align: center;
+                font-size: 30px;
+                color: #4cd18e;
+            }
+            > button {
+                position: absolute;
+                color: #fff;
+                height: 90px;
+                width: 392px;
+                border: 0;
+                left: 50%;
+                margin-left: -196px;
+                margin-top: 526px;
+                font-size: 30px;
+                background-color: #4cd18e;
+            }
+        }
+        .textarea {
+            > p:nth-of-type(1) {
+                font-size: 22px;
+                color: #3865a7;
+                margin-top: 32px;
+                width: 100%;
+                text-align: center;
+            }
+            .inner1 {
+                margin: 64px 7px 0 92px;
+                > p {
+                    margin: -6px 0;
+                    font-size: 30px;
+                    color: #9d9d9d;
+                    line-height: 42px;
+                    width: 100%;
+                }
+            }
+            .inner2 {
+                font-size: 26px;
+                margin-top: 36px;
+                padding-left: 96px;
+                padding-right: 96px;
+                width: 100%;
+            }
+            .title {
+                margin-top: 84px;
+                > p {
+                    font-size: 30px;
+                    color: #9d9d9d;
+                    padding-left: 32px;
+                    width: 100%;
+                }
+                > hr {
+                    margin: 24px 32px 0;
+                }
+            }
+            .text {
+                padding-left: 96px;
+                margin-top: 50px;
+                height: 108px;
+                position: relative;
+                > img {
+                    margin-left: 10px;
+                    width: 72px;
+                    height: 72px;
+                }
+                > div {
+                    display: table;
+                    margin-left: 188px;
+                    height: 106px;
+                    position: absolute;
+                    p {
+                        display: table-cell;
+                        vertical-align: middle;
+                        line-height: 38px;
+                        margin-top: 86px;
+                        font-size: 26px;
+                    }
+                }
+                > p {
+                  position: absolute;
+                  margin-top: 86px;
+                  font-size: 22px;
+                }
+            }
+            .bottom {
+                height: 382px;
+                position: relative;
+                margin: 50px 96px 0;
+                img {
+                    width: 558px;
+                    height: 182px;
+                }
+            }
+        }
+        .separ {
+            background-color: #184b96;
+            display: block;
+            width: 100%;
+            height: 16px;
+        }
+    }
+    .request {
+            padding: 48px 32px;
+            position: relative;
+            .text {
+                height: 70px;
+            }
+            .input {
+                width: 100%;
+                margin-top: 32px;
+                > input {
+                    width: 100%;
+                    border-radius: 4px;
+                    border-style: solid;
+                    border-width: 1px;
+                    height: 80px;
+                    padding: 32px;
+                }
+                > input:nth-of-type(2) {
+                    margin-top: 30px;
+                }
+                > textarea {
+                    margin-top: 30px;
+                    width: 100%;
+                    padding: 28px 32px;
+                    height: 180px;
+                    resize: none;
+                    border-radius: 4px;
+                }
+                button {
+                    height: 80px;
+                    width: 100%;
+                    border: 0;
+                    border-radius: 8px;
+                    margin-top: 32px;
+                }
+            }
+            ::-webkit-input-placeholder {
+                color: #888888;
+            }
+    }
+}
+</style>

@@ -15,13 +15,12 @@ export default {
     data() {
         return {
             user: {
-                id: 2,
+                user_id: 2,
                 token: 'f87e7796-9896-4a6f-997e-11b48aebd347'
             }
         }
     },
     created() {
-        // 注册滚动触底事件广播
         emitter.on('scroll-to-bottom', (e) => {
             this.$broadcast('scrollToBottom', e);
         });

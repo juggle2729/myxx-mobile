@@ -7,7 +7,7 @@
                     赞了一个{{thumb.title}}
                 </p>
             </div>
-            <div class="info flex" v-link="{ name: 'evaluation', params: { id: thumb.post_id }}">
+            <div class="info flex" v-link="{ name: thumb.link, params: { id: thumb.post_id }}">
                 <div class="left">
                     <div class="flex">
                         <div v-bg.sm="thumb.user.photo" class="avatar-50"></div>
@@ -51,30 +51,31 @@ export default {
             const limit = 10;
             if (this.loading) {
                 this.loading = false;
-                return this.$get('users/' + userId + '/like_list', {offset, limit},
-                        (data) => {
+                return this.$get('users/' + userId + '/like_list', {offset, limit})
+                        .then((data) => {
                             data.entries.forEach((item) => {
                                 if (item.type === 10) {//picture
-                                    console.log(item.entry.picture);
+                                    item.entry.link = 'evaluation';
                                     item.entry.photo1 = item.entry.picture;
                                     item.entry.description = item.entry.description;
                                     item.entry.result = item.entry.status + '条鉴定结果';
                                 } else if (item.type === 20) {//video
-                                    console.log(item.entry.video);
+                                    item.entry.link = 'evaluation';
                                     item.entry.photo2 = item.entry.video;
                                     item.entry.user = item.entry.identifier;
                                     item.entry.description = '鉴定了 ' + item.entry.jianbao.applier.nickname + ' 的宝贝';
                                     item.entry.result = '鉴定结果为 ' + item.entry.result;
                                 } else if (item.type === 30) {//media
-                                    item.entry.user = item.entry.applier;
-                                    if (item.entry.title) {
-                                        item.entry.description = item.entry.title;
-                                    } else {
-                                        item.entry.description = '分享了一个话题';
-                                    }
-                                } else if (item.type === 80) { //商品现在没有数据
-                                    item.entry.user = item.entry.identifier;
-                                    item.entry.result = 1106;
+                                    item.entry.link = 'story';
+                                    item.entry.description = '分享了一个话题';
+                                    item.entry.photo1 = item.entry.media[0].id;
+                                } else if (item.type === 40) { //宝贝
+                                    item.entry.link = 'jade';
+                                    item.entry.post_id = item.entry.id;
+                                    item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
+                                    item.entry.user.name = item.entry.user.nickname;
+                                    item.entry.photo1 = item.entry.imgs[0];
+                                    item.entry.result = item.entry.product_rewards[0].reward.name;
                                 }
                                 item.entry.title = types[item.type / 10];
                                 this.thumbs.push(item.entry);
@@ -135,6 +136,10 @@ export default {
                 > p:nth-of-type(2) {
                     margin-top: 12px;
                 }
+            }
+            .right {
+                background-size: cover;
+                background-position: center;
             }
         }
     }

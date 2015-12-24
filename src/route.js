@@ -36,6 +36,7 @@ export default {
     },
     '/jades': {
         name: 'jades',
+        title: '宝贝秀',
         component: require('./components/JadesView.vue')
     },
     '/jade/:id': {
@@ -45,6 +46,7 @@ export default {
     },
     '/masters': {
         name: 'masters',
+        title: '官网秀',
         component: require('./components/MastersView.vue')
     },
     '/master/:id': {
@@ -57,37 +59,44 @@ export default {
         name: 'messages',
         component: require('./components/MessagesView.vue')
     },
+    '/master/:id/request': {
+        name: 'master-request',
+        title: '申请大师权限',
+        component: require('./components/MasterRequestView.vue')
+    },
     '/profile': {   // 个人中心
         name: 'profile',
+        title: '个人中心',
         component: require('./components/ProfileView.vue')
     },
     '/profile/:id': { // 个人主页
         name: 'user-profile',
+        title: '个人主页',
         component: require('./components/HomePageView.vue')
     },
     '/profile/:id/story': {
         name: 'user-story',
-        title: '我的话题',
+        title: '话题',
         component: require('./components/UserStoryView.vue')
     },
     '/profile/:id/following': {
         name: 'following',
-        title: '我的关注',
+        title: '关注',
         component: require('./components/FollowingView.vue')
     },
     '/profile/:id/follower': {
         name: 'follower',
-        title: '我的粉丝',
+        title: '粉丝',
         component: require('./components/FollowerView.vue')
     },
     '/profile/:id/evaluation': {
         name: 'user-evaluation',
-        title: '我的鉴宝',
+        title: '鉴宝',
         component: require('./components/UserEvaluationView.vue')
     },
     '/profile/:id/like': {
         name: 'user-like',
-        title: '我的赞',
+        title: '赞',
         component: require('./components/UserLikeView.vue')
     },
     '/profile/:id/shop/request': {
@@ -99,6 +108,16 @@ export default {
         name: 'site-request',
         title: '申请官网',
         component: require('./components/SiteRequestView.vue')
+    },
+    '/feedback': {
+        name: 'feedback',
+        title: '意见反馈',
+        component: require('./components/FeedbackView.vue')
+    },
+    '/about': {
+        name: 'about',
+        title: '关于美玉秀秀',
+        component: require('./components/AboutView.vue')
     },
     '/css': {
         name: 'cssview',

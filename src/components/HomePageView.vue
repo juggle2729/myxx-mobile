@@ -3,11 +3,11 @@
     <div class="account border-bottom flex">
         <div class="avatar-240" v-bg.md="photo"></div>
         <p class="font-30 red">{{nickname}}</p>
-        <button v-if="!follow && isNotSelf" class="bg-red font-26 white icon-favor-active" @click="toggleFollow">关注</button>
-        <button v-if="follow && isNotSelf" class="bg-gray font-26 white" @click="toggleFollow">已关注</button>
+        <button v-if="!follow && isNotSelf" class="bg-red font-26 white icon-like-active" @click="toggleFollow">关注</button>
+        <button v-if="follow && isNotSelf" class="bg-default font-26 white" @click="toggleFollow">已关注</button>
     </div>
     <div class="community bg-white flex">
-        <div v-link="{name: 'story', params: {id: userId}}" class="border-right">
+        <div v-link="{name: 'user-story', params: {id: userId}}" class="border-right">
             <p class="font-30" align="center">{{topic_count}}</p>
             <p class="font-26 gray" align="center">话题</p>
         </div>
@@ -23,17 +23,17 @@
     <div class="separator" style="height:30px"></div>
     <div class="his border-bottom">
         <div class="row font-30 border-bottom" v-link="{name: 'user-like', params: {id: userId}}">
-            <span class="red icon-my-favor"></span>
+            <span class="red icon-like"></span>
             <span>TA的赞</span>
             <span class="icon-enter gray"></span>
         </div>
-        <div class="row font-30 border-bottom">
-            <span class="red icon-review"></span>
+        <div class="row font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
+            <span class="red icon-eval"></span>
             <span>TA的鉴宝</span>
             <span class="icon-enter gray"></span>
         </div>
         <div class="row font-30">
-            <span class="red icon-my-shop"></span>
+            <span class="red icon-store"></span>
             <span>{{has_shop ? 'TA的店铺' : 'TA没有店铺'}}</span>
             <span class="icon-enter gray"></span>
         </div>
@@ -61,12 +61,9 @@ export default {
     route: {
         data() {
             this.userId = this.$route.params.id;
-            this.isNotSelf = !(this.userId == this.self.user_id);
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
-                    console.log(this.userId);
-                    console.log(this.self.user_id);
-                    console.log(this.isNotSelf);
+                    this.isNotSelf = !(this.userId == this.self.user_id);
                     this.$data = Object.assign(this.$data, data);
                 });
         }

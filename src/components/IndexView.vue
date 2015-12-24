@@ -37,13 +37,17 @@
             <a href="#/profile/2">个人主页 - profile/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#!/profile">个人中心 - profile</a>
-        </li>
-        <li class="font-26 border-top padding center">
             <a href="#!/jades">宝贝秀 - jades</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="#!/masters">官网秀 - masters</a>
+        </li>
+        <li class="tab">设置</li>
+        <li class="font-26 border-top padding center">
+            <a href="#!/about">关于美玉秀秀 - about</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="#!/feedback">意见反馈 - feedback</a>
         </li>
     </ul>
 </div>

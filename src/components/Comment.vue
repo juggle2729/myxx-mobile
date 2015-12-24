@@ -73,7 +73,6 @@ export default {
     },
     methods: {
         comment(e, user) {
-            debugger;
             const id = user ? user.id : '-1';
             const rect = e.target.getBoundingClientRect();
             const position = rect.top + rect.height + window.scrollY;

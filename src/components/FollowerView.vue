@@ -8,11 +8,11 @@
                 <p class="font-26 light" style="margin-top:8px;">{{user.role | role}}</p>
             </div>
             <button class="gray font-22 border-gray flex bg-white" v-if="user.follow && user.isNotSelf" @click="toggleFollow(user)">
-                <img src="/static/images/profile/unfollow.png">
+                <img src="/static/images/profile/unfollow.png" style="margin-left:0">
                 <p>已关注</p>
             </button>
             <button class="red font-22 border-red flex bg-white" v-if="!user.follow && user.isNotSelf" @click="toggleFollow(user)">
-                <img src="/static/images/profile/follow.png">
+                <img src="/static/images/profile/follow.png" style="margin-left:0">
                 <p>加关注</p>
             </button>
         </div>
@@ -29,13 +29,13 @@ export default {
     methods: {
         toggleFollow(user) {
             if (user.follow) {
-                this.$delete(`users/follow/`+user.user_id)
+                this.$delete('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = false;
                     this.toast('取消关注成功');
                 });
             } else {
-                this.$post(`users/follow/`+user.user_id)
+                this.$post('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = true;
                     this.toast('关注成功');

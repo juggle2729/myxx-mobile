@@ -9,7 +9,7 @@
             </div>
             <button class="gray font-22 border-gray flex bg-white" v-if="user.follow && user.isNotSelf" @click="toggleFollow(user)">取消关注</button>
             <button class="red font-22 border-red flex bg-white" v-if="!user.follow && user.isNotSelf" @click="toggleFollow(user)">
-                <img src="/static/images/profile/follow.png">
+                <img src="/static/images/profile/follow.png" style="margin-left:0">
                 <p>加关注</p>
             </button>
         </div>
@@ -26,14 +26,14 @@ export default {
     methods: {
         toggleFollow(user) {
             if (user.follow) {
-                this.$delete(`users/follow/`+user.user_id)
+                this.$delete('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = false;
                     this.toast('取消关注成功');
                 });
             } else {
-                this.$post(`users/follow/`+user.user_id)
-                .success(() => {
+                this.$post('users/follow/'+user.user_id)
+                .then(() => {
                     user.follow = true;
                     this.toast('关注成功');
                 });
@@ -50,6 +50,7 @@ export default {
                     .then((data) => {
                         data.entries.forEach((entry) => {
                             entry.isNotSelf = !(entry.user_id == this.self.user_id);
+                            console.debug('self2', this.self);
                             this.userList.push(entry);
                         });
                         this.loading = true;
@@ -69,7 +70,7 @@ export default {
         };
     },
     route: {
-        data() {
+        data({from,to}) {
             return this.fetch();
         }
     },

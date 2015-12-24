@@ -4,10 +4,10 @@
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
         <div>
-            <span class="font-30  icon-my-site" style="color:#f3ac1c;"> {{info.product_rewards[0].reward.name}}</span>
+            <span class="font-30 icon-trophy" style="color:#f3ac1c;"> {{info.product_rewards[0].reward.name}}</span>
         </div>
         <div>
-            <span class="red font-30 icon-review"> {{info.price}}</span>
+            <span class="red font-30 icon-price"> {{info.price}}</span>
             <span class="gray font-22">{{info.display_count}}人浏览</span>
         </div>
     </div>
@@ -36,7 +36,10 @@
                 <span class="gray">类型</span>
                 <span>{{info.category.name}}</span>
             </p>
-            <!-- <p class="font-26" v-if="category.parent"><span class="gray">器型</span><span>{{category.parent.name}}</span></p> -->
+            <p class="font-26" v-if="info.category.parent">
+                <span class="gray">器型</span>
+                <span>{{info.category.parent.name}}</span>
+            </p>
             <p class="font-26">
                 <span class="gray">重量</span>
                 <span>{{info.weight}}</span>
@@ -57,23 +60,25 @@
                 <span class="gray">产地</span>
                 <span>{{info.origin_place.name}}</span>
             </p>
-            <p class="font-26">
-                <span class="gray">简介</span>
-                <span>$route.params.id{{$route.params.id}}</span>
-            </p>
         </div>
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <div class="title border-bottom" @click="adddetail">
+        <div class="title border-bottom">
             <span class="font-22 gray">图文详情</span>
         </div>
-        <div class="content" id="detail">
+        <div class="content font-30" id="detail">
         </div>
     </div>
+    <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
+        <div class="center border-left light extra-action">
+            <i class="icon-share"></i><span v-link="{name: 'evaluation', params: {id: 1}}">分享</span>
+        </div>
+    </social-bar>
 </div>
 </template>
 <script>
+import SocialBar from './SocialBar.vue';
 import emitter from '../utils/emitter';
 export default {
     name: 'JadeView',
@@ -87,7 +92,7 @@ export default {
                 user: { // 商家用户信息
                     id: 1,
                     nickname: '商家名字',
-                    photo: '/static/images/artist/head.png'
+                    photo: ''
                 },
                 name: '和田玉器茶壶',
                 category: { // 分类信息
@@ -134,37 +139,29 @@ export default {
                     id: 1,
                     name: '市级工艺大师'
                 },
-                imgs: ['/static/images/artist/store.jpg'], // 图片
+                imgs: [], // 图片
                 like_count: 12, // 关注数
                 display_count: 34, // 浏览数，
                 is_liked: true, // 如果当前登录状态，是否关注过
                 create_at: '2015-01-01 10:10:10',
                 details: '<p class="font-34">123</p>',
-                detail: [{
-                    media_type: 'inner_img', // 图片
-                    media_content: '/static/images/artist/store.jpg'
-                }, {
-                    media_type: 'text',
-                    media_content: '你好啊， 这是文本块'
-                }, {
-                    media_type: 'inner_video', // 视频
-                    media_content: '/static/images/artist/store.jpg'
-                }]
+                detail: []
             },
-            boool: true
+            likes: [
+
+            ]
         };
     },
     methods: {
-        adddetail() {
-            this.info.detail.forEach((item) => {
+        addDetail() {
+            this.info.detail.medias.forEach((item) => {
                 if (item.media_type === 'text') {
                     var text = document.createElement('p');
                     text.innerText = item.media_content;
-                    text.className = 'font-30';
                     document.getElementById('detail').appendChild(text);
                 } else {
                     var image = document.createElement('img');
-                    image.src = item.media_content;
+                    image.src = 'http://7xo8aj.com2.z0.glb.qiniucdn.com/'+ item.media_content +'?imageView2/1/w/600/h/350/interlace/1';
                     image.className = 'visible';
                     document.getElementById('detail').appendChild(image);
                 }
@@ -173,19 +170,19 @@ export default {
     },
     route: {
         data() {
-            return this.$get('mall/products/1')
+            return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
+                    this.$get('users/target/'+ this.info.id +'/type/40/likers')
+                        .then((data) => {
+                            this.likes = data.users;
+                        });
+                    this.addDetail();
                 });
         }
     },
-    created() {
-        emitter.on('scroll-to-bottom', (e) => {
-            if (this.boool) {
-                this.adddetail();
-                this.boool = false;
-            }
-        });
+    components: {
+        SocialBar
     }
 }
 </script>
@@ -239,17 +236,11 @@ export default {
             height: 80px;
         }
         .content {
-            padding-top: 32px;
             > p {
-                margin-top: 28px;
-                > span:nth-child(2) {
-                    margin-left: 16px;
-                }
-            }
-            > p:nth-child(1) {
-                margin-top: 0;
+                margin-top: 32px;
             }
             > img {
+                margin-top: 32px;
                 width: 100%;
             }
         }

@@ -40,9 +40,9 @@ var router = new Router({hashbang: false, suppressTransitionError: false});
 router.beforeEach(({from, to, abort, next}) => {
     if(window.WebViewJavascriptBridge) {
         if(from.fullPath !== to.fullPath) {
-            abort();
-            console.debug('go =>', to.path);
+            console.debug('go', {url: to.path});
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
+            abort();
         } else {
             next();
         }
@@ -64,7 +64,7 @@ router.beforeEach(function() {
 });
 
 router.redirect({
-    '*': '/profile'
+
 });
 
 router.start(App, '#app');

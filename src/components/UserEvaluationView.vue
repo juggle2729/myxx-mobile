@@ -1,182 +1,138 @@
 <style lang="sass">
-    .jades {
-        .notice {
-            padding-left: 32px;
-            padding-right: 32px;
-            position: relative;
-            .sender {
-                display: flex;
-                height: 120px;
-                align-items: center;
-                > img {
-                    height: 68px;
-                    width: 68px;
-                    border-radius: 50%;
-                }
-                > div {
-                    margin-left: 24px;
-                    > p:nth-of-type(1) {
-                        font-size: 26px;
-                    }
-                    > p:nth-of-type(2) {
-                        margin-top: 10px;
-                        font-size: 24px;
-                    }
-                }
-            }
-            .info {
-                position: relative;
-                .result {
-                    display: flex;
-                    height: 100px;
-                    align-items: center;
-                    > img {
-                        height: 60px;
-                        width: 60px;
-                        border-radius: 50%;
-                    }
-                    > p {
-                        font-size: 26px;
-                        margin-left: 300px;
-                    }
-                    > div {
-                        margin-left: 24px;
-                        > p:nth-of-type(1) {
-                            font-size: 26px;
-                        }
-                        > p:nth-of-type(2) {
-                            margin-top: 10px;
-                            font-size: 24px;
-                        }
-                    }
-                }
-            }
-            .image {
-                position: relative;
-                width: 100%;
-                height: 350px;
-                > div {
-                    width: 33.3%;
-                    height: 100%;
-                    float: left;
-                    display: inline;
-                    padding-right: 6px;
-                }
-                .video {
-                    position: relative;
-                    background-size: cover;
-                    background-position: center;
-                    &::after {
-                        content: '';
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        right: 0;
-                        bottom: 0;
-                        background-size: 120px;
-                        mix-blend-mode: overlay;
-                        background-image: url('/static/images/icon/ico_video.png');
-                    }
-                }
+.user-evaluation {
+    .tabs {
+        display: -webkit-box;
+        height: 80px;
+        > div {
+            -webkit-box-flex: 1;
+            margin: 24px 0;
+        }
+        label {
+            width: 100%;
+            display: inline-block;
+        }
+        input {
+            display: none;
+        }
+    }
+    .item {
+        padding: 24px 32px;
+    }
+    .user {
+        display: -webkit-box;
+        -webkit-box-align: center;
+        .avatar {
+            height: 68px;
+            width: 68px;
+            border-radius: 50%;
+            background-size: cover;
+            vertical-align: middle;
+        }
+        .name {
+            margin-left: 20px;
+            .moment {
+                margin-top: 12px;
             }
         }
     }
+    .desc {
+        margin: 30px 0 24px;
+    }
+    .video {
+        height: 500px;
+    }
+    .social {
+        padding: 0 32px;
+    }
+    .result {
+        height: 116px;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        .avatar {
+            height: 68px;
+            width: 68px;
+            border-radius: 50%;
+            background-size: cover;
+            vertical-align: middle;
+        }
+        .master {
+            -webkit-box-flex: 1;
+            padding-left: 20px;
+            .title {
+                margin-top: 12px;
+            }
+        }
+        .mark {
+            padding: 5px 0 5px 35px;
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
+            background-position: left center;
+            background-size: 26px;
+        }
+    }
+    .loadmore {
+        img {
+            width: 120px;
+            height: 68px;
+        }
+    }
+}
 </style>
 <template>
-    <div class="jades">
-        <template v-for="jade in jades">
-            <div class="notice ">
-                <div class="sender">
-                    <img :src="photo | img" />
-                    <div>
-                        <p class="font-26 txt-primary">
-                            小玉小
-                        </p>
-                        <p class="light">{{jade.date | moment}}</p>
-                    </div>
-                </div>
-                <div class="image">
-                    <div>
-                        <img :src="jade.pictures[0] | img" style="width:100%;height:48%;" />
-                        <img :src="jade.pictures[1] | img" style="width:100%;height:48%;" />
-                    </div>
-                    <div>
-                        <img :src="jade.pictures[2] | img" style="width:100%;height:48%;" />
-                        <img :src="jade.pictures[3] | img" style="width:100%;height:48%;" />
-                    </div>
-                    <div class="video clickable" @click="play(jade.video)" v-bg.video="jade.video">
-                    </div>
-                </div>
-                <div class="info">
-                    <template v-for="result in jade.results">
-                        <div class="result border-bottom" v-link="{ name: 'homepage', params: { id: result.id }}">
-                            <img :src="photo | img" />
-                            <div>
-                                <p class="font-26 txt-primary">
-                                    {{result.identifier.name}}
-                                </p>
-                                <p class="light">{{result.identifier.title}}</p>
-                            </div>
-                            <p>已鉴定</p>
-                        </div>
-                    </template>
-                </div>
-            </div>
-            <div class="separator-20"></div>
-        </template>
+<div class="user-evaluation">
+    <evaluation-list :items="items"></evaluation-list>
+    <div class="loadmore center font-22 gray padding-vertical">
+        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <span v-show="!hasMore">没有了</span>
     </div>
+</div>
 </template>
 <script>
-    export default {
-        name: 'SelfEvaluation',
+import EvaluationList from './EvaluationList.vue';
+export default {
+    name: 'UserEvaluationView',
+    data() {
+        return {
+            user:'',
+            userId: 0,
+            loading: true,
+            hasMore: true,
+            items: [],
+        };
+    },
+    components: {
+        EvaluationList
+    },
+    route: {
         data() {
-            return {
-                photo: '',
-                jades: []
-            };
-        },
-        route: {
-            data({
-                to
-            }) {
-                const userId = to.query.id || 1;
-                return this.$get('sns/users/jianbao')
-                    .then(function(resp) {
-                        console.log(resp);
-                        var applies = resp.data.jianbaos;
-                        this.jades = applies;
-                        for (var x in applies) {
-                            if (applies[x].applier.id === userId) {
-                                this.$data.jades[x].title = true;
-                                if (this.photo === '') {
-                                    this.photo = applies[x].applier.photo;
-                                }
-                            } else {
-                                this.$data.jades[x].title = false;
-                                if (this.photo === '') {
-                                    for (var n in applies[x].results) {
-                                        if (applies[x].results[n].identifier.id === userId)
-                                            this.photo = applies[x].results[0].identifier.photo;
-                                    }
-                                }
-                            }
-                            this.jades[x].id = applies[x].id;
-                            this.jades[x].resultTotal = applies[x].results.length;
-                            this.jades[x].results = applies[x].results;
-                            //this.jades[x].date = applies[x].create_at.substring(5, 10);
-                            this.jades[x].date = applies[x].create_at;
-                            this.jades[x].pictures = applies[x].pictures;
-                            this.jades[x].video = applies[x].video;
-                        }
-                    });
-            }
-        },
-        methods: {
-            play(video) {
-                this.toast(video);
-            }
+            this.userId = this.$route.params.id;
+            this.fetch();
         }
+    },
+    events: {
+        scrollToBottom(e) {
+          this.fetch();
+        }
+    },
+    methods: {
+        fetch: (function() {
+            const limit = 2;
+            return function() {
+                let offset = this.items.length;
+                if(this.loading) {
+                    this.loading = false;
+                    const params = {offset, limit};
+                    return this.$get('sns/users/'+ this.userId +'/jianbao', params)
+                        .then((data) => {
+                            this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
+                            this.loading = true;
+                            if (data.jianbaos.length < limit) {
+                                this.hasMore = false;
+                                this.loading = false;
+                            }
+                        });
+                }
+            }
+        })()
     }
+}
 </script>
