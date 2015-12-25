@@ -1,9 +1,9 @@
 <template>
-<div class="message-view">
+<div class="message-view bg-default">
     <div class="separator-20"></div>
-    <div class="messages border-bottom">
+    <div class="messages border-bottom bg-white">
         <div class="row font-34 border-bottom flex" v-link="{name: 'master-request'}">
-            <span class="red icon-phone"></span>
+            <span class="red icon-alarm"></span>
             <span>系统通知</span>
             <span class="icon-enter gray"></span>
         </div>
@@ -25,14 +25,14 @@
     </div>
 </div>
 </template>
-
 <script>
-    export default {
-        name: 'MessageView',
-    }
+export default {
+    name: 'MessageView',
+}
 </script>
 <style lang="sass">
 .message-view {
+    height: 100%;
     .messages {
         padding-left: 32px;
         .row {
@@ -41,9 +41,6 @@
                 margin-left: 32px;
             }
         }
-    }
-    .icon-enter {
-        transform: rotate(-90deg);
     }
 }
 </style>

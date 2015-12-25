@@ -1,3 +1,78 @@
+<template>
+<div class="stories-view">
+    <div class="tabs">
+        <div :class="{'red': tab=='time'}" class="font-26 center border-right">
+            <label for="tab-time">最新</label><input name="tab" v-model="tab" type="radio" id="tab-time" value="time" />
+        </div>
+        <div :class="{'red': tab=='popularity'}" class="font-26 center">
+            <label for="tab-popularity">热门</label><input name="tab" v-model="tab" type="radio" id="tab-popularity" value="popularity"/>
+        </div>
+    </div>
+    <story-list :items="items"></story-list>
+    <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+    </div>
+</div>
+</template>
+<script>
+import StoryList from './StoryList.vue';
+export default {
+    name: 'StoriesView',
+    components: {
+        StoryList
+    },
+    data() {
+        return {
+            tab: 'time',
+            items: [],
+            total: 0,
+            hasMore: true
+        };
+    },
+    route: {
+        data({to}) {
+            this.tab = to.params.tab;
+            this.fetch();
+        },
+        canReuse() {
+            return false;
+        }
+    },
+    created() {
+        this.$watch('tab', (tab) => {
+            this.$route.router.go({name: 'stories', params: {tab}});
+        });
+    },
+    events: {
+        scrollToBottom(e) {
+            this.fetch();
+        }
+    },
+    methods: {
+        fetch: (function() {
+            const limit = 5;
+            let loading = false;
+            return function() {
+                let offset = this.items.length;
+                if(loading) {
+                    return console.debug('skip!!!!!!!!');
+                }
+                console.debug('fetch', this.tab, offset);
+                loading = true;
+                const params = {[this.tab]: 1, offset, limit};
+                return this.$get('sns/topics', params).then((data) => {
+                        this.items.splice(this.items.length, 0, ...data.topics);
+                        this.total = data.total;
+                        loading = false;
+                        if (data.topics.length < limit) {
+                            this.hasMore = false;
+                        }
+                    });
+            }
+        })()
+    }
+}
+</script>
 <style lang="sass">
 .stories-view {
     .tabs {
@@ -68,80 +143,3 @@
     }
 }
 </style>
-<template>
-<div class="stories-view">
-    <div class="tabs">
-        <div :class="{'red': tab=='time'}" class="font-26 center border-right">
-            <label for="tab-time">最新</label><input name="tab" v-model="tab" type="radio" id="tab-time" value="time" />
-        </div>
-        <div :class="{'red': tab=='popularity'}" class="font-26 center">
-            <label for="tab-popularity">热门</label><input name="tab" v-model="tab" type="radio" id="tab-popularity" value="popularity"/>
-        </div>
-    </div>
-    <div class="separator" v-show="tab"></div>
-    <story-list :items="items"></story-list>
-    <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore">没有了</span>
-    </div>
-</div>
-</template>
-<script>
-import StoryList from './StoryList.vue';
-export default {
-    name: 'StoriesView',
-    components: {
-        StoryList
-    },
-    data() {
-        return {
-            tab: 'time',
-            items: [],
-            total: 0,
-            hasMore: true
-        };
-    },
-    route: {
-        data({to}) {
-            this.tab = to.params.tab;
-            this.fetch();
-        },
-        canReuse() {
-            return false;
-        }
-    },
-    created() {
-        this.$watch('tab', (tab) => {
-            this.$route.router.go({name: 'stories', params: {tab}});
-        });
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            const limit = 5;
-            let loading = false;
-            return function() {
-                let offset = this.items.length;
-                if(loading) {
-                    return console.debug('skip!!!!!!!!');
-                }
-                console.debug('fetch', this.tab, offset);
-                loading = true;
-                const params = {[this.tab]: 1, offset, limit};
-                return this.$get('sns/topics', params).then((data) => {
-                        this.items.splice(this.items.length, 0, ...data.topics);
-                        this.total = data.total;
-                        loading = false;
-                        if (data.topics.length < limit) {
-                            this.hasMore = false;
-                        }
-                    });
-            }
-        })()
-    }
-}
-</script>

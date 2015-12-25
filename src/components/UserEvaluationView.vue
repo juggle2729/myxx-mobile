@@ -1,5 +1,64 @@
+<template>
+<div class="user-evaluation bg-default">
+    <evaluation-list :items="items"></evaluation-list>
+    <div class="loadmore center font-22 gray padding-vertical border-top">
+        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+    </div>
+</div>
+</template>
+<script>
+import EvaluationList from './EvaluationList.vue';
+export default {
+    name: 'UserEvaluationView',
+    data() {
+        return {
+            user:'',
+            userId: 0,
+            loading: true,
+            hasMore: true,
+            items: [],
+        };
+    },
+    components: {
+        EvaluationList
+    },
+    route: {
+        data() {
+            this.userId = this.$route.params.id;
+            this.fetch();
+        }
+    },
+    events: {
+        scrollToBottom(e) {
+          this.fetch();
+        }
+    },
+    methods: {
+        fetch: (function() {
+            const limit = 2;
+            return function() {
+                let offset = this.items.length;
+                if(this.loading) {
+                    this.loading = false;
+                    const params = {offset, limit};
+                    return this.$get('sns/users/'+ this.userId +'/jianbao', params)
+                        .then((data) => {
+                            this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
+                            this.loading = true;
+                            if (data.jianbaos.length < limit) {
+                                this.hasMore = false;
+                                this.loading = false;
+                            }
+                        });
+                }
+            }
+        })()
+    }
+}
+</script>
 <style lang="sass">
 .user-evaluation {
+    height: 100%;
     .tabs {
         display: -webkit-box;
         height: 80px;
@@ -77,62 +136,3 @@
     }
 }
 </style>
-<template>
-<div class="user-evaluation">
-    <evaluation-list :items="items"></evaluation-list>
-    <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore">没有了</span>
-    </div>
-</div>
-</template>
-<script>
-import EvaluationList from './EvaluationList.vue';
-export default {
-    name: 'UserEvaluationView',
-    data() {
-        return {
-            user:'',
-            userId: 0,
-            loading: true,
-            hasMore: true,
-            items: [],
-        };
-    },
-    components: {
-        EvaluationList
-    },
-    route: {
-        data() {
-            this.userId = this.$route.params.id;
-            this.fetch();
-        }
-    },
-    events: {
-        scrollToBottom(e) {
-          this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            const limit = 2;
-            return function() {
-                let offset = this.items.length;
-                if(this.loading) {
-                    this.loading = false;
-                    const params = {offset, limit};
-                    return this.$get('sns/users/'+ this.userId +'/jianbao', params)
-                        .then((data) => {
-                            this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
-                            this.loading = true;
-                            if (data.jianbaos.length < limit) {
-                                this.hasMore = false;
-                                this.loading = false;
-                            }
-                        });
-                }
-            }
-        })()
-    }
-}
-</script>

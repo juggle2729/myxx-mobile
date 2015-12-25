@@ -1,5 +1,9 @@
 <style lang="sass">
     @import '../styles/myxx';
+    #app {
+        min-height: 100%;
+        height: 100%;
+    }
 </style>
 <template>
   <main :class="{'loading': $loadingRouteData}">

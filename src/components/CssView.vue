@@ -1,174 +1,3 @@
-<style lang="sass">
-.css_view{
-    background-color: #fff3ad;
-    padding: 40px 40px;
-    .font-size {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: 50px;
-            margin-left: 30px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-        }
-    }
-    .icons {
-        margin-bottom: 50px;
-        display: flex;
-        flex-wrap: wrap;
-        .display {
-            display: table;
-            margin-top: 30px;
-            height: 50px;
-            .class_name {
-                width: 220px;
-                margin-top: 30px;
-            }
-            .class_display {
-                height: 50px;
-                width: 50px;
-            }
-        }
-    }
-    .margins {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: auto;
-            margin-left: 30px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-            .class_display {
-                width: 300px;
-                height: 100px;
-                > div {
-                    float: left;
-                }
-            }
-        }
-    }
-    .paddings {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: auto;
-            margin-left: 30px;
-            margin-top: 10px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-            .class_display {
-                width: 300px;
-                height: 100px;
-                > div {
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-        }
-    }
-    .components {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: auto;
-            margin-left: 30px;
-            margin-top: 10px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-            .class_display {
-                width: 300px;
-                height: 100px;
-                position: relative;
-                > button {
-                    width:230px;
-                    height: 26px;
-                    position: absolute;
-                    background-color: inherit;
-                    border-style: none;
-                    top: 50%;
-                    margin-top: -13px;
-                }
-            }
-        }
-    }
-    .positions {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: auto;
-            margin-left: 30px;
-            margin-top: 10px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-            .class_display {
-                width: 300px;
-                height: 100px;
-                position: relative;
-                > div {
-                    width: 150px;
-                    height: 30px;
-                    left: 30px;
-                    top: 30px;
-                }
-                > button {
-                    position: absolute;
-                    left: 30px;
-                    bottom: 0;
-                    width: 210px;
-                    height: 26px;
-                    background-color: inherit;
-                    border-style: none;
-                }
-            }
-        }
-    }
-    .avatars {
-        margin-bottom: 50px;
-        .display {
-            display: flex;
-            align-items: center;
-            height: auto;
-            margin-left: 30px;
-            margin-top: 30px;
-            .class_name {
-                width: 170px;
-                margin-right: 50px;
-            }
-            .class_display {
-                display: flex;
-                align-items: center;
-            }
-        }
-    }
-    .title {
-        color: #86be79;
-        background-image: linear-gradient(0deg, transparent 50%, #86be79 50%);
-        background-position: center bottom;
-        background-repeat: no-repeat;
-        background-size: 100% 7px;
-        padding-bottom: 15px;
-        font-size: 25px;
-        font-weight: bold;
-        width: 200px;
-        margin-bottom: 30px;
-    }
-}
-</style>
 <template>
     <div class="css_view">
         <div class="font-size">
@@ -187,7 +16,7 @@
             </template>
         </div>
         <div class="title">
-            <p align="center">Icons</p>
+            <p align="center"><a href="http://192.168.199.168/icomoon/demo.html">Icons</a></p>
         </div>
         <div class="icons">
             <template v-for="icon in icons">
@@ -380,39 +209,29 @@ export default {
         ],
         icons: [
             'icon-alarm',
-            'icon-auto-change-1',
-            'icon-auto-change-2',
+            'icon-follow',
+            'icon-followed',
             'icon-comment',
             'icon-enter',
             'icon-edit',
-            'icon-favor',
-            'icon-favor-active',
-            'icon-favor-master',
+            'icon-like',
+            'icon-like-active',
+            'icon-trophy',
+            'icon-price',
             'icon-menu',
-            'icon-item',
-            'icon-my-favor',
-            'icon-review',
-            'icon-my-shop',
-            'icon-my-site',
+            'icon-share',
+            'icon-more',
+            'icon-eval',
+            'icon-store',
+            'icon-site',
             'icon-phone',
-            'icon-resume-big',
-            'icon-resume-mid',
-            'icon-resume-small',
-            'icon-search-master',
+            'icon-search',
             'icon-settings',
-            'icon-shop',
-            'icon-thumb',
-            'icon-thumb-active',
-            'icon-view'
         ],
         paths: [
             ['icon-location', 'path1'],
             ['icon-location', 'path2'],
-            ['icon-location', 'path3'],
-            ['icon-play', 'path1'],
-            ['icon-play', 'path2'],
-            ['icon-record', 'path1'],
-            ['icon-record', 'path2']
+            ['icon-location', 'path3']
         ],
         colors: [
             ['', '#393939'],
@@ -422,6 +241,7 @@ export default {
             ['red', '#cc3f4f'],
             ['white', '#ffffff'],
             ['bg-default', '#efefef'],
+            ['bg-gray', '#c6c6c6'],
             ['bg-light', '#f9f9f9'],
             ['bg-red', '#cc3f4f'],
             ['bg-yellow', '#f3ac1c'],
@@ -494,3 +314,174 @@ export default {
 
 }
 </script>
+<style lang="sass">
+.css_view{
+    background-color: #fff3ad;
+    padding: 40px 40px;
+    .font-size {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            margin-left: 30px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+        }
+    }
+    .icons {
+        margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        .display {
+            display: table;
+            margin-top: 30px;
+            height: 50px;
+            .class_name {
+                width: 220px;
+                margin-top: 30px;
+            }
+            .class_display {
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+    .margins {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin-left: 30px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+            .class_display {
+                width: 300px;
+                height: 100px;
+                > div {
+                    float: left;
+                }
+            }
+        }
+    }
+    .paddings {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin-left: 30px;
+            margin-top: 10px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+            .class_display {
+                width: 300px;
+                height: 100px;
+                > div {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+    .components {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin-left: 30px;
+            margin-top: 10px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+            .class_display {
+                width: 300px;
+                height: 100px;
+                position: relative;
+                > button {
+                    width:230px;
+                    height: 26px;
+                    position: absolute;
+                    background-color: inherit;
+                    border-style: none;
+                    top: 50%;
+                    margin-top: -13px;
+                }
+            }
+        }
+    }
+    .positions {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin-left: 30px;
+            margin-top: 10px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+            .class_display {
+                width: 300px;
+                height: 100px;
+                position: relative;
+                > div {
+                    width: 150px;
+                    height: 30px;
+                    left: 30px;
+                    top: 30px;
+                }
+                > button {
+                    position: absolute;
+                    left: 30px;
+                    bottom: 0;
+                    width: 210px;
+                    height: 26px;
+                    background-color: inherit;
+                    border-style: none;
+                }
+            }
+        }
+    }
+    .avatars {
+        margin-bottom: 50px;
+        .display {
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin-left: 30px;
+            margin-top: 30px;
+            .class_name {
+                width: 170px;
+                margin-right: 50px;
+            }
+            .class_display {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+    .title {
+        color: #86be79;
+        background-image: linear-gradient(0deg, transparent 50%, #86be79 50%);
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: 100% 7px;
+        padding-bottom: 15px;
+        font-size: 25px;
+        font-weight: bold;
+        width: 200px;
+        margin-bottom: 30px;
+    }
+}
+</style>

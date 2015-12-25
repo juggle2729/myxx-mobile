@@ -1,23 +1,3 @@
-<style lang="sass">
-.likes-view {
-    .user {
-        padding: 24px 32px;
-        .avatar {
-            margin-right: 24px;
-        }
-    }
-    .follow {
-        padding: 5px;
-        border: 2px solid red;
-        border-radius: 5px;
-    }
-    .unfollow {
-        padding: 5px;
-        border: 2px solid gray;
-        border-radius: 5px;
-    }
-}
-</style>
 <template>
 <div class="likes-view">
     <div class="separator"></div>
@@ -82,3 +62,23 @@ export default {
     }
 }
 </script>
+<style lang="sass">
+.likes-view {
+    .user {
+        padding: 24px 32px;
+        .avatar {
+            margin-right: 24px;
+        }
+    }
+    .follow {
+        padding: 5px;
+        border: 2px solid red;
+        border-radius: 5px;
+    }
+    .unfollow {
+        padding: 5px;
+        border: 2px solid gray;
+        border-radius: 5px;
+    }
+}
+</style>

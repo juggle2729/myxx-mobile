@@ -1,5 +1,5 @@
 <template>
-<div class="site bg-default">
+<div class="masters-view bg-default">
     <template v-for="item in list">
         <div class="cell bg-white flex" v-link="{name: 'user-profile', params: {id: item.id}}" v-bg="item.background_img">
             <div class="txt">
@@ -14,9 +14,8 @@
             </div>
         </div>
     </template>
-    <div class="loadmore center font-22 gray">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore" class="center-vertical">没有了</span>
+    <div class="loadmore center font-22 gray" v-show="hasMore">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
 </div>
 </template>
@@ -63,7 +62,8 @@ export default {
 }
 </script>
 <style lang="sass">
-.site {
+.masters-view {
+    height: 100%;
     padding: 20px;
     .cell {
         margin-bottom: 20px;

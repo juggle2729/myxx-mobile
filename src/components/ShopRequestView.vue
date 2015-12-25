@@ -14,9 +14,8 @@
             <div class="inner1">
                 <p> 美玉秀秀是国内最大的和田玉鉴定社交交易平台，全国各地超过4000家高品质店铺现已入驻，期待您的加入。</p>
             </div>
-            <div class="title">
+            <div class="title border-bottom">
                 <p>开通店铺优势</p>
-                <hr style="border-top:1px ridge #d9d9d9;"></hr>
             </div>
             <div class="text">
                 <div>
@@ -51,14 +50,12 @@
                 <p>精准推广</p>
                 <img src="/static/images/open/od4.png" />
             </div>
-            <div class="title">
+            <div class="title border-bottom">
                 <p>申请条件</p>
-                <hr style="border-top:1px ridge #d9d9d9;"></hr>
             </div>
             <p class="inner2">只要您想提升自己的知名度，均可提出申请。</p>
-            <div class="title">
+            <div class="title border-bottom">
                 <p>开通流程</p>
-                <hr style="border-top:1px ridge #d9d9d9;"></hr>
             </div>
             <div class="bottom">
                 <img src="/static/images/open/od5.png" />
@@ -97,14 +94,14 @@
             };
         },
         methods: {
-          submit() {
-              var msg = this.name + '=' + this.phone + '==' +this.content;
-              this.toast(msg, 1000);
-              this.toggleShow();
-          },
-          toggleShow() {
-              this.requestShow = !this.requestShow;
-          }
+            submit() {
+                var msg = this.name + '=' + this.phone + '==' +this.content;
+                this.toast(msg, 1000);
+                this.toggleShow();
+            },
+            toggleShow() {
+                this.requestShow = !this.requestShow;
+            }
         }
     }
 </script>
@@ -160,7 +157,6 @@
                 > p {
                     margin: -6px 0;
                     font-size: 30px;
-                    color: #9d9d9d;
                     line-height: 42px;
                     width: 100%;
                 }
@@ -174,9 +170,11 @@
             }
             .title {
                 margin-top: 84px;
+                padding-bottom: 24px;
+                margin-right: 32px;
+                background-position: 32px 100%;
                 > p {
                     font-size: 30px;
-                    color: #9d9d9d;
                     padding-left: 32px;
                     width: 100%;
                 }

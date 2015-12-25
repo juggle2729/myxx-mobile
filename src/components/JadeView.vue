@@ -71,17 +71,17 @@
         </div>
     </div>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
-        <div class="center border-left light extra-action">
-            <i class="icon-share"></i><span v-link="{name: 'evaluation', params: {id: 1}}">分享</span>
-        </div>
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>
 <script>
 import SocialBar from './SocialBar.vue';
-import emitter from '../utils/emitter';
 export default {
     name: 'JadeView',
+    components: {
+        SocialBar
+    },
     data() {
         return {
             info: {
@@ -152,6 +152,19 @@ export default {
             ]
         };
     },
+    route: {
+        data() {
+            return this.$get('mall/products/'+ this.$route.params.id)
+                .then((data) => {
+                    this.info = data;
+                    this.$get('users/target/'+ this.info.id +'/type/40/likers')
+                        .then((data) => {
+                            this.likes = data.users;
+                        });
+                    this.addDetail();
+                });
+        }
+    },
     methods: {
         addDetail() {
             this.info.detail.medias.forEach((item) => {
@@ -166,28 +179,16 @@ export default {
                     document.getElementById('detail').appendChild(image);
                 }
             });
+        },
+        share() {
+            this.action('share', {title: '宝贝', desc: '我的宝贝', icon: this.info.imgs[0], url: location.href});
         }
-    },
-    route: {
-        data() {
-            return this.$get('mall/products/'+ this.$route.params.id)
-                .then((data) => {
-                    this.info = data;
-                    this.$get('users/target/'+ this.info.id +'/type/40/likers')
-                        .then((data) => {
-                            this.likes = data.users;
-                        });
-                    this.addDetail();
-                });
-        }
-    },
-    components: {
-        SocialBar
     }
 }
 </script>
 <style lang="sass">
 .jade-detail {
+    padding-bottom: 80px;
     .imgs {
         position: relative;
         width: 100%;
@@ -244,6 +245,13 @@ export default {
                 width: 100%;
             }
         }
+    }
+    .social {
+        padding: 0 32px;
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
     }
 }
 </style>

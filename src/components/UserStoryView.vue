@@ -1,5 +1,71 @@
+<template>
+<div class="user-story bg-default">
+    <story-list :items="items"></story-list>
+    <div class="loadmore center font-22 gray padding-vertical border-top">
+        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+    </div>
+</div>
+</template>
+<script>
+import StoryList from './StoryList.vue';
+export default {
+    name: 'UserStoryView',
+    data() {
+        return {
+            userId: 0,
+            items: [],
+            hasMore: true,
+            hasNew: false,
+            loading: true
+        };
+    },
+    components: {
+        StoryList
+    },
+    route: {
+        data() {
+            this.userId = this.$route.params.id;
+            this.fetch();
+        }
+    },
+    events: {
+        scrollToBottom(e) {
+          this.fetch();
+        }
+    },
+    methods: {
+        fetch: (function() {
+            const limit = 3;
+            return function() {
+                let offset = this.items.length;
+                if(this.loading) {
+                    console.debug('fetch', offset);
+                    this.loading = false;
+                    const params = {offset, limit};
+                    return this.$get('sns/users/'+ this.userId +'/topics', params)
+                        .then((data) => {
+                            this.items.splice(this.items.length, 0, ...data.topics);
+                            this.loading = true;
+                            if (data.topics.length < limit) {
+                                this.hasMore = false;
+                                this.loading = false;
+                            }
+                        });
+                }
+            }
+        })(),
+        coverflow(story, index) {
+            let ids = story.medias
+                        .filter(media => media.type==='picture')
+                        .map(media => media.id);
+            this.action('coverflow', {ids, index});
+        }
+    }
+}
+</script>
 <style lang="sass">
 .user-story {
+    height: 100%;
     .tabs {
         display: -webkit-box;
         height: 80px;
@@ -69,69 +135,3 @@
     }
 }
 </style>
-<template>
-<div class="user-story">
-    <story-list :items="items"></story-list>
-    <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore">没有了</span>
-    </div>
-</div>
-</template>
-<script>
-import StoryList from './StoryList.vue';
-export default {
-    name: 'UserStoryView',
-    data() {
-        return {
-            userId: 0,
-            items: [],
-            hasMore: true,
-            hasNew: false,
-            loading: true
-        };
-    },
-    components: {
-        StoryList
-    },
-    route: {
-        data() {
-            this.userId = this.$route.params.id;
-            this.fetch();
-        }
-    },
-    events: {
-        scrollToBottom(e) {
-          this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            const limit = 3;
-            return function() {
-                let offset = this.items.length;
-                if(this.loading) {
-                    console.debug('fetch', offset);
-                    this.loading = false;
-                    const params = {offset, limit};
-                    return this.$get('sns/users/'+ this.userId +'/topics', params)
-                        .then((data) => {
-                            this.items.splice(this.items.length, 0, ...data.topics);
-                            this.loading = true;
-                            if (data.topics.length < limit) {
-                                this.hasMore = false;
-                                this.loading = false;
-                            }
-                        });
-                }
-            }
-        })(),
-        coverflow(story, index) {
-            let ids = story.medias
-                        .filter(media => media.type==='picture')
-                        .map(media => media.id);
-            this.action('coverflow', {ids, index});
-        }
-    }
-}
-</script>

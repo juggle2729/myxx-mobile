@@ -1,3 +1,53 @@
+<template>
+<div class="master-request">
+      <p class="text font-30">
+          申请和田玉鉴定权限——需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
+          如果您有意向请天下以下信息，美玉秀秀客服人员会在二个工作日内联系您！
+      </p>
+      <div class="input">
+          <input class="font-30 border-default" type="text" placeholder="手机号" value="15012345678">
+          <input class="font-30 border-default" type="text" placeholder="姓名">
+          <textarea class="font-30 border-default"  placeholder="申请说明，50字以内(选填)"></textarea>
+          <button @click="submit" class="bg-red white font-30">
+              <span>提交</span>
+          </button>
+      </div>
+      <div class="title font-30 border-bottom">
+          <p>大师特权</p>
+      </div>
+      <div class="imgs font-26">
+          <div class="tr">
+              <div class="tb flex">
+                  <img src="/static/images/open/os1.png" />
+                  <span class="flex">大师官网</span>
+                  <img src="/static/images/open/os1.png" />
+                  <span class="flex">鉴宝权限</span>
+              </div>
+          </div>
+          <div class="tr">
+              <div class="tb flex">
+                  <img src="/static/images/open/os1.png" />
+                  <span class="flex">专属店铺</span>
+                  <img src="/static/images/open/os4.png" />
+                  <span class="flex">精准推广</span>
+              </div>
+          </div>
+      </div>
+      <div class="bottom font-26 gray center">美玉秀秀客服：400-058-7266</div>
+</div>
+</template>
+<script>
+    export default {
+        name: 'MasterRequest',
+        data() {
+        },
+        methods: {
+            submit() {
+                this.toast('提交成功');
+            }
+        }
+    }
+</script>
 <style lang="sass">
 .master-request {
     padding: 39px 32px;
@@ -71,53 +121,3 @@
     }
   }
 </style>
-<template>
-<div class="master-request">
-      <p class="text font-30">
-          申请和田玉鉴定权限——需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
-          如果您有意向请天下以下信息，美玉秀秀客服人员会在二个工作日内联系您！
-      </p>
-      <div class="input">
-          <input class="font-30 border-default" type="text" placeholder="手机号" value="15012345678">
-          <input class="font-30 border-default" type="text" placeholder="姓名">
-          <textarea class="font-30 border-default"  placeholder="申请说明，50字以内(选填)"></textarea>
-          <button @click="submit" class="bg-red white font-30">
-              <span>提交</span>
-          </button>
-      </div>
-      <div class="title font-30 border-bottom">
-          <p>大师特权</p>
-      </div>
-      <div class="imgs font-26">
-          <div class="tr">
-              <div class="tb flex">
-                  <img src="/static/images/open/os1.png" />
-                  <span class="flex">大师官网</span>
-                  <img src="/static/images/open/os1.png" />
-                  <span class="flex">鉴宝权限</span>
-              </div>
-          </div>
-          <div class="tr">
-              <div class="tb flex">
-                  <img src="/static/images/open/os1.png" />
-                  <span class="flex">专属店铺</span>
-                  <img src="/static/images/open/os4.png" />
-                  <span class="flex">精准推广</span>
-              </div>
-          </div>
-      </div>
-      <div class="bottom font-26 gray center">美玉秀秀客服：400-058-7266</div>
-</div>
-</template>
-<script>
-    export default {
-        name: 'MasterRequest',
-        data() {
-        },
-        methods: {
-          submit() {
-              this.toast('提交成功');
-          }
-        }
-    }
-</script>

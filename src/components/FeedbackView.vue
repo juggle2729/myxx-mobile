@@ -1,5 +1,5 @@
 <template>
-    <div class="feedback-view">
+    <div class="feedback-view bg-default">
         <div class="info">
             <textarea class="font-30 border-default" placeholder="写下你对美玉秀秀的建议吧" v-model="advice" v-on:keyup.enter="adviceEnter"></textarea>
             <p class="font-30">联系方式</p>
@@ -38,7 +38,7 @@ export default {
 </script>
 <style lang="sass">
 .feedback-view {
-    display: -webkit-box;
+    height: 100%;
     padding: 20px 32px;
     position: relative;
     .info {

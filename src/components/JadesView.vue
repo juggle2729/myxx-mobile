@@ -1,5 +1,74 @@
+<template>
+    <div class="jades-view bg-default">
+        <div class="content">
+            <template v-for="promote in promotes" track-by="$index">
+                <div class="outside">
+                    <div class="cell bg-white" v-link="{name: 'jade', params:{ id: promote.id}}">
+                        <div class="image" v-bg="promote.imgs[0]">
+                        </div>
+                        <div class="txt">
+                            <p class="font-30">{{promote.name}}</p>
+                            <p class="font-22 gray" style="margin-top: 16px;">{{promote.reward}}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="loadmore center font-22 gray" v-show="hasMore">
+            <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        </div>
+    </div>
+</template>
+<script>
+import emitter from '../utils/emitter';
+export default {
+    name: 'JadesView',
+    data() {
+        return {
+            promotes: [],
+            hasMore: true,
+            loading: true
+        };
+    },
+    route: {
+        data() {
+            this.fetch();
+        }
+    },
+    created() {
+        emitter.on('scroll-to-bottom', (e) => {
+            return this.fetch();
+        });
+    },
+    methods: {
+        fetch() {
+            const offset = this.promotes.length;
+            const limit = 10;
+            if(this.loading){
+                this.loading = false;
+                this.$get('mall/products', {offset, limit})
+                .then((data) => {
+                    data.products.forEach((promote) => {
+                            promote.reward = '';
+                            promote.product_rewards.forEach((item) => {
+                                promote.reward += '#' + item.reward.name;
+                            });
+                            this.promotes.push(promote);
+                    });
+                    this.loading = true;
+                    if(data.products.length < limit || data.total === this.promotes.length){
+                        this.loading = false;
+                        this.hasMore = false;
+                    }
+                });
+            }
+        }
+    }
+}
+</script>
 <style lang="sass">
 .jades-view {
+    height: 100%;
     .content {
         display: flex;
         flex-wrap: wrap;
@@ -34,72 +103,3 @@
     }
 }
 </style>
-<template>
-    <div class="jades-view bg-default">
-        <div class="content">
-            <template v-for="promote in promotes" track-by="$index">
-                <div class="outside">
-                    <div class="cell bg-white" v-link="{name: 'jade', params:{ id: promote.id}}">
-                        <div class="image" v-bg="promote.imgs[0]">
-                        </div>
-                        <div class="txt">
-                            <p class="font-30">{{promote.name}}</p>
-                            <p class="font-22 gray" style="margin-top: 16px;">{{promote.reward}}</p>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </div>
-        <div class="loadmore center font-22 gray">
-            <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-            <span v-show="!hasMore" class="center-vertical">没有了</span>
-        </div>
-    </div>
-</template>
-<script>
-    import emitter from '../utils/emitter';
-    export default {
-        name: 'JadesView',
-        data() {
-            return {
-                promotes: [],
-                hasMore: true,
-                loading: true
-            };
-        },
-        route: {
-            data() {
-                this.fetch();
-            }
-        },
-        created() {
-            emitter.on('scroll-to-bottom', (e) => {
-                return this.fetch();
-            });
-        },
-        methods: {
-            fetch() {
-                const offset = this.promotes.length;
-                const limit = 10;
-                if(this.loading){
-                    this.loading = false;
-                    this.$get('mall/products', {offset, limit})
-                    .then((data) => {
-                        data.products.forEach((promote) => {
-                                promote.reward = '';
-                                promote.product_rewards.forEach((item) => {
-                                    promote.reward += '#' + item.reward.name;
-                                });
-                                this.promotes.push(promote);
-                        });
-                        this.loading = true;
-                        if(data.products.length < limit || data.total === this.promotes.length){
-                            this.loading = false;
-                            this.hasMore = false;
-                        }
-                    });
-                }
-            }
-        }
-    }
-</script>

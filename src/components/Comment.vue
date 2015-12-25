@@ -17,7 +17,7 @@
 }
 </style>
 <template>
-<div class="comment-component">
+<div class="comment-component bg-white">
     <div class="header border-bottom font-22">
         <div>评论{{total}}</div>
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>

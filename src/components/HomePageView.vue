@@ -1,10 +1,13 @@
 <template>
-<div class="homepage-view">
-    <div class="account border-bottom flex">
-        <div class="avatar-240" v-bg.md="photo"></div>
-        <p class="font-30 red">{{nickname}}</p>
-        <button v-if="!follow && isNotSelf" class="bg-red font-26 white icon-like-active" @click="toggleFollow">关注</button>
-        <button v-if="follow && isNotSelf" class="bg-default font-26 white" @click="toggleFollow">已关注</button>
+<div class="homepage-view bg-default">
+    <div class="separator-20"></div>
+    <div class="account border-bottom bg-white">
+        <div class="avatar-240 center-horizontal" v-bg.md="photo"></div>
+        <p class="font-30 red center">{{nickname}}</p>
+        <button v-if="!follow && isNotSelf" class="bg-red font-26 white center-horizontal" @click="toggleFollow">
+            <span class="icon-like-active center"> 关注</span></button>
+        <button v-if="follow && isNotSelf" class="bg-gray font-26 white center-horizontal" @click="toggleFollow">
+            <span class="center">已关注</span></button>
     </div>
     <div class="community bg-white flex">
         <div v-link="{name: 'user-story', params: {id: userId}}" class="border-right">
@@ -15,27 +18,27 @@
             <p class="font-30" align="center">{{follow_count}}</p>
             <p class="font-26 gray" align="center">关注</p>
         </div>
-        <div v-link="{name: 'follower', params: {id: userId }}" class="border-right">
+        <div v-link="{name: 'follower', params: {id: userId }}">
             <p class="font-30" align="center">{{fans_count}}</p>
             <p class="font-26 gray" align="center">粉丝</p>
         </div>
     </div>
-    <div class="separator" style="height:30px"></div>
-    <div class="his border-bottom">
+    <div class="separator-20"></div>
+    <div class="his border-bottom bg-white">
         <div class="row font-30 border-bottom" v-link="{name: 'user-like', params: {id: userId}}">
             <span class="red icon-like"></span>
             <span>TA的赞</span>
-            <span class="icon-enter gray"></span>
+            <span class="icon-enter gray font-26"></span>
         </div>
         <div class="row font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
             <span class="red icon-eval"></span>
             <span>TA的鉴宝</span>
-            <span class="icon-enter gray"></span>
+            <span class="icon-enter gray font-26"></span>
         </div>
         <div class="row font-30">
             <span class="red icon-store"></span>
             <span>{{has_shop ? 'TA的店铺' : 'TA没有店铺'}}</span>
-            <span class="icon-enter gray"></span>
+            <span class="icon-enter gray font-26"></span>
         </div>
     </div>
 </div>
@@ -61,9 +64,18 @@ export default {
     route: {
         data() {
             this.userId = this.$route.params.id;
+            this.action('user')
+                .then((resp) => {
+                    if(resp){
+                        let user = JSON.parse(resp);
+                        this.$root.user = user;
+                    } else {
+                        this.$root.user = { token: 'f87e7796-9896-4a6f-997e-11b48aebd347', id: 6};
+                    }
+                });
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
-                    this.isNotSelf = !(this.userId == this.self.user_id);
+                    this.isNotSelf = !(this.userId == this.$root.user.id);
                     this.$data = Object.assign(this.$data, data);
                 });
         }
@@ -71,9 +83,13 @@ export default {
     methods: {
         toggleFollow() {
             if (this.follow) {
-                this.toast('已关注');
+                this.$delete('users/follow/'+ this.userId)
+                    .then(() => {
+                        this.follow = false;
+                        this.toast('取消关注成功');
+                    });
             } else {
-                this.$post(`users/follow/` + this.userId)
+                this.$post('users/follow/' + this.userId)
                     .then(() => {
                         this.follow = true;
                         this.toast('关注成功');
@@ -85,8 +101,8 @@ export default {
 </script>
 <style lang="sass">
 .homepage-view {
+    height: 100%;
     .account {
-        flex-direction: column;
         height: 420px;
         padding-top: 20px;
         > p {
@@ -116,9 +132,6 @@ export default {
         .row {
             padding-left: 0;
         }
-    }
-    .icon-enter {
-        transform: rotate(-90deg);
     }
 }
 </style>

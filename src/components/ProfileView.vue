@@ -1,5 +1,6 @@
 <template>
-<div class="profile">
+<div class="profile-view bg-default">
+    <div class="separator-20"></div>
     <div class="account bg-white border-bottom flex" @click="action('profile')">
         <div class="avatar-120" v-bg.md="photo"></div>
         <div class="user flex-1">
@@ -17,7 +18,7 @@
             <p class="font-30" align="center">{{follow_count}}</p>
             <p class="font-26 gray" align="center">关注</p>
         </div>
-        <div v-link="{name: 'follower', params: {id: userId }}" class="border-right">
+        <div v-link="{name: 'follower', params: {id: userId }}">
             <p class="font-30" align="center">{{fans_count}}</p>
             <p class="font-26 gray" align="center">粉丝</p>
         </div>
@@ -36,7 +37,6 @@
         </div>
     </div>
     <div class="separator-40"></div>
-
     <div class="rows">
         <div class="row bg-white font-30 border-bottom" v-link="{name: 'shop-request', params: {id: userId}}">
             <span class="icon-store red"></span>
@@ -53,7 +53,7 @@
     <div class="row bg-white font-30 border-bottom" @click="action('settings')">
         <span class="red icon-settings"></span>
         <span>设置</span>
-        <span class="icon-enter gray"></span>
+        <span class="icon-enter gray font-26"></span>
     </div>
 </div>
 </template>
@@ -78,9 +78,12 @@ export default {
             this.action('user')
                 .then((user) => {
                     if(user) {
+                        console.debug('user2', user);
                         return this.$get(`users/${user.id}/profile`)
                             .then((data) => {
+                                console.debug('data', data);
                                 this.$data = data;
+                                this.userId = user.id;
                             });
                     } else {
                         return this.action('login');
@@ -91,7 +94,8 @@ export default {
 }
 </script>
 <style lang="sass">
-.profile {
+.profile-view {
+    height: 100%;
     .account {
         height: 200px;
         padding: 0 32px;
@@ -115,13 +119,11 @@ export default {
         }
     }
     .rows {
-        padding-left: 32px;
+        padding-left: 0;
         .row {
-            padding-left: 0;
+            padding-left: 32px;
+            background-position: 32px 100%;
         }
-    }
-    .icon-enter {
-        transform: rotate(-90deg);
     }
 }
 </style>

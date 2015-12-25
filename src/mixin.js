@@ -23,8 +23,8 @@ export default {
                         if(resp) {
                             user = JSON.parse(resp);
                         }
-                        defer.resolve(user);
                         this.$root.user = user;
+                        defer.resolve(user);
                     });
                 } else if(handler === 'keyboard') {
                     bridge.callHandler(handler, params, (resp) => {

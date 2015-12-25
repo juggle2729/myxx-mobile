@@ -1,5 +1,6 @@
 <template>
-<div class="follower-view">
+<div class="follower-view bg-default">
+    <div class="separator-20"></div>
     <template v-for="user in userList">
         <div class="user border-bottom bg-white flex">
             <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
@@ -8,24 +9,33 @@
                 <p class="font-26 light" style="margin-top:8px;">{{user.role | role}}</p>
             </div>
             <button class="gray font-22 border-gray flex bg-white" v-if="user.follow && user.isNotSelf" @click="toggleFollow(user)">
-                <img src="/static/images/profile/unfollow.png" style="margin-left:0">
-                <p>已关注</p>
+                <span class="icon-followed">已关注</span>
             </button>
             <button class="red font-22 border-red flex bg-white" v-if="!user.follow && user.isNotSelf" @click="toggleFollow(user)">
-                <img src="/static/images/profile/follow.png" style="margin-left:0">
-                <p>加关注</p>
+                <span class="icon-follow">加关注</span>
             </button>
         </div>
     </template>
-    <div class="loadmore center font-22 gray">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore" class="center-vertical">没有了</span>
+    <div class="loadmore center font-22 gray" v-show="hasMore">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
 </div>
 </template>
 <script>
 export default {
     name: 'Selffollower',
+    data() {
+        return {
+            userList: [],
+            hasMore: true,
+            loading: true
+        };
+    },
+    route: {
+        data() {
+            return this.fetch();
+        }
+    },
     methods: {
         toggleFollow(user) {
             if (user.follow) {
@@ -52,7 +62,7 @@ export default {
                 return this.$get('users/' + userid + '/fans_list', params)
                     .then((data) => {
                         data.entries.forEach((entry) => {
-                            entry.isNotSelf = !(entry.user_id == this.self.user_id);
+                            entry.isNotSelf = !(entry.user_id == this.$root.user.id);
                             this.userList.push(entry);
                         });
                         this.loading = true;
@@ -64,18 +74,6 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            userList: [],
-            hasMore: true,
-            loading: true
-        };
-    },
-    route: {
-        data() {
-            return this.fetch();
-        }
-    },
     events: {
         scrollToBottom(e) {
             this.fetch();
@@ -85,6 +83,7 @@ export default {
 </script>
 <style lang="sass">
 .follower-view {
+    height: 100%;
     .user {
         height: 180px;
         width: 100%;
@@ -107,6 +106,9 @@ export default {
             > p {
                 display: inline;
                 margin-left: 8px;
+            }
+            .icon-followed {
+                width: 15px;
             }
         }
     }

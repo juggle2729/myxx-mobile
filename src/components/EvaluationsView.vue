@@ -33,11 +33,9 @@
             <label for="tab-popularity">热门</label><input name="tab" v-model="tab" type="radio" id="tab-popularity" value="popularity"/>
         </div>
     </div>
-    <div class="separator" v-show="tab"></div>
     <evaluation-list :items="items"></evaluation-list>
-    <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore">没有了</span>
+    <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
 </div>
 </template>
@@ -88,7 +86,7 @@ export default {
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
                 return this.$get('sns/jianbao', params).then((data) => {
-                        this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
+                        this.items.splice(this.items.length, 0, ...data.jianbaos);
                         this.total = data.total;
                         loading = false;
                         if (data.jianbaos.length < limit) {

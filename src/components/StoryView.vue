@@ -1,85 +1,7 @@
-<style lang="sass">
-.story-view {
-    padding-bottom: 80px;
-    .story {
-        padding: 24px 32px;
-    }
-    .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .name {
-            margin-left: 20px;
-            .moment {
-                margin-top: 12px;
-            }
-        }
-    }
-    .desc {
-        margin: 30px 0 24px;
-    }
-    .medias {
-        .media {
-            vertical-align: top;
-            display: inline-block;
-            width: percentage(1/3);
-            padding-top: percentage(1/3);
-            border: thick solid white;
-            background-size: cover;
-            background-position: center;
-        }
-        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-            margin-right: percentage(1/3);
-        }
-        .unique {
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
-        }
-    }
-    .social {
-        padding: 0 32px;
-    }
-    .comments {
-        padding: 24px 32px;
-        .header {
-            display: -webkit-box;
-            -webkit-box-align: center;
-            -webkit-box-pack: justify;
-            height: 80px;
-        }
-        li {
-            .author {
-                display: -webkit-box;
-                -webkit-box-align: center;
-                height: 108px;
-            }
-        }
-    }
-    .loadmore {
-        img {
-            width: 120px;
-            height: 68px;
-        }
-    }
-    .social {
-        padding: 0 32px;
-        position: fixed;
-        z-index: 9;
-        bottom: 0;
-        width: 100%;
-    }
-}
-</style>
 <template>
-<div class="story-view">
-    <div class="story">
+<div class="story-view bg-default">
+    <div class="separator last"></div>
+    <div class="story bg-white">
         <div class="header">
             <div class="user">
                 <div class="avatar" v-link="{name: story.user.role=='3' ? 'user-site' : 'user-profile', params: {id: story.user.id}}" v-bg.sm="story.user.photo"></div>
@@ -109,9 +31,8 @@
     </social-bar>
     <div class="separator"></div>
     <comment :id="story.post_id" type="30"></comment>
-    <div class="separator last"></div>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>
@@ -159,3 +80,80 @@ export default {
     }
 }
 </script>
+<style lang="sass">
+.story-view {
+    padding-bottom: 80px;
+    height:100%;
+    .story {
+        padding: 24px 32px;
+    }
+    .user {
+        display: -webkit-box;
+        -webkit-box-align: center;
+        .avatar {
+            height: 68px;
+            width: 68px;
+            border-radius: 50%;
+            background-size: cover;
+            vertical-align: middle;
+        }
+        .name {
+            margin-left: 20px;
+            .moment {
+                margin-top: 12px;
+            }
+        }
+    }
+    .desc {
+        margin: 30px 0 24px;
+    }
+    .medias {
+        .media {
+            vertical-align: top;
+            display: inline-block;
+            width: percentage(1/3);
+            padding-top: percentage(1/3);
+            border: thick solid white;
+            background-size: cover;
+            background-position: center;
+        }
+        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
+            margin-right: percentage(1/3);
+        }
+        .unique {
+            width: 100%;
+            padding-top: 60%;
+            background-size: cover;
+        }
+    }
+    .comments {
+        padding: 24px 32px;
+        .header {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: justify;
+            height: 80px;
+        }
+        li {
+            .author {
+                display: -webkit-box;
+                -webkit-box-align: center;
+                height: 108px;
+            }
+        }
+    }
+    .loadmore {
+        img {
+            width: 120px;
+            height: 68px;
+        }
+    }
+    .social {
+        padding: 0 32px;
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
+    }
+}
+</style>

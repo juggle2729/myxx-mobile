@@ -15,7 +15,7 @@
     }
     .images {
         font-size: 0;
-        margin: 5px -5px -5px;
+        margin: 0 -5px -5px;
         > li {
             display: inline-block;
             position: relative;
@@ -60,7 +60,6 @@
             cursor: pointer;
         }
     }
-
     .social {
         padding: 0 32px;
         position: fixed;
@@ -74,8 +73,8 @@
 }
 </style>
 <template>
-<div class="evaluation-detail">
-    <div class="header">
+<div class="evaluation-detail bg-default">
+    <div class="header bg-white">
         <div class="user">
             <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
             <div class="margin-left">
@@ -87,9 +86,9 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
-    <div class="results">
+    <div class="results bg-white">
         <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{evaluation.results.length}}</div>
         <div class="result" v-for="result in evaluation.results">
             <div class="result-header">
@@ -118,9 +117,8 @@
     </div>
     <div class="separator"></div>
     <comment type="10" :id="evaluation.post_id"></comment>
-    <div class="separator last"></div>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center light extra-action"><i class="icon-share"></i><span>分享</span></div
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>

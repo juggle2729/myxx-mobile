@@ -57,6 +57,7 @@ export default {
     },
     '/messages': {
         name: 'messages',
+        title: '消息',
         component: require('./components/MessagesView.vue')
     },
     '/master/:id/request': {
@@ -66,7 +67,7 @@ export default {
     },
     '/profile': {   // 个人中心
         name: 'profile',
-        title: '个人中心',
+        title: '我的',
         component: require('./components/ProfileView.vue')
     },
     '/profile/:id': { // 个人主页

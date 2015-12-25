@@ -19,6 +19,15 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-test:before {
+    content: "\e90b";
+}
+.icon-follow:before {
+    content: "\e904";
+}
+.icon-followed:before {
+    content: "\e905";
+}
 .icon-trophy:before {
     content: "\e922";
 }
@@ -44,6 +53,9 @@
     content: "\e902";
     margin-left: -1em;
     color: rgb(198, 198, 198);
+}
+.icon-alarm:before {
+    content: "\e903";
 }
 .icon-comment:before {
     content: "\e906";

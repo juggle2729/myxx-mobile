@@ -1,7 +1,8 @@
 <template>
-<div class="userlike-view">
+<div class="userlike-view bg-default">
     <template v-for="thumb in thumbs">
-        <div class="notice">
+        <div class="separator-20"></div>
+        <div class="notice bg-white">
             <div class="sender flex">
                 <p class="font-30 gray">
                     赞了一个{{thumb.title}}
@@ -20,11 +21,10 @@
                 <div v-if="thumb.photo2" v-bg.video="thumb.photo2" class="right"></div>
             </div>
         </div>
-        <div class="separator-20"></div>
     </template>
-    <div class="loadmore center font-22 gray">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <span v-show="!hasMore" class="center-vertical">没有了</span>
+    <div class="border-top"></div>
+    <div class="loadmore center font-22 gray" v-show="hasMore">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
 </div>
 </template>
@@ -98,6 +98,7 @@ export default {
 </script>
 <style lang="sass">
 .userlike-view {
+    height: 100%;
     .notice {
         padding-left: 32px;
         padding-right: 32px;

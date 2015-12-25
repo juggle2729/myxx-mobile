@@ -10,7 +10,7 @@ let adapter = {
                 phone: "15871705303",
                 photo: "1287933.jpeg",
                 role: "4",
-                token: "984bbe6e-191f-44f6-88b0-ee6ee349e85b"
+                token: "f87e7796-9896-4a6f-997e-11b48aebd347"
             };
             cb(JSON.stringify(user));
         } else if(handler === 'keyboard') {

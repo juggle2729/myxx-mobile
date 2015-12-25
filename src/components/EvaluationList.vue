@@ -57,8 +57,9 @@
 }
 </style>
 <template>
-<div class="evaluation-list">
+<div class="evaluation-list bg-white">
     <template v-for="item in items">
+        <div class="separator"></div>
         <div class="item" v-link="{name: 'evaluation', params: {id: item.post_id}}">
             <div class="header">
                 <div class="user">
@@ -81,11 +82,10 @@
             </div>
         </div>
         <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left light extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}}">
+            <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}}">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
         </social-bar>
-        <div class="separator"></div>
     </template>
 </div>
 </template>
