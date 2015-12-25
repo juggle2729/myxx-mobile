@@ -95,7 +95,7 @@
             <div class="result-header">
                 <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                 <div class="master padding-left">
-                    <h3 class="font-26">{{result.identifier.name}}<span class="site-mark font-22 bg-yellow white">个人官网</span></h3>
+                    <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.has_website" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
                     <p class="font-22 gray margin-top">{{result.identifier.title}}</p>
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>
@@ -132,7 +132,6 @@ export default {
     name: 'EvaluationView',
     data() {
         return {
-            user: {},
             evaluation: {
                 user: {},
                 results: []
@@ -157,25 +156,13 @@ export default {
                 label = '鉴定已完成';
             } else if(this.evaluation.master) {
                 action = 'evaluate';
-            } else if(this.user.id){
+            } else if(this.self.id){
                 action = 'request';
             } else {
                 action = 'login';
             }
             return {label, action};
         }
-    },
-    created() {
-        this.action('user')
-            .then((resp) => {
-                if(resp) {
-                    let user = JSON.parse(resp);
-                    this.$get(`users/${user.user_id}/basic`)
-                        .then((u) => {
-                            this.user = u;
-                        })
-                }
-            });
     },
     route: {
         data({to}) {
@@ -197,7 +184,7 @@ export default {
             if(action === 'login') {
                 this.action('login');
             } else if(action === 'request'){
-                this.$route.router.go({name: 'master-request', params: {id: this.user.id}});
+                this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
             } else if(action === 'evaluate'){
                 this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
             }

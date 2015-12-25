@@ -85,7 +85,9 @@
                 <div class="avatar" v-link="{name: story.user.role=='3' ? 'user-site' : 'user-profile', params: {id: story.user.id}}" v-bg.sm="story.user.photo"></div>
                 <div class="name">
                     <p class="font-26">{{story.user.name}}</p>
-                    <p class="moment font-22 gray">{{story.create_at | moment}}</p>
+                    <div class="padding-top font-22 gray">
+                        <span>{{story.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{story.click}}人浏览</span>
+                    </div>
                 </div>
             </div>
             <div class="desc font-30"><span class="gray">#{{story.topic_type}}</span><br/>{{story.content}}</div>
@@ -95,7 +97,7 @@
             <template v-else="story.medias.length!==1">
                 <template v-for="media in story.medias"
                     ><div class="media picture" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.play="media.id"></div
+                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
                 ></template>
             </template>
         </div>

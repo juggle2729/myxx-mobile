@@ -54,7 +54,6 @@ export default {
     data() {
         return {
             uid: 0,
-            user: {},
             total: 0,
             comments: []
         }
@@ -64,12 +63,6 @@ export default {
         this.$watch('id', () => {
             this.fetch();
         });
-        this.action('user')
-            .then((resp) => {
-                if(resp) {
-                    this.user = JSON.parse(resp);
-                }
-            });
         // 监听广播事件
         this.$on('reply', (e, user) => {
             this.reply(e, user);
@@ -106,7 +99,7 @@ export default {
                 });
         },
         reply(e, user) {
-            const id = this.uid + user.id;
+            const id = this.uid + this.self.id;
             const placeholder = '回复' + user.name;
             const rect = e.target.getBoundingClientRect();
             const position = rect.top + rect.height + window.scrollY;
@@ -124,7 +117,7 @@ export default {
                 });
         },
         remove(comment, index) {
-            if(this.user.user_id == comment.reply_from.id) {
+            if(this.self.id == comment.reply_from.id) {
                 this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
                     .then(() => {
                         this.toast('评论删除成功');

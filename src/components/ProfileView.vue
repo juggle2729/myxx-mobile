@@ -68,18 +68,17 @@ export default {
             nickname: '',
             has_website: false,
             fans_count: 0,
-            topic_count: 1,
-            follow_count: 2,
+            topic_count: 0,
+            follow_count: 0,
             userId: 0,
         };
     },
     route: {
         data() {
-            return this.action('user')
-                .then((resp) => {
-                    if(resp){
-                        let user = JSON.parse(resp);
-                        return this.$get(`users/${user.user_id}/profile`)
+            this.action('user')
+                .then((user) => {
+                    if(user) {
+                        return this.$get(`users/${user.id}/profile`)
                             .then((data) => {
                                 this.$data = data;
                             });

@@ -12,6 +12,11 @@ import Q from 'q';
 import emitter from '../utils/emitter';
 export default {
     name: 'App',
+    data() {
+        return {
+            user: {}
+        }
+    },
     created() {
         emitter.on('scroll-to-bottom', (e) => {
             this.$broadcast('scrollToBottom', e);

@@ -51,9 +51,6 @@
 <script>
 export default {
     name: 'SocialBar',
-    data() {
-        return {};
-    },
     props: {
         id: {
             required: false,
@@ -95,7 +92,6 @@ export default {
                 this.$post(this.likeApi).then(() => {
                     this.active = true;
                     this.total += 1;
-                    console.debug('self', this.self, this.$root.user);
                     this.list.splice(0, 0, this.self);
                 });
             }

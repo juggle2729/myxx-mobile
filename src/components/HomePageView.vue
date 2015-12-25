@@ -51,8 +51,8 @@ export default {
             nickname: '',
             has_website: false,
             fans_count: 0,
-            topic_count: 1,
-            follow_count: 2,
+            topic_count: 0,
+            follow_count: 0,
             follow: false,
             userId: 0,
             isNotSelf: false

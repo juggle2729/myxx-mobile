@@ -1,5 +1,11 @@
 import Q from 'q';
+import bridge from './bridge';
 export default {
+    computed: {
+        self() {
+            return this.$root.user;
+        }
+    },
     methods: {
         toast(msg, delay = 2000) {
             const span = document.createElement('span');
@@ -8,74 +14,35 @@ export default {
             document.body.appendChild(span);
             setTimeout(() => span.parentNode.removeChild(span), delay);
         },
-        // 检测WebViewJavascriptBridge
-        bridge() {
+        action(handler, params = '') {
             let defer = Q.defer();
-            ((w, cb) => {
-                if (w.WebViewJavascriptBridge) {
-                    cb(WebViewJavascriptBridge);
-                } else {
-                    w.document.addEventListener('WebViewJavascriptBridgeReady', () => {
-                        cb(WebViewJavascriptBridge);
-                    }, false);
-                }
-            })(window, (bridge) => {
-                defer.resolve(bridge);
-                if(!bridge.initalized) {
-                    bridge.initalized = true; // 防止bridge多次初始化报错
-                    bridge.init((user) => {
-                        console.debug('bridge.initalized', user);
+            bridge.then((bridge) => {
+                if(handler === 'user') {
+                    bridge.callHandler(handler, params, (resp) => {
+                        let user;
+                        if(resp) {
+                            user = JSON.parse(resp);
+                        }
+                        defer.resolve(user);
+                        this.$root.user = user;
                     });
+                } else if(handler === 'keyboard') {
+                    bridge.callHandler(handler, params, (resp) => {
+                        // FIXME针对输入，做一些安全转码处理
+                        defer.resolve(resp);
+                    });
+                } else if(handler === 'login') {
+                    bridge.callHandler(handler, params, (resp) => {});
+                } else { // 无回调的接口
+                    bridge.callHandler(handler, params);
+                    defer.resolve();
                 }
             });
             return defer.promise;
         },
-        action(handler, params = '') {
-            let defer = Q.defer();
-            if(/myxx/i.test(navigator.userAgent)) {
-                //参数转换为字符串类型
-                Object.keys(params).forEach((key) => {
-                    params[key] = '' + params[key];
-                });
-                this.bridge()
-                    .then((bridge) => {
-                        if('user,keyboard,login'.indexOf(handler) !== -1) {
-                            bridge.callHandler(handler, params, (resp) => {
-                                defer.resolve(resp);
-                            });
-                        } else {
-                            bridge.callHandler(handler, params);
-                            defer.resolve();
-                        }
-                    });
-            } else {
-                defer.resolve();
-                this.toast(handler);
-            }
-            return defer.promise;
-        },
         $req(url, method, data = {}) {
             let defer = Q.defer();
-            let userDefer = Q.defer();
-            if(/myxx/i.test(navigator.userAgent)) {
-                this.action('user').then((user) => {
-                    if(user) {
-                        user = JSON.parse(user);
-                        this.$root.user = user;
-                    }
-                    userDefer.resolve(user);
-                });
-            } else if(/^[\d|.]+$/.test(location.host)){ // 使用IP访问时采用默认用户信息
-                userDefer.resolve({
-                    id: 2,
-                    token: 'f87e7796-9896-4a6f-997e-11b48aebd347',
-                    photo: "avatar2.jpg",
-                    role: 0
-                });
-            } else {
-                userDefer.resolve();
-            }
-            userDefer.promise.then((user) => {
+            this.action('user').then((user) => {
                 if(method !== 'get' && !user) {
                     this.action('login');
                 } else {
@@ -89,7 +56,7 @@ export default {
                         } else if(resp.status === 605){
                             this.action('login');
                         } else {
-                            this.toast(resp.message);
+                            this.toast(resp.status);
                         }
                     });
                 }
