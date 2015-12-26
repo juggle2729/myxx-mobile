@@ -99,7 +99,7 @@
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
-            <div class="flex bg-gray border-all font-30">
+            <div class="flex bg-default border-all font-30">
                 <div class="play w-50" @click="play(result.video)" v-bg.play="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span :class="{'red': result.result=='真货' }">{{result.result}}</span>

@@ -78,10 +78,8 @@ export default {
             this.action('user')
                 .then((user) => {
                     if(user) {
-                        console.debug('user2', user);
                         return this.$get(`users/${user.id}/profile`)
                             .then((data) => {
-                                console.debug('data', data);
                                 this.$data = data;
                                 this.userId = user.id;
                             });

@@ -1,10 +1,11 @@
 export default {
     api: 'http://dev.api.meiyuxiuxiu.net',
+    //api: 'http://192.168.199.205:8001',
     img: 'http://img.meiyuxiuxiu.net/',
     video: 'http://video.meiyuxiuxiu.net/',
     www: 'http://7xp1h7.com2.z0.glb.qiniucdn.com/',
     types: [
-        'xxx', 
+        'xxx',
         {
             name: '大师',
             route: ''

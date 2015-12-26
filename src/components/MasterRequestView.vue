@@ -2,13 +2,13 @@
 <div class="master-request">
       <p class="text font-30">
           申请和田玉鉴定权限——需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
-          如果您有意向请天下以下信息，美玉秀秀客服人员会在二个工作日内联系您！
+          如果您有意向请填写以下信息，美玉秀秀客服人员会在两个工作日内联系您！
       </p>
       <div class="input">
-          <input class="font-30 border-default" type="text" placeholder="手机号" value="15012345678">
-          <input class="font-30 border-default" type="text" placeholder="姓名">
-          <textarea class="font-30 border-default"  placeholder="申请说明，50字以内(选填)"></textarea>
-          <button @click="submit" class="bg-red white font-30">
+          <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact">
+          <input class="font-30 border-default" type="text" placeholder="姓名" v-model="name">
+          <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" v-model="content"></textarea>
+          <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
               <span>提交</span>
           </button>
       </div>
@@ -40,10 +40,46 @@
     export default {
         name: 'MasterRequest',
         data() {
+            return {
+                type: 'jianbao',
+                contact: 15012345678,
+                phone: 0,
+                name: '',
+                content: '',
+                checked: false
+            }
+        },
+        created() {
+            this.$watch('result', (data) => {
+                if(data.name !== '' && data.phone !== 0){
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        },
+        computed: {
+            result(){
+                let phoneReg = /^[1]\d{10}$/i;
+                if(phoneReg.test(this.contact)){
+                    this.phone = this.contact;
+                } else {
+                    this.phone = 0;
+                }
+                return {
+                    type: this.type,
+                    phone: this.phone,
+                    name: this.name,
+                    content: this.content
+                };
+            }
         },
         methods: {
             submit() {
-                this.toast('提交成功');
+                this.$post('users/feedbacks', this.result)
+                    .then(() => {
+                        this.toast('提交申请成功');
+                    });
             }
         }
     }
@@ -58,7 +94,7 @@
     .input {
         width: 100%;
         margin-top:15px;
-        > input {
+        input {
             width: 100%;
             border-radius: 4px;
             border-style: solid;
@@ -66,16 +102,20 @@
             height: 80px;
             padding: 32px;
         }
-        > input:nth-of-type(2) {
+        input:nth-of-type(2) {
             margin-top: 30px;
         }
-        > textarea {
+        textarea {
             margin-top: 30px;
             width: 100%;
             padding: 28px 32px;
             height: 180px;
             resize: none;
             border-radius: 4px;
+        }
+        input:active, input:focus ,
+        textarea:active, textarea:focus{
+            border-color: #cc3f4f;
         }
         button {
             height: 80px;

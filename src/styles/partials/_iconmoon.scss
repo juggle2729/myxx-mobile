@@ -19,8 +19,17 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-test:before {
-    content: "\e90b";
+.icon-m-best:before {
+    content: "\e90d";
+}
+.icon-m-human:before {
+    content: "\e90e";
+}
+.icon-m-home:before {
+    content: "\e913";
+}
+.icon-m-office:before {
+    content: "\e914";
 }
 .icon-follow:before {
     content: "\e904";

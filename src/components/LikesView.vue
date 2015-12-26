@@ -1,14 +1,14 @@
 <template>
-<div class="likes-view">
+<div class="likes-view bg-default">
     <div class="separator"></div>
-    <div class="user flex border-bottom" v-for="user in users">
-        <div class="avatar" v-bg.sm="user.photo"></div>
-        <div class="flex-1">
+    <div class="user flex border-bottom bg-white" v-for="user in users">
+        <div class="avatar-120" v-bg.md="user.photo" v-link="{name: 'user-profile', params: { id: user.id}}"></div>
+        <div class="flex-1" v-link="{name: 'user-profile', params: { id: user.id}}">
             <div class="font-30">{{user.name}}</div>
-            <div class="font-26 gray margin-top">{{user.role | role}}</div>
+            <div class="font-26 light margin-top">{{user.role | role}}</div>
         </div>
-        <div v-if="user.is_followed" class="font-22 gray unfollow">+已关注</div>
-        <div v-else class="font-22 gray follow">+加关注</div>
+        <div v-if="user.is_followed" class="font-22 gray border-red follow icon-followed" @click="toggleFollow(user)" @click="toggleFollow(user)">已关注</div>
+        <div v-else class="font-22 red border-light follow icon-follow" @click="toggleFollow(user)">加关注</div>
     </div>
 </div>
 </template>
@@ -38,6 +38,21 @@ export default {
         }
     },
     methods: {
+        toggleFollow(user) {
+            if (user.is_followed) {
+                this.$delete('users/follow/'+user.id)
+                .then(() => {
+                    user.is_followed = false;
+                    this.toast('取消关注成功');
+                });
+            } else {
+                this.$post('users/follow/'+user.id)
+                .then(() => {
+                    user.is_followed = true;
+                    this.toast('关注成功');
+                });
+            }
+        },
         fetch: (function() {
             const limit = 10;
             let loading = false;
@@ -50,7 +65,7 @@ export default {
                 loading = true;
                 const params = {limit, offset};
                 return this.$get(`users/target/${this.id}/type/${this.type}/likers`, params).then((data) => {
-                        this.users.splice(this.users.length - 1, 0, ...data.users);
+                        this.users.splice(this.users.length, 0, ...data.users);
                         this.total = data.total;
                         loading = false;
                         if (data.users.length < limit) {
@@ -64,21 +79,20 @@ export default {
 </script>
 <style lang="sass">
 .likes-view {
+    height: 100%;
     .user {
+        height: 180px;
         padding: 24px 32px;
-        .avatar {
-            margin-right: 24px;
+        .avatar-120 {
+            margin-right: 64px;
         }
-    }
-    .follow {
-        padding: 5px;
-        border: 2px solid red;
-        border-radius: 5px;
-    }
-    .unfollow {
-        padding: 5px;
-        border: 2px solid gray;
-        border-radius: 5px;
+        .follow {
+            padding: 5px;
+            border: 2px solid;
+            border-radius: 8px;
+            width: 112px;
+            height: 40px;
+        }
     }
 }
 </style>

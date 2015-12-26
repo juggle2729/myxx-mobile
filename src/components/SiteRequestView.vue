@@ -59,10 +59,10 @@
             <p style="margin-top:8px">我们会在两个工作日内联系你。</p>
         </div>
         <div class="input">
-            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="phone">
+            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact">
             <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name">
             <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" v-model="content"></textarea>
-            <button @click="submit" class="bg-red white font-30">
+            <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
                 <span>提交</span>
             </button>
         </div>
@@ -77,17 +77,45 @@ export default {
             banner: '/static/images/open/osbanner.png',
             title: '【人人皆可拥有】',
             requestShow: false,
-            type: 'site',
-            phone: 15012345678,
-            mail: '',
+            type: 'website',
+            contact: 15012345678,
+            photo: 0,
             name: '',
-            content: ''
+            content: '',
+            checked: false
         };
+    },
+    created() {
+        this.$watch('result', (data) => {
+            if(data.name !== '' && data.phone !== 0){
+                this.checked = true;
+            } else {
+                this.checked = false;
+            }
+        });
+    },
+    computed: {
+        result(){
+            let phoneReg = /^[1]\d{10}$/i;
+            if(phoneReg.test(this.contact)){
+                this.phone = this.contact;
+            } else {
+                this.phone = 0;
+            }
+            return {
+                type: this.type,
+                phone: this.phone,
+                name: this.name,
+                content: this.content
+            };
+        }
     },
     methods: {
         submit() {
-            var msg = this.name + '=' + this.phone + '==' +this.content;
-            this.toast(msg, 1000);
+            this.$post('users/feedbacks', this.result)
+                .then(() => {
+                    this.toast('提交申请成功');
+                });
             this.toggleShow();
         },
         toggleShow() {
@@ -222,7 +250,7 @@ export default {
             .input {
                 width: 100%;
                 margin-top: 32px;
-                > input {
+                input {
                     width: 100%;
                     border-radius: 4px;
                     border-style: solid;
@@ -230,10 +258,14 @@ export default {
                     height: 80px;
                     padding: 32px;
                 }
-                > input:nth-of-type(2) {
+                input:active, input:focus ,
+                textarea:active, textarea:focus{
+                    border-color: #cc3f4f;
+                }
+                input:nth-of-type(2) {
                     margin-top: 30px;
                 }
-                > textarea {
+                textarea {
                     margin-top: 30px;
                     width: 100%;
                     padding: 28px 32px;
