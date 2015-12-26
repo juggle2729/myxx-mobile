@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?akq9lw');
-    src:    url('fonts/icomoon.eot?akq9lw#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?akq9lw') format('truetype'),
-        url('fonts/icomoon.woff?akq9lw') format('woff'),
-        url('fonts/icomoon.svg?akq9lw#icomoon') format('svg');
+    src:    url('fonts/icomoon.eot?8r1673');
+    src:    url('fonts/icomoon.eot?8r1673#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?8r1673') format('truetype'),
+    url('fonts/icomoon.woff?8r1673') format('woff'),
+    url('fonts/icomoon.svg?8r1673#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,24 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-m-best:before {
+    content: "\e90d";
+}
+.icon-m-human:before {
+    content: "\e90e";
+}
+.icon-m-home:before {
+    content: "\e913";
+}
+.icon-m-office:before {
+    content: "\e914";
+}
+.icon-follow:before {
+    content: "\e904";
+}
+.icon-followed:before {
+    content: "\e905";
+}
 .icon-trophy:before {
     content: "\e922";
 }
@@ -49,6 +67,9 @@
     content: "\e902";
     margin-left: -1em;
     color: rgb(198, 198, 198);
+}
+.icon-alarm:before {
+    content: "\e903";
 }
 .icon-comment:before {
     content: "\e906";
@@ -86,4 +107,3 @@
 .icon-settings:before {
     content: "\e919";
 }
-

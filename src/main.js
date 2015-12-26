@@ -55,7 +55,7 @@ router.beforeEach(({from, to, abort, next}) => {
 });
 //设置页面title
 router.afterEach(function ({ to }) {
-    document.title = (to.title || '美玉秀秀');
+    document.title = (to.title || to.query.title || '美玉秀秀');
 });
 router.map(routes);
 

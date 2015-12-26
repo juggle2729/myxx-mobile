@@ -49,11 +49,21 @@ export default {
         title: '官网秀',
         component: require('./components/MastersView.vue')
     },
-    '/master/:id': {
-        name: 'master',
-        component: {
-            template: '大师官网'
-        }
+    '/master/:id/home' : {
+        name: 'master-home',
+        component: require('./components/MasterHomeView.vue')
+    },
+    '/master/:id/works' : {
+        name: 'master-works',
+        component: require('./components/MasterWorksView.vue')
+    },
+    '/master/:id/special' : {
+        name: 'master-special',
+        component: require('./components/MasterSpecialView.vue')
+    },
+    '/master/:id/studio' : {
+        name: 'master-studio',
+        component: require('./components/MasterStudioView.vue')
     },
     '/messages': {
         name: 'messages',
