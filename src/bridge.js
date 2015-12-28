@@ -2,7 +2,6 @@ import Q from 'q';
 
 let adapter = {
     callHandler(handler, params, cb) {
-        console.log(handler, params, cb);
         if(handler === 'user') {
             let user = {
                 id: "2",

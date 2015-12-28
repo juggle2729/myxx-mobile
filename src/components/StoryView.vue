@@ -1,6 +1,5 @@
 <template>
 <div class="story-view bg-default">
-    <div class="separator last"></div>
     <div class="story bg-white">
         <div class="header">
             <div class="user">

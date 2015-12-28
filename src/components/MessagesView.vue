@@ -2,17 +2,17 @@
 <div class="message-view bg-default">
     <div class="separator-20"></div>
     <div class="messages border-bottom bg-white">
-        <div class="row font-34 border-bottom flex" v-link="{name: 'master-request'}">
+        <div class="row font-34 border-bottom flex">
             <span class="red icon-alarm"></span>
             <span>系统通知</span>
             <span class="icon-enter gray"></span>
         </div>
-        <div class="row font-34 border-bottom flex" v-link="{name: 'feedback'}">
+        <div class="row font-34 border-bottom flex">
             <span class="red icon-eval"></span>
             <span>鉴宝</span>
             <span class="icon-enter gray"></span>
         </div>
-        <div class="row font-34 border-bottom flex" v-link="{name: 'about'}">
+        <div class="row font-34 border-bottom flex">
             <span class="red icon-comment"></span>
             <span>评论</span>
             <span class="icon-enter gray"></span>

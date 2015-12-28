@@ -27,7 +27,7 @@ const scrollListener = (function(w) {
                     doc.body.clientHeight, doc.documentElement.clientHeight
                 );
             }
-            const bottom = getDocHeight() - w.scrollY - w.document.body.clientHeight;
+            const bottom = getDocHeight() - w.scrollY - Math.max(w.document.body.clientHeight, w.innerHeight);
             if(delta > 0 && bottom <= threshold) {
                 emitter.emit('scroll-to-bottom', event);
             }

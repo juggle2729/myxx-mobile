@@ -1,6 +1,6 @@
 require('./utils/resize');
 import config from './config';
-import Q from 'q';
+import emitter from './utils/emitter';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
@@ -30,6 +30,11 @@ Vue.filter('truncate', truncate);
 Vue.config.debug = true;
 Vue.http.options.emulateJSON = true;
 Vue.http.options.root = config.api;
+Vue.http.options.beforeSend = function(xhr, req) {
+    if(location.hash.indexOf('?time=') !== -1 && req.method !== 'GET') {
+        emitter.emit('get-app');
+    }
+};
 Vue.http.options.error = function(resp, status, req) {
     console.error(status, req.responseURL);
     this.toast('💔出错了');
@@ -39,19 +44,21 @@ Vue.http.options.error = function(resp, status, req) {
 var router = new Router({hashbang: false, suppressTransitionError: false});
 //设置页面title
 router.beforeEach(({from, to, abort, next}) => {
-    if(window.WebViewJavascriptBridge) {
-        if(from.fullPath !== to.fullPath) {
-            console.debug('go', {url: to.path});
+    if(/myxx/i.test(navigator.userAgent)) {
+        if(from.fullPath && from.fullPath !== to.fullPath) {
+            console.debug('go', to.path);
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
             abort();
         } else {
             next();
         }
     } else {
-        if(from.fullPath && from.fullPath !== to.fullPath) {
-            console.debug('go =>', to.path);
+        if(from.query && from.query.time) {
+            emitter.emit('get-app');
+            abort();
+        } else {
+            next();
         }
-        next();
     }
 });
 //设置页面title

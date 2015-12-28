@@ -2,7 +2,7 @@
 .featured-view {
     padding: 20px;
     .item {
-        height: 350px;
+        height: 438px;
         margin-bottom: 20px;
         background-repeat: no-repeat;
         background-size: cover;

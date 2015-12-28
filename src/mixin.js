@@ -2,6 +2,16 @@ import Q from 'q';
 import bridge from './bridge';
 export default {
     computed: {
+        platform() {
+            const ua = navigator.userAgent;
+            return {
+                isApp: /myxx/i.test(ua),
+                isMobile: /android|iphone|ipod|ipad/i.test(ua),
+                isIOS: /iphone|ipod|ipad/i.test(ua),
+                isAndroid: /android/i.test(ua),
+                isWechat: /micromessenger|qq/i.test(ua)
+            };
+        },
         self() {
             return this.$root.user;
         }
@@ -15,6 +25,9 @@ export default {
             setTimeout(() => span.parentNode.removeChild(span), delay);
         },
         action(handler, params = '') {
+            Object.keys(params).forEach((k) => {
+                params[k] = '' + params[k];
+            });
             let defer = Q.defer();
             bridge.then((bridge) => {
                 if(handler === 'user') {
@@ -33,6 +46,9 @@ export default {
                     });
                 } else if(handler === 'login') {
                     bridge.callHandler(handler, params, (resp) => {});
+                } else if(handler === 'share') {
+                    params.url = params.url + '?time=' + (new Date()).getTime();
+                    bridge.callHandler(handler, params);
                 } else { // 无回调的接口
                     bridge.callHandler(handler, params);
                     defer.resolve();
