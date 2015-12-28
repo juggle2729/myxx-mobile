@@ -13,7 +13,9 @@
                 this.id = to.params.id;
 
                 // get data from cache
-                const cacheMasterBaseInfo = JSON.parse(localStorage.getItem('masterBaseData'));
+                const cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
+
+                const cacheMasterBaseInfo = cacheMastersBaseInfo ? cacheMastersBaseInfo[this.id] : null;
                 if (cacheMasterBaseInfo) {
                     this.masterBaseData = cacheMasterBaseInfo;
                     this.loadMasterOtherData();
@@ -26,7 +28,14 @@
             canDeactivate({ to }) {
                 const targetRouteName = to.name;
                 if (!targetRouteName.startsWith('master')) { //clear cache
-                    localStorage.removeItem('masterBaseData');
+                    let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
+                    if (!cacheMastersBaseInfo) {
+                        cacheMastersBaseInfo = {};
+                    } else {
+                        cacheMastersBaseInfo[this.id] && (delete cacheMastersBaseInfo[this.id]);
+                    }
+
+                    localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
                 }
                 return true;
             }
@@ -45,7 +54,13 @@
                     loading = true;
                     return this.$get(`sites/${this.id}/base`, {}).then((data) => {
                         this.masterBaseData = data;
-                        localStorage.setItem('masterBaseData', JSON.stringify(data));
+
+                        let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
+                        if (!cacheMastersBaseInfo) {
+                            cacheMastersBaseInfo = {};
+                        }
+                        cacheMastersBaseInfo[this.id] = data;
+                        localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
 
                         loading = false;
                     });

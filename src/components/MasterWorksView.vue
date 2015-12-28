@@ -1,6 +1,8 @@
+<style lang="sass">
+    .master-works-view {}
+</style>
 <template>
-    <div class="master-works-site bg-default">
-        works
+    <div class="master-works-view bg-default">
         <master-tab :master-info="masterBaseData" :current-tab="'master-works'"></master-tab>
     </div>
 </template>
@@ -21,7 +23,7 @@
         mixins: [masterMixin],
         methods: {
             loadMasterOtherData: function() {
-                this.fetchMasterWorksInfo();
+                //this.fetchMasterWorksInfo();
                 this.fetchMasterCraftsInfo();
             },
             fetchMasterWorksInfo: (function () {

@@ -7,7 +7,7 @@ import Resource from 'vue-resource';
 import routes from './route';
 import mixins from './mixin';
 import { bg } from './directive';
-import { moment, money, role, type, profile, qn } from './filter';
+import { moment, money, role, type, profile, qn, truncate } from './filter';
 import App from './components/App.vue';
 
 Vue.use(Router);
@@ -24,6 +24,7 @@ Vue.filter('role', role);
 Vue.filter('type', type);
 Vue.filter('profile', profile);
 Vue.filter('qn', qn);
+Vue.filter('truncate', truncate);
 
 // Vue configurations
 Vue.config.debug = true;

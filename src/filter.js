@@ -24,6 +24,13 @@ export function money(number) {
     return number / 10000 + '万';
 }
 
+export function truncate(str, len) {
+    if (!str) {
+        return '';
+    }
+    return str.length > len ? str.substr(0, len) + '...' : str;
+}
+
 export function profile(user) {
     const route = {name: 'user-profile', params: {id: user.id}};
     if(+user.role === 3) {

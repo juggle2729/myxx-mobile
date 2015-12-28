@@ -105,6 +105,7 @@
 
             .name-time {
                 margin-left: 20px;
+                margin-top: -6px;
             }
 
             .time {
@@ -121,29 +122,25 @@
                 background-size: cover;
                 margin-bottom: 20px;
             }
+        }
 
-            .like-comment {
-                line-height: 86px;
-                padding: 18px 25px;
-
-                .like {
-                    float: left;
-                }
-
-                .icon, .count {
-                    vertical-align: 18px;
-                }
-
-                .like-list {
-                    display: inline-block;
-                    margin-left: 28px;
-                }
-
-                .comment {
-                    padding-left: 28px;
-                    line-height: 48px;
-                    float: right;
-                }
+        .medias {
+            .media {
+                vertical-align: top;
+                display: inline-block;
+                width: percentage(1/3);
+                padding-top: percentage(1/3);
+                border: thick solid white;
+                background-size: cover;
+                background-position: center;
+            }
+            .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
+                margin-right: percentage(1/3);
+            }
+            .unique {
+                width: 100%;
+                padding-top: 60%;
+                background-size: cover;
             }
         }
 
@@ -165,7 +162,7 @@
                 <div class="base-info">
                     <div class="head avatar-180" v-bg.sm="masterBaseData.photo"></div>
                     <div class="name font-30">{{masterBaseData.name}}</div>
-                    <div class="titles">
+                    <div class="titles" v-if="masterBaseData && masterBaseData.titles">
                         <div class="title font-26 gray" v-for="title in masterBaseData.titles | limitBy 3">
                             {{title.name}}
                         </div>
@@ -184,36 +181,37 @@
             </div>
             <div class="dynamic-list">
                 <div class="dynamic-item bg-white" v-for="dynamic in dynamics">
-                    <div v-if="dynamic.event_type === 'jianbao_add'">
-                        <div class="person">
-                            <div class="photo avatar-50" v-bg.sm="dynamic.event.user.photo"></div>
-                            <div class="name-time">
-                                <div class="font-26">{{dynamic.event.user.name}}</div>
-                                <div class="time font-22 light">{{dynamic.event.create_at | moment}}</div>
-                            </div>
-                        </div>
-                        <div class="description font-30">{{dynamic.event.description}}</div>
-                        <div class="media video" @click="play(dynamic.event.video)" v-bg.video="dynamic.event.video"></div>
-                        <div class="like-comment border-top clearfix">
-                            <div class="like font-22">
-                                <span class="icon" :class="[dynamic.event.liked ? 'icon-like-active' : 'icon-like', dynamic.event.liked ? 'red' : 'gray']"></span>
-                                <span class="count" :class="[dynamic.event.liked ? 'red' : 'gray']">{{dynamic.event.like}}</span>
-                                <div class="like-list" v-show="dynamic.event.likes.length > 0">
-                                    <div class="like-item avatar-50" v-for="like in dynamic.event.likes" v-link="like | profile" v-bg.sm="like.photo"></div>
-                                </div>
-                            </div>
-                            <div class="comment font-22 gray border-left">
-                                <span class="icon-comment"></span>
-                                <span class="comment-count">{{dynamic.event.comment}}</span>
-                            </div>
+                    <div class="person">
+                        <div class="photo avatar-50" v-bg.sm="dynamic.event.user.photo"></div>
+                        <div class="name-time">
+                            <div class="font-26">{{dynamic.event.user.name}}</div>
+                            <div class="time font-22 light">{{dynamic.event.create_at | moment}}</div>
                         </div>
                     </div>
+                    <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
+                    <div v-if="dynamic.event_type === 'jianbao_add'">
+                        <div class="media video" @click="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
+                    </div>
                     <div v-if="dynamic.event_type === 'topic_add'">
-                        <span class="font-30">topic_add</span>
+                        <div class="medias">
+                            <div class="unique" v-if="dynamic.event.media.length === 1" v-bg.lg="dynamic.event.media[0].id"></div>
+                            <template v-else="dynamic.event.media.length !== 1">
+                                <template v-for="media in dynamic.event.media">
+                                    <div class="media picture" @click="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
+                                    <div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
+                                </template>
+                            </template>
+                        </div>
                     </div>
                     <div v-if="dynamic.event_type === 'jianbao_result'">
                         <span class="font-30">jianbao_result</span>
                     </div>
+                    <social-bar :id="dynamic.event.post_id" :type="likeType(dynamic.event_type)" :active="dynamic.event.liked"
+                                :total="dynamic.event.like" :list="dynamic.event.likes" class="border-top social bg-white">
+                        <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: dynamic.event.post_id}}">
+                            <i class="icon-comment"></i><span>{{dynamic.event.comment}}</span>
+                        </div>
+                    </social-bar>
                 </div>
             </div>
             <div class="no-more light font-22 center" v-show="!hasMore">没有更多了</div>
@@ -226,8 +224,11 @@
 </template>
 <script>
     import masterMixin from '../mixins/MasterMixin.vue';
+    import SocialBar from './SocialBar.vue';
+
     export default {
         name: 'MasterHomeView',
+        components: { SocialBar },
         mixins: [masterMixin],
         data() {
             return {
@@ -239,6 +240,22 @@
         methods: {
             play(id) {
                 this.action('play', {id});
+            },
+            coverflow(medias, index) {
+                let ids = medias.filter(media => media.type==='picture')
+                    .map(media => media.id);
+                this.action('coverflow', {ids, index});
+            },
+            likeType(eventType) {
+                if (eventType === 'jianbao_add') {
+                    return 10;
+                } else if (eventType === 'jianbao_result') {
+                    return 20;
+                } else if (eventType === 'topic_add') {
+                    return 30;
+                } else {
+                    return 40;
+                }
             },
             loadMasterOtherData: function() {
                 this.fetchMasterDynamicInfo();
@@ -258,6 +275,7 @@
 
                     return this.$get(`sites/${this.id}/timeline`, params).then((data) => {
                         this.dynamics.splice(this.dynamics.length, 0, ...data.events);
+                        this.dynamics = this.dynamics.filter((item) => item.event_type !== 'jianbao_result');
                         this.dynamicTotal = data.total;
                         loading = false;
                         if (data.events.length < limit) {
