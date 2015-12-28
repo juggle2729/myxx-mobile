@@ -69,9 +69,9 @@ export default {
         });
     },
     events: {
-        scrollToBottom(e) {
-            console.debug('xxx');
-        }
+        // scrollToBottom(e) {
+        //     console.debug('xxx');
+        // }
     },
     methods: {
         fetch() {
@@ -93,8 +93,6 @@ export default {
                             .then(() => {
                                 this.fetch();
                             });
-                    } else {
-                        this.toast('说点什么吧');
                     }
                 });
         },
@@ -111,17 +109,20 @@ export default {
                             .then(() => {
                                 this.fetch();
                             });
-                    } else {
-                        this.toast('说点什么吧');
                     }
                 });
         },
         remove(comment, index) {
             if(this.self.id == comment.reply_from.id) {
-                this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
-                    .then(() => {
-                        this.toast('评论删除成功');
-                        this.fetch();
+                this.action('delete', '')
+                    .then((confirm) => {
+                        if(confirm) {
+                            this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
+                                .then(() => {
+                                    this.action('toast', {success: 1, text: '评论删除成功'});
+                                    this.fetch();
+                                });
+                        }
                     });
             }
         }

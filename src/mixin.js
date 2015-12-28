@@ -46,6 +46,10 @@ export default {
                     });
                 } else if(handler === 'login') {
                     bridge.callHandler(handler, params, (resp) => {});
+                } else if('delete,confirm'.indexOf(handler) !== -1) {
+                    bridge.callHandler(handler, params, (resp) => {
+                        defer.resolve(resp);
+                    });
                 } else if(handler === 'share') {
                     params.url = params.url + '?time=' + (new Date()).getTime();
                     bridge.callHandler(handler, params);

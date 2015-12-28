@@ -182,7 +182,10 @@ export default {
             if(action === 'login') {
                 this.action('login');
             } else if(action === 'request'){
-                this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
+                this.action('confirm', {text: '申请鉴宝权限'})
+                    .then((confirm) => {
+                        this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
+                    });
             } else if(action === 'evaluate'){
                 this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
             }
