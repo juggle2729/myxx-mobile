@@ -73,4 +73,24 @@
     .bottom-blank {
         margin-bottom: 100px;
     }
+
+    .line-title {
+        line-height: 66px;
+        text-align: center;
+        .line {
+            margin-bottom: 7px;
+            width: 40px;
+            height: 1px;
+            margin-top: -1px;
+            border-bottom: 1px solid #c6c6c6;
+            display: inline-block;
+        }
+        .text {
+            padding: 0 12px;
+        }
+    }
+
+    .no-more {
+        margin-top: 32px;
+    }
 </style>
