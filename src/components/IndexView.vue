@@ -49,6 +49,22 @@
         <li class="font-26 border-top padding center">
             <a href="#!/feedback">意见反馈 - feedback</a>
         </li>
+        <li class="tab">打开Native</li>
+        <li class="font-26 border-top padding center">
+            <a href="myxx://">美玉秀秀</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="myxx://web/evaluation/1">鉴宝1</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="myxx://web/story/23">话题23</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="myxx://web/jade/2">宝贝2</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="myxx://web/master/1/home?title=%E8%B5%B5%E5%85%B0-%E5%AE%98%E7%BD%91">大师官网1</a>
+        </li>
     </ul>
 </div>
 </template>

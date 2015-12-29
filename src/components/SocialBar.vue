@@ -66,9 +66,7 @@ export default {
             default: 0
         },
         list: {
-            default() {
-                return [];
-            }
+            default: []
         },
         active: {
             default: false

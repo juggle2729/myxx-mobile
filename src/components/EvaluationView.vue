@@ -184,14 +184,19 @@ export default {
             } else if(action === 'request'){
                 this.action('confirm', {text: '申请鉴宝权限'})
                     .then((confirm) => {
-                        this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
+                        if(confirm === '1') {
+                            this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
+                        }
                     });
             } else if(action === 'evaluate'){
                 this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
             }
         },
         share() {
-            this.action('share', {title: '鉴宝', desc: '鉴宝有益身心', icon: this.evaluation.pictures[0], url: location.href});
+            let title = this.self.nickname + '邀请你来鉴宝！';
+            let desc = this.evaluation.description.substr(0, 20);
+            let icon = this.evaluation.pictures[0];
+            this.action('share', {title, desc, icon, url: location.href});
         }
     }
 }

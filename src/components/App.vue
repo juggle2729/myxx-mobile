@@ -118,6 +118,8 @@ export default {
                 myxxIframe.src = 'myxx://';
                 myxxIframe.width = '1px';
                 myxxIframe.height = '1px';
+                myxxIframe.scrolling = 'no';
+                myxxIframe.style.border = 'none';
                 myxxIframe.src = 'myxx://';
                 document.body.appendChild(myxxIframe);
                 setTimeout(() => {
