@@ -85,20 +85,7 @@
                 .detail {
                     padding-top: 32px;
                 }
-
-                .media-text {
-                    text-indent: 15px;
-                    line-height: 40px;
-                }
-
-                .media-inner-img, .media-inner-video {
-                    height: 576px;
-                }
-
-                .media-item:not(:first-child) {
-                    margin-top: 32px;
-                }
-    }
+            }
         }
     }
 </style>
@@ -136,16 +123,9 @@
                 <div class="publish-date font-26 gray" v-show="!!interview.date">{{interview.date}}</div>
                 <div class="content">
                     <div class="title font-26 white bg-gray">文章导读</div>
-                    <div class="abstract border-vertical font-26 light">{{{interview.abstract}}}</div>
-                    <div class="detail font-30 gray">
-                        <template v-for="media in interview.medias">
-                            <div class="media-item media-text" v-if="media.media_type === 'text'">{{{media.media_content}}}</div>
-                            <div class="media-item media-inner-img" v-if="media.media_type === 'inner_img'" v-bg.lg="media.media_content"></div>
-                            <div class="media-item media-outer-img" v-if="media.media_type === 'outer_img'" v-bg.lg="media.media_content">
-                                <img src="{{media.media_content}}"/>
-                            </div>
-                            <div class="media-item media-inner-video" v-if="media.media_type === 'inner_video'" v-bg.video="media.media_content"></div>
-                        </template>
+                    <div class="abstract border-vertical font-26 light" v-if="!!interview.abstract">{{interview.abstract}}</div>
+                    <div class="detail">
+                        <rich-text :medias="interview.medias"></rich-text>
                     </div>
                 </div>
             </div>
@@ -155,9 +135,12 @@
 </template>
 <script>
     import masterMixin from '../mixins/MasterMixin.vue';
+    import RichText from './RichTextView.vue';
+
     export default {
         name: 'MasterSpecialView',
         mixins: [masterMixin],
+        components: { RichText },
         data() {
             return {
                 titleLimit: 3,

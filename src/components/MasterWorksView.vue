@@ -84,7 +84,7 @@
                 <span class="text gray">工艺展示</span>
                 <div class="line"></div>
             </div>
-            <div class="craft-item bg-white" v-for="craft in masterCrafts">
+            <div class="craft-item bg-white" v-for="craft in masterCrafts" v-link="{name: 'craft-detail', params: {id: id, craftId: craft.id}}">
                 <div class="img" v-bg.lg="craft.images[0]"></div>
                 <div class="font-30 title">{{craft.title}}</div>
             </div>

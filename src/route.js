@@ -65,6 +65,11 @@ export default {
         name: 'master-studio',
         component: require('./components/MasterStudioView.vue')
     },
+    '/craft/:id/:craftId/detail' : {
+        name: 'craft-detail',
+        title: '工艺展示详情',
+        component: require('./components/CraftDetailView.vue')
+    },
     '/messages': {
         name: 'messages',
         title: '消息',
