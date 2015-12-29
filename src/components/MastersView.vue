@@ -8,7 +8,7 @@
                     <p class="font-26 white">{{item.titles[0].name}}</p>
                     <p class="font-26 white">
                         <span style="margin-right:72px;">粉丝:{{item.fans_count}}</span>
-                        <span>鉴宝数:{{item.jianbao_collection_count}}</span>
+                        <span>鉴宝数:{{item.jianbao_count}}</span>
                     </p>
                 </div>
             </div>

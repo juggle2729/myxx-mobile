@@ -7,7 +7,7 @@
                 <p class="font-30">{{user.nickname}}</p>
                 <p class="font-26 light margin-top">{{user.role | role}}</p>
             </div>
-            <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow center" @click="toggleFollow(user)">取消关注</div>
+            <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow icon-followed" @click="toggleFollow(user)">已关注</div>
             <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow icon-follow" @click="toggleFollow(user)">加关注</div>
         </div>
     <div class="loadmore center font-22 gray" v-show="hasMore">
@@ -36,13 +36,13 @@ export default {
                 this.$delete('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = false;
-                    this.toast('取消关注成功');
+                    this.action('toast', {success: 0, text: '取消关注成功'});
                 });
             } else {
                 this.$post('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = true;
-                    this.toast('关注成功');
+                    this.action('toast', {success: 0, text: '关注成功'});
                 });
             }
         },

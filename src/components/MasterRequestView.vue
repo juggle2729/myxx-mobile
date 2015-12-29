@@ -42,7 +42,7 @@
         data() {
             return {
                 type: 'jianbao',
-                contact: 15012345678,
+                contact: 0,
                 phone: 0,
                 name: '',
                 content: '',
@@ -57,6 +57,14 @@
                     this.checked = false;
                 }
             });
+        },
+        route: {
+            data() {
+                this.$get(`users/${this.$route.params.id}/basic`)
+                   .then((data) => {
+                       this.contact = data.phone;
+                   });
+            }
         },
         computed: {
             result(){
@@ -78,7 +86,7 @@
             submit() {
                 this.$post('users/feedbacks', this.result)
                     .then(() => {
-                        this.toast('提交申请成功');
+                        this.action('toast', {success: 0, text: '已成功提交'});
                     });
             }
         }

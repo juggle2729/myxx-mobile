@@ -25,14 +25,14 @@
     <ul>
         <li class="margin-bottom" v-for="c in comments" @click="remove(c, $index)">
             <div class="author">
-                <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+                <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}" v-link="c.reply_from | profile"></div>
                 <div>
-                    <h3 class="font-26 blue" @click="reply($event, c.reply_from)">{{c.reply_from.name}}</h3>
+                    <h3 class="font-26 blue" v-link="c.reply_from | profile">{{c.reply_from.name}}</h3>
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
-            <div class="font-30 light">
-                <span v-if="c.reply_to" class="label">回复<span @click="reply($event, c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
+            <div class="font-30 light" @click="reply($event, c.reply_from)">
+                <span v-if="c.reply_to" class="label">回复<span v-link="c.reply_from | profile" class="blue">{{c.reply_to.name}}</span>:</span>
                 <span>{{c.content}}</span>
             </div>
         </li>

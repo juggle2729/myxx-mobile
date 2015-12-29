@@ -67,7 +67,12 @@
         <div class="title border-bottom">
             <span class="font-22 gray">图文详情</span>
         </div>
-        <div class="content font-30" id="detail">
+        <div class="medias font-30">
+            <template v-for="media in info.detail.medias">
+                <div class="media text" v-if="media.media_type==='text'">{{media.media_content}}</div>
+                <div class="media picture" @click="coverflow(0)" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
+                <div class="media play" @click="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
+            </template>
         </div>
     </div>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
@@ -145,7 +150,9 @@ export default {
                 is_liked: true, // 如果当前登录状态，是否关注过
                 create_at: '2015-01-01 10:10:10',
                 details: '<p class="font-34">123</p>',
-                detail: []
+                detail: {
+                    medias: [{}]
+                }
             },
             likes: [
 
@@ -161,24 +168,18 @@ export default {
                         .then((data) => {
                             this.likes = data.users;
                         });
-                    this.addDetail();
                 });
         }
     },
     methods: {
-        addDetail() {
-            this.info.detail.medias.forEach((item) => {
-                if (item.media_type === 'text') {
-                    var text = document.createElement('p');
-                    text.innerText = item.media_content;
-                    document.getElementById('detail').appendChild(text);
-                } else {
-                    var image = document.createElement('img');
-                    image.src = 'http://7xo8aj.com2.z0.glb.qiniucdn.com/'+ item.media_content +'?imageView2/1/w/600/h/350/interlace/1';
-                    image.className = 'visible';
-                    document.getElementById('detail').appendChild(image);
-                }
-            });
+        coverflow(index) {
+            let ids = this.info.detail.medias
+                        .filter(media => media.media_type==='picture')
+                        .map(media => media.media_content);
+            this.action('coverflow', {ids, index});
+        },
+        play(id) {
+            this.action('play', {id});
         },
         share() {
             this.action('share', {title: '宝贝', desc: '我的宝贝', icon: this.info.imgs[0], url: location.href});
@@ -243,6 +244,20 @@ export default {
             > img {
                 margin-top: 32px;
                 width: 100%;
+            }
+        }
+        .medias {
+            .text{
+                margin-top: 32px;
+            }
+            .picture {
+                margin-top: 32px;
+                background-size: cover;
+            }
+            .picture:after {
+                content: '';
+                display: block;
+                padding-bottom: 200%;
             }
         }
     }

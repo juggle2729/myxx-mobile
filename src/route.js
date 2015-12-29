@@ -22,7 +22,7 @@ export default {
     },
     '/likes/:type/:id': {
         name: 'likes',
-        title: '点赞列表',
+        title: '赞过的人',
         component: require('./components/LikesView.vue')
     },
     '/stories/:tab': {
@@ -92,7 +92,7 @@ export default {
     },
     '/profile/:id/following': {
         name: 'following',
-        title: '关注',
+        title: '关注的人',
         component: require('./components/FollowingView.vue')
     },
     '/profile/:id/follower': {

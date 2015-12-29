@@ -38,6 +38,9 @@
         <div v-for="user in list">
             <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
         </div>
+        <!-- <div v-if="total===7" v-for="user in list | limitBy 1">
+            <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
+        </div> -->
         <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
             <div class="more"></div>
         </div>

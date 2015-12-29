@@ -76,7 +76,7 @@
             </div>
         </div>
         <social-bar :id="item.post_id" type="30" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left gray extra-action">
+            <div class="center border-left gray extra-action" v-link="{name: 'story', params: {id: item.post_id}}">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
         </social-bar>

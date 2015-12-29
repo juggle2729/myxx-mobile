@@ -57,7 +57,7 @@ export default {
         submit() {
             this.$post('users/feedbacks', this.result)
                 .then(() => {
-                    this.toast('提交申请成功');
+                    this.action('toast', {success: 0, text: '已成功提交'});
                 });
         }
     }

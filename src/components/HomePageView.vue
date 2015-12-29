@@ -30,14 +30,14 @@
             <span>TA的赞</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
+        <div class="row font-30" :class="{'border-bottom': has_shop}"v-link="{name: 'user-evaluation', params: {id: userId}}">
             <span class="red icon-eval"></span>
             <span>TA的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row font-30">
+        <div class="row font-30" v-if="has_shop">
             <span class="red icon-store"></span>
-            <span>{{has_shop ? 'TA的店铺' : 'TA没有店铺'}}</span>
+            <span>TA的店铺</span>
             <span class="icon-enter gray font-26"></span>
         </div>
     </div>
@@ -86,13 +86,13 @@ export default {
                 this.$delete('users/follow/'+ this.userId)
                     .then(() => {
                         this.follow = false;
-                        this.toast('取消关注成功');
+                        this.action('toast', {success: 0, text: '取消关注成功'});
                     });
             } else {
                 this.$post('users/follow/' + this.userId)
                     .then(() => {
                         this.follow = true;
-                        this.toast('关注成功');
+                        this.action('toast', {success: 0, text: '关注成功'});
                     });
             }
         }

@@ -78,7 +78,7 @@ export default {
             title: '【人人皆可拥有】',
             requestShow: false,
             type: 'website',
-            contact: 15012345678,
+            contact: 0,
             photo: 0,
             name: '',
             content: '',
@@ -93,6 +93,14 @@ export default {
                 this.checked = false;
             }
         });
+    },
+    route: {
+        data() {
+            this.$get(`users/${this.$route.params.id}/basic`)
+               .then((data) => {
+                   this.contact = data.phone;
+               });
+        }
     },
     computed: {
         result(){
@@ -114,7 +122,7 @@ export default {
         submit() {
             this.$post('users/feedbacks', this.result)
                 .then(() => {
-                    this.toast('提交申请成功');
+                    this.action('toast', {success: 0, text: '已成功提交'});
                 });
             this.toggleShow();
         },
