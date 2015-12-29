@@ -57,7 +57,7 @@
         <div class="item" v-link="{name: 'story', params: {id: item.post_id}}">
             <div class="header">
                 <div class="user">
-                    <div class="avatar" v-link="{name: item.user.role=='3' ? 'user-site' : 'user-profile', params: {id: item.user.id}}" v-bg.sm="item.user.photo"></div>
+                    <div class="avatar" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
                     <div class="name">
                         <p class="font-26">{{item.user.name}}</p>
                         <p class="moment font-22 gray">{{item.create_at | moment}}</p>
@@ -66,7 +66,9 @@
                 <div class="desc font-30">{{item.content}}</div>
             </div>
             <div class="medias">
-                <div class="unique" v-if="item.medias.length===1" v-bg.lg="item.medias[0].id"></div>
+                <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">
+                    <img :src="'http://img.meiyuxiuxiu.net/' + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                </div>
                 <template v-else>
                     <template v-for="media in item.medias"
                         ><div class="media" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div

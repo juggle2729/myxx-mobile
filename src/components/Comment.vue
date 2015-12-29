@@ -119,7 +119,7 @@ export default {
             if(this.self.id == comment.reply_from.id) {
                 this.action('delete', '')
                     .then((confirm) => {
-                        if(confirm) {
+                        if(confirm === '1') {
                             this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
                                 .then(() => {
                                     this.action('toast', {success: 1, text: '评论删除成功'});

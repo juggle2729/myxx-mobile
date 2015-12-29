@@ -1,6 +1,68 @@
+<style lang="sass">
+.jade-view {
+    .titles {
+        display: -webkit-box-;
+        height: 238px;
+        padding: 32px 32px 36px 32px;
+        position: relative;
+        > div {
+            display: flex;
+            align-items: center;
+            width: 75%;
+            margin-top: 32px;
+            height: 36px;
+            > span:nth-of-type(2) {
+                position: absolute;
+                right: 32px;
+            }
+        }
+    }
+    .avatars {
+        height: 132px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > div {
+            display: flex;
+            align-items: center;
+            > span:nth-of-type(1) {
+                margin-left: 20px;
+                margin-right: 56px;
+            }
+            .icon-enter {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+    .params {
+        padding: 0 32px 32px 32px;
+        .title {
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+        .content {
+            > p {
+                margin-top: 32px;
+            }
+            > img {
+                margin-top: 32px;
+                width: 100%;
+            }
+        }
+    }
+    .social {
+        padding: 0 32px;
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
+    }
+}
+</style>
 <template>
-<div class="jade-detail">
-    <div class="imgs" v-bg="info.imgs[0]"></div>
+<div class="jade-view">
+    <slider :ids="info.imgs"></slider>
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
         <div>
@@ -82,81 +144,33 @@
 </template>
 <script>
 import SocialBar from './SocialBar.vue';
+import Slider from './Slider.vue';
 export default {
     name: 'JadeView',
     components: {
-        SocialBar
+        SocialBar,
+        Slider
     },
     data() {
         return {
             info: {
-                shop: { // 所属商家
-                    id: 1,
-                    shop_name: '商家名称'
+                shop: {},
+                user: {},
+                category: {
+                    parent: {}
                 },
-                user: { // 商家用户信息
-                    id: 1,
-                    nickname: '商家名字',
-                    photo: ''
-                },
-                name: '和田玉器茶壶',
-                category: { // 分类信息
-                    id: 1,
-                    name: '摆件',
-                    parent: {
-                        id: 5,
-                        name: '壶'
-                    }
-                },
-                theme: { // 题材
-                    id: 3,
-                    name: '动物'
-                },
-                skin_color: '皮色',
-                inner_color: { // 肉色
-                    id: 1,
-                    name: '红色'
-                },
-                moral: { // 寓意
-                    id: 1,
-                    name: '吉祥如意'
-                },
-                price: 2940500,
-                weight: 59,
-                size: '40cm*12cm',
-                origin_place: { // 原产地
-                    id: 1,
-                    name: '深圳'
-                },
-                stock: 23, // 库存
-                defect: '瑕疵',
-                package: '包装',
-                product_rewards: [ // 商品奖项
-                    {
-                        reward:{
-                            id: 0,
-                            name: '13年百花奖金奖'
-                        }
-                    }
-                ],
-                creator: '创作者',
-                creator_reward: { // 创作者奖项
-                    id: 1,
-                    name: '市级工艺大师'
-                },
-                imgs: [], // 图片
-                like_count: 12, // 关注数
-                display_count: 34, // 浏览数，
-                is_liked: true, // 如果当前登录状态，是否关注过
-                create_at: '2015-01-01 10:10:10',
-                details: '<p class="font-34">123</p>',
+                theme: {},
+                inner_color: {},
+                moral: {},
+                origin_place: {},
+                product_rewards: [{reward: {}}],
+                creator_reward: {},
+                imgs: ['img.png'], // 占位图，误删
                 detail: {
                     medias: [{}]
                 }
             },
-            likes: [
-
-            ]
+            likes: []
         };
     },
     route: {
@@ -182,91 +196,11 @@ export default {
             this.action('play', {id});
         },
         share() {
-            this.action('share', {title: '宝贝', desc: '我的宝贝', icon: this.info.imgs[0], url: location.href});
+            let title = '我在[美玉秀秀]发现一个宝贝！';
+            let desc = this.info.name.substr(0, 20);
+            let icon = this.info.imgs[0];
+            this.action('share', {title, desc, icon, url: location.href});
         }
     }
 }
 </script>
-<style lang="sass">
-.jade-detail {
-    padding-bottom: 80px;
-    .imgs {
-        position: relative;
-        width: 100%;
-        height: 577px;
-        background-size: cover;
-    }
-    .titles {
-        display: -webkit-box-;
-        height: 238px;
-        padding: 32px 32px 36px 32px;
-        position: relative;
-        > div {
-            display: flex;
-            align-items: center;
-            width: 75%;
-            margin-top: 32px;
-            height: 36px;
-            > span:nth-of-type(2) {
-                position: absolute;
-                right: 32px;
-            }
-        }
-    }
-    .avatars {
-        height: 132px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > div {
-            display: flex;
-            align-items: center;
-            > span:nth-of-type(1) {
-                margin-left: 20px;
-                margin-right: 56px;
-            }
-            .icon-enter {
-                transform: rotate(-90deg);
-            }
-        }
-    }
-    .params {
-        padding: 0 32px 32px 32px;
-        .title {
-            display: flex;
-            align-items: center;
-            height: 80px;
-        }
-        .content {
-            > p {
-                margin-top: 32px;
-            }
-            > img {
-                margin-top: 32px;
-                width: 100%;
-            }
-        }
-        .medias {
-            .text{
-                margin-top: 32px;
-            }
-            .picture {
-                margin-top: 32px;
-                background-size: cover;
-            }
-            .picture:after {
-                content: '';
-                display: block;
-                padding-bottom: 200%;
-            }
-        }
-    }
-    .social {
-        padding: 0 32px;
-        position: fixed;
-        z-index: 9;
-        bottom: 0;
-        width: 100%;
-    }
-}
-</style>
