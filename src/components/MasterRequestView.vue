@@ -7,7 +7,7 @@
       <div class="input">
           <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact">
           <input class="font-30 border-default" type="text" placeholder="姓名" v-model="name">
-          <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" v-model="content"></textarea>
+          <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" maxlength="50" v-model="content"></textarea>
           <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
               <span>提交</span>
           </button>
@@ -86,7 +86,7 @@
             submit() {
                 this.$post('users/feedbacks', this.result)
                     .then(() => {
-                        this.action('toast', {success: 0, text: '已成功提交'});
+                        this.action('modal', {text: '您的申请已成功提交！请耐心等待客服联系。'});
                     });
             }
         }

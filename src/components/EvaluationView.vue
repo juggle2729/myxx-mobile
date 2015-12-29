@@ -99,14 +99,14 @@
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
-            <div class="flex bg-gray border-all font-30">
+            <div class="flex bg-light border-all font-30">
                 <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span :class="{'red': result.result=='真货' }">{{result.result}}</span>
                     <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span>
                 </div>
             </div>
-            <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all">
+            <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
                 <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>

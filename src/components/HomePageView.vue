@@ -86,13 +86,13 @@ export default {
                 this.$delete('users/follow/'+ this.userId)
                     .then(() => {
                         this.follow = false;
-                        this.action('toast', {success: 0, text: '取消关注成功'});
+                        this.action('toast', {text: '取消关注成功'});
                     });
             } else {
                 this.$post('users/follow/' + this.userId)
                     .then(() => {
                         this.follow = true;
-                        this.action('toast', {success: 0, text: '关注成功'});
+                        this.action('toast', {text: '关注成功'});
                     });
             }
         }

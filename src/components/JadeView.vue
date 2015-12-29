@@ -1,53 +1,54 @@
 <style lang="sass">
 .jade-view {
+    padding-bottom: 80px;
     .titles {
         display: -webkit-box-;
         height: 238px;
         padding: 32px 32px 36px 32px;
         position: relative;
         > div {
-            display: flex;
-            align-items: center;
-            width: 75%;
             margin-top: 32px;
             height: 36px;
-            > span:nth-of-type(2) {
-                position: absolute;
-                right: 32px;
-            }
+        }
+        .icon-price:before {
+            margin-right: 16px;
+        }
+        .icon-trophy:before {
+            margin-right: 16px;
         }
     }
     .avatars {
+        padding: 0 32px;
         height: 132px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > div {
-            display: flex;
-            align-items: center;
-            > span:nth-of-type(1) {
-                margin-left: 20px;
-                margin-right: 56px;
-            }
-            .icon-enter {
-                transform: rotate(-90deg);
-            }
+        span {
+            margin-left: 20px;
+        }
+        p {
+            margin-left: 16px;
         }
     }
     .params {
         padding: 0 32px 32px 32px;
         .title {
-            display: flex;
-            align-items: center;
             height: 80px;
         }
         .content {
             > p {
                 margin-top: 32px;
             }
-            > img {
+        }
+        .medias {
+            .text{
                 margin-top: 32px;
-                width: 100%;
+            }
+            .picture {
+                margin-top: 32px;
+                background-size: cover;
+            }
+            .picture:after {
+                content: '';
+                display: block;
+                padding-bottom: 200%;
             }
         }
     }
@@ -65,29 +66,29 @@
     <slider :ids="info.imgs"></slider>
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
-        <div>
-            <span class="font-30 icon-trophy" style="color:#f3ac1c;"> {{info.product_rewards[0].reward.name}}</span>
+        <div class="flex">
+            <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{info.product_rewards[0].reward.name}}</span>
         </div>
-        <div>
-            <span class="red font-30 icon-price"> {{info.price}}</span>
-            <span class="gray font-22">{{info.display_count}}人浏览</span>
+        <div class="flex">
+            <p class="red font-30 icon-price flex-1">{{info.price}}</p>
+            <p class="gray font-22 flex">{{info.display_count}}人浏览</p>
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="row avatars">
-        <div>
+    <div class="avatars flex">
+        <div class="flex flex-1">
             <div class="avatar-68" v-bg="info.user.photo"></div>
-            <span class="font-30" >{{info.user.nickname}}</span>
+            <span class="font-30 flex">{{info.user.nickname}}</span>
         </div>
-        <div>
-            <span class="font-26 red">进入官网</span>
-            <span class="icon-enter font-26 red"></span>
+        <div class="font-26 red flex" v-link="info.user | profile">
+            <p class="flex">进入官网</p>
+            <p class="icon-enter "></p>
         </div>
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <div class="title border-bottom">
-            <span class="font-22 gray">宝贝参数</span>
+        <div class="title border-bottom flex">
+            <span class="font-22 gray flex">宝贝参数</span>
         </div>
         <div class="content">
             <p class="font-26">
@@ -126,13 +127,13 @@
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <div class="title border-bottom">
-            <span class="font-22 gray">图文详情</span>
+        <div class="title border-bottom flex">
+            <span class="font-22 gray flex">图文详情</span>
         </div>
         <div class="medias font-30">
             <template v-for="media in info.detail.medias">
                 <div class="media text" v-if="media.media_type==='text'">{{media.media_content}}</div>
-                <div class="media picture" @click="coverflow(0)" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
+                <div class="media picture" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
                 <div class="media play" @click="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
             </template>
         </div>

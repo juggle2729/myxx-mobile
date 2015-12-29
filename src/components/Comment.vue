@@ -23,7 +23,7 @@
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="margin-bottom" v-for="c in comments" @click="remove(c, $index)">
+        <li class="margin-bottom" v-for="c in comments">
             <div class="author">
                 <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}" v-link="c.reply_from | profile"></div>
                 <div>
@@ -31,7 +31,7 @@
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
-            <div class="font-30 light" @click="reply($event, c.reply_from)">
+            <div class="font-30" @click="clickContent(c, $index, $event)">
                 <span v-if="c.reply_to" class="label">回复<span v-link="c.reply_from | profile" class="blue">{{c.reply_to.name}}</span>:</span>
                 <span>{{c.content}}</span>
             </div>
@@ -127,6 +127,13 @@ export default {
                                 });
                         }
                     });
+            }
+        },
+        clickContent(comment, index, e) {
+            if(this.self.id == comment.reply_from.id) {
+                this.remove(comment, index);
+            } else {
+                this.reply(e, comment.reply_from);
             }
         }
     }
