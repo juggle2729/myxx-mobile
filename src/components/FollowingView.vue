@@ -36,13 +36,13 @@ export default {
                 this.$delete('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = false;
-                    this.action('toast', {success: 0, text: '取消关注成功'});
+                    this.action('toast', {text: '已取消关注'});
                 });
             } else {
                 this.$post('users/follow/'+user.user_id)
                 .then(() => {
                     user.follow = true;
-                    this.action('toast', {success: 0, text: '关注成功'});
+                    this.action('toast', {text: '已关注'});
                 });
             }
         },

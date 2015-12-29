@@ -1,7 +1,6 @@
 <style lang="sass">
 .story-view {
     padding-bottom: 80px;
-    height:100%;
     .story {
         padding: 24px 32px;
     }
