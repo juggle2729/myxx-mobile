@@ -70,6 +70,11 @@ export default {
         title: '工艺展示详情',
         component: require('./components/CraftDetailView.vue')
     },
+    '/mall/:id/store' : {
+        name: 'mall-store',
+        title: '店铺详情',
+        component: require('./components/MallStoreView.vue')
+    },
     '/messages': {
         name: 'messages',
         title: '消息',

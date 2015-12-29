@@ -28,11 +28,11 @@
                 width: 180px;
                 height: 180px;
                 margin: 0 auto 32px auto;
+                background-size: cover;
+                background-position: center;
             }
         }
-        .img::before {
-            background: none;
-        }
+
         .contact {
             .title {
                 height: 80px;
@@ -109,13 +109,13 @@
             <div class="img logo" v-bg.md="shop.logo"></div>
             <p class="font-30">{{shop.shop_name}}</p>
             <p class="font-26 gray">{{shop.shop_about}}</p>
-            <input type="button" class="white font-26 bg-green" value="进入店铺"/>
+            <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
         </div>
         <div class="separator separator-20"></div>
         <div class="contact">
-            <div class="title flex border-bottom">
-                <img src="/static/images/icon/icon_line.svg" class="flex"/>
-                <span class="font-22 gray flex">联系方式</span>
+            <div class="block-title font-22 gray border-bottom">
+                <span class="line-yellow"></span>
+                <span class="title">联系方式</span>
             </div>
             <div class="content">
                 <div class="gray font-26">
@@ -131,9 +131,9 @@
         </div>
         <div class="separator separator-20"></div>
         <div class="message">
-            <div class="title flex">
-                <img src="/static/images/icon/icon_line.svg" class="flex"/>
-                <span class="font-22 gray flex">欢迎给我留言</span>
+            <div class="block-title font-22 gray">
+                <span class="line-yellow"></span>
+                <span class="title">欢迎给我留言</span>
             </div>
             <div class="content">
                 <textarea v-model="content" class="border-all"></textarea>
@@ -157,14 +157,14 @@
         mixins: [masterMixin],
         data() {
            return {
-              shop: {},
+              shop: {}
            };
         },
         components: {
             Comment
         },
         methods: {
-           loadMasterOtherData: () => {
+           loadMasterOtherData() {
               this.fetchMasterShopInfo();
            },
            fetchMasterShopInfo: (function() {
