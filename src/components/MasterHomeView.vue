@@ -61,29 +61,6 @@
 
         .dynamic-info {
             padding-bottom: 96px;
-            .title {
-                line-height: 66px;
-                text-align: center;
-                position: relative;
-                .line {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    width: 36px;
-                    height: 1px;
-                    margin-top: -1px;
-                    border-bottom: 2px solid #888888;
-                }
-                .line.before {
-                    margin-left: -68px;
-                }
-                .line.after {
-                    margin-left: 32px;
-                }
-                .text {
-                    padding: 0 12px;
-                }
-            }
         }
 
         .dynamic-list {
@@ -120,7 +97,6 @@
                 height: 540px;
                 background-repeat: no-repeat;
                 background-size: cover;
-                margin-bottom: 20px;
             }
         }
 
@@ -144,8 +120,38 @@
             }
         }
 
-        .no-more {
-            margin-top: 32px;
+        .result-item {
+            margin-left: 20px;
+            .person {
+                float: left;
+                padding-left: 0;
+                padding-top: 4.5%;
+            }
+
+            .name-time {
+                margin-left: 20px;
+                margin-top: -6px;
+            }
+
+            .time {
+                margin-top: 12px;
+            }
+
+            .status {
+                float: right;
+                padding-right: 20px;
+                * {
+                    line-height: 110px;
+                }
+            }
+
+            .icon-followed {
+                background: #56b937;
+                border-radius: 24px;
+                padding-right: 0;
+                vertical-align: text-top;
+                margin-right: -10px;
+            }
         }
     }
 </style>
@@ -174,10 +180,10 @@
             </div>
         </div>
         <div class="dynamic-info" :class="{'bottom-blank': dynamicTotal > 0}" v-show="dynamicTotal > 0">
-            <div class="title font-22 gray">
-                <div class="line before"></div>
+            <div class="line-title font-22 gray">
+                <div class="line"></div>
                 <span class="text gray">动态</span>
-                <div class="line after"></div>
+                <div class="line"></div>
             </div>
             <div class="dynamic-list">
                 <div class="dynamic-item bg-white" v-for="dynamic in dynamics">
@@ -191,6 +197,21 @@
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
                         <div class="media video" @click="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
+                        <div class="result-list" v-if="dynamic.event.results.length > 0">
+                            <div class="result-item clearfix" :class="[$index > 0 && dynamic.event.results.length > 1 ? 'border-bottom' : '']" v-for="result in dynamic.event.results">
+                                <div class="person">
+                                    <div class="photo avatar-50" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
+                                    <div class="name-time">
+                                        <div class="font-26">{{result.identifier.name}}</div>
+                                        <div class="time font-22 light">{{result.identifier.title || '国家级大师'}}</div>
+                                    </div>
+                                </div>
+                                <div class="status">
+                                    <span class="icon-followed font-22 white"></span>
+                                    <span class="text font-22">{{result.result}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
@@ -202,9 +223,6 @@
                                 </template>
                             </template>
                         </div>
-                    </div>
-                    <div v-if="dynamic.event_type === 'jianbao_result'">
-                        <span class="font-30">jianbao_result</span>
                     </div>
                     <social-bar :id="dynamic.event.post_id" :type="likeType(dynamic.event_type)" :active="dynamic.event.liked"
                                 :total="dynamic.event.like" :list="dynamic.event.likes" class="border-top social bg-white">
@@ -249,8 +267,6 @@
             likeType(eventType) {
                 if (eventType === 'jianbao_add') {
                     return 10;
-                } else if (eventType === 'jianbao_result') {
-                    return 20;
                 } else if (eventType === 'topic_add') {
                     return 30;
                 } else {
