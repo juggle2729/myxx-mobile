@@ -47,31 +47,6 @@
             margin-top: 22px;
         }
 
-        .expand {
-            .arrow-down {
-                background: url("http://7xp1h7.com2.z0.glb.qiniucdn.com/arrow-down.svg") no-repeat;
-                background-size: cover;
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-            }
-
-            .line {
-                width: 253px;
-            }
-
-            .arrow-down {
-                margin-left: 28px;
-                margin-right: -20px;
-                vertical-align: bottom;
-            }
-
-            .text {
-                padding-left: 12px;
-                padding-right: 32px;
-            }
-        }
-
         .works-info.bottom-blank {
             margin-bottom: 44px;
         }
@@ -94,7 +69,7 @@
             </div>
             <div class="expand line-title" v-show="worksHasMore && !worksLoading">
                 <span class="line"></span>
-                <span class="arrow-down font-22 gray"></span>
+                <span class="arrow font-22 gray"></span>
                 <span class="text font-22 gray" @click="fetchMasterWorksInfo">展开</span>
                 <span class="line"></span>
             </div>

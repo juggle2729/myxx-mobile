@@ -90,6 +90,42 @@
         }
     }
 
+    .line-yellow {
+        width: 3px;
+        height: 25px;
+        display: inline-block;
+        background-color: #f3ac1c;
+        vertical-align: -4px;
+        padding-right: 0;
+    }
+
+    .expand {
+        .arrow {
+            background: url("http://7xp1h7.com2.z0.glb.qiniucdn.com/arrow-down.svg") no-repeat;
+            background-size: cover;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+
+            margin-left: 28px;
+            margin-right: -20px;
+            vertical-align: bottom;
+        }
+
+        .arrow-up {
+            transform: rotateX(180deg);
+        }
+
+        .line {
+            width: 253px;
+        }
+
+        .text {
+            padding-left: 12px;
+            padding-right: 32px;
+        }
+    }
+
     .no-more {
         margin-top: 32px;
     }
