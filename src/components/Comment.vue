@@ -67,6 +67,9 @@ export default {
         this.$on('reply', (e, user) => {
             this.reply(e, user);
         });
+        this.$on('fetch', () => {
+            this.fetch();
+        });
     },
     events: {
         // scrollToBottom(e) {
