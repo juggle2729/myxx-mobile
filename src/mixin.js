@@ -40,10 +40,16 @@ export default {
                         defer.resolve(user);
                     });
                 } else if(handler === 'keyboard') {
-                    bridge.callHandler(handler, params, (resp) => {
-                        // FIXME针对输入，做一些安全转码处理
-                        defer.resolve(resp);
-                    });
+                    if(!this.self) {
+                        this.action('login');
+                        defer.reject();
+                    } else {
+                        bridge.callHandler(handler, params, (resp) => {
+                            // FIXME针对输入，做一些安全转码处理
+                            defer.resolve(resp);
+                        });
+                    }
+                    
                 } else if(handler === 'login') {
                     bridge.callHandler(handler, params, (resp) => {});
                 } else if('delete,confirm'.indexOf(handler) !== -1) {
@@ -51,7 +57,7 @@ export default {
                         defer.resolve(resp);
                     });
                 } else if(handler === 'share') {
-                    params.url = params.url + '?time=' + (new Date()).getTime();
+                    params.url = params.url + '?share=' + (new Date()).getTime();
                     bridge.callHandler(handler, params);
                 } else { // 无回调的接口
                     bridge.callHandler(handler, params);
@@ -75,8 +81,6 @@ export default {
                             defer.resolve(resp.data);
                         } else if(resp.status === 605){
                             this.action('login');
-                        } else {
-                            this.toast(resp.status);
                         }
                     });
                 }

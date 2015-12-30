@@ -197,7 +197,7 @@ export default {
             this.action('play', {id});
         },
         share() {
-            let title = '我在[美玉秀秀]发现一个宝贝！';
+            let title = '我在[美玉秀秀]发现一个宝贝！快来帮我看看这个宝贝怎么样！';
             let desc = this.info.name.substr(0, 20);
             let icon = this.info.imgs[0];
             this.action('share', {title, desc, icon, url: location.href});

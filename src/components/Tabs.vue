@@ -18,7 +18,7 @@
 }
 </style>
 <template>
-<div class="tabs">
+<div class="tabs bg-white">
     <div v-for="tab in tabs.items" :class="{'red': tab.active}" class="font-26 center border-right">
         <label for="tab-{{$index}}">{{tab.name}}</label>
         <input id="tab-{{$index}}" name="tab" v-model="tabs.active" type="radio" value='{{tab.value}}' />

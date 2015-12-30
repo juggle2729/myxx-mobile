@@ -148,7 +148,14 @@ export default {
             this.action('play', {id});
         },
         share() {
-            let title = this.self.nickname + '的话题！';
+            let title = '分享[美玉秀秀]话题！';
+            if(this.story.topic_type === '晒宝') {
+                title = '快来帮我看看这个宝贝怎么样！';
+            } else if(this.story.topic_type === '工艺') {
+                title = '快来围观这个精湛的工艺！';
+            } else if(this.story.topic_type === '淘玉故事') {
+                title = '好玉原来是这么淘来的！';
+            }
             let desc = this.story.content.substr(0, 20);
             let icon = this.story.medias[0].id;
             this.action('share', {title, desc, icon, url: location.href});

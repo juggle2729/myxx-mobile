@@ -1,5 +1,7 @@
 import Q from 'q';
 
+const isMobile = /android|iphone|ipod|ipad/i.test(navigator.userAgent);
+
 let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
@@ -13,14 +15,18 @@ let adapter = {
             };
             cb(JSON.stringify(user));
         } else if(handler === 'keyboard') {
-            let comment = prompt("少年，来鉴宝吧！");
-            comment && cb(comment);
+            if(!isMobile) {
+                let comment = prompt("少年，来鉴宝吧！");
+                comment && cb(comment);
+            }
         } else {
-            const span = document.createElement('span');
-            span.innerText = handler;
-            span.className = 'toast white visible';
-            document.body.appendChild(span);
-            setTimeout(() => span.parentNode.removeChild(span), 2000);
+            if(!isMobile) {
+                const span = document.createElement('span');
+                span.innerText = handler;
+                span.className = 'toast white visible';
+                document.body.appendChild(span);
+                setTimeout(() => span.parentNode.removeChild(span), 2000);
+            }
         }
     }
 };

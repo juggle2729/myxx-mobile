@@ -31,7 +31,7 @@ Vue.config.debug = true;
 Vue.http.options.emulateJSON = true;
 Vue.http.options.root = config.api;
 Vue.http.options.beforeSend = function(xhr, req) {
-    if(location.hash.indexOf('?time=') !== -1 && req.method !== 'GET') {
+    if(this.$route.query.share && req.method !== 'GET') {
         emitter.emit('get-app');
     }
 };
@@ -53,8 +53,7 @@ router.beforeEach(({from, to, abort, next}) => {
             next();
         }
     } else {
-        if(from.query && from.query.time) {
-            emitter.emit('get-app');
+        if(from.query && from.query.share) {
             abort();
         } else {
             next();

@@ -193,7 +193,7 @@ export default {
             }
         },
         share() {
-            let title = this.self.nickname + '邀请你来鉴宝！';
+            let title = '快来帮我鉴定一下，看看这个宝贝怎么样！';
             let desc = this.evaluation.description.substr(0, 20);
             let icon = this.evaluation.pictures[0];
             this.action('share', {title, desc, icon, url: location.href});

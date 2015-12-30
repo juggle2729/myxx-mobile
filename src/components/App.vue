@@ -27,22 +27,25 @@
                 height: 100%;
             }
         }
+        .download-trigger {
+            display: block;
+        }
     }
 </style>
 <template>
   <main :class="{'loading': $loadingRouteData}">
-    <div @click="getApp" class="hide download-top flex bg-default border-bottom">
+    <div v-if="isShare" @click="getApp($event)" class="download-top flex bg-default border-bottom">
         <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
             <div class="slogan font-26 gray padding-top">中国最大的和田玉平台</div>
         </div>
-        <div class="download-trigger download-btn font-30 red border-red">下载</div>
+        <a :href="appCmd" class="download-trigger download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div @click="getApp" class="hide download-bottom flex bg-red white font-30">
+    <div v-if="isShare" @click="getApp($event)" class="download-bottom flex bg-red white font-30">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-left.png" alt="left">
-        <div class="download-trigger flex-1 center bold">我也要晒宝</div>
+        <a :href="appCmd" class="download-trigger flex-1 center bold">我也要晒宝</a>
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-right.png" alt="right">
     </div>
   </main>
@@ -63,6 +66,14 @@ export default {
         });
     },
     computed: {
+        isShare() {
+            return !this.platform.isApp && this.$route.query.share;
+        },
+        appCmd() {
+            let path = this.$route.path;
+            path = path.replace(/share=\d+&?/, '').replace(/\?$/, '');  // 去掉share参数
+            return 'myxx://web/' + encodeURIComponent(path);
+        },
         appUrl() {
             let url = '';
             if(this.platform.isIOS) {
@@ -76,18 +87,12 @@ export default {
         }
     },
     ready() {
-        if(!this.platform.isApp && location.hash.indexOf('?time=') !== -1) {
-            const downloadDivs = [document.querySelector('.download-top'), document.querySelector('.download-bottom')];
-            downloadDivs.forEach((d) => {
-                d.classList.remove('hide');
-            });
-            emitter.on('get-app', (e) => {
-                this.getApp();
-            });
-        }
+        emitter.on('get-app', (e) => {
+            this.getApp();
+        });
     },
     methods: {
-        getApp() {
+        getApp(e) {
             if(this.platform.isWechat) {
                 let hint = document.createElement('img');
                 if(this.platform.isAndroid) {
@@ -114,16 +119,25 @@ export default {
                     document.body.appendChild(hint);
                 }
             } else {
-                let myxxIframe = document.createElement('iframe');
-                myxxIframe.src = 'myxx://';
-                myxxIframe.width = '1px';
-                myxxIframe.height = '1px';
-                myxxIframe.scrolling = 'no';
-                myxxIframe.style.border = 'none';
-                myxxIframe.src = 'myxx://';
-                document.body.appendChild(myxxIframe);
+                // let myxxIframe = document.createElement('iframe');
+                // myxxIframe.src = this.appCmd;
+                // myxxIframe.width = '1px';
+                // myxxIframe.height = '1px';
+                // myxxIframe.scrolling = 'no';
+                // myxxIframe.style.border = 'none';
+                // document.body.appendChild(myxxIframe);
+                let opened = false;
+                if(e && e.target) {
+                    e.target.focus();
+                    e.target.addEventListener('blur', () => {
+                        opened = true;
+                    }, false);
+                }
                 setTimeout(() => {
-                    location.href = this.appUrl;
+                    if(!opened) {
+                        console.debug('appURL', this.appUrl);
+                        location.href = this.appUrl;
+                    }
                 }, 500);
             }
         }
