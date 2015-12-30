@@ -74,6 +74,14 @@
         margin-bottom: 100px;
     }
 
+    .block-title {
+        line-height: 80px;
+        padding-left: 32px;
+        .title {
+           margin-left: 16px;
+        }
+    }
+
     .line-title {
         line-height: 66px;
         text-align: center;

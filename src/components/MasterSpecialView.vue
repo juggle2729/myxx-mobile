@@ -1,10 +1,5 @@
 <style lang="sass">
     .master-special-view {
-        .block-title {
-            line-height: 80px;
-            padding-left: 32px;
-        }
-
         .info {
             padding: 22px 32px 32px;
         }
