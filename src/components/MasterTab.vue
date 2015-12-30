@@ -51,7 +51,7 @@
         },
         computed: {
             pageTitle() {
-                return this.masterInfo.name + '-官网';
+                return encodeURIComponent(this.masterInfo.name + '-官网');
             }
         }
     };

@@ -53,7 +53,7 @@
                }
 
                .profile {
-                   margin: 23px 16px;
+                   margin: 16px;
                    .red {
                        margin-top: 16px;
                    }

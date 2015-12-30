@@ -198,7 +198,8 @@
                     <div v-if="dynamic.event_type === 'jianbao_add'">
                         <div class="media video" @click="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
                         <div class="result-list" v-if="dynamic.event.results.length > 0">
-                            <div class="result-item clearfix" :class="[$index > 0 && dynamic.event.results.length > 1 ? 'border-bottom' : '']" v-for="result in dynamic.event.results">
+                            <div class="result-item clearfix" :class="[dynamic.event.results.length > 1 && $index !== dynamic.event.results.length - 1 ?
+                            'border-bottom' : '']" v-for="result in dynamic.event.results">
                                 <div class="person">
                                     <div class="photo avatar-50" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                                     <div class="name-time">

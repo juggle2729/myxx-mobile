@@ -1,7 +1,7 @@
 <template>
 <div class="masters-view bg-default">
     <template v-for="item in list">
-        <div class="cell bg-white flex" v-link="{name: 'master-home', params: {id: item.id}, query: {title: item.name + '-官网'}}" v-bg="item.background_img">
+        <div class="cell bg-white flex" v-link="{name: 'master-home', params: {id: item.id}, query: {title: encodeURIComponent(item.name + '-官网')}}" v-bg="item.background_img">
             <div class="txt">
                 <p class="font-34 white">{{item.name}}</p>
                 <div class="flex">
