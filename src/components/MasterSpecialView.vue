@@ -79,6 +79,7 @@
 
                 .detail {
                     padding-top: 32px;
+                    overflow: hidden;
                 }
             }
         }

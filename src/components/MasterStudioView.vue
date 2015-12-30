@@ -157,7 +157,8 @@
         mixins: [masterMixin],
         data() {
            return {
-              shop: {}
+               content: '',
+               shop: {}
            };
         },
         components: {
@@ -187,7 +188,8 @@
                if(content && typeof content === 'string') {
                    this.$post(`users/target/${this.id}/type/50/comments`, {content})
                        .then(() => {
-                           this.fetch();
+                           this.content = '';
+                           this.$broadcast('fetch');
                        });
                } else {
                    this.toast('说点什么吧');

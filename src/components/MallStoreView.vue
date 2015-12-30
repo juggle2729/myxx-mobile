@@ -94,8 +94,8 @@
                 <div class="line"></div>
             </div>
             <ul class="bg-default">
-                <li v-for="product in products" class="bg-white">
-                    <div class="image" v-bg.md="product.imgs[0]"></div>
+                <li v-for="product in products" class="bg-white" v-link="{name: 'jade', params: {id: product.id}}">
+                    <div class="image" v-bg.md="product.imgs[0]" @click.stop="coverflow(product.imgs[0], $index)"></div>
                     <div class="font-26 profile">
                         <p>{{product.name}}</p>
                         <p class="red">{{product.price | currency '￥'}}</p>
@@ -141,32 +141,35 @@
            }
         },
         methods: {
-           expandTitle() {
+            expandTitle() {
               this.isExpand = !this.isExpand;
-           },
-           loadMasterOtherData() {
+            },
+            loadMasterOtherData() {
               this.fetchMallStoreInfo();
-           },
-           fetchMallStoreInfo: (function() {
-              let loading = false;
-              return function() {
-                 if(loading) {
-                     return console.debug('store info!!!!!!!!');
-                 }
-                 loading = true;
-                 console.debug('fetch store info', 'mall ' + this.id);
+            },
+            coverflow(pictureId, index) {
+                this.action('coverflow', {pictureId, index});
+            },
+            fetchMallStoreInfo: (function() {
+               let loading = false;
+               return function() {
+                  if(loading) {
+                      return console.debug('store info!!!!!!!!');
+                  }
+                  loading = true;
+                  console.debug('fetch store info', 'mall ' + this.id);
 
-                 return this.$get(`mall/shops/${this.id}`).then((data) => {
-                     this.shop = data;
-                     loading = false;
-                     this.fetchStoreProducts();
-                 });
-              }
-          })(),
-          fetchStoreProducts: (function() {
-              const limit = 5;
-              let loading = false;
-              return function() {
+                  return this.$get(`mall/shops/${this.id}`).then((data) => {
+                      this.shop = data;
+                      loading = false;
+                      this.fetchStoreProducts();
+                  });
+               }
+            })(),
+            fetchStoreProducts: (function() {
+               const limit = 5;
+               let loading = false;
+               return function() {
                   if(loading) {
                       return console.debug('store products skip!!!!!');
                   }

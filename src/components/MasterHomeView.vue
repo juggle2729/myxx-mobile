@@ -200,7 +200,8 @@
                 <div class="line"></div>
             </div>
             <div class="dynamic-list">
-                <div class="dynamic-item bg-white" v-for="dynamic in dynamics">
+                <div class="dynamic-item bg-white" v-for="dynamic in dynamics"
+                     v-link="{name: dynamic.event_type === 'jianbao_add' ? 'evaluation' : (dynamic.event_type === 'topic_add' ? 'story' : ''), params: {id: dynamic.event.post_id}}">
                     <div class="person">
                         <div class="photo avatar-50" v-bg.sm="dynamic.event.user.photo"></div>
                         <div class="name-time">
@@ -210,7 +211,7 @@
                     </div>
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
-                        <div class="media video" @click="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
+                        <div class="media video" @click.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
                         <div class="result-list" v-if="dynamic.event.results.length > 0">
                             <div class="result-item clearfix" :class="[dynamic.event.results.length > 1 && $index !== dynamic.event.results.length - 1 ?
                             'border-bottom' : '']" v-for="result in dynamic.event.results">
@@ -230,11 +231,11 @@
                     </div>
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
-                            <div class="unique" v-if="dynamic.event.media.length === 1" v-bg.lg="dynamic.event.media[0].id"></div>
+                            <div class="unique" v-if="dynamic.event.media.length === 1" @click.stop="coverflow(dynamic.event.media, 0)" v-bg.lg="dynamic.event.media[0].id"></div>
                             <template v-else="dynamic.event.media.length !== 1">
                                 <template v-for="media in dynamic.event.media">
-                                    <div class="media picture" @click="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
-                                    <div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
+                                    <div class="media picture" @click.stop="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
+                                    <div class="media play" @click.stop="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
                                 </template>
                             </template>
                         </div>
@@ -248,9 +249,9 @@
                 </div>
             </div>
             <div class="no-more light font-22 center" v-show="!hasMore">没有更多了</div>
-            <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
-                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-            </div>
+        </div>
+        <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
+            <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
         </div>
         <master-tab :master-info="masterBaseData" :current-tab="'master-home'"></master-tab>
     </div>

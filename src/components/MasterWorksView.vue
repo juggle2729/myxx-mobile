@@ -61,7 +61,8 @@
                 <div class="line"></div>
             </div>
             <div class="work-item bg-white" v-for="work in masterWorks">
-                <div class="img work-img" v-bg="work.imgs[0]" query="imageView2/1/w/702/h/540/interlace/1">
+                <div class="img work-img" v-bg="work.imgs[0]" query="imageView2/1/w/702/h/540/interlace/1"
+                     v-link="{name: 'jade', params: {id: work.id}}">
                     <div class="img reward-img" v-if="work.product_rewards.length > 0" v-bg="work.product_rewards[0].reward_img"
                          query="imageView2/1/w/194/h/150/interlace/1"></div>
                 </div>
