@@ -2,23 +2,34 @@
     .master-home-view {
         overflow-x: hidden;
         .personal-info {
-            background-size: 100% 100%;
+            background: url("/static/images/master/cover.png") no-repeat;
+            background-size: cover;
         }
 
         .attention {
             padding-top: 32px;
             text-align: right;
             .content {
-                width: 144px;
                 float: right;
+            }
+
+            .status {
+                width: 152px;
                 line-height: 54px;
                 border-radius: 54px;
-                margin-right: -24px;
-                padding-right: 44px;
-                padding-top: 5px;
+                margin-right: -22px;
+                padding-right: 46px;
             }
-            .icon-like {
+
+            .icon-follow {
+                line-height: 54px;
                 padding-right: 0;
+                vertical-align: -0.04rem;
+            }
+
+            .count {
+                margin-top: 16px;
+                margin-right: 24px;
             }
         }
 
@@ -157,12 +168,15 @@
 </style>
 <template>
     <div class="master-home-view bg-default">
-        <div class="personal-info" :class="{'bottom-blank': dynamicTotal <= 0}" v-bg.lg="masterBaseData.background_img">
+        <div class="personal-info" :class="{'bottom-blank': dynamicTotal <= 0}">
             <div class="border-vertical">
-                <div class="attention font-26 clearfix">
-                    <div class="content bg-red white">
-                        <span class="icon-like"></span>
-                        <span class="count">{{masterBaseData.fans_count || 0}}</span>
+                <div class="attention clearfix" v-show="!!masterBaseData">
+                    <div class="content white">
+                        <div class="font-26 status" @click="followMaster" :class="[masterBaseData.follow ? 'bg-gray' : 'bg-red']">
+                            <span class="font-30" :class="[masterBaseData.follow ? '' : 'icon-follow']"></span>
+                            {{masterBaseData.follow ? '已关注' : '关注'}}
+                        </div>
+                        <div class="count font-22 gray">粉丝 {{masterBaseData.fans_count || 0}}</div>
                     </div>
                 </div>
                 <div class="base-info">
@@ -175,7 +189,7 @@
                     </div>
                     <div class="brief font-26 gray">{{masterBaseData.brief}}</div>
                     <div class="link-detail white font-26 bg-black"
-                         v-link="{name: 'master-special', params: {id: masterBaseData.id}, query: {title: masterBaseData.name + '-官网'}}">查看详情</div>
+                         v-link="{name: 'master-special', params: {id: masterBaseData.id}, query: {title: encodeURIComponent(masterBaseData.name + '-官网')}}">查看详情</div>
                 </div>
             </div>
         </div>
@@ -253,10 +267,39 @@
             return {
                 hasMore: true,
                 dynamics: [],
-                dynamicTotal: 0
+                dynamicTotal: 0,
+                following: false
             };
         },
         methods: {
+            followMaster() {
+                if (this.following) {
+                    return;
+                }
+
+                this.following = true;
+                if (this.masterBaseData.follow) {
+                    this.$delete(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
+                        this.following = false;
+                        this.masterBaseData.follow = false;
+                        this.masterBaseData.fans_count -= 1;
+
+                        localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
+                    }).catch(() => {
+                        this.following = false;
+                    });
+                } else {
+                    this.$post(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
+                        this.following = false;
+                        this.masterBaseData.follow = true;
+                        this.masterBaseData.fans_count += 1;
+
+                        localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
+                    }).catch(() => {
+                        this.following = false;
+                    });
+                }
+            },
             play(id) {
                 this.action('play', {id});
             },
