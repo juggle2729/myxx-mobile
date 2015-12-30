@@ -62,7 +62,7 @@
 }
 </style>
 <template>
-<div class="jade-view">
+<div class="jade-view bg-white">
     <slider :ids="info.imgs"></slider>
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>

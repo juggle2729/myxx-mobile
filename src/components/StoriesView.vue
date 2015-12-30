@@ -1,6 +1,6 @@
 <template>
 <div class="stories-view">
-    <div class="tabs">
+    <div class="tabs bg-white">
         <div :class="{'red': tab=='time'}" class="font-26 center border-right">
             <label for="tab-time">最新</label><input name="tab" v-model="tab" type="radio" id="tab-time" value="time" />
         </div>

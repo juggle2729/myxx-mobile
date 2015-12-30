@@ -182,7 +182,7 @@ export default {
             if(action === 'login') {
                 this.action('login');
             } else if(action === 'request'){
-                this.action('confirm', {text: '申请鉴宝权限'})
+                this.action('confirm', {text: '抱歉，只有大师才可鉴定。您可以联系我们进行大师身份认证'})
                     .then((confirm) => {
                         if(confirm === '1') {
                             this.$route.router.go({name: 'master-request', params: {id: this.self.id}});

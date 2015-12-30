@@ -3,7 +3,7 @@
         <div class="info">
             <textarea class="font-30 border-default" placeholder="写下你对美玉秀秀的建议吧" v-model="content" maxlength="200"></textarea>
             <p class="font-30">联系方式</p>
-            <input class="font-30 border-default" type="text" placeholder="留下您的邮箱或电话号码" v-model="contact">
+            <input class="font-30 border-default" type="text" placeholder="留下您的邮箱或电话号码" v-model="contact" maxlength="60">
             <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
                 <span>提交</span>
             </button>
@@ -57,7 +57,7 @@ export default {
         submit() {
             this.$post('users/feedbacks', this.result)
                 .then(() => {
-                    this.action('toast', {success: 0, text: '已成功提交'});
+                    this.action('toast', {success: 1, text: '已成功提交'});
                 });
         }
     }

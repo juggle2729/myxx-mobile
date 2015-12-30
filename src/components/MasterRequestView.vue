@@ -5,8 +5,8 @@
           如果您有意向请填写以下信息，美玉秀秀客服人员会在两个工作日内联系您！
       </p>
       <div class="input">
-          <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact">
-          <input class="font-30 border-default" type="text" placeholder="姓名" v-model="name">
+          <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact" maxlength="20">
+          <input class="font-30 border-default" type="text" placeholder="姓名" v-model="name" maxlength="20">
           <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" maxlength="50" v-model="content"></textarea>
           <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
               <span>提交</span>
