@@ -54,16 +54,16 @@
             <a href="myxx://">美玉秀秀</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/evaluation/1">鉴宝1</a>
+            <a href="myxx://web/%2Fevaluation%2F1">鉴宝1</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/story/23">话题23</a>
+            <a href="myxx://web/%2Fstory%2F23">话题23</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/jade/2">宝贝2</a>
+            <a href="myxx://web/%2Fjade%2F2">宝贝2</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/master/1/home?title=%E8%B5%B5%E5%85%B0-%E5%AE%98%E7%BD%91">大师官网1</a>
+            <a href="myxx://web/%2Fmaster%2F1%2Fhome%3Ftitle%3D%25E8%25B5%25B5%25E5%2585%25B0-%25E5%25AE%2598%25E7%25BD%2591">大师官网1</a>
         </li>
     </ul>
 </div>

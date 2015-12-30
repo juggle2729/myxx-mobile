@@ -1,6 +1,7 @@
 <style lang="sass">
 .story-view {
     padding-bottom: 80px;
+    min-height:100%;
     .story {
         padding: 24px 32px;
     }
@@ -23,6 +24,9 @@
     }
     .desc {
         margin: 30px 0 24px;
+        .tag {
+            margin-bottom: 24px;
+        }
     }
     .medias {
         .media {
@@ -54,12 +58,6 @@
             }
         }
     }
-    .loadmore {
-        img {
-            width: 120px;
-            height: 68px;
-        }
-    }
     .social {
         padding: 0 32px;
         position: fixed;
@@ -82,7 +80,10 @@
                     </div>
                 </div>
             </div>
-            <div class="desc font-30"><span class="gray">#{{story.topic_type}}</span><br/>{{story.content}}</div>
+            <div class="desc font-30">
+                <div class="tag gray font-26">#{{story.topic_type}}</div>
+                <div>{{story.content}}</div>
+            </div>
         </div>
         <div class="medias">
             <div v-if="unique">
@@ -96,11 +97,6 @@
             </template>
         </div>
     </div>
-    <social-bar :id="story.post_id" type="30" :active="story.liked" :total="story.like" :list="story.likes" class="border-top social bg-white">
-        <div class="center border-left light extra-action">
-            <i class="icon-comment"></i><span>{{story.comment}}</span>
-        </div>
-    </social-bar>
     <div class="separator"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">

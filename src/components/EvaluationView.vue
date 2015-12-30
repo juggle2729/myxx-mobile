@@ -149,7 +149,7 @@ export default {
             let label = '我来鉴定';
             let action;
             if(!this.evaluation.unidentified) {
-                label = '你已鉴定过';
+                label = '您已鉴定过';
             } else if(!this.evaluation.has_seat) {
                 label = '鉴定已完成';
             } else if(this.evaluation.master) {
