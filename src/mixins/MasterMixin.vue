@@ -26,8 +26,17 @@
                 this.loadMasterOtherData();
             },
             canDeactivate({ to }) {
-                const targetRouteName = to.name;
-                if (!targetRouteName.startsWith('master')) { //clear cache
+                this.clearMasterCache(to.name);
+                return true;
+            },
+            activate(transition) {
+                this.clearMasterCache(transition.from.name);
+                transition.next();
+            }
+        },
+        methods: {
+            clearMasterCache(targetRouteName) {
+                if (targetRouteName && !targetRouteName.startsWith('master')) { //clear cache
                     let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
                     if (!cacheMastersBaseInfo) {
                         cacheMastersBaseInfo = {};
@@ -37,11 +46,8 @@
 
                     localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
                 }
-                return true;
-            }
-        },
-        methods: {
-            loadMasterOtherData: function () {
+            },
+            loadMasterOtherData() {
                 console.log('master default other data loading');
             },
             fetchMasterBaseInfo: (function() {
