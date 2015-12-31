@@ -46,10 +46,10 @@ var router = new Router({hashbang: false, suppressTransitionError: false});
 router.beforeEach(({from, to, abort, next}) => {
     if(/myxx/i.test(navigator.userAgent)) {
         if(from.fullPath && from.fullPath !== to.fullPath) {
-            console.debug('go', to.path);
+            console.debug(history.length, 'go', to.path);
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-            abort();
         } else {
+            console.debug(history.length, 'load', to.path);
             next();
         }
     } else {
