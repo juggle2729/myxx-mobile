@@ -2,7 +2,7 @@
 .social-bar {
     height: 80px;
     .action {
-        padding-left: 12px;
+        padding-left: 26px;
         padding-right: 32px;
     }
     .users {

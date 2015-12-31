@@ -51,18 +51,22 @@ export default {
     },
     '/master/:id/home' : {
         name: 'master-home',
+        title: '大师官网',
         component: require('./components/MasterHomeView.vue')
     },
     '/master/:id/works' : {
         name: 'master-works',
+        title: '大师官网',
         component: require('./components/MasterWorksView.vue')
     },
     '/master/:id/special' : {
         name: 'master-special',
+        title: '大师官网',
         component: require('./components/MasterSpecialView.vue')
     },
     '/master/:id/studio' : {
         name: 'master-studio',
+        title: '大师官网',
         component: require('./components/MasterStudioView.vue')
     },
     '/craft/:id/:craftId/detail' : {

@@ -102,12 +102,22 @@
 
             .description {
                 margin: 24px 20px;
+                line-height: 42px;
             }
 
             .video {
                 height: 540px;
                 background-repeat: no-repeat;
                 background-size: cover;
+            }
+
+            .extra-action {
+                text-align: right;
+                padding-right: 26px;
+            }
+
+            .social-bar {
+                border-radius: 8px;
             }
         }
 
@@ -163,6 +173,10 @@
                 vertical-align: text-top;
                 margin-right: -10px;
             }
+
+            .one-word {
+                margin-right: 22px;
+            }
         }
     }
 </style>
@@ -189,7 +203,7 @@
                     </div>
                     <div class="brief font-26 gray">{{masterBaseData.brief}}</div>
                     <div class="link-detail white font-26 bg-black"
-                         v-link="{name: 'master-special', params: {id: masterBaseData.id}, query: {title: encodeURIComponent(masterBaseData.name + '-官网')}}">查看详情</div>
+                         v-link="{name: 'master-special', params: {id: masterBaseData.id}}">查看详情</div>
                 </div>
             </div>
         </div>
@@ -219,10 +233,10 @@
                                     <div class="photo avatar-50" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                                     <div class="name-time">
                                         <div class="font-26">{{result.identifier.name}}</div>
-                                        <div class="time font-22 light">{{result.identifier.title || '国家级大师'}}</div>
+                                        <div class="time font-22 light">{{result.identifier.title || ''}}</div>
                                     </div>
                                 </div>
-                                <div class="status">
+                                <div class="status" :class="{'one-word' : result.result.length === 1}">
                                     <span class="icon-followed font-22 white"></span>
                                     <span class="text font-22">{{result.result}}</span>
                                 </div>
@@ -242,7 +256,7 @@
                     </div>
                     <social-bar :id="dynamic.event.post_id" :type="likeType(dynamic.event_type)" :active="dynamic.event.liked"
                                 :total="dynamic.event.like" :list="dynamic.event.likes" class="border-top social bg-white">
-                        <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: dynamic.event.post_id}}">
+                        <div class="border-left gray extra-action" v-link="{name: 'evaluation', params: {id: dynamic.event.post_id}}">
                             <i class="icon-comment"></i><span>{{dynamic.event.comment}}</span>
                         </div>
                     </social-bar>

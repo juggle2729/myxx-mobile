@@ -46,7 +46,7 @@ var router = new Router({hashbang: false, suppressTransitionError: false});
 let skip = false;
 router.beforeEach(({from, to, abort, next}) => {
     if(/myxx/i.test(navigator.userAgent)) {
-        
+
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
             abort();
@@ -64,7 +64,7 @@ router.beforeEach(({from, to, abort, next}) => {
 });
 //设置页面title
 router.afterEach(function ({ to }) {
-    document.title = (to.title || to.query.title || '美玉秀秀');
+    document.title = (to.title || '美玉秀秀');
 });
 router.map(routes);
 

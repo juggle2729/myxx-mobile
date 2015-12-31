@@ -4,7 +4,7 @@
 <template>
     <div class="master-tabs bg-white border-top">
         <div class="master-tab font-22 gray" v-for="tab in tabs"
-             :class="{'red': currentTab === tab.linkName}" v-link="{name: tab.linkName, params: {id: masterInfo.id}, query: {title: pageTitle}}">
+             :class="{'red': currentTab === tab.linkName}" v-link="{name: tab.linkName, params: {id: masterInfo.id}}">
             <div class="tab-icon {{tab.iconName}}"></div>
             <div class="tab-name">{{tab.name}}</div>
         </div>
@@ -71,10 +71,12 @@
         }
 
         .tab-name {
-            margin-top: 12px;
+            line-height: 10px;
+            margin-top: 14px;
         }
 
         .tab-icon {
+            font-size: 36px;
             padding-right: 0;
         }
     }

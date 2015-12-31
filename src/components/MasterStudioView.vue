@@ -61,6 +61,14 @@
                       width: 243px;
                    }
                 }
+                .email img {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 0;
+                }
+                .icon-location {
+                    font-size: 32px;
+                }
             }
         }
         .message {
@@ -94,6 +102,9 @@
                     display: none;
                 }
             }
+            .margin-bottom:not(:first-child) {
+                margin-top: 32px;
+            }
         }
     }
 </style>
@@ -124,9 +135,12 @@
                 </div>
                 <div class="gray font-26">
                     <div class="right-120 flex"><img src="/static/images/icon/icon_qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
-                    <div class="flex"><img src="/static/images/icon/icon_email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
+                    <div class="flex email"><img src="/static/images/icon/icon_email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
                 </div>
-                <div class="gray font-26"><i class="icon-site"></i><span>{{masterBaseData.address}}</span></div>
+                <div class="gray font-26">
+                    <span class="icon-location gray"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                    <span>{{masterBaseData.address}}</span>
+                </div>
             </div>
         </div>
         <div class="separator separator-20"></div>
