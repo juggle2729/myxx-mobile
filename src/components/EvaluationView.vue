@@ -14,6 +14,7 @@
         }
         .desc {
             margin: 30px 0 0;
+            line-height: 1.2em;
         }
     }
     .images {
@@ -179,7 +180,9 @@ export default {
         jb() {
             let label = '我来鉴定';
             let action;
-            if(!this.evaluation.unidentified) {
+            if(this.self && this.self.id == this.evaluation.user.id) {
+                label = '不能鉴定自己的宝贝';
+            } else if(!this.evaluation.unidentified) {
                 label = '您已鉴定过';
             } else if(!this.evaluation.has_seat) {
                 label = '鉴定已完成';

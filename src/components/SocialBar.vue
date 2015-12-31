@@ -2,13 +2,13 @@
 .social-bar {
     height: 80px;
     .action {
-        padding-left: 26px;
-        padding-right: 32px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .users {
         > div {
             width: percentage(1/7);
-            padding: 15px;
+            padding: 10px;
             /*background-color: rgba(tomato, .2);*/
         }
         .user, .more {

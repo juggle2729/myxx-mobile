@@ -27,6 +27,7 @@
         > p:nth-of-type(2){
             margin-top: 16px;
             line-height: 46px;
+            line-height: 1.2em;
         }
     }
     .medias {
@@ -85,7 +86,7 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
@@ -113,8 +114,9 @@ export default {
             story: {
                 user: {},
                 medias: [],
-                likes: []
-            }
+                likes: [],
+            },
+            imgRoot: config.img
         };
     },
     components: {

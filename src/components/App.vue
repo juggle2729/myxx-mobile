@@ -38,7 +38,7 @@
         <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
-            <div class="slogan font-26 gray padding-top">中国最大的和田玉平台</div>
+            <div class="slogan font-26 gray padding-top">中国最大的和田玉爱好者平台</div>
         </div>
         <a href="http://build.meiyuxiuxiu.net/" class="download-trigger download-btn font-30 red border-red">下载</a>
     </div>

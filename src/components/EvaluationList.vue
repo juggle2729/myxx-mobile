@@ -23,6 +23,7 @@
     .desc {
         line-height: 44px;
         margin: 30px 0 24px;
+        line-height: 1.2em;
     }
     .video {
         height: 500px;
