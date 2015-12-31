@@ -94,7 +94,7 @@ export default {
                         dot.classList.remove('active');
                     }
                 });
-            } 
+            }
         }
     }
 }

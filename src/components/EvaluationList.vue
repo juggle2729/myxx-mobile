@@ -21,6 +21,7 @@
         }
     }
     .desc {
+        line-height: 44px;
         margin: 30px 0 24px;
     }
     .video {
