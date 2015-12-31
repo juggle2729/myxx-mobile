@@ -12,6 +12,13 @@ let adapter = {
                 // photo: "1287933.jpeg",
                 // role: "4",
                 // token: "f87e7796-9896-4a6f-997e-11b48aebd347"
+                // id: "1007",
+                // nickname: "chchyu",
+                // phone: "15871705303",
+                // photo: "1287933.jpeg",
+                // role: "4",
+                // token: "f87e7796-9896-4a6f-997e-11b48aebd347"
+                // token: "ea8f2d2a-0db7-4109-851b-93f7e47cb937"
             };
             cb(JSON.stringify(user));
         } else if(handler === 'keyboard') {

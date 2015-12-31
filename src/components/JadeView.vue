@@ -3,7 +3,7 @@
     padding-bottom: 80px;
     .titles {
         display: -webkit-box-;
-        height: 238px;
+        /*height: 238px;*/
         padding: 32px 32px 36px 32px;
         position: relative;
         > div {
@@ -43,6 +43,7 @@
         .medias {
             .text{
                 margin-top: 32px;
+                line-height: 46px;
             }
             .picture {
                 margin-top: 32px;
@@ -51,7 +52,7 @@
             .picture:after {
                 content: '';
                 display: block;
-                padding-bottom: 200%;
+                padding-bottom: 100%;
             }
         }
     }
@@ -69,7 +70,7 @@
     <slider :ids="info.imgs"></slider>
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
-        <div class="flex">
+        <div class="flex" v-if="info.product_rewards.length >0">
             <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
         </div>
         <div class="flex">
@@ -188,6 +189,7 @@ export default {
             return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
+                    console.debug('imgs', info.imgs);
                     this.$get('users/target/'+ this.info.id +'/type/40/likers')
                         .then((data) => {
                             this.likes = data.users;
