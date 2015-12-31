@@ -34,13 +34,13 @@
 </style>
 <template>
   <main :class="{'loading': $loadingRouteData}">
-    <div v-if="isShare" @click="getApp($event)" class="download-top flex bg-default border-bottom">
+    <div v-if="isShare" class="download-top flex bg-default border-bottom">
         <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
             <div class="slogan font-26 gray padding-top">中国最大的和田玉平台</div>
         </div>
-        <a :href="appCmd" class="download-trigger download-btn font-30 red border-red">下载</a>
+        <a href="http://build.meiyuxiuxiu.net/" class="download-trigger download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
     <div v-if="isShare" @click="getApp($event)" class="download-bottom flex bg-red white font-30">
@@ -73,17 +73,6 @@ export default {
             let path = this.$route.path;
             path = path.replace(/share=\d+&?/, '').replace(/\?$/, '');  // 去掉share参数
             return 'myxx://web/' + encodeURIComponent(path);
-        },
-        appUrl() {
-            let url = '';
-            if(this.platform.isIOS) {
-                url = 'itms-services://?action=download-manifest&url=https://dn-myxx-app-download.qbox.me/myxxapp.plist';
-            } else if(this.platform.isAndroid) {
-                url = 'http://build.meiyuxiuxiu.net/jenkins-myxx-Android-latest.apk';
-            } else {
-                url = 'http://build.meiyuxiuxiu.net/';
-            }
-            return url;
         }
     },
     ready() {
@@ -135,8 +124,7 @@ export default {
                 }
                 setTimeout(() => {
                     if(!opened) {
-                        console.debug('appURL', this.appUrl);
-                        location.href = this.appUrl;
+                        // location.href = 'http://build.meiyuxiuxiu.net/';
                     }
                 }, 500);
             }

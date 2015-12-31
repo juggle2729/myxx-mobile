@@ -13,7 +13,7 @@
     .slide {
         background-size: cover;
         background-position: center;
-        background-color: red;
+        /*background-color: #e0e0e0;*/
         width: 100%;
         min-height: 100%;
         height: 100%;
@@ -57,6 +57,7 @@ export default {
     },
     ready() {
         this.$watch('ids', (ids) => {
+            console.debug('ids');
             const threshold = 50;
             let pageX = 0;
             let slides = [...document.querySelectorAll('.slide')];

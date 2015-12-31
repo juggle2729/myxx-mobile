@@ -140,6 +140,7 @@
 .video {
     position: relative;
     background-size: cover;
+    background-color: #e0e0e0;
     &::before {
         content: '';
         position: absolute;
@@ -147,11 +148,11 @@
         top: 0;
         right: 0;
         bottom: 0;
-        mix-blend-mode: overlay;
+        /*mix-blend-mode: overlay;*/
         background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat right 30px top 30px;
         background-size: 1rem;
     }
-    &::after {
+/*    &::after {
         content: '';
         position: absolute;
         left: 0;
@@ -160,7 +161,7 @@
         bottom: 0;
         background-color: #e0e0e0;
         z-index: -1;
-    }
+    }*/
 }
 .play {
     position: relative;

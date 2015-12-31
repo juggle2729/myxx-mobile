@@ -119,7 +119,7 @@
                 <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span class="red">{{result.result}}</span>
-                    <p v-if="result.value_min" class="font-26 gujia"><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></p>
+                    <p v-if="result.result === '真'" class="font-26 gujia"><span>估价：{{prices[$index]}}</span></p>
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
@@ -161,6 +161,21 @@ export default {
         Comment
     },
     computed: {
+        prices() {
+            return this.evaluation.results.map((result) => {
+                if(result.result === '真') {
+                    if(result.value_min && result.value_max) {
+                        return `${Math.round(result.value_min/1000)/10} ~ ${Math.round(result.value_max/1000)/10}万`;
+                    } else if(result.value_min) {
+                        return `${Math.round(result.value_min/1000)/10}万以上`;
+                    } else if(result.value_max) {
+                        return `${Math.round(result.value_max/1000)/10}万以下`;
+                    }
+                } else {
+                    return '';
+                }
+            });
+        },
         jb() {
             let label = '我来鉴定';
             let action;

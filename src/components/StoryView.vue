@@ -85,7 +85,7 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img :src="'http://img.meiyuxiuxiu.net/' + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
@@ -103,6 +103,7 @@
 </div>
 </template>
 <script>
+import config from '../config';
 import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
 export default {
@@ -149,7 +150,7 @@ export default {
             let title = '分享[美玉秀秀]话题！';
             if(this.story.topic_type === '晒宝') {
                 title = '快来帮我看看这个宝贝怎么样！';
-            } else if(this.story.topic_type === '工艺') {
+            } else if(this.story.topic_type === '工艺展示') {
                 title = '快来围观这个精湛的工艺！';
             } else if(this.story.topic_type === '淘玉故事') {
                 title = '好玉原来是这么淘来的！';

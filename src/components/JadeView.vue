@@ -70,7 +70,7 @@
     <div class="titles">
         <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
         <div class="flex">
-            <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{info.product_rewards[0].reward.name}}</span>
+            <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
         </div>
         <div class="flex">
             <p class="red font-30 icon-price flex-1">{{info.price}}</p>
@@ -176,6 +176,12 @@ export default {
             },
             likes: []
         };
+    },
+    computed: {
+        productReward() {
+            let reward = this.info.product_rewards[0];
+            return reward ? reward.reward.name : '';
+        }
     },
     route: {
         data() {

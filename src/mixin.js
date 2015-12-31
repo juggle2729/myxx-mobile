@@ -79,7 +79,8 @@ export default {
                     this.$http[method](url, data).success((resp) => {
                         if(resp.status === 200) {
                             defer.resolve(resp.data);
-                        } else if(resp.status === 605){
+                        } else if(resp.status === 605 || resp.status === 608){
+                        // } else if(resp.status === 605){
                             this.action('login');
                         }
                     });
