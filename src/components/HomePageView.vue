@@ -47,36 +47,14 @@
 export default {
     name: 'HomePageView',
     data() {
-        return {
-            photo: null,
-            role: 0,
-            has_shop: false,
-            nickname: '',
-            has_website: false,
-            fans_count: 0,
-            topic_count: 0,
-            follow_count: 0,
-            follow: false,
-            userId: 0,
-            isNotSelf: false
-        };
     },
     route: {
         data() {
             this.userId = this.$route.params.id;
-            this.action('user')
-                .then((resp) => {
-                    if(resp){
-                        let user = JSON.parse(resp);
-                        this.$root.user = user;
-                    } else {
-                        this.$root.user = { token: 'f87e7796-9896-4a6f-997e-11b48aebd347', id: 6};
-                    }
-                });
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
                     this.isNotSelf = !(this.userId == this.$root.user.id);
-                    this.$data = Object.assign(this.$data, data);
+                    this.$data = data;
                 });
         }
     },

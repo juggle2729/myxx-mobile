@@ -4,11 +4,11 @@
             <template v-for="promote in promotes" track-by="$index">
                 <div class="outside">
                     <div class="cell bg-white" v-link="{name: 'jade', params:{ id: promote.id}}">
-                        <div class="image" v-bg="promote.imgs[0]">
+                        <div class="image" v-bg.sm="promote.imgs[0]">
                         </div>
                         <div class="txt">
                             <p class="font-30">{{promote.name}}</p>
-                            <p class="font-22 gray" style="margin-top: 16px;">{{promote.reward}}</p>
+                            <p class="font-22 gray">{{promote.reward}}</p>
                         </div>
                     </div>
                 </div>
@@ -90,6 +90,9 @@ export default {
                 }
                 .txt {
                     padding: 24px 0 24px 20px;
+                    >p:nth-of-type(1) {
+                        margin-bottom: 16px;
+                    }
                 }
             }
         }

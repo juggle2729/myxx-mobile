@@ -60,7 +60,7 @@
                     <div class="avatar" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
                     <div class="name">
                         <p class="font-26">{{item.user.name}}</p>
-                        <p class="moment font-22 gray">{{item.create_at | moment}}</p>
+                        <p class="moment font-22 light">{{item.create_at | moment}}</p>
                   </div>
                 </div>
                 <div class="desc font-30">{{item.content}}</div>

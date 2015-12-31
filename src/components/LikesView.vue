@@ -7,8 +7,8 @@
             <div class="font-30">{{user.name}}</div>
             <div class="font-26 light margin-top">{{user.role | role}}</div>
         </div>
-        <div v-if="user.is_followed" class="font-22 gray border-red follow icon-followed" @click="toggleFollow(user)" @click="toggleFollow(user)">已关注</div>
-        <div v-else class="font-22 red border-light follow icon-follow" @click="toggleFollow(user)">加关注</div>
+        <div v-if="user.is_followed" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-else class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
 </div>
 </template>
@@ -92,6 +92,12 @@ export default {
             border-radius: 8px;
             width: 112px;
             height: 40px;
+        }
+    }
+    .icon-follow, .icon-followed {
+        padding-right: 5px;
+        &  + span {
+            vertical-align: text-top;
         }
     }
 }

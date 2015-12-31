@@ -13,13 +13,16 @@
             -webkit-box-align: center;
             height: 108px;
         }
+        span {
+            line-height: 46px;
+        }
     }
 }
 </style>
 <template>
 <div class="comment-component bg-white">
     <div class="header border-bottom font-22">
-        <div>评论{{total}}</div>
+        <div class="gray">评论{{total}}</div>
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
@@ -31,9 +34,9 @@
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
-            <div class="font-30" @click="clickContent(c, $index, $event)">
+            <div class="font-30">
                 <span v-if="c.reply_to" class="label">回复<span v-link="c.reply_from | profile" class="blue">{{c.reply_to.name}}</span>:</span>
-                <span>{{c.content}}</span>
+                <span @click="clickContent(c, $index, $event)">{{c.content}}</span>
             </div>
         </li>
         <li v-show="!total" class="center light font-26 margin-top">还没有人评论</li>

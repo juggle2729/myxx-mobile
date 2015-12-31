@@ -17,14 +17,17 @@
                     <p class="font-30">{{{thumb.description}}}</p>
                     <p v-if="thumb.result" class="font-22 gray">{{{thumb.result}}}</p>
                 </div>
-                <div v-if="thumb.photo1" v-bg="thumb.photo1" class="right"></div>
+                <div v-if="thumb.photo1" v-bg.sm="thumb.photo1" class="right"></div>
                 <div v-if="thumb.photo2" v-bg.video="thumb.photo2" class="right"></div>
             </div>
         </div>
     </template>
     <div class="border-top"></div>
-    <div class="loadmore center font-22 gray" v-show="hasMore">
+    <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+    </div>
+    <div class="loadmore center font-22 gray" v-else >
+         <p class="center-vertical">没有更多了</p>
     </div>
 </div>
 </template>
@@ -75,7 +78,9 @@ export default {
                                     item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
                                     item.entry.user.name = item.entry.user.nickname;
                                     item.entry.photo1 = item.entry.imgs[0];
-                                    item.entry.result = item.entry.product_rewards[0].reward.name;
+                                    if(item.entry.product_rewards.length > 0){
+                                        item.entry.result = item.entry.product_rewards[0].reward.name;
+                                    }
                                 }
                                 item.entry.title = types[item.type / 10];
                                 this.thumbs.push(item.entry);

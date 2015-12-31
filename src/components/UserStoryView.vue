@@ -2,7 +2,8 @@
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
     <div class="loadmore center font-22 gray padding-vertical border-top">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <img v-if="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <p v-else>没有更多了</p>
     </div>
 </div>
 </template>

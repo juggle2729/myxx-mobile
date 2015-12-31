@@ -1,6 +1,6 @@
 <template>
 <div class="site-request">
-    <div class="opensite" :class="{'hide': requestShow}">
+    <div class="opensite bg-white" :class="{'hide': requestShow}">
         <div class="banner">
             <img :src="banner" />
             <p>{{title}}</p>

@@ -35,6 +35,9 @@
         .content {
             > p {
                 margin-top: 32px;
+                > span {
+                    margin-right: 16px;
+                }
             }
         }
         .medias {
@@ -71,18 +74,18 @@
         </div>
         <div class="flex">
             <p class="red font-30 icon-price flex-1">{{info.price}}</p>
-            <p class="gray font-22 flex">{{info.display_count}}人浏览</p>
+            <p class="light font-22 flex">{{info.display_count}}人浏览</p>
         </div>
     </div>
     <div class="separator-20"></div>
     <div class="avatars flex">
         <div class="flex flex-1">
-            <div class="avatar-68" v-bg="info.user.photo"></div>
+            <div class="avatar-68" v-bg.sm="info.user.photo"></div>
             <span class="font-30 flex">{{info.user.nickname}}</span>
         </div>
         <div class="font-26 red flex" v-link="info.user | profile">
             <p class="flex">进入官网</p>
-            <p class="icon-enter "></p>
+            <p class="icon-enter gray"></p>
         </div>
     </div>
     <div class="separator-20"></div>
@@ -92,35 +95,35 @@
         </div>
         <div class="content">
             <p class="font-26">
-                <span class="gray">编号</span>
+                <span class="light">编号</span>
                 <span>A976578758</span>
             </p>
             <p class="font-26">
-                <span class="gray">类型</span>
+                <span class="light">类型</span>
                 <span>{{info.category.name}}</span>
             </p>
             <p class="font-26" v-if="info.category.parent">
-                <span class="gray">器型</span>
+                <span class="light">器型</span>
                 <span>{{info.category.parent.name}}</span>
             </p>
             <p class="font-26">
-                <span class="gray">重量</span>
+                <span class="light">重量</span>
                 <span>{{info.weight}}</span>
             </p>
             <p class="font-26">
-                <span class="gray">尺寸</span>
+                <span class="light">尺寸</span>
                 <span>{{info.size}}</span>
             </p>
             <p class="font-26">
-                <span class="gray">皮色</span>
+                <span class="light">皮色</span>
                 <span>{{info.skin_color}}</span>
             </p>
             <p class="font-26">
-                <span class="gray">肉色</span>
+                <span class="light">肉色</span>
                 <span>{{info.inner_color.name}}</span>
             </p>
             <p class="font-26">
-                <span class="gray">产地</span>
+                <span class="light">产地</span>
                 <span>{{info.origin_place.name}}</span>
             </p>
         </div>

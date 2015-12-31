@@ -1,6 +1,6 @@
 <template>
 <div class="shop-request">
-    <div class="openshop" :class="{'hide': requestShow}">
+    <div class="openshop bg-white" :class="{'hide': requestShow}">
         <div class="banner">
             <img class="center-horizontal" :src="banner" />
             <p class="font-30 center-horizontal">{{title}}</p>

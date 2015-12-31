@@ -1,7 +1,7 @@
 <template>
 <div class="master-request">
       <p class="text font-30">
-          申请和田玉鉴定权限——需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
+          申请和田玉鉴定权限————需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
           如果您有意向请填写以下信息，美玉秀秀客服人员会在两个工作日内联系您！
       </p>
       <div class="input">
@@ -104,11 +104,11 @@
         margin-top:15px;
         input {
             width: 100%;
-            border-radius: 4px;
+            border-radius: 6px;
             border-style: solid;
             border-width: 1px;
             height: 80px;
-            padding: 32px;
+            padding: 30px 20px;
         }
         input:nth-of-type(2) {
             margin-top: 30px;
@@ -116,10 +116,10 @@
         textarea {
             margin-top: 30px;
             width: 100%;
-            padding: 28px 32px;
+            padding: 30px 20px;
             height: 180px;
             resize: none;
-            border-radius: 4px;
+            border-radius: 6px;
         }
         input:active, input:focus ,
         textarea:active, textarea:focus{
