@@ -82,7 +82,7 @@ export default {
     },
     '/master/:id/request': {
         name: 'master-request',
-        title: '申请大师权限',
+        title: '申请大师鉴定权限',
         component: require('./components/MasterRequestView.vue')
     },
     '/profile': {   // 个人中心

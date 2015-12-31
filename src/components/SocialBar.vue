@@ -31,21 +31,18 @@
 </style>
 <template>
 <div class="social-bar font-26 gray flex">
-    <div class="action" @click.stop="like">
-        <i class="{{active ? 'red icon-like-active' : 'icon-like'}}"></i><span>{{total}}</span>
+    <div class="action" @click="like">
+        <i class="{{active ? 'red icon-like-active' : 'icon-like'}}"></i><span class="{{active ? 'red' : 'gray'}}">{{total}}</span>
     </div>
     <div class="users flex flex-1" v-show="total">
-        <div v-for="user in list">
+        <div v-for="user in list" v-if="$index <6 || (total ===7 && $index<7)" >
             <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
         </div>
-        <!-- <div v-if="total===7" v-for="user in list | limitBy 1">
-            <div class="user" v-link="user | profile" v-bg.sm="user.photo"></div>
-        </div> -->
         <div v-if="total>7" v-link="{name: 'likes', params: {type: type, id: id}}">
             <div class="more"></div>
         </div>
     </div>
-    <div class="hint flex-1" v-show="!total">
+    <div class="hint flex-1 light" v-show="!total">
         位置已经留好，就等你来点赞
     </div>
     <slot>x</slot>

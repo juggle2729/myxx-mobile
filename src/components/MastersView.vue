@@ -1,14 +1,14 @@
 <template>
 <div class="masters-view bg-default">
-    <template v-for="item in list">
-        <div class="cell bg-white flex" v-link="{name: 'master-home', params: {id: item.id}, query: {title: encodeURIComponent(item.name + '-官网')}}" v-bg="item.background_img">
+    <template v-for="site in list">
+        <div class="cell bg-white flex" v-link="{name: 'master-home', params: {id: site.id}, query: {title: site.item.name + '-官网'}}" v-bg="site.image">
             <div class="txt">
-                <p class="font-34 white">{{item.name}}</p>
+                <p class="font-34 white">{{site.item.name}}</p>
                 <div class="flex">
-                    <p class="font-26 white">{{item.titles.length > 0 ? item.titles[0].name : ''}}</p>
+                    <p class="font-26 white flex-1">{{site.item.titles.length > 0 ? site.item.titles[0].name : ''}}</p>
                     <p class="font-26 white">
-                        <span style="margin-right:72px;">粉丝:{{item.fans_count}}</span>
-                        <span>鉴宝数:{{item.jianbao_count}}</span>
+                        <span>粉丝:{{site.item.fans_count}}</span>
+                        <span>鉴宝数:{{site.item.jianbao_count}}</span>
                     </p>
                 </div>
             </div>
@@ -39,14 +39,14 @@ export default {
             const offset = this.list.length;
             const limit = 3;
             if(this.loading){
-                return this.$get('sites',{offset, limit})
+                return this.$get('cms/promotes?section=website',{offset, limit})
                     .then((data) => {
                         this.loading = false;
-                        data.sites.forEach((site) =>{
+                        data.promotes.forEach((site) =>{
                             this.list.push(site);
                         });
                         this.loading = true;
-                        if(data.sites.length < limit){
+                        if(data.promotes.length < limit){
                             this.loading = false;
                             this.hasMore = false;
                         }
@@ -76,10 +76,15 @@ export default {
         padding-left: 44px;
         padding-right: 22px;
         .txt {
+            padding-right: 22px;
             width: 100%;
             > div {
                 margin-top: 28px;
-                justify-content: space-between;
+                >p{
+                    > span:nth-of-type(1) {
+                        margin-right: 72px;
+                    }
+                }
             }
         }
     }

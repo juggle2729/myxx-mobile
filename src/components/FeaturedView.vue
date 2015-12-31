@@ -37,7 +37,7 @@
         bottom: 20px;
         width: 36px;
         padding: 10px 5px;
-        border-radius: 15px;
+        border-radius: 18px;
     }
 }
 </style>
@@ -47,7 +47,7 @@
             <div class="title font-30 bold">{{item.item.title}}</div>
             <div class="user flex">
                 <div class="avatar-36" v-bg.sm='item.item.user.photo'></div>
-                <div class="font-26 gray padding-left">{{item.item.user.name}}</div>
+                <div class="font-26 padding-left">{{item.item.user.name}}</div>
             </div>
             <div class="social font-22">
                 <div class="favor">
@@ -59,7 +59,7 @@
                     <span>{{item.item.comments}}</span>
                 </div>
             </div>
-            <div class="type bg-red font-26">{{item.type.name}}</div>
+            <div class="type bg-red font-22">{{item.type.name}}</div>
         </div>
     </div>
 </template>

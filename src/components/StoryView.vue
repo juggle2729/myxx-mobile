@@ -24,8 +24,9 @@
     }
     .desc {
         margin: 30px 0 24px;
-        .tag {
-            margin-bottom: 24px;
+        > p:nth-of-type(2){
+            margin-top: 16px;
+            line-height: 46px;
         }
     }
     .medias {
@@ -80,10 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="desc font-30">
-                <div class="tag gray font-26">#{{story.topic_type}}</div>
-                <div>{{story.content}}</div>
-            </div>
+            <div class="desc font-30"><p class="gray">#{{story.topic_type}}</p><p>{{story.content}}</p></div>
         </div>
         <div class="medias">
             <div v-if="unique">

@@ -1,17 +1,20 @@
 <template>
 <div class="follower-view bg-default">
     <div class="separator-20"></div>
-        <div class="user border-bottom bg-white flex" v-for="user in userList">
-            <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
-            <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
-                <p class="font-30">{{user.nickname}}</p>
-                <p class="font-26 light margin-top">{{user.role | role}}</p>
-            </div>
-            <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow icon-followed" @click="toggleFollow(user)">已关注</div>
-            <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow icon-follow" @click="toggleFollow(user)">加关注</div>
+    <div class="user border-bottom bg-white flex" v-for="user in userList">
+        <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
+        <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
+            <p class="font-30">{{user.nickname}}</p>
+            <p class="font-26 light margin-top">{{user.role | role}}</p>
         </div>
-    <div class="loadmore center font-22 gray" v-show="hasMore">
+        <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+    </div>
+    <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+    </div>
+    <div class="loadmore center font-22 gray" v-else >
+         <p class="center-vertical">没有更多了</p>
     </div>
 </div>
 </template>
@@ -97,6 +100,12 @@ export default {
         > img {
             width: 120px;
             height: 68px;
+        }
+    }
+    .icon-follow, .icon-followed {
+        padding-right: 5px;
+        &  + span {
+            vertical-align: text-top;
         }
     }
 }

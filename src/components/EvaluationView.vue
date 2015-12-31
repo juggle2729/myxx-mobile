@@ -1,8 +1,11 @@
 <style lang="sass">
 .evaluation-detail {
     padding-bottom: 80px;
-    .header, .images, .results {
+    .images, .results {
         padding: 24px 32px;
+    }
+    .header {
+        padding: 24px 32px 0 32px;
     }
     .header {
         .user {
@@ -26,12 +29,18 @@
             background-position: center;
         }
     }
+    .results {
+        .padding-bottom {
+            padding-bottom: 29px;
+        }
+    }
     .result {
         .result-header {
             display: -webkit-box;
             -webkit-box-align: center;
             height: 120px;
             .master {
+                margin-left: 20px;
                 -webkit-box-flex: 1;
             }
             .site-mark {
@@ -49,9 +58,12 @@
                 background-size: 60px;
             }
         }
+        .gujia {
+            margin-top: 20px;
+        }
     }
     .evaluation-btn {
-        margin: 32px;
+        margin: 16px 0 8px 0;
         button {
             height: 80px;
             width: 100%;
@@ -69,6 +81,10 @@
     }
     .w-50 {
         width: 50%;
+    }
+    .nocontent {
+        margin-top: 48px;
+        margin-bottom: 32px;
     }
 }
 </style>
@@ -89,28 +105,28 @@
     <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results bg-white">
-        <div class="font-30 light border-bottom padding-vertical">大师鉴定 {{evaluation.results.length}}</div>
+        <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
         <div class="result" v-for="result in evaluation.results">
             <div class="result-header">
                 <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                 <div class="master padding-left">
                     <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.has_website" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
-                    <p class="font-22 gray margin-top">{{result.identifier.title}}</p>
+                    <p v-if="result.identifier.title" class="font-22 gray margin-top">{{result.identifier.title}}</p>
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
             <div class="flex bg-light border-all font-30">
                 <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
-                    鉴宝结果：<span :class="{'red': result.result=='真货' }">{{result.result}}</span>
-                    <span v-if="result.value_min"><br><br><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></span>
+                    鉴宝结果：<span class="red">{{result.result}}</span>
+                    <p v-if="result.value_min" class="font-26 gujia"><span>估价：{{result.value_min | money}}~{{result.value_max | money}}</span></p>
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
                 <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
-        <div v-show="!evaluation.results.length" class="center light font-26 margin-top">还没有大师来鉴定</div>
+        <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
         <div class="evaluation-btn">
             <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
         </div>
