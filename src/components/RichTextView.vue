@@ -26,9 +26,17 @@
             play(id) {
                 this.action('play', {id});
             },
-            coverflow(index) {
-                let ids = this.medias.filter(media => media.media_type === 'inner_img' || media.media_type === 'outer_img')
-                .map(media => media.media_content);
+            coverflow(fromIndex) {
+                const imgIndexArr = [];
+                let ids = this.medias.filter((media, index) => {
+                    const isImg = (media.media_type === 'inner_img' || media.media_type === 'outer_img');
+                    if (isImg) {
+                        imgIndexArr.push(index);
+                    }
+                    return isImg;
+                }).map(media => media.media_content);
+
+                const index = imgIndexArr.indexOf(fromIndex);
                 this.action('coverflow', {ids, index});
             }
         }

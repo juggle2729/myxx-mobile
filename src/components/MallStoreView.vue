@@ -145,8 +145,8 @@
             loadMasterOtherData() {
               this.fetchMallStoreInfo();
             },
-            coverflow(pictureId, index) {
-                this.action('coverflow', {pictureId, index});
+            coverflow(ids, index) {
+                this.action('coverflow', {ids, index});
             },
             fetchMallStoreInfo: (function() {
                let loading = false;
