@@ -42,8 +42,8 @@ export function truncate(str, len) {
 
 export function profile(user) {
     const route = {name: 'user-profile', params: {id: user.id}};
-    if(+user.role === 3) {
-        route.name = 'master';
+    if(user.has_website === true) {
+        route.name = 'master-home';
     }
     return route;
 }
