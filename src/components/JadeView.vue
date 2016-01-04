@@ -189,7 +189,7 @@ export default {
             return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
-                    console.debug('imgs', info.imgs);
+                    console.debug('imgs', this.info.imgs);
                     this.$get('users/target/'+ this.info.id +'/type/40/likers')
                         .then((data) => {
                             this.likes = data.users;

@@ -8,16 +8,15 @@
             .text {
                 text-align: center;
                 width: 520px;
-                height: 120px;
                 display: inline-block;
                 opacity: 0.5;
                 line-height: 120px;
 
                 position: absolute;
-                top: 50%;
                 left: 50%;
+                top: 50%;
                 margin-left: -260px;
-                margin-top: -60px;
+                transform: translateY(-50%);
             }
         }
 

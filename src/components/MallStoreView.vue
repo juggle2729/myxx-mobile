@@ -165,7 +165,7 @@
                }
             })(),
             fetchStoreProducts: (function() {
-               const limit = 5;
+               const limit = 6;
                let loading = false;
                return function() {
                   if(loading) {
@@ -176,10 +176,9 @@
                   let offset = this.products.length;
                   let shop_id = this.shop.id;
                   const params = {offset, limit, shop_id};
-                  console.debug(params);
+
                   return this.$get(`mall/products`, params).then((data) => {
                       this.products.splice(this.products.length, 0, ...data.products);
-                      console.debug(this.products);
                       loading = false;
                       if (data.products.length < limit) {
                           this.hasMore = false;

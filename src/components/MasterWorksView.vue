@@ -11,6 +11,7 @@
         .craft-item, .work-item {
             border-radius: 10px;
             .img {
+                background-size: cover;
                 height: 540px;
             }
 

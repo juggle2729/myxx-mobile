@@ -121,7 +121,7 @@
                     <div class="title font-26 white bg-gray">文章导读</div>
                     <div class="abstract border-vertical font-26 light" v-if="!!interview.abstract">{{interview.abstract}}</div>
                     <div class="detail">
-                        <rich-text :medias="interview.medias"></rich-text>
+                        <rich-text :medias="interview.medias || []"></rich-text>
                     </div>
                 </div>
             </div>

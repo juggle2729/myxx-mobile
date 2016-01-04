@@ -36,6 +36,10 @@
 </script>
 <style lang="sass">
     .media-list {
+        .media-item {
+            background-size: cover;
+        }
+
         .media-text {
             text-indent: 15px;
             line-height: 40px;
@@ -43,7 +47,6 @@
 
         .media-inner-img, .media-inner-video {
             height: 576px;
-            margin: 0 -32px;
         }
 
         object {
