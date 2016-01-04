@@ -26,7 +26,9 @@
         line-height: 1.2em;
     }
     .video {
-        height: 500px;
+        height: 528px;
+        background-size: cover;
+        background-position: center;
     }
     .social {
         padding: 0 32px;

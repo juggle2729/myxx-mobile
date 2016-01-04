@@ -20,9 +20,6 @@
     .avatars {
         padding: 0 32px;
         height: 132px;
-        span {
-            margin-left: 20px;
-        }
         p {
             margin-left: 16px;
         }
@@ -81,7 +78,7 @@
     <div class="separator-20"></div>
     <div class="avatars flex">
         <div class="flex flex-1">
-            <div class="avatar-68" v-bg.sm="info.user.photo"></div>
+            <div class="avatar-68 margin-right" v-bg.sm="info.user.photo"></div>
             <span class="font-30 flex">{{info.user.nickname}}</span>
         </div>
         <div class="font-26 red flex" v-link="info.user | profile">
@@ -189,7 +186,6 @@ export default {
             return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
-                    console.debug('imgs', this.info.imgs);
                     this.$get('users/target/'+ this.info.id +'/type/40/likers')
                         .then((data) => {
                             this.likes = data.users;

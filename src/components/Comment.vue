@@ -34,9 +34,9 @@
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
-            <div class="font-30">
-                <span v-if="c.reply_to" class="label">回复<span v-link="c.reply_from | profile" class="blue">{{c.reply_to.name}}</span>:</span>
-                <span @click="clickContent(c, $index, $event)">{{c.content}}</span>
+            <div class="font-30" @click="clickContent(c, $index, $event)">
+                <span v-if="c.reply_to" class="label">回复<span @click.stop="userProfile(c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
+                <span>{{c.content}}</span>
             </div>
         </li>
         <li v-show="!total" class="center light font-26 margin-top">还没有人评论</li>
@@ -138,6 +138,13 @@ export default {
             } else {
                 this.reply(e, comment.reply_from);
             }
+        },
+        userProfile(user){
+            let name = 'user-profile';
+            if(user.has_website === true) {
+                name = 'master-home';
+            }
+            this.$route.router.go({'name': name, 'params': {'id': user.id}})
         }
     }
 }
