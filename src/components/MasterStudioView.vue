@@ -61,6 +61,12 @@
                       width: 243px;
                    }
                 }
+
+                .email {
+                    word-break: break-all;
+                    word-wrap:break-word;
+                }
+
                 .email img {
                     width: 28px;
                     height: 28px;

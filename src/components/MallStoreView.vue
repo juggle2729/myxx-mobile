@@ -95,7 +95,7 @@
             </div>
             <ul class="bg-default">
                 <li v-for="product in products" class="bg-white" v-link="{name: 'jade', params: {id: product.id}}">
-                    <div class="image" v-bg.md="product.imgs[0]" @click.stop="coverflow(product.imgs[0], $index)"></div>
+                    <div class="image" v-bg.md="product.imgs[0]" @click.stop="coverflow($index)"></div>
                     <div class="font-26 profile">
                         <p>{{product.name}}</p>
                         <p class="red">{{product.price | currency '￥'}}</p>
@@ -145,7 +145,8 @@
             loadMasterOtherData() {
               this.fetchMallStoreInfo();
             },
-            coverflow(ids, index) {
+            coverflow(index) {
+                const ids = this.products.map((product) => product.imgs[0]);
                 this.action('coverflow', {ids, index});
             },
             fetchMallStoreInfo: (function() {
