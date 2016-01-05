@@ -37,8 +37,6 @@
             width: percentage(1/3);
             padding-top: percentage(1/3);
             border: thick solid white;
-            background-size: cover;
-            background-position: center;
         }
         .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
             margin-right: percentage(1/3);
@@ -86,11 +84,11 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img class="img" :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
-                    ><div class="media picture" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                    ><div class="media img" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
                     ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
                 ></template>
             </template>
@@ -134,6 +132,7 @@ export default {
             const storyId = to.params.id;
             return this.$get(`sns/topics/${storyId}`)
                 .then((story) => {
+                    console.log('11', Date.now());
                     this.story = story;
                 });
         }

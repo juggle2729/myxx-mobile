@@ -7,7 +7,7 @@ import Resource from 'vue-resource';
 import routes from './route';
 import mixins from './mixin';
 import { bg } from './directive';
-import { moment, money, role, type, profile, qn, truncate } from './filter';
+import { moment, role, type, profile, truncate } from './filter';
 import App from './components/App.vue';
 
 Vue.use(Router);
@@ -19,11 +19,9 @@ Vue.mixin(mixins);
 Vue.directive('bg', bg);
 // filters
 Vue.filter('moment', moment);
-Vue.filter('money', money);
 Vue.filter('role', role);
 Vue.filter('type', type);
 Vue.filter('profile', profile);
-Vue.filter('qn', qn);
 Vue.filter('truncate', truncate);
 
 // Vue configurations
@@ -41,8 +39,8 @@ Vue.http.options.error = function(resp, status, req) {
 };
 
 // routing
-// var router = new Router({history: true});
-var router = new Router({hashbang: false});
+var router = new Router({history: true});
+// var router = new Router({hashbang: false});
 //设置页面title
 let skip = false;
 router.beforeEach(({from, to, abort, next}) => {

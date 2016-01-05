@@ -19,6 +19,18 @@ export default {
     route: {
         waitForData: true
     },
+    created() {
+        if(this.$options.route.data) {
+            this.$watch('$loadingRouteData', (loading) => {
+                if(!loading) {
+                    this.$root.$el.classList.remove('loading');
+                }
+            });
+        } else {
+            document.querySelector('#app').classList.remove('loading');
+        }
+        
+    },
     methods: {
         toast(msg, delay = 2000) {
             const span = document.createElement('span');

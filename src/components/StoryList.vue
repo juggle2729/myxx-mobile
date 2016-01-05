@@ -73,7 +73,7 @@
                 </div>
                 <template v-else>
                     <template v-for="media in item.medias"
-                        ><div class="media" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                        ><div class="media img" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
                         ><div class="media play" v-if="media.type==='video'" v-bg.video="media.id"></div
                     ></template>
                 </template>

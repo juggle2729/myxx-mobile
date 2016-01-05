@@ -33,7 +33,7 @@
     }
 </style>
 <template>
-  <main :class="{'loading': $loadingRouteData}">
+  <main>
     <div v-if="isShare" class="download-top flex bg-default border-bottom">
         <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
         <div class="flex-1">

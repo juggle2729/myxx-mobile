@@ -26,8 +26,6 @@
             width: 338px;
             padding: percentage(1/2.6) 0 0;
             margin: 5px;
-            background-size: cover;
-            background-position: center;
         }
     }
     .results {

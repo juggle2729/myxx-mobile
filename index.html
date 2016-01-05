@@ -4,10 +4,30 @@
     <meta charset="utf-8">
     <title>美玉秀秀</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="/static/logo.png" type="image/x-icon">
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+        }
+        // 页面加载效果
+        .loading {
+            overflow: hidden;
+        }
+        .loading::before {
+            content: '';
+            position: absolute;
+            z-index: 999;
+            background: white url('//7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif') no-repeat center;
+            width: 100%;
+            height: 100%;
+            background-size: 120px 68px;
+        }
+    </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app" class="loading"></div>
     <script src="/static/app.js"></script>
 </body>
 </html>

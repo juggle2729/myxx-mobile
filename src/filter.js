@@ -29,10 +29,6 @@ export function moment(time) {
     return m;
 }
 
-export function money(number) {
-    return number / 10000 + '万';
-}
-
 export function truncate(str, len) {
     if (!str) {
         return '';
@@ -54,9 +50,4 @@ export function role(id) {
 
 export function type(id) {
     return config.types[id];
-}
-
-export function qn(id) {
-    debugger;
-    return id;
 }

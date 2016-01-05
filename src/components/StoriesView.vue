@@ -120,8 +120,6 @@ export default {
             width: percentage(1/3);
             padding-top: percentage(1/3);
             border: thick solid white;
-            background-size: cover;
-            background-position: center;
         }
         .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
             margin-right: percentage(1/3);
