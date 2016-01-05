@@ -333,7 +333,7 @@
                 }
             },
             loadMasterOtherData: function() {
-                this.fetchMasterDynamicInfo();
+                return this.fetchMasterDynamicInfo();
             },
             fetchMasterDynamicInfo: (function () {
                 const limit = 5;

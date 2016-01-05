@@ -31,7 +31,7 @@ export default {
     },
     route: {
         data() {
-            this.fetch();
+            return this.fetch();
         }
     },
     methods: {

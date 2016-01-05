@@ -147,7 +147,7 @@ export default {
     name: 'EvaluationView',
     data() {
         return {
-            evaluation: {
+             evaluation: {
                 user: {},
                 results: []
             },
@@ -200,9 +200,7 @@ export default {
         data({to}) {
             const evaluationId = to.params.id;
             return this.$get(`sns/jianbao/${evaluationId}`)
-                    .then((evaluation) => {
-                        this.evaluation = evaluation;
-                    });
+                    .then((evaluation) => ({evaluation}));
         }
     },
     methods: {

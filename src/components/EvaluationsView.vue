@@ -57,7 +57,7 @@ export default {
     route: {
         data({to}) {
             this.tab = to.params.tab;
-            this.fetch();
+            return this.fetch();
         },
         canReuse() {
             return false;

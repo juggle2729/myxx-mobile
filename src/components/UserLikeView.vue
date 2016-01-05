@@ -72,16 +72,17 @@ export default {
                                     item.entry.link = 'story';
                                     item.entry.description = '分享了一个话题';
                                     item.entry.photo1 = item.entry.media[0].id;
-                                } else if (item.type === 40) { //宝贝
-                                    item.entry.link = 'jade';
-                                    item.entry.post_id = item.entry.id;
-                                    item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
-                                    item.entry.user.name = item.entry.user.nickname;
-                                    item.entry.photo1 = item.entry.imgs[0];
-                                    if(item.entry.product_rewards.length > 0){
-                                        item.entry.result = item.entry.product_rewards[0].reward.name;
-                                    }
-                                }
+                                } 
+                                // else if (item.type === 40) { //宝贝
+                                //     item.entry.link = 'jade';
+                                //     item.entry.post_id = item.entry.id;
+                                //     item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
+                                //     item.entry.user.name = item.entry.user.nickname;
+                                //     item.entry.photo1 = item.entry.imgs[0];
+                                //     if(item.entry.product_rewards.length > 0){
+                                //         item.entry.result = item.entry.product_rewards[0].reward.name;
+                                //     }
+                                // }
                                 item.entry.title = types[item.type / 10];
                                 this.thumbs.push(item.entry);
                             });

@@ -44,7 +44,7 @@ export default {
                     const params = {offset, limit};
                     return this.$get('sns/users/'+ this.userId +'/jianbao', params)
                         .then((data) => {
-                            this.items.splice(this.items.length - 1, 0, ...data.jianbaos);
+                            this.items.splice(this.items.length, 0, ...data.jianbaos);
                             this.loading = true;
                             if (data.jianbaos.length < limit) {
                                 this.hasMore = false;

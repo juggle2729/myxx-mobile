@@ -4,37 +4,37 @@
     <ul>
         <li class="tab">首页</li>
         <li class="font-26 border-top padding center">
-            <a href="#/featured">精选 - featured</a>
+            <a href="/featured">精选 - featured</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/evaluations/time">鉴宝/最新 - evaluations/time</a>
+            <a href="/evaluations/time">鉴宝/最新 - evaluations/time</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/evaluations/popularity">鉴宝/最热 - evaluations/popularity</a>
+            <a href="/evaluations/popularity">鉴宝/最热 - evaluations/popularity</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/stories/time">话题/最新 - stories/time</a>
+            <a href="/stories/time">话题/最新 - stories/time</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/stories/popularity">话题/最热 - stories/popularity</a>
+            <a href="/stories/popularity">话题/最热 - stories/popularity</a>
         </li>
         <li class="tab">发现</li>
         <li class="font-26 border-top padding center">
-            <a href="#/jades">宝贝秀 - jades</a>
+            <a href="/jades">宝贝秀 - jades</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/masters">官网秀 - masters</a>
+            <a href="/masters">官网秀 - masters</a>
         </li>
         <li class="tab">消息</li>
         <li class="font-26 border-top padding center">
-            <a href="#/messages">消息 - messages</a>
+            <a href="/messages">消息 - messages</a>
         </li>
         <li class="tab">我的</li>
         <li class="font-26 border-top padding center">
-            <a href="#/profile">个人中心 - profile</a>
+            <a href="/profile">个人中心 - profile</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#/profile/2">个人主页 - profile/:id</a>
+            <a href="/profile/2">个人主页 - profile/:id</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="#!/jades">宝贝秀 - jades</a>
@@ -44,10 +44,10 @@
         </li>
         <li class="tab">设置</li>
         <li class="font-26 border-top padding center">
-            <a href="#!/about">关于美玉秀秀 - about</a>
+            <a href="/about">关于美玉秀秀 - about</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="#!/feedback">意见反馈 - feedback</a>
+            <a href="/feedback">意见反馈 - feedback</a>
         </li>
         <li class="tab">打开Native</li>
         <li class="font-26 border-top padding center">

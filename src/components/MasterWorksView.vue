@@ -118,7 +118,7 @@
         methods: {
             loadMasterOtherData: function() {
                 this.fetchMasterWorksInfo();
-                this.fetchMasterCraftsInfo();
+                return this.fetchMasterCraftsInfo();
             },
             fetchMasterWorksInfo: (function () {
                 const limit = 5;

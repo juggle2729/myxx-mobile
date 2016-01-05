@@ -18,12 +18,11 @@
                 const cacheMasterBaseInfo = cacheMastersBaseInfo ? cacheMastersBaseInfo[this.id] : null;
                 if (cacheMasterBaseInfo) {
                     this.masterBaseData = cacheMasterBaseInfo;
-                    this.loadMasterOtherData();
-                    return;
+                    return this.loadMasterOtherData();
                 }
 
-                this.fetchMasterBaseInfo();
                 this.loadMasterOtherData();
+                return this.fetchMasterBaseInfo();
             },
             canDeactivate({ to }) {
                 this.clearMasterCache(to.name);
@@ -48,7 +47,7 @@
                 }
             },
             loadMasterOtherData() {
-                console.log('master default other data loading');
+                return console.log('master default other data loading');
             },
             fetchMasterBaseInfo: (function() {
                 let loading = false;

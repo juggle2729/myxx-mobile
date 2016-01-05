@@ -143,7 +143,7 @@
               this.isExpand = !this.isExpand;
             },
             loadMasterOtherData() {
-              this.fetchMallStoreInfo();
+              return this.fetchMallStoreInfo();
             },
             coverflow(ids, index) {
                 this.action('coverflow', {ids, index});
