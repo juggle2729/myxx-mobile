@@ -1,7 +1,7 @@
 <style lang="sass">
 .evaluation-list {
     .item {
-        padding: 24px 32px;
+        padding: 24px 32px 0 32px;
     }
     .user {
         display: -webkit-box;
@@ -58,6 +58,9 @@
             background-size: 26px;
         }
     }
+    .sep {
+        height: 24px;
+    }
 }
 </style>
 <template>
@@ -84,6 +87,7 @@
                 </div>
                 <div class="mark font-22">已鉴定</div>
             </div>
+            <div v-if="item.results.length === 0" class="sep"></div>
         </div>
         <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}}">
