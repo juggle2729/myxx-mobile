@@ -186,7 +186,7 @@
         },
         methods: {
            loadMasterOtherData() {
-              this.fetchMasterShopInfo();
+              return this.fetchMasterShopInfo();
            },
            fetchMasterShopInfo: (function() {
                let loading = false;

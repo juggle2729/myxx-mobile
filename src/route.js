@@ -4,7 +4,9 @@ export default {
     },
     '/featured': {
         name: 'featured',
-        component: require('./components/FeaturedView.vue')
+        component: {
+            template: '<p class="center center-vertical font-30 gray">【即将下线】</p>'
+        }
     },
     '/evaluations/:tab': {
         name: 'evaluations',
@@ -37,7 +39,9 @@ export default {
     '/jades': {
         name: 'jades',
         title: '宝贝秀',
-        component: require('./components/JadesView.vue')
+        component: {
+            template: '<p class="center center-vertical font-30 gray">【即将下线】</p>'
+        }
     },
     '/jade/:id': {
         name: 'jade',

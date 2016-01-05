@@ -41,7 +41,8 @@ Vue.http.options.error = function(resp, status, req) {
 };
 
 // routing
-var router = new Router({hashbang: false, suppressTransitionError: false});
+// var router = new Router({history: true});
+var router = new Router({hashbang: false});
 //设置页面title
 let skip = false;
 router.beforeEach(({from, to, abort, next}) => {
@@ -67,10 +68,6 @@ router.afterEach(function ({ to }) {
     document.title = (to.title || '美玉秀秀');
 });
 router.map(routes);
-
-router.beforeEach(function() {
-    window.scrollTo(0, 0);
-});
 
 router.redirect({
 

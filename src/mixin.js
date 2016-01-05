@@ -9,12 +9,15 @@ export default {
                 isMobile: /android|iphone|ipod|ipad/i.test(ua),
                 isIOS: /iphone|ipod|ipad/i.test(ua),
                 isAndroid: /android/i.test(ua),
-                isWechat: /micromessenger|qq/i.test(ua)
+                isWechat: /micromessenger/i.test(ua)
             };
         },
         self() {
             return this.$root.user;
         }
+    },
+    route: {
+        waitForData: true
     },
     methods: {
         toast(msg, delay = 2000) {

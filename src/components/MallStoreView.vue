@@ -143,7 +143,7 @@
               this.isExpand = !this.isExpand;
             },
             loadMasterOtherData() {
-              this.fetchMallStoreInfo();
+              return this.fetchMallStoreInfo();
             },
             coverflow(index) {
                 const ids = this.products.map((product) => product.imgs[0]);

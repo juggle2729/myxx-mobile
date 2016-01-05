@@ -149,11 +149,11 @@
                 this.isExpand = !this.isExpand;
             },
             loadMasterOtherData: function() {
-                this.fetchMasterInterviewInfo();
+                return this.fetchMasterInterviewInfo();
             },
             fetchMasterInterviewInfo: (function () {
                 return function () {
-                    this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {
+                    return this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {
                         this.interview = data;
                     });
                 }

@@ -51,13 +51,13 @@
                 this.id = to.params.id;
                 this.craftId = to.params.craftId;
 
-                this.fetchCraftDetail();
+                return this.fetchCraftDetail();
             }
         },
         methods: {
             fetchCraftDetail: (function () {
                 return function () {
-                    this.$get(`sites/${this.id}/articles/${this.craftId}`, {}).then((data) => {
+                    return this.$get(`sites/${this.id}/articles/${this.craftId}`, {}).then((data) => {
                         this.craft = data;
                     });
                 }
