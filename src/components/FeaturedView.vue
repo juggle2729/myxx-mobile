@@ -36,7 +36,7 @@
         right: 20px;
         bottom: 20px;
         width: 36px;
-        padding: 10px 5px;
+        padding: 10px 6px;
         border-radius: 18px;
     }
 }
@@ -59,7 +59,7 @@
                     <span>{{item.item.comments}}</span>
                 </div>
             </div>
-            <div class="type bg-red font-22">{{item.type.name}}</div>
+            <div class="type font-22" :style="{backgroundColor: item.bgColor}">{{item.type.name}}</div>
         </div>
     </div>
 </template>
@@ -76,6 +76,10 @@ export default {
         data() {
             return this.$get('cms/promotes?section=cy031').then(({promotes: items}) => {
                     this.items = items.map((item) => {
+                        item.bgColor = '#cc3f4f';
+                        if(item.type === 6) {
+                            item.bgColor = '#e56202';
+                        }
                         item.type = config.types[item.type];
                         return item;
                     });

@@ -3,7 +3,7 @@
     padding-bottom: 80px;
     min-height:100%;
     .story {
-        padding: 24px 32px;
+        padding: 32px 32px;
     }
     .user {
         display: -webkit-box;
