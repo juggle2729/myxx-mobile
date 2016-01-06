@@ -4,9 +4,9 @@
     <div class="account border-bottom bg-white">
         <div class="avatar-240 center-horizontal" v-bg.md="photo"></div>
         <p class="font-30 red center">{{nickname}}</p>
-        <button v-if="!follow && isNotSelf" class="bg-red font-26 white center-horizontal" @click="toggleFollow">
+        <button v-if="!follow && isNotSelf" class="bg-red font-26 white center-horizontal" v-touch:tap="toggleFollow">
             <span class="icon-like-active center"> 关注</span></button>
-        <button v-if="follow && isNotSelf" class="bg-gray font-26 white center-horizontal" @click="toggleFollow">
+        <button v-if="follow && isNotSelf" class="bg-gray font-26 white center-horizontal" v-touch:tap="toggleFollow">
             <span class="center">已关注</span></button>
     </div>
     <div class="community bg-white flex">

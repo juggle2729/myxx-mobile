@@ -6,6 +6,9 @@
         > div {
             -webkit-box-flex: 1;
             margin: 24px 0;
+            &:active {
+                color: #cc3f4f;
+            }
         }
         label {
             width: 100%;
@@ -26,12 +29,10 @@
 <template>
 <div class="evaluations-view">
     <div class="tabs bg-white">
-        <div :class="{'red': tab=='time'}" class="font-26 center border-right">
-            <label for="tab-time">最新</label><input name="tab" v-model="tab" type="radio" id="tab-time" value="time" />
+        <div :class="{'red': tab=='time'}" v-touch:tap="tab='time'" class="font-26 center">
+            <div class="border-right">最新</div>
         </div>
-        <div :class="{'red': tab=='popularity'}" class="font-26 center">
-            <label for="tab-popularity">热门</label><input name="tab" v-model="tab" type="radio" id="tab-popularity" value="popularity"/>
-        </div>
+        <div :class="{'red': tab=='popularity'}" v-touch:tap="tab='popularity'" class="font-26 center">热门</div>
     </div>
     <evaluation-list :items="items"></evaluation-list>
     <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">

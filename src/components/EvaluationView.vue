@@ -101,7 +101,7 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" v-touch:tap="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" v-touch:tap="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
@@ -115,25 +115,25 @@
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
             <div class="flex bg-light border-all font-30">
-                <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
+                <div class="play w-50" v-touch:tap="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span class="red">{{result.result}}</span>
                     <p v-if="result.result === '真'" class="font-26 gujia"><span>估价：{{prices[$index]}}</span></p>
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
-                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+                <div v-touch:tap="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
         <div class="evaluation-btn">
-            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
+            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" v-touch:tap="evaluate(jb.action)">{{jb.label}}</button>
         </div>
     </div>
     <div class="separator"></div>
     <comment type="10" :id="evaluation.post_id"></comment>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>

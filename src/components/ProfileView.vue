@@ -1,7 +1,7 @@
 <template>
 <div class="profile-view bg-default">
     <div class="separator-20"></div>
-    <div class="account bg-white border-bottom flex" @click="action('profile')">
+    <div class="account bg-white border-bottom flex" v-touch:tap="action('profile')">
         <div class="avatar-120" v-bg.md="photo"></div>
         <div class="user flex-1">
             <p class="font-30">{{nickname}}</p>
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="separator-40"></div>
-    <div class="row bg-white font-30 border-bottom" @click="action('settings')">
+    <div class="row bg-white font-30 border-bottom" v-touch:tap="action('settings')">
         <span class="red icon-settings"></span>
         <span>设置</span>
         <span class="icon-enter gray font-26"></span>

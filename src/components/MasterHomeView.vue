@@ -186,7 +186,7 @@
             <div class="border-vertical">
                 <div class="attention clearfix" v-show="!!masterBaseData">
                     <div class="content white">
-                        <div class="font-26 status" @click="followMaster" :class="[masterBaseData.follow ? 'bg-gray' : 'bg-red']">
+                        <div class="font-26 status" v-touch:tap="followMaster" :class="[masterBaseData.follow ? 'bg-gray' : 'bg-red']">
                             <span class="font-30" :class="[masterBaseData.follow ? '' : 'icon-follow']"></span>
                             {{masterBaseData.follow ? '已关注' : '关注'}}
                         </div>
@@ -225,7 +225,7 @@
                     </div>
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
-                        <div class="media video" @click.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
+                        <div class="media video" v-touch:tap.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
                         <div class="result-list" v-if="dynamic.event.results.length > 0">
                             <div class="result-item clearfix" :class="[dynamic.event.results.length > 1 && $index !== dynamic.event.results.length - 1 ?
                             'border-bottom' : '']" v-for="result in dynamic.event.results">
@@ -245,11 +245,11 @@
                     </div>
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
-                            <div class="unique" v-if="dynamic.event.media.length === 1" @click.stop="coverflow(dynamic.event.media, 0)" v-bg.lg="dynamic.event.media[0].id"></div>
+                            <div class="unique" v-if="dynamic.event.media.length === 1" v-touch:tap.stop="coverflow(dynamic.event.media, 0)" v-bg.lg="dynamic.event.media[0].id"></div>
                             <template v-else="dynamic.event.media.length !== 1">
                                 <template v-for="media in dynamic.event.media">
-                                    <div class="media picture" @click.stop="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
-                                    <div class="media play" @click.stop="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
+                                    <div class="media picture" v-touch:tap.stop="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
+                                    <div class="media play" v-touch:tap.stop="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
                                 </template>
                             </template>
                         </div>

@@ -7,8 +7,8 @@
             <p class="font-30">{{user.nickname}}</p>
             <p class="font-26 light margin-top">{{user.role | role}}</p>
         </div>
-        <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
-        <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+        <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
     <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">

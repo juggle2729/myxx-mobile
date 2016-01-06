@@ -137,7 +137,7 @@
                 </div>
                 <div class="class_display border-horizontal">
                     <p class="font-22">上例中四个div属性均为<br>{ left: 30px;top: 30px;}</p>
-                    <button @click="toggleFixed" class="border-bottom">Click here to {{isHide? 'show':'hide'}} "fixed"</button>
+                    <button v-touch:tap="toggleFixed" class="border-bottom">Click here to {{isHide? 'show':'hide'}} "fixed"</button>
                 </div>
             </div>
         </div>
@@ -150,7 +150,7 @@
                     <p class="font-26 gray" align="right">toast</p>
                 </div>
                 <div class="class_display">
-                    <button @click="viewToast" class="border-bottom">Click here to view "toast"</button>
+                    <button v-touch:tap="viewToast" class="border-bottom">Click here to view "toast"</button>
                 </div>
             </div>
             <div class="display">

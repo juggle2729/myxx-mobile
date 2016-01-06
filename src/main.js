@@ -4,6 +4,7 @@ import emitter from './utils/emitter';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
+import Touch from 'vue-touch';
 import routes from './route';
 import mixins from './mixin';
 import { bg } from './directive';
@@ -12,6 +13,7 @@ import App from './components/App.vue';
 
 Vue.use(Router);
 Vue.use(Resource);
+Vue.use(Touch);
 
 // mixins
 Vue.mixin(mixins);
@@ -45,8 +47,7 @@ router.beforeEach(({from, to, abort, next}) => {
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
             abort();
-            skip = true;
-        } else if(!skip) {
+        } else {
             next();
         }
     } else {

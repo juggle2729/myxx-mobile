@@ -157,7 +157,7 @@
             </div>
             <div class="content">
                 <textarea v-model="content" class="border-all"></textarea>
-                <input type="button" value="提交" class="white font-30 bg-yellow" @click="commitMessage()"/>
+                <input type="button" value="提交" class="white font-30 bg-yellow" v-touch:tap="commitMessage()"/>
                 <div class="line-title font-22 gray">
                     <div class="line"></div>
                     <span class="text gray">历史留言</span>

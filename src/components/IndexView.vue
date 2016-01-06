@@ -76,7 +76,13 @@ export default {
             host: location.href
         };
     },
-    created() {
+    methods: {
+        click() {
+            console.debug('click');
+        },
+        onTap() {
+            console.debug('tap');
+        }
     }
 }
 </script>

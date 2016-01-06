@@ -75,7 +75,7 @@
             <div class="logo" v-bg.md="shop.logo"></div>
             <p class="font-30 center">{{shop.shop_name}}</p>
             <div class="content font-26 gray" v-text="shopDesc"></div>
-            <div class="expand font-22 gray center" @click="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
+            <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
                 <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
                 <span class="text">{{isExpand ? '收起' : '展开'}}</span>
             </div>
@@ -95,7 +95,7 @@
             </div>
             <ul class="bg-default">
                 <li v-for="product in products" class="bg-white" v-link="{name: 'jade', params: {id: product.id}}">
-                    <div class="image" v-bg.md="product.imgs[0]" @click.stop="coverflow($index)"></div>
+                    <div class="image" v-bg.md="product.imgs[0]" v-touch:tap.stop="coverflow($index)"></div>
                     <div class="font-26 profile">
                         <p>{{product.name}}</p>
                         <p class="red">{{product.price | currency '￥'}}</p>

@@ -5,11 +5,11 @@
     <div class="media-list font-30 gray">
         <template v-for="media in medias">
             <div class="media-item media-text" v-if="media.media_type === 'text'">{{{media.media_content}}}</div>
-            <div class="media-item media-inner-img" v-if="media.media_type === 'inner_img'" @click="coverflow($index)" v-bg.lg="media.media_content"></div>
-            <div class="media-item media-outer-img" v-if="media.media_type === 'outer_img'" @click="coverflow($index)" v-bg.lg="media.media_content">
+            <div class="media-item media-inner-img" v-if="media.media_type === 'inner_img'" v-touch:tap="coverflow($index)" v-bg.lg="media.media_content"></div>
+            <div class="media-item media-outer-img" v-if="media.media_type === 'outer_img'" v-touch:tap="coverflow($index)" v-bg.lg="media.media_content">
                 <img :src="media.media_content"/>
             </div>
-            <div class="media-item media-inner-video" v-if="media.media_type === 'inner_video'" @click="play(media.media_content)" v-bg.video="media.media_content"></div>
+            <div class="media-item media-inner-video" v-if="media.media_type === 'inner_video'" v-touch:tap="play(media.media_content)" v-bg.video="media.media_content"></div>
         </template>
     </div>
 </template>

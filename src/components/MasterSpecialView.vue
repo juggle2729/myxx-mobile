@@ -99,7 +99,7 @@
                 <div class="titles font-26" v-if="masterBaseData && masterBaseData.titles">
                     <div class="title-item" v-for="title in masterBaseData.titles" v-show="$index < titleLimit || isExpand">{{title.name}}</div>
                 </div>
-                <div class="expand font-22 gray center" @click="expandTitle" v-show="masterBaseData && masterBaseData.titles && masterBaseData.titles.length > 3">
+                <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="masterBaseData && masterBaseData.titles && masterBaseData.titles.length > 3">
                     <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
                     <span class="text">{{isExpand ? '收起' : '展开'}}</span>
                 </div>

@@ -88,8 +88,8 @@
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
-                    ><div class="media img" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
+                    ><div class="media img" v-touch:tap="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                    ><div class="media play" v-touch:tap="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
                 ></template>
             </template>
         </div>
@@ -97,7 +97,7 @@
     <div class="separator"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>

@@ -7,8 +7,8 @@
             <div class="font-30">{{user.name}}</div>
             <div class="font-26 light margin-top">{{user.role | role}}</div>
         </div>
-        <div v-if="user.is_followed" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
-        <div v-else class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+        <div v-if="user.is_followed" class="font-22 gray border-red follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-else class="font-22 red border-light follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
 </div>
 </template>
