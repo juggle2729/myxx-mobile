@@ -30,6 +30,25 @@
         .download-trigger {
             display: block;
         }
+        #backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            overflow: hidden;
+            z-index: 999;
+            background-color: #EDEDED;
+            transition: height .4s ease-in-out;
+            > img {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 0;
+                z-index: 9999;
+            }
+        }
     }
 </style>
 <template>
@@ -40,13 +59,16 @@
             <div class="name font-30 bold">美玉秀秀</div>
             <div class="slogan font-26 gray padding-top">中国最大的和田玉爱好者平台</div>
         </div>
-        <a href="http://build.meiyuxiuxiu.net/" class="download-trigger download-btn font-30 red border-red">下载</a>
+        <a href="http://download.meiyuxiuxiu.com/" class="download-trigger download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="isShare" @click="getApp($event)" class="download-bottom flex bg-red white font-30">
+    <div v-if="isShare" @click="getApp()" class="download-bottom flex bg-red white font-30">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-left.png" alt="left">
-        <a :href="appCmd" class="download-trigger flex-1 center bold">我也要晒宝</a>
+        <div class="download-trigger flex-1 center bold">我也要晒宝</div>
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-right.png" alt="right">
+    </div>
+    <div v-if="isShare" id="backdrop">
+        <img :src="platform.isIOS ? 'http://7xp1h7.com2.z0.glb.qiniucdn.com/ios.png' : 'http://7xp1h7.com2.z0.glb.qiniucdn.com/android.png'" alt="用浏览器打开">
     </div>
   </main>
 </template>
@@ -81,52 +103,24 @@ export default {
         });
     },
     methods: {
-        getApp(e) {
+        getApp() {
             if(this.platform.isWechat) {
-                let hint = document.createElement('img');
-                if(this.platform.isAndroid) {
-                    hint.src = 'http://7xp1h7.com2.z0.glb.qiniucdn.com/android.png';
-                }else if(this.platform.isIOS) {
-                    hint.src = 'http://7xp1h7.com2.z0.glb.qiniucdn.com/ios.png';
-                }
-                if(hint.src){
-                    let backdrop = document.createElement('div');
-                    backdrop.style.position = 'fixed';
-                    backdrop.style.top = 0;
-                    backdrop.style.left = 0;
-                    backdrop.style.bottom = 0;
-                    backdrop.style.right = 0;
-                    backdrop.style.zIndex = 9998;
-                    backdrop.style.backgroundColor = '#EDEDED';
-                    hint.style.position = 'fixed';
-                    hint.style.top = 0;
-                    hint.style.left = 0;
-                    hint.style.width = '100%';
-                    hint.style.zIndex = 9999;
-                    document.body.style.overflow = 'hidden';
-                    document.body.appendChild(backdrop);
-                    document.body.appendChild(hint);
-                }
+                document.querySelector('#backdrop').style.height = '100%';
+                document.querySelector('#backdrop > img').style.height = 'auto';
             } else {
-                // let myxxIframe = document.createElement('iframe');
-                // myxxIframe.src = this.appCmd;
-                // myxxIframe.width = '1px';
-                // myxxIframe.height = '1px';
-                // myxxIframe.scrolling = 'no';
-                // myxxIframe.style.border = 'none';
-                // document.body.appendChild(myxxIframe);
-                let opened = false;
-                if(e && e.target) {
-                    e.target.focus();
-                    e.target.addEventListener('blur', () => {
-                        opened = true;
-                    }, false);
+                if(/version\/9/i.test(navigator.userAgent)) { // iOS 9
+                    location.href = this.appCmd;
+                } else {
+                    let myxxIframe = document.createElement('iframe');
+                    myxxIframe.src = this.appCmd;
+                    myxxIframe.width = 0;
+                    myxxIframe.height = 0;
+                    myxxIframe.frameBorder = 0;
+                    document.body.appendChild(myxxIframe);
+                    setTimeout(() => {
+                        location.href = 'http://download.meiyuxiuxiu.com';
+                    }, 500);
                 }
-                setTimeout(() => {
-                    if(!opened) {
-                        // location.href = 'http://build.meiyuxiuxiu.net/';
-                    }
-                }, 500);
             }
         }
     }

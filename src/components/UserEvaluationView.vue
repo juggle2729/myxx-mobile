@@ -17,7 +17,7 @@ export default {
             userId: 0,
             loading: true,
             hasMore: true,
-            items: [],
+            items: []
         };
     },
     components: {
@@ -35,9 +35,9 @@ export default {
         }
     },
     methods: {
-        fetch: (function() {
+        fetch: (() => {
             const limit = 2;
-            return function() {
+            return () => {
                 let offset = this.items.length;
                 if(this.loading) {
                     this.loading = false;

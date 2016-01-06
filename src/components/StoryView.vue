@@ -132,7 +132,6 @@ export default {
             const storyId = to.params.id;
             return this.$get(`sns/topics/${storyId}`)
                 .then((story) => {
-                    console.log('11', Date.now());
                     this.story = story;
                 });
         }

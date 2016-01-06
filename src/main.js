@@ -39,13 +39,9 @@ Vue.http.options.error = function(resp, status, req) {
 };
 
 // routing
-var router = new Router({history: true});
-// var router = new Router({hashbang: false});
-//设置页面title
-let skip = false;
+let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
     if(/myxx/i.test(navigator.userAgent)) {
-
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
             abort();
