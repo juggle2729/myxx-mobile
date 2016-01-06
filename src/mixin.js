@@ -20,14 +20,16 @@ export default {
         waitForData: true
     },
     created() {
+        const appContainer = document.querySelector('#app');
         if(this.$options.route.data) {
             this.$watch('$loadingRouteData', (loading) => {
                 if(!loading) {
-                    this.$root.$el.classList.remove('loading');
+                    console.debug('remove!!!');
+                    appContainer.classList.remove('loading');
                 }
             });
         } else {
-            document.querySelector('#app').classList.remove('loading');
+            appContainer.classList.remove('loading');
         }
         
     },

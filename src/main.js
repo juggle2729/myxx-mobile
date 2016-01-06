@@ -40,9 +40,12 @@ Vue.http.options.error = function(resp, status, req) {
     this.toast('💔出错了');
 };
 
+const appContainer = document.querySelector('#app');
 // routing
 let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
+    appContainer.classList.add('loading');
+    console.debug('add loading');
     if(/myxx/i.test(navigator.userAgent)) {
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});

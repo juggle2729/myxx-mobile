@@ -103,7 +103,7 @@ export default {
                 });
         },
         reply(e, user) {
-            const id = this.uid + this.self.id;
+            const id = this.uid + (this.self ? this.self.id : '');
             const placeholder = '回复' + user.name;
             const rect = e.target.getBoundingClientRect();
             const position = rect.top + rect.height + window.scrollY;
@@ -119,7 +119,7 @@ export default {
                 });
         },
         remove(comment, index) {
-            if(this.self.id == comment.reply_from.id) {
+            if(this.self && this.self.id == comment.reply_from.id) {
                 this.action('delete', '')
                     .then((confirm) => {
                         if(confirm === '1') {
@@ -133,7 +133,7 @@ export default {
             }
         },
         clickContent(comment, index, e) {
-            if(this.self.id == comment.reply_from.id) {
+            if(this.self && this.self.id == comment.reply_from.id) {
                 this.remove(comment, index);
             } else {
                 this.reply(e, comment.reply_from);
