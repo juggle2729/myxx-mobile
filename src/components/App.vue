@@ -18,7 +18,7 @@
             }
         }
         .download-bottom {
-            z-index: 999;
+            z-index: 990;
             position: fixed;
             bottom: 0;
             height: 100px;
@@ -49,6 +49,19 @@
                 z-index: 9999;
             }
         }
+        .video-display{
+            background-color: black;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            video {
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
 </style>
 <template>
@@ -70,16 +83,23 @@
     <div v-if="isShare" id="backdrop">
         <img :src="platform.isIOS ? 'http://7xp1h7.com2.z0.glb.qiniucdn.com/ios.png' : 'http://7xp1h7.com2.z0.glb.qiniucdn.com/android.png'" alt="用浏览器打开">
     </div>
+    <div v-if="isShare && videoDisplay" class="video-display" @click="videoClose">
+        <video :src="config.video + videoId" autoplay controls="controls">
+        </video>
+    </div>
   </main>
 </template>
 <script>
 import Q from 'q';
+import config from '../config'
 import emitter from '../utils/emitter';
 export default {
     name: 'App',
     data() {
         return {
-            user: {}
+            user: {},
+            videoDisplay: false,
+            config: config
         }
     },
     created() {
@@ -122,6 +142,9 @@ export default {
                     }, 500);
                 }
             }
+        },
+        videoClose() {
+            this.videoDisplay = false;
         }
     }
 }

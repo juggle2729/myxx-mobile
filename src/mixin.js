@@ -31,7 +31,7 @@ export default {
         } else {
             appContainer.classList.remove('loading');
         }
-        
+
     },
     methods: {
         toast(msg, delay = 2000) {
@@ -66,7 +66,7 @@ export default {
                             defer.resolve(resp);
                         });
                     }
-                    
+
                 } else if(handler === 'login') {
                     bridge.callHandler(handler, params, (resp) => {});
                 } else if('delete,confirm'.indexOf(handler) !== -1) {
@@ -80,6 +80,14 @@ export default {
                         params.url = params.url + '&share=' + (new Date()).getTime();
                     }
                     bridge.callHandler(handler, params);
+                } else if(handler === 'play') {
+                    if(this.$root.isShare){
+                      this.$root.videoId = params.id;
+                      this.$root.videoDisplay = true;
+                    } else {
+                      bridge.callHandler(handler, params);
+                    }
+                    defer.resolve();
                 } else { // 无回调的接口
                     bridge.callHandler(handler, params);
                     defer.resolve();

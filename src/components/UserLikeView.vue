@@ -22,28 +22,31 @@
             </div>
         </div>
     </template>
-    <div class="border-top"></div>
+    <div class="border-top" v-if="total"></div>
+    <empty-page v-else title="你还没有赞"></empty-page>
     <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
-    <div class="loadmore center font-22 gray" v-else >
-         <p class="center-vertical">没有更多了</p>
     </div>
 </div>
 </template>
 <script>
+import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'thumb',
     data() {
         return {
             thumbs: [],
             hasMore: true,
-            loading: true
+            loading: true,
+            total: 0
         };
+    },
+    components: {
+        EmptyPage
     },
     route: {
         data() {
-            this.fetch();
+            return this.fetch();
         }
     },
     methods: {
@@ -56,6 +59,7 @@ export default {
                 this.loading = false;
                 return this.$get('users/' + userId + '/like_list', {offset, limit})
                         .then((data) => {
+                            this.total = data.total;
                             data.entries.forEach((item) => {
                                 if (item.type === 10) {//picture
                                     item.entry.link = 'evaluation';
@@ -72,17 +76,18 @@ export default {
                                     item.entry.link = 'story';
                                     item.entry.description = '分享了一个话题';
                                     item.entry.photo1 = item.entry.media[0].id;
-                                } 
-                                // else if (item.type === 40) { //宝贝
-                                //     item.entry.link = 'jade';
-                                //     item.entry.post_id = item.entry.id;
-                                //     item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
-                                //     item.entry.user.name = item.entry.user.nickname;
-                                //     item.entry.photo1 = item.entry.imgs[0];
-                                //     if(item.entry.product_rewards.length > 0){
-                                //         item.entry.result = item.entry.product_rewards[0].reward.name;
-                                //     }
-                                // }
+                                }
+                                else if (item.type === 40) { //宝贝
+                                    // item.entry.link = 'jade';
+                                    // item.entry.post_id = item.entry.id;
+                                    // item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
+                                    // item.entry.user.name = item.entry.user.nickname;
+                                    // item.entry.photo1 = item.entry.imgs[0];
+                                    // if(item.entry.product_rewards.length > 0){
+                                    //     item.entry.result = item.entry.product_rewards[0].reward.name;
+                                    // }
+                                    return;
+                                }
                                 item.entry.title = types[item.type / 10];
                                 this.thumbs.push(item.entry);
                             });

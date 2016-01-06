@@ -1,32 +1,35 @@
 <template>
 <div class="following-view bg-default">
-    <div class="separator-20"></div>
-        <div class="user border-bottom bg-white flex" v-for="user in userList">
-            <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
-            <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
-                <p class="font-30">{{user.nickname}}</p>
-                <p class="font-26 light margin-top">{{user.role | role}}</p>
-            </div>
-            <div v-if="user.follow && user.isNotSelf" class="font-22 gray border-red follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
-            <div v-if="!user.follow && user.isNotSelf" class="font-22 red border-light follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+    <div v-if="total" class="separator-20"></div>
+    <empty-page v-else title="你还没有关注"></empty-page>
+    <div class="user border-bottom bg-white flex" v-for="user in userList">
+        <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
+        <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
+            <p class="font-30">{{user.nickname}}</p>
+            <p class="font-26 light margin-top">{{user.role | role}}</p>
         </div>
+        <div v-if="user.follow && !user.isSelf" class="font-22 gray border-red follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-if="!(user.follow || user.isSelf)" class="font-22 red border-light follow flex" v-touch:tap="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+    </div>
     <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
-    <div class="loadmore center font-22 gray" v-else >
-         <p class="center-vertical">没有更多了</p>
     </div>
 </div>
 </template>
 <script>
+import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'Selffollowing',
     data() {
         return {
             userList: [],
             hasMore: true,
-            loading: true
+            loading: true,
+            total: 0
         };
+    },
+    components: {
+        EmptyPage
     },
     route: {
         data() {
@@ -36,13 +39,13 @@ export default {
     methods: {
         toggleFollow(user) {
             if (user.follow) {
-                this.$delete('users/follow/'+user.user_id)
+                this.$delete(`users/follow/${user.user_id}`)
                 .then(() => {
                     user.follow = false;
                     this.action('toast', {success: 1, text: '已取消关注'});
                 });
             } else {
-                this.$post('users/follow/'+user.user_id)
+                this.$post(`users/follow/${user.user_id}`)
                 .then(() => {
                     user.follow = true;
                     this.action('toast', {success: 1, text: '已关注'});
@@ -56,10 +59,11 @@ export default {
             if (this.loading) {
                 this.loading = false;
                 const params = {offset, limit};
-                return this.$get('users/' + userid + '/follow_list', params)
+                return this.$get(`users/${userid}/follow_list`, params)
                     .then((data) => {
+                        this.total = data.total;
                         data.entries.forEach((entry) => {
-                            entry.isNotSelf = !(entry.user_id == this.self.id);
+                            entry.isSelf = (this.self ? entry.user_id == this.self.id : false);
                             this.userList.push(entry);
                         });
                         this.loading = true;

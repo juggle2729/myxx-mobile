@@ -8,7 +8,7 @@ export default {
     '/featured': {
         name: 'featured',
         component: {
-            template: '<p class="center center-vertical font-30 gray">【即将下线】</p>'
+            template: '<p class="font-30 gray center" style="position:relative;top: 200px;">【即将下线】</p></div>'
         }
     },
     '/evaluations/:tab': {
@@ -43,7 +43,7 @@ export default {
         name: 'jades',
         title: '宝贝秀',
         component: {
-            template: '<p class="center center-vertical font-30 gray">【即将下线】</p>'
+            template: '<p class="font-30 gray center" style="position:relative;top: 200px;">【即将下线】</p></div>'
         }
     },
     '/jade/:id': {
