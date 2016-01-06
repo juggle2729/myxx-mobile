@@ -104,7 +104,7 @@ export default {
     },
     methods: {
         getApp() {
-            if(this.platform.isWechat) {
+            if(this.platform.isWechat || this.platform.isQQ) {
                 document.querySelector('#backdrop').style.height = '100%';
                 document.querySelector('#backdrop > img').style.height = 'auto';
             } else {

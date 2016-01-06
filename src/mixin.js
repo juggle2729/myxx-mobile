@@ -9,7 +9,8 @@ export default {
                 isMobile: /android|iphone|ipod|ipad/i.test(ua),
                 isIOS: /iphone|ipod|ipad/i.test(ua),
                 isAndroid: /android/i.test(ua),
-                isWechat: /micromessenger/i.test(ua)
+                isWechat: /micromessenger/i.test(ua),
+                isQQ: /qq\//i.test(ua)
             };
         },
         self() {
@@ -24,7 +25,6 @@ export default {
         if(this.$options.route.data) {
             this.$watch('$loadingRouteData', (loading) => {
                 if(!loading) {
-                    console.debug('remove!!!');
                     appContainer.classList.remove('loading');
                 }
             });
@@ -74,7 +74,11 @@ export default {
                         defer.resolve(resp);
                     });
                 } else if(handler === 'share') {
-                    params.url = params.url + '?share=' + (new Date()).getTime();
+                    if(params.url.indexOf('?') === -1) {
+                        params.url = params.url + '?share=' + (new Date()).getTime();
+                    } else {
+                        params.url = params.url + '&share=' + (new Date()).getTime();
+                    }
                     bridge.callHandler(handler, params);
                 } else { // 无回调的接口
                     bridge.callHandler(handler, params);

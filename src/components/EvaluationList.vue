@@ -90,7 +90,7 @@
             <div v-if="item.results.length === 0" class="sep"></div>
         </div>
         <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}}">
+            <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}, query: {comment: 'show'}}">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
         </social-bar>

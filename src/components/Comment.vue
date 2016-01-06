@@ -23,7 +23,7 @@
 <div class="comment-component bg-white">
     <div class="header border-bottom font-22">
         <div class="gray">评论{{total}}</div>
-        <div v-touch:tap="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
+        <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
         <li class="margin-bottom" v-for="c in comments">
@@ -34,7 +34,7 @@
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
-            <div class="font-30" v-touch:tap="clickContent(c, $index, $event)">
+            <div class="font-30" @click="clickContent(c, $index, $event)">
                 <span v-if="c.reply_to" class="label">回复<span v-touch:tap.stop="userProfile(c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
                 <span>{{c.content}}</span>
             </div>
@@ -65,6 +65,9 @@ export default {
         this.uid = ('' + Date.now()).substr(-5);
         this.$watch('id', () => {
             this.fetch();
+            if(this.$route.query.comment) {
+                this.$el.scrollIntoView();
+            }
         });
         // 监听广播事件
         this.$on('reply', (e, user) => {

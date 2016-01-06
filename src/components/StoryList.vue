@@ -74,13 +74,13 @@
                 <template v-else>
                     <template v-for="media in item.medias"
                         ><div class="media img" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                        ><div class="media play" v-if="media.type==='video'" v-bg.video="media.id"></div
+                        ><div class="media play" v-if="media.type==='video'" @click.stop="play(media.id)" v-bg.video="media.id"></div
                     ></template>
                 </template>
             </div>
         </div>
         <social-bar :id="item.post_id" type="30" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left gray extra-action" v-link="{name: 'story', params: {id: item.post_id}}">
+            <div class="center border-left gray extra-action" v-link="{name: 'story', params: {id: item.post_id}, query: {comment: 'show'}}">
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
         </social-bar>
@@ -112,6 +112,9 @@ export default {
                         .filter(media => media.type==='picture')
                         .map(media => media.id);
             this.action('coverflow', {ids, index});
+        },
+        play(id) {
+            this.action('play', {id});
         }
     }
 }

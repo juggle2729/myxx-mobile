@@ -122,7 +122,7 @@
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
-                <div v-touch:tap="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>

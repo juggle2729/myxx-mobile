@@ -2,6 +2,9 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
+    '/ua': {
+        component: require('./components/UAView.vue')
+    },
     '/featured': {
         name: 'featured',
         component: {
