@@ -114,7 +114,7 @@
 
     .expand {
         .arrow {
-            background: url("http://7xp1h7.com2.z0.glb.qiniucdn.com/arrow-down.svg") no-repeat;
+            background: url("http://7xp1h7.com2.z0.glb.qiniucdn.com/icon/arrow-down.svg") no-repeat;
             background-size: cover;
             display: inline-block;
             width: 24px;

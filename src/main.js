@@ -44,6 +44,7 @@ const appContainer = document.querySelector('#app');
 // routing
 let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
+    document.title = (to.title || '美玉秀秀');
     appContainer.classList.add('loading');
     if(/myxx/i.test(navigator.userAgent)) {
         if(from.fullPath && from.fullPath !== to.fullPath) {
@@ -59,10 +60,6 @@ router.beforeEach(({from, to, abort, next}) => {
             next();
         }
     }
-});
-//设置页面title
-router.afterEach(function ({ to }) {
-    document.title = (to.title || '美玉秀秀');
 });
 router.map(routes);
 

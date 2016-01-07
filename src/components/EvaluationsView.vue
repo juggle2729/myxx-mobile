@@ -5,7 +5,7 @@
         height: 80px;
         > div {
             -webkit-box-flex: 1;
-            margin: 24px 0;
+            padding: 25px 0 23px;
             &:active {
                 color: #cc3f4f;
             }

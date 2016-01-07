@@ -6,8 +6,6 @@
     }
     .header {
         padding: 32px 32px 0 32px;
-    }
-    .header {
         .user {
             display: -webkit-box;
             -webkit-box-align: center;
@@ -30,7 +28,7 @@
     }
     .results {
         .padding-bottom {
-            padding-bottom: 29px;
+            padding-bottom: 24px;
         }
     }
     .result {

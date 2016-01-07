@@ -18,10 +18,10 @@
             background-size: cover;
         }
         .user {
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.svg');
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar.svg');
         }
         .more {
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg');
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/icon/more.svg');
         }
     }
     .extra-action {
