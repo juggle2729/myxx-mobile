@@ -1,31 +1,33 @@
 import config from './config';
 export function moment(time) {
+    let m = '神秘时间';
+    if(typeof time !== 'number') {
+        return m;
+    }
     const [d, now] = [new Date(time), new Date()];
     const diff = now - d;
     const MINUTE = 1000 * 60;
     const HOUR = 60 * MINUTE;
     const DAY = HOUR * 24;
-    const MONTH = DAY * 30; // FIXME
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
     const YESTERDAY = now.getTime();
-    let m = '';
-    if (!isNaN(d.valueOf())) {
+
+    if(d.getTime() >= YESTERDAY) { //今天
         if (diff <= MINUTE) {
             m = '刚刚';
         } else if (diff <= HOUR) {
-            m = Math.floor(diff / MINUTE) + '分钟前';
-        } else if (d >= YESTERDAY) {
-            m = Math.floor(diff / HOUR) + '小时前';
-        } else if (d >= (YESTERDAY - DAY )) {
-            m = '昨天';
-        } else if(diff <= MONTH){
-            m = Math.floor(diff / DAY) + '天前';
+            m = Math.ceil(diff / MINUTE) + '分钟前';
         } else {
-            m = Math.floor(diff / MONTH) + '月前';
+            m = Math.ceil(diff / HOUR) + '小时前';
         }
+    } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
+        m = `昨天${d.getHours()}点${d.getMinutes()}分`;
+    } else { // N天前
+        m = Math.ceil(diff / DAY) + '天前';
     }
+
     return m;
 }
 

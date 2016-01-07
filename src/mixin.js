@@ -10,7 +10,8 @@ export default {
                 isIOS: /iphone|ipod|ipad/i.test(ua),
                 isAndroid: /android/i.test(ua),
                 isWechat: /micromessenger/i.test(ua),
-                isQQ: /qq\//i.test(ua)
+                isQQ: /qq\//i.test(ua),
+                isWeibo: /weibo/i.test(ua)
             };
         },
         self() {
