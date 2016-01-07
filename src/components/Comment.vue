@@ -1,7 +1,7 @@
 <style lang="sass">
 .comment-component {
-    padding: 24px 32px;
-    .header {
+    padding: 0 32px 24px 32px;
+    .comment-header {
         display: -webkit-box;
         -webkit-box-align: center;
         -webkit-box-pack: justify;
@@ -17,11 +17,15 @@
             line-height: 46px;
         }
     }
+    .nocomment {
+        margin-top: 48px;
+        margin-bottom: 24px;
+    }
 }
 </style>
 <template>
 <div class="comment-component bg-white">
-    <div class="header border-bottom font-22">
+    <div class="comment-header border-bottom font-22">
         <div class="gray">评论{{total}}</div>
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
@@ -39,7 +43,7 @@
                 <span>{{c.content}}</span>
             </div>
         </li>
-        <li v-show="!total" class="center light font-26 margin-top">还没有人评论</li>
+        <li v-show="!total" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
 </div>
 </template>

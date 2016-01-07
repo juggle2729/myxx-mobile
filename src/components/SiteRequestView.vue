@@ -96,7 +96,7 @@ export default {
     },
     route: {
         data() {
-            this.$get(`users/${this.$route.params.id}/basic`)
+            return this.$get(`users/${this.$route.params.id}/basic`)
                .then((data) => {
                    this.contact = data.phone;
                });

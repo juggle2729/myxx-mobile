@@ -76,9 +76,9 @@
     </div>
     <router-view></router-view>
     <div v-if="isShare" v-touch:tap="getApp()" class="download-bottom flex bg-red white font-30">
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-left.png" alt="left">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/left.png" alt="left">
         <div class="download-trigger flex-1 center bold">我也要晒宝</div>
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share-right.png" alt="right">
+        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/right.png" alt="right">
     </div>
     <div v-if="isShare" id="backdrop">
         <img :src="platform.isIOS ? 'http://7xp1h7.com2.z0.glb.qiniucdn.com/ios.png' : 'http://7xp1h7.com2.z0.glb.qiniucdn.com/android.png'" alt="用浏览器打开">

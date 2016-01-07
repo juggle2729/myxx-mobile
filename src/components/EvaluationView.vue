@@ -6,8 +6,6 @@
     }
     .header {
         padding: 32px 32px 0 32px;
-    }
-    .header {
         .user {
             display: -webkit-box;
             -webkit-box-align: center;
@@ -72,7 +70,6 @@
         }
     }
     .social {
-        padding: 0 32px;
         position: fixed;
         z-index: 9;
         bottom: 0;
@@ -101,7 +98,7 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" v-touch:tap="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" v-touch:tap="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" v-touch:tap="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>

@@ -1,9 +1,9 @@
 <style lang="sass">
 .social-bar {
-    height: 80px;
+    height: 82px;
     .action {
-        padding-left: 12px;
-        padding-right: 12px;
+        width: 128px;
+        padding-left: 30px;
     }
     .users {
         > div {
@@ -18,14 +18,14 @@
             background-size: cover;
         }
         .user {
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-avatar.svg');
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar.svg');
         }
         .more {
             background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/more.svg');
         }
     }
     .extra-action {
-        width: 108px;
+        width: 150px;
     }
 }
 </style>

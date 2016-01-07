@@ -1,61 +1,60 @@
 <style lang="sass">
 .evaluation-list {
     .item {
-        padding: 24px 32px 0 32px;
-    }
-    .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .name {
-            margin-left: 20px;
-            .moment {
-                margin-top: 12px;
+        padding-top: 24px;
+        .header {
+            .user {
+                padding: 0 32px;
+                display: -webkit-box;
+                -webkit-box-align: center;
+                .avatar {
+                    height: 68px;
+                    width: 68px;
+                    border-radius: 50%;
+                    background-size: cover;
+                    vertical-align: middle;
+                }
+                .name {
+                    margin-left: 20px;
+                    .moment {
+                        margin-top: 12px;
+                    }
+                }
+            }
+            .desc {
+                padding: 0 32px;
+                line-height: 44px;
+                margin: 30px 0 24px;
+                line-height: 1.2em;
             }
         }
     }
-    .desc {
-        line-height: 44px;
-        margin: 30px 0 24px;
-        line-height: 1.2em;
-    }
-    .video {
-        height: 528px;
+    .eval-video {
+        height: 548px;
         background-size: cover;
         background-position: center;
-    }
-    .social {
-        padding: 0 32px;
-    }
-    .result {
-        height: 116px;
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
+        position: relative;
+        .result {
+            padding: 12px 0 9px 19px;
+            width: 240px;
+            height: 45px;
+            position: relative;
+            border-radius: 25px;
+            left: 25px;
+            top: 25px;
+            background-color: rgba(80, 80, 80, .5);
         }
-        .master {
-            -webkit-box-flex: 1;
-            padding-left: 20px;
-            .title {
-                margin-top: 12px;
+        .svg {
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            width: 62px;
+            height: 40px;
+            border-radius: 25px;
+            background-color: rgba(80, 80, 80, .5);
+            > img {
+                width: 28px;
             }
-        }
-        .mark {
-            padding: 5px 0 5px 35px;
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
-            background-position: left center;
-            background-size: 26px;
         }
     }
     .sep {
@@ -78,16 +77,14 @@
                 </div>
                 <div class="desc font-30">{{item.description}}</div>
             </div>
-            <div class="video" v-bg="item.picture"></div>
-            <div v-for="result in item.results" class="result border-top">
-                <div class="avatar" v-bg.sm="result.identifier.photo" v-link="result.identifier | profile"></div>
-                <div class="master">
-                    <p class="name font-26">{{result.identifier.name}}</p>
-                    <p class="title font-22 gray">{{result.identifier.title}}</p>
+            <div class="eval-video" v-bg="item.picture">
+                <div class="result white font-22" v-if="item.results.length">
+                    <i class="icon-eval"></i><span class="">已有{{item.results.length}}位大师鉴定</span>
                 </div>
-                <div class="mark font-22">已鉴定</div>
+                <div class="svg flex">
+                    <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/video.svg" class="flex center-horizontal">
+                </div>
             </div>
-            <div v-if="item.results.length === 0" class="sep"></div>
         </div>
         <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
             <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}, query: {comment: 'show'}}">

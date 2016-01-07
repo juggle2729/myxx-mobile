@@ -39,7 +39,7 @@ export default {
         data({to}) {
             this.id = to.params.id;
             this.type = to.params.type;
-            this.fetch();
+            return this.fetch();
         }
     },
     events: {

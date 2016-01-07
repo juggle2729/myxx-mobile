@@ -54,7 +54,6 @@
         }
     }
     .social {
-        padding: 0 32px;
         position: fixed;
         z-index: 9;
         bottom: 0;

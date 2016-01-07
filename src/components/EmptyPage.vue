@@ -5,7 +5,7 @@
         width: 160px;
         height: 160px;
         border-radius: 50%;
-        background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder-empty.png');
+        background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/empty.png');
         background-size: cover;
         margin-bottom: 40px;
     }

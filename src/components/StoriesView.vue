@@ -131,9 +131,6 @@ export default {
             background-size: cover;
         }
     }
-    .social {
-        padding: 0 32px;
-    }
     .loadmore {
         img {
             width: 120px;

@@ -28,9 +28,6 @@
     .video {
         height: 500px;
     }
-    .social {
-        padding: 0 32px;
-    }
     .result {
         height: 116px;
         display: -webkit-box;
