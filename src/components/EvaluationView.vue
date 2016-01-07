@@ -99,7 +99,7 @@
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
     <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" v-touch:tap="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
         <div class="result" v-for="result in evaluation.results">
@@ -127,7 +127,7 @@
             <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" v-touch:tap="evaluate(jb.action)">{{jb.label}}</button>
         </div>
     </div>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <comment type="10" :id="evaluation.post_id"></comment>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
         <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>

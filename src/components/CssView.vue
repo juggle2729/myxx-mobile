@@ -299,7 +299,7 @@ export default {
             ['invisible','不可见'],
             ['clearfix','12'],
             ['row-block','自己看代码'],
-            ['separator','宽度为20px的分割div']
+            ['separator-20','宽度为20px的分割div']
         ]
     };
    },

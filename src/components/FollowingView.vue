@@ -1,6 +1,6 @@
 <template>
 <div class="following-view bg-default">
-    <div v-if="total" class="separator-20"></div>
+    <div v-if="total" class="separator"></div>
     <empty-page v-else title="你还没有关注"></empty-page>
     <div class="user border-bottom bg-white flex" v-for="user in userList">
         <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>

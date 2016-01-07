@@ -10,7 +10,7 @@
 </style>
 <template>
 <div class="evaluation-likes-view">
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <div class="user flex border-bottom" v-for="user in users">
         <div class="avatar" v-bg.sm="user.photo"></div>
         <div class="flex-1">

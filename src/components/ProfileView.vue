@@ -1,6 +1,6 @@
 <template>
 <div class="profile-view bg-default">
-    <div class="separator-20"></div>
+    <div class="separator"></div>
     <div class="account bg-white border-bottom flex" v-touch:tap="action('profile')">
         <div class="avatar-120" v-bg.md="photo"></div>
         <div class="user flex-1">

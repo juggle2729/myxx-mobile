@@ -87,7 +87,7 @@
             <label for="tab-popularity">热门</label><input name="tab" v-model="tab" type="radio" id="tab-popularity" value="popularity"/>
         </div>
     </div>
-    <div class="separator" v-show="tab"></div>
+    <div class="separator-20" v-show="tab"></div>
     <template v-for="item in current.items">
         <div class="item">
             <div class="header">
@@ -115,7 +115,7 @@
                 <i class="icon-comment"></i><span>{{item.comment}}</span>
             </div>
         </social-bar>
-        <div class="separator"></div>
+        <div class="separator-20"></div>
     </template>
     <div class="loadmore center font-22 gray padding-vertical">
         <img v-show="current.hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">

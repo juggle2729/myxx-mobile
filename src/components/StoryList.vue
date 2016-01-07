@@ -52,7 +52,7 @@
 <template>
 <div class="story-list bg-white">
     <template v-for="item in items">
-        <div class="separator"></div>
+        <div :class="{'separator-20': $index !=0 , 'separator': $index === 0}"></div>
         <div class="item" v-link="{name: 'story', params: {id: item.post_id}}">
             <div class="header">
                 <div class="user">

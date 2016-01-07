@@ -1,7 +1,7 @@
 <template>
 <div class="userlike-view bg-default">
     <template v-for="thumb in thumbs">
-        <div class="separator-20"></div>
+        <div :class="{'separator-20': $index !=0 , 'separator': $index === 0}"></div>
         <div class="notice bg-white">
             <div class="sender flex">
                 <p class="font-30 gray">

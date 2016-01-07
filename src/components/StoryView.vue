@@ -93,7 +93,7 @@
             </template>
         </div>
     </div>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
         <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>

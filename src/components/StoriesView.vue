@@ -1,6 +1,6 @@
 <template>
 <div class="stories-view">
-    <div class="tabs bg-white">
+    <div class="tabs bg-white border-bottom">
         <div :class="{'red': tab=='time'}" v-touch:tap="tab='time'" class="font-26 center">
             <div class="border-right">最新</div>
         </div>

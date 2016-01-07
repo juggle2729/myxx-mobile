@@ -179,7 +179,12 @@
         margin-top: 0;
     }
 }
-.separator, .separator-20 {
+.separator {
+    @extend .border-bottom;
+    @extend .bg-default;
+    height: 20px;
+}
+.separator-20 {
     @extend .border-vertical;
     @extend .bg-default;
     height: 20px;

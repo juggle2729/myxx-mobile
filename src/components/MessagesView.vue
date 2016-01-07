@@ -1,6 +1,6 @@
 <template>
 <div class="message-view bg-default">
-    <div class="separator-20"></div>
+    <div class="separator"></div>
     <div class="messages border-bottom bg-white">
         <div class="row font-34 border-bottom flex">
             <span class="red icon-alarm"></span>

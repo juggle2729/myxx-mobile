@@ -116,19 +116,19 @@
 </style>
 <template>
     <div class="master-studio-view bg-white">
-        <div class="separator separator-20"></div>
+        <div class="separator-20"></div>
         <div class="qrcode center">
             <img src="/static/images/avatar--defaut.jpg" alt="qrcode"/>
             <p class="font-30">官网二维码</p>
         </div>
-        <div class="separator separator-20"></div>
+        <div class="separator-20"></div>
         <div class="studio center">
             <div class="img logo" v-bg.md="shop.logo"></div>
             <p class="font-30">{{shop.shop_name}}</p>
             <p class="font-26 gray">{{shop.shop_about}}</p>
             <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
         </div>
-        <div class="separator separator-20"></div>
+        <div class="separator-20"></div>
         <div class="contact">
             <div class="block-title font-22 gray border-bottom">
                 <span class="line-yellow"></span>
@@ -149,7 +149,7 @@
                 </div>
             </div>
         </div>
-        <div class="separator separator-20"></div>
+        <div class="separator-20"></div>
         <div class="message">
             <div class="block-title font-22 gray">
                 <span class="line-yellow"></span>
