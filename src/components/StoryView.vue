@@ -59,7 +59,6 @@
         }
     }
     .social {
-        padding: 0 32px;
         position: fixed;
         z-index: 9;
         bottom: 0;
@@ -87,10 +86,10 @@
                 <img class="img" :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
-                <template v-for="media in story.medias">
-                    <div class="media img" v-touch:tap="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
-                    <div class="media play" v-touch:tap="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
-                </template>
+                <template v-for="media in story.medias"
+                    ><div class="media img" v-touch:tap="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
+                ></template>
             </template>
         </div>
     </div>

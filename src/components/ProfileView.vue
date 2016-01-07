@@ -62,20 +62,11 @@ export default {
     name: 'Profile',
     data() {
         return {
-            photo: null,
-            role: 0,
-            has_shop: false,
-            nickname: '',
-            has_website: false,
-            fans_count: 0,
-            topic_count: 0,
-            follow_count: 0,
-            userId: 0,
         };
     },
     route: {
         data() {
-            this.action('user')
+            return this.action('user')
                 .then((user) => {
                     if(user) {
                         return this.$get(`users/${user.id}/profile`)

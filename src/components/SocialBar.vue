@@ -1,9 +1,9 @@
 <style lang="sass">
 .social-bar {
-    height: 80px;
+    height: 82px;
     .action {
-        padding-left: 12px;
-        padding-right: 12px;
+        width: 128px;
+        padding-left: 30px;
     }
     .users {
         > div {
@@ -25,7 +25,7 @@
         }
     }
     .extra-action {
-        width: 108px;
+        width: 150px;
     }
 }
 </style>
