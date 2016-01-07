@@ -1,14 +1,15 @@
 <template>
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
-    <div class="loadmore center font-22 gray padding-vertical border-top">
+    <div v-if="total" class="loadmore center font-22 gray padding-vertical border-top">
         <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <p v-else>没有更多了</p>
     </div>
+    <empty-page v-else title="你还没有鉴宝"></empty-page>
 </div>
 </template>
 <script>
 import EvaluationList from './EvaluationList.vue';
+import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'UserEvaluationView',
     data() {
@@ -17,33 +18,36 @@ export default {
             userId: 0,
             loading: true,
             hasMore: true,
-            items: []
+            items: [],
+            total: 0
         };
     },
     components: {
-        EvaluationList
+        EvaluationList,
+        EmptyPage
     },
     route: {
         data() {
             this.userId = this.$route.params.id;
-            this.fetch();
+            return this.fetch();
         }
     },
     events: {
         scrollToBottom(e) {
-          this.fetch();
+            this.fetch();
         }
     },
     methods: {
         fetch: (() => {
             const limit = 2;
-            return () => {
+            return function() {
                 let offset = this.items.length;
                 if(this.loading) {
                     this.loading = false;
                     const params = {offset, limit};
-                    return this.$get('sns/users/'+ this.userId +'/jianbao', params)
+                    return this.$get(`sns/users/${this.userId}/jianbao`, params)
                         .then((data) => {
+                            this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.jianbaos);
                             this.loading = true;
                             if (data.jianbaos.length < limit) {

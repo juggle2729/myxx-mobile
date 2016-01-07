@@ -1,14 +1,15 @@
 <template>
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
-    <div class="loadmore center font-22 gray padding-vertical border-top">
+    <div v-if="total" class="loadmore center font-22 gray padding-vertical border-top">
         <img v-if="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        <p v-else>没有更多了</p>
     </div>
+    <empty-page v-else title="你还没有话题"></empty-page>
 </div>
 </template>
 <script>
 import StoryList from './StoryList.vue';
+import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'UserStoryView',
     data() {
@@ -17,16 +18,18 @@ export default {
             items: [],
             hasMore: true,
             hasNew: false,
-            loading: true
+            loading: true,
+            total: 0
         };
     },
     components: {
-        StoryList
+        StoryList,
+        EmptyPage
     },
     route: {
         data() {
             this.userId = this.$route.params.id;
-            this.fetch();
+            return this.fetch();
         }
     },
     events: {
@@ -40,11 +43,11 @@ export default {
             return function() {
                 let offset = this.items.length;
                 if(this.loading) {
-                    console.debug('fetch', offset);
                     this.loading = false;
                     const params = {offset, limit};
                     return this.$get('sns/users/'+ this.userId +'/topics', params)
                         .then((data) => {
+                            this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.topics);
                             this.loading = true;
                             if (data.topics.length < limit) {

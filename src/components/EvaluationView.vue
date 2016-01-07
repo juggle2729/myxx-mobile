@@ -143,7 +143,7 @@ export default {
     name: 'EvaluationView',
     data() {
         return {
-             evaluation: {
+            evaluation: {
                 user: {},
                 results: []
             },
@@ -221,7 +221,7 @@ export default {
             }
         },
         share() {
-            let title = '快来帮我鉴定一下，看看这个宝贝怎么样！';
+            let title = '快来帮我鉴定一下，这个宝贝！';
             let desc = this.evaluation.description.substr(0, 20);
             let icon = this.evaluation.pictures[0];
             this.action('share', {title, desc, icon, url: location.href});
