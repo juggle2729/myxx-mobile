@@ -118,7 +118,7 @@
     <div class="master-studio-view bg-white">
         <div class="separator-20"></div>
         <div class="qrcode center">
-            <img src="/static/images/avatar--defaut.jpg" alt="qrcode"/>
+            <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar--defaut.jpg" alt="qrcode"/>
             <p class="font-30">官网二维码</p>
         </div>
         <div class="separator-20"></div>
@@ -137,11 +137,11 @@
             <div class="content">
                 <div class="gray font-26">
                     <div class="right-120"><i class="icon-phone"></i><span>{{masterBaseData.phone}}</span></div>
-                    <div class="flex"><img src="/static/images/icon/icon_wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
+                    <div class="flex"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
                 </div>
                 <div class="gray font-26">
-                    <div class="right-120 flex"><img src="/static/images/icon/icon_qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
-                    <div class="flex email"><img src="/static/images/icon/icon_email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
+                    <div class="right-120 flex"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
+                    <div class="flex email"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
                 </div>
                 <div class="gray font-26">
                     <span class="icon-location gray"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>

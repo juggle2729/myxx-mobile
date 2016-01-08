@@ -64,7 +64,7 @@
         }
         .mark {
             padding: 5px 0 5px 35px;
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
+            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico/ico_identify.png');
             background-position: left center;
             background-size: 26px;
         }

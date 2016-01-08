@@ -2,7 +2,7 @@
 <div class="profile-view bg-default">
     <div class="separator"></div>
     <div class="account bg-white border-bottom flex" v-touch:tap="action('profile')">
-        <div class="avatar-120" v-bg.md="photo"></div>
+        <div class="avatar-120" v-bg.sm="photo"></div>
         <div class="user flex-1">
             <p class="font-30">{{nickname}}</p>
             <p class="font-26 gray">{{role | role}}</p>

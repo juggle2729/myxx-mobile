@@ -18,17 +18,17 @@
       <div class="imgs font-26">
           <div class="tr">
               <div class="tb flex">
-                  <img src="/static/images/open/os1.png" />
+                  <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os1.png" />
                   <span class="flex">大师官网</span>
-                  <img src="/static/images/open/os1.png" />
+                  <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os1.png" />
                   <span class="flex">鉴宝权限</span>
               </div>
           </div>
           <div class="tr">
               <div class="tb flex">
-                  <img src="/static/images/open/os1.png" />
+                  <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os1.png" />
                   <span class="flex">专属店铺</span>
-                  <img src="/static/images/open/os4.png" />
+                  <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os4.png" />
                   <span class="flex">精准推广</span>
               </div>
           </div>

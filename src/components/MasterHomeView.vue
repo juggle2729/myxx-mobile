@@ -2,7 +2,7 @@
     .master-home-view {
         overflow-x: hidden;
         .personal-info {
-            background: url("/static/images/master/cover.png") no-repeat;
+            background: url("//7xp1h7.com2.z0.glb.qiniucdn.com/master/cover.png") no-repeat;
             background-size: cover;
         }
 

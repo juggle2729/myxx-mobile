@@ -21,25 +21,25 @@
                 <p>汇聚海量高端用户
                     <br>领略大师风采尽在美玉秀秀</p>
                 <p>海量用户</p>
-                <img src="/static/images/open/os1.png" />
+                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os1.png" />
             </div>
             <div class="text">
                 <p>私人定制，精雕细琢
                     <br>全方位打造玉界明星</p>
                 <p>个性定制</p>
-                <img src="/static/images/open/os2.png" />
+                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os2.png" />
             </div>
             <div class="text">
                 <p>入驻美玉秀秀，获得鉴宝权限
                     <br>突显您渊博的学识和丰富的经验</p>
                 <p>鉴宝权限</p>
-                <img src="/static/images/open/os3.png" />
+                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os3.png" />
             </div>
             <div class="text">
                 <p>多种运营方式，精准推广大师
                     <br>全面提升您的知名度</p>
                 <p>精准推广</p>
-                <img src="/static/images/open/os4.png" />
+                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os4.png" />
             </div>
             <div class="title border-bottom">
                 <p>申请条件</p>
@@ -49,7 +49,7 @@
                 <p>开通流程</p>
             </div>
             <div class="bottom">
-                <img src="/static/images/open/os5.png" />
+                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os5.png" />
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@ export default {
     name: 'SelfEvaluation',
     data() {
         return {
-            banner: '/static/images/open/osbanner.png',
+            banner: '//7xp1h7.com2.z0.glb.qiniucdn.com/open/osbanner.png',
             title: '【人人皆可拥有】',
             requestShow: false,
             type: 'website',

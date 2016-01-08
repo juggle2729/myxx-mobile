@@ -19,7 +19,7 @@
             </div>
             <div class="text flex">
                 <div class="left font-22">
-                    <img src="/static/images/open/od1.png" />
+                    <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/od1.png" />
                     <p>海量用户</p>
                 </div>
                 <div class="right font-26 flex">
@@ -30,7 +30,7 @@
             </div>
             <div class="text flex">
                 <div class="left font-22">
-                    <img src="/static/images/open/od2.png" />
+                    <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/od2.png" />
                     <p>精准推广</p>
                 </div>
                 <div class="right font-26 flex">
@@ -40,7 +40,7 @@
             </div>
             <div class="text flex">
                 <div class="left font-22">
-                    <img src="/static/images/open/od3.png" />
+                    <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/od3.png" />
                     <p>鉴宝权限</p>
                 </div>
                 <div class="right font-26 flex">
@@ -50,7 +50,7 @@
             </div>
             <div class="text flex">
                 <div class="left font-22">
-                    <img src="/static/images/open/od4.png" />
+                    <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/od4.png" />
                     <p>精准推广</p>
                 </div>
                 <div class="right font-26 flex">
@@ -69,7 +69,7 @@
                 <p>开通流程</p>
             </div>
             <div class="bottom">
-                <img class="center-horizontal" src="/static/images/open/od5.png" />
+                <img class="center-horizontal" src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/od5.png" />
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@ export default {
     name: 'SelfEvaluation',
     data() {
         return {
-            banner: '/static/images/open/odbanner.png',
+            banner: '//7xp1h7.com2.z0.glb.qiniucdn.com/open/odbanner.png',
             title: '【人人皆可拥有】',
             requestShow: false,
             type: 'shop',

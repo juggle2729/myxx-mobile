@@ -65,7 +65,7 @@
                         <p class="font-26 gray" align="right">{{size}}</p>
                     </div>
                     <div class="class_display">
-                        <img :class="size" src="/static/images/artist/work-one.jpg">
+                        <img :class="size" src="//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar.svg">
                     </div>
                 </div>
             </template>

@@ -1,7 +1,7 @@
 <template>
     <div class="about-view">
         <div class="imgs center">
-            <img src="/static/images/profile/about.png">
+            <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/profile/about.png">
             <p class="font-34">美玉秀秀</p>
         </div>
         <div class="text">

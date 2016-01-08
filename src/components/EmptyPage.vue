@@ -14,7 +14,7 @@
 <template>
 <div class="empty-page font-30 gray bg-white">
     <div class="center-vertical">
-        <div class="empty-img center-horizontal "></div>
+        <div class="empty-img center-horizontal"></div>
         <div class="center">{{title}}</div>
     </div>
 </div>

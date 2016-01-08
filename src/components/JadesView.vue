@@ -85,7 +85,7 @@ export default {
                     height: 0;
                     width: 100%;
                     padding-bottom: 77%;
-                    background-image: url('/static/images/artist/treasure.jpg');
+                    background-image: url('//7xp1h7.com2.z0.glb.qiniucdn.com/artist/treasure.jpg');
                     background-size: cover;
                 }
                 .txt {
