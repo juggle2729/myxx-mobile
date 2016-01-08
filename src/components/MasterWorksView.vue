@@ -88,7 +88,7 @@
                 <div class="line"></div>
             </div>
             <div class="craft-item bg-white" v-for="craft in masterCrafts" v-link="{name: 'craft-detail', params: {id: id, craftId: craft.id}}">
-                <div class="img" v-bg.lg="craft.images[0]"></div>
+                <div class="img" v-bg.lg="craft.img"></div>
                 <div class="font-30 title">{{craft.title}}</div>
             </div>
             <div class="no-more light font-22 center" v-show="!craftsHasMore">没有更多了</div>

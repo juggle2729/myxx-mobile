@@ -82,6 +82,11 @@
                     overflow: hidden;
                 }
             }
+
+            .cover {
+                height: 576px;
+                width: 100%;
+            }
         }
     }
 </style>
@@ -111,6 +116,7 @@
                 <span class="line-yellow"></span>
                 <span class="title">大师专访</span>
             </div>
+            <div ng-if="interview.img" class="cover img" v-bg.lg="interview.img"></div>
             <div class="info border-top">
                 <div class="title font-30">{{interview.title}}</div>
                 <div class="sub-title font-30">
@@ -121,7 +127,7 @@
                     <div class="title font-26 white bg-gray">文章导读</div>
                     <div class="abstract border-vertical font-26 light" v-if="!!interview.abstract">{{interview.abstract}}</div>
                     <div class="detail">
-                        <rich-text :medias="interview.medias || []"></rich-text>
+                        <rich-text :medias="interview.content || ''"></rich-text>
                     </div>
                 </div>
             </div>

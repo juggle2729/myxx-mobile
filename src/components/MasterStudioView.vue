@@ -3,15 +3,17 @@
         padding-bottom: 120px;
         .qrcode {
             padding: 72px 0 50px 0;
-            img {
+            .code-img {
+                display: inline-block;
                 width: 180px;
                 height: 180px;
                 margin-bottom: 32px;
+                background-size: cover;
             }
         }
         .studio {
             padding: 72px 0 32px 0;
-            .gray {
+            .content {
                 padding: 0 32px;
                 text-align: left;
                 text-indent: 54px;
@@ -30,6 +32,9 @@
                 margin: 0 auto 32px auto;
                 background-size: cover;
                 background-position: center;
+            }
+            .expand .arrow {
+                margin-right: -12px;
             }
         }
 
@@ -118,14 +123,18 @@
     <div class="master-studio-view bg-white">
         <div class="separator-20"></div>
         <div class="qrcode center">
-            <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar--defaut.jpg" alt="qrcode"/>
+            <span class="code-img" v-bg="masterBaseData.website_2d_img" query="imageView2/1/w/180/h/180/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
         <div class="separator-20"></div>
         <div class="studio center">
             <div class="img logo" v-bg.md="shop.logo"></div>
             <p class="font-30">{{shop.shop_name}}</p>
-            <p class="font-26 gray">{{shop.shop_about}}</p>
+            <div class="content font-26 gray" v-text="shopDesc"></div>
+            <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
+                <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
+                <span class="text">{{isExpand ? '收起' : '展开'}}</span>
+            </div>
             <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
         </div>
         <div class="separator-20"></div>
@@ -178,17 +187,35 @@
         data() {
            return {
                content: '',
-               shop: {}
+               shop: {},
+               isExpand: false,
+               aboutLimit: 300
            };
         },
         components: {
             Comment
         },
+        computed: {
+            shopDesc() {
+                if (this.isExpand) {
+                    return this.shop.shop_about;
+                } else {
+                    const shopDesc = this.shop && this.shop.shop_about ? this.shop.shop_about : '';
+                    if (shopDesc) {
+                        return shopDesc.length > this.aboutLimit ? shopDesc.substr(0, this.aboutLimit) + '...' : shopDesc;
+                    }
+                    return '';
+                }
+            }
+        },
         methods: {
-           loadMasterOtherData() {
+            expandTitle() {
+                this.isExpand = !this.isExpand;
+            },
+            loadMasterOtherData() {
               return this.fetchMasterShopInfo();
-           },
-           fetchMasterShopInfo: (function() {
+            },
+            fetchMasterShopInfo: (function() {
                let loading = false;
                return function() {
                   if(loading) {
@@ -202,8 +229,8 @@
                       loading = false;
                   });
                }
-           })(),
-           commitMessage() {
+            })(),
+            commitMessage() {
                const content = this.content;
                if(content && typeof content === 'string') {
                    this.$post(`users/target/${this.id}/type/50/comments`, {content})
@@ -214,7 +241,7 @@
                } else {
                    this.toast('说点什么吧');
                }
-           }
+            }
         }
     };
 </script>

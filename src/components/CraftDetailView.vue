@@ -27,9 +27,9 @@
 </style>
 <template>
     <div class="craft-detail-view border-top">
-        <div class="title img font-44 white"><span class="text bg-black">{{craft.title}}</span></div>
+        <div class="title img font-44 white" v-bg.lg="craft.img"><span class="text bg-black">{{craft.title}}</span></div>
         <div class="content">
-            <rich-text :medias="craft.medias || []"></rich-text>
+            <rich-text :medias="craft.content || ''"></rich-text>
         </div>
     </div>
 </template>

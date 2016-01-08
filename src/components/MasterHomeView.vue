@@ -173,6 +173,13 @@
                 margin-right: 22px;
             }
         }
+
+        .expand {
+            margin-top: 32px;
+            .arrow {
+                margin-right: -12px;
+            }
+        }
     }
 </style>
 <template>
@@ -196,7 +203,12 @@
                             {{title.name}}
                         </div>
                     </div>
-                    <div class="brief font-26 gray">{{masterBaseData.brief}}</div>
+                    <div class="brief font-26 gray" v-text="briefDesc"></div>
+                    <div class="expand font-22 gray center" v-touch:tap="expandTitle"
+                         v-show="masterBaseData.brief && masterBaseData.brief.length > briefLimit">
+                        <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
+                        <span class="text">{{isExpand ? '收起' : '展开'}}</span>
+                    </div>
                     <div class="link-detail white font-26 bg-black"
                          v-link="{name: 'master-special', params: {id: masterBaseData.id}}">查看详情</div>
                 </div>
@@ -278,10 +290,28 @@
                 hasMore: true,
                 dynamics: [],
                 dynamicTotal: 0,
-                following: false
+                following: false,
+                isExpand: false,
+                briefLimit: 48
             };
         },
+        computed: {
+            briefDesc() {
+                if (this.isExpand) {
+                    return this.masterBaseData.brief;
+                } else {
+                    const briefDesc = this.masterBaseData && this.masterBaseData.brief ? this.masterBaseData.brief : '';
+                    if (briefDesc) {
+                        return briefDesc.length > this.briefLimit ? briefDesc.substr(0, this.briefLimit) + '...' : briefDesc;
+                    }
+                    return '';
+                }
+            }
+        },
         methods: {
+            expandTitle() {
+                this.isExpand = !this.isExpand;
+            },
             followMaster() {
                 if (this.following) {
                     return;
