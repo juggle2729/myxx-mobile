@@ -1,4 +1,5 @@
 require('./utils/resize');
+require('lodash');
 import config from './config';
 import emitter from './utils/emitter';
 import Vue from 'vue';

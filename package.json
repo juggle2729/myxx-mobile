@@ -19,6 +19,7 @@
     "eslint-plugin-babel": "^3.0.0",
     "event-emitter": "^0.3.4",
     "file-loader": "^0.8.5",
+    "lodash": "^3.10.1",
     "node-sass": "^3.4.2",
     "pxtorem-loader": "^0.1.1",
     "q": "^1.4.1",
