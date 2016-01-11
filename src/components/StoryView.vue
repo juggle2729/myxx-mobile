@@ -27,7 +27,7 @@
         > p:nth-of-type(2){
             margin-top: 16px;
             line-height: 46px;
-            line-height: 1.2em;
+            line-height: 1.5em;
         }
     }
     .medias {
@@ -83,7 +83,7 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img class="img" :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img class="img" v-touch:tap="coverflow($index)" :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
@@ -96,7 +96,7 @@
     <div class="separator-20"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
-        <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>

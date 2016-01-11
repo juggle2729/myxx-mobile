@@ -4,9 +4,6 @@
     <ul>
         <li class="tab">首页</li>
         <li class="font-26 border-top padding center">
-            <a href="/featured">精选 - featured</a>
-        </li>
-        <li class="font-26 border-top padding center">
             <a href="/evaluations/time">鉴宝/最新 - evaluations/time</a>
         </li>
         <li class="font-26 border-top padding center">
@@ -19,9 +16,6 @@
             <a href="/stories/popularity">话题/最热 - stories/popularity</a>
         </li>
         <li class="tab">发现</li>
-        <li class="font-26 border-top padding center">
-            <a href="/jades">宝贝秀 - jades</a>
-        </li>
         <li class="font-26 border-top padding center">
             <a href="/masters">官网秀 - masters</a>
         </li>
@@ -76,13 +70,7 @@ export default {
             host: location.href
         };
     },
-    methods: {
-        click() {
-            console.debug('click');
-        },
-        onTap() {
-            console.debug('tap');
-        }
+    created() {
     }
 }
 </script>

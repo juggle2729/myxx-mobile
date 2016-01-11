@@ -1,7 +1,7 @@
 <style lang="sass">
 .evaluation-detail {
     padding-bottom: 80px;
-    .images, .results {
+    .results {
         padding: 24px 32px;
     }
     .header {
@@ -12,12 +12,12 @@
         }
         .desc {
             margin: 30px 0 0;
-            line-height: 1.2em;
+            line-height: 1.5em;
         }
     }
     .images {
         font-size: 0;
-        margin: 0 -5px -5px;
+        padding: 24px 27px 19px;
         > li {
             display: inline-block;
             position: relative;
@@ -55,9 +55,6 @@
                 background-size: 60px;
             }
         }
-        .gujia {
-            margin-top: 20px;
-        }
     }
     .evaluation-btn {
         margin: 16px 0 8px 0;
@@ -91,7 +88,7 @@
             <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
             <div class="margin-left">
                 <div class="font-26">{{evaluation.user.name}}</div>
-                <div class="padding-top font-22 gray">
+                <div class="margin-top font-22 gray">
                     <span>{{evaluation.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{evaluation.click}}人浏览</span>
                 </div>
             </div>
@@ -105,7 +102,7 @@
         <div class="result" v-for="result in evaluation.results">
             <div class="result-header">
                 <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
-                <div class="master padding-left">
+                <div class="master">
                     <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.has_website" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
                     <p v-if="result.identifier.title" class="font-22 gray margin-top">{{result.identifier.title}}</p>
                 </div>
@@ -115,11 +112,11 @@
                 <div class="play w-50" v-touch:tap="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span class="red">{{result.result}}</span>
-                    <p v-if="result.result === '真'" class="font-26 gujia"><span>估价：{{prices[$index]}}</span></p>
+                    <p v-if="result.result === '真'" class="font-26 margin-top"><span>估价：{{prices[$index]}}</span></p>
                 </div>
             </div>
             <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
-                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center light"><i class="icon-comment"></i></div>
+                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center gray"><i class="icon-comment"></i></div>
             </social-bar>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
@@ -130,7 +127,7 @@
     <div class="separator-20"></div>
     <comment type="10" :id="evaluation.post_id"></comment>
     <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
-        <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>
@@ -181,7 +178,7 @@ export default {
                 label = '您已鉴定过';
             } else if(!this.evaluation.has_seat) {
                 label = '鉴定已完成';
-            } else if(this.evaluation.master) {
+            } else if(this.evaluation.jianbao_permission) {
                 action = 'evaluate';
             } else if(this.self){
                 action = 'request';

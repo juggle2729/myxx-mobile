@@ -1,3 +1,4 @@
+// hosts设置
 let [api, img, video] = ['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
 if(/^app/.test(location.hostname)) {
     [api, img, video] = ['http://api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/'];
@@ -32,7 +33,7 @@ export default {
             route: 'story'
         }
     ],
-    roles: ['普通用户', '商家', '藏家', '大师', '权威'],
+    roles: {0: '普通用户', 1: '商家', 2: '藏家', 4: '大师', 8: '权威'},
     likes: [
         {
             id: 10,

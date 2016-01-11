@@ -25,7 +25,7 @@
                 padding: 0 32px;
                 line-height: 44px;
                 margin: 30px 0 24px;
-                line-height: 1.2em;
+                line-height: 1.5em;
             }
         }
     }
