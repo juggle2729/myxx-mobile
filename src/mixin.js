@@ -67,9 +67,9 @@ export default {
                     }
                 } else if('login' === handler) {
                     resolver = _.noop;
-                } else if('confirm' === handler || 'delete' === handler) {
+                } else if('confirm,delete'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
-                } else if('share' === handler && _.get(this, 'self.id')) {
+                } else if('share,shareable'.indexOf(handler) !== -1 && _.get(this, 'self.id')) {
                     let inviterQuery = 'inviter=' + this.self.id;
                     params.url = [params.url, inviterQuery].join(_.isEmpty(this.$route.query) ? '?' : '&');
                 } else if('play' === handler && this.$root.isShare){

@@ -57,12 +57,6 @@
                 ];
 
                 let curUrl = location.href;
-                if (curUrl.includes('?')) {
-                    curUrl += '&inviter=' + this.self.id;
-                } else {
-                    curUrl += '?inviter=' + this.self.id;
-                }
-
                 this.action('shareable', {title, desc, icon, url: curUrl });
             },
             clearMasterCache(targetRouteName) {
