@@ -12,12 +12,15 @@
             data({ to }) {
                 this.id = to.params.id;
 
+                this.setPageParams(to.params);
+
                 // get data from cache
                 const cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
 
                 const cacheMasterBaseInfo = cacheMastersBaseInfo ? cacheMastersBaseInfo[this.id] : null;
                 if (cacheMasterBaseInfo) {
                     this.masterBaseData = cacheMasterBaseInfo;
+                    this.checkShare();
                     return this.loadMasterOtherData();
                 }
 
@@ -34,6 +37,27 @@
             }
         },
         methods: {
+            setPageParams() {
+                return console.log('master default set page parameters');
+            },
+            preventDefaultShare() {
+                return false;
+            },
+            checkShare() {
+                const isPrevent = this.preventDefaultShare();
+                if (!isPrevent) {
+                    this.setShare();
+                }
+            },
+            setShare() {
+                const [title, desc, icon] = [
+                    this.masterBaseData.name + '的官网，快来一睹大师风采',
+                    this.masterBaseData.name + (this.masterBaseData.titles.length > 0 ? ' ' + this.masterBaseData.titles[0].name : ''),
+                    this.masterBaseData.photo
+                ];
+
+                this.action('share', {title, desc, icon, url: location.href});
+            },
             clearMasterCache(targetRouteName) {
                 if (targetRouteName && !targetRouteName.startsWith('master')) { //clear cache
                     let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
@@ -59,6 +83,7 @@
                     loading = true;
                     return this.$get(`sites/${this.id}/base`, {}).then((data) => {
                         this.masterBaseData = data;
+                        this.checkShare();
 
                         let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
                         if (!cacheMastersBaseInfo) {
@@ -87,22 +112,6 @@
         }
     }
 
-    .line-title {
-        line-height: 66px;
-        text-align: center;
-        .line {
-            margin-bottom: 7px;
-            width: 40px;
-            height: 1px;
-            margin-top: -1px;
-            border-bottom: 1px solid #c6c6c6;
-            display: inline-block;
-        }
-        .text {
-            padding: 0 12px;
-        }
-    }
-
     .line-yellow {
         width: 3px;
         height: 25px;
@@ -110,6 +119,17 @@
         background-color: #f3ac1c;
         vertical-align: -4px;
         padding-right: 0;
+    }
+
+    .line-title {
+        line-height: 66px;
+        text-align: center;
+        .line {
+            @extend .line-yellow;
+        }
+        .text {
+            padding: 0 12px;
+        }
     }
 
     .expand {

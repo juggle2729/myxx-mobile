@@ -160,25 +160,6 @@
                     line-height: 110px;
                 }
             }
-
-            .icon-followed {
-                background: #56b937;
-                border-radius: 24px;
-                padding-right: 0;
-                vertical-align: text-top;
-                margin-right: -10px;
-            }
-
-            .one-word {
-                margin-right: 22px;
-            }
-        }
-
-        .expand {
-            margin-top: 32px;
-            .arrow {
-                margin-right: -12px;
-            }
         }
     }
 </style>
@@ -204,11 +185,6 @@
                         </div>
                     </div>
                     <div class="brief font-26 gray" v-text="briefDesc"></div>
-                    <div class="expand font-22 gray center" v-touch:tap="expandTitle"
-                         v-show="masterBaseData.brief && masterBaseData.brief.length > briefLimit">
-                        <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
-                        <span class="text">{{isExpand ? '收起' : '展开'}}</span>
-                    </div>
                     <div class="link-detail white font-26 bg-black"
                          v-link="{name: 'master-special', params: {id: masterBaseData.id}}">查看详情</div>
                 </div>
@@ -233,22 +209,6 @@
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
                         <div class="media video" v-touch:tap.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
-                        <div class="result-list" v-if="dynamic.event.results.length > 0">
-                            <div class="result-item clearfix" :class="[dynamic.event.results.length > 1 && $index !== dynamic.event.results.length - 1 ?
-                            'border-bottom' : '']" v-for="result in dynamic.event.results">
-                                <div class="person">
-                                    <div class="photo avatar-50" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
-                                    <div class="name-time">
-                                        <div class="font-26">{{result.identifier.name}}</div>
-                                        <div class="time font-22 light">{{result.identifier.title || ''}}</div>
-                                    </div>
-                                </div>
-                                <div class="status" :class="{'one-word' : result.result.length === 1}">
-                                    <span class="icon-followed font-22 white"></span>
-                                    <span class="text font-22">{{result.result}}</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
@@ -291,27 +251,19 @@
                 dynamics: [],
                 dynamicTotal: 0,
                 following: false,
-                isExpand: false,
-                briefLimit: 48
+                briefLimit: 45
             };
         },
         computed: {
             briefDesc() {
-                if (this.isExpand) {
-                    return this.masterBaseData.brief;
-                } else {
-                    const briefDesc = this.masterBaseData && this.masterBaseData.brief ? this.masterBaseData.brief : '';
-                    if (briefDesc) {
-                        return briefDesc.length > this.briefLimit ? briefDesc.substr(0, this.briefLimit) + '...' : briefDesc;
-                    }
-                    return '';
+                const briefDesc = this.masterBaseData && this.masterBaseData.brief ? this.masterBaseData.brief : '';
+                if (briefDesc) {
+                    return briefDesc.length > this.briefLimit ? briefDesc.substr(0, this.briefLimit) + '...' : briefDesc;
                 }
+                return '';
             }
         },
         methods: {
-            expandTitle() {
-                this.isExpand = !this.isExpand;
-            },
             followMaster() {
                 if (this.following) {
                     return;

@@ -71,14 +71,7 @@
                     line-height: 44px;
                 }
 
-                .abstract {
-                    margin-top: 6px;
-                    line-height: 38px;
-                    padding: 16px 0;
-                }
-
                 .detail {
-                    padding-top: 32px;
                     overflow: hidden;
                 }
             }
@@ -124,8 +117,6 @@
                 </div>
                 <div class="publish-date font-26 gray" v-show="!!interview.date">{{interview.date}}</div>
                 <div class="content">
-                    <div class="title font-26 white bg-gray">文章导读</div>
-                    <div class="abstract border-vertical font-26 light" v-if="!!interview.abstract">{{interview.abstract}}</div>
                     <div class="detail">
                         <rich-text :medias="interview.content || ''"></rich-text>
                     </div>

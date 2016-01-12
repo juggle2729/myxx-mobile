@@ -29,16 +29,18 @@
     <div class="craft-detail-view border-top">
         <div class="title img font-44 white" v-bg.lg="craft.img"><span class="text bg-black">{{craft.title}}</span></div>
         <div class="content">
-            <rich-text :medias="craft.content || ''"></rich-text>
+            <rich-text :medias="craft.content || ''"/>
         </div>
     </div>
 </template>
 <script>
     import RichText from './RichTextView.vue';
+    import masterMixin from '../mixins/MasterMixin.vue';
 
     export default {
         name: 'CraftDetail',
         components: { RichText },
+        mixins: [ masterMixin ],
         data() {
             return {
                 id: '',
@@ -46,15 +48,13 @@
                 craft: {}
             };
         },
-        route: {
-            data({ to }) {
-                this.id = to.params.id;
-                this.craftId = to.params.craftId;
-
-                return this.fetchCraftDetail();
-            }
-        },
         methods: {
+            setPageParams(params) {
+                this.craftId = params.craftId;
+            },
+            loadMasterOtherData() {
+                return this.fetchCraftDetail();
+            },
             fetchCraftDetail: (function () {
                 return function () {
                     return this.$get(`sites/${this.id}/articles/${this.craftId}`, {}).then((data) => {

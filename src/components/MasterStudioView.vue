@@ -67,7 +67,7 @@
                    }
                 }
 
-                .email {
+                .wrap-row {
                     word-break: break-all;
                     word-wrap:break-word;
                 }
@@ -109,7 +109,7 @@
             }
             .comment-component {
                 padding: 0 0 24px 0;
-                .header {
+                .comment-header .red {
                     display: none;
                 }
             }
@@ -126,17 +126,19 @@
             <span class="code-img" v-bg="masterBaseData.website_2d_img" query="imageView2/1/w/180/h/180/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
-        <div class="separator-20"></div>
-        <div class="studio center">
-            <div class="img logo" v-bg.md="shop.logo"></div>
-            <p class="font-30">{{shop.shop_name}}</p>
-            <div class="content font-26 gray" v-text="shopDesc"></div>
-            <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
-                <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
-                <span class="text">{{isExpand ? '收起' : '展开'}}</span>
+        <template v-if="shop.shop_type !== 'inner'">
+            <div class="separator-20"></div>
+            <div class="studio center">
+                <div class="img logo" v-bg.md="shop.logo"></div>
+                <p class="font-30">{{shop.shop_name}}</p>
+                <div class="content font-26 gray" v-text="shopDesc"></div>
+                <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
+                    <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
+                    <span class="text">{{isExpand ? '收起' : '展开'}}</span>
+                </div>
+                <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
             </div>
-            <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
-        </div>
+        </template>
         <div class="separator-20"></div>
         <div class="contact">
             <div class="block-title font-22 gray border-bottom">
@@ -145,12 +147,12 @@
             </div>
             <div class="content">
                 <div class="gray font-26">
-                    <div class="right-120"><i class="icon-phone"></i><span>{{masterBaseData.phone}}</span></div>
-                    <div class="flex"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
+                    <div class="right-120" v-show="masterBaseData.phone"><i class="icon-phone"></i><span>{{masterBaseData.phone}}</span></div>
+                    <div class="flex" v-show="masterBaseData.weixin"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
                 </div>
                 <div class="gray font-26">
-                    <div class="right-120 flex"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
-                    <div class="flex email"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/ico/icon_email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
+                    <div class="right-120 flex" v-show="masterBaseData.qq"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
+                    <div class="flex email" v-show="masterBaseData.email" :class="{'wrap-row': masterBaseData.qq}"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
                 </div>
                 <div class="gray font-26">
                     <span class="icon-location gray"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
@@ -165,7 +167,7 @@
                 <span class="title">欢迎给我留言</span>
             </div>
             <div class="content">
-                <textarea v-model="content" class="border-all"></textarea>
+                <textarea v-model="content" class="border-all font-22"></textarea>
                 <input type="button" value="提交" class="white font-30 bg-yellow" v-touch:tap="commitMessage()"/>
                 <div class="line-title font-22 gray">
                     <div class="line"></div>

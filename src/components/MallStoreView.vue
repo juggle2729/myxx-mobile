@@ -95,7 +95,7 @@
             </div>
             <ul class="bg-default">
                 <li v-for="product in products" class="bg-white" v-link="{name: 'jade', params: {id: product.id}}">
-                    <div class="image" v-bg.md="product.imgs[0]" v-touch:tap.stop="coverflow($index)"></div>
+                    <div class="image" v-bg.md="product.imgs[0]"></div>
                     <div class="font-26 profile">
                         <p>{{product.name}}</p>
                         <p class="red">{{product.price | currency '￥'}}</p>
@@ -139,15 +139,18 @@
            }
         },
         methods: {
+            setShare() {
+                const [title, desc, icon] = ['打开 [美玉秀秀] 开启美玉之旅！', this.shop.shop_name, this.shop.logo];
+                this.action('share', {title, desc, icon, url: location.href});
+            },
+            preventDefaultShare() {
+                return true;
+            },
             expandTitle() {
               this.isExpand = !this.isExpand;
             },
             loadMasterOtherData() {
               return this.fetchMallStoreInfo();
-            },
-            coverflow(index) {
-                const ids = this.products.map((product) => product.imgs[0]);
-                this.action('coverflow', {ids, index});
             },
             fetchMallStoreInfo: (function() {
                let loading = false;
@@ -160,6 +163,8 @@
 
                   return this.$get(`mall/shops/${this.id}`).then((data) => {
                       this.shop = data;
+                      this.setShare();
+
                       loading = false;
                       this.fetchStoreProducts();
                   });
