@@ -65,7 +65,7 @@
     }
 </style>
 <template>
-  <main>
+  <main class="loading">
     <div v-if="isShare" class="download-top flex bg-default border-bottom">
         <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
         <div class="flex-1">
@@ -109,11 +109,11 @@ export default {
     },
     computed: {
         isShare() {
-            return !this.platform.isApp && this.$route.query.share;
+            return !this.platform.isApp && this.$route.query.inviter;
         },
         appCmd() {
             let path = this.$route.path;
-            path = path.replace(/share=\d+&?/, '').replace(/\?$/, '');  // 去掉share参数
+            path = path.replace(/inviter=\d+&?/, '').replace(/\?$/, '');  // 去掉inviter参数
             return 'myxx://web/' + encodeURIComponent(path);
         }
     },

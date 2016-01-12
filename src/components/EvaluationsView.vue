@@ -66,6 +66,7 @@ export default {
     },
     created() {
         this.$watch('tab', (tab) => {
+            this.toggleLoading(true);
             this.$route.router.go({name: 'evaluations', params: {tab}});
         });
     },
@@ -83,7 +84,6 @@ export default {
                 if(loading) {
                     return console.debug('skip!!!!!!!!');
                 }
-                console.debug('fetch', this.tab, offset);
                 loading = true;
                 const params = {[this.tab]: 1, offset, limit};
                 return this.$get('sns/jianbao', params).then((data) => {

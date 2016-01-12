@@ -19,14 +19,17 @@
             content: '';
             position: absolute;
             z-index: 999;
-            background: white url('//7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif') no-repeat center;
+            background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif') no-repeat center;
+            background-size: 60px 34px;
             width: 100%;
-            height: 100%;
+            height: 100px;
+            top: 50%;
+            top: calc(50% - 50px);
         }
     </style>
 </head>
 <body>
-    <div id="app" class="loading"></div>
+    <div id="app"></div>
     <script defer src="/app.js"></script>
 </body>
 </html>

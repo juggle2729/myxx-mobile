@@ -22,17 +22,17 @@ export default {
         waitForData: true
     },
     created() {
-        const appContainer = document.querySelector('#app');
-        if(this.$options.route.data) {
-            this.$watch('$loadingRouteData', (loading) => {
-                if(!loading) {
-                    appContainer.classList.remove('loading');
-                }
-            });
-        } else {
-            appContainer.classList.remove('loading');
+        if(this.$root === this.$parent) {
+            if(this.$options.route.data) {
+                this.$watch('$loadingRouteData', (loading) => {
+                    if(!loading) {
+                        this.toggleLoading(false);
+                    }
+                });
+            } else {
+                this.toggleLoading(false);
+            }
         }
-
     },
     methods: {
         // toast(msg, delay = 2000) {
@@ -42,6 +42,11 @@ export default {
         //     document.body.appendChild(span);
         //     setTimeout(() => span.parentNode.removeChild(span), delay);
         // },
+        toggleLoading(show) {
+            const appContainer = document.querySelector('#app');
+            show = (show === undefined ? !appContainer.classList.contains('loading') : show);
+            document.querySelector('#app').classList[show ? 'add' : 'remove']('loading');
+        },
         action(handler, params = '') {
             Object.keys(params).forEach((k) => params[k] = '' + params[k]);
             let defer = Q.defer();
@@ -64,19 +69,12 @@ export default {
                     resolver = _.noop;
                 } else if('confirm' === handler || 'delete' === handler) {
                     resolver = (resp) => defer.resolve(resp);
-                } else if('share' === handler) {
-                    console.debug(this.self, this.$route);
-                    //let inviterQuery = 'inviter=' + this.self.id;
-                    if(_.isEmpty(this.$route.query)) {
-                        params.url = params.url + '?share=' + (new Date()).getTime();
-                    } else {
-                        params.url = params.url + '&share=' + (new Date()).getTime();
-                    }
-                } else if('play' === handler) {
-                    if(this.$root.isShare){
-                        this.$root.videoId = params.id;
-                        this.$root.videoDisplay = true;
-                    }
+                } else if('share' === handler && _.get(this, 'self.id')) {
+                    let inviterQuery = 'inviter=' + this.self.id;
+                    params.url = [params.url, inviterQuery].join(_.isEmpty(this.$route.query) ? '?' : '&');
+                } else if('play' === handler && this.$root.isShare){
+                    this.$root.videoId = params.id;
+                    this.$root.videoDisplay = true;
                 }
                 if(resolver === undefined) {
                     bridge.callHandler(handler, params);

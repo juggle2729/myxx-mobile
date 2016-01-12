@@ -2,9 +2,6 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/ua': {
-        component: require('./components/UAView.vue')
-    },
     '/featured': {
         name: 'featured',
         component: {
@@ -19,11 +16,6 @@ export default {
         name: 'evaluation',
         title: '鉴宝详情',
         component: require('./components/EvaluationView.vue')
-    },
-    '/evaluation/:id/likes': {
-        name: 'evaluation-likes',
-        title: '点赞',
-        component: require('./components/EvaluationLikesView.vue')
     },
     '/likes/:type/:id': {
         name: 'likes',

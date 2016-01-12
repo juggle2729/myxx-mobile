@@ -38,6 +38,7 @@ export default {
     },
     created() {
         this.$watch('tab', (tab) => {
+            this.toggleLoading(true);
             this.$route.router.go({name: 'stories', params: {tab}});
         });
     },

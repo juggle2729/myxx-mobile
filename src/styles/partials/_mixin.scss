@@ -1,12 +1,12 @@
 @mixin border($direction:all, $color:map-get($colors, 'border-default')) {
     @if ($direction==top) {
-        background-image: linear-gradient(180deg, $color 50%, transparent 50%);
+        background-image: linear-gradient(180deg, $color 51%, transparent 51%);
         background-position: center top;
         background-repeat: no-repeat;
         background-size: 100% 1px;
         padding-top: 1px;
     } @else if ($direction==bottom) {
-        background-image: linear-gradient(0deg, $color 50%, transparent 50%);
+        background-image: linear-gradient(0deg, $color 51%, transparent 51%);
         background-position: center bottom;
         background-repeat: no-repeat;
         background-size: 100% 1px;

@@ -21,7 +21,7 @@ _.merge(Vue.http.options, {
     root: config.api,
     emulateJSON: true,
     beforeSend(xhr, req) {
-        if(this.$route.query.share && req.method !== 'GET') {
+        if(this.$route.query.inviter && req.method !== 'GET') {
             emitter.emit('get-app');
         }
     },
