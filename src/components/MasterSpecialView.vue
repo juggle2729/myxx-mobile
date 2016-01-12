@@ -94,8 +94,8 @@
             <div class="info border-top">
                 <div class="name font-30">{{masterBaseData.name}}</div>
                 <div class="desc font-26">{{masterBaseData.brief}}</div>
-                <div class="titles font-26" v-if="masterBaseData && masterBaseData.titles">
-                    <div class="title-item" v-for="title in masterBaseData.titles" v-show="$index < titleLimit || isExpand">{{title.name}}</div>
+                <div class="titles font-26" v-if="resumes && resumes.length > 0">
+                    <div class="title-item" v-for="resume in resumes" v-show="$index < titleLimit || isExpand" v-text="resumeContent($index)"></div>
                 </div>
                 <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="masterBaseData && masterBaseData.titles && masterBaseData.titles.length > 3">
                     <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
@@ -138,16 +138,36 @@
             return {
                 titleLimit: 3,
                 isExpand: false,
-                interview: {}
+                interview: {},
+                resumes: []
             };
         },
         methods: {
+            resumeContent(index) {
+                const curResume = this.resumes[index];
+                if (!curResume) {
+                    return '';
+                }
+
+                let dateStr = curResume.occur_at;
+                const year = dateStr.substr(0, dateStr.indexOf('-'));
+
+                return [year + '年', curResume.description].join('');
+            },
             expandTitle() {
                 this.isExpand = !this.isExpand;
             },
             loadMasterOtherData: function() {
+                this.fetchMasterResumes();
                 return this.fetchMasterInterviewInfo();
             },
+            fetchMasterResumes: (function () {
+                return function () {
+                    return this.$get(`sites/${this.id}/resumes`, {}).then((data) => {
+                        this.resumes = data.resumes;
+                    });
+                };
+            })(),
             fetchMasterInterviewInfo: (function () {
                 return function () {
                     return this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {

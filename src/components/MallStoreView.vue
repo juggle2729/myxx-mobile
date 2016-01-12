@@ -141,7 +141,15 @@
         methods: {
             setShare() {
                 const [title, desc, icon] = ['打开 [美玉秀秀] 开启美玉之旅！', this.shop.shop_name, this.shop.logo];
-                this.action('shareable', {title, desc, icon, url: location.href});
+
+                let curUrl = location.href;
+                if (curUrl.includes('?')) {
+                    curUrl += '&inviter=' + this.self.id;
+                } else {
+                    curUrl += '?inviter=' + this.self.id;
+                }
+
+                this.action('shareable', {title, desc, icon, url: curUrl});
             },
             preventDefaultShare() {
                 return true;
