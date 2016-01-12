@@ -5,8 +5,6 @@ var webpack = require('webpack');
 module.exports = {
     entry: './src/main.js',
     output: {
-        path: './static',
-        publicPath: '/static/',
         filename: 'app.js'
     },
     resolve: {
@@ -55,9 +53,14 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false,
             compress: {
-                warnings: false
-            }
+                warnings: false,
+                drop_console: true
+            },
+            output: {
+                comments: false
+            } 
         }),
         new webpack.optimize.OccurenceOrderPlugin()
     ]

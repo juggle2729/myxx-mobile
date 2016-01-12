@@ -3,7 +3,7 @@ let [api, img, video] = ['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiux
 if(/^app/.test(location.hostname)) {
     [api, img, video] = ['http://api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/'];
 } else if(/^test/.test(location.hostname)) {
-    [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/'];
+    [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
 }
 
 export default {

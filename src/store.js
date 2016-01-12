@@ -19,9 +19,6 @@ let store = {
     },
     remove(k) {
         return storage.removeItem(k);
-    },
-    hot(k, v) {
-
     }
 }
 

@@ -35,63 +35,53 @@ export default {
 
     },
     methods: {
-        toast(msg, delay = 2000) {
-            const span = document.createElement('span');
-            span.innerText = msg;
-            span.className = 'toast white visible';
-            document.body.appendChild(span);
-            setTimeout(() => span.parentNode.removeChild(span), delay);
-        },
+        // toast(msg, delay = 2000) {
+        //     const span = document.createElement('span');
+        //     span.innerText = msg;
+        //     span.className = 'toast white visible';
+        //     document.body.appendChild(span);
+        //     setTimeout(() => span.parentNode.removeChild(span), delay);
+        // },
         action(handler, params = '') {
-            Object.keys(params).forEach((k) => {
-                params[k] = '' + params[k];
-            });
+            Object.keys(params).forEach((k) => params[k] = '' + params[k]);
             let defer = Q.defer();
+            let resolver = undefined;   //可选值为undefined, false, function
             bridge.then((bridge) => {
-                if(handler === 'user') {
-                    bridge.callHandler(handler, params, (resp) => {
-                        let user;
-                        if(resp) {
-                            user = JSON.parse(resp);
-                        }
+                if('user' === handler) {
+                    resolver = (resp) => {
+                        let user = (resp ? JSON.parse(resp) : undefined);
                         this.$root.user = user;
                         defer.resolve(user);
-                    });
-                } else if(handler === 'keyboard') {
-                    if(!this.self) {
-                        this.action('login');
-                        defer.reject();
+                    };
+                } else if('keyboard' === handler) {
+                    if(_.get(this, 'self.token')) {
+                        resolver = (resp) => defer.resolve(resp);
                     } else {
-                        bridge.callHandler(handler, params, (resp) => {
-                            // FIXME针对输入，做一些安全转码处理
-                            defer.resolve(resp);
-                        });
+                        this.action('login');
+                        resolver = false;
                     }
-
-                } else if(handler === 'login') {
-                    bridge.callHandler(handler, params, (resp) => {});
-                } else if('delete,confirm'.indexOf(handler) !== -1) {
-                    bridge.callHandler(handler, params, (resp) => {
-                        defer.resolve(resp);
-                    });
-                } else if(handler === 'share') {
-                    if(params.url.indexOf('?') === -1) {
+                } else if('login' === handler) {
+                    resolver = _.noop;
+                } else if('confirm' === handler || 'delete' === handler) {
+                    resolver = (resp) => defer.resolve(resp);
+                } else if('share' === handler) {
+                    console.debug(this.self, this.$route);
+                    //let inviterQuery = 'inviter=' + this.self.id;
+                    if(_.isEmpty(this.$route.query)) {
                         params.url = params.url + '?share=' + (new Date()).getTime();
                     } else {
                         params.url = params.url + '&share=' + (new Date()).getTime();
                     }
-                    bridge.callHandler(handler, params);
-                } else if(handler === 'play') {
+                } else if('play' === handler) {
                     if(this.$root.isShare){
-                      this.$root.videoId = params.id;
-                      this.$root.videoDisplay = true;
-                    } else {
-                      bridge.callHandler(handler, params);
+                        this.$root.videoId = params.id;
+                        this.$root.videoDisplay = true;
                     }
-                    defer.resolve();
-                } else { // 无回调的接口
+                }
+                if(resolver === undefined) {
                     bridge.callHandler(handler, params);
-                    defer.resolve();
+                } else if(typeof resolver === 'function') {
+                    bridge.callHandler(handler, params, resolver);
                 }
             });
             return defer.promise;
@@ -99,18 +89,17 @@ export default {
         $req(url, method, data = {}) {
             let defer = Q.defer();
             this.action('user').then((user) => {
-                if(method !== 'get' && !user) {
+                let token = _.get(user, 'token');
+                if(method !== 'get' && !token) {
                     this.action('login');
                 } else {
-                    this.$http.options.emulateJSON = true;
-                    if(user && user.token) {
-                        this.$http.headers.common['X-Auth-Token'] = user.token;
+                    if(token) {
+                        this.$http.headers.common['X-Auth-Token'] = token;
                     }
-                    this.$http[method](url, data).success((resp) => {
+                    this.$http[method](url, data).then(({data: resp}) => {
                         if(resp.status === 200) {
                             defer.resolve(resp.data);
                         } else if(resp.status === 605 || resp.status === 608){
-                        // } else if(resp.status === 605){
                             this.action('login');
                         }
                     });

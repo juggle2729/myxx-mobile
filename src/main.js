@@ -17,27 +17,19 @@ Vue.config.debug = true;
 Vue.use(Store);
 Vue.use(Touch);
 Vue.use(Resource);
-Vue.http.options.emulateJSON = true;
-Vue.http.options.root = config.api;
-Vue.http.options.beforeSend = function(xhr, req) {
-    if(this.$route.query.share && req.method !== 'GET') {
-        emitter.emit('get-app');
+_.merge(Vue.http.options, {
+    root: config.api,
+    emulateJSON: true,
+    beforeSend(xhr, req) {
+        if(this.$route.query.share && req.method !== 'GET') {
+            emitter.emit('get-app');
+        }
+    },
+    catch(resp, status, req) {
+        console.error(status, req.responseURL);
+        this.toast('💔出错了');
     }
-};
-Vue.http.options.catch = function(resp, status, req) {
-    console.error(status, req.responseURL);
-    this.toast('💔出错了');
-};
-// Vue.http.interceptors.push({
-//     request(req) {
-//         return req;
-//     },
-//     response(resp) {
-//         return resp;
-//     }
-// });
-
-
+});
 
 // mixins
 Vue.mixin(mixin);
