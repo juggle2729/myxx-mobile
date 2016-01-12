@@ -56,7 +56,7 @@
                     this.masterBaseData.photo
                 ];
 
-                this.action('share', {title, desc, icon, url: location.href});
+                this.action('shareable', {title, desc, icon, url: location.href});
             },
             clearMasterCache(targetRouteName) {
                 if (targetRouteName && !targetRouteName.startsWith('master')) { //clear cache
