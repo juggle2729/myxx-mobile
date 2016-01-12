@@ -4,7 +4,7 @@
         <div class="banner">
             <img :src="banner" />
             <p>{{title}}</p>
-            <button v-touch:tap="toggleShow">
+            <button @click="toggleShow">
                 <span>立即申请</span>
             </button>
         </div>
@@ -62,7 +62,7 @@
             <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact" maxlength="20">
             <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name" maxlength="20">
             <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" maxlength="50" v-model="content"></textarea>
-            <button v-touch:tap="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
+            <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
                 <span>提交</span>
             </button>
         </div>
@@ -122,7 +122,7 @@ export default {
         submit() {
             this.$post('users/feedbacks', this.result)
                 .then(() => {
-                    this.action('toast', {success: 1, text: '已成功提交'});
+                    this.action('modal', {text: '您的申请已成功提交！请耐心等待客服联系。'});
                 });
             this.toggleShow();
         },

@@ -23,7 +23,7 @@ export function moment(time) {
             m = Math.ceil(diff / HOUR) + '小时前';
         }
     } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
-        m = `昨天${d.getHours()}点${d.getMinutes()}分`;
+        m = `昨天${d.getHours()}:${d.getMinutes() < 10 ? '0' :''}${d.getMinutes()}`;
     } else { // N天前
         m = Math.ceil(diff / DAY) + '天前';
     }

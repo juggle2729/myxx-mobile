@@ -128,9 +128,6 @@ export default {
             background-position: center;
         }
     }
-    .social {
-        padding: 0 32px;
-    }
     .loadmore {
         img {
             width: 120px;
