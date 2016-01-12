@@ -27,7 +27,7 @@
     <div class="rows">
         <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
             <span class="red icon-eval"></span>
-            <span>我的鉴宝</span>
+            <span class="">我的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
         <div class="row bg-white font-30" v-link="{name: 'user-like', params:{id: userId}}">
