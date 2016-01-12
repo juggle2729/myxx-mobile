@@ -156,6 +156,7 @@
 
                     loading = true;
                     const params = {offset, limit};
+                    params.article_type = 'craft';
 
                     return this.$get(`sites/${this.id}/articles`, params).then((data) => {
                         this.masterCrafts.splice(this.masterCrafts.length, 0, ...data.articles);
