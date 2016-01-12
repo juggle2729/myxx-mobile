@@ -42,8 +42,6 @@ Vue.filter('type', type);
 Vue.filter('profile', profile);
 Vue.filter('truncate', truncate);
 
-
-
 Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
@@ -51,7 +49,11 @@ router.beforeEach(({from, to, abort, next}) => {
     document.title = (to.title || '美玉秀秀');
     appContainer.classList.add('loading');
 
-    const stopAppRoute = to.stopAppRoute || false; // true: 由浏览器管理路由
+    let stopAppRoute = to.stopAppRoute || false; // true: 由浏览器管理路由
+    if (stopAppRoute) {
+        stopAppRoute = (stopAppRoute && to.query.replace === 'true');
+    }
+
     if(/myxx/i.test(navigator.userAgent) && !stopAppRoute) {
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});

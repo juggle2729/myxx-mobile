@@ -4,7 +4,7 @@
 <template>
     <div class="master-tabs bg-white border-top">
         <div class="master-tab font-22 gray" v-for="tab in tabs"
-             :class="{'red': currentTab === tab.linkName}" v-link="{name: tab.linkName, replace: true, params: {id: masterInfo.id}}">
+             :class="{'red': currentTab === tab.linkName}" v-link="{name: tab.linkName, replace: true, params: {id: masterInfo.id}, query: {replace: true}}">
             <div class="tab-icon {{tab.iconName}}"></div>
             <div class="tab-name">{{tab.name}}</div>
         </div>

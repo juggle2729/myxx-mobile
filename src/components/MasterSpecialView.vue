@@ -86,7 +86,7 @@
 <template>
     <div class="master-special-view">
         <div class="separator-20"></div>
-        <div class="simple-intro">
+        <div class="simple-intro bg-white">
             <div class="block-title font-22 gray">
                 <span class="line-yellow"></span>
                 <span class="title">人物简介</span>
@@ -104,7 +104,7 @@
             </div>
         </div>
         <div class="separator-20" v-if="masterBaseData.interview_id"></div>
-        <div class="interview" v-if="masterBaseData.interview_id">
+        <div class="interview bg-white" v-if="masterBaseData.interview_id">
             <div class="block-title font-22 gray">
                 <span class="line-yellow"></span>
                 <span class="title">大师专访</span>

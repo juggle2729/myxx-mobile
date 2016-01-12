@@ -123,7 +123,7 @@
     <div class="master-studio-view bg-white">
         <div class="separator-20"></div>
         <div class="qrcode center">
-            <span class="code-img" v-bg="masterBaseData.website_2d_img" query="imageView2/1/w/180/h/180/interlace/1"></span>
+            <span class="code-img" v-bg="masterBaseData.website_2d_img" v-touch:tap.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/180/h/180/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
         <template v-if="shop.shop_type !== 'inner'">
@@ -139,27 +139,29 @@
                 <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
             </div>
         </template>
-        <div class="separator-20"></div>
-        <div class="contact">
-            <div class="block-title font-22 gray border-bottom">
-                <span class="line-yellow"></span>
-                <span class="title">联系方式</span>
+        <template v-if="masterBaseData.phone || masterBaseData.weixin || masterBaseData.qq || masterBaseData.email || masterBaseData.address">
+            <div class="separator-20"></div>
+            <div class="contact">
+                <div class="block-title font-22 gray border-bottom">
+                    <span class="line-yellow"></span>
+                    <span class="title">联系方式</span>
+                </div>
+                <div class="content">
+                    <div class="gray font-26" v-show="masterBaseData.phone || masterBaseData.weixin">
+                        <div class="right-120" v-show="masterBaseData.phone"><i class="icon-phone"></i><span>{{masterBaseData.phone}}</span></div>
+                        <div class="flex" v-show="masterBaseData.weixin"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
+                    </div>
+                    <div class="gray font-26" v-show="masterBaseData.qq || masterBaseData.email">
+                        <div class="right-120 flex" v-show="masterBaseData.qq"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
+                        <div class="flex email" v-show="masterBaseData.email" :class="{'wrap-row': masterBaseData.qq}"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
+                    </div>
+                    <div class="gray font-26" v-show="masterBaseData.address">
+                        <span class="icon-location gray"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                        <span>{{masterBaseData.address}}</span>
+                    </div>
+                </div>
             </div>
-            <div class="content">
-                <div class="gray font-26" v-show="masterBaseData.phone || masterBaseData.weixin">
-                    <div class="right-120" v-show="masterBaseData.phone"><i class="icon-phone"></i><span>{{masterBaseData.phone}}</span></div>
-                    <div class="flex" v-show="masterBaseData.weixin"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/wechat.png" class="flex"/><span class="flex">{{masterBaseData.weixin}}</span></div>
-                </div>
-                <div class="gray font-26" v-show="masterBaseData.qq || masterBaseData.email">
-                    <div class="right-120 flex" v-show="masterBaseData.qq"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/qq.png" class="flex"/><span class="flex">{{masterBaseData.qq}}</span></div>
-                    <div class="flex email" v-show="masterBaseData.email" :class="{'wrap-row': masterBaseData.qq}"><img src="//7xp1h7.com2.z0.glb.qiniucdn.com/icon/email.svg" class="flex"/><span class="flex">{{masterBaseData.email}}</span></div>
-                </div>
-                <div class="gray font-26" v-show="masterBaseData.address">
-                    <span class="icon-location gray"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                    <span>{{masterBaseData.address}}</span>
-                </div>
-            </div>
-        </div>
+        </template>
         <div class="separator-20"></div>
         <div class="message">
             <div class="block-title font-22 gray">
@@ -211,6 +213,9 @@
             }
         },
         methods: {
+            coverflow(ids, index) {
+                this.action('coverflow', {ids, index});
+            },
             expandTitle() {
                 this.isExpand = !this.isExpand;
             },
