@@ -50,7 +50,9 @@ let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
     document.title = (to.title || '美玉秀秀');
     appContainer.classList.add('loading');
-    if(/myxx/i.test(navigator.userAgent)) {
+
+    const stopAppRoute = to.stopAppRoute || false; // true: 由浏览器管理路由
+    if(/myxx/i.test(navigator.userAgent) && !stopAppRoute) {
         if(from.fullPath && from.fullPath !== to.fullPath) {
             window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
             abort();
