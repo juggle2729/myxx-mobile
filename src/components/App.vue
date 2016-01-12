@@ -75,7 +75,7 @@
         <a href="http://download.meiyuxiuxiu.com/" class="download-trigger download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="isShare" v-touch:tap="getApp()" class="download-bottom flex bg-red white font-30">
+    <div v-if="isShare" @click="getApp()" class="download-bottom flex bg-red white font-30">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/left.png" alt="left">
         <div class="download-trigger flex-1 center bold">我也要晒宝</div>
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/right.png" alt="right">

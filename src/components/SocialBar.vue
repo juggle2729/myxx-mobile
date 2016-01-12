@@ -31,7 +31,7 @@
 </style>
 <template>
 <div class="social-bar font-26 gray flex">
-    <div class="action" v-touch:tap="like">
+    <div class="action" @click="like">
         <i class="{{active ? 'red icon-like-active' : 'icon-like'}}"></i><span class="{{active ? 'red' : 'gray'}}">{{total}}</span>
     </div>
     <div class="users flex flex-1" v-show="total">

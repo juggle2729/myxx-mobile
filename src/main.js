@@ -1,11 +1,11 @@
 require('./utils/resize');
+require('fastclick').attach(document.body);
 import _ from 'lodash';
 import config from './config';
 import emitter from './utils/emitter';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
-import Touch from 'vue-touch';
 import Store from './store';
 import routes from './route';
 import mixin from './mixin';
@@ -15,7 +15,6 @@ import { moment, role, type, profile, truncate } from './filter';
 // Vue configurations
 Vue.config.debug = true;
 Vue.use(Store);
-Vue.use(Touch);
 Vue.use(Resource);
 _.merge(Vue.http.options, {
     root: config.api,

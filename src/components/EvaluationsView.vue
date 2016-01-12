@@ -29,10 +29,10 @@
 <template>
 <div class="evaluations-view">
     <div class="tabs bg-white border-bottom">
-        <div :class="{'red': tab=='time'}" v-touch:tap="tab='time'" class="font-26 center">
+        <div :class="{'red': tab=='time'}" @click="tab='time'" class="font-26 center">
             <div class="border-right">最新</div>
         </div>
-        <div :class="{'red': tab=='popularity'}" v-touch:tap="tab='popularity'" class="font-26 center">热门</div>
+        <div :class="{'red': tab=='popularity'}" @click="tab='popularity'" class="font-26 center">热门</div>
     </div>
     <evaluation-list :items="items"></evaluation-list>
     <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">

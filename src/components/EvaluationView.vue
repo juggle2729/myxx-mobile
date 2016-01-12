@@ -95,7 +95,7 @@
         </div>
         <div class="desc font-30">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" v-touch:tap="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator-20"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
@@ -109,7 +109,7 @@
                 <div class="font-22 light">{{result.create_at | moment}}</div>
             </div>
             <div class="flex bg-light border-all font-30">
-                <div class="play w-50" v-touch:tap="play(result.video)" v-bg.video="result.video"></div>
+                <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
                 <div class="center w-50">
                     鉴宝结果：<span class="red">{{result.result}}</span>
                     <p v-if="result.result === '真'" class="font-26 margin-top"><span>估价：{{prices[$index]}}</span></p>
@@ -121,7 +121,7 @@
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
         <div class="evaluation-btn">
-            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" v-touch:tap="evaluate(jb.action)">{{jb.label}}</button>
+            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
         </div>
     </div>
     <div class="separator-20"></div>

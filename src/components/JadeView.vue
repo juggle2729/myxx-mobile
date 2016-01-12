@@ -134,12 +134,12 @@
             <template v-for="media in info.detail.medias">
                 <div class="media text" v-if="media.media_type==='text'">{{media.media_content}}</div>
                 <div class="media picture" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
-                <div class="media play" v-touch:tap="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
+                <div class="media play" @click="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
             </template>
         </div>
     </div>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
-        <div v-touch:tap="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>

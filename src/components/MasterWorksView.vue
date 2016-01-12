@@ -73,7 +73,7 @@
             <div class="expand line-title" v-show="worksHasMore && !worksLoading">
                 <span class="line"></span>
                 <span class="arrow font-22 gray"></span>
-                <span class="text font-22 gray" v-touch:tap="fetchMasterWorksInfo">展开</span>
+                <span class="text font-22 gray" @click="fetchMasterWorksInfo">展开</span>
                 <span class="line"></span>
             </div>
             <div class="no-more light font-22 center" v-show="!worksHasMore && !worksLoading">没有更多了</div>

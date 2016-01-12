@@ -123,7 +123,7 @@
     <div class="master-studio-view bg-white">
         <div class="separator-20"></div>
         <div class="qrcode center">
-            <span class="code-img" v-bg="masterBaseData.website_2d_img" v-touch:tap.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/180/h/180/interlace/1"></span>
+            <span class="code-img" v-bg="masterBaseData.website_2d_img" @click.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/180/h/180/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
         <template v-if="shop.shop_type !== 'inner'">
@@ -132,7 +132,7 @@
                 <div class="img logo" v-bg.md="shop.logo"></div>
                 <p class="font-30">{{shop.shop_name}}</p>
                 <div class="content font-26 gray" v-text="shopDesc"></div>
-                <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
+                <div class="expand font-22 gray center" @click="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
                     <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
                     <span class="text">{{isExpand ? '收起' : '展开'}}</span>
                 </div>
@@ -170,7 +170,7 @@
             </div>
             <div class="content">
                 <textarea v-model="content" class="border-all font-22"></textarea>
-                <input type="button" value="提交" class="white font-30 bg-yellow" v-touch:tap="commitMessage()"/>
+                <input type="button" value="提交" class="white font-30 bg-yellow" @click="commitMessage()"/>
                 <div class="line-title font-22 gray">
                     <div class="line"></div>
                     <span class="text gray">历史留言</span>

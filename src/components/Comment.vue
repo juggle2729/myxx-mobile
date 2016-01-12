@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="font-30" @click="clickContent(c, $index, $event)">
-                <span v-if="c.reply_to" class="label">回复<span v-touch:tap.stop="userProfile(c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
+                <span v-if="c.reply_to" class="label">回复<span @click.stop="userProfile(c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
                 <span>{{c.content}}</span>
             </div>
         </li>

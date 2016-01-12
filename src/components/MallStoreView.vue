@@ -75,7 +75,7 @@
             <div class="logo" v-bg.md="shop.logo"></div>
             <p class="font-30 center">{{shop.shop_name}}</p>
             <div class="content font-26 gray" v-text="shopDesc"></div>
-            <div class="expand font-22 gray center" v-touch:tap="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
+            <div class="expand font-22 gray center" @click="expandTitle" v-show="shop.shop_about && shop.shop_about.length > aboutLimit">
                 <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
                 <span class="text">{{isExpand ? '收起' : '展开'}}</span>
             </div>
