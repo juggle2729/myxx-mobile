@@ -2,7 +2,7 @@
  * Created by chunzujun on 12/29/15.
  */
 <template>
-    <div class="media-content font-30 gray" v-html="medias"></div>
+    <div class="media-content font-30" v-html="medias"></div>
 </template>
 <script>
     export default {
@@ -33,4 +33,15 @@
         }
     };
 </script>
+<style lang="sass">
+    .media-content {
+        * {
+            line-height: 42px;
+        }
+
+        img {
+            margin: 50px 0;
+        }
+    }
+</style>
 
