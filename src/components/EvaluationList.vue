@@ -77,7 +77,7 @@
                 </div>
                 <div class="desc font-30">{{item.description}}</div>
             </div>
-            <div class="eval-video" v-bg.lg="item.picture">
+            <div class="eval-video" v-bg="item.picture">
                 <div class="result white font-22" v-if="item.results.length">
                     <i class="icon-eval"></i><span class="">已有{{item.results.length}}位大师鉴定</span>
                 </div>

@@ -99,6 +99,8 @@ export default {
                             defer.resolve(resp.data);
                         } else if(resp.status === 605 || resp.status === 608){
                             this.action('login');
+                        } else if(resp.status === 5004){
+                            this.$route.router.replace({name: '404'});
                         }
                     });
                 }

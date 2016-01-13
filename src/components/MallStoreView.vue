@@ -188,7 +188,7 @@
                   return this.$get(`mall/products`, params).then((data) => {
                       this.products.splice(this.products.length, 0, ...data.products);
                       loading = false;
-                      if (data.products.length < limit) {
+                      if (data.products.length < limit || offset + limit >= this.total) {
                           this.hasMore = false;
                       }
                   });

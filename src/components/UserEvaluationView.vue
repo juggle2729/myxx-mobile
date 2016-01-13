@@ -50,7 +50,7 @@ export default {
                             this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.jianbaos);
                             this.loading = true;
-                            if (data.jianbaos.length < limit) {
+                            if (data.jianbaos.length < limit || offset + limit >= this.total) {
                                 this.hasMore = false;
                                 this.loading = false;
                             }

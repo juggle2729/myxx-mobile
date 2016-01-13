@@ -190,7 +190,7 @@ export default {
                         this.current.items.splice(this.current.items.length - 1, 0, ...data.jianbaos);
                         this.current.total = data.total;
                         loading = false;
-                        if (data.jianbaos.length < limit) {
+                        if (data.jianbaos.length < limit || offset + limit >= this.total) {
                             this.current.hasMore = false;
                         }
                     });

@@ -56,7 +56,7 @@ export default {
                             this.promotes.push(promote);
                     });
                     this.loading = true;
-                    if(data.products.length < limit || data.total === this.promotes.length){
+                    if(data.products.length < limit || offset + limit >= this.total){
                         this.loading = false;
                         this.hasMore = false;
                     }

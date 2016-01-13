@@ -138,7 +138,7 @@
                         this.worksTotal = data.total;
                         this.worksLoading = false;
 
-                        if (data.products.length < limit) {
+                        if (data.products.length < limit || offset + limit >= this.total) {
                             this.worksHasMore = false;
                         }
                     });
@@ -162,7 +162,7 @@
                         this.masterCrafts.splice(this.masterCrafts.length, 0, ...data.articles);
                         this.craftsTotal = data.total;
                         loading = false;
-                        if (data.articles.length < limit) {
+                        if (data.articles.length < limit || offset + limit >= this.total) {
                             this.craftsHasMore = false;
                         }
                     });

@@ -92,7 +92,7 @@ export default {
                                 this.thumbs.push(item.entry);
                             });
                             this.loading = true;
-                            if (data.entries.length < limit || data.entries.length === data.total) {
+                            if (data.entries.length < limit || offset + limit >= this.total || data.entries.length === data.total) {
                                 this.hasMore = false;
                                 this.loading = false;
                             }

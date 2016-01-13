@@ -130,9 +130,7 @@ export default {
         data({to}) {
             const storyId = to.params.id;
             return this.$get(`sns/topics/${storyId}`)
-                .then((story) => {
-                    this.story = story;
-                });
+                .then((story) => ({story}));
         }
     },
     methods: {

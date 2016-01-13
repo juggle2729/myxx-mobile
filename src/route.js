@@ -152,6 +152,11 @@ export default {
         component: require('./components/CssView.vue')
     },
     // not found handler
+    '/404': {
+        title: '找不到北',
+        name: '404',
+        component: require('./components/NotFoundView.vue')
+    },
     '*': {
         title: '找不到北',
         component: require('./components/NotFoundView.vue')

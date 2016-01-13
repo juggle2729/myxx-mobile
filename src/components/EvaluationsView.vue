@@ -90,7 +90,7 @@ export default {
                         this.items.splice(this.items.length, 0, ...data.jianbaos);
                         this.total = data.total;
                         loading = false;
-                        if (data.jianbaos.length < limit) {
+                        if (data.jianbaos.length < limit || offset + limit >= this.total) {
                             this.hasMore = false;
                         }
                     });

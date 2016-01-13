@@ -3,7 +3,7 @@
     <div v-if="total" class="separator"></div>
     <empty-page v-else title="你还没有关注"></empty-page>
     <div class="user border-bottom bg-white flex" v-for="user in userList">
-        <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
+        <div v-bg.sm="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
         <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
             <p class="font-30">{{user.nickname}}</p>
             <p class="font-26 light margin-top">{{user.role | role}}</p>
@@ -67,7 +67,7 @@ export default {
                             this.userList.push(entry);
                         });
                         this.loading = true;
-                        if (data.entries.length < limit) {
+                        if (data.entries.length < limit || offset + limit >= this.total) {
                             this.hasMore = false;
                             this.loading = false;
                         }

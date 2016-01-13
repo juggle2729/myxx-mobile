@@ -42,11 +42,14 @@ export default {
                 return this.$get('cms/promotes?section=website',{offset, limit})
                     .then((data) => {
                         this.loading = false;
+                        this.total = data.total;
                         data.promotes.forEach((site) =>{
                             this.list.push(site);
                         });
                         this.loading = true;
-                        if(data.promotes.length < limit){
+                        console.log(this.total);
+                        console.log(offset + limit);
+                        if(data.promotes.length < limit || offset + limit >= this.total){
                             this.loading = false;
                             this.hasMore = false;
                         }

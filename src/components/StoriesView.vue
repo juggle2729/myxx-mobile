@@ -63,7 +63,7 @@ export default {
                         this.items.splice(this.items.length, 0, ...data.topics);
                         this.total = data.total;
                         loading = false;
-                        if (data.topics.length < limit) {
+                        if (data.topics.length < limit || offset + limit >= this.total) {
                             this.hasMore = false;
                         }
                     });

@@ -3,7 +3,7 @@
     <div v-if="total" class="separator"></div>
     <empty-page v-else title="你还没有粉丝"></empty-page>
     <div class="user border-bottom bg-white flex" v-for="user in userList">
-        <div v-bg.md="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
+        <div v-bg.sm="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
         <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
             <p class="font-30">{{user.nickname}}</p>
             <p class="font-26 light margin-top">{{user.role | role}}</p>
@@ -53,7 +53,7 @@ export default {
             }
         },
         fetch() {
-            const limit = 10;
+            const limit = 5;
             const userid = this.$route.params.id;
             let offset = this.userList.length;
             if (this.loading) {
@@ -67,7 +67,7 @@ export default {
                             this.userList.push(entry);
                         });
                         this.loading = true;
-                        if (data.entries.length < limit) {
+                        if (data.entries.length < limit || offset + limit >= this.total) {
                             this.hasMore = false;
                             this.loading = false;
                         }

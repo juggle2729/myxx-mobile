@@ -2,13 +2,13 @@
 <div class="likes-view bg-default">
     <div class="separator"></div>
     <div class="user flex border-bottom bg-white" v-for="user in users">
-        <div class="avatar-120" v-bg.md="user.photo" v-link="{name: 'user-profile', params: { id: user.id}}"></div>
+        <div class="avatar-120" v-bg.sm="user.photo" v-link="{name: 'user-profile', params: { id: user.id}}"></div>
         <div class="flex-1" v-link="{name: 'user-profile', params: { id: user.id}}">
             <div class="font-30">{{user.name}}</div>
             <div class="font-26 light margin-top">{{user.role | role}}</div>
         </div>
-        <div v-if="user.is_followed" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
-        <div v-else class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
+        <div v-if="user.is_followed && !user.isSelf" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
+        <div v-if="!(user.is_followed || user.isSelf)" class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
 </div>
 </template>
@@ -65,10 +65,13 @@ export default {
                 loading = true;
                 const params = {limit, offset};
                 return this.$get(`users/target/${this.id}/type/${this.type}/likers`, params).then((data) => {
-                        this.users.splice(this.users.length, 0, ...data.users);
                         this.total = data.total;
+                        data.users.forEach((user) => {
+                            user.isSelf = (this.self ? user.id == this.self.id : false);
+                        });
+                        this.users.splice(this.users.length, 0, ...data.users);
                         loading = false;
-                        if (data.users.length < limit) {
+                        if (data.users.length < limit || offset + limit >= this.total) {
                             this.hasMore = false;
                         }
                     });

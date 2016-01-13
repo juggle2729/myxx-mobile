@@ -50,7 +50,7 @@ export default {
                             this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.topics);
                             this.loading = true;
-                            if (data.topics.length < limit) {
+                            if (data.topics.length < limit || offset + limit >= this.total) {
                                 this.hasMore = false;
                                 this.loading = false;
                             }
