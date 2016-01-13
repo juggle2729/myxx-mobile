@@ -51,7 +51,7 @@
         },
         created() {
             this.$watch('result', (data) => {
-                if(data.name !== '' && data.phone !== 0){
+                if(data.phone !== 0){
                     this.checked = true;
                 } else {
                     this.checked = false;

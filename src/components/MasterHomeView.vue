@@ -104,15 +104,44 @@
                 margin: 24px 20px;
                 line-height: 42px;
             }
-
+/*
             .video {
                 height: 540px;
                 background-repeat: no-repeat;
                 background-size: cover;
-            }
+            }*/
 
             .social-bar {
                 border-radius: 8px;
+            }
+
+            .eval {
+                height: 548px;
+                background-size: cover;
+                background-position: center;
+                position: relative;
+                .result {
+                    padding: 12px 0 9px 19px;
+                    width: 240px;
+                    height: 45px;
+                    position: relative;
+                    border-radius: 25px;
+                    left: 25px;
+                    top: 25px;
+                    background-color: rgba(80, 80, 80, .5);
+                }
+                .svg {
+                    position: absolute;
+                    right: 20px;
+                    top: 25px;
+                    width: 62px;
+                    height: 40px;
+                    border-radius: 25px;
+                    background-color: rgba(80, 80, 80, .5);
+                    > img {
+                        width: 28px;
+                    }
+                }
             }
         }
 
@@ -208,8 +237,17 @@
                     </div>
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
-                        <div class="media video" @click.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div>
+                        <!-- <div class="media video" @click.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div> -->
+                        <div class="eval" v-bg.lg="dynamic.event.picture">
+                            <div class="result white font-22" v-if="dynamic.event.results.length">
+                                <i class="icon-eval"></i><span class="">已有{{dynamic.event.results.length}}位大师鉴定</span>
+                            </div>
+                            <div class="svg flex">
+                                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/video.svg" class="flex center-horizontal">
+                            </div>
+                        </div>
                     </div>
+
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
                             <div class="unique" v-if="dynamic.event.media.length === 1" @click.stop="coverflow(dynamic.event.media, 0)" v-bg.lg="dynamic.event.media[0].id"></div>
