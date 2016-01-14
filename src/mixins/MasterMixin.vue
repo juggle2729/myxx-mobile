@@ -101,66 +101,67 @@
     };
 </script>
 <style lang="sass">
-    .bottom-blank {
-        margin-bottom: 100px;
-    }
+@import '../styles/partials/var';
+.bottom-blank {
+    margin-bottom: 100px;
+}
 
-    .block-title {
-        line-height: 80px;
-        padding-left: 32px;
-        .title {
-           margin-left: 16px;
-        }
+.block-title {
+    line-height: 80px;
+    padding-left: 32px;
+    .title {
+       margin-left: 16px;
     }
+}
 
-    .line-yellow {
-        width: 3px;
-        height: 25px;
+.line-yellow {
+    width: 3px;
+    height: 25px;
+    display: inline-block;
+    background-color: #f3ac1c;
+    vertical-align: -4px;
+    padding-right: 0;
+}
+
+.line-title {
+    line-height: 66px;
+    text-align: center;
+    .line {
+        @extend .line-yellow;
+    }
+    .text {
+        padding: 0 12px;
+    }
+}
+
+.expand {
+    .arrow {
+        background: url("#{$qn}/icon/arrow-down.svg") no-repeat;
+        background-size: cover;
         display: inline-block;
-        background-color: #f3ac1c;
-        vertical-align: -4px;
-        padding-right: 0;
+        width: 24px;
+        height: 24px;
+
+        margin-left: 28px;
+        margin-right: -20px;
+        vertical-align: bottom;
     }
 
-    .line-title {
-        line-height: 66px;
-        text-align: center;
-        .line {
-            @extend .line-yellow;
-        }
-        .text {
-            padding: 0 12px;
-        }
+    .arrow-up {
+        transform: rotateX(180deg);
     }
 
-    .expand {
-        .arrow {
-            background: url("http://7xp1h7.com2.z0.glb.qiniucdn.com/icon/arrow-down.svg") no-repeat;
-            background-size: cover;
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-
-            margin-left: 28px;
-            margin-right: -20px;
-            vertical-align: bottom;
-        }
-
-        .arrow-up {
-            transform: rotateX(180deg);
-        }
-
-        .line {
-            width: 253px;
-        }
-
-        .text {
-            padding-left: 12px;
-            padding-right: 32px;
-        }
+    .line {
+        width: 253px;
     }
 
-    .no-more {
-        margin-top: 32px;
+    .text {
+        padding-left: 12px;
+        padding-right: 32px;
     }
+}
+
+.no-more {
+    margin-top: 32px;
+}
 </style>

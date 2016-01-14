@@ -64,7 +64,7 @@
         }
         .mark {
             padding: 5px 0 5px 35px;
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico/ico_identify.png');
+            background-image: url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico/ico_identify.png');
             background-position: left center;
             background-size: 26px;
         }
@@ -118,7 +118,7 @@
         <div class="separator-20"></div>
     </template>
     <div class="loadmore center font-22 gray padding-vertical">
-        <img v-show="current.hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
+        <img v-show="current.hasMore" src="//7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
         <span v-show="!current.hasMore">没有了</span>
     </div>
 </div>

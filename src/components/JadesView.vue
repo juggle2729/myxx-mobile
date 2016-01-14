@@ -14,9 +14,7 @@
                 </div>
             </template>
         </div>
-        <div class="loadmore center font-22 gray" v-show="hasMore">
-            <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        </div>
+        <partial name="load-more" v-show="hasMore"></partial>
     </div>
 </template>
 <script>
@@ -85,7 +83,7 @@ export default {
                     height: 0;
                     width: 100%;
                     padding-bottom: 77%;
-                    background-image: url('//7xp1h7.com2.z0.glb.qiniucdn.com/artist/treasure.jpg');
+                    background-image: url('#{$qn}/artist/treasure.jpg');
                     background-size: cover;
                 }
                 .txt {
@@ -95,13 +93,6 @@ export default {
                     }
                 }
             }
-        }
-    }
-    .loadmore {
-        height: 68px;
-        img {
-            width: 120px;
-            height: 68px;
         }
     }
 }

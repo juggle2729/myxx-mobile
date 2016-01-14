@@ -24,9 +24,7 @@
     </template>
     <div class="border-top" v-if="thumbs.length"></div>
     <empty-page v-else title="你还没有赞"></empty-page>
-    <div class="loadmore center font-22 gray" v-if="hasMore">
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
+    <partial name="load-more" v-show="hasMore"></partial>
 </div>
 </template>
 <script>
@@ -153,13 +151,6 @@ export default {
                 background-size: cover;
                 background-position: center;
             }
-        }
-    }
-    .loadmore {
-        height: 68px;
-        img {
-            width: 120px;
-            height: 68px;
         }
     }
 }

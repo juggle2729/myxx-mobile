@@ -83,7 +83,7 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img class="img" @click="coverflow($index)" :src="imgRoot + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img class="img" @click="coverflow($index)" :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
@@ -101,7 +101,6 @@
 </div>
 </template>
 <script>
-import config from '../config';
 import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
 export default {
@@ -112,8 +111,7 @@ export default {
                 user: {},
                 medias: [],
                 likes: [],
-            },
-            imgRoot: config.img
+            }
         };
     },
     components: {

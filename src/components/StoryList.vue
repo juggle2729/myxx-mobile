@@ -66,7 +66,7 @@
             </div>
             <div class="medias">
                 <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">
-                    <img :src="imgRoot + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'" @click.stop="coverflow(item, 0)">
+                    <img :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'" @click.stop="coverflow(item, 0)">
                 </div>
                 <template v-else>
                     <template v-for="media in item.medias"
@@ -85,15 +85,9 @@
 </div>
 </template>
 <script>
-import config from '../config';
 import SocialBar from './SocialBar.vue';
 export default {
     name: 'StoryList',
-    data() {
-        return {
-            imgRoot: config.img
-        }
-    },
     props: {
         items: {
             type: Array,

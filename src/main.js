@@ -9,12 +9,17 @@ import Resource from 'vue-resource';
 import Store from './store';
 import routes from './route';
 import mixin from './mixin';
-import { bg } from './directive';
-import { moment, role, type, profile, truncate } from './filter';
+import directive from './directive';
+import filter from './filter';
+import partial from './partial';
 
 // Vue configurations
 Vue.config.debug = true;
-Vue.use(Store);
+Vue.use(mixin);
+Vue.use(filter);
+Vue.use(directive);
+Vue.use(partial);
+
 Vue.use(Resource);
 _.merge(Vue.http.options, {
     root: config.api,
@@ -24,22 +29,12 @@ _.merge(Vue.http.options, {
             emitter.emit('get-app');
         }
     },
-    catch(resp, status, req) {
+    error(resp, status, req) {
         console.error(status, req.responseURL);
-        this.toast('💔出错了');
+        this.toggleLoading(false);
+        this.toast('获取数据失败，请稍后再试！');
     }
 });
-
-// mixins
-Vue.mixin(mixin);
-// directives
-Vue.directive('bg', bg);
-// filters
-Vue.filter('moment', moment);
-Vue.filter('role', role);
-Vue.filter('type', type);
-Vue.filter('profile', profile);
-Vue.filter('truncate', truncate);
 
 Vue.use(Router);
 const appContainer = document.querySelector('#app');
@@ -48,10 +43,7 @@ router.beforeEach(({from, to, abort, next}) => {
     document.title = (to.title || '美玉秀秀');
     appContainer.classList.add('loading');
 
-    let stopAppRoute = to.stopAppRoute || false; // true: 由浏览器管理路由
-    if (stopAppRoute) {
-        stopAppRoute = (stopAppRoute && to.query.replace === 'true');
-    }
+    let stopAppRoute = to.raw && (to.query.replace === 'true');
 
     if(/myxx/i.test(navigator.userAgent) && !stopAppRoute) {
         if(from.fullPath && from.fullPath !== to.fullPath) {

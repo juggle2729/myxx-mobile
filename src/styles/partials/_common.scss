@@ -30,7 +30,7 @@
         width: #{$size}px;
         height: #{$size}px;
         border-radius: 50%;
-        background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/avatar.svg');
+        background-image: url('#{$qn}/placeholder/avatar.svg');
         background-size: cover;
     }
 }
@@ -113,6 +113,12 @@
 /****************************
 *           常用组件          *
 * **************************/
+.load-more {
+    img {
+        width: 120px;
+        height: 68px;
+    }
+}
 .toast {
     position: fixed;
     top: 50%;
@@ -137,7 +143,7 @@
         right: 0;
         bottom: 0;
         /*mix-blend-mode: overlay;*/
-        background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/ico_video.png') no-repeat right 30px top 30px;
+        background: transparent url('#{$qn}/ico_video.png') no-repeat right 30px top 30px;
         background-size: 1rem;
     }
 }
@@ -153,7 +159,7 @@
         right: 0;
         bottom: 0;
         // mix-blend-mode: overlay;
-        background: transparent url('//7xp1h7.com2.z0.glb.qiniucdn.com/icon/play.svg') no-repeat center;
+        background: transparent url('#{$qn}/icon/play.svg') no-repeat center;
         background-size: 1rem;
     }
 }

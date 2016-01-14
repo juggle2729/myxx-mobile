@@ -5,7 +5,7 @@ let preset = {
     sm: 'imageView2/1/w/200/h/200/interlace/1',
     video: 'vframe/jpg/offset/0/rotate/auto|imageView2/1/w/340/h/250'
 };
-export const bg = {
+const bg = {
     params: ['query'],
     bind() {
         this.query = this.params.query || preset[Object.keys(this.modifiers).pop() || 'lg'] || '';
@@ -16,7 +16,7 @@ export const bg = {
             let host = config.video;
             if(/^image/i.test(this.query)) {
                 host = config.img;
-                bgImgStr = `url(${host + id + '?' + this.query}), url('http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/img.png')`
+                bgImgStr = `url(${host + id + '?' + this.query}), url('//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/img.png')`
             } else {
                 bgImgStr = `url(${host + id + '?' + this.query})`
             }
@@ -24,3 +24,8 @@ export const bg = {
         }
     }
 };
+export default {
+    install(Vue, options) {
+        Vue.directive('bg', bg);
+    }
+}

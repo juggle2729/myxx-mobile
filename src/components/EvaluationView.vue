@@ -132,7 +132,6 @@
 </div>
 </template>
 <script>
-import config from '../config';
 import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
 export default {

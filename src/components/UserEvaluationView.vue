@@ -1,9 +1,7 @@
 <template>
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
-    <div v-if="items.length" class="loadmore center font-22 gray padding-vertical border-top">
-        <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
+    <partial name="load-more" v-show="items.length"></partial>
     <empty-page v-else title="你还没有鉴宝"></empty-page>
 </div>
 </template>
@@ -58,6 +56,7 @@ export default {
 }
 </script>
 <style lang="sass">
+@import '../styles/partials/var';
 .user-evaluation {
     height: 100%;
     .tabs {
@@ -121,15 +120,9 @@ export default {
         }
         .mark {
             padding: 5px 0 5px 35px;
-            background-image: url('http://7xp1h7.com2.z0.glb.qiniucdn.com/ico_identify.png');
+            background-image: url('#{$qn}/ico_identify.png');
             background-position: left center;
             background-size: 26px;
-        }
-    }
-    .loadmore {
-        img {
-            width: 120px;
-            height: 68px;
         }
     }
 }

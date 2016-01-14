@@ -46,8 +46,6 @@
 <script>
 export default {
     name: 'HomePageView',
-    data() {
-    },
     route: {
         data() {
             this.userId = this.$route.params.id;

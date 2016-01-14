@@ -1,9 +1,7 @@
 <template>
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
-    <div v-if="items.length" class="loadmore center font-22 gray padding-vertical border-top">
-        <img v-if="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
+    <partial name="load-more" v-if="items.length"></partial>
     <empty-page v-else title="你还没有话题"></empty-page>
 </div>
 </template>
@@ -122,12 +120,6 @@ export default {
             padding-top: 60%;
             background-size: cover;
             background-position: center;
-        }
-    }
-    .loadmore {
-        img {
-            width: 120px;
-            height: 68px;
         }
     }
 }

@@ -1,6 +1,12 @@
 import Q from 'q';
 import bridge from './bridge';
-export default {
+import config from './config';
+const mixin = {
+    data() {
+        return {
+            config
+        };
+    },
     computed: {
         platform() {
             const ua = navigator.userAgent;
@@ -35,13 +41,13 @@ export default {
         }
     },
     methods: {
-        // toast(msg, delay = 2000) {
-        //     const span = document.createElement('span');
-        //     span.innerText = msg;
-        //     span.className = 'toast white visible';
-        //     document.body.appendChild(span);
-        //     setTimeout(() => span.parentNode.removeChild(span), delay);
-        // },
+        toast(msg, delay = 2000) {
+            const span = document.createElement('span');
+            span.innerText = msg;
+            span.className = 'toast white visible';
+            document.body.appendChild(span);
+            setTimeout(() => span.parentNode.removeChild(span), delay);
+        },
         toggleLoading(show) {
             const appContainer = document.querySelector('#app');
             show = (show === undefined ? !appContainer.classList.contains('loading') : show);
@@ -116,5 +122,10 @@ export default {
         $delete(url, data) {
             return this.$req(url, 'delete', data);
         }
+    }
+}
+export default {
+    install(Vue, options) {
+        Vue.mixin(mixin);
     }
 }

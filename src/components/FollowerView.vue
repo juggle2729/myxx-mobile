@@ -11,9 +11,7 @@
         <div v-if="user.follow && !user.isSelf" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
         <div v-if="!(user.follow || user.isSelf)" class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
-    <div class="loadmore center font-22 gray" v-if="hasMore">
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
+    <partial name="load-more" v-show="hasMore"></partial>
 </div>
 </template>
 <script>
@@ -97,13 +95,6 @@ export default {
             height: 40px;
             border-radius: 8px;
             border: 1px solid;
-        }
-    }
-    .loadmore {
-        height: 68px;
-        > img {
-            width: 120px;
-            height: 68px;
         }
     }
     .icon-follow, .icon-followed {

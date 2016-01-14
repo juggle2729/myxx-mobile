@@ -14,9 +14,7 @@
             </div>
         </div>
     </template>
-    <div class="loadmore center font-22 gray" v-show="hasMore">
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-    </div>
+    <partial name="load-more" v-if="hasMore"></partial>
 </div>
 </template>
 <script>
@@ -88,13 +86,6 @@ export default {
                     }
                 }
             }
-        }
-    }
-    .loadmore {
-        height: 68px;
-        img {
-            width: 120px;
-            height: 68px;
         }
     }
 }

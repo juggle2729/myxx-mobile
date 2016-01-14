@@ -8,7 +8,7 @@ module.exports = {
         filename: 'app.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['', '.js'],
         alias: {
             'style': __dirname + '/src/styles/'
         }
@@ -22,7 +22,6 @@ module.exports = {
             // excluding some local linked packages.
             // for normal use cases only node_modules is needed.
             exclude: [
-                path.resolve(__dirname, "src/scripts/swiper.js"),
                 /node_modules|vue\/src|vue-router\/|vue-loader\/|vue-hot-reload-api\//
             ],
             loader: 'babel'

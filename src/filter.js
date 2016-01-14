@@ -1,5 +1,5 @@
 import config from './config';
-export function moment(time) {
+function moment(time) {
     let m = '神秘时间';
     if(typeof time !== 'number') {
         return m;
@@ -31,14 +31,14 @@ export function moment(time) {
     return m;
 }
 
-export function truncate(str, len) {
+function truncate(str, len) {
     if (!str) {
         return '';
     }
     return str.length > len ? str.substr(0, len) + '...' : str;
 }
 
-export function profile(user) {
+function profile(user) {
     const route = {name: 'user-profile', params: {id: user.id}};
     if(user.has_website === true) {
         route.name = 'master-home';
@@ -46,10 +46,24 @@ export function profile(user) {
     return route;
 }
 
-export function role(id) {
+function role(id) {
     return config.roles[id];
 }
 
-export function type(id) {
+function type(id) {
     return config.types[id];
+}
+
+function qn(path) {
+    return config.www + path;
+}
+export default {
+    install(Vue, options) {
+        Vue.filter('moment', moment);
+        Vue.filter('role', role);
+        Vue.filter('type', type);
+        Vue.filter('profile', profile);
+        Vue.filter('truncate', truncate);
+        Vue.filter('qn', qn);
+    }
 }

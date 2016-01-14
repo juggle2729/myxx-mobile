@@ -82,7 +82,7 @@
                     <i class="icon-eval"></i><span class="">已有{{item.results.length}}位大师鉴定</span>
                 </div>
                 <div class="svg flex">
-                    <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/video.svg" class="flex center-horizontal">
+                    <img :src="'placeholder/video.svg' | qn" class="flex center-horizontal">
                 </div>
             </div>
         </div>

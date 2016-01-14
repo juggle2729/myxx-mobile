@@ -67,7 +67,7 @@
 <template>
   <main class="loading">
     <div v-if="isShare" class="download-top flex bg-default border-bottom">
-        <img class="logo" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/logo.png" alt="美玉秀秀">
+        <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
             <div class="slogan font-26 gray padding-top">中国最大的和田玉爱好者平台</div>
@@ -76,12 +76,12 @@
     </div>
     <router-view></router-view>
     <div v-if="isShare" @click="getApp()" class="download-bottom flex bg-red white font-30">
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/left.png" alt="left">
+        <img :src="'share/left.png' | qn" alt="left">
         <div class="download-trigger flex-1 center bold">我也要晒宝</div>
-        <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/share/right.png" alt="right">
+        <img :src="'share/right.png' | qn" alt="right">
     </div>
     <div v-if="isShare" id="backdrop">
-        <img :src="platform.isIOS ? 'http://7xp1h7.com2.z0.glb.qiniucdn.com/ios.png' : 'http://7xp1h7.com2.z0.glb.qiniucdn.com/android.png'" alt="用浏览器打开">
+        <img :src="platform.isIOS ? '//o0x80w5li.qnssl.com/ios.png' : '//o0x80w5li.qnssl.com/android.png'" alt="用浏览器打开">
     </div>
     <div v-if="isShare && videoDisplay" class="video-display" @click="videoClose">
         <video :src="config.video + videoId" autoplay controls="controls">
@@ -91,15 +91,13 @@
 </template>
 <script>
 import Q from 'q';
-import config from '../config'
 import emitter from '../utils/emitter';
 export default {
     name: 'App',
     data() {
         return {
             user: {},
-            videoDisplay: false,
-            config: config
+            videoDisplay: false
         }
     },
     created() {

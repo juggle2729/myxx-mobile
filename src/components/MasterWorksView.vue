@@ -77,9 +77,7 @@
                 <span class="line"></span>
             </div>
             <div class="no-more light font-22 center" v-show="!worksHasMore && !worksLoading">没有更多了</div>
-            <div v-show="worksHasMore && worksLoading" class="loadmore center font-22 gray padding-vertical">
-                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-            </div>
+            <partial name="load-more" v-show="worksHasMore && worksLoading"></partial>
         </div>
         <div class="craft-info" :class="{'bottom-blank': craftsTotal > 0}" v-show="craftsTotal > 0">
             <div class="line-title font-22 gray">
@@ -92,9 +90,7 @@
                 <div class="font-30 title">{{craft.title}}</div>
             </div>
             <div class="no-more light font-22 center" v-show="!craftsHasMore">没有更多了</div>
-            <div v-show="craftsHasMore" class="loadmore center font-22 gray padding-vertical">
-                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-            </div>
+            <partial name="load-more" v-show="worksHasMore"></partial>
         </div>
         <master-tab :master-info="masterBaseData" :current-tab="'master-works'"></master-tab>
     </div>

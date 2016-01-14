@@ -105,9 +105,7 @@
             <div class="line-title font-22 light" v-show="!hasMore">
                 <span class="text gray">没有更多了</span>
             </div>
-            <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
-                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-            </div>
+            <partial name="load-more" v-show="hasMore"></partial>
         </div>
     </div>
 </template>

@@ -64,7 +64,6 @@
     </div>
 </template>
 <script>
-import config from '../config';
 export default {
     name: 'FeaturedView',
     data() {
@@ -80,7 +79,7 @@ export default {
                         if(item.type === 6) {
                             item.bgColor = '#e56202';
                         }
-                        item.type = config.types[item.type];
+                        item.type = this.config.types[item.type];
                         return item;
                     });
                 });

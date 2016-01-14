@@ -2,7 +2,7 @@
 <div class="site-request">
     <div class="opensite bg-white" :class="{'hide': requestShow}">
         <div class="banner">
-            <img :src="banner" />
+            <img :src="'open/osbanner.png' | qn" />
             <p>{{title}}</p>
             <button @click="toggleShow">
                 <span>立即申请</span>
@@ -21,25 +21,25 @@
                 <p>汇聚海量高端用户
                     <br>领略大师风采尽在美玉秀秀</p>
                 <p>海量用户</p>
-                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os1.png" />
+                <img :src="'open/os1.png' | qn" />
             </div>
             <div class="text">
                 <p>私人定制，精雕细琢
                     <br>全方位打造玉界明星</p>
                 <p>个性定制</p>
-                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os2.png" />
+                <img :src="'open/os2.png' | qn" />
             </div>
             <div class="text">
                 <p>入驻美玉秀秀，获得鉴宝权限
                     <br>突显您渊博的学识和丰富的经验</p>
                 <p>鉴宝权限</p>
-                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os3.png" />
+                <img :src="'open/os3.png' | qn" />
             </div>
             <div class="text">
                 <p>多种运营方式，精准推广大师
                     <br>全面提升您的知名度</p>
                 <p>精准推广</p>
-                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os4.png" />
+                <img :src="'open/os4.png' | qn" />
             </div>
             <div class="title border-bottom">
                 <p>申请条件</p>
@@ -49,7 +49,7 @@
                 <p>开通流程</p>
             </div>
             <div class="bottom">
-                <img src="//7xp1h7.com2.z0.glb.qiniucdn.com/open/os5.png" />
+                <img :src="'open/os5.png' | qn" />
             </div>
         </div>
     </div>
@@ -74,7 +74,6 @@ export default {
     name: 'SelfEvaluation',
     data() {
         return {
-            banner: '//7xp1h7.com2.z0.glb.qiniucdn.com/open/osbanner.png',
             title: '【人人皆可拥有】',
             requestShow: false,
             type: 'website',
@@ -133,7 +132,7 @@ export default {
 }
 </script>
 <style lang="sass">
-.site-request{
+.site-request {
     .opensite {
         .banner {
             display: -webkit-box;

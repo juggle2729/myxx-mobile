@@ -1,196 +1,197 @@
 <style lang="sass">
-    .master-home-view {
-        overflow-x: hidden;
-        .personal-info {
-            background: url("//7xp1h7.com2.z0.glb.qiniucdn.com/master/cover.png") no-repeat;
-            background-size: cover;
+@import '../styles/partials/var';
+.master-home-view {
+    overflow-x: hidden;
+    .personal-info {
+        background: url("#{$qn}/cover.png") no-repeat;
+        background-size: cover;
+    }
+
+    .attention {
+        padding-top: 32px;
+        text-align: right;
+        .content {
+            float: right;
         }
 
-        .attention {
-            padding-top: 32px;
-            text-align: right;
-            .content {
-                float: right;
-            }
-
-            .status {
-                width: 152px;
-                line-height: 54px;
-                border-radius: 54px;
-                margin-right: -22px;
-                padding-right: 46px;
-            }
-
-            .icon-follow {
-                line-height: 54px;
-                padding-right: 0;
-                vertical-align: -0.04rem;
-            }
-
-            .count {
-                margin-top: 16px;
-                margin-right: 24px;
-            }
+        .status {
+            width: 152px;
+            line-height: 54px;
+            border-radius: 54px;
+            margin-right: -22px;
+            padding-right: 46px;
         }
 
-        .base-info {
-            margin-top: 45px;
-            text-align: center;
-            padding: 0 62px 50px;
-            .name {
-                margin-top: 36px;
-            }
+        .icon-follow {
+            line-height: 54px;
+            padding-right: 0;
+            vertical-align: -0.04rem;
         }
 
-        .head {
-            margin: 0 auto;
-            border-radius: 180px;
-            border: 6px solid white;
+        .count {
+            margin-top: 16px;
+            margin-right: 24px;
         }
+    }
 
-        .titles {
+    .base-info {
+        margin-top: 45px;
+        text-align: center;
+        padding: 0 62px 50px;
+        .name {
             margin-top: 36px;
         }
+    }
 
-        .title:not(:first-child) {
-            margin-top: 20px;
+    .head {
+        margin: 0 auto;
+        border-radius: 180px;
+        border: 6px solid white;
+    }
+
+    .titles {
+        margin-top: 36px;
+    }
+
+    .title:not(:first-child) {
+        margin-top: 20px;
+    }
+
+    .brief {
+        line-height: 38px;
+        margin-top: 44px;
+    }
+
+    .link-detail {
+        margin: 24px auto 0;
+        width: 200px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 4px;
+        opacity: 0.3;
+    }
+
+    .dynamic-info {
+        padding-bottom: 96px;
+    }
+
+    .dynamic-list {
+        padding: 0 24px;
+    }
+
+    .dynamic-item:not(:first-child) {
+        margin-top: 22px;
+    }
+
+    .dynamic-item {
+        border-radius: 10px;
+        padding-top: 25px;
+
+        .person {
+            padding-left: 20px;
+            display: -webkit-box;
         }
 
-        .brief {
-            line-height: 38px;
-            margin-top: 44px;
-        }
-
-        .link-detail {
-            margin: 24px auto 0;
-            width: 200px;
-            height: 60px;
-            line-height: 60px;
-            border-radius: 4px;
-            opacity: 0.3;
-        }
-
-        .dynamic-info {
-            padding-bottom: 96px;
-        }
-
-        .dynamic-list {
-            padding: 0 24px;
-        }
-
-        .dynamic-item:not(:first-child) {
-            margin-top: 22px;
-        }
-
-        .dynamic-item {
-            border-radius: 10px;
-            padding-top: 25px;
-
-            .person {
-                padding-left: 20px;
-                display: -webkit-box;
-            }
-
-            .name-time {
-                margin-left: 20px;
-                margin-top: -6px;
-            }
-
-            .time {
-                margin-top: 12px;
-            }
-
-            .description {
-                margin: 24px 20px;
-                line-height: 42px;
-            }
-/*
-            .video {
-                height: 540px;
-                background-repeat: no-repeat;
-                background-size: cover;
-            }*/
-
-            .social-bar {
-                border-radius: 8px;
-            }
-
-            .eval {
-                height: 548px;
-                background-size: cover;
-                background-position: center;
-                position: relative;
-                .result {
-                    padding: 12px 0 9px 19px;
-                    width: 240px;
-                    height: 45px;
-                    position: relative;
-                    border-radius: 25px;
-                    left: 25px;
-                    top: 25px;
-                    background-color: rgba(80, 80, 80, .5);
-                }
-                .svg {
-                    position: absolute;
-                    right: 20px;
-                    top: 25px;
-                    width: 62px;
-                    height: 40px;
-                    border-radius: 25px;
-                    background-color: rgba(80, 80, 80, .5);
-                    > img {
-                        width: 28px;
-                    }
-                }
-            }
-        }
-
-        .medias {
-            .media {
-                vertical-align: top;
-                display: inline-block;
-                width: percentage(1/3);
-                padding-top: percentage(1/3);
-                border: thick solid white;
-                background-size: cover;
-                background-position: center;
-            }
-            .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-                margin-right: percentage(1/3);
-            }
-            .unique {
-                width: 100%;
-                padding-top: 60%;
-                background-size: cover;
-            }
-        }
-
-        .result-item {
+        .name-time {
             margin-left: 20px;
-            .person {
-                float: left;
-                padding-left: 0;
-                padding-top: 4.5%;
-            }
+            margin-top: -6px;
+        }
 
-            .name-time {
-                margin-left: 20px;
-                margin-top: -6px;
-            }
+        .time {
+            margin-top: 12px;
+        }
 
-            .time {
-                margin-top: 12px;
-            }
+        .description {
+            margin: 24px 20px;
+            line-height: 42px;
+        }
+/*
+        .video {
+            height: 540px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }*/
 
-            .status {
-                float: right;
-                padding-right: 20px;
-                * {
-                    line-height: 110px;
+        .social-bar {
+            border-radius: 8px;
+        }
+
+        .eval {
+            height: 548px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            .result {
+                padding: 12px 0 9px 19px;
+                width: 240px;
+                height: 45px;
+                position: relative;
+                border-radius: 25px;
+                left: 25px;
+                top: 25px;
+                background-color: rgba(80, 80, 80, .5);
+            }
+            .svg {
+                position: absolute;
+                right: 20px;
+                top: 25px;
+                width: 62px;
+                height: 40px;
+                border-radius: 25px;
+                background-color: rgba(80, 80, 80, .5);
+                > img {
+                    width: 28px;
                 }
             }
         }
     }
+
+    .medias {
+        .media {
+            vertical-align: top;
+            display: inline-block;
+            width: percentage(1/3);
+            padding-top: percentage(1/3);
+            border: thick solid white;
+            background-size: cover;
+            background-position: center;
+        }
+        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
+            margin-right: percentage(1/3);
+        }
+        .unique {
+            width: 100%;
+            padding-top: 60%;
+            background-size: cover;
+        }
+    }
+
+    .result-item {
+        margin-left: 20px;
+        .person {
+            float: left;
+            padding-left: 0;
+            padding-top: 4.5%;
+        }
+
+        .name-time {
+            margin-left: 20px;
+            margin-top: -6px;
+        }
+
+        .time {
+            margin-top: 12px;
+        }
+
+        .status {
+            float: right;
+            padding-right: 20px;
+            * {
+                line-height: 110px;
+            }
+        }
+    }
+}
 </style>
 <template>
     <div class="master-home-view bg-default">
@@ -243,7 +244,7 @@
                                 <i class="icon-eval"></i><span class="">已有{{dynamic.event.results.length}}位大师鉴定</span>
                             </div>
                             <div class="svg flex">
-                                <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/video.svg" class="flex center-horizontal">
+                                <img :src="'video.svg' | qn" class="flex center-horizontal">
                             </div>
                         </div>
                     </div>
@@ -269,9 +270,7 @@
             </div>
             <div class="no-more light font-22 center" v-show="!hasMore">没有更多了</div>
         </div>
-        <div v-show="hasMore" class="loadmore center font-22 gray padding-vertical">
-            <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
-        </div>
+        <partial name="load-more" v-show="hasMore"></partial>
         <master-tab :master-info="masterBaseData" :current-tab="'master-home'"></master-tab>
     </div>
 </template>
