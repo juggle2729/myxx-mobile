@@ -4,7 +4,7 @@
 <template>
     <div class="master-tabs bg-white border-top">
         <div class="master-tab font-22 gray" v-for="tab in tabs"
-             :class="{'red': currentTab === tab.linkName}" v-link="{name: tab.linkName, replace: true, params: {id: masterInfo.id}, query: {replace: true}}">
+             :class="{'red': isActive(tab)}" v-link="{name: tab.linkName, replace: true, params: {id: masterInfo.id}, query: {replace: true}}">
             <div class="tab-icon {{tab.iconName}}"></div>
             <div class="tab-name">{{tab.name}}</div>
         </div>
@@ -23,35 +23,48 @@
                 default: 'master-home'
             }
         },
-        data() {
-            return {
-                tabs: [
+        computed: {
+            pageTitle() {
+                return encodeURIComponent(this.masterInfo.name + '-官网');
+            },
+            tabs() {
+                const tabs = [
                     {
                         linkName: 'master-home',
                         name: '首页',
-                        iconName: 'icon-m-home'
+                        iconName: 'icon-u-home'
                     },
                     {
                         linkName: 'master-works',
                         name: '精品展示',
-                        iconName: 'icon-m-best'
+                        iconName: 'icon-u-best'
                     },
                     {
                         linkName: 'master-special',
                         name: '人物志',
-                        iconName: 'icon-m-human'
+                        iconName: 'icon-u-human'
                     },
                     {
                         linkName: 'master-studio',
                         name: '工作室',
-                        iconName: 'icon-m-office'
+                        iconName: 'icon-u-office'
                     }
-                ]
-            };
+                ];
+
+                tabs.forEach((tab) => {
+                    if (tab.linkName === this.currentTab) {
+                        tab.iconName = tab.iconName.replace('-u-', '-m-');
+                    } else {
+                        tab.iconName = tab.iconName.replace('-m-', '-u-');
+                    }
+                });
+
+                return tabs;
+            }
         },
-        computed: {
-            pageTitle() {
-                return encodeURIComponent(this.masterInfo.name + '-官网');
+        methods: {
+            isActive(tab) {
+                return this.currentTab === tab.linkName;
             }
         }
     };

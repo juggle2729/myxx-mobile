@@ -60,7 +60,7 @@
                 this.action('shareable', {title, desc, icon, url: curUrl });
             },
             clearMasterCache(targetRouteName) {
-                if (targetRouteName && !/^master/i.test(targetRouteName)) { //clear cache
+                if (targetRouteName && !/^master-/i.test(targetRouteName)) { //clear cache
                     let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
                     if (!cacheMastersBaseInfo) {
                         cacheMastersBaseInfo = {};
