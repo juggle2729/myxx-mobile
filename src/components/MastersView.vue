@@ -25,8 +25,7 @@ export default {
     data() {
         return {
             list: [],
-            hasMore: true,
-            loading: true
+            hasMore: true
         };
     },
     route: {
@@ -35,27 +34,27 @@ export default {
         }
     },
     methods: {
-        fetch() {
-            const offset = this.list.length;
-            const limit = 3;
-            if(this.loading){
-                return this.$get('cms/promotes?section=website',{offset, limit})
-                    .then((data) => {
-                        this.loading = false;
-                        this.total = data.total;
-                        data.promotes.forEach((site) =>{
-                            this.list.push(site);
+        fetch: (function() {
+            let limit = 3;
+            let loading = true;
+            return function() {
+                let offset = this.list.length;
+                if(loading){
+                    return this.$get('cms/promotes?section=website',{offset, limit})
+                        .then((data) => {
+                            loading = false;
+                            data.promotes.forEach((site) =>{
+                                this.list.push(site);
+                            });
+                            loading = true;
+                            if(data.promotes.length < limit || offset + limit >= data.total){
+                                loading = false;
+                                this.hasMore = false;
+                            }
                         });
-                        this.loading = true;
-                        console.log(this.total);
-                        console.log(offset + limit);
-                        if(data.promotes.length < limit || offset + limit >= this.total){
-                            this.loading = false;
-                            this.hasMore = false;
-                        }
-                    });
+                }
             }
-        }
+        })()
     },
     events: {
         scrollToBottom(e) {

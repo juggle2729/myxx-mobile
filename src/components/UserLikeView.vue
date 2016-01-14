@@ -22,7 +22,7 @@
             </div>
         </div>
     </template>
-    <div class="border-top" v-if="total"></div>
+    <div class="border-top" v-if="thumbs.length"></div>
     <empty-page v-else title="你还没有赞"></empty-page>
     <div class="loadmore center font-22 gray" v-if="hasMore">
         <img src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
@@ -36,9 +36,7 @@ export default {
     data() {
         return {
             thumbs: [],
-            hasMore: true,
-            loading: true,
-            total: 0
+            hasMore: true
         };
     },
     components: {
@@ -50,55 +48,57 @@ export default {
         }
     },
     methods: {
-        fetch() {
+        fetch: (function() {
+            let loading =true;
             const types = ['xxx', '鉴宝', '大师鉴定', '话题', '宝贝'];
-            const userId = this.$route.params.id;
-            const offset = this.thumbs.length;
             const limit = 10;
-            if (this.loading) {
-                this.loading = false;
-                return this.$get('users/' + userId + '/like_list', {offset, limit})
-                        .then((data) => {
-                            this.total = data.total;
-                            data.entries.forEach((item) => {
-                                if (item.type === 10) {//picture
-                                    item.entry.link = 'evaluation';
-                                    item.entry.photo1 = item.entry.picture;
-                                    item.entry.description = item.entry.description;
-                                    item.entry.result = item.entry.status + '条鉴定结果';
-                                } else if (item.type === 20) {//video
-                                    item.entry.link = 'evaluation';
-                                    item.entry.photo2 = item.entry.video;
-                                    item.entry.user = item.entry.identifier;
-                                    item.entry.description = '鉴定了 ' + item.entry.jianbao.applier.nickname + ' 的宝贝';
-                                    item.entry.result = '鉴定结果为 ' + item.entry.result;
-                                } else if (item.type === 30) {//media
-                                    item.entry.link = 'story';
-                                    item.entry.description = '分享了一个话题';
-                                    item.entry.photo1 = item.entry.media[0].id;
+            return function(){
+                let offset = this.thumbs.length;
+                let userId = this.$route.params.id;
+                if (loading) {
+                    loading = false;
+                    return this.$get('users/' + userId + '/like_list', {offset, limit})
+                            .then((data) => {
+                                data.entries.forEach((item) => {
+                                    if (item.type === 10) {//picture
+                                        item.entry.link = 'evaluation';
+                                        item.entry.photo1 = item.entry.picture;
+                                        item.entry.description = item.entry.description;
+                                        item.entry.result = item.entry.status + '条鉴定结果';
+                                    } else if (item.type === 20) {//video
+                                        item.entry.link = 'evaluation';
+                                        item.entry.photo2 = item.entry.video;
+                                        item.entry.user = item.entry.identifier;
+                                        item.entry.description = '鉴定了 ' + item.entry.jianbao.applier.nickname + ' 的宝贝';
+                                        item.entry.result = '鉴定结果为 ' + item.entry.result;
+                                    } else if (item.type === 30) {//media
+                                        item.entry.link = 'story';
+                                        item.entry.description = '分享了一个话题';
+                                        item.entry.photo1 = item.entry.media[0].id;
+                                    }
+                                    else if (item.type === 40) { //宝贝
+                                        // item.entry.link = 'jade';
+                                        // item.entry.post_id = item.entry.id;
+                                        // item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
+                                        // item.entry.user.name = item.entry.user.nickname;
+                                        // item.entry.photo1 = item.entry.imgs[0];
+                                        // if(item.entry.product_rewards.length > 0){
+                                        //     item.entry.result = item.entry.product_rewards[0].reward.name;
+                                        // }
+                                        return;
+                                    }
+                                    item.entry.title = types[item.type / 10];
+                                    this.thumbs.push(item.entry);
+                                });
+                                loading = true;
+                                if (data.entries.length < limit || offset + limit >= data.total) {
+                                    this.hasMore = false;
+                                    loading = false;
                                 }
-                                else if (item.type === 40) { //宝贝
-                                    // item.entry.link = 'jade';
-                                    // item.entry.post_id = item.entry.id;
-                                    // item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
-                                    // item.entry.user.name = item.entry.user.nickname;
-                                    // item.entry.photo1 = item.entry.imgs[0];
-                                    // if(item.entry.product_rewards.length > 0){
-                                    //     item.entry.result = item.entry.product_rewards[0].reward.name;
-                                    // }
-                                    return;
-                                }
-                                item.entry.title = types[item.type / 10];
-                                this.thumbs.push(item.entry);
                             });
-                            this.loading = true;
-                            if (data.entries.length < limit || offset + limit >= this.total || data.entries.length === data.total) {
-                                this.hasMore = false;
-                                this.loading = false;
-                            }
-                        });
+                }
             }
-        }
+        })()
     },
     events: {
         scrollToBottom(e) {

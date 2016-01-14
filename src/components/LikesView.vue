@@ -65,13 +65,12 @@ export default {
                 loading = true;
                 const params = {limit, offset};
                 return this.$get(`users/target/${this.id}/type/${this.type}/likers`, params).then((data) => {
-                        this.total = data.total;
                         data.users.forEach((user) => {
-                            user.isSelf = (this.self ? user.id == this.self.id : false);
+                            user.isSelf = _.get(this, 'self.id') == user.id;
                         });
                         this.users.splice(this.users.length, 0, ...data.users);
                         loading = false;
-                        if (data.users.length < limit || offset + limit >= this.total) {
+                        if (data.users.length < limit || offset + limit >= data.total) {
                             this.hasMore = false;
                         }
                     });

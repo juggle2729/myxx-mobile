@@ -368,7 +368,7 @@
                         this.dynamics = this.dynamics.filter((item) => item.event_type !== 'jianbao_result');
                         this.dynamicTotal = data.total;
                         loading = false;
-                        if (data.events.length < limit || offset + limit >= this.total) {
+                        if (data.events.length < limit || offset + limit >= data.total) {
                             this.hasMore = false;
                         }
                     });

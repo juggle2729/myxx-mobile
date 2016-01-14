@@ -1,7 +1,7 @@
 <template>
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
-    <div v-if="total" class="loadmore center font-22 gray padding-vertical border-top">
+    <div v-if="items.length" class="loadmore center font-22 gray padding-vertical border-top">
         <img v-if="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
     <empty-page v-else title="你还没有话题"></empty-page>
@@ -14,12 +14,8 @@ export default {
     name: 'UserStoryView',
     data() {
         return {
-            userId: 0,
             items: [],
-            hasMore: true,
-            hasNew: false,
-            loading: true,
-            total: 0
+            hasMore: true
         };
     },
     components: {
@@ -28,7 +24,6 @@ export default {
     },
     route: {
         data() {
-            this.userId = this.$route.params.id;
             return this.fetch();
         }
     },
@@ -40,19 +35,20 @@ export default {
     methods: {
         fetch: (function() {
             const limit = 3;
+            let loading = true;
             return function() {
                 let offset = this.items.length;
-                if(this.loading) {
-                    this.loading = false;
+                let userId = this.$route.params.id;
+                if(loading) {
+                    loading = false;
                     const params = {offset, limit};
-                    return this.$get('sns/users/'+ this.userId +'/topics', params)
+                    return this.$get('sns/users/'+ userId +'/topics', params)
                         .then((data) => {
-                            this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.topics);
-                            this.loading = true;
-                            if (data.topics.length < limit || offset + limit >= this.total) {
+                            loading = true;
+                            if (data.topics.length < limit || offset + limit >= data.total) {
                                 this.hasMore = false;
-                                this.loading = false;
+                                loading = false;
                             }
                         });
                 }

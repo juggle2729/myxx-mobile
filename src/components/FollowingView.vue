@@ -1,6 +1,6 @@
 <template>
 <div class="following-view bg-default">
-    <div v-if="total" class="separator"></div>
+    <div v-if="userList.length" class="separator"></div>
     <empty-page v-else title="你还没有关注"></empty-page>
     <div class="user border-bottom bg-white flex" v-for="user in userList">
         <div v-bg.sm="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
@@ -23,9 +23,7 @@ export default {
     data() {
         return {
             userList: [],
-            hasMore: true,
-            loading: true,
-            total: 0
+            hasMore: true
         };
     },
     components: {
@@ -52,28 +50,30 @@ export default {
                 });
             }
         },
-        fetch() {
+        fetch: (function() {
             const limit = 10;
-            const userid = this.$route.params.id;
-            let offset = this.userList.length;
-            if (this.loading) {
-                this.loading = false;
-                const params = {offset, limit};
-                return this.$get(`users/${userid}/follow_list`, params)
-                    .then((data) => {
-                        this.total = data.total;
-                        data.entries.forEach((entry) => {
-                            entry.isSelf = (this.self ? entry.user_id == this.self.id : false);
-                            this.userList.push(entry);
+            let loading = true;
+            return function() {
+                let userid = this.$route.params.id;
+                let offset = this.userList.length;
+                if (loading) {
+                    loading = false;
+                    const params = {offset, limit};
+                    return this.$get(`users/${userid}/follow_list`, params)
+                        .then((data) => {
+                            data.entries.forEach((entry) => {
+                                entry.isSelf = (this.self ? entry.user_id == this.self.id : false);
+                                this.userList.push(entry);
+                            });
+                            loading = true;
+                            if (data.entries.length < limit || offset + limit >= data.total) {
+                                this.hasMore = false;
+                                loading = false;
+                            }
                         });
-                        this.loading = true;
-                        if (data.entries.length < limit || offset + limit >= this.total) {
-                            this.hasMore = false;
-                            this.loading = false;
-                        }
-                    });
+                }
             }
-        }
+        })()
     },
     events: {
         scrollToBottom(e) {
