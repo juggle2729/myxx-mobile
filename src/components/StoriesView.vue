@@ -23,7 +23,6 @@ export default {
         return {
             tab: 'time',
             items: [],
-            total: 0,
             hasMore: true
         };
     },
@@ -61,9 +60,8 @@ export default {
                 const params = {[this.tab]: 1, offset, limit};
                 return this.$get('sns/topics', params).then((data) => {
                         this.items.splice(this.items.length, 0, ...data.topics);
-                        this.total = data.total;
                         loading = false;
-                        if (data.topics.length < limit || offset + limit >= this.total) {
+                        if (data.topics.length < limit || offset + limit >= data.total) {
                             this.hasMore = false;
                         }
                     });

@@ -26,8 +26,7 @@ export default {
     data() {
         return {
             promotes: [],
-            hasMore: true,
-            loading: true
+            hasMore: true
         };
     },
     route: {
@@ -41,11 +40,12 @@ export default {
         });
     },
     methods: {
-        fetch() {
+        fetch: (function() {
             const offset = this.promotes.length;
             const limit = 10;
-            if(this.loading){
-                this.loading = false;
+            let loading = true;
+            if(loading){
+                loading = false;
                 this.$get('mall/products', {offset, limit})
                 .then((data) => {
                     data.products.forEach((promote) => {
@@ -55,14 +55,14 @@ export default {
                             });
                             this.promotes.push(promote);
                     });
-                    this.loading = true;
-                    if(data.products.length < limit || offset + limit >= this.total){
-                        this.loading = false;
+                    loading = true;
+                    if(data.products.length < limit || offset + limit >= data.total){
+                        loading = false;
                         this.hasMore = false;
                     }
                 });
             }
-        }
+        })()
     }
 }
 </script>

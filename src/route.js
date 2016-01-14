@@ -153,7 +153,7 @@ export default {
     },
     // not found handler
     '/404': {
-        title: '找不到北',
+        title: '数据不存在',
         name: '404',
         component: require('./components/NotFoundView.vue')
     },

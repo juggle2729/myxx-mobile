@@ -1,7 +1,7 @@
 <template>
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
-    <div v-if="total" class="loadmore center font-22 gray padding-vertical border-top">
+    <div v-if="items.length" class="loadmore center font-22 gray padding-vertical border-top">
         <img v-show="hasMore" src="http://7xp1h7.com2.z0.glb.qiniucdn.com/loading.gif" alt="loading">
     </div>
     <empty-page v-else title="你还没有鉴宝"></empty-page>
@@ -14,12 +14,8 @@ export default {
     name: 'UserEvaluationView',
     data() {
         return {
-            user:'',
-            userId: 0,
-            loading: true,
             hasMore: true,
-            items: [],
-            total: 0
+            items: []
         };
     },
     components: {
@@ -28,7 +24,6 @@ export default {
     },
     route: {
         data() {
-            this.userId = this.$route.params.id;
             return this.fetch();
         }
     },
@@ -40,19 +35,20 @@ export default {
     methods: {
         fetch: (() => {
             const limit = 2;
+            let loading = true;
             return function() {
                 let offset = this.items.length;
-                if(this.loading) {
-                    this.loading = false;
+                let userId = this.$route.params.id;
+                if(loading) {
+                    loading = false;
                     const params = {offset, limit};
-                    return this.$get(`sns/users/${this.userId}/jianbao`, params)
+                    return this.$get(`sns/users/${userId}/jianbao`, params)
                         .then((data) => {
-                            this.total = data.total;
                             this.items.splice(this.items.length, 0, ...data.jianbaos);
-                            this.loading = true;
-                            if (data.jianbaos.length < limit || offset + limit >= this.total) {
+                            loading = true;
+                            if (data.jianbaos.length < limit || offset + limit >= data.total) {
                                 this.hasMore = false;
-                                this.loading = false;
+                                loading = false;
                             }
                         });
                 }
@@ -80,7 +76,7 @@ export default {
         }
     }
     .item {
-        padding: 24px 32px;
+        padding: 24px 0;
     }
     .user {
         display: -webkit-box;
@@ -104,9 +100,6 @@ export default {
     }
     .video {
         height: 500px;
-    }
-    .social {
-        padding: 0 32px;
     }
     .result {
         height: 116px;
