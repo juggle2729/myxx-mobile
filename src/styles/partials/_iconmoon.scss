@@ -19,29 +19,29 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-u-office:before {
+.icon-m-office:before {
     content: "\e90b";
+}
+.icon-u-best:before {
+    content: "\e90d";
+}
+.icon-m-best:before {
+    content: "\e90e";
+}
+.icon-u-human:before {
+    content: "\e913";
+}
+.icon-m-human:before {
+    content: "\e914";
 }
 .icon-u-home:before {
     content: "\e915";
 }
-.icon-u-human:before {
+.icon-m-home:before {
     content: "\e916";
 }
-.icon-u-best:before {
+.icon-u-office:before {
     content: "\e917";
-}
-.icon-m-best:before {
-    content: "\e90d";
-}
-.icon-m-human:before {
-    content: "\e90e";
-}
-.icon-m-home:before {
-    content: "\e913";
-}
-.icon-m-office:before {
-    content: "\e914";
 }
 .icon-follow:before {
     content: "\e904";

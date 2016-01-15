@@ -1,24 +1,23 @@
 <template>
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
-    <partial name="load-more" v-show="items.length"></partial>
-    <empty-page v-else title="你还没有鉴宝"></empty-page>
+    <partial name="load-more" v-if="hasMore"></partial>
+    <partial v-if="!items.length" name="empty-page"></partial>
 </div>
 </template>
 <script>
 import EvaluationList from './EvaluationList.vue';
-import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'UserEvaluationView',
     data() {
         return {
             hasMore: true,
-            items: []
+            items: [],
+            emptyTitle: '你还没有鉴宝'
         };
     },
     components: {
-        EvaluationList,
-        EmptyPage
+        EvaluationList
     },
     route: {
         data() {

@@ -1,7 +1,7 @@
 <template>
 <div class="following-view bg-default">
     <div v-if="userList.length" class="separator"></div>
-    <empty-page v-else title="你还没有关注"></empty-page>
+    <partial v-else name="empty-page"></partial>
     <div class="user border-bottom bg-white flex" v-for="user in userList">
         <div v-bg.sm="user.photo" class="avatar-120" v-link="{name: 'user-profile', params: { id: user.user_id}}"></div>
         <div class="flex-1" v-link="{name: 'user-profile', params: {id: user.user_id}}">
@@ -11,21 +11,18 @@
         <div v-if="user.follow && !user.isSelf" class="font-22 gray border-red follow flex" @click="toggleFollow(user)"><i class="icon-followed flex"></i><span class="flex">已关注</span></div>
         <div v-if="!(user.follow || user.isSelf)" class="font-22 red border-light follow flex" @click="toggleFollow(user)"><i class="icon-follow flex"></i><span class="flex">加关注</span></div>
     </div>
-    <partial name="load-more" v-show="hasMore"></partial>
+    <partial name="load-more" v-if="hasMore"></partial>
 </div>
 </template>
 <script>
-import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'Selffollowing',
     data() {
         return {
             userList: [],
-            hasMore: true
+            hasMore: true,
+            emptyTitle: '你还没有关注'
         };
-    },
-    components: {
-        EmptyPage
     },
     route: {
         data() {

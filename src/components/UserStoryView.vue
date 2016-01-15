@@ -1,24 +1,23 @@
 <template>
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
-    <partial name="load-more" v-if="items.length"></partial>
-    <empty-page v-else title="你还没有话题"></empty-page>
+    <partial name="load-more" v-if="hasMore"></partial>
+    <partial v-if="!items.length" name="empty-page"></partial>
 </div>
 </template>
 <script>
 import StoryList from './StoryList.vue';
-import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'UserStoryView',
     data() {
         return {
             items: [],
-            hasMore: true
+            hasMore: true,
+            emptyTitle: '你还没有话题'
         };
     },
     components: {
-        StoryList,
-        EmptyPage
+        StoryList
     },
     route: {
         data() {

@@ -1,6 +1,5 @@
 <template>
 <div class="homepage-view bg-default">
-    <div class="separator"></div>
     <div class="account border-bottom bg-white">
         <div class="avatar-240 center-horizontal" v-bg.sm="photo"></div>
         <p class="font-30 red center">{{nickname}}</p>

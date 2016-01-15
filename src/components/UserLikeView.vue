@@ -23,22 +23,19 @@
         </div>
     </template>
     <div class="border-top" v-if="thumbs.length"></div>
-    <empty-page v-else title="你还没有赞"></empty-page>
-    <partial name="load-more" v-show="hasMore"></partial>
+    <partial v-else name="empty-page"></partial>
+    <partial name="load-more" v-if="hasMore"></partial>
 </div>
 </template>
 <script>
-import EmptyPage from './EmptyPage.vue';
 export default {
     name: 'thumb',
     data() {
         return {
             thumbs: [],
-            hasMore: true
+            hasMore: true,
+            emptyTitle: '你还没有赞'
         };
-    },
-    components: {
-        EmptyPage
     },
     route: {
         data() {

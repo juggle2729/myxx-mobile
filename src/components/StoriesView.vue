@@ -116,6 +116,7 @@ export default {
             vertical-align: top;
             display: inline-block;
             width: percentage(1/3);
+            padding-top: 33.3333%;
             padding-top: -webkit-calc(33.3333% - 10px);
             border: 5px solid white;
         }
