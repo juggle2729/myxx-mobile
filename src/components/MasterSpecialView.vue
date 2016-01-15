@@ -152,7 +152,7 @@
                 let dateStr = curResume.occur_at;
                 const year = dateStr.substr(0, dateStr.indexOf('-'));
 
-                return [year + '年', curResume.description].join('');
+                return [year + '年 ', curResume.description].join('');
             },
             expandTitle() {
                 this.isExpand = !this.isExpand;

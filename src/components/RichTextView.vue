@@ -40,6 +40,7 @@
         }
 
         img {
+            width: 100% !important;
             margin: 50px 0;
         }
     }
