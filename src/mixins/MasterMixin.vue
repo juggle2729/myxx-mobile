@@ -10,8 +10,6 @@
         },
         route: {
             data({ to }) {
-                this.id = to.params.id;
-
                 this.setPageParams(to.params);
 
                 // get data from cache
@@ -27,11 +25,8 @@
                 this.loadMasterOtherData();
                 return this.fetchMasterBaseInfo();
             },
-            canDeactivate({ to }) {
-                this.clearMasterCache(to.name);
-                return true;
-            },
             activate(transition) {
+                this.id = transition.to.params.id;
                 this.clearMasterCache(transition.from.name);
                 transition.next();
             }
@@ -59,8 +54,17 @@
                 let curUrl = location.href;
                 this.action('shareable', {title, desc, icon, url: curUrl });
             },
-            clearMasterCache(targetRouteName) {
-                if (targetRouteName && !/^master-/i.test(targetRouteName)) { //clear cache
+            clearMasterCache(fromRouteName) {
+                let clearCache = false;
+                if (!fromRouteName) {
+                    clearCache = true;
+                } else {
+                    if (!/^master-/i.test(fromRouteName)) {
+                        clearCache = true;
+                    }
+                }
+
+                if (clearCache) { //clear cache
                     let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
                     if (!cacheMastersBaseInfo) {
                         cacheMastersBaseInfo = {};
