@@ -2,7 +2,7 @@
 .slider {
     position: relative;
     width: 100%;
-    height: 577px;
+    height: 540px;
     overflow: hidden;
     .slide-container {
         display: -webkit-box;

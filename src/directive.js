@@ -1,6 +1,6 @@
 import config from './config';
 let preset = {
-    lg: 'imageView2/1/w/600/h/350/interlace/1',
+    lg: 'imageView2/1/w/600/h/440/interlace/1',
     md: 'imageView2/3/w/300/h/300/interlace/1',
     sm: 'imageView2/1/w/200/h/200/interlace/1',
     video: 'vframe/jpg/offset/0/rotate/auto|imageView2/1/w/340/h/250'
