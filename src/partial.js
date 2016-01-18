@@ -8,7 +8,7 @@ export default {
             `<div class="empty-page font-30 gray bg-white">
                 <div class="center-vertical">
                     <div class="empty-img center-horizontal"></div>
-                    <div class="center">{{emptyTitle}}</div>
+                    <div class="center">{{emptyTitle || '暂无数据'}}</div>
                 </div>
             </div>`);
     }

@@ -1,6 +1,6 @@
 <template>
 <div class="masters-view bg-default">
-    <template v-for="site in list">
+    <template v-for="site in items">
         <div class="cell bg-white flex" v-link="{name: 'master-home', params: {id: site.item.id}, query: {replace: false}}" v-bg="site.image">
             <div class="txt">
                 <p class="font-34 white">{{site.item.name}}</p>
@@ -18,45 +18,21 @@
 </div>
 </template>
 <script>
+import PagingMixin from './PagingMixin.vue';
 export default {
     name: 'MastersView',
-    data() {
-        return {
-            list: [],
-            hasMore: true
-        };
+    mixins: [PagingMixin],
+    computed: {
+        paging() {
+            return {
+                path: 'cms/promotes?section=website',
+                list: 'promotes'
+            }
+        }
     },
     route: {
         data() {
             return this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            let limit = 3;
-            let loading = true;
-            return function() {
-                let offset = this.list.length;
-                if(loading){
-                    return this.$get('cms/promotes?section=website',{offset, limit})
-                        .then((data) => {
-                            loading = false;
-                            data.promotes.forEach((site) =>{
-                                this.list.push(site);
-                            });
-                            loading = true;
-                            if(data.promotes.length < limit || offset + limit >= data.total){
-                                loading = false;
-                                this.hasMore = false;
-                            }
-                        });
-                }
-            }
-        })()
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
         }
     }
 }

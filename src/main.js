@@ -60,5 +60,10 @@ router.beforeEach(({from, to, abort, next}) => {
         }
     }
 });
+router.afterEach(({to}) => {
+    if(!to.query.position) {
+        window.scrollTo(0, 0);
+    }
+});
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

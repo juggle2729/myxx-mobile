@@ -1,14 +1,15 @@
 <template>
 <div class="userlike-view bg-default">
-    <template v-for="thumb in thumbs">
-        <div :class="{'separator-20': $index !=0 , 'separator': $index === 0}"></div>
+    <template v-for="thumb in items">
+        <div v-if="$index === 0" class="separator"></div>
+        <div v-else class="separator-20"></div>
         <div class="notice bg-white">
             <div class="sender flex">
                 <p class="font-30 gray">
                     赞了一个{{thumb.title}}
                 </p>
             </div>
-            <div class="info flex" v-link="{ name: thumb.link, params: { id: thumb.post_id }}">
+            <div class="info flex" v-link="{ name: thumb.route, params: { id: thumb.post_id }}">
                 <div class="left">
                     <div class="flex">
                         <div v-bg.sm="thumb.user.photo" class="avatar-50"></div>
@@ -17,87 +18,65 @@
                     <p class="font-30">{{{thumb.description}}}</p>
                     <p v-if="thumb.result" class="font-22 gray">{{{thumb.result}}}</p>
                 </div>
-                <div v-if="thumb.photo1" v-bg.sm="thumb.photo1" class="right"></div>
-                <div v-if="thumb.photo2" v-bg.video="thumb.photo2" class="right"></div>
+                <div v-if="thumb.imgPreview" v-bg.sm="thumb.imgPreview" class="right"></div>
+                <div v-if="thumb.videoPreview" v-bg.video="thumb.videoPreview" class="right"></div>
             </div>
         </div>
     </template>
-    <div class="border-top" v-if="thumbs.length"></div>
+    <div class="border-top" v-if="!items.isEmpty"></div>
     <partial v-else name="empty-page"></partial>
-    <partial name="load-more" v-if="hasMore"></partial>
+    <partial name="load-more" v-if="items.hasMore"></partial>
 </div>
 </template>
 <script>
+import PagingMixin from './PagingMixin.vue';
 export default {
-    name: 'thumb',
+    name: 'UserLikeView',
+    mixins: [PagingMixin],
     data() {
         return {
-            thumbs: [],
-            hasMore: true,
             emptyTitle: '你还没有赞'
-        };
+        }
+    },
+    computed: {
+        currentUserId() {
+            return _.get(this, 'self.id');
+        },
+        paging() {
+            return {
+                path: 'users/'+ this.$route.params.id +'/like_list',
+                list: 'entries',
+                params: {
+                    limit: 10
+                },
+                transform(items) {
+                    return items.map((item) => {
+                        let entry = item.entry;
+                        const type = _.find(this.config.types, {'id': item.type});
+                        entry.route = type.route;
+                        entry.title = type.name;
+                        if (item.type === 10) {//picture
+                            entry.imgPreview = entry.picture;
+                            entry.description = entry.description;
+                            entry.result = entry.status + '条鉴定结果';
+                        } else if (item.type === 20) {//video
+                            entry.videoPreview = entry.video;
+                            entry.user = entry.identifier;
+                            entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
+                            entry.result = '鉴定结果为 ' + entry.result;
+                        } else if (item.type === 30) {//media
+                            entry.description = '分享了一个话题';
+                            entry.imgPreview = entry.media[0].id;
+                        }
+                        return entry;
+                    });
+                }
+            }
+        }
     },
     route: {
         data() {
             return this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            let loading =true;
-            const types = ['xxx', '鉴宝', '大师鉴定', '话题', '宝贝'];
-            const limit = 10;
-            return function(){
-                let offset = this.thumbs.length;
-                let userId = this.$route.params.id;
-                if (loading) {
-                    loading = false;
-                    return this.$get('users/' + userId + '/like_list', {offset, limit})
-                            .then((data) => {
-                                data.entries.forEach((item) => {
-                                    if (item.type === 10) {//picture
-                                        item.entry.link = 'evaluation';
-                                        item.entry.photo1 = item.entry.picture;
-                                        item.entry.description = item.entry.description;
-                                        item.entry.result = item.entry.status + '条鉴定结果';
-                                    } else if (item.type === 20) {//video
-                                        item.entry.link = 'evaluation';
-                                        item.entry.photo2 = item.entry.video;
-                                        item.entry.user = item.entry.identifier;
-                                        item.entry.description = '鉴定了 ' + item.entry.jianbao.applier.nickname + ' 的宝贝';
-                                        item.entry.result = '鉴定结果为 ' + item.entry.result;
-                                    } else if (item.type === 30) {//media
-                                        item.entry.link = 'story';
-                                        item.entry.description = '分享了一个话题';
-                                        item.entry.photo1 = item.entry.media[0].id;
-                                    }
-                                    else if (item.type === 40) { //宝贝
-                                        // item.entry.link = 'jade';
-                                        // item.entry.post_id = item.entry.id;
-                                        // item.entry.description = item.entry.name + ' ' + item.entry.moral.name;
-                                        // item.entry.user.name = item.entry.user.nickname;
-                                        // item.entry.photo1 = item.entry.imgs[0];
-                                        // if(item.entry.product_rewards.length > 0){
-                                        //     item.entry.result = item.entry.product_rewards[0].reward.name;
-                                        // }
-                                        return;
-                                    }
-                                    item.entry.title = types[item.type / 10];
-                                    this.thumbs.push(item.entry);
-                                });
-                                loading = true;
-                                if (data.entries.length < limit || offset + limit >= data.total) {
-                                    this.hasMore = false;
-                                    loading = false;
-                                }
-                            });
-                }
-            }
-        })()
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
         }
     }
 }

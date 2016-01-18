@@ -24,13 +24,13 @@
 }
 </style>
 <template>
-<div class="comment-component bg-white">
+<div class="comment-component bg-white border-bottom">
     <div class="comment-header border-bottom font-22">
         <div class="gray">评论&nbsp;&nbsp;{{total}}</div>
         <div @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="margin-bottom" v-for="c in comments">
+        <li class="margin-bottom" v-for="c in items">
             <div class="author">
                 <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}" v-link="c.reply_from | profile"></div>
                 <div>
@@ -43,13 +43,15 @@
                 <span>{{c.content}}</span>
             </div>
         </li>
-        <li v-show="!total" class="center light font-26 nocomment">还没有人评论</li>
+        <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
 </div>
 </template>
 <script>
+import PagingMixin from './PagingMixin.vue';
 export default {
     name: 'Comment',
+    mixins: [PagingMixin],
     props: {
         id: {
             default: -1
@@ -60,9 +62,18 @@ export default {
     },
     data() {
         return {
-            uid: 0,
-            total: 0,
-            comments: []
+            uid: 0
+        }
+    },
+    computed: {
+        paging() {
+            return {
+                path: `users/target/${this.id}/type/${this.type}/comments`,
+                list: 'comments',
+                params: {
+                    limit: 10
+                }
+            }
         }
     },
     created() {
@@ -81,19 +92,7 @@ export default {
             this.fetch();
         });
     },
-    events: {
-        // scrollToBottom(e) {
-        //     console.debug('xxx');
-        // }
-    },
     methods: {
-        fetch() {
-            this.$get(`users/target/${this.id}/type/${this.type}/comments`)
-                .then((comments) => {
-                    this.comments = comments.comments;
-                    this.total = comments.total;
-                });
-        },
         comment(e) {
             const id = this.uid;
             const placeholder = '';

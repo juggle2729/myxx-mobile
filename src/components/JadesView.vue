@@ -32,10 +32,10 @@ export default {
             return this.fetch();
         }
     },
-    created() {
-        emitter.on('scroll-to-bottom', (e) => {
+    events: {
+        scrollToBottom(e) {
             return this.fetch();
-        });
+        }
     },
     methods: {
         fetch: (function() {

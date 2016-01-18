@@ -78,29 +78,15 @@
             loadMasterOtherData() {
                 return console.log('master default other data loading');
             },
-            fetchMasterBaseInfo: (function() {
-                let loading = false;
-                return function() {
-                    if(loading) {
-                        return console.debug('master base info skip!!!!!!!!');
-                    }
-                    console.debug('fetch base info', 'master' + this.id);
-                    loading = true;
-                    return this.$get(`sites/${this.id}/base`, {}).then((data) => {
-                        this.masterBaseData = data;
-                        this.checkShare();
-
-                        let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
-                        if (!cacheMastersBaseInfo) {
-                            cacheMastersBaseInfo = {};
-                        }
-                        cacheMastersBaseInfo[this.id] = data;
-                        localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
-
-                        loading = false;
-                    });
-                }
-            })()
+            fetchMasterBaseInfo() {
+                return this.$get(`sites/${this.id}/base`, {}).then((data) => {
+                    this.masterBaseData = data;
+                    this.checkShare();
+                    let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData')) || {};
+                    cacheMastersBaseInfo[this.id] = data;
+                    localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
+                });
+            }
         }
     };
 </script>
@@ -164,7 +150,6 @@
         padding-right: 32px;
     }
 }
-
 .no-more {
     margin-top: 32px;
 }

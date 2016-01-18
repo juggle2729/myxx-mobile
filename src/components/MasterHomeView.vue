@@ -3,7 +3,7 @@
 .master-home-view {
     overflow-x: hidden;
     .personal-info {
-        background: url("#{$qn}/cover.png") no-repeat;
+        background: url("#{$qn}/master/cover.png") no-repeat;
         background-size: cover;
     }
 
@@ -220,14 +220,14 @@
                 </div>
             </div>
         </div>
-        <div class="dynamic-info" :class="{'bottom-blank': dynamicTotal > 0}" v-show="dynamicTotal > 0">
+        <div class="dynamic-info" :class="{'bottom-blank': dynamicTotal > 0}" v-show="!items.isEmpty">
             <div class="line-title font-22 gray">
                 <div class="line"></div>
                 <span class="text gray">动态</span>
                 <div class="line"></div>
             </div>
             <div class="dynamic-list">
-                <div class="dynamic-item bg-white" v-for="dynamic in dynamics"
+                <div class="dynamic-item bg-white" v-for="dynamic in items"
                      v-link="{name: dynamic.event_type === 'jianbao_add' ? 'evaluation' : (dynamic.event_type === 'topic_add' ? 'story' : ''), params: {id: dynamic.event.post_id}}">
                     <div class="person">
                         <div class="photo avatar-50" v-bg.sm="dynamic.event.user.photo"></div>
@@ -244,7 +244,7 @@
                                 <i class="icon-eval"></i><span class="">已有{{dynamic.event.results.length}}位大师鉴定</span>
                             </div>
                             <div class="svg flex">
-                                <img :src="'video.svg' | qn" class="flex center-horizontal">
+                                <img :src="'placeholder/video.svg' | qn" class="flex center-horizontal">
                             </div>
                         </div>
                     </div>
@@ -275,109 +275,84 @@
     </div>
 </template>
 <script>
-    import masterMixin from '../mixins/MasterMixin.vue';
-    import SocialBar from './SocialBar.vue';
+import MasterMixin from '../mixins/MasterMixin.vue';
+import PagingMixin from './PagingMixin.vue';
+import SocialBar from './SocialBar.vue';
 
-    export default {
-        name: 'MasterHomeView',
-        components: { SocialBar },
-        mixins: [masterMixin],
-        data() {
+export default {
+    name: 'MasterHomeView',
+    components: { SocialBar },
+    mixins: [MasterMixin, PagingMixin],
+    data() {
+        return {
+            following: false,
+            briefLimit: 45
+        };
+    },
+    computed: {
+        paging() {
             return {
-                hasMore: true,
-                dynamics: [],
-                dynamicTotal: 0,
-                following: false,
-                briefLimit: 45
-            };
-        },
-        computed: {
-            briefDesc() {
-                const briefDesc = this.masterBaseData && this.masterBaseData.brief ? this.masterBaseData.brief : '';
-                if (briefDesc) {
-                    return briefDesc.length > this.briefLimit ? briefDesc.substr(0, this.briefLimit) + '...' : briefDesc;
-                }
-                return '';
+                path: `sites/${this.id}/timeline`,
+                list: 'events'
             }
         },
-        methods: {
-            followMaster() {
-                if (this.following) {
-                    return;
-                }
-
-                this.following = true;
-                if (this.masterBaseData.follow) {
-                    this.$delete(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
-                        this.following = false;
-                        this.masterBaseData.follow = false;
-                        this.masterBaseData.fans_count -= 1;
-
-                        localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
-                    }).catch(() => {
-                        this.following = false;
-                    });
-                } else {
-                    this.$post(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
-                        this.following = false;
-                        this.masterBaseData.follow = true;
-                        this.masterBaseData.fans_count += 1;
-
-                        localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
-                    }).catch(() => {
-                        this.following = false;
-                    });
-                }
-            },
-            play(id) {
-                this.action('play', {id});
-            },
-            coverflow(medias, index) {
-                let ids = medias.filter(media => media.type==='picture')
-                    .map(media => media.id);
-                this.action('coverflow', {ids, index});
-            },
-            likeType(eventType) {
-                if (eventType === 'jianbao_add') {
-                    return 10;
-                } else if (eventType === 'topic_add') {
-                    return 30;
-                } else {
-                    return 40;
-                }
-            },
-            loadMasterOtherData: function() {
-                return this.fetchMasterDynamicInfo();
-            },
-            fetchMasterDynamicInfo: (function () {
-                const limit = 5;
-                let loading = false;
-                return function() {
-                    let offset = this.dynamics.length;
-                    if(loading || !this.hasMore) {
-                        return console.debug('master dynamics skip!!!!!!!!');
-                    }
-
-                    console.debug('fetch dynamics info', 'master' + this.id);
-                    loading = true;
-                    const params = {offset, limit};
-
-                    return this.$get(`sites/${this.id}/timeline`, params).then((data) => {
-                        this.dynamics.splice(this.dynamics.length, 0, ...data.events);
-                        this.dynamics = this.dynamics.filter((item) => item.event_type !== 'jianbao_result');
-                        this.dynamicTotal = data.total;
-                        loading = false;
-                        if (data.events.length < limit || offset + limit >= data.total) {
-                            this.hasMore = false;
-                        }
-                    });
-                }
-            })()
-        },
-        events: {
-            scrollToBottom(e) {
-                this.fetchMasterDynamicInfo();
+        briefDesc() {
+            const briefDesc = this.masterBaseData && this.masterBaseData.brief ? this.masterBaseData.brief : '';
+            if (briefDesc) {
+                return briefDesc.length > this.briefLimit ? briefDesc.substr(0, this.briefLimit) + '...' : briefDesc;
             }
+            return '';
         }
-    };
+    },
+    methods: {
+        followMaster() {
+            if (this.following) {
+                return;
+            }
+
+            this.following = true;
+            if (this.masterBaseData.follow) {
+                this.$delete(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
+                    this.following = false;
+                    this.masterBaseData.follow = false;
+                    this.masterBaseData.fans_count -= 1;
+
+                    localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
+                }).catch(() => {
+                    this.following = false;
+                });
+            } else {
+                this.$post(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
+                    this.following = false;
+                    this.masterBaseData.follow = true;
+                    this.masterBaseData.fans_count += 1;
+
+                    localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
+                }).catch(() => {
+                    this.following = false;
+                });
+            }
+        },
+        play(id) {
+            this.action('play', {id});
+        },
+        coverflow(medias, index) {
+            let ids = medias.filter(media => media.type==='picture')
+                .map(media => media.id);
+            this.action('coverflow', {ids, index});
+        },
+        likeType(eventType) {
+            if (eventType === 'jianbao_add') {
+                return 10;
+            } else if (eventType === 'topic_add') {
+                return 30;
+            } else {
+                return 40;
+            }
+        },
+        loadMasterOtherData: function() {
+            return this.fetch();
+        }
+    }
+};
 </script>

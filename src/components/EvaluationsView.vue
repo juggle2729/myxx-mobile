@@ -33,18 +33,29 @@
 </div>
 </template>
 <script>
+import PagingMixin from './PagingMixin.vue';
 import EvaluationList from './EvaluationList.vue';
 export default {
     name: 'EvaluationsView',
+    mixins: [PagingMixin],
     components: {
         EvaluationList
     },
     data() {
         return {
-            tab: 'time',
-            items: [],
-            hasMore: true
+            tab: 'time'
         };
+    },
+    computed: {
+        paging() {
+            return {
+                path: 'sns/jianbao',
+                list: 'jianbaos',
+                params: {
+                    [this.tab]: 1
+                }
+            }
+        }
     },
     route: {
         data({to}) {
@@ -60,32 +71,6 @@ export default {
             this.toggleLoading(true);
             this.$route.router.go({name: 'evaluations', params: {tab}});
         });
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            const limit = 5;
-            let loading = false;
-            return function() {
-                let offset = this.items.length;
-                if(loading) {
-                    return console.debug('skip!!!!!!!!');
-                }
-                loading = true;
-                const params = {[this.tab]: 1, offset, limit};
-                return this.$get('sns/jianbao', params).then((data) => {
-                        this.items.splice(this.items.length, 0, ...data.jianbaos);
-                        loading = false;
-                        if (data.jianbaos.length < limit || offset + limit >= data.total) {
-                            this.hasMore = false;
-                        }
-                    });
-            }
-        })()
     }
 }
 </script>

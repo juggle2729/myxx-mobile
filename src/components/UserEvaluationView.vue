@@ -1,56 +1,36 @@
 <template>
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
-    <partial name="load-more" v-if="hasMore"></partial>
-    <partial v-if="!items.length" name="empty-page"></partial>
+    <partial name="load-more" v-if="items.hasMore"></partial>
+    <partial v-else name="empty-page"></partial>
 </div>
 </template>
 <script>
 import EvaluationList from './EvaluationList.vue';
+import PagingMixin from './PagingMixin.vue';
 export default {
     name: 'UserEvaluationView',
-    data() {
-        return {
-            hasMore: true,
-            items: [],
-            emptyTitle: '你还没有鉴宝'
-        };
-    },
+    mixins: [PagingMixin],
     components: {
         EvaluationList
+    },
+    data() {
+        return {
+            emptyTitle: '你还没有鉴宝'
+        }
+    },
+    computed: {
+        paging() {
+            return {
+                path: 'sns/users/'+ this.$route.params.id +'/jianbao',
+                list: 'jianbaos'
+            }
+        }
     },
     route: {
         data() {
             return this.fetch();
         }
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
-        }
-    },
-    methods: {
-        fetch: (() => {
-            const limit = 2;
-            let loading = true;
-            return function() {
-                let offset = this.items.length;
-                let userId = this.$route.params.id;
-                if(loading) {
-                    loading = false;
-                    const params = {offset, limit};
-                    return this.$get(`sns/users/${userId}/jianbao`, params)
-                        .then((data) => {
-                            this.items.splice(this.items.length, 0, ...data.jianbaos);
-                            loading = true;
-                            if (data.jianbaos.length < limit || offset + limit >= data.total) {
-                                this.hasMore = false;
-                                loading = false;
-                            }
-                        });
-                }
-            }
-        })()
     }
 }
 </script>

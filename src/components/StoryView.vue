@@ -74,7 +74,7 @@
                 <div class="avatar" v-link="story.user | profile" v-bg.sm="story.user.photo"></div>
                 <div class="name">
                     <p class="font-26">{{story.user.name}}</p>
-                    <div class="padding-top font-22 gray">
+                    <div class="margin-top font-22 gray">
                         <span>{{story.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{story.click}}人浏览</span>
                     </div>
                 </div>

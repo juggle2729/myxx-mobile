@@ -1,20 +1,28 @@
 <template>
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
-    <partial name="load-more" v-if="hasMore"></partial>
-    <partial v-if="!items.length" name="empty-page"></partial>
+    <partial name="load-more" v-if="items.hasMore"></partial>
+    <partial v-else name="empty-page"></partial>
 </div>
 </template>
 <script>
 import StoryList from './StoryList.vue';
+import PagingMixin from './PagingMixin.vue';
 export default {
     name: 'UserStoryView',
+    mixins: [PagingMixin],
     data() {
         return {
-            items: [],
-            hasMore: true,
             emptyTitle: '你还没有话题'
-        };
+        }
+    },
+    computed: {
+        paging() {
+            return {
+                path: 'sns/users/'+ this.$route.params.id +'/topics',
+                list: 'topics'
+            }
+        }
     },
     components: {
         StoryList
@@ -24,33 +32,7 @@ export default {
             return this.fetch();
         }
     },
-    events: {
-        scrollToBottom(e) {
-          this.fetch();
-        }
-    },
     methods: {
-        fetch: (function() {
-            const limit = 3;
-            let loading = true;
-            return function() {
-                let offset = this.items.length;
-                let userId = this.$route.params.id;
-                if(loading) {
-                    loading = false;
-                    const params = {offset, limit};
-                    return this.$get('sns/users/'+ userId +'/topics', params)
-                        .then((data) => {
-                            this.items.splice(this.items.length, 0, ...data.topics);
-                            loading = true;
-                            if (data.topics.length < limit || offset + limit >= data.total) {
-                                this.hasMore = false;
-                                loading = false;
-                            }
-                        });
-                }
-            }
-        })(),
         coverflow(story, index) {
             let ids = story.medias
                         .filter(media => media.type==='picture')

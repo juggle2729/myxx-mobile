@@ -1,8 +1,8 @@
 <style lang="sass">
     @import '../styles/myxx';
     #app {
-        min-height: 100%;
         height: 100%;
+        min-height: 100%;
         .download-top {
             height: 100px;
             padding: 0px 32px;

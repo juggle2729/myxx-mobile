@@ -7,22 +7,33 @@
         <div :class="{'red': tab=='popularity'}" @click="tab='popularity'" class="font-26 center">热门</div>
     </div>
     <story-list :items="items"></story-list>
-    <partial name="load-more" v-show="hasMore"></partial>
+    <partial name="load-more" v-show="items.hasMore"></partial>
 </div>
 </template>
 <script>
+import PagingMixin from './PagingMixin.vue';
 import StoryList from './StoryList.vue';
 export default {
     name: 'StoriesView',
+    mixins: [PagingMixin],
     components: {
         StoryList
     },
     data() {
         return {
-            tab: 'time',
-            items: [],
-            hasMore: true
+            tab: 'time'
         };
+    },
+    computed: {
+        paging() {
+            return {
+                path: 'sns/topics',
+                list: 'topics',
+                params: {
+                    [this.tab]: 1
+                }
+            }
+        }
     },
     route: {
         data({to}) {
@@ -38,33 +49,6 @@ export default {
             this.toggleLoading(true);
             this.$route.router.go({name: 'stories', params: {tab}});
         });
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
-        }
-    },
-    methods: {
-        fetch: (function() {
-            const limit = 5;
-            let loading = false;
-            return function() {
-                let offset = this.items.length;
-                if(loading) {
-                    return console.debug('skip!!!!!!!!');
-                }
-                console.debug('fetch', this.tab, offset);
-                loading = true;
-                const params = {[this.tab]: 1, offset, limit};
-                return this.$get('sns/topics', params).then((data) => {
-                        this.items.splice(this.items.length, 0, ...data.topics);
-                        loading = false;
-                        if (data.topics.length < limit || offset + limit >= data.total) {
-                            this.hasMore = false;
-                        }
-                    });
-            }
-        })()
     }
 }
 </script>

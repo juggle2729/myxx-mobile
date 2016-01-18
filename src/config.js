@@ -11,45 +11,28 @@ export default {
     img,
     video,
     www: '//o0x80w5li.qnssl.com/',
-    types: [
-        'xxx',
-        {
-            name: '大师',
-            route: ''
-        }, {
-            name: '权威',
-            route: ''
-        }, {
-            name: '鉴宝',
-            route: 'evaluation'
-        }, {
-            name: '玉石',
-            route: ''
-        }, {
-            name: '商家',
-            route: ''
-        }, {
-            name: '话题',
-            route: 'story'
-        }
-    ],
     roles: {0: '普通用户', 1: '商家', 2: '藏家', 4: '大师', 8: '权威'},
-    likes: [
+    types: [
         {
             id: 10,
             name: '鉴宝',
+            route: 'evaluation'
         }, {
             id: 20,
-            name: '结果',
+            name: '大师鉴定',
+            route: 'evaluation'
         }, {
             id: 30,
             name: '话题',
+            route: 'story'
         }, {
             id: 40,
             name: '宝贝',
+            route: 'jade'
         }, {
             id: 50,
             name: '官网',
+            route: 'master'
         }
     ]
 };

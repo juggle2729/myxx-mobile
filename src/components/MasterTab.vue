@@ -72,6 +72,7 @@
 <style lang="sass">
     .master-tabs {
         position: fixed;
+        z-index: 999;
         left: 0;
         bottom: 0;
         width: 100%;
