@@ -43,25 +43,24 @@
         mixins: [ masterMixin ],
         data() {
             return {
-                id: '',
                 craftId: '',
                 craft: {}
             };
         },
+        activate(done) {
+            document.title = '工艺展示详情';
+
+            this.checkShare();
+            this.fetchCraftDetail().then(() => {
+                done();
+            });
+        },
         methods: {
-            setPageParams(params) {
-                this.craftId = params.craftId;
-            },
-            loadMasterOtherData() {
-                return this.fetchCraftDetail();
-            },
-            fetchCraftDetail: (function () {
-                return function () {
-                    return this.$get(`sites/${this.id}/articles/${this.craftId}`, {}).then((data) => {
-                        this.craft = data;
-                    });
-                }
-            })()
+            fetchCraftDetail: function () {
+                return this.$get(`sites/${this.id}/articles/${this.params.craftId}`, {}).then((data) => {
+                    this.craft = data;
+                });
+            }
         }
     };
 </script>

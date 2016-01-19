@@ -49,7 +49,7 @@
         }
 
         .craft-info.bottom-blank {
-            margin-bottom: 44px;
+            padding-bottom: 44px;
         }
     }
 </style>
@@ -61,12 +61,11 @@
                 <span class="text gray">工艺展示</span>
                 <div class="line"></div>
             </div>
-            <div class="craft-item bg-white" v-for="craft in masterCrafts" v-link="{name: 'craft-detail', params: {id: id, craftId: craft.id}}">
+            <div class="craft-item bg-white" v-for="craft in masterCrafts" v-link="{name: 'master', params: {id: id}, query: {tab: 'craftDetail', craftId: craft.id}}">
                 <div class="img" v-bg.lg="craft.img"></div>
                 <div class="font-30 title">{{craft.title}}</div>
             </div>
         </div>
-        <master-tab :master-info="masterBaseData" :current-tab="'master-works'"></master-tab>
         <div class="works-info" :class="{'bottom-blank': !items.isEmpty}" v-show="!items.isEmpty">
             <div class="line-title font-22 gray">
                 <div class="line"></div>
@@ -85,6 +84,7 @@
             <partial name="load-more" v-if="items.hasMore"></partial>
             <div v-else class="no-more light font-22 center">没有更多了</div>
         </div>
+        <master-tab :master-info="masterBaseData" :current-tab="'works'"></master-tab>
     </div>
 </template>
 <script>
@@ -92,12 +92,18 @@ import MasterMixin from '../mixins/MasterMixin.vue';
 import PagingMixin from './PagingMixin.vue';
 export default {
     name: 'MasterWorksView',
+    mixins: [MasterMixin, PagingMixin],
     data() {
         return {
             masterCrafts: []
         };
     },
-    mixins: [MasterMixin, PagingMixin],
+    activate(done) {
+        this.checkShare();
+        this.loadMasterOtherData().then(() => {
+            done();
+        });
+    },
     computed: {
         paging() {
             return {
@@ -112,7 +118,7 @@ export default {
             return this.fetch();
         },
         fetchMasterCraftsInfo() {
-            return this.$get(`sites/${this.id}/articles`).then((data) => {
+            return this.$get(`sites/${this.id}/articles`,  { article_type: 'craft' }).then((data) => {
                 this.masterCrafts.splice(this.masterCrafts.length, 0, ...data.articles);
             });
         }

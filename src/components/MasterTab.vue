@@ -4,7 +4,7 @@
 <template>
     <div class="master-tabs bg-white border-top">
         <div class="master-tab font-22 gray" v-for="tab in tabs"
-             :class="{'red': isActive(tab)}" v-link="{name: tab.linkName, replace: true, params: {id: masterInfo.id}, query: {replace: true}}">
+             :class="{'red': isActive(tab)}" v-link="{name: 'master', replace: true, params: {id: masterInfo.id}, query: {replace: true, tab: tab.linkName}}">
             <div class="tab-icon {{tab.iconName}}"></div>
             <div class="tab-name">{{tab.name}}</div>
         </div>
@@ -20,7 +20,7 @@
             },
             currentTab: {
                 type: String,
-                default: 'master-home'
+                default: 'home'
             }
         },
         computed: {
@@ -30,22 +30,22 @@
             tabs() {
                 const tabs = [
                     {
-                        linkName: 'master-home',
+                        linkName: 'home',
                         name: '首页',
                         iconName: 'icon-u-home'
                     },
                     {
-                        linkName: 'master-works',
+                        linkName: 'works',
                         name: '精品展示',
                         iconName: 'icon-u-best'
                     },
                     {
-                        linkName: 'master-special',
+                        linkName: 'special',
                         name: '人物志',
                         iconName: 'icon-u-human'
                     },
                     {
-                        linkName: 'master-studio',
+                        linkName: 'studio',
                         name: '工作室',
                         iconName: 'icon-u-office'
                     }

@@ -4,37 +4,25 @@
         components: { masterTab },
         data() {
             return {
-                id: '',
-                masterBaseData: {}
+                masterBaseData: this.data
             };
         },
-        route: {
-            data({ to }) {
-                this.setPageParams(to.params);
-
-                // get data from cache
-                const cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
-
-                const cacheMasterBaseInfo = cacheMastersBaseInfo ? cacheMastersBaseInfo[this.id] : null;
-                if (cacheMasterBaseInfo) {
-                    this.masterBaseData = cacheMasterBaseInfo;
-                    this.checkShare();
-                    return this.loadMasterOtherData();
-                }
-
-                this.loadMasterOtherData();
-                return this.fetchMasterBaseInfo();
+        props: {
+            id: {
+                type: String,
+                required: true
             },
-            activate(transition) {
-                this.id = transition.to.params.id;
-                this.clearMasterCache(transition.from.name);
-                transition.next();
+            data: {
+                type: Object,
+                required: true
+            },
+            params: {
+                type: Object,
+                required: true,
+                default: {}
             }
         },
         methods: {
-            setPageParams() {
-                return console.log('master default set page parameters');
-            },
             preventDefaultShare() {
                 return false;
             },
@@ -53,39 +41,6 @@
 
                 let curUrl = location.href;
                 this.action('shareable', {title, desc, icon, url: curUrl });
-            },
-            clearMasterCache(fromRouteName) {
-                let clearCache = false;
-                if (!fromRouteName) {
-                    clearCache = true;
-                } else {
-                    if (!/^master-/i.test(fromRouteName)) {
-                        clearCache = true;
-                    }
-                }
-
-                if (clearCache) { //clear cache
-                    let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData'));
-                    if (!cacheMastersBaseInfo) {
-                        cacheMastersBaseInfo = {};
-                    } else {
-                        cacheMastersBaseInfo[this.id] && (delete cacheMastersBaseInfo[this.id]);
-                    }
-
-                    localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
-                }
-            },
-            loadMasterOtherData() {
-                return console.log('master default other data loading');
-            },
-            fetchMasterBaseInfo() {
-                return this.$get(`sites/${this.id}/base`, {}).then((data) => {
-                    this.masterBaseData = data;
-                    this.checkShare();
-                    let cacheMastersBaseInfo = JSON.parse(localStorage.getItem('mastersBaseData')) || {};
-                    cacheMastersBaseInfo[this.id] = data;
-                    localStorage.setItem('mastersBaseData', JSON.stringify(cacheMastersBaseInfo));
-                });
             }
         }
     };

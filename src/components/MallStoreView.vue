@@ -122,6 +122,14 @@ export default {
           aboutLimit: 70
        };
     },
+    activate(done) {
+        document.title = '店铺详情';
+
+        this.checkShare();
+        this.fetchMallStoreInfo().then(() => {
+            done();
+        });
+    },
     computed: {
         paging() {
             return {
@@ -156,9 +164,6 @@ export default {
         },
         expandTitle() {
           this.isExpand = !this.isExpand;
-        },
-        loadMasterOtherData() {
-          return this.fetchMallStoreInfo();
         },
         fetchMallStoreInfo() {
           return this.$get(`mall/shops/${this.id}`).then((data) => {

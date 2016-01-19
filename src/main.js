@@ -61,7 +61,7 @@ router.beforeEach(({from, to, abort, next}) => {
     }
 });
 router.afterEach(({to}) => {
-    if(!to.query.position) {
+    if(!_.get(to, 'query.position')) {
         window.scrollTo(0, 0);
     }
 });

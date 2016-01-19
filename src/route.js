@@ -48,39 +48,11 @@ export default {
         title: '官网秀',
         component: require('./components/MastersView.vue')
     },
-    '/master/:id/home' : {
-        name: 'master-home',
+    '/master/:id': {
+        name: 'master',
         title: '大师官网',
         raw: true,
-        component: require('./components/MasterHomeView.vue')
-    },
-    '/master/:id/works' : {
-        name: 'master-works',
-        title: '大师官网',
-        raw: true,
-        component: require('./components/MasterWorksView.vue')
-    },
-    '/master/:id/special' : {
-        name: 'master-special',
-        title: '大师官网',
-        raw: true,
-        component: require('./components/MasterSpecialView.vue')
-    },
-    '/master/:id/studio' : {
-        name: 'master-studio',
-        title: '大师官网',
-        raw: true,
-        component: require('./components/MasterStudioView.vue')
-    },
-    '/craft/:id/:craftId/detail' : {
-        name: 'craft-detail',
-        title: '工艺展示详情',
-        component: require('./components/CraftDetailView.vue')
-    },
-    '/mall/:id/store' : {
-        name: 'mall-store',
-        title: '店铺详情',
-        component: require('./components/MallStoreView.vue')
+        component: require('./components/Master.vue')
     },
     '/messages': {
         name: 'messages',

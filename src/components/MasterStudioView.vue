@@ -140,7 +140,7 @@
                     <span class="arrow" :class="[isExpand ? 'arrow-up' : '']"></span>
                     <span class="text">{{isExpand ? '收起' : '展开'}}</span>
                 </div>
-                <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'mall-store', params: {id: masterBaseData.id}}"/>
+                <input type="button" class="white font-26 bg-green" value="进入店铺" v-link="{name: 'master', params: {id: masterBaseData.id}, query: {tab: 'store'}}"/>
             </div>
         </template>
         <template v-if="masterBaseData.phone || masterBaseData.weixin || masterBaseData.qq || masterBaseData.email || masterBaseData.address">
@@ -183,7 +183,7 @@
                 <comment :id="masterBaseData.id" type="50"></comment>
             </div>
         </div>
-        <master-tab :master-info="masterBaseData" :current-tab="'master-studio'"></master-tab>
+        <master-tab :master-info="masterBaseData" :current-tab="'studio'"></master-tab>
     </div>
 </template>
 <script>
@@ -202,6 +202,12 @@
         },
         components: {
             Comment
+        },
+        activate(done) {
+            this.checkShare();
+            this.fetchMasterShopInfo().then(() => {
+                done();
+            });
         },
         computed: {
             shopDesc() {
@@ -222,9 +228,6 @@
             },
             expandTitle() {
                 this.isExpand = !this.isExpand;
-            },
-            loadMasterOtherData() {
-              return this.fetchMasterShopInfo();
             },
             fetchMasterShopInfo: (function() {
                let loading = false;

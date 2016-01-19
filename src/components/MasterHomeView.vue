@@ -216,7 +216,7 @@
                     </div>
                     <div class="brief font-26 gray" v-text="briefDesc"></div>
                     <div class="link-detail white font-26 bg-black"
-                         v-link="{name: 'master-special', params: {id: masterBaseData.id}, query: {replace: true}}">查看详情</div>
+                         v-link="{name: 'master', params: {id: masterBaseData.id}, query: {replace: true, tab: 'special'}}">查看详情</div>
                 </div>
             </div>
         </div>
@@ -271,7 +271,7 @@
             <div class="no-more light font-22 center" v-show="!hasMore">没有更多了</div>
         </div>
         <partial name="load-more" v-show="hasMore"></partial>
-        <master-tab :master-info="masterBaseData" :current-tab="'master-home'"></master-tab>
+        <master-tab :master-info="masterBaseData" :current-tab="'home'"></master-tab>
     </div>
 </template>
 <script>
@@ -288,6 +288,12 @@ export default {
             following: false,
             briefLimit: 45
         };
+    },
+    activate(done) {
+        this.checkShare();
+        this.fetch().then(() => {
+            done();
+        });
     },
     computed: {
         paging() {
@@ -349,9 +355,6 @@ export default {
             } else {
                 return 40;
             }
-        },
-        loadMasterOtherData: function() {
-            return this.fetch();
         }
     }
 };

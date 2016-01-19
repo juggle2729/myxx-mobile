@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <master-tab :master-info="masterBaseData" :current-tab="'master-special'"></master-tab>
+        <master-tab :master-info="masterBaseData" :current-tab="'special'"></master-tab>
     </div>
 </template>
 <script>
@@ -141,6 +141,12 @@
                 interview: {},
                 resumes: []
             };
+        },
+        activate(done) {
+            this.checkShare();
+            this.loadMasterOtherData().then(() => {
+                done();
+            });
         },
         methods: {
             resumeContent(index) {
