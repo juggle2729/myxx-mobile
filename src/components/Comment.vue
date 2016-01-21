@@ -148,7 +148,7 @@ export default {
         userProfile(user){
             let name = 'user-profile';
             if(user.has_website === true) {
-                name = 'master-home';
+                name = 'master';
             }
             this.$route.router.go({'name': name, 'params': {'id': user.id}})
         }

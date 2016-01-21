@@ -5,7 +5,7 @@ if(/^app/.test(location.hostname)) {
 } else if(/^test/.test(location.hostname)) {
     [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
 }
-
+// let [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
 export default {
     api,
     img,
