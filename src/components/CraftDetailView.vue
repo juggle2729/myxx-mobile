@@ -35,7 +35,7 @@
 </template>
 <script>
     import RichText from './RichTextView.vue';
-    import masterMixin from '../mixins/MasterMixin.vue';
+    import masterMixin from './mixin/Master.vue';
 
     export default {
         name: 'CraftDetail',

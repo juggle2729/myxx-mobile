@@ -48,7 +48,7 @@
 </div>
 </template>
 <script>
-import PagingMixin from './PagingMixin.vue';
+import PagingMixin from './mixin/Paging.vue';
 export default {
     name: 'Comment',
     mixins: [PagingMixin],
@@ -103,7 +103,7 @@ export default {
                     if(content && typeof content === 'string') {
                         this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content})
                             .then(() => {
-                                this.fetch();
+                                this.fetch(true);
                             });
                     }
                 });
@@ -119,7 +119,7 @@ export default {
                         let reply_to = user.id;
                         this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content, reply_to})
                             .then(() => {
-                                this.fetch();
+                                this.fetch(true);
                             });
                     }
                 });
@@ -132,7 +132,7 @@ export default {
                             this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
                                 .then(() => {
                                     this.action('toast', {success: 1, text: '评论删除成功'});
-                                    this.fetch();
+                                    this.fetch(true);
                                 });
                         }
                     });

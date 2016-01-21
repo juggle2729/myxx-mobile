@@ -88,8 +88,8 @@
     </div>
 </template>
 <script>
-import MasterMixin from '../mixins/MasterMixin.vue';
-import PagingMixin from './PagingMixin.vue';
+import MasterMixin from './mixin/Master.vue';
+import PagingMixin from './mixin/Paging.vue';
 export default {
     name: 'MasterWorksView',
     mixins: [MasterMixin, PagingMixin],

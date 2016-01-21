@@ -187,7 +187,7 @@
     </div>
 </template>
 <script>
-    import masterMixin from '../mixins/MasterMixin.vue';
+    import masterMixin from './mixin/Master.vue';
     import Comment from './Comment.vue';
     export default {
         name: 'MasterStudioView',

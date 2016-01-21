@@ -220,7 +220,7 @@
                 </div>
             </div>
         </div>
-        <div class="dynamic-info" :class="{'bottom-blank': dynamicTotal > 0}" v-show="!items.isEmpty">
+        <div class="dynamic-info" :class="{'bottom-blank': dynamicTotal > 0}" v-if="!items.isEmpty">
             <div class="line-title font-22 gray">
                 <div class="line"></div>
                 <span class="text gray">动态</span>
@@ -268,15 +268,15 @@
                     </social-bar>
                 </div>
             </div>
-            <div class="no-more light font-22 center" v-show="!hasMore">没有更多了</div>
+            <div class="no-more light font-22 center" v-if="!items.hasMore">没有更多了</div>
         </div>
-        <partial name="load-more" v-show="hasMore"></partial>
+        <partial name="load-more" v-if="items.hasMore"></partial>
         <master-tab :master-info="masterBaseData" :current-tab="'home'"></master-tab>
     </div>
 </template>
 <script>
-import MasterMixin from '../mixins/MasterMixin.vue';
-import PagingMixin from './PagingMixin.vue';
+import MasterMixin from './mixin/Master.vue';
+import PagingMixin from './mixin/Paging.vue';
 import SocialBar from './SocialBar.vue';
 
 export default {

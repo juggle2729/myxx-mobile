@@ -54,7 +54,9 @@ const mixin = {
             document.querySelector('#app').classList[show ? 'add' : 'remove']('loading');
         },
         action(handler, params = '') {
-            Object.keys(params).forEach((k) => params[k] = '' + params[k]);
+            if(_.isObject(params)) {
+                Object.keys(params).forEach((k) => params[k] = '' + params[k]);
+            }
             let defer = Q.defer();
             let resolver = undefined;   //可选值为undefined, false, function
             bridge.then((bridge) => {

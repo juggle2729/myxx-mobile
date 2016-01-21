@@ -1,5 +1,5 @@
 <script>
-    import masterTab from '../components/MasterTab.vue';
+    import masterTab from '../MasterTab.vue';
     export default {
         components: { masterTab },
         data() {
@@ -46,7 +46,7 @@
     };
 </script>
 <style lang="sass">
-@import '../styles/partials/var';
+@import '../../styles/partials/var';
 .bottom-blank {
     margin-bottom: 100px;
 }

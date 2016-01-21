@@ -127,7 +127,7 @@
     </div>
 </template>
 <script>
-    import masterMixin from '../mixins/MasterMixin.vue';
+    import masterMixin from './mixin/Master.vue';
     import RichText from './RichTextView.vue';
 
     export default {

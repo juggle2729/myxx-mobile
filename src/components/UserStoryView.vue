@@ -7,7 +7,7 @@
 </template>
 <script>
 import StoryList from './StoryList.vue';
-import PagingMixin from './PagingMixin.vue';
+import PagingMixin from './mixin/Paging.vue';
 export default {
     name: 'UserStoryView',
     mixins: [PagingMixin],
