@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="desc font-30">{{evaluation.description}}</div>
+        <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
     <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator-20"></div>

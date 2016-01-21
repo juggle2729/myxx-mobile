@@ -72,46 +72,5 @@ export default {
             display: none;
         }
     }
-    .item {
-        padding: 24px 32px;
-    }
-    .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
-        .name {
-            margin-left: 20px;
-            .moment {
-                margin-top: 12px;
-            }
-        }
-    }
-    .desc {
-        margin: 30px 0 24px;
-    }
-    .medias {
-        .media {
-            vertical-align: top;
-            display: inline-block;
-            width: percentage(1/3);
-            padding-top: 33.3333%;
-            padding-top: -webkit-calc(33.3333% - 10px);
-            border: 5px solid white;
-        }
-        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-            margin-right: percentage(1/3);
-        }
-        .unique {
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
-        }
-    }
 }
 </style>

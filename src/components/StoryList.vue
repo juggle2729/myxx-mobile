@@ -25,26 +25,22 @@
         margin: 30px 0 24px;
         line-height: 1.5em;
     }
-    .video {
-        height: 500px;
-    }
-    .result {
-        height: 116px;
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
+    .medias {
+        .media {
+            vertical-align: top;
+            display: inline-block;
+            width: percentage(1/3);
+            padding-top: 33.3333%;
+            padding-top: -webkit-calc(33.3333% - 10px);
+            border: 5px solid white;
         }
-        .master {
-            -webkit-box-flex: 1;
-            padding-left: 20px;
-            .title {
-                margin-top: 12px;
-            }
+        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
+            margin-right: percentage(1/3);
+        }
+        .unique {
+            width: 100%;
+            padding-top: 60%;
+            background-size: cover;
         }
     }
 }
@@ -62,7 +58,7 @@
                         <p class="moment font-22 light">{{item.create_at | moment}}</p>
                   </div>
                 </div>
-                <div class="desc font-30">{{item.content}}</div>
+                <div class="desc font-30 user-input">{{item.content}}</div>
             </div>
             <div class="medias">
                 <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">

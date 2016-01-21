@@ -75,7 +75,7 @@
                         <p class="moment font-22 light">{{item.create_at | moment}}</p>
                   </div>
                 </div>
-                <div class="desc font-30">{{item.description}}</div>
+                <div class="desc font-30 user-input">{{item.description}}</div>
             </div>
             <div class="eval-video" v-bg="item.picture">
                 <div class="result white font-22" v-if="item.results.length">

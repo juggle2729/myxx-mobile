@@ -2,12 +2,6 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/featured': {
-        name: 'featured',
-        component: {
-            template: '<p class="font-30 gray center" style="position:relative;top: 200px;">【即将下线】</p></div>'
-        }
-    },
     '/evaluations/:tab': {
         name: 'evaluations',
         component: require('./components/EvaluationsView.vue')
@@ -30,13 +24,6 @@ export default {
         name: 'story',
         title: '话题详情',
         component: require('./components/StoryView.vue')
-    },
-    '/jades': {
-        name: 'jades',
-        title: '宝贝秀',
-        component: {
-            template: '<p class="font-30 gray center" style="position:relative;top: 200px;">【即将下线】</p></div>'
-        }
     },
     '/jade/:id': {
         name: 'jade',

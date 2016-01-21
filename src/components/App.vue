@@ -107,7 +107,7 @@ export default {
     },
     computed: {
         isShare() {
-            return !this.platform.isApp && this.$route.query.inviter;
+            return !this.platform.isApp && _.get(this.$route, 'query.inviter');
         },
         appCmd() {
             let path = this.$route.path;

@@ -40,7 +40,7 @@
             </div>
             <div class="font-30" @click="clickContent(c, $index, $event)">
                 <span v-if="c.reply_to" class="label">回复<span @click.stop="userProfile(c.reply_to)" class="blue">{{c.reply_to.name}}</span>:</span>
-                <span>{{c.content}}</span>
+                <span class="user-input">{{c.content}}</span>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
