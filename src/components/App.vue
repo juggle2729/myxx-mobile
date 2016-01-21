@@ -1,7 +1,6 @@
 <style lang="sass">
     @import '../styles/myxx';
     #app {
-        height: 100%;
         min-height: 100%;
         .download-top {
             height: 100px;
@@ -65,7 +64,7 @@
     }
 </style>
 <template>
-  <main class="loading">
+  <div class="loading">
     <div v-if="isShare" class="download-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">
@@ -87,7 +86,7 @@
         <video :src="config.video + videoId" autoplay controls="controls">
         </video>
     </div>
-  </main>
+  </div>
 </template>
 <script>
 import Q from 'q';

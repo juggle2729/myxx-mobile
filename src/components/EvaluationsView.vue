@@ -29,7 +29,7 @@
         <div :class="{'red': tab=='popularity'}" @click="tab='popularity'" class="font-26 center">热门</div>
     </div>
     <evaluation-list :items="items"></evaluation-list>
-    <partial name="load-more" v-show="hasMore"></partial>
+    <partial name="load-more" v-if="items.hasMore"></partial>
 </div>
 </template>
 <script>

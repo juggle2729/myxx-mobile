@@ -16,7 +16,7 @@ const bg = {
             let host = config.video;
             if(/^image/i.test(this.query)) {
                 host = config.img;
-                bgImgStr = `url(${host + id + '?' + this.query}), url('//7xp1h7.com2.z0.glb.qiniucdn.com/placeholder/img.png')`
+                bgImgStr = `url(${host + id + '?' + this.query}), url('//o0x80w5li.qnssl.com/placeholder/img.png')`
             } else {
                 bgImgStr = `url(${host + id + '?' + this.query})`
             }

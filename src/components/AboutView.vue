@@ -13,11 +13,7 @@
 </template>
 <script>
 export default {
-    name: 'AboutView',
-    data() {
-        return {
-        }
-    }
+    name: 'AboutView'
 }
 </script>
 <style lang="sass">

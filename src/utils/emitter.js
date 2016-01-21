@@ -4,7 +4,7 @@ export default emitter;
 
 // 处理滚动
 const scrollListener = (function(w) {
-    const threshold = 50;
+    const threshold = 100;
     const delay = 50;
     let lastPos = w.scrollY;
     let timer;
