@@ -3,18 +3,11 @@ import { EventEmitter } from 'events'
 const scroll = new EventEmitter();
 
 const touchEvent = {
-    sPos: {
-        x: 0,
-        y: 0
-    },
-    mPos: {
-        x: 0,
-        y: 0
-    },
+    sPos: { x: 0, y: 0 },
+    mPos: { x: 0, y: 0 },
     control: false,
     threshold: 60,
-    preventDefault: true,
-    scrollLastPos: 0,
+    preventDefault: false,
     touchstart: (evt) => {
         const point = evt.touches ? evt.touches[0] : evt;
 
@@ -22,6 +15,7 @@ const touchEvent = {
         touchEvent.sPos.y = point.screenY;
     },
     touchmove: (evt) => {
+        evt.preventDefault();
         touchEvent.control = true;
 
         var point = evt.touches ? evt.touches[0] : evt;
@@ -39,17 +33,9 @@ const touchEvent = {
             }
 
             if (Math.abs(xDiff) > Math.abs(yDiff))  {
-                if (xDiff > 0) {
-                    scroll.emit('scroll', 'right');
-                } else {
-                    scroll.emit('scroll', 'left');
-                }
+                scroll.emit('scroll', xDiff > 0 ? 'right' : 'left');
             } else {
-                if (yDiff > 0) {
-                    scroll.emit('scroll', 'down');
-                } else {
-                    scroll.emit('scroll', 'up');
-                }
+                scroll.emit('scroll', yDiff > 0 ? 'down' : 'up');
             }
 
             touchEvent.control = false;
@@ -64,5 +50,12 @@ scroll.init = () => {
     doc.addEventListener('touchmove', touchEvent.touchmove, false);
     doc.addEventListener('touchend', touchEvent.touchend, false);
 };
+
+scroll.preventDefault = (isPrevent) => {
+    "use strict";
+
+}
+
+// scroll.init();
 
 export default scroll;

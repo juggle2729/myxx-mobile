@@ -1,10 +1,10 @@
 <template>
     <nav class="right-menu" :class="{fixed: fixed}">
         <nav class="menu toggle-leave">
-            <li v-link="{ path: linkPage('studio') }">工作室</li>
-            <li v-link="{ path: linkPage('personal') }">人物志</li>
-            <li v-link="{ path: linkPage('works') }">精品</li>
-            <li v-link="{ path: linkPage('home') }">首页</li>
+            <li v-link="{name: 'master', replace: true, params: {id: id}, query: {replace: true, tab: 'store'}}">工作室</li>
+            <li v-link="{name: 'master', replace: true, params: {id: id}, query: {replace: true, tab: 'special'}}">人物志</li>
+            <li v-link="{name: 'master', replace: true, params: {id: id}, query: {replace: true, tab: 'works'}}">精品</li>
+            <li v-link="{name: 'master', replace: true, params: {id: id}, query: {replace: true, tab: 'home'}}">首页</li>
             <li></li>
         </nav>
         <li class="toggle open" @click="toggleMenu"></li>
@@ -12,18 +12,22 @@
 </template>
 
 <script>
-
-    import Scroll from '../../scripts/scroll.js';
-
     export default {
         name: 'RightMenu',
 
         props: {
-            id: Number,
+            id: {
+                type: String,
+                required: true
+            },
             fixed: {
                 type: Boolean,
                 default: true
             },
+            show: {
+                type: Boolean,
+                default: false
+            }
         },
 
         data() {
@@ -34,10 +38,8 @@
 
         methods: {
             toggleMenu() {
+                this.show = !this.show;
                 this.showMenus(this.show);
-            },
-            linkPage(pageName) {
-                return '/artist/' + this.id + (pageName ? '/' + pageName : '');
             },
             showMenus(flag) {
                 if (this.interval) {
@@ -46,93 +48,96 @@
 
                 this.interval = setTimeout(() => {
                         const menuDom = document.querySelector('.right-menu .menu');
-                const toggleDom = document.querySelector('.right-menu .toggle');
-                if (!menuDom || !toggleDom) {
-                    return;
-                }
+                        const toggleDom = document.querySelector('.right-menu .toggle');
+                        if (!menuDom || !toggleDom) {
+                            return;
+                        }
 
-                const menuClasslist = menuDom.classList;
-                const toggleClasslist = toggleDom.classList;
+                        const menuClasslist = menuDom.classList;
+                        const toggleClasslist = toggleDom.classList;
 
-                if (flag) {
-                    menuClasslist.remove('toggle-leave');
-                    menuClasslist.add('toggle-enter');
+                        if (flag) {
+                            menuClasslist.remove('toggle-leave');
+                            menuClasslist.add('toggle-enter');
 
-                    toggleClasslist.add('close');
-                    toggleClasslist.remove('open');
-                } else {
-                    menuClasslist.remove('toggle-enter');
-                    menuClasslist.add('toggle-leave');
+                            toggleClasslist.add('close');
+                            toggleClasslist.remove('open');
+                        } else {
+                            menuClasslist.remove('toggle-enter');
+                            menuClasslist.add('toggle-leave');
 
-                    toggleClasslist.add('open');
-                    toggleClasslist.remove('close');
-                }
+                            toggleClasslist.add('open');
+                            toggleClasslist.remove('close');
+                        }
 
-                this.interval = null;
-            }, 10);
+                        this.interval = null;
+                }, 10);
             }
         }
     }
 </script>
 
 <style lang="sass" scoped>
-
-    @import '../../styles/partials/_function.scss';
+    @import '../../../styles/partials/_var.scss';
 
     @mixin toggleIcon($bgName) {
         position: relative;
         bottom: 0;
         right: 0;
         z-index: 2;
-        background: url('/src/images/#{$bgName}.png') center center no-repeat #d79f60;
-        background-size: rem(24) rem(24);
+        background: url('#{$qn}/artist/#{$bgName}.png') center center no-repeat #d79f60;
+        background-size: 24px 24px;
     }
 
     .right-menu {
         position: absolute;
 
-        right: rem(30);
-        bottom: rem(102);
+        right: 42px;
+        bottom: 36px;
         z-index: 99;
 
-    .menu {
-        transition: all 0.4s ease;
-        overflow: hidden;
+        .menu {
+            transition: all 0.4s ease;
+            -webkit-transition: all 0.4s ease;
 
-        position: relative;
-        right: 0;
-        z-index: 1;
-    li:not(:first-child){
-        margin-top: rem(14);
-    }
-    li:last-child {
-        background: transparent;
-    }
-    }
+            overflow: hidden;
 
-    li {
-        color: #fff;
-        font-size: rem(24);
-        background-color: #898989;
-        width: rem(96);
-        height: rem(96);
-        border-radius: rem(96);
-        text-align: center;
-        line-height: rem(96);
-        position: relative;
+            position: relative;
+            right: 0;
+            z-index: 1;
 
-    &.v-link-active {
-         background-color: #d26c1a;
-     }
+            li:not(:first-child){
+                margin-top: 14px;
+            }
 
-    &.close {
-     @include toggleIcon(menu_close);
-     }
+            li:last-child {
+                background: transparent;
+            }
+        }
 
-    &.open {
-     @include toggleIcon(menu_icon);
-     }
-    }
+        li {
+            color: #fff;
+            font-size: 24px;
+            background-color: #898989;
+            width: 96px;
+            height: 96px;
+            border-radius: 96px;
+            text-align: center;
+            line-height: 96px;
+            position: relative;
+
+            &.v-link-active {
+                 background-color: #d26c1a;
+             }
+
+            &.close {
+                @include toggleIcon(menu_close);
+             }
+
+            &.open {
+                @include toggleIcon(menu_icon);
+             }
+        }
     }
 
     .right-menu.fixed {
@@ -141,11 +146,11 @@
 
     .toggle-leave {
         height: 0;
-        bottom: rem(-37);
+        bottom: -37px;
     }
 
     .toggle-enter {
-        height: rem(440);
+        height: 440px;
         bottom: 0;
     }
 </style>

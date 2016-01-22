@@ -10,6 +10,10 @@
     import MasterBasicCraftDetail from './CraftDetailView.vue';
 
     import MasterVipBlackHome from './vips/black/MasterHomeView.vue'
+    import MasterVipBlackActivities from './vips/black/MasterActivitiesView.vue';
+    import MasterVipBlackWorks from './vips/black/MasterWorksView.vue';
+    import MasterVipBlackSpecial from './vips/black/MasterSpecialView.vue';
+    import MasterVipBlackStore from './vips/black/MasterStoreView.vue';
 
     export default{
         data(){
@@ -19,7 +23,7 @@
                 masterBaseData: {},
                 tab: '',
                 params: {},
-                validTabs: [ 'home', 'works', 'special', 'studio', 'store', 'craftDetail' ],
+                validTabs: [ 'home', 'works', 'special', 'studio', 'store', 'craftDetail', 'activities' ],
                 vipTemplates: {
                     1: 'Black'
                 }
@@ -33,7 +37,11 @@
             MasterBasicStore,
             MasterBasicCraftDetail,
 
-            MasterVipBlackHome
+            MasterVipBlackHome,
+            MasterVipBlackActivities,
+            MasterVipBlackWorks,
+            MasterVipBlackSpecial,
+            MasterVipBlackStore
         },
         route: {
             data({ to }) {
@@ -62,7 +70,7 @@
                             preCurrentView = 'MasterBasic';
                         } else if (data.site_type === 'vip') {
                             const vipTemplate = this.vipTemplates[data.display_template];
-                            if(!vipTemplate) {
+                            if(vipTemplate) {
                                 preCurrentView = 'MasterVip' + vipTemplate;
                             } else {
                                 preCurrentView = 'MasterBasic';

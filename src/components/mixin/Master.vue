@@ -106,6 +106,6 @@
     }
 }
 .no-more {
-    margin-top: 32px;
+    margin: 32px 0;
 }
 </style>

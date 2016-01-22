@@ -1,4 +1,6 @@
 require('./utils/resize');
+require('./utils/scroll');
+
 require('fastclick').attach(document.body);
 import _ from 'lodash';
 import config from './config';

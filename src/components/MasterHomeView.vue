@@ -165,32 +165,6 @@
             background-size: cover;
         }
     }
-
-    .result-item {
-        margin-left: 20px;
-        .person {
-            float: left;
-            padding-left: 0;
-            padding-top: 4.5%;
-        }
-
-        .name-time {
-            margin-left: 20px;
-            margin-top: -6px;
-        }
-
-        .time {
-            margin-top: 12px;
-        }
-
-        .status {
-            float: right;
-            padding-right: 20px;
-            * {
-                line-height: 110px;
-            }
-        }
-    }
 }
 </style>
 <template>
@@ -322,8 +296,6 @@ export default {
                     this.following = false;
                     this.masterBaseData.follow = false;
                     this.masterBaseData.fans_count -= 1;
-
-                    localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
                 }).catch(() => {
                     this.following = false;
                 });
@@ -332,8 +304,6 @@ export default {
                     this.following = false;
                     this.masterBaseData.follow = true;
                     this.masterBaseData.fans_count += 1;
-
-                    localStorage.setItem('mastersBaseData', JSON.stringify(this.masterBaseData));
                 }).catch(() => {
                     this.following = false;
                 });
