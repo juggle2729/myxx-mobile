@@ -7,23 +7,23 @@
                 <div class="description">{{work.name}}</div>
             </div>
         </div>
-        <right-menu :show="showMenu" :id="id"></right-menu>
     </div>
 </template>
 <script>
     import MasterMixin from '../../mixin/Master.vue';
     import PagingMixin from '../../mixin/Paging.vue';
-    import RightMenu from './RightMenu.vue';
 
     export default {
         name: 'MasterWorksView',
-        components: { RightMenu },
         mixins: [ MasterMixin, PagingMixin ],
         data(){
             return {
                 masterBaseData: this.data,
                 showMenu: false
             };
+        },
+        ready() {
+            window.scrollTo(0, 0);
         },
         activate(done) {
             this.checkShare();

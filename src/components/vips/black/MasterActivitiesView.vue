@@ -150,7 +150,6 @@
                 </social-bar>
             </div>
         </div>
-        <right-menu :show="showMenu" :id="id" :fixed="true"></right-menu>
         <div class="no-more light font-22 center" v-if="!items.hasMore">没有更多了</div>
         <partial name="load-more" v-if="items.hasMore"></partial>
     </div>
@@ -158,12 +157,11 @@
 <script>
     import MasterMixin from '../../mixin/Master.vue';
     import PagingMixin from '../../mixin/Paging.vue';
-    import RightMenu from './RightMenu.vue';
     import SocialBar from '../../SocialBar.vue';
 
     export default{
         name: 'MasterActivitiesView',
-        components: { RightMenu, SocialBar },
+        components: { SocialBar },
         mixins: [ MasterMixin, PagingMixin ],
         data(){
             return {
@@ -176,6 +174,9 @@
             this.fetch().then(() => {
                 done();
             });
+        },
+        ready() {
+            window.scrollTo(0, 0);
         },
         computed: {
             paging() {

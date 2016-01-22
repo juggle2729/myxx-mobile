@@ -42,7 +42,13 @@ Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
-    document.title = (to.title || '美玉秀秀');
+    if (to.query.tab && to.query.tab.toLowerCase() === 'store') {
+        document.title = '店铺详情';
+    } else if (to.query.tab && to.query.tab.toLowerCase() === 'craftDetail') {
+        document.title = '工艺详情';
+    } else {
+        document.title = (to.title || '美玉秀秀');
+    }
     appContainer.classList.add('loading');
 
     let stopAppRoute = to.raw && (to.query.replace === 'true');
@@ -63,9 +69,9 @@ router.beforeEach(({from, to, abort, next}) => {
     }
 });
 router.afterEach(({to}) => {
-    if(!_.get(to, 'query.position')) {
-        window.scrollTo(0, 0);
-    }
+    //if(!_.get(to, 'query.position')) {
+    //    window.scrollTo(0, 0);
+    //}
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

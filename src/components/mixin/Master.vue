@@ -20,6 +20,11 @@
                 type: Object,
                 required: true,
                 default: {}
+            },
+            fromParams: {
+                type: Object,
+                required: true,
+                default: {}
             }
         },
         methods: {
@@ -105,7 +110,21 @@
         padding-right: 32px;
     }
 }
+
 .no-more {
     margin: 32px 0;
+}
+
+.arrow {
+    width: 100%;
+    text-align: center;
+
+    .icon-down {
+        color: #fff;
+        font-size: 45px;
+        width: 35px;
+        height: 22px;
+        padding-right: 0;
+    }
 }
 </style>

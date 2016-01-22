@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'events';
 
 const scroll = new EventEmitter();
 
@@ -7,7 +7,6 @@ const touchEvent = {
     mPos: { x: 0, y: 0 },
     control: false,
     threshold: 60,
-    preventDefault: false,
     touchstart: (evt) => {
         const point = evt.touches ? evt.touches[0] : evt;
 
@@ -33,9 +32,9 @@ const touchEvent = {
             }
 
             if (Math.abs(xDiff) > Math.abs(yDiff))  {
-                scroll.emit('scroll', xDiff > 0 ? 'right' : 'left');
+                scroll.emit('touch-scroll', xDiff > 0 ? 'right' : 'left');
             } else {
-                scroll.emit('scroll', yDiff > 0 ? 'down' : 'up');
+                scroll.emit('touch-scroll', yDiff > 0 ? 'down' : 'up');
             }
 
             touchEvent.control = false;
@@ -43,19 +42,15 @@ const touchEvent = {
     }
 };
 
-scroll.init = () => {
-    const doc = window.document;
+scroll.install = (container) => {
 
-    doc.addEventListener('touchstart', touchEvent.touchstart, false);
-    doc.addEventListener('touchmove', touchEvent.touchmove, false);
-    doc.addEventListener('touchend', touchEvent.touchend, false);
+    if (!container) {
+        throw new Error('Not found container');
+    }
+
+    container.addEventListener('touchstart', touchEvent.touchstart, false);
+    container.addEventListener('touchmove', touchEvent.touchmove, false);
+    container.addEventListener('touchend', touchEvent.touchend, false);
 };
-
-scroll.preventDefault = (isPrevent) => {
-    "use strict";
-
-}
-
-// scroll.init();
 
 export default scroll;

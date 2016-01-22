@@ -1,11 +1,11 @@
 <template>
-    <div class="titles">
+    <div class="titles" v-if="resumes.length">
         <nav class="title-list">
             <li class="title-item" v-for="title in titleData" :class="countStyle($index, title)" track-by="$index">
                 <span class="text">{{title}}</span>
             </li>
         </nav>
-        <div class="date-container">
+        <div class="date-container" v-show="showDate">
             <nav class="title-date-list">
                 <div class="split"></div>
                 <li class="title-date-item" v-for="date in dateData" :class="{active: !$index}" track-by="$index">
@@ -23,15 +23,37 @@
     export default {
         name: 'resumes',
         ready() {
-            Scroll.on('scroll', (direction) = > {
-                this.titleAnimate(direction);
-                this.titleDateInit();
+            Scroll.on('touch-scroll', this.scrollHandler);
+
+            if (this.tab) {
+                document.querySelector('.master-vip-black-home .menus').scrollIntoView();
+            }
+        },
+        activate(done) {
+            this.fetchUserResumes().then(() => {
+                setTimeout(() => {
+                    const titlesDom = document.querySelector('.titles');
+                    if (titlesDom) {
+                        Scroll.install(titlesDom);
+                    }
+
+                    this.titleDateInit();
+                }, 100);
+                done();
             });
         },
+        destroyed() {
+            Scroll.removeListener('touch-scroll', this.scrollHandler);
+        },
         props: {
-            resumes: {
-                type: Array,
-                default: []
+            id: {
+                type: String,
+                required: true
+            },
+            tab: {
+                type: String,
+                required: true,
+                default: ''
             }
         },
         data() {
@@ -40,8 +62,10 @@
                 maxDisplayCount: 4,
                 dateItemWidth: 172,
                 dateMarginLeft: -14,
-                dateInit: false
-            }
+                dateInit: false,
+                resumes: [],
+                showDate: false
+            };
         },
         computed: {
             titleData() {
@@ -57,11 +81,19 @@
                 this.resumes.reduce((res, resume) => {
                     res.push(resume.occur_at.substr(0, 4));
                     return res;
-                },resArr);
+                }, resArr);
                 return resArr;
             }
         },
         methods: {
+            scrollHandler: function(direction) {
+                this.titleAnimate(direction);
+            },
+            fetchUserResumes: function () {
+                return this.$get(`sites/${this.id}/resumes`, {}).then((data) => {
+                    this.resumes = data.resumes;
+                });
+            },
             countStyle(index, content) {
                 let cls = '';
                 if (index === 0) {
@@ -122,7 +154,7 @@
                         }
                     });
                 } else if (direction === 'right') {
-                    Array.prototype.slice.call(titleItems).forEach((item, index) = > {
+                    Array.prototype.slice.call(titleItems).forEach((item, index) => {
                         const itemClasslist = item.classList;
                         if (index === this.activeCount) {
                             if (itemClasslist.contains('level-remove')) {
@@ -149,6 +181,10 @@
 
                     this.titleDateAnimate(direction);
                     this.activeCount = this.activeCount > 0 ? this.activeCount - 1 : 0;
+                } else if (direction === 'up') {
+                    window.scrollBy(0, 50);
+                } else if (direction === 'down') {
+                    window.scrollBy(0, -50);
                 }
             },
             titleDateInit() {
@@ -156,17 +192,27 @@
                     return;
                 }
 
-                this.dateInit = true;
 
                 const titleDateList = document.querySelector('.title-date-list');
+                if (!titleDateList) {
+                    return;
+                }
+
                 const titleDateItems = titleDateList.querySelectorAll('.title-date-item');
 
                 titleDateList.style.width = this.remToPx(titleDateItems.length * this.dateItemWidth);
                 titleDateList.style.marginLeft = this.remToPx(this.dateMarginLeft);
 
-                Array.prototype.slice.call(titleDateItems).forEach((item) = > {
+                Array.prototype.slice.call(titleDateItems).forEach((item) => {
                     item.style.width = this.remToPx(this.dateItemWidth);
                 });
+
+                if (this.tab) {
+                    document.querySelector('.master-vip-black-home .bottom-placeholder').scrollIntoView();
+                }
+
+                this.dateInit = true;
+                this.showDate = true;
             },
             titleDateAnimate(direction) {
                 if (direction !== 'left' && direction !== 'right') {
@@ -206,7 +252,7 @@
                     }
 
                     targetItem && targetItem.classList.add('active');
-                },100);
+                }, 100);
             },
             remToPx(px, specSize = 750) {
                 if (!px) {
@@ -223,7 +269,7 @@
     @mixin listBg($bgColor, $iconColor) {
         &:after {
             content: '';
-            background-color: $ bgColor;
+            background-color: $bgColor;
             position: absolute;
             top: 0;
             left: 1px;
@@ -238,7 +284,7 @@
              display: inline-block;
              width: 11px;
              height: 23px;
-             background: $ iconColor;
+             background: $iconColor;
              position: absolute;
              top: 15px;
              right: 18px;
@@ -251,17 +297,7 @@
     }
 
     .titles {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 88;
-
-        background-image: url('#{$qn}/artist/resume_cover.png');
-        background-repeat: no-repeat;
-        background-size: 100% 344px;
-        padding-top: 224px;
+        margin-top: 170px;
         color: #fff;
     }
 
@@ -351,11 +387,13 @@
     }
 
     .title-date-list {
-        font-size: 18px;
-        clear: both;
         position: absolute;
         top: 0;
         left: 50%;
+        margin-left: -30px;
+
+        font-size: 18px;
+        clear: both;
 
         transition: all 0.4s ease;
         -webkit-transition: all 0.4s ease;

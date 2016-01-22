@@ -1,5 +1,15 @@
+<style lang="sass">
+    .fade-transition {
+        transition: opacity .1s ease;
+    }
+
+    .fade-enter, .fade-leave {
+        opacity: 0;
+    }
+</style>
 <template>
-    <component :is="currentView" :id="userId" :data="masterBaseData" :params="params"></component>
+    <component :is="currentView" :id="userId" :data="masterBaseData" :params="params" :from-params="fromParams" transition="fade"
+               transition-mode="out-in"></component>
 </template>
 <script>
     import MasterBasicHome from './MasterHomeView.vue'
@@ -13,7 +23,7 @@
     import MasterVipBlackActivities from './vips/black/MasterActivitiesView.vue';
     import MasterVipBlackWorks from './vips/black/MasterWorksView.vue';
     import MasterVipBlackSpecial from './vips/black/MasterSpecialView.vue';
-    import MasterVipBlackStore from './vips/black/MasterStoreView.vue';
+    import MasterVipBlackStudio from './vips/black/MasterStudioView.vue';
 
     export default{
         data(){
@@ -23,10 +33,12 @@
                 masterBaseData: {},
                 tab: '',
                 params: {},
+                fromParams: {},
                 validTabs: [ 'home', 'works', 'special', 'studio', 'store', 'craftDetail', 'activities' ],
                 vipTemplates: {
                     1: 'Black'
-                }
+                },
+                isVip: false
             }
         },
         components: {
@@ -41,13 +53,14 @@
             MasterVipBlackActivities,
             MasterVipBlackWorks,
             MasterVipBlackSpecial,
-            MasterVipBlackStore
+            MasterVipBlackStudio
         },
         route: {
-            data({ to }) {
-                this.userId = to.params.id;
-                this.tab = this.tabName(to.query.tab);
-                this.params = _.merge(to.params, to.query);
+            data(transition) {
+                this.userId = transition.to.params.id;
+                this.tab = this.tabName(transition.to.query.tab);
+                this.params = _.merge(transition.to.params, transition.to.query);
+                this.fromParams = _.merge(transition.from.params, transition.from.query) || {};
 
                 return this.fetchMasterBaseInfo();
             }
@@ -61,23 +74,36 @@
 
                 return string.charAt(0).toUpperCase() + string.slice(1);
             },
+            setPageTitle() {
+                document.title = this.masterBaseData.name + '-官网';
+                if (this.tab.toLowerCase() === 'store') {
+                    document.title = '店铺详情';
+                } else if (this.tab.toLowerCase() === 'craftDetail') {
+                    document.title = '工艺详情';
+                }
+            },
             fetchMasterBaseInfo() {
                 return this.$get(`sites/${this.userId}/base`, {}).then(data => {
-                        this.masterBaseData = data;
+                    this.masterBaseData = data;
 
-                        let preCurrentView = '';
-                        if (data.site_type === 'general') {
+                    let preCurrentView = '';
+                    if (data.site_type === 'general') {
+                        this.isVip = true;
+                        preCurrentView = 'MasterBasic';
+
+                    } else if (data.site_type === 'vip') {
+                        this.isVip = true;
+
+                        const vipTemplate = this.vipTemplates[data.display_template];
+                        if(vipTemplate && (this.tab.toLowerCase() !== 'store' &&
+                            this.tab.toLowerCase() !== 'craftDetail')) {
+                            preCurrentView = 'MasterVip' + vipTemplate;
+                        } else {
                             preCurrentView = 'MasterBasic';
-                        } else if (data.site_type === 'vip') {
-                            const vipTemplate = this.vipTemplates[data.display_template];
-                            if(vipTemplate) {
-                                preCurrentView = 'MasterVip' + vipTemplate;
-                            } else {
-                                preCurrentView = 'MasterBasic';
-                            }
                         }
-                        this.currentView = (preCurrentView + this.tab);
-                    });
+                    }
+                    this.currentView = (preCurrentView + this.tab);
+                });
             }
         }
     }
