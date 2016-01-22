@@ -31,6 +31,12 @@
             <a href="/profile/2">个人主页 - profile/:id</a>
         </li>
         <li class="font-26 border-top padding center">
+            <a href="/profile/coin">我的金币 - profile/:id</a>
+        </li>
+        <li class="font-26 border-top padding center">
+            <a href="/jades">宝贝秀 - jades</a>
+        </li>
+        <li class="font-26 border-top padding center">
             <a href="/masters">官网秀 - masters</a>
         </li>
         <li class="tab">设置</li>
@@ -48,7 +54,7 @@
             <a href="myxx://web/%2Fevaluation%2F1">鉴宝1</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fstory%2F23">话题23</a>
+            <a href="myxx://web/%2Fstory%2F23">话题2</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="myxx://web/%2Fjade%2F2">宝贝2</a>

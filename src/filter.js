@@ -40,7 +40,7 @@ function truncate(str, len) {
 
 function profile(user) {
     const route = {name: 'user-profile', params: {id: user.id}};
-    if(user.has_website === true) {
+    if(user.website_status === true) {
         route.name = 'master';
     }
     return route;

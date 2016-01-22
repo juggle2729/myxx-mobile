@@ -103,7 +103,7 @@
             <div class="result-header">
                 <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                 <div class="master">
-                    <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.has_website" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
+                    <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.website_status" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
                     <p v-if="result.identifier.title" class="font-22 gray margin-top">{{result.identifier.title}}</p>
                 </div>
                 <div class="font-22 light">{{result.create_at | moment}}</div>

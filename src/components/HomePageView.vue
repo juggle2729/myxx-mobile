@@ -29,12 +29,12 @@
             <span>TA的赞</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row font-30" :class="{'border-bottom': has_shop}"v-link="{name: 'user-evaluation', params: {id: userId}}">
+        <div class="row font-30" :class="{'border-bottom': shop_status}" v-link="{name: 'user-evaluation', params: {id: userId}}">
             <span class="red icon-eval"></span>
             <span>TA的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row font-30" v-if="has_shop">
+        <div class="row font-30" v-if="shop_status" v-link="{name: 'master', params: {id: userId}, query: {tab: 'store'}}">
             <span class="red icon-store"></span>
             <span>TA的店铺</span>
             <span class="icon-enter gray font-26"></span>
