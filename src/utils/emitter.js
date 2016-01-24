@@ -30,6 +30,8 @@ const scrollListener = (function(w) {
             const bottom = getDocHeight() - w.scrollY - w.innerHeight;
             if(delta > 0 && bottom <= threshold) {
                 emitter.emit('scroll-to-bottom', event);
+            } else if (delta < 0 && w.scrollY === 0) {
+                emitter.emit('scroll-to-up', event);
             }
             lastPos = window.scrollY;
         }, delay);
