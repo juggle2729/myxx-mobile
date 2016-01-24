@@ -8,9 +8,9 @@ const mixin = {
         };
     },
     computed: {
-        platform() {
+        env() {
             const ua = navigator.userAgent;
-            return {
+            let env = {
                 isApp: /myxx/i.test(ua),
                 isMobile: /android|iphone|ipod|ipad/i.test(ua),
                 isIOS: /iphone|ipod|ipad/i.test(ua),
@@ -19,6 +19,8 @@ const mixin = {
                 isQQ: /qq\//i.test(ua),
                 isWeibo: /weibo/i.test(ua)
             };
+            env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
+            return env;
         },
         self() {
             return this.$root.user;
@@ -77,17 +79,13 @@ const mixin = {
                     resolver = _.noop;
                 } else if('confirm,delete'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
-                } else if('share,shareable'.indexOf(handler) !== -1 && _.get(this, 'self.id')) {
-                    let inviterQuery = 'inviter=' + this.self.id;
-                    params.url = [params.url, inviterQuery].join(_.isEmpty(this.$route.query) ? '?' : '&');
-                } else if('play' === handler && this.$root.isShare){
-                    this.$root.videoId = params.id;
-                    this.$root.videoDisplay = true;
+                } else if('share,shareable'.indexOf(handler) !== -1) {
+                    params.url += `&user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`;
                 }
                 if(resolver === undefined) {
-                    bridge.callHandler(handler, params);
+                    bridge.callHandler.call(this, handler, params);
                 } else if(typeof resolver === 'function') {
-                    bridge.callHandler(handler, params, resolver);
+                    bridge.callHandler.call(this, handler, params, resolver);
                 }
             });
             return defer.promise;

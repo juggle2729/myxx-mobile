@@ -95,7 +95,7 @@
         </div>
         <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" qid="{{picture}}" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video" qid="{{evaluation.video}}"></li></ul>
     <div class="separator-20"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
@@ -219,7 +219,14 @@ export default {
             let title = '快来帮我鉴定一下，这个宝贝！';
             let desc = this.evaluation.description.substr(0, 20);
             let icon = this.evaluation.pictures[0];
-            this.action('share', {title, desc, icon, url: location.href});
+            let url = location.origin + location.pathname;
+            let query = _.merge({}, this.$route.query, {
+                id: this.evaluation.post_id,
+                type: 'jianbao'
+            });
+            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+            console.debug(url);
+            this.action('share', {title, desc, icon, url});
         }
     }
 }

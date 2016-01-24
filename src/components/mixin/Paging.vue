@@ -18,13 +18,18 @@ export default {
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
                 this.items.loading = true;
-                return this.$get(this.paging.path, _.merge({offset: this.items.length, limit: 5}, this.paging.params)).then((data) => {
+                let offset = fresh ? 0 : this.items.length;
+                let limit =  5;
+                return this.$get(this.paging.path, _.merge({offset, limit}, this.paging.params)).then((data) => {
                         let items = data[this.paging.list];
                         if(typeof this.paging.transform === 'function') {
                             items = this.paging.transform.call(this, items);
                         }
-
-                        this.items.splice(this.items.length, 0, ...items);
+                        if(fresh) {
+                            this.items.splice(0, this.items.length, ...items);
+                        } else {
+                            this.items.splice(this.items.length, 0, ...items);
+                        }
                         this.items.loading = false;
                         this.items.total = data.total;
 

@@ -152,7 +152,13 @@ export default {
             }
             let desc = this.story.content.substr(0, 20);
             let icon = this.story.medias[0].id;
-            this.action('share', {title, desc, icon, url: location.href});
+            let url = location.origin + location.pathname;
+            let query = _.merge({}, this.$route.query, {
+                id: this.story.post_id,
+                type: 'topic'
+            });
+            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+            this.action('share', {title, desc, icon, url});
         }
     }
 }

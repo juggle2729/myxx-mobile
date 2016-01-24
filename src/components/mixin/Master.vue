@@ -39,8 +39,13 @@
                     this.masterBaseData.photo
                 ];
 
-                let curUrl = location.href;
-                this.action('shareable', {title, desc, icon, url: curUrl });
+                let url = location.origin + location.pathname;
+                let query = _.merge({}, this.$route.query, {
+                    id: this.id,
+                    type: 'website'
+                });
+                url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+                this.action('shareable', {title, desc, icon, url });
             }
         }
     };

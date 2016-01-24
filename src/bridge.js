@@ -17,19 +17,30 @@ let adapter = {
               // "photo" : "1287933.jpeg"
             };
             cb(JSON.stringify(user));
-        } else if(handler === 'keyboard') {
-            if(!isMobile) {
-                let comment = prompt("少年，来鉴宝吧！");
-                comment && cb(comment);
+        } 
+        // else if(handler === 'keyboard') {
+        //     if(!isMobile) {
+        //         let comment = prompt("少年，来鉴宝吧！");
+        //         comment && cb(comment);
+        //     }
+        // } 
+        else if(handler === 'play') {
+            this.$root.video = params.id;
+        } else if(handler === 'coverflow') {
+            this.$root.img = {
+                ids: params.ids.split(','),
+                i: +params.index
             }
         } else {
-            if(!isMobile) {
-                const span = document.createElement('span');
+            const span = document.createElement('span');
+            span.className = 'toast white visible';
+            if(isMobile) {
+                span.innerText = '请在【美玉秀秀】里使用该功能';
+            } else {
                 span.innerText = handler;
-                span.className = 'toast white visible';
-                document.body.appendChild(span);
-                setTimeout(() => span.parentNode.removeChild(span), 2000);
             }
+            document.body.appendChild(span);
+            setTimeout(() => span.parentNode.removeChild(span), 2000);
         }
     }
 };

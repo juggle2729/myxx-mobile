@@ -25,8 +25,8 @@ _.merge(Vue.http.options, {
     root: config.api,
     emulateJSON: true,
     beforeSend(xhr, req) {
-        if(this.$route.query.inviter && req.method !== 'GET') {
-            emitter.emit('get-app');
+        if(this.$route.query.user && req.method !== 'GET') {
+            emitter.emit('open-app');
         }
     },
     error(resp, status, req) {
@@ -53,7 +53,7 @@ router.beforeEach(({from, to, abort, next}) => {
             next();
         }
     } else {
-        if(from.query && from.query.share) {
+        if(from.query && from.query.user) {//   禁止分享页面导航
             abort();
         } else {
             next();

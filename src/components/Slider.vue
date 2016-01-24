@@ -57,7 +57,6 @@ export default {
     },
     ready() {
         this.$watch('ids', (ids) => {
-            console.debug('ids');
             const threshold = 50;
             let pageX = 0;
             let slides = [...document.querySelectorAll('.slide')];

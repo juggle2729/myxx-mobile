@@ -206,7 +206,13 @@ export default {
             let title = '我在[美玉秀秀]发现一个宝贝！快来帮我看看这个宝贝怎么样！';
             let desc = this.info.name.substr(0, 20);
             let icon = this.info.imgs[0];
-            this.action('share', {title, desc, icon, url: location.href});
+            let url = location.origin + location.pathname;
+            let query = _.merge({}, this.$route.query, {
+                id: this.info.id,
+                type: 'jade'
+            });
+            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+            this.action('share', {title, desc, icon, url});
         }
     }
 }

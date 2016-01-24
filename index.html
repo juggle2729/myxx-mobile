@@ -5,25 +5,24 @@
     <title>美玉秀秀</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <!-- <link rel="icon" href="//o0x80w5li.qnssl.com/logo.png" type="image/x-icon"> -->
+    <link rel="icon" href="//o0x80w5li.qnssl.com/logo.png" type="image/x-icon">
     <style>
         html, body {
             padding: 0;
             margin: 0;
         }
         .loading {
+            height: 100%;
             overflow: hidden;
         }
         .loading::before {
             content: '';
             position: fixed;
             z-index: 999;
-            background: transparent url('//o0x80w5li.qnssl.com/loading.svg') no-repeat center;
+            background: rgba(255, 255, 255, .5) url('//o0x80w5li.qnssl.com/loading.svg') no-repeat center;
             background-size: 60px 34px;
             width: 100%;
-            height: 100px;
-            top: 50%;
-            top: calc(50% - 50px);
+            height: 100%;
         }
     </style>
 </head>
