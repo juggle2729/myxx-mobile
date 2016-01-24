@@ -155,9 +155,13 @@ export default {
     methods: {
         setShare() {
             const [title, desc, icon] = ['打开 [美玉秀秀] 开启美玉之旅！', this.shop.shop_name, this.shop.logo];
-
-            let curUrl = location.href;
-            this.action('shareable', {title, desc, icon, url: curUrl});
+            let url = location.origin + location.pathname;
+            let query = _.merge({}, this.$route.query, {
+                id: this.shop.id,
+                type: 'website'
+            });
+            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+            this.action('shareable', {title, desc, icon, url});
         },
         preventDefaultShare() {
             return true;
