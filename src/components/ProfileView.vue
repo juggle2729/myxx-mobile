@@ -38,14 +38,27 @@
     </div>
     <div class="separator-40"></div>
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: 'shop-request', params: {id: userId}}">
-            <span class="icon-store red"></span>
-            <span>{{has_shop ? '我的店铺' : '申请开通店铺'}}</span>
+        <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-coin'}">
+            <span class="red icon-eval"></span>
+            <span class="">我的金币</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" v-link="{name: 'site-request', params: {id: userId}}">
+        <div class="row bg-white font-30">
+            <span class="icon-like red"></span>
+            <span>邀请有奖</span>
+            <span class="icon-enter gray font-26"></span>
+        </div>
+    </div>
+    <div class="separator-40"></div>
+    <div class="rows">
+        <div class="row bg-white font-30 border-bottom" v-link="{name: shop_status ? 'master' : 'shop-request', params: {id: userId}, query: {tab: 'store'}}">
+            <span class="icon-store red"></span>
+            <span>{{shop_status ? '我的店铺' : '申请开通店铺'}}</span>
+            <span class="icon-enter gray font-26"></span>
+        </div>
+        <div class="row bg-white font-30" v-link="{name: website_status ? 'master' : 'site-request', params: {id: userId}}">
             <span class="icon-site red"></span>
-            <span>{{has_website ? '我的官网' : '申请开通官网'}}</span>
+            <span>{{website_status ? '我的官网' : '申请开通官网'}}</span>
             <span class="icon-enter gray font-26"></span>
         </div>
     </div>

@@ -18,14 +18,28 @@ export default {
             content: '',
             contact: '',
             mail: '',
-            phone: 0,
+            phone: '',
             type: 'feedback',
             checked: false
         }
     },
     created() {
-        this.$watch('result', (data) => {
-            if(data.content !== '' && (data.phone !== 0 || data.mail !=='')){
+        this.$watch('merge', (data) => {
+            let mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            let phoneReg = /^[1]\d{10}$/i;
+            if(phoneReg.test(this.contact)){
+                this.phone = this.contact;
+            }else if(mailReg.test(this.contact)){
+                this.mail = this.contact;
+            } else {
+                this.phone = '';
+                this.mail = '';
+            }
+            if(data.content === ''){
+                this.checked = false;
+            } else if(data.contact === '') {
+                this.checked = true;
+            } else if(this.phone !== '' || this.mail !== '') {
                 this.checked = true;
             } else {
                 this.checked = false;
@@ -34,21 +48,17 @@ export default {
     },
     computed: {
         result(){
-            let mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-            let phoneReg = /^[1]\d{10}$/i;
-            if(phoneReg.test(this.contact)){
-                this.phone = this.contact;
-            }else if(mailReg.test(this.contact)){
-                this.mail = this.contact;
-            } else {
-                this.phone = 0;
-                this.mail = '';
-            }
             return {
                 type: this.type,
                 mail: this.mail,
                 phone: this.phone,
                 name: this.name,
+                content: this.content
+            };
+        },
+        merge() {
+            return {
+                contact: this.contact,
                 content: this.content
             };
         }
@@ -65,7 +75,7 @@ export default {
 </script>
 <style lang="sass">
 .feedback-view {
-    height: 100%;
+    min-height: 100%;
     padding: 20px 32px;
     position: relative;
     .info {

@@ -19,6 +19,18 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-down:before {
+    content: "\e91c";
+}
+.icon-coin-y .path1:before {
+    content: "\e91a";
+    color: rgb(216, 216, 216);
+}
+.icon-coin-y .path2:before {
+    content: "\e91b";
+    margin-left: -1.0380859375em;
+    color: rgb(255, 255, 255);
+}
 .icon-m-office:before {
     content: "\e90b";
 }

@@ -86,6 +86,41 @@ export default {
         title: '赞',
         component: require('./components/UserLikeView.vue')
     },
+    '/profile/coin': {
+        name: 'user-coin',
+        title: '我的金币',
+        component: require('./components/UserCoinView.vue')
+    },
+    '/profile/coin/rule': {
+        name: 'coin-rule',
+        title: '金币规则',
+        component: require('./components/CoinRuleView.vue')
+    },
+    '/profile/coin/use': {
+        name: 'coin-use',
+        title: '金币的用处',
+        component: require('./components/CoinUsageView.vue')
+    },
+    "/profile/coin/redeem": {
+        name: 'coin-redeem',
+        title: '兑换列表',
+        component: require('./components/CoinRedeemView.vue')
+    },
+    '/profile/coin/:id/detail': {
+        name: 'coin-redeem-detail',
+        title: '兑换详情',
+        component: require('./components/CoinRedeemDetailView.vue')
+    },
+    '/profile/coin/:id/success': {
+        name: 'coin-redeem-success',
+        title: '兑换成功',
+        component: require('./components/CoinRedeemSuccessView.vue')
+    },
+    '/profile/:id/invite': {
+        name: 'user-invite',
+        title: '邀请有奖',
+        component: require('./components/UserLikeView.vue')
+    },
     '/profile/:id/shop/request': {
         name: 'shop-request',
         title: '申请店铺',
