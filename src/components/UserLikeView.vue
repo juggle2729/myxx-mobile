@@ -9,7 +9,7 @@
                     赞了一个{{thumb.title}}
                 </p>
             </div>
-            <div class="info flex" v-link="{ name: thumb.route, params: { id: thumb.post_id }}">
+            <div class="info flex" v-if="!thumb.isEmpty" v-link="{ name: thumb.route, params: { id: thumb.post_id }}">
                 <div class="left">
                     <div class="flex">
                         <div v-bg.sm="thumb.user.photo" class="avatar-50"></div>
@@ -20,6 +20,9 @@
                 </div>
                 <div v-if="thumb.imgPreview" v-bg.sm="thumb.imgPreview" class="right"></div>
                 <div v-if="thumb.videoPreview" v-bg.video="thumb.videoPreview" class="right"></div>
+            </div>
+            <div class="info flex font-30" v-else>
+                <span style="margin-left:32px;">该{{thumb.title}}已被删除!</span>
             </div>
         </div>
     </template>
@@ -52,21 +55,37 @@ export default {
                 transform(items) {
                     return items.map((item) => {
                         let entry = item.entry;
+                        if(JSON.stringify(entry) === '{}' || item.entry === null || item.entry === undefined){
+                            entry.isEmpty = true;
+                        } else {
+                            entry.isEmpty = false;
+                        }
                         const type = _.find(this.config.types, {'id': item.type});
                         entry.route = type.route;
                         entry.title = type.name;
-                        if (item.type === 10) {//picture
-                            entry.imgPreview = entry.picture;
-                            entry.description = entry.description;
-                            entry.result = entry.status + '条鉴定结果';
-                        } else if (item.type === 20) {//video
-                            entry.videoPreview = entry.video;
-                            entry.user = entry.identifier;
-                            entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
-                            entry.result = '鉴定结果为 ' + entry.result;
-                        } else if (item.type === 30) {//media
-                            entry.description = '分享了一个话题';
-                            entry.imgPreview = entry.media[0].id;
+                        if(!entry.isEmpty){
+                            if (item.type === 10) {//picture
+                                entry.imgPreview = entry.picture;
+                                entry.description = entry.description;
+                                entry.result = entry.status + '条鉴定结果';
+                            } else if (item.type === 20) {//video
+                                entry.videoPreview = entry.video;
+                                entry.user = entry.identifier;
+                                entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
+                                entry.result = '鉴定结果为 ' + entry.result;
+                            } else if (item.type === 30) {//media
+                                entry.description = '分享了一个话题';
+                                entry.imgPreview = entry.media[0].id;
+                            } else if (item.type === 40) {
+                                entry.post_id = entry.id;
+                                entry.description = entry.name + ' ' + entry.moral.name;
+                                entry.user.name = entry.user.nickname;
+                                entry.imgPreview = entry.imgs[0];
+                                if(entry.product_rewards.length > 0){
+                                    entry.result = entry.product_rewards[0].reward.name;
+                                }
+                            }
+                            entry.isEmpty = false;
                         }
                         return entry;
                     });

@@ -1,14 +1,23 @@
 <template>
-    <div class="nocontent-view">
+    <div class="notfound-view">
         <div class="content">
             <div class="img center-horizontal"></div>
-            <div class="text font-30">页面找不到了...</div>
+            <div class="text font-30">没有内容...(错误码:{{$route.query.status}})</div>
         </div>
     </div>
 </template>
+<script>
+export default {
+    name: 'NoContentView',
+    data() {
+        return {
+        };
+    }
+}
+</script>
 <style lang="sass">
 @import '../styles/partials/var';
-.nocontent-view {
+.notfound-view {
     .content {
         position: relative;
         top: 118px;
