@@ -2,7 +2,11 @@
     <div class="master-vip-black-special">
         <div class="cover">
             <div class="bg img" v-bg="interview.img" query="imageView2/1/w/750/h/1334/interlace/1"></div>
-            <div class="title">{{interview.title}}</div>
+            <div class="title-bg"></div>
+            <div class="title">
+                <div class="main-title" v-text="mainTitle"></div>
+                <div class="sub-title" v-if="subTitle" v-text="subTitle"></div>
+            </div>
             <div class="arrow">
                 <span class="icon-down"></span>
             </div>
@@ -10,9 +14,6 @@
         <div class="interview">
             <div class="top">
                 <div class="title img"></div>
-                <div class="title-text">
-                    专访{{masterBaseData.name}}{{masterBaseData.titles.length ? masterBaseData.titles[0].name : ''}}
-                </div>
             </div>
             <div class="content" v-html="interview.content"></div>
         </div>
@@ -51,9 +52,33 @@
                 done();
             });
         },
+        computed: {
+            mainTitle() {
+                if (!this.interview.title) {
+                    return '';
+                }
+
+                const separator = this.interview.title.indexOf('\\n');
+                if (separator === -1) {
+                    return this.interview.title;
+                }
+
+                return this.interview.title.substr(0, separator);
+            },
+            subTitle() {
+                if (!this.interview.title) {
+                    return '';
+                }
+
+                const separator = this.interview.title.indexOf('\\n');
+                if (separator === -1) {
+                    return '';
+                }
+                return this.interview.title.substr(separator + 2, this.interview.title.length);
+            }
+        },
         methods: {
             scrollHandler(direction) {
-                console.log(direction);
                 const container = document.querySelector('.master-vip-black-special');
 
                 const coverDom = container.querySelector('.cover');
@@ -62,11 +87,17 @@
                 const innerHeight = window.innerHeight;
 
                 if (direction === 'up') {
-                    coverDom.style.top =  '-200px';
+                    coverDom.style.top =  '-300px';
                     interviewDom.style.top = "0px";
+
+                    coverDom.style.transform =  'translateY(-300px)';
+                    interviewDom.style.transform = "translateY(0)";
                 } else if (direction === 'down') {
                     coverDom.style.top = '0px';
                     interviewDom.style.top = innerHeight + 'px';
+
+                    coverDom.style.transform = 'translateY(0)';
+                    interviewDom.style.transform = 'translateY(' + innerHeight + 'px)';
                 }
             },
             fetchMasterInterviewInfo() {
@@ -82,7 +113,8 @@
                 bgDom.style.height = innerHeight + 'px';
 
                 const interviewDom = container.querySelector('.interview');
-                interviewDom.style.top = (innerHeight - 0.2) + 'px';
+                interviewDom.style.top = innerHeight + 'px';
+                interviewDom.style.transform = 'translateY(' + innerHeight + 'px)';
             }
         }
     }
@@ -96,8 +128,8 @@
         background-color: #fff;
 
         .cover {
-            transition: all 1s ease-in;
-            -webkit-transition: all 1s ease-in;
+            transition: transform 0.6s ease;
+            -webkit-transition: transform 0.6s ease;
 
             position: absolute;
             top: 0;
@@ -115,51 +147,80 @@
                 z-index: 89;
             }
 
-            .title {
+            .title-bg {
                 position: absolute;
                 height: 220px;
                 width: 100%;
                 background: #000;
-                color: #fff;
                 opacity: 0.6;
                 bottom: 0;
                 left: 0;
-                font-size: 40px;
                 z-index: 88;
+            }
+
+            .title {
+                position: absolute;
+                color: #fff;
+                font-size: 40px;
                 padding: 40px 32px;
+                z-index: 89;
+                bottom: 36px;
+                left: 0;
+                text-align: left;
+            }
+
+            .main-title {
+                font-size: 44px;
+            }
+
+            .sub-title {
+                margin-top: 36px;
+                font-size: 30px;
             }
         }
 
         .interview {
+            width: 100%;
             position: absolute;
             left: 0;
-            top: 1334px;
-            background: #000;
+            top: 0;
+            background: #fff;
             color: #fff;
             z-index: 88;
 
-            transition: all 0.6s ease;
-            -webkit-transition: all 0.6s ease;
-        }
-
-        .title {
-            height: 220px;
-            width: 750px;
-            background-image: url('#{$qn}/artist/special_title.png');
-        }
-
-        .title-text {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 24px;
+            transition: transform 0.8s ease;
+            -webkit-transition: transform 0.8s ease;
         }
 
         .top {
-            padding-bottom: 65px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+
+            height: 500px;
+            width: 100%;
+            .title {
+                height: 68px;
+                width: 284px;
+                margin: 72px auto;
+                background-image: url('#{$qn}/artist/special-title.png');
+            }
         }
 
         .content {
-            padding: 0 55px 65px;
+            position: absolute;
+            left: 0;
+            top: 180px;
+            width: 100%;
+            z-index: 5;
+
+            padding: 0 25px 65px;
+            font-size: 30px;
+            line-height: 26px;
+            img {
+                margin: 10px 0 !important;
+            }
         }
     }
 </style>

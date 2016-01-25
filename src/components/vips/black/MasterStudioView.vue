@@ -13,12 +13,15 @@
             <div class="contact-list">
                 <div class="contact-item" v-for="contact in contacts">
                     <div class="label">{{contact.name}}</div>
-                    <div class="data">{{contact.value}}</div>
+                    <div class="data"
+                         :class="{'wrap-row': $index === contacts.length - 1 || $index === contacts.length - 2}">
+                        {{contact.value}}
+                    </div>
                 </div>
             </div>
         </div>
         <div class="qrcode center">
-            <span class="code-img" v-bg="masterBaseData.website_2d_img" @click.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/180/h/180/interlace/1"></span>
+            <span class="code-img" v-bg="masterBaseData.website_2d_img" @click.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/300/h/300/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
         <comment :id="id" type="50"></comment>
@@ -137,7 +140,7 @@
         }
 
         .enter-store {
-            margin-top: 950px;
+            margin-top: 864px;
             text-align: center;
             font-size: 28px;
 
@@ -147,7 +150,7 @@
                 line-height: 100px;
                 background: #b92d2d;
                 color: #fff;
-                border-radius: 14px;
+                border-radius: 8px;
             }
         }
 
@@ -173,7 +176,7 @@
             text-align: center;
 
             .title {
-                padding: 0 38px;
+                padding: 0 40px;
             }
 
             .text {
@@ -182,15 +185,20 @@
                 display: block;
             }
 
+            .label {
+                font-size: 30px;
+            }
+
             .data {
                 margin-top: 35px;
                 color: #f5a242;
-                font-size: 43px;
+                font-size: 60px;
             }
         }
 
         .contact-list {
-            margin-top: 90px;
+            margin-top: 72px;
+            padding: 0 50px;
         }
 
         .contact-item:not(:first-child) {
@@ -201,8 +209,8 @@
             padding: 72px 0 50px 0;
             .code-img {
                 display: inline-block;
-                width: 180px;
-                height: 180px;
+                width: 300px;
+                height: 300px;
                 margin-bottom: 32px;
                 background-size: cover;
             }
@@ -213,6 +221,11 @@
             .red, .blue, .light {
                 color: #888888;
             }
+        }
+
+        .wrap-row {
+            word-break: break-all;
+            word-wrap:break-word;
         }
     }
 </style>
