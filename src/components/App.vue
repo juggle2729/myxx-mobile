@@ -2,6 +2,7 @@
     @import '../styles/myxx';
     #app {
         min-height: 100%;
+        height: 100%;
         .share-top {
             height: 100px;
             padding: 0px 32px;

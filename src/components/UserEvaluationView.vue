@@ -2,7 +2,7 @@
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-else name="empty-page"></partial>
+    <partial v-if="items.isEmpty" name="empty-page"></partial>
 </div>
 </template>
 <script>

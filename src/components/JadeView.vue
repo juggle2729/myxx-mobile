@@ -81,7 +81,7 @@
             <span class="font-30 flex">{{info.user.nickname}}</span>
         </div>
         <div class="font-26 red flex" v-link="info.user | profile">
-            <p class="flex">进入官网</p>
+            <p class="flex">进入{{info.user.website_status? '官网':'主页'}}</p>
             <p class="icon-enter gray"></p>
         </div>
     </div>
@@ -131,11 +131,12 @@
             <span class="font-22 gray flex">图文详情</span>
         </div>
         <div class="medias font-30">
-            <template v-for="media in info.detail.medias">
+            {{{info.detail}}}
+            <!-- <template v-for="media in info.detail.medias">
                 <div class="media text" v-if="media.media_type==='text'">{{media.media_content}}</div>
                 <div class="media picture" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
                 <div class="media play" @click="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
-            </template>
+            </template> -->
         </div>
     </div>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
