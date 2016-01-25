@@ -69,18 +69,18 @@
         <div class="menus">
             <div class="menu">
                 <div class="menu-item">
-                    <span class="bg" v-link="{name: 'master', params: {id: id}, query: {tab: 'special'}}">人物志</span>
+                    <span class="bg" v-link="linkPage('special')">人物志</span>
                 </div>
                 <div class="menu-item">
-                    <span class="bg" v-link="{name: 'master', params: {id: id}, query: {tab: 'works'}}">作品展示</span>
+                    <span class="bg" v-link="linkPage('works')">作品展示</span>
                 </div>
             </div>
             <div class="menu">
                 <div class="menu-item">
-                    <span class="bg" v-link="{name: 'master', params: {id: id}, query: {tab: 'activities'}}">动态</span>
+                    <span class="bg" v-link="linkPage('activities')">动态</span>
                 </div>
                 <div class="menu-item">
-                    <span class="bg" v-link="{name: 'master', params: {id: id}, query: {tab: 'studio'}}">工作室</span>
+                    <span class="bg" v-link="linkPage('studio')">工作室</span>
                 </div>
             </div>
         </div>
@@ -99,9 +99,18 @@
                 masterBaseData: this.data
             };
         },
+        activate(done) {
+            this.checkShare();
+            done();
+        },
         computed: {
             tab() {
                 return this.fromParams.tab || '';
+            }
+        },
+        methods: {
+            linkPage(tab) {
+                return this.link(tab, false);
             }
         }
     }

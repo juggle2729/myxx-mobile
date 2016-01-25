@@ -190,7 +190,7 @@
                     </div>
                     <div class="brief font-26 gray" v-text="briefDesc"></div>
                     <div class="link-detail white font-26 bg-black"
-                         v-link="{name: 'master', params: {id: masterBaseData.id}, query: {replace: true, tab: 'special'}}">查看详情</div>
+                         v-link="link('special')">查看详情</div>
                 </div>
             </div>
         </div>

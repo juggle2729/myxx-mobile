@@ -93,7 +93,7 @@
 
     .master-vip-black-special {
         position: relative;
-        color: #fff;
+        background-color: #fff;
 
         .cover {
             transition: all 1s ease-in;
@@ -119,7 +119,8 @@
                 position: absolute;
                 height: 220px;
                 width: 100%;
-                background: #0f0f10;
+                background: #000;
+                color: #fff;
                 opacity: 0.6;
                 bottom: 0;
                 left: 0;
@@ -133,7 +134,8 @@
             position: absolute;
             left: 0;
             top: 1334px;
-            background: #ab9780;
+            background: #000;
+            color: #fff;
             z-index: 88;
 
             transition: all 0.6s ease;
