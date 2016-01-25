@@ -15,7 +15,7 @@
 
         .brief {
             margin-top: 130px;
-            font-size: 24px;
+            font-size: 30px;
             color: #fff;
             line-height: 42px;
             padding: 0 106px;
@@ -23,7 +23,7 @@
         }
 
         .arrow {
-            margin-top: 168px;
+            margin-top: 228px;
         }
 
         .menus {
@@ -61,7 +61,7 @@
 <template>
     <div class="master-vip-black-home">
         <div class="cover img" v-bg="masterBaseData.vip_website_img" query="imageView2/1/w/750/h/1334/interlace/1"></div>
-        <div class="brief">{{masterBaseData.brief | truncate 100}}</div>
+        <div class="brief">{{masterBaseData.brief | truncate 95}}</div>
         <resumes :id="id" :tab="tab"></resumes>
         <div class="arrow">
             <span class="icon-down"></span>

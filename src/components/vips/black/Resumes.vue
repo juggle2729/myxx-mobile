@@ -1,7 +1,7 @@
 <template>
     <div class="titles" v-if="resumes.length">
         <nav class="title-list">
-            <li class="title-item" v-for="title in titleData" :class="countStyle($index, title)" track-by="$index">
+            <li class="title-item" v-for="title in titleData" :class="countStyle($index, title)" :style="{zIndex: zIndex($index)}" track-by="$index">
                 <span class="text">{{title}}</span>
             </li>
         </nav>
@@ -34,7 +34,7 @@
                 setTimeout(() => {
                     const titlesDom = document.querySelector('.titles');
                     if (titlesDom) {
-                        Scroll.install(titlesDom);
+                        Scroll.install(titlesDom, 'horizontal');
                     }
 
                     this.titleDateInit();
@@ -86,6 +86,9 @@
             }
         },
         methods: {
+            zIndex(index) {
+                return this.resumes.length * 2 - (2 * index);
+            },
             scrollHandler: function(direction) {
                 this.titleAnimate(direction);
             },
@@ -108,7 +111,7 @@
                     cls += 'level-least';
                 }
 
-                const [ len, rowCount ] = [content.length, 14];
+                const [ len, rowCount ] = [content.length, 15];
                 if (len < rowCount) {
                     cls += ' first-line';
                 } else if (len < rowCount * 2) {
@@ -124,60 +127,60 @@
                     let isRemove = false;
                     Array.prototype.slice.call(titleItems).forEach((item, index) => {
                         const itemClasslist = item.classList;
-                        if (itemClasslist.contains('active')) {
-                            if (index === titleItems.length - 1) {
-                                return;
-                            }
-
-                            this.activeCount = index;
-                            itemClasslist.add('level-remove');
-                            itemClasslist.remove('level-0');
-                            itemClasslist.remove('active');
-                            isRemove = true;
-
-                            this.titleDateAnimate(direction);
-                        } else if (itemClasslist.contains('level-least')) {
-                            if (isRemove) {
-                                itemClasslist.remove('level-least');
-                                itemClasslist.add('level-' + (this.maxDisplayCount - 1));
-                                isRemove = false;
-                            }
-                        } else if (!itemClasslist.contains('level-remove')) {
-                            if (index === this.activeCount + 1) {
-                                itemClasslist.add('active');
-                                itemClasslist.add('level-0');
-                                itemClasslist.remove('level-1');
-                            } else {
-                                itemClasslist.add('level-' + (index - this.activeCount - 1));
-                                itemClasslist.remove('level-' + (index - this.activeCount));
-                            }
+                    if (itemClasslist.contains('active')) {
+                        if (index === titleItems.length - 1) {
+                            return;
                         }
-                    });
+
+                        this.activeCount = index;
+                        itemClasslist.add('level-remove');
+                        itemClasslist.remove('level-0');
+                        itemClasslist.remove('active');
+                        isRemove = true;
+
+                        this.titleDateAnimate(direction);
+                    } else if (itemClasslist.contains('level-least')) {
+                        if (isRemove) {
+                            itemClasslist.remove('level-least');
+                            itemClasslist.add('level-' + (this.maxDisplayCount - 1));
+                            isRemove = false;
+                        }
+                    } else if (!itemClasslist.contains('level-remove')) {
+                        if (index === this.activeCount + 1) {
+                            itemClasslist.add('active');
+                            itemClasslist.add('level-0');
+                            itemClasslist.remove('level-1');
+                        } else {
+                            itemClasslist.add('level-' + (index - this.activeCount - 1));
+                            itemClasslist.remove('level-' + (index - this.activeCount));
+                        }
+                    }
+                });
                 } else if (direction === 'right') {
                     Array.prototype.slice.call(titleItems).forEach((item, index) => {
                         const itemClasslist = item.classList;
-                        if (index === this.activeCount) {
-                            if (itemClasslist.contains('level-remove')) {
-                                itemClasslist.remove('level-remove');
-                                itemClasslist.add('level-0');
-                                itemClasslist.add('active');
-                            }
-                        } else if (0 < index - this.activeCount) {
-                            if (index - this.activeCount < this.maxDisplayCount) {
-                                if (itemClasslist.contains('active')) {
-                                    itemClasslist.remove('active');
-                                    itemClasslist.remove('level-0');
-                                    itemClasslist.add('level-1');
-                                } else {
-                                    itemClasslist.add('level-' + (index - this.activeCount));
-                                    itemClasslist.remove('level-' + (index - this.activeCount - 1));
-                                }
-                            } else {
-                                itemClasslist.remove('level-' + (this.maxDisplayCount - 1));
-                                itemClasslist.add('level-least');
-                            }
+                    if (index === this.activeCount) {
+                        if (itemClasslist.contains('level-remove')) {
+                            itemClasslist.remove('level-remove');
+                            itemClasslist.add('level-0');
+                            itemClasslist.add('active');
                         }
-                    });
+                    } else if (0 < index - this.activeCount) {
+                        if (index - this.activeCount < this.maxDisplayCount) {
+                            if (itemClasslist.contains('active')) {
+                                itemClasslist.remove('active');
+                                itemClasslist.remove('level-0');
+                                itemClasslist.add('level-1');
+                            } else {
+                                itemClasslist.add('level-' + (index - this.activeCount));
+                                itemClasslist.remove('level-' + (index - this.activeCount - 1));
+                            }
+                        } else {
+                            itemClasslist.remove('level-' + (this.maxDisplayCount - 1));
+                            itemClasslist.add('level-least');
+                        }
+                    }
+                });
 
                     this.titleDateAnimate(direction);
                     this.activeCount = this.activeCount > 0 ? this.activeCount - 1 : 0;
@@ -191,7 +194,6 @@
                 if (this.dateInit) {
                     return;
                 }
-
 
                 const titleDateList = document.querySelector('.title-date-list');
                 if (!titleDateList) {
@@ -311,44 +313,51 @@
             left: -199px;
         }
 
-        .title-item.level-0 {
-            z-index: 10;
-        }
-
         .title-item.level-1 {
-            z-index: 8;
-            transform: scale(0.95, 0.95) translateX(72px);
-            background-color: #4d3616;
             @include listBg(#4d3616, #3a2810);
+            transform: scale(0.95, 0.95) translateX(72px);
+            -webkit-transform: scale(0.95, 0.95) translateX(72px);
+            background-color: #4d3616;
         }
 
         .title-item.level-2 {
-            z-index: 6;
-            transform: scale(0.90, 0.90) translateX(144px);
             @include listBg(#3b2911, #2d1e0b);
+            transform: scale(0.90, 0.90) translateX(144px);
+            -webkit-transform: scale(0.90, 0.90) translateX(144px);
         }
 
         .title-item.level-3 {
-            z-index: 4;
-            transform: scale(0.85, 0.85) translateX(216px);
             @include listBg(#261a0c, #2d1e0b);
+            transform: scale(0.85, 0.85) translateX(216px);
+            -webkit-transform: scale(0.85, 0.85) translateX(216px);
         }
 
         .title-item.level-least {
-            z-index: 2;
-            transform: scale(0.85, 0.85) translateX(216px);
             @include listBg(#261a0c, #2d1e0b);
+            transform: scale(0.85, 0.85) translateX(216px);
+            -webkit-transform: scale(0.85, 0.85) translateX(216px);;
         }
 
         .title-item.active.second-line {
             .text {
                 position: relative;
-                left: -1px;
+                left: -10%;
+            }
+        }
+
+        .title-item.active.first-line {
+            .text {
+                position: relative;
+                left: -21%;
+                top: 9%;
             }
         }
 
         .title-item.active.third-line {
-            padding-right: 1.1px;
+            .text {
+                position: relative;
+                left: 0;
+            }
         }
     }
 
@@ -356,15 +365,15 @@
         position: absolute;
         top: 0;
         left: 50%;
-        margin-left: -100px;
+        margin-left: -114.5px;
         background: url('#{$qn}/artist/title_bg.jpg') no-repeat;
         background-size: cover;
-        font-size: 30px;
-        height: 644px;
-        width: 200px;
+        font-size: 40px;
+        height: 704px;
+        width: 229px;
 
         word-wrap: break-word;
-        letter-spacing: 10px;
+        letter-spacing: 5px;
         text-align: justify;
 
         -webkit-writing-mode: vertical-rl;
@@ -376,13 +385,13 @@
 
         .text {
             padding: 62px 42px 62px 55px;
-            line-height: 40px;
+            line-height: 48px;
             display: inline-block;
         }
     }
 
     .date-container {
-        margin-top: 60px;
+        margin-top: 120px;
         position: relative;
     }
 
@@ -395,8 +404,8 @@
         font-size: 18px;
         clear: both;
 
-        transition: all 0.4s ease;
-        -webkit-transition: all 0.4s ease;
+        transition: all 0.8s ease;
+        -webkit-transition: all 0.8s ease;
 
         .split {
             position: absolute;
@@ -457,8 +466,8 @@
             }
 
             .text {
-                left: 8px;
-                font-size: 18px;
+                font-size: 25px;
+                color: #c18f4a;
             }
         }
     }
