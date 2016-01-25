@@ -44,7 +44,7 @@ let router = new Router({history: true});
 router.beforeEach(({from, to, abort, next}) => {
     if (to.query.tab && to.query.tab.toLowerCase() === 'store') {
         document.title = '店铺详情';
-    } else if (to.query.tab && to.query.tab.toLowerCase() === 'craftDetail') {
+    } else if (to.query.tab && to.query.tab.toLowerCase() === 'craftdetail') {
         document.title = '工艺详情';
     } else {
         document.title = (to.title || '美玉秀秀');
@@ -61,7 +61,8 @@ router.beforeEach(({from, to, abort, next}) => {
             next();
         }
     } else {
-        if(from.query && from.query.user) {//   禁止分享页面导航
+        if(from.query && from.query.user && (to.name !== 'master' ||
+            to.query.tab === 'store')) {//   禁止分享页面导航
             abort();
         } else {
             next();

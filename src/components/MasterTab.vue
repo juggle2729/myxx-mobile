@@ -4,7 +4,7 @@
 <template>
     <div class="master-tabs bg-white border-top">
         <div class="master-tab font-22 gray" v-for="tab in tabs"
-             :class="{'red': isActive(tab)}" v-link="{name: 'master', replace: true, params: {id: masterInfo.id}, query: {replace: true, tab: tab.linkName}}">
+             :class="{'red': isActive(tab)}" v-link="link(tab.linkName)">
             <div class="tab-icon {{tab.iconName}}"></div>
             <div class="tab-name">{{tab.name}}</div>
         </div>
@@ -65,6 +65,21 @@
         methods: {
             isActive(tab) {
                 return this.currentTab === tab.linkName;
+            },
+            link(tab) {
+                const [linkObj, userPattern] = [{
+                    name: 'master',
+                    replace: true,
+                    params: { id: this.masterInfo.id },
+                    query: { replace: true, tab: tab }
+                }, /user\=([0-9^&]+)/ig];
+
+                const matchResult = userPattern.exec(location.search);
+                if (matchResult) {
+                    linkObj.query.user = matchResult[1];
+                }
+
+                return linkObj;
             }
         }
     };

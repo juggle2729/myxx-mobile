@@ -3,7 +3,7 @@
     .master-vip-black-activities {
         width: 100%;
         position: relative;
-        background-color: #030102;
+        background-color: #efefef;
         overflow: hidden;
 
         .cover {

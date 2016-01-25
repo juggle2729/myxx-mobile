@@ -154,7 +154,7 @@ export default {
     },
     methods: {
         setShare() {
-            const [title, desc, icon] = ['打开 [美玉秀秀] 开启美玉之旅！', this.shop.shop_name, this.shop.logo];
+            const [title, desc, icon] = ['快来逛逛我的店铺吧!', this.shop.shop_name, this.shop.logo];
             let url = location.origin + location.pathname;
             let query = _.merge({}, this.$route.query, {
                 id: this.shop.id,

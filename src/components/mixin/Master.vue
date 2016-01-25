@@ -39,7 +39,7 @@
             },
             setShare() {
                 const [title, desc, icon] = [
-                    this.masterBaseData.name + '的官网，快来一睹大师风采',
+                    '快来逛逛我的个人官网!',
                     this.masterBaseData.name + (this.masterBaseData.titles.length > 0 ? ' ' + this.masterBaseData.titles[0].name : ''),
                     this.masterBaseData.photo
                 ];
@@ -51,6 +51,31 @@
                 });
                 url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
                 this.action('shareable', {title, desc, icon, url });
+            },
+            link(tab, isReplace = true, additionalParams = null) {
+                const [linkObj, userPattern] = [{
+                    name: 'master',
+                    params: { id: this.id },
+                    query: { tab: tab }
+                }, /user\=([0-9^&]+)/ig];
+
+                const matchResult = userPattern.exec(location.search);
+                if (matchResult) {
+                    linkObj.query.user = matchResult[1];
+                }
+
+                if (isReplace) {
+                    linkObj.replace = true;
+                    linkObj.query.replace = true;
+                }
+
+                if (additionalParams) {
+                    for (const key in additionalParams) {
+                        linkObj.query[key] = additionalParams[key];
+                    }
+                }
+
+                return linkObj;
             }
         }
     };
