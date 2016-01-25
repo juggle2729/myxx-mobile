@@ -123,7 +123,7 @@ const mixin = {
             return this.$req(url, 'delete', data);
         }
     }
-}
+};
 export default {
     install(Vue, options) {
         Vue.mixin(mixin);

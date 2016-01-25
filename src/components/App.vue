@@ -142,7 +142,7 @@ export default {
         this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));
         this.$watch('video', (video) => this.$el.classList[video?'add':'remove']('frozen'));
         if(this.isShare) {
-            this.$post('log/content_readings', this.$route.query).then((d) => console.log(d));
+            this.$get('log/content_readings', this.$route.query).then(_.noop);
         }
     },
     methods: {

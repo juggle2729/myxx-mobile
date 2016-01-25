@@ -216,7 +216,10 @@ export default {
             }
         },
         share() {
-            let title = '快来帮我鉴定一下，这个宝贝！';
+            let title = '快帮我鉴定一下这个宝贝！';
+            if(!this.evaluation.unidentified) {
+                title = '快来看看我的鉴定吧！';
+            }
             let desc = this.evaluation.description.substr(0, 20);
             let icon = this.evaluation.pictures[0];
             let url = location.origin + location.pathname;
@@ -225,7 +228,6 @@ export default {
                 type: 'jianbao'
             });
             url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            console.debug(url);
             this.action('share', {title, desc, icon, url});
         }
     }

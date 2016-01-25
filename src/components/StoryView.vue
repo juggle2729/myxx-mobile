@@ -152,6 +152,9 @@ export default {
             }
             let desc = this.story.content.substr(0, 20);
             let icon = this.story.medias[0].id;
+            if(this.story.medias[0].type === 'video') {
+                icon = this.config.video + icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
+            }
             let url = location.origin + location.pathname;
             let query = _.merge({}, this.$route.query, {
                 id: this.story.post_id,
