@@ -92,7 +92,7 @@
             <div class="name font-30 bold">美玉秀秀</div>
             <div class="slogan font-26 gray padding-top">中国最大的和田玉爱好者平台</div>
         </div>
-        <a :href="downloadUrl" class="download-btn font-30 red border-red">下载</a>
+        <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
     <div v-if="isShare" @click="openApp()" class="share-bottom flex bg-red white font-30">
@@ -121,7 +121,6 @@ export default {
     name: 'App',
     data() {
         return {
-            downloadUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx',
             user: {},
             video: undefined,
             img: undefined
@@ -143,6 +142,9 @@ export default {
         this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));
         this.$watch('video', (video) => this.$el.classList[video?'add':'remove']('frozen'));
         if(this.isShare) {
+            if(!this.$route.query.channel) {
+                this.$route.query.channel = 'wechat';
+            }
             this.$get('log/content_readings', this.$route.query).then(_.noop);
         }
     },
@@ -160,9 +162,10 @@ export default {
                     myxxIframe.height = 0;
                     myxxIframe.frameBorder = 0;
                     document.body.appendChild(myxxIframe);
-                    setTimeout(() => {
-                        location.href = this.downloadUrl;
-                    }, 500);
+                    // setTimeout(() => {
+                    //     debugger;
+                    //     location.href = this.config.download;
+                    // }, 500);
                 }
             }
         },

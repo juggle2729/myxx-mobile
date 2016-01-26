@@ -62,7 +62,7 @@ router.beforeEach(({from, to, abort, next}) => {
         }
     } else {
         if(from.query && from.query.user && (to.name !== 'master' ||
-            to.query.tab === 'store')) {//   禁止分享页面导航
+            to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
             abort();
         } else {
             next();

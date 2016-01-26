@@ -102,21 +102,19 @@ const mixin = {
                     }
                     this.$http[method](url, data).then(({data: resp}) => {
                         if(resp.status === 200) {
-                            if(resp.data === undefined){
-                              this.$route.router.replace({name: 'nocontent', query: {status: resp.status}});
-                              defer.reject();
-                            } else {
-                              defer.resolve(resp.data);
-                            }
+                            defer.resolve(resp.data);
                         } else if(resp.status === 605 || resp.status === 608){
                             this.action('login');
                         } else if(resp.status === 5004){
+                            defer.reject();
                             this.$route.router.replace({name: '404'});
                         } else if(resp.status === undefined) {
-                            this.$route.router.replace({name: 'nocontent', query: {status: 500}});
+                            defer.reject();
+                            this.$route.router.replace({name: 'nocontent'});
                         } else {
+                            defer.reject();
                             console.log('resp.status:'+resp.status);
-                            this.$route.router.replace({name: 'nocontent', query: {status: resp.status}});
+                            this.$route.router.replace({name: 'nocontent'});
                         }
                     });
                 }

@@ -1,11 +1,11 @@
 // hosts设置
-let [api, img, video] = ['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
+let [api, img, video, download] = ['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
 if(/^app/.test(location.hostname)) {
-    [api, img, video] = ['//api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/'];
+    [api, img, video, download] = ['//api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/', 'http://download.meiyuxiuxiu.com/'];
 } else if(/^test/.test(location.hostname)) {
-    [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
+    [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
 }
-// let [api, img, video] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/'];
+
 export default {
     api,
     img,

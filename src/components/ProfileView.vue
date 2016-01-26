@@ -36,7 +36,7 @@
             <span class="icon-enter gray font-26"></span>
         </div>
     </div>
-    <div class="separator-40"></div>
+    <!-- <div class="separator-40"></div>
     <div class="rows">
         <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-coin'}">
             <span class="red icon-eval"></span>
@@ -48,7 +48,7 @@
             <span>邀请有奖</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-    </div>
+    </div> -->
     <div class="separator-40"></div>
     <div class="rows">
         <div class="row bg-white font-30 border-bottom" v-link="{name: shop_status ? 'master' : 'shop-request', params: {id: userId}, query: {tab: 'store'}}">
