@@ -1,27 +1,25 @@
 <template>
     <div class="master-vip-black-special">
-        <div class="cover">
+        <div class="cover" @touchstart="coverTouchStart($event)"
+             @touchmove="coverTouchMove($event)" @touchend="coverTouchEnd($event)">
             <div class="bg img" v-bg="interview.img" query="imageView2/1/w/750/h/1334/interlace/1"></div>
-            <div class="title-bg"></div>
-            <div class="title">
+            <div class="cover-bar">
                 <div class="main-title" v-text="mainTitle"></div>
                 <div class="sub-title" v-if="subTitle" v-text="subTitle"></div>
-            </div>
-            <div class="arrow">
-                <span class="icon-down"></span>
+                <div class="arrow">
+                    <span class="icon-down"></span>
+                </div>
             </div>
         </div>
-        <div class="interview">
-            <div class="top">
-                <div class="title img"></div>
-            </div>
+        <div class="interview" @touchstart="contentTouchStart($event)"
+             @touchmove="contentTouchMove($event)" @touchend="contentTouchEnd($event)">
+            <div class="top img"></div>
             <div class="content" v-html="interview.content"></div>
         </div>
     </div>
 </template>
 <script>
     import MasterMixin from '../../mixin/Master.vue';
-    import Scroll from '../../../utils/scroll';
 
     export default {
         name: 'MasterSpecialView',
@@ -30,21 +28,23 @@
             return {
                 masterBaseData: this.data,
                 showMenu: false,
-                interview: {}
+                interview: {},
+                coverStartPos: 0,
+                coverMoved: 0,
+                contentStartPos: 0,
+                contentMoved: 0,
+                minMove: 150,
+                coverDom: null,
+                contentDom: null
             };
         },
         ready() {
             window.scrollTo(0, 0);
 
-            Scroll.on('touch-scroll', this.scrollHandler);
-
-            Scroll.install(document.querySelector('.master-vip-black-special .cover'));
-            Scroll.install(document.querySelector('.master-vip-black-special .top'));
+            this.coverDom = document.querySelector('.master-vip-black-special .cover');
+            this.contentDom = document.querySelector('.master-vip-black-special .interview');
 
             this.initDom();
-        },
-        destroyed() {
-            Scroll.removeListener('touch-scroll', this.scrollHandler);
         },
         activate(done) {
             this.checkShare();
@@ -78,26 +78,61 @@
             }
         },
         methods: {
-            scrollHandler(direction) {
-                const container = document.querySelector('.master-vip-black-special');
+            coverTouchStart(event) {
+                this.coverStartPos = event.touches[0].pageY;
+                this.coverMoved = 0;
+            },
+            coverTouchMove(event) {
+                var curPos = event.touches[0].pageY;
 
-                const coverDom = container.querySelector('.cover');
-                const interviewDom = container.querySelector('.interview');
+                event.preventDefault();
+                event.stopPropagation();
 
-                const innerHeight = window.innerHeight;
+                this.coverMoved = curPos - this.coverStartPos;
+                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.coverMoved) + 'px)';
+                this.contentDom.style['-webkit-transition'] = 'ms linear';
+            },
+            coverTouchEnd() {
+                var pageHeight = document.documentElement.clientHeight;
+                if (this.coverMoved > -this.minMove) {
+                    this.contentDom.style['-webkit-transform'] = 'translateY(0px)';
+                    this.contentDom.style['-webkit-transition'] = '100ms linear';
+                } else {
+                    this.contentDom.style['-webkit-transform'] = 'translateY(' + -pageHeight + 'px)';
+                    this.contentDom.style['-webkit-transition'] = '200ms linear';
+                    this.contentDom.style.marginBottom = -pageHeight + 'px';
+                }
+            },
+            contentTouchStart(event) {
+                this.contentStartPos = event.touches[0].pageY;
+                this.contentMoved = 0;
+            },
+            contentTouchMove(event) {
+                var pageHeight = document.documentElement.clientHeight;
 
-                if (direction === 'up') {
-                    coverDom.style.top =  '-300px';
-                    interviewDom.style.top = "0px";
+                var curPos = event.touches[0].pageY;
+                var curTop = document.body.scrollTop;
 
-                    coverDom.style.transform =  'translateY(-300px)';
-                    interviewDom.style.transform = "translateY(0)";
-                } else if (direction === 'down') {
-                    coverDom.style.top = '0px';
-                    interviewDom.style.top = innerHeight + 'px';
+                if ((curPos < this.contentStartPos) || (curPos > this.contentStartPos && curTop > 0)) {
+                    return true;
+                }
 
-                    coverDom.style.transform = 'translateY(0)';
-                    interviewDom.style.transform = 'translateY(' + innerHeight + 'px)';
+                event.preventDefault();
+                event.stopPropagation();
+
+                this.contentMoved = curPos - this.contentStartPos;
+                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
+                this.contentDom.style['-webkit-transition'] = 'ms linear';
+            },
+            contentTouchEnd(event) {
+                var pageHeight = document.documentElement.clientHeight;
+
+                if (this.contentMoved > this.minMove) {
+                    this.contentDom.style['-webkit-transform'] = 'translateY(0px)';
+                    this.contentDom.style['-webkit-transition'] = '200ms linear';
+                } else {
+                    this.contentDom.style['-webkit-transform'] = 'translateY(' + -pageHeight + 'px)';
+                    this.contentDom.style['-webkit-transition'] = '100ms linear';
                 }
             },
             fetchMasterInterviewInfo() {
@@ -111,10 +146,6 @@
                 const container = document.querySelector('.master-vip-black-special');
                 const bgDom = container.querySelector('.cover .bg');
                 bgDom.style.height = innerHeight + 'px';
-
-                const interviewDom = container.querySelector('.interview');
-                interviewDom.style.top = innerHeight + 'px';
-                interviewDom.style.transform = 'translateY(' + innerHeight + 'px)';
             }
         }
     }
@@ -124,103 +155,58 @@
     @import '../../../styles/partials/_var.scss';
 
     .master-vip-black-special {
-        position: relative;
-        background-color: #fff;
-
+        overflow: hidden;
         .cover {
-            transition: transform 0.6s ease;
-            -webkit-transition: transform 0.6s ease;
+            position: relative;
+        }
 
+        .cover-bar {
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 220px;
             position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 77;
+            bottom: 0;
+            color: #fff;
+            font-size: 40px;
 
-            .bg {
-                width: 750px;
-            }
+            padding: 40px 32px;
+        }
 
-            .arrow {
-                position: absolute;
-                left: 0;
-                bottom: 22px;
-                z-index: 89;
-            }
+        .main-title {
+            font-size: 44px;
+        }
 
-            .title-bg {
-                position: absolute;
-                height: 220px;
-                width: 100%;
-                background: #000;
-                opacity: 0.6;
-                bottom: 0;
-                left: 0;
-                z-index: 88;
-            }
-
-            .title {
-                position: absolute;
-                color: #fff;
-                font-size: 40px;
-                padding: 40px 32px;
-                z-index: 89;
-                bottom: 36px;
-                left: 0;
-                text-align: left;
-            }
-
-            .main-title {
-                font-size: 44px;
-            }
-
-            .sub-title {
-                margin-top: 36px;
-                font-size: 30px;
-            }
+        .sub-title {
+            margin-top: 36px;
+            font-size: 30px;
         }
 
         .interview {
-            width: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
+            padding-top: 1px;
             background: #fff;
-            color: #fff;
-            z-index: 88;
-
-            transition: transform 0.8s ease;
-            -webkit-transition: transform 0.8s ease;
         }
 
         .top {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 10;
-
-            height: 500px;
-            width: 100%;
-            .title {
-                height: 68px;
-                width: 284px;
-                margin: 72px auto;
-                background-image: url('#{$qn}/artist/special-title.png');
-            }
+            height: 68px;
+            width: 284px;
+            margin: 72px auto;
+            background-image: url('#{$qn}/artist/special-title.png');
         }
 
         .content {
-            position: absolute;
-            left: 0;
-            top: 180px;
-            width: 100%;
-            z-index: 5;
-
             padding: 0 25px 65px;
             font-size: 30px;
             line-height: 26px;
-            img {
-                margin: 10px 0 !important;
-            }
+        }
+
+        .arrow {
+            animation: show_animation 1s infinite;
+            -webkit-animation: show_animation 1.5s infinite 0.2s;
+        }
+
+        @keyframes show_animation {
+            0% { margin-top: 0; }
+            50% { margin-top: 5px; }
         }
     }
 </style>

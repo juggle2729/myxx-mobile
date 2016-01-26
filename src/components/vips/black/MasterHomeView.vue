@@ -32,7 +32,13 @@
         }
 
         .menu:not(:first-child) {
-            margin-top: 34px;
+            margin-top: 32px;
+        }
+
+        .menu {
+            .menu-item:last-child {
+                margin-left: 24px;
+            }
         }
 
         .menu-item {
@@ -67,19 +73,15 @@
             <span class="icon-down"></span>
         </div>
         <div class="menus">
-            <div class="menu">
-                <div class="menu-item">
+            <div class="menu"><div class="menu-item">
                     <span class="bg" v-link="linkPage('special')">人物志</span>
-                </div>
-                <div class="menu-item">
+                </div><div class="menu-item">
                     <span class="bg" v-link="linkPage('works')">作品展示</span>
                 </div>
             </div>
-            <div class="menu">
-                <div class="menu-item">
+            <div class="menu"><div class="menu-item">
                     <span class="bg" v-link="linkPage('activities')">动态</span>
-                </div>
-                <div class="menu-item">
+                </div><div class="menu-item">
                     <span class="bg" v-link="linkPage('studio')">工作室</span>
                 </div>
             </div>
