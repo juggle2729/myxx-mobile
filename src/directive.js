@@ -6,9 +6,10 @@ let preset = {
     video: 'vframe/jpg/offset/0/rotate/auto|imageView2/1/w/340/h/250'
 };
 const bg = {
-    params: ['query'],
+    params: ['query', 'default'],
     bind() {
         this.query = this.params.query || preset[Object.keys(this.modifiers).pop() || 'lg'] || '';
+        this.default = this.params.default === 'false' ? false : true;
     },
     update(id) {
         if(id) {
@@ -16,9 +17,12 @@ const bg = {
             let host = config.video;
             if(/^image/i.test(this.query)) {
                 host = config.img;
-                bgImgStr = `url(${host + id + '?' + this.query}), url('//o0x80w5li.qnssl.com/placeholder/img.png')`
+                bgImgStr = `url(${host + id + '?' + this.query})`;
+                if (this.default) {
+                    bgImgStr += `, url('//o0x80w5li.qnssl.com/placeholder/img.png')`;
+                }
             } else {
-                bgImgStr = `url(${host + id + '?' + this.query})`
+                bgImgStr = `url(${host + id + '?' + this.query})`;
             }
             this.el.style.backgroundImage = bgImgStr;
         }

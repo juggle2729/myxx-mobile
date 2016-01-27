@@ -33,7 +33,7 @@
                 coverMoved: 0,
                 contentStartPos: 0,
                 contentMoved: 0,
-                minMove: 150,
+                minMove: 50,
                 coverDom: null,
                 contentDom: null
             };
@@ -78,6 +78,11 @@
             }
         },
         methods: {
+            enableRefresh(enable) {
+                this.action('toggleTopRefresh', {
+                    enable: enable
+                })
+            },
             coverTouchStart(event) {
                 this.coverStartPos = event.touches[0].pageY;
                 this.coverMoved = 0;
@@ -101,6 +106,8 @@
                     this.contentDom.style['-webkit-transform'] = 'translateY(' + -pageHeight + 'px)';
                     this.contentDom.style['-webkit-transition'] = '200ms linear';
                     this.contentDom.style.marginBottom = -pageHeight + 'px';
+
+                    this.enableRefresh(false);
                 }
             },
             contentTouchStart(event) {
@@ -123,6 +130,8 @@
                 this.contentMoved = curPos - this.contentStartPos;
                 this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
                 this.contentDom.style['-webkit-transition'] = 'ms linear';
+
+                this.enableRefresh(true);
             },
             contentTouchEnd(event) {
                 var pageHeight = document.documentElement.clientHeight;

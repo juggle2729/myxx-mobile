@@ -58,8 +58,10 @@ export default {
     ready() {
         this.$watch('ids', (ids) => {
             const threshold = 50;
-            let pageX = 0;
-            let slides = [...document.querySelectorAll('.slide')];
+
+            let [pageX, slideList] = [0, document.querySelectorAll('.slide')];
+            let slides = Array.prototype.slice.call(slideList, 0, slideList.length);
+
             slides.forEach((slide) => {
                 slide.addEventListener('touchstart', (e) => {
                     pageX = e.pageX;
