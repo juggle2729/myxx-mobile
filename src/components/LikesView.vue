@@ -2,8 +2,8 @@
 <div class="likes-view bg-default">
     <div class="separator"></div>
     <div class="user flex border-bottom bg-white" v-for="user in items">
-        <div class="avatar-120" v-bg.sm="user.photo" v-link="{name: 'user-profile', params: { id: user.id}}"></div>
-        <div class="flex-1" v-link="{name: 'user-profile', params: { id: user.id}}">
+        <div class="avatar-120" v-bg.sm="user.photo" v-link="user | profile"></div>
+        <div class="flex-1" v-link="user | profile">
             <div class="font-30">{{user.name}}</div>
             <div class="font-26 light margin-top">{{user.role | role}}</div>
         </div>
