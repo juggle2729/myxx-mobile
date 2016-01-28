@@ -7,7 +7,7 @@ let adapter = {
         if(handler === 'user') {
             let user = {
               // "id" : "2",
-              // "token" : "e90a3655-bac2-478c-841f-a7f39f878f9d",
+              // "token" : "4713bc32-fa8c-42bc-94b3-858802327d7e",
               // "gender" : "1",
               // "phone" : "15871705303",
               // "nickname" : "余长春",
@@ -27,7 +27,6 @@ let adapter = {
         else if(handler === 'play') {
             this.$root.video = params.id;
         } else if(handler === 'coverflow') {
-            debugger;
             this.$root.img = {
                 ids: params.ids.split(','),
                 i: +params.index

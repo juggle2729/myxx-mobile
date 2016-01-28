@@ -65,7 +65,7 @@
             height: 100%;
             overflow-y: auto;
             color: white;
-            background: black url('//o0x80w5li.qnssl.com/loading.svg') no-repeat center;
+            background: black url('#{$qn}/loading.svg') no-repeat center;
             background-size: 60px 34px;
             img {
                 position: relative;
@@ -115,7 +115,6 @@
   </div>
 </template>
 <script>
-import Q from 'q';
 import emitter from '../utils/emitter';
 export default {
     name: 'App',
@@ -153,6 +152,24 @@ export default {
         emitter.on('open-app', (e) => this.openApp());
         this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));
         this.$watch('video', (video) => this.$el.classList[video?'add':'remove']('frozen'));
+
+        if(this.isShare) {
+            this.$get('log/content_readings', this.$route.query).then(_.noop);
+        }
+
+        if(this.$route.name === 'evaluation') {
+            document.title = '[美玉秀秀]鉴宝';
+        } else if(this.$route.name === 'story') {
+            document.title = '[美玉秀秀]晒宝';
+        } else if(this.$route.name === 'jade') {
+            document.title = '[美玉秀秀]宝贝';
+        } else if(this.$route.name === 'master') {
+            if(this.$route.query.tab === 'store') {
+                document.title = '[美玉秀秀]店铺';
+            } else {
+                document.title = '大师官网';
+            }
+        }
     },
     methods: {
         openApp() {

@@ -86,7 +86,6 @@ const mixin = {
                     params.url += `&user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`;
                 }
                 if(resolver === undefined) {
-                    debugger;
                     bridge.callHandler.call(this, handler, params);
                 } else if(typeof resolver === 'function') {
                     bridge.callHandler.call(this, handler, params, resolver);

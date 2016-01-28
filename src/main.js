@@ -28,7 +28,7 @@ _.merge(Vue.http.options, {
     emulateJSON: true,
     beforeSend(xhr, req) {
         if(this.$route.query.user && req.method !== 'GET') {
-            emitter.emit('open-app');
+            this.toast('请在【美玉秀秀】里使用该功能');
         }
     },
     catch(resp, status, req) {
@@ -63,6 +63,7 @@ router.beforeEach(({from, to, abort, next}) => {
 
     if(from.query && from.query.user && (to.name !== 'master' ||
         to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
+        from.router.app.toast('请在【美玉秀秀】里查看');
         abort();
     } else {
         next();
