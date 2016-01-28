@@ -2,8 +2,8 @@
     <div class="master-vip-black-works">
         <div class="cover img"></div>
         <div class="works-item">
-            <div class="work-item" v-for="work in items" v-link="{name: 'jade', params: {id: work.id}}">
-                <div class="img" v-bg="work.vip_img" query="imageView2/1/w/750/h/774/interlace/1"></div>
+            <div class="work-item" :class="[$index % 2 === 0 ? 'odd' : 'even']" v-for="work in items" v-link="{name: 'jade', params: {id: work.id}}">
+                <div class="img" v-bg="work.vip_img" default="false" query="imageView2/1/w/750/h/774/interlace/1"></div>
                 <div class="description">{{work.name}}</div>
             </div>
         </div>
@@ -74,6 +74,16 @@
                 width: 100%;
                 height: 774px;
             }
+
+            &.even {
+                 background: url('#{$qn}/artist/works_bg.png') no-repeat center center;
+                 background-size: cover;
+             }
+
+            &.odd {
+                background: #282828;
+             }
+
         }
 
         .description {

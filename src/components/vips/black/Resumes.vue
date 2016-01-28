@@ -28,17 +28,23 @@
             if (this.tab) {
                 document.querySelector('.master-vip-black-home .menus').scrollIntoView();
             }
+
+            let titlesDom = document.querySelector('.titles');
+            if (titlesDom) {
+                this.initPage(titlesDom);
+            } else {
+                this.timer = setInterval(() => {
+                    titlesDom = document.querySelector('.titles');
+                    if (titlesDom) {
+                        this.initPage(titlesDom);
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                }, 100);
+            }
         },
         activate(done) {
             this.fetchUserResumes().then(() => {
-                setTimeout(() => {
-                    const titlesDom = document.querySelector('.titles');
-                    if (titlesDom) {
-                        Scroll.install(titlesDom, 'horizontal');
-                    }
-
-                    this.titleDateInit();
-                }, 100);
                 done();
             });
         },
@@ -64,7 +70,8 @@
                 dateMarginLeft: -14,
                 dateInit: false,
                 resumes: [],
-                showDate: false
+                showDate: false,
+                timer: null
             };
         },
         computed: {
@@ -86,6 +93,13 @@
             }
         },
         methods: {
+            initPage(titlesDom) {
+                if (titlesDom) {
+                    Scroll.install(titlesDom, 'horizontal');
+                }
+
+                this.titleDateInit();
+            },
             zIndex(index) {
                 return this.resumes.length * 2 - (2 * index);
             },
@@ -97,7 +111,7 @@
                     this.resumes = data.resumes;
                 });
             },
-            countStyle(index, content) {
+            countStyle(index) {
                 let cls = '';
                 if (index === 0) {
                     cls += 'level-0 active';
@@ -111,14 +125,6 @@
                     cls += 'level-least';
                 }
 
-                const [ len, rowCount ] = [content.length, 15];
-                if (len < rowCount) {
-                    cls += ' first-line';
-                } else if (len < rowCount * 2) {
-                    cls += ' second-line';
-                } else if (len < rowCount * 3) {
-                    cls += ' third-line';
-                }
                 return cls;
             },
             titleAnimate(direction) {
@@ -159,28 +165,28 @@
                 } else if (direction === 'right') {
                     Array.prototype.slice.call(titleItems).forEach((item, index) => {
                         const itemClasslist = item.classList;
-                    if (index === this.activeCount) {
-                        if (itemClasslist.contains('level-remove')) {
-                            itemClasslist.remove('level-remove');
-                            itemClasslist.add('level-0');
-                            itemClasslist.add('active');
-                        }
-                    } else if (0 < index - this.activeCount) {
-                        if (index - this.activeCount < this.maxDisplayCount) {
-                            if (itemClasslist.contains('active')) {
-                                itemClasslist.remove('active');
-                                itemClasslist.remove('level-0');
-                                itemClasslist.add('level-1');
-                            } else {
-                                itemClasslist.add('level-' + (index - this.activeCount));
-                                itemClasslist.remove('level-' + (index - this.activeCount - 1));
+                        if (index === this.activeCount) {
+                            if (itemClasslist.contains('level-remove')) {
+                                itemClasslist.remove('level-remove');
+                                itemClasslist.add('level-0');
+                                itemClasslist.add('active');
                             }
-                        } else {
-                            itemClasslist.remove('level-' + (this.maxDisplayCount - 1));
-                            itemClasslist.add('level-least');
+                        } else if (0 < index - this.activeCount) {
+                            if (index - this.activeCount < this.maxDisplayCount) {
+                                if (itemClasslist.contains('active')) {
+                                    itemClasslist.remove('active');
+                                    itemClasslist.remove('level-0');
+                                    itemClasslist.add('level-1');
+                                } else {
+                                    itemClasslist.add('level-' + (index - this.activeCount));
+                                    itemClasslist.remove('level-' + (index - this.activeCount - 1));
+                                }
+                            } else {
+                                itemClasslist.remove('level-' + (this.maxDisplayCount - 1));
+                                itemClasslist.add('level-least');
+                            }
                         }
-                    }
-                });
+                    });
 
                     this.titleDateAnimate(direction);
                     this.activeCount = this.activeCount > 0 ? this.activeCount - 1 : 0;
@@ -274,7 +280,7 @@
             background-color: $bgColor;
             position: absolute;
             top: 0;
-            left: 1px;
+            left: 0;
             z-index: 1;
             display: block;
             width: 100%;
@@ -384,9 +390,13 @@
         -webkit-transition: all 0.4s ease;
 
         .text {
-            padding: 62px 42px 62px 55px;
+            padding: 62px 0;
             line-height: 48px;
-            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 100%;
         }
     }
 
