@@ -28,17 +28,23 @@
             if (this.tab) {
                 document.querySelector('.master-vip-black-home .menus').scrollIntoView();
             }
+
+            let titlesDom = document.querySelector('.titles');
+            if (titlesDom) {
+                this.initPage(titlesDom);
+            } else {
+                this.timer = setInterval(() => {
+                    titlesDom = document.querySelector('.titles');
+                    if (titlesDom) {
+                        this.initPage(titlesDom);
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                }, 100);
+            }
         },
         activate(done) {
             this.fetchUserResumes().then(() => {
-                setTimeout(() => {
-                    const titlesDom = document.querySelector('.titles');
-                    if (titlesDom) {
-                        Scroll.install(titlesDom, 'horizontal');
-                    }
-
-                    this.titleDateInit();
-                }, 100);
                 done();
             });
         },
@@ -64,7 +70,8 @@
                 dateMarginLeft: -14,
                 dateInit: false,
                 resumes: [],
-                showDate: false
+                showDate: false,
+                timer: null
             };
         },
         computed: {
@@ -86,6 +93,13 @@
             }
         },
         methods: {
+            initPage(titlesDom) {
+                if (titlesDom) {
+                    Scroll.install(titlesDom, 'horizontal');
+                }
+
+                this.titleDateInit();
+            },
             zIndex(index) {
                 return this.resumes.length * 2 - (2 * index);
             },
