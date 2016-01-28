@@ -55,6 +55,21 @@
                 background-size: 60px;
             }
         }
+/*        .social {
+            margin-top: 20px;
+            > div {
+                width: calc(50% - 10px);
+                padding: 20px 0;
+                border: 1px solid #b2b2b2;
+                border-radius: 8px;
+            }
+            .like {
+                margin-right: 10px;
+            }
+            .comment {
+                margin-left: 10px;
+            }
+        }*/
     }
     .evaluation-btn {
         margin: 16px 0 8px 0;
@@ -66,18 +81,18 @@
             cursor: pointer;
         }
     }
-    .social {
-        position: fixed;
-        z-index: 9;
-        bottom: 0;
-        width: 100%;
-    }
     .w-50 {
         width: 50%;
     }
     .nocontent {
         margin-top: 48px;
         margin-bottom: 32px;
+    }
+    .social {
+        position: fixed;
+        z-index: 9;
+        bottom: 0;
+        width: 100%;
     }
 }
 </style>
@@ -115,9 +130,10 @@
                     <p v-if="result.result === '真'" class="font-26 margin-top"><span>估价：{{prices[$index]}}</span></p>
                 </div>
             </div>
-            <social-bar :id="result.id" type="20" :total="result.like" :list="result.likes" :active="result.liked" class="border-all bg-light">
-                <div @click="$broadcast('reply', $event, result.identifier)" class="extra-action border-left center gray"><i class="icon-comment"></i></div>
-            </social-bar>
+            <div class="social flex gray font-26">
+                <div @click="like(result)" class="like center" :class="{'red': result.liked}"><i class="{{result.liked ? 'icon-like-active' : 'icon-like'}}"></i><span>{{result.like}}</span></div>
+                <div v-link="{name: 'result-comment', params: {id: result.id}}" class="comment center"><i class="icon-comment"></i><span>{{evaluation.comment}}</span></div>
+            </div>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
         <div class="evaluation-btn">
@@ -132,8 +148,8 @@
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
+import SocialBar from './SocialBar.vue';
 export default {
     name: 'EvaluationView',
     data() {
@@ -149,8 +165,8 @@ export default {
         };
     },
     components: {
-        SocialBar,
-        Comment
+        Comment,
+        SocialBar
     },
     computed: {
         prices() {
@@ -195,11 +211,19 @@ export default {
         }
     },
     methods: {
-        coverflow(index) {
-            this.action('coverflow', {ids: this.evaluation.pictures, index});
-        },
-        play(id) {
-            this.action('play', {id});
+        like(result) {
+            const api = `users/target/${result.id}/type/20/like`;
+            if (result.liked) {
+                this.$delete(api).then(() => {
+                    result.liked = false;
+                    result.like -= 1;
+                });
+            } else {
+                this.$post(api).then(() => {
+                    result.liked = true;
+                    result.like += 1;
+                });
+            }
         },
         evaluate(action) {
             if(action === 'login') {
@@ -215,12 +239,18 @@ export default {
                 this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
             }
         },
+        coverflow(index) {
+            this.action('coverflow', {ids: this.evaluation.pictures, index});
+        },
+        play(id) {
+            this.action('play', {id});
+        },
         share() {
             let title = '快帮我鉴定一下这个宝贝！';
             if(!this.evaluation.unidentified) {
                 title = '快来看看我的鉴定吧！';
             }
-            let desc = this.evaluation.description.substr(0, 20);
+            let desc = this.evaluation.description;
             let icon = this.evaluation.pictures[0];
             let url = location.origin + location.pathname;
             let query = _.merge({}, this.$route.query, {

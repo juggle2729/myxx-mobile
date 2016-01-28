@@ -86,16 +86,10 @@
                 </div>
             </div>
         </div>
-        <social-bar :id="item.post_id" type="10" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left gray extra-action" v-link="{name: 'evaluation', params: {id: item.post_id}, query: {comment: 'show'}}">
-                <i class="icon-comment"></i><span>{{item.comment}}</span>
-            </div>
-        </social-bar>
     </template>
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
 export default {
     name: 'EvaluationList',
     props: {
@@ -103,9 +97,6 @@ export default {
             type: Array,
             required: true
         }
-    },
-    components: {
-        SocialBar
     }
 }
 </script>

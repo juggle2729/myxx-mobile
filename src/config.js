@@ -10,6 +10,7 @@ export default {
     api,
     img,
     video,
+    download,
     www: '//o0x80w5li.qnssl.com/',
     roles: {0: '普通用户', 1: '商家', 2: '藏家', 4: '大师', 8: '权威'},
     types: [

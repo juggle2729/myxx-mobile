@@ -80,9 +80,13 @@ const mixin = {
                 } else if('confirm,delete'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
                 } else if('share,shareable'.indexOf(handler) !== -1) {
+                    if(params.desc.length > 20) {
+                        params.desc = params.desc.substr(0, 20) + '...';
+                    }
                     params.url += `&user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`;
                 }
                 if(resolver === undefined) {
+                    debugger;
                     bridge.callHandler.call(this, handler, params);
                 } else if(typeof resolver === 'function') {
                     bridge.callHandler.call(this, handler, params, resolver);
@@ -111,6 +115,8 @@ const mixin = {
                         } else if(resp.status === undefined) {
                             defer.reject();
                             this.$route.router.replace({name: 'nocontent'});
+                        } else if(resp.status === 601) {// 统计接口缺少参数
+                            console.log(resp.message);
                         } else {
                             defer.reject();
                             console.log('resp.status:'+resp.status);

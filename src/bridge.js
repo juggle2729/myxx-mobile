@@ -27,6 +27,7 @@ let adapter = {
         else if(handler === 'play') {
             this.$root.video = params.id;
         } else if(handler === 'coverflow') {
+            debugger;
             this.$root.img = {
                 ids: params.ids.split(','),
                 i: +params.index

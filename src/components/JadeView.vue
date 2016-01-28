@@ -205,7 +205,7 @@ export default {
         },
         share() {
             let title = '我在 [美玉秀秀] 发现一个宝贝！';
-            let desc = this.info.name.substr(0, 20);
+            let desc = this.info.name;
             let icon = this.info.imgs[0];
             let url = location.origin + location.pathname;
             let query = _.merge({}, this.$route.query, {

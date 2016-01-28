@@ -97,7 +97,7 @@
     <router-view></router-view>
     <div v-if="isShare" @click="openApp()" class="share-bottom flex bg-red white font-30">
         <img :src="'share/left.png' | qn" alt="left">
-        <div class="flex-1 center bold">我也要晒宝</div>
+        <div class="flex-1 center bold">{{text}}</div>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
     <div id="open-in-browser" v-if="isShare && !env.isBrowser" @click="$event.target.classList.remove('show')"></div>
@@ -128,7 +128,18 @@ export default {
     },
     computed: {
         isShare() {
-            return !this.env.isApp && _.get(this.$route, 'query.user');
+            return !this.env.isApp && _.get(this.$route, 'query.user') && this.text;
+        },
+        text() {
+            if(this.$route.name === 'evaluation') {
+                return '我也要鉴宝';
+            } else if(this.$route.name === 'story') {
+                return '我也要晒宝';
+            } else if(this.$route.name === 'jade') {
+                return '我也要逛逛';
+            } else if(this.$route.name === 'master' && this.$route.query.tab === 'store') {
+                return '我也要逛逛';
+            }
         },
         appCmd() {
             let path = this.$route.path;
@@ -142,12 +153,6 @@ export default {
         emitter.on('open-app', (e) => this.openApp());
         this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));
         this.$watch('video', (video) => this.$el.classList[video?'add':'remove']('frozen'));
-        if(this.isShare) {
-            if(!this.$route.query.channel) {
-                this.$route.query.channel = 'wechat';
-            }
-            this.$get('log/content_readings', this.$route.query).then(_.noop);
-        }
     },
     methods: {
         openApp() {
@@ -163,10 +168,6 @@ export default {
                     myxxIframe.height = 0;
                     myxxIframe.frameBorder = 0;
                     document.body.appendChild(myxxIframe);
-                    // setTimeout(() => {
-                    //     debugger;
-                    //     location.href = this.config.download;
-                    // }, 500);
                 }
             }
         },

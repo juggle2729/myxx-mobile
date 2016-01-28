@@ -83,7 +83,7 @@
         </div>
         <div class="medias">
             <div v-if="unique">
-                <img class="img" @click="coverflow($index)" :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                <img class="img" @click="coverflow(0)" :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
             </div>
             <template v-else>
                 <template v-for="media in story.medias"
@@ -150,7 +150,7 @@ export default {
             } else if(this.story.topic_type === '淘玉故事') {
                 title = '好玉原来是这么淘来的！';
             }
-            let desc = this.story.content.substr(0, 20);
+            let desc = this.story.content;
             let icon = this.story.medias[0].id;
             if(this.story.medias[0].type === 'video') {
                 icon = this.config.video + icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
