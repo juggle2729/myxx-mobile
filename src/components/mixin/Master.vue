@@ -38,8 +38,9 @@
                 }
             },
             setShare() {
+                const isSelf = _.get(this, 'self.id') == this.id;
                 const [title, desc, icon] = [
-                    '快来逛逛我的个人官网!',
+                    isSelf ? '快来逛逛我的个人官网!' : this.masterBaseData.name + '的官网，快来一睹大师风采',
                     this.masterBaseData.name + (this.masterBaseData.titles.length > 0 ? ' ' + this.masterBaseData.titles[0].name : ''),
                     this.masterBaseData.photo
                 ];
@@ -49,6 +50,9 @@
                     id: this.id,
                     type: 'website'
                 });
+
+                query.tab && (delete query.tab); //官网分享出去全部指向首页,所以remove tab parameter
+
                 url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
                 this.action('shareable', {title, desc, icon, url });
             },
