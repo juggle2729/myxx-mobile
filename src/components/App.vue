@@ -137,6 +137,7 @@ export default {
         }
     },
     ready() {
+        emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
         emitter.on('open-app', (e) => this.openApp());
         this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));

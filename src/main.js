@@ -31,7 +31,7 @@ _.merge(Vue.http.options, {
             emitter.emit('open-app');
         }
     },
-    error(resp, status, req) {
+    catch(resp, status, req) {
         console.error(status, req.responseURL);
         this.toggleLoading(false);
         console.log('获取数据失败，请稍后再试！');
@@ -41,7 +41,18 @@ _.merge(Vue.http.options, {
 Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
+router.beforeGo((from, to) => {
+    let stopAppRoute = to.raw && (to.query.replace === 'true');
+    let useAppGo = /myxx/i.test(navigator.userAgent)
+                 && !stopAppRoute
+                 && from.fullPath !== to.fullPath;
+    if(useAppGo) {
+        window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
+    }
+    return !useAppGo;
+});
 router.beforeEach(({from, to, abort, next}) => {
+    appContainer.classList.add('loading');
     if (to.query.tab && to.query.tab.toLowerCase() === 'store') {
         document.title = '店铺详情';
     } else if (to.query.tab && to.query.tab.toLowerCase() === 'craftdetail') {
@@ -49,24 +60,12 @@ router.beforeEach(({from, to, abort, next}) => {
     } else {
         document.title = (to.title || '美玉秀秀');
     }
-    appContainer.classList.add('loading');
 
-    let stopAppRoute = to.raw && (to.query.replace === 'true');
-
-    if(/myxx/i.test(navigator.userAgent) && !stopAppRoute) {
-        if(from.fullPath && from.fullPath !== to.fullPath) {
-            window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-            abort();
-        } else {
-            next();
-        }
+    if(from.query && from.query.user && (to.name !== 'master' ||
+        to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
+        abort();
     } else {
-        if(from.query && from.query.user && (to.name !== 'master' ||
-            to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
-            abort();
-        } else {
-            next();
-        }
+        next();
     }
 });
 router.afterEach(({to}) => {

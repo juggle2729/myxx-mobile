@@ -13,11 +13,7 @@ const scrollListener = (function(w) {
         timer = setTimeout(function() {
             // 滚动方向检测
             const delta = w.scrollY - lastPos;
-            if (delta > 0) {
-                emitter.emit('scroll-down', event);
-            } else if (delta < 0) {
-                emitter.emit('scroll-up', event);
-            }
+            emitter.emit('scroll', event);
             // 滚动触底检测
             function getDocHeight() {
                 const doc = w.document;
@@ -31,7 +27,7 @@ const scrollListener = (function(w) {
             if(delta > 0 && bottom <= threshold) {
                 emitter.emit('scroll-to-bottom', event);
             } else if (delta < 0 && w.scrollY === 0) {
-                emitter.emit('scroll-to-up', event);
+                emitter.emit('scroll-to-top', event);
             }
             lastPos = window.scrollY;
         }, delay);

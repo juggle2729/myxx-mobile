@@ -7,7 +7,7 @@ let adapter = {
         if(handler === 'user') {
             let user = {
               // "id" : "2",
-              // "token" : "348ccf6d-5557-4d0f-9cc6-943ae7242b81",
+              // "token" : "e90a3655-bac2-478c-841f-a7f39f878f9d",
               // "gender" : "1",
               // "phone" : "15871705303",
               // "nickname" : "余长春",
@@ -31,9 +31,9 @@ let adapter = {
                 ids: params.ids.split(','),
                 i: +params.index
             }
-        } else {
+        } else if(handler !== 'shareable'){
             const span = document.createElement('span');
-            span.className = 'toast white visible';
+            span.className = 'toast white visible font-30';
             if(isMobile) {
                 span.innerText = '请在【美玉秀秀】里使用该功能';
             } else {
