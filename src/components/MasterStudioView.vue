@@ -130,7 +130,7 @@
             <span class="code-img" v-bg="masterBaseData.website_2d_img" @click.stop="coverflow(masterBaseData.website_2d_img, 0)" query="imageView2/1/w/180/h/180/interlace/1"></span>
             <p class="font-30">官网二维码</p>
         </div>
-        <template v-if="shop.shop_type !== 'inner'">
+        <template v-if="shop.shop_type !== 'inner' && hasShop">
             <div class="separator-20"></div>
             <div class="studio center">
                 <div class="img logo" v-bg.md="shop.logo"></div>
@@ -197,7 +197,8 @@
                content: '',
                shop: {},
                isExpand: false,
-               aboutLimit: 300
+               aboutLimit: 300,
+               hasShop: true
            };
         },
         components: {
@@ -205,9 +206,7 @@
         },
         activate(done) {
             this.checkShare();
-            this.fetchMasterShopInfo().then(() => {
-                done();
-            });
+            this.fetchMasterShopInfo(done);
         },
         computed: {
             shopDesc() {
@@ -231,7 +230,7 @@
             },
             fetchMasterShopInfo: (function() {
                let loading = false;
-               return function() {
+               return function(callback) {
                   if(loading) {
                       return console.debug('master studio!!!!!!!!');
                   }
@@ -240,8 +239,16 @@
 
                   return this.$get(`mall/shops/${this.id}`).then((data) => {
                       this.shop = data;
+
                       loading = false;
-                  });
+                      callback();
+                  }, (err) => {
+                       console.error('Fail to fetch shop info', err);
+
+                       callback();
+                       this.hasShop = false;
+                       loading = false;
+                   });
                }
             })(),
             commitMessage() {

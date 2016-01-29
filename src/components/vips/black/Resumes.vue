@@ -397,6 +397,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             height: 100%;
+            text-align: center;
         }
     }
 

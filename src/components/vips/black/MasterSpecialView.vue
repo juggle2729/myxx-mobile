@@ -33,7 +33,7 @@
                 coverMoved: 0,
                 contentStartPos: 0,
                 contentMoved: 0,
-                minMove: 50,
+                minMove: 5,
                 coverDom: null,
                 contentDom: null
             };
@@ -94,8 +94,8 @@
                 event.stopPropagation();
 
                 this.coverMoved = curPos - this.coverStartPos;
-                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.coverMoved) + 'px)';
-                this.contentDom.style['-webkit-transition'] = 'ms linear';
+                //this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.coverMoved) + 'px)';
+                //this.contentDom.style['-webkit-transition'] = 'ms linear';
             },
             coverTouchEnd() {
                 var pageHeight = document.documentElement.clientHeight;
@@ -109,6 +109,8 @@
 
                     this.enableRefresh(false);
                 }
+
+                return true;
             },
             contentTouchStart(event) {
                 this.contentStartPos = event.touches[0].pageY;
@@ -128,8 +130,8 @@
                 event.stopPropagation();
 
                 this.contentMoved = curPos - this.contentStartPos;
-                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
-                this.contentDom.style['-webkit-transition'] = 'ms linear';
+//                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
+//                this.contentDom.style['-webkit-transition'] = 'ms linear';
 
                 this.enableRefresh(true);
             },
@@ -143,6 +145,8 @@
                     this.contentDom.style['-webkit-transform'] = 'translateY(' + -pageHeight + 'px)';
                     this.contentDom.style['-webkit-transition'] = '100ms linear';
                 }
+
+                return true;
             },
             fetchMasterInterviewInfo() {
                 return this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {

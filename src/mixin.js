@@ -111,15 +111,11 @@ const mixin = {
                         } else if(resp.status === 5004){
                             defer.reject();
                             this.$route.router.replace({name: '404'});
-                        } else if(resp.status === undefined) {
-                            defer.reject();
-                            this.$route.router.replace({name: 'nocontent'});
                         } else if(resp.status === 601) {// 统计接口缺少参数
                             console.log(resp.message);
                         } else {
                             defer.reject();
                             console.log('resp.status:'+resp.status);
-                            this.$route.router.replace({name: 'nocontent'});
                         }
                     });
                 }
