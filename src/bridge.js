@@ -17,13 +17,13 @@ let adapter = {
               // "photo" : "1287933.jpeg"
             };
             cb(JSON.stringify(user));
-        } 
+        }
         // else if(handler === 'keyboard') {
         //     if(!isMobile) {
         //         let comment = prompt("少年，来鉴宝吧！");
         //         comment && cb(comment);
         //     }
-        // } 
+        // }
         else if(handler === 'play') {
             this.$root.video = params.id;
         } else if(handler === 'coverflow') {
@@ -31,7 +31,7 @@ let adapter = {
                 ids: params.ids.split(','),
                 i: +params.index
             }
-        } else if(handler !== 'shareable'){
+        } else if(handler !== 'shareable' && handler !== 'toggleTopRefresh'){
             const span = document.createElement('span');
             span.className = 'toast white visible font-30';
             if(isMobile) {

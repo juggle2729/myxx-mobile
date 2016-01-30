@@ -67,17 +67,15 @@
                 return this.currentTab === tab.linkName;
             },
             link(tab) {
-                const [linkObj, userPattern] = [{
+                const linkObj = {
                     name: 'master',
                     replace: true,
                     params: { id: this.masterInfo.id },
-                    query: { replace: true, tab: tab }
-                }, /user\=([0-9^&]+)/ig];
-
-                const matchResult = userPattern.exec(location.search);
-                if (matchResult) {
-                    linkObj.query.user = matchResult[1];
-                }
+                    query: _.merge({}, this.$route.query, {
+                        tab: tab,
+                        replace: true
+                    })
+                };
 
                 return linkObj;
             }

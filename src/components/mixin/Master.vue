@@ -57,20 +57,16 @@
                 this.action('shareable', {title, desc, icon, url });
             },
             link(tab, isReplace = true, additionalParams = null) {
-                const [linkObj, userPattern] = [{
+                const linkObj = {
                     name: 'master',
-                    params: { id: this.id },
-                    query: { tab: tab }
-                }, /user\=([0-9^&]+)/ig];
-
-                const matchResult = userPattern.exec(location.search);
-                if (matchResult) {
-                    linkObj.query.user = matchResult[1];
+                    params: {id: this.id},
+                    query: _.merge({}, this.$route.query, {
+                        tab: tab
+                    })
                 }
 
                 if (isReplace) {
                     linkObj.replace = true;
-                    linkObj.query.replace = true;
                 }
 
                 if (additionalParams) {

@@ -29,6 +29,7 @@
             }
         }
     }
+
     .products {
        padding-bottom: 100px;
 
@@ -64,8 +65,17 @@
            }
        }
     }
+
     [class^="icon-"]:before {
         margin-right: 18px;
+    }
+
+    .icon-location {
+        .path1, .path3 {
+            &:before {
+                color: #888888;
+             }
+        }
     }
 }
 </style>
@@ -80,7 +90,10 @@
                 <span class="text">{{isExpand ? '收起' : '展开'}}</span>
             </div>
             <div class="contact border-vertical">
-                <div class="gray font-26 flex"><span class="icon-site">{{masterBaseData.address}}</span></div>
+                <div class="gray font-26 flex">
+                    <span class="icon-location"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                    {{masterBaseData.address}}
+                </div>
                 <div class="gray font-26 flex">
                     <p class="icon-phone flex-1">{{masterBaseData.phone}}</p>
                     <p class="font-26 red">藏品数<span>{{shop.products_count}}</span></p>

@@ -192,7 +192,7 @@
             .data {
                 margin-top: 35px;
                 color: #f5a242;
-                font-size: 60px;
+                font-size: 40px;
             }
         }
 
@@ -202,7 +202,7 @@
         }
 
         .contact-item:not(:first-child) {
-            margin-top: 62px;
+            margin-top: 66px;
         }
 
         .qrcode {
