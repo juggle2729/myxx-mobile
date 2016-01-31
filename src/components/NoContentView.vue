@@ -2,7 +2,7 @@
     <div class="notfound-view">
         <div class="content">
             <div class="img center-horizontal"></div>
-            <div class="text font-30">没有内容...</div>
+            <div class="text font-30">该条内容不存在...</div>
         </div>
     </div>
 </template>

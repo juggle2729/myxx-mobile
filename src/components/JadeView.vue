@@ -38,7 +38,8 @@
             }
         }
         .medias {
-            .text{
+            padding: 32px 0;
+            /*.text{
                 margin-top: 32px;
                 line-height: 46px;
             }
@@ -50,7 +51,7 @@
                 content: '';
                 display: block;
                 padding-bottom: 100%;
-            }
+            }*/
         }
     }
     .social {
@@ -70,7 +71,7 @@
             <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
         </div>
         <div class="flex">
-            <p class="red font-30 icon-price flex-1">{{info.price}}</p>
+            <p class="red font-30 icon-price flex-1">{{info.price | percent}}</p>
             <p class="light font-22 flex">{{info.display_count}}人浏览</p>
         </div>
     </div>
@@ -92,10 +93,6 @@
         </div>
         <div class="content">
             <p class="font-26">
-                <span class="light">编号</span>
-                <span>A976578758</span>
-            </p>
-            <p class="font-26">
                 <span class="light">类型</span>
                 <span>{{info.category.name}}</span>
             </p>
@@ -105,11 +102,11 @@
             </p>
             <p class="font-26">
                 <span class="light">重量</span>
-                <span>{{info.weight}}</span>
+                <span>{{info.weight | percent}}&nbsp;g</span>
             </p>
             <p class="font-26">
                 <span class="light">尺寸</span>
-                <span>{{info.size}}</span>
+                <span>{{info.size}}&nbsp;(cm)</span>
             </p>
             <p class="font-26">
                 <span class="light">皮色</span>

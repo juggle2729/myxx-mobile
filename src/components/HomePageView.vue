@@ -1,7 +1,7 @@
 <template>
 <div class="homepage-view bg-default">
     <div class="account border-bottom bg-white">
-        <div class="avatar-240 center-horizontal" v-bg.sm="photo" @click="coverflow(0)"></div>
+        <div class="avatar-240 center-avatar" v-bg.sm="photo" @click="coverflow(0)"></div>
         <p class="font-30 red center">{{nickname}}</p>
         <button v-if="!(follow || isSelf)" class="bg-red font-26 white center-horizontal" @click="toggleFollow">
             <span class="icon-like-active center"> 关注</span></button>

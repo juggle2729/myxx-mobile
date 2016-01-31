@@ -34,7 +34,7 @@ _.merge(Vue.http.options, {
     catch(resp, status, req) {
         console.error(status, req.responseURL);
         this.toggleLoading(false);
-        console.log('获取数据失败，请稍后再试！');
+        this.toast('获取数据失败，请稍后再试！');
     }
 });
 

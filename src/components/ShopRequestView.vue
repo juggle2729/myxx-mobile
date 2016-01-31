@@ -106,7 +106,7 @@ export default {
     },
     created() {
         this.$watch('result', (data) => {
-            if(data.name !== '' && data.phone !== 0){
+            if(data.phone !== 0){
                 this.checked = true;
             } else {
                 this.checked = false;
@@ -141,7 +141,7 @@ export default {
         submit() {
             this.$post('users/feedbacks', this.result)
                 .then(() => {
-                    this.action('modal', {text: '您的申请已成功提交！请耐心等待客服联系。'});
+                    this.action('modal');
                 });
             this.toggleShow();
         },

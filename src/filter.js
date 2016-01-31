@@ -47,6 +47,18 @@ function profile(user) {
     return route;
 }
 
+function percent(num) {
+    var str = num +'';
+    if(str.length === 2){
+      str = '0' +str;
+    } else if(str.length === 1){
+      str = '00' +str;
+    } else if(str.length === 0){
+      return '0.00';
+    }
+    return str.substring(0,str.length-2)+'.'+ str.substring(str.length-2,str.length);;
+}
+
 function role(id) {
     return config.roles[id];
 }
@@ -64,6 +76,7 @@ export default {
         Vue.filter('role', role);
         Vue.filter('type', type);
         Vue.filter('profile', profile);
+        Vue.filter('percent', percent);
         Vue.filter('truncate', truncate);
         Vue.filter('qn', qn);
     }
