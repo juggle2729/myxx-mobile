@@ -3,7 +3,7 @@
         <div class="cover img"></div>
         <div class="works-item">
             <div class="work-item" :class="[$index % 2 === 0 ? 'odd' : 'even']" v-for="work in items" @click="coverFlow($index)">
-                <div class="img" v-bg="work.vip_img" default="false" query="imageView2/1/w/750/h/774/interlace/1"></div>
+                <div class="img" v-bg="work.vip_img" holder="false" query="imageView2/1/w/750/h/774/interlace/1"></div>
                 <div class="description">{{work.name}}</div>
             </div>
         </div>

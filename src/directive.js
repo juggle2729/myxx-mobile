@@ -6,10 +6,10 @@ let preset = {
     video: 'vframe/jpg/offset/0/rotate/auto|imageView2/1/w/340/h/250'
 };
 const bg = {
-    params: ['query', 'default'],
+    params: ['query', 'holder'],
     bind() {
         this.query = this.params.query || preset[Object.keys(this.modifiers).pop() || 'lg'] || '';
-        this.default = this.params.default === 'false' ? false : true;
+        this.holder = this.params.holder === 'false' ? false : true;
     },
     update(id) {
         if(id) {
@@ -18,7 +18,7 @@ const bg = {
             if(/^image/i.test(this.query)) {
                 host = config.img;
                 bgImgStr = `url(${host + id + '?' + this.query})`;
-                if (this.default) {
+                if (this.holder) {
                     bgImgStr += `, url('//o0x80w5li.qnssl.com/placeholder/img.png')`;
                 }
             } else {
