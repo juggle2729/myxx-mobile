@@ -33,7 +33,7 @@
                 coverMoved: 0,
                 contentStartPos: 0,
                 contentMoved: 0,
-                minMove: 5,
+                minMove: 100,
                 coverDom: null,
                 contentDom: null
             };
@@ -94,8 +94,8 @@
                 event.stopPropagation();
 
                 this.coverMoved = curPos - this.coverStartPos;
-                //this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.coverMoved) + 'px)';
-                //this.contentDom.style['-webkit-transition'] = 'ms linear';
+                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.coverMoved) + 'px)';
+                this.contentDom.style['-webkit-transition'] = '0ms linear';
             },
             coverTouchEnd() {
                 var pageHeight = document.documentElement.clientHeight;
@@ -130,8 +130,8 @@
                 event.stopPropagation();
 
                 this.contentMoved = curPos - this.contentStartPos;
-//                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
-//                this.contentDom.style['-webkit-transition'] = 'ms linear';
+                this.contentDom.style['-webkit-transform'] = 'translateY(' + (this.contentMoved - pageHeight) + 'px)';
+                this.contentDom.style['-webkit-transition'] = '0ms linear';
 
                 this.enableRefresh(true);
             },
