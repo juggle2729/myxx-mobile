@@ -151,18 +151,12 @@
             vertical-align: top;
             display: inline-block;
             width: percentage(1/3);
-            padding-top: percentage(1/3);
-            border: thick solid white;
-            background-size: cover;
-            background-position: center;
+            padding-top: -webkit-calc(33.3333% - 10px);
+            border: 5px solid white;
         }
+
         .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
             margin-right: percentage(1/3);
-        }
-        .unique {
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
         }
     }
 }
@@ -225,11 +219,13 @@
 
                     <div v-if="dynamic.event_type === 'topic_add'">
                         <div class="medias">
-                            <div class="unique" v-if="dynamic.event.media.length === 1" @click.stop="coverflow(dynamic.event.media, 0)" v-bg.lg="dynamic.event.media[0].id"></div>
+                            <div v-if="dynamic.event.media.length === 1">
+                                <img class="img" @click.stop="coverflow(dynamic.event.media, 0)" :src="config.img + dynamic.event.media[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+                            </div>
                             <template v-else="dynamic.event.media.length !== 1">
-                                <template v-for="media in dynamic.event.media">
-                                    <div class="media picture" @click.stop="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div>
-                                    <div class="media play" @click.stop="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
+                                <template v-for="media in dynamic.event.media"
+                                    ><div class="media img" @click.stop="coverflow(dynamic.event.media, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                                    ><div class="media play" @click.stop="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div>
                                 </template>
                             </template>
                         </div>
