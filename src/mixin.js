@@ -77,7 +77,7 @@ const mixin = {
                     }
                 } else if('login' === handler) {
                     resolver = _.noop;
-                } else if('confirm,delete'.indexOf(handler) !== -1) {
+                } else if('confirm,delete,version'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
                 } else if('share,shareable'.indexOf(handler) !== -1) {
                     if(params.desc.length > 20) {
@@ -106,13 +106,18 @@ const mixin = {
                     this.$http[method](url, data).then(({data: resp}) => {
                         if(resp.status === 200) {
                             defer.resolve(resp.data);
-                        } else if(resp.status === 605 || resp.status === 608){
+                        } else if(resp.status === 605 || resp.status === 608){//token问题
                             this.action('login');
                         } else if(resp.status === 5004){
                             defer.reject();
                             this.$route.router.replace({name: '404'});
                         } else if(resp.status === 601) {// 统计接口缺少参数
+                            defer.reject();
                             console.log(resp.message);
+                        } else if(resp.status === 3002) {// 商品话题个人页面缺少内容
+                            defer.reject();
+                            console.log(resp.message);
+                            this.$route.router.replace({'name': 'nocontent'});
                         } else {
                             defer.reject();
                             console.log('resp.status:'+resp.status);

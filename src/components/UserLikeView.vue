@@ -74,11 +74,14 @@ export default {
                                 entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
                                 entry.result = '鉴定结果为 ' + entry.result;
                             } else if (item.type === 30) {//media
-                                entry.description = '分享了一个话题';
+                                entry.description = '发布的话题';
+                                if(entry.content_type === 'short_text' && entry.content !== ''){
+                                    entry.description = entry.content;
+                                }
                                 entry.imgPreview = entry.media[0].id;
                             } else if (item.type === 40) {
                                 entry.post_id = entry.id;
-                                entry.description = entry.name + ' ' + entry.moral.name;
+                                entry.description = entry.name + ' ' + (entry.moral? entry.moral.name: '');
                                 entry.user.name = entry.user.nickname;
                                 entry.imgPreview = entry.imgs[0];
                                 if(entry.product_rewards.length > 0){

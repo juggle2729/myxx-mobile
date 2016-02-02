@@ -86,7 +86,7 @@
 </style>
 <template>
   <div class="loading">
-    <div v-if="isShare" class="share-top flex bg-default border-bottom">
+    <div v-if="isShare && !isMaster" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
@@ -95,7 +95,7 @@
         <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="isShare" @click="openApp()" class="share-bottom flex bg-red white font-30">
+    <div v-if="isShare && !isMaster" @click="openApp()" class="share-bottom flex bg-red white font-30">
         <img :src="'share/left.png' | qn" alt="left">
         <div class="flex-1 center bold">{{text}}</div>
         <img :src="'share/right.png' | qn" alt="right">
@@ -144,6 +144,9 @@ export default {
             let path = this.$route.path;
             path = path.replace(/user=\d+&?/, '').replace(/\?$/, '');  // 去掉分享过程中加的参数
             return 'myxx://web/' + encodeURIComponent(path);
+        },
+        isMaster() {
+            return this.$route.name === 'master';
         }
     },
     ready() {
