@@ -135,7 +135,7 @@
                         </template>
                     </div>
                 </div>
-                <social-bar :id="dynamic.event.post_id" :type="likeType(dynamic.event_type)" :active="dynamic.event.liked"
+                <social-bar v-if="dynamic.event_type === 'topic_add'" :id="dynamic.event.post_id" :type="likeType(dynamic.event_type)" :active="dynamic.event.liked"
                             :total="dynamic.event.like" :list="dynamic.event.likes" class="border-top social bg-white">
                     <div class="border-left gray extra-action center" v-link="{name: 'evaluation', params: {id: dynamic.event.post_id}}">
                         <i class="icon-comment"></i><span>{{dynamic.event.comment}}</span>

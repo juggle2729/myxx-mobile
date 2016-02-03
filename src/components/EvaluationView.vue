@@ -1,6 +1,6 @@
 <style lang="sass">
 .evaluation-detail {
-    padding-bottom: 80px;
+    padding-bottom: 130px;
     .results {
         padding: 24px 32px;
     }
@@ -55,7 +55,7 @@
                 background-size: 60px;
             }
         }
-/*        .social {
+        .social {
             margin-top: 20px;
             > div {
                 width: calc(50% - 10px);
@@ -69,7 +69,7 @@
             .comment {
                 margin-left: 10px;
             }
-        }*/
+        }
     }
     .evaluation-btn {
         margin: 16px 0 8px 0;
@@ -88,11 +88,31 @@
         margin-top: 48px;
         margin-bottom: 32px;
     }
-    .social {
+    .fake-input {
         position: fixed;
-        z-index: 9;
         bottom: 0;
         width: 100%;
+        background-color: #f9f9f9;
+        color: red;
+        height: 98px;
+        padding: 16px;
+        .input {
+            background-color: white;
+            color: #c6c6c6;
+            padding: 0 20px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 8px;
+        }
+        .submit {
+            line-height: 72px;
+            margin-left: 16px;
+            width: 140px;
+            height: 72px;
+            color: white;
+            background-color: #b2b2b2;
+            border-radius: 8px;
+        }
     }
 }
 </style>
@@ -132,7 +152,7 @@
             </div>
             <div class="social flex gray font-26">
                 <div @click="like(result)" class="like center" :class="{'red': result.liked}"><i class="{{result.liked ? 'icon-like-active' : 'icon-like'}}"></i><span>{{result.like}}</span></div>
-                <div v-link="{name: 'result-comment', params: {id: result.id}}" class="comment center"><i class="icon-comment"></i><span>{{evaluation.comment}}</span></div>
+                <div v-link="{name: 'result-comment', params: {id: result.id}}" class="comment center"><i class="icon-comment"></i><span>{{result.comment}}</span></div>
             </div>
         </div>
         <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
@@ -141,15 +161,15 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <comment type="10" :id="evaluation.post_id"></comment>
-    <social-bar :id="evaluation.post_id" type="10" :total="evaluation.like" :list="evaluation.likes" :active="evaluation.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
-    </social-bar>
+    <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
+    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
+        <div class="input flex-1">点击此处发表评论...</div>
+        <div class="submit center">发送</div>
+    </div>
 </div>
 </template>
 <script>
 import Comment from './Comment.vue';
-import SocialBar from './SocialBar.vue';
 export default {
     name: 'EvaluationView',
     data() {
@@ -165,8 +185,7 @@ export default {
         };
     },
     components: {
-        Comment,
-        SocialBar
+        Comment
     },
     computed: {
         prices() {
@@ -202,6 +221,21 @@ export default {
             }
             return {label, action};
         }
+    },
+    ready() {
+        let title = '快帮我鉴定一下这个宝贝！';
+        if(!this.evaluation.unidentified) {
+            title = '快来看看我的鉴定吧！';
+        }
+        let desc = this.evaluation.description;
+        let icon = this.evaluation.pictures[0];
+        let url = location.origin + location.pathname;
+        let query = _.merge({}, this.$route.query, {
+            id: this.evaluation.post_id,
+            type: 'jianbao'
+        });
+        url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+        this.action('shareable', {title, desc, icon, url});
     },
     route: {
         data({to}) {
@@ -244,21 +278,6 @@ export default {
         },
         play(id) {
             this.action('play', {id});
-        },
-        share() {
-            let title = '快帮我鉴定一下这个宝贝！';
-            if(!this.evaluation.unidentified) {
-                title = '快来看看我的鉴定吧！';
-            }
-            let desc = this.evaluation.description;
-            let icon = this.evaluation.pictures[0];
-            let url = location.origin + location.pathname;
-            let query = _.merge({}, this.$route.query, {
-                id: this.evaluation.post_id,
-                type: 'jianbao'
-            });
-            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            this.action('share', {title, desc, icon, url});
         }
     }
 }

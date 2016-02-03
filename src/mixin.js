@@ -44,11 +44,15 @@ const mixin = {
     },
     methods: {
         toast(msg, delay = 2000) {
+            const toast = document.querySelector('.toast');
+            if(toast) {
+                toast.parentNode.removeChild(toast);
+            }
             const span = document.createElement('span');
             span.innerText = msg;
-            span.className = 'toast white visible';
+            span.className = 'toast white visible font-30';
             document.body.appendChild(span);
-            setTimeout(() => span.parentNode.removeChild(span), delay);
+            setTimeout(() => span.parentNode && span.parentNode.removeChild(span), delay);
         },
         toggleLoading(show) {
             const appContainer = document.querySelector('#app');

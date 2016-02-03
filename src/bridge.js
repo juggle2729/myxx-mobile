@@ -7,7 +7,7 @@ let adapter = {
         if(handler === 'user') {
             let user = {
               // "id" : "2",
-              // "token" : "4713bc32-fa8c-42bc-94b3-858802327d7e",
+              // "token" : "e6f1855f-2592-4815-8ae2-ce65a9db5b91",
               // "gender" : "1",
               // "phone" : "15871705303",
               // "nickname" : "余长春",
@@ -23,7 +23,10 @@ let adapter = {
         //         let comment = prompt("少年，来鉴宝吧！");
         //         comment && cb(comment);
         //     }
-        // }
+        // } 
+        else if(handler === 'delete') {
+            cb.call(this, window.confirm('删除评论？') ? '1' : '0');
+        }
         else if(handler === 'play') {
             this.$root.video = params.id;
         } else if(handler === 'coverflow') {
@@ -31,7 +34,11 @@ let adapter = {
                 ids: params.ids.split(','),
                 i: +params.index
             }
-        } else if(handler !== 'shareable' && handler !== 'toggleTopRefresh'){
+        } else if('shareable,toggleTopRefresh'.indexOf(handler) === -1){
+            const toast = document.querySelector('.toast');
+            if(toast) {
+                toast.parentNode.removeChild(toast);
+            }
             const span = document.createElement('span');
             span.className = 'toast white visible font-30';
             if(isMobile) {

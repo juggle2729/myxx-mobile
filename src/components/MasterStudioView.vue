@@ -1,127 +1,127 @@
 <style lang="sass">
-    .master-studio-view {
-        padding-bottom: 120px;
-        .qrcode {
-            padding: 72px 0 50px 0;
-            .code-img {
-                display: inline-block;
-                width: 180px;
-                height: 180px;
-                margin-bottom: 32px;
-                background-size: cover;
-            }
-        }
-        .studio {
-            padding: 72px 0 32px 0;
-            .content {
-                padding: 0 32px;
-                text-align: left;
-                text-indent: 54px;
-                line-height: 38px;
-                margin: 32px 0;
-            }
-            [type='button'] {
-                width: 200px;
-                height: 60px;
-                border: 0;
-                border-radius: 4px;
-            }
-            .logo {
-                width: 180px;
-                height: 180px;
-                margin: 0 auto 32px auto;
-                background-size: cover;
-                background-position: center;
-            }
-            .expand .arrow {
-                margin-right: -12px;
-            }
-        }
-
-        .contact {
-            .title {
-                height: 80px;
-                line-height: 80px;
-            }
-            .content {
-                padding: 40px 72px;
-                >div {
-                   display: -webkit-box;
-                   .right-120{
-                       margin-right: 120px;
-                   }
-                   &:not(:last-child) {
-                      margin-bottom: 40px;
-                   }
-                   img {
-                      width: 32px;
-                      height: 32px;
-                      border-radius: 50%;
-                      margin-right: 18px;
-                   }
-                   i {
-                      margin-right: 12px;
-                   }
-                   & > div {
-                      width: 243px;
-                   }
-                }
-
-                .wrap-row {
-                    word-break: break-all;
-                    word-wrap:break-word;
-                }
-
-                .email img {
-                    width: 28px;
-                    height: 28px;
-                    border-radius: 0;
-                }
-                .icon-location {
-                    font-size: 32px;
-                }
-            }
-        }
-        .message {
-            .title {
-                height: 80px;
-            }
-            .content {
-                padding: 0 32px;
-                textarea {
-                   width: 686px;
-                   height: 240px;
-                   border: 0;
-                   border-radius: 8px;
-                   resize: none;
-                   padding: 5px;
-                   line-height: 26px;
-                }
-                [type="button"] {
-                   width: 686px;
-                   height: 80px;
-                   border: 0;
-                   border-radius: 8px;
-                }
-                .line-title {
-                   margin: 17px 0;
-                }
-            }
-            .comment-component {
-                padding: 0 0 24px 0;
-                .comment-header .red {
-                    display: none;
-                }
-            }
-            .margin-bottom:not(:first-child) {
-                margin-top: 32px;
-            }
-        }
-
-        .border-all {
-            box-shadow: 0 0 1px 0 #aaa;
+.master-studio-view {
+    padding-bottom: 120px;
+    .qrcode {
+        padding: 72px 0 50px 0;
+        .code-img {
+            display: inline-block;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 32px;
+            background-size: cover;
         }
     }
+    .studio {
+        padding: 72px 0 32px 0;
+        .content {
+            padding: 0 32px;
+            text-align: left;
+            text-indent: 54px;
+            line-height: 38px;
+            margin: 32px 0;
+        }
+        [type='button'] {
+            width: 200px;
+            height: 60px;
+            border: 0;
+            border-radius: 4px;
+        }
+        .logo {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 32px auto;
+            background-size: cover;
+            background-position: center;
+        }
+        .expand .arrow {
+            margin-right: -12px;
+        }
+    }
+
+    .contact {
+        .title {
+            height: 80px;
+            line-height: 80px;
+        }
+        .content {
+            padding: 40px 72px;
+            >div {
+               display: -webkit-box;
+               .right-120{
+                   margin-right: 120px;
+               }
+               &:not(:last-child) {
+                  margin-bottom: 40px;
+               }
+               img {
+                  width: 32px;
+                  height: 32px;
+                  border-radius: 50%;
+                  margin-right: 18px;
+               }
+               i {
+                  margin-right: 12px;
+               }
+               & > div {
+                  width: 243px;
+               }
+            }
+
+            .wrap-row {
+                word-break: break-all;
+                word-wrap:break-word;
+            }
+
+            .email img {
+                width: 28px;
+                height: 28px;
+                border-radius: 0;
+            }
+            .icon-location {
+                font-size: 32px;
+            }
+        }
+    }
+    .message {
+        .title {
+            height: 80px;
+        }
+        .content {
+            padding: 0 32px;
+            textarea {
+               width: 686px;
+               height: 240px;
+               border: 0;
+               border-radius: 8px;
+               resize: none;
+               padding: 5px;
+               line-height: 26px;
+            }
+            [type="button"] {
+               width: 686px;
+               height: 80px;
+               border: 0;
+               border-radius: 8px;
+            }
+            .line-title {
+               margin: 17px 0;
+            }
+        }
+        .comment-component {
+            padding: 0 0 24px 0;
+            .comment-header .red {
+                display: none;
+            }
+        }
+        .margin-bottom:not(:first-child) {
+            margin-top: 32px;
+        }
+    }
+
+    .border-all {
+        box-shadow: 0 0 1px 0 #aaa;
+    }
+}
 </style>
 <template>
     <div class="master-studio-view bg-white">

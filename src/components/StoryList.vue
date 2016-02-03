@@ -38,9 +38,7 @@
             margin-right: percentage(1/3);
         }
         .unique {
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
+            max-width: 100%;
         }
     }
 }
@@ -62,7 +60,7 @@
             </div>
             <div class="medias">
                 <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">
-                    <img :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'" @click.stop="coverflow(item, 0)">
+                    <img class="unique" :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'" @click.stop="coverflow(item, 0)">
                 </div>
                 <template v-else>
                     <template v-for="media in item.medias"

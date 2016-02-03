@@ -1,6 +1,5 @@
 require('./utils/resize');
 require('./utils/scroll');
-
 require('fastclick').attach(document.body);
 import _ from 'lodash';
 import config from './config';
@@ -43,13 +42,17 @@ const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
 router.beforeGo((from, to) => {
     let stopAppRoute = to.raw && (to.query.replace === 'true');
-    let useAppGo = /myxx/i.test(navigator.userAgent)
+    let stop = /myxx/i.test(navigator.userAgent)
                  && !stopAppRoute
                  && from.fullPath !== to.fullPath;
-    if(useAppGo) {
+    if(stop) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
+    } else if(from.query && from.query.user && (to.name !== 'master' ||
+        to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
+            from.router.app.toast('请在【美玉秀秀】里查看');
+            stop = true;
     }
-    return !useAppGo;
+    return !stop;
 });
 router.beforeEach(({from, to, abort, next}) => {
     appContainer.classList.add('loading');
@@ -61,13 +64,7 @@ router.beforeEach(({from, to, abort, next}) => {
         document.title = (to.title || '美玉秀秀');
     }
 
-    if(from.query && from.query.user && (to.name !== 'master' ||
-        to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
-        from.router.app.toast('请在【美玉秀秀】里查看');
-        abort();
-    } else {
-        next();
-    }
+    next();
 });
 router.afterEach(({to}) => {
     //if(!_.get(to, 'query.position')) {

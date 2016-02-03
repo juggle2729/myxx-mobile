@@ -122,7 +122,8 @@ export default {
         return {
             user: {},
             video: undefined,
-            img: undefined
+            img: undefined,
+            scrollY: 0
         }
     },
     computed: {
@@ -153,8 +154,24 @@ export default {
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
         emitter.on('open-app', (e) => this.openApp());
-        this.$watch('img', (img) => this.$el.classList[img?'add':'remove']('frozen'));
-        this.$watch('video', (video) => this.$el.classList[video?'add':'remove']('frozen'));
+        this.$watch('img', (img) => {
+                if(img) {
+                    this.scrollY = window.scrollY;
+                    this.$el.classList.add('frozen');
+                } else {
+                    this.$el.classList.remove('frozen');
+                    window.scrollTo(0, this.scrollY);
+                }
+            });
+        this.$watch('video', (video) => {
+            if(video) {
+                this.scrollY = window.scrollY;
+                this.$el.classList.add('frozen');
+            } else {
+                this.$el.classList.remove('frozen');
+                window.scrollTo(0, this.scrollY);
+            }
+        });
 
         if(this.isShare) {
             this.$get('log/content_readings', this.$route.query).then(_.noop);

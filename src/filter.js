@@ -40,11 +40,8 @@ function truncate(str, len) {
 
 function profile(user) {
     let id = user.id || user.user_id;
-    const route = {name: 'user-profile', params: {id}};
-    if(user.website_status === true) {
-        route.name = 'master';
-    }
-    return route;
+    let name = user.website_status === true ? 'master' : 'user-profile';
+    return {name, params: {id}};
 }
 
 function percent(num) {
