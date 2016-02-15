@@ -2,7 +2,7 @@
     <div class="titles" v-if="resumes.length">
         <nav class="title-list">
             <li class="title-item" v-for="title in titleData" :class="countStyle($index, title)" :style="{zIndex: zIndex($index)}" track-by="$index">
-                <span class="text">{{title}}</span>
+                <span class="text" v-html="titleText(title)"></span>
             </li>
         </nav>
         <div class="date-container" v-show="showDate">
@@ -28,6 +28,11 @@
             if (this.tab) {
                 document.querySelector('.master-vip-black-home .menus').scrollIntoView();
             }
+
+            // check user agent
+            const userAgent = navigator.userAgent.toLowerCase();
+            this.isQQBrowser = userAgent.indexOf('android') !== -1 &&
+                userAgent.indexOf('mqqbrowser') !== -1 && userAgent.indexOf('micromessenger') !== -1;
 
             let titlesDom = document.querySelector('.titles');
             if (titlesDom) {
@@ -71,7 +76,8 @@
                 dateInit: false,
                 resumes: [],
                 showDate: false,
-                timer: null
+                timer: null,
+                isQQBrowser: false
             };
         },
         computed: {
@@ -99,6 +105,28 @@
                 }
 
                 this.titleDateInit();
+                this.changeTitleTextStyle();
+            },
+            changeTitleTextStyle() {
+                if (!this.isQQBrowser) {
+                    return;
+                }
+
+                const textItems = document.querySelectorAll('.titles .title-text-item');
+                Array.prototype.slice.call(textItems, 0).forEach(curNode => {
+                    if (/\d/g.test(curNode.innerHTML)) {
+                        return;
+                    }
+
+                    curNode.style.transform = 'rotate(-90deg)';
+                    curNode.style['-webkit-transform'] = 'rotate(-90deg)';
+                });
+            },
+            titleText(title) {
+                if (!this.isQQBrowser) {
+                    return title;
+                }
+                return title.split('').map(item => '<span class="title-text-item">' + item + '</span>').join('');
             },
             zIndex(index) {
                 return this.resumes.length * 2 - (2 * index);
@@ -271,7 +299,7 @@
         }
     }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
     @import '../../../styles/partials/_var.scss';
 
     @mixin listBg($bgColor, $iconColor) {
@@ -398,6 +426,10 @@
             transform: translate(-50%, -50%);
             height: 100%;
             text-align: center;
+        }
+
+        .title-text-item {
+            display: inline-block;
         }
     }
 

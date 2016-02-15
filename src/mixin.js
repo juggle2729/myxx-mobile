@@ -122,6 +122,8 @@ const mixin = {
                             defer.reject();
                             console.log(resp.message);
                             this.$route.router.replace({'name': 'nocontent'});
+                        } else if (resp.status === 2000) { //商家店铺被关闭
+                            defer.reject(resp.message);
                         } else {
                             defer.reject();
                             console.log('resp.status:'+resp.status);
