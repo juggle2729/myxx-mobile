@@ -4,7 +4,7 @@
         <div class="enter-store">
             <span class="button" v-link="{name: 'master', params: {id: id}, query: {tab: 'store'}}">进入工作室</span>
         </div>
-        <div class="content">
+        <div class="store-content">
             <div class="title">{{shop.shop_name}}简介</div>
             <div class="detail">{{shop.shop_about}}</div>
         </div>
@@ -159,7 +159,7 @@
             width: 100%;
         }
 
-        .content {
+        .store-content {
             padding: 72px 60px 0;
             .title {
                 text-align: center;

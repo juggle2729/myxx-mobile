@@ -1,5 +1,5 @@
 <template>
-    <div class="titles" v-if="resumes.length">
+    <div class="resumes-titles" v-if="resumes.length">
         <nav class="title-list">
             <li class="title-item" v-for="title in titleData" :class="countStyle($index, title)" :style="{zIndex: zIndex($index)}" track-by="$index">
                 <span class="text" v-html="titleText(title)"></span>
@@ -34,12 +34,12 @@
             this.isQQBrowser = userAgent.indexOf('android') !== -1 &&
                 userAgent.indexOf('mqqbrowser') !== -1 && userAgent.indexOf('micromessenger') !== -1;
 
-            let titlesDom = document.querySelector('.titles');
+            let titlesDom = document.querySelector('.resumes-titles');
             if (titlesDom) {
                 this.initPage(titlesDom);
             } else {
                 this.timer = setInterval(() => {
-                    titlesDom = document.querySelector('.titles');
+                    titlesDom = document.querySelector('.resumes-titles');
                     if (titlesDom) {
                         this.initPage(titlesDom);
                         clearInterval(this.timer);
@@ -112,7 +112,7 @@
                     return;
                 }
 
-                const textItems = document.querySelectorAll('.titles .title-text-item');
+                const textItems = document.querySelectorAll('.resumes-titles .title-text-item');
                 Array.prototype.slice.call(textItems, 0).forEach(curNode => {
                     if (/\d/g.test(curNode.innerHTML)) {
                         return;
@@ -328,196 +328,196 @@
          }
     }
 
-    li {
-        display: inline-block;
-    }
-
-    .titles {
+    .resumes-titles {
         margin-top: 170px;
         color: #fff;
-    }
 
-    .title-list {
-        text-align: center;
-        position: relative;
-        width: 100%;
-        height: 624px;
-
-        .title-item.level-remove {
-            left: -199px;
-        }
-
-        .title-item.level-1 {
-            @include listBg(#4d3616, #3a2810);
-            transform: scale(0.95, 0.95) translateX(72px);
-            -webkit-transform: scale(0.95, 0.95) translateX(72px);
-            background-color: #4d3616;
-        }
-
-        .title-item.level-2 {
-            @include listBg(#3b2911, #2d1e0b);
-            transform: scale(0.90, 0.90) translateX(144px);
-            -webkit-transform: scale(0.90, 0.90) translateX(144px);
-        }
-
-        .title-item.level-3 {
-            @include listBg(#261a0c, #2d1e0b);
-            transform: scale(0.85, 0.85) translateX(216px);
-            -webkit-transform: scale(0.85, 0.85) translateX(216px);
-        }
-
-        .title-item.level-least {
-            @include listBg(#261a0c, #2d1e0b);
-            transform: scale(0.85, 0.85) translateX(216px);
-            -webkit-transform: scale(0.85, 0.85) translateX(216px);;
-        }
-
-        .title-item.active.second-line {
-            .text {
-                position: relative;
-                left: -10%;
-            }
-        }
-
-        .title-item.active.first-line {
-            .text {
-                position: relative;
-                left: -21%;
-                top: 9%;
-            }
-        }
-
-        .title-item.active.third-line {
-            .text {
-                position: relative;
-                left: 0;
-            }
-        }
-    }
-
-    .title-item {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        margin-left: -114.5px;
-        background: url('#{$qn}/artist/title_bg.jpg') no-repeat;
-        background-size: cover;
-        font-size: 40px;
-        height: 704px;
-        width: 229px;
-
-        word-wrap: break-word;
-        letter-spacing: 5px;
-        text-align: justify;
-
-        -webkit-writing-mode: vertical-rl;
-        writing-mode: tb-rl;
-        writing-mode: vertical-rl;
-
-        transition: all 0.4s ease;
-        -webkit-transition: all 0.4s ease;
-
-        .text {
-            padding: 62px 0;
-            line-height: 48px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 100%;
-            text-align: center;
-        }
-
-        .title-text-item {
+        li {
             display: inline-block;
         }
-    }
 
-    .date-container {
-        margin-top: 120px;
-        position: relative;
-    }
-
-    .title-date-list {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        margin-left: -30px;
-
-        font-size: 18px;
-        clear: both;
-
-        transition: all 0.8s ease;
-        -webkit-transition: all 0.8s ease;
-
-        .split {
-            position: absolute;
-            top: 42px;
-            left: 10px;
-            z-index: 1;
-            background-color: #fff;
-            width: 95%;
-            height: 1px;
-        }
-
-        .dot {
-            background: #000;
-            border-radius: 30px;
-            width: 30px;
-            height: 30px;
+        .title-list {
             text-align: center;
             position: relative;
-            z-index: 2;
+            width: 100%;
+            height: 624px;
+
+            .title-item.level-remove {
+                left: -199px;
+            }
+
+            .title-item.level-1 {
+                @include listBg(#4d3616, #3a2810);
+                transform: scale(0.95, 0.95) translateX(72px);
+                -webkit-transform: scale(0.95, 0.95) translateX(72px);
+                background-color: #4d3616;
+            }
+
+            .title-item.level-2 {
+                @include listBg(#3b2911, #2d1e0b);
+                transform: scale(0.90, 0.90) translateX(144px);
+                -webkit-transform: scale(0.90, 0.90) translateX(144px);
+            }
+
+            .title-item.level-3 {
+                @include listBg(#261a0c, #2d1e0b);
+                transform: scale(0.85, 0.85) translateX(216px);
+                -webkit-transform: scale(0.85, 0.85) translateX(216px);
+            }
+
+            .title-item.level-least {
+                @include listBg(#261a0c, #2d1e0b);
+                transform: scale(0.85, 0.85) translateX(216px);
+                -webkit-transform: scale(0.85, 0.85) translateX(216px);;
+            }
+
+            .title-item.active.second-line {
+                .text {
+                    position: relative;
+                    left: -10%;
+                }
+            }
+
+            .title-item.active.first-line {
+                .text {
+                    position: relative;
+                    left: -21%;
+                    top: 9%;
+                }
+            }
+
+            .title-item.active.third-line {
+                .text {
+                    position: relative;
+                    left: 0;
+                }
+            }
         }
 
-        .inner {
+        .title-item {
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 50%;
-            margin-top: -6px;
-            margin-left: -6px;
-            background: #c18f4a;
-            width: 12px;
-            height: 12px;
-            border-radius: 12px;
-            display: inline-block;
+            margin-left: -114.5px;
+            background: url('#{$qn}/artist/title_bg.jpg') no-repeat;
+            background-size: cover;
+            font-size: 40px;
+            height: 704px;
+            width: 229px;
+
+            word-wrap: break-word;
+            letter-spacing: 5px;
+            text-align: justify;
+
+            -webkit-writing-mode: vertical-rl;
+            writing-mode: tb-rl;
+            writing-mode: vertical-rl;
+
+            transition: all 0.4s ease;
+            -webkit-transition: all 0.4s ease;
+
+            .text {
+                padding: 62px 0;
+                line-height: 48px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 100%;
+                text-align: center;
+            }
+
+            .title-text-item {
+                display: inline-block;
+            }
         }
 
-        .text {
+        .date-container {
+            margin-top: 120px;
+            position: relative;
+        }
+
+        .title-date-list {
             position: absolute;
-            bottom: -25px;
-            left: 0;
-            font-size: 13px;
-        }
+            top: 0;
+            left: 50%;
+            margin-left: -30px;
 
-        .title-date-item.active {
+            font-size: 18px;
+            clear: both;
+
+            transition: all 0.8s ease;
+            -webkit-transition: all 0.8s ease;
+
+            .split {
+                position: absolute;
+                top: 42px;
+                left: 10px;
+                z-index: 1;
+                background-color: #fff;
+                width: 95%;
+                height: 1px;
+            }
+
             .dot {
+                background: #000;
+                border-radius: 30px;
+                width: 30px;
+                height: 30px;
+                text-align: center;
                 position: relative;
-                top: 16px;
-
-                width: 58px;
-                height: 58px;
-                border-radius: 58px;
+                z-index: 2;
             }
 
             .inner {
-                width: 40px;
-                height: 40px;
-                border-radius: 40px;
-                margin-top: -20px;
-                margin-left: -20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -6px;
+                margin-left: -6px;
+                background: #c18f4a;
+                width: 12px;
+                height: 12px;
+                border-radius: 12px;
+                display: inline-block;
             }
 
             .text {
-                font-size: 25px;
-                color: #c18f4a;
+                position: absolute;
+                bottom: -25px;
+                left: 0;
+                font-size: 13px;
+            }
+
+            .title-date-item.active {
+                .dot {
+                    position: relative;
+                    top: 16px;
+
+                    width: 58px;
+                    height: 58px;
+                    border-radius: 58px;
+                }
+
+                .inner {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 40px;
+                    margin-top: -20px;
+                    margin-left: -20px;
+                }
+
+                .text {
+                    font-size: 25px;
+                    color: #c18f4a;
+                }
             }
         }
-    }
 
-    .title-date-list.activing {
-        .dot {
-            top: 30px;
+        .title-date-list.activing {
+            .dot {
+                top: 30px;
+            }
         }
     }
 </style>
