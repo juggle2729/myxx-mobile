@@ -108,8 +108,7 @@
     </div>
     <div id="img-player" v-if="img" @click="img = undefined"
         @touchstart.prevent="img.x=$event.pageX" @touchend.prevent="transform($event.pageX-img.x)">
-        <img :src="config.img + img.ids[img.i] + '?imageView2/3/w/600/interlace/1'"
-            onload="javascript:if(this.clientHeight>this.parentNode.clientHeight){this.style.top=0;this.style.transform='none';}"/>
+        <img :src="config.img + img.ids[img.i] + '?imageView2/3/w/600/interlace/1'" onload="javascript:if(this.clientHeight>this.parentNode.clientHeight){this.style.top=0;this.style.transform='none';}" />
         <div class="paging font-30">{{+img.i+1 + '/' + img.ids.length}}</div>
     </div>
   </div>

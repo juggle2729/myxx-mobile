@@ -30,9 +30,17 @@ let adapter = {
         else if(handler === 'play') {
             this.$root.video = params.id;
         } else if(handler === 'coverflow') {
-            this.$root.img = {
-                ids: params.ids.split(','),
-                i: +params.index
+            if(window.WeixinJSBridge) {
+                let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
+                WeixinJSBridge.invoke('imagePreview', {
+                    urls,
+                    current: urls[+params.index] 
+                });
+            } else {
+                this.$root.img = {
+                    ids: params.ids.split(','),
+                    i: +params.index
+                }
             }
         } else if('shareable,toggleTopRefresh'.indexOf(handler) === -1){
             const toast = document.querySelector('.toast');

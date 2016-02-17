@@ -11,7 +11,7 @@
         <div class="separ"></div>
         <div class="textarea">
             <div class="content">
-                <p class="font-22 blue"> 快速申请开通店铺，也可联系我们，400-0000-8888</p>
+                <p class="font-22 blue"> 快速申请开通店铺，也可联系我们，400-0587-266</p>
                 <p class="font-30 line-42"> 美玉秀秀是国内最大的和田玉鉴定社交交易平台，全国各地超过4000家高品质店铺现已入驻，期待您的加入。</p>
             </div>
             <div class="title border-bottom font-30">
