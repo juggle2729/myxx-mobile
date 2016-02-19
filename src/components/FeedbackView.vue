@@ -35,6 +35,7 @@ export default {
                 this.phone = '';
                 this.mail = '';
             }
+
             if(data.content === ''){
                 this.checked = false;
             } else if(data.contact === '') {

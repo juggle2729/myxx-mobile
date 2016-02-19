@@ -35,6 +35,11 @@ export default {
         title: '宝贝详情',
         component: require('./components/JadeView.vue')
     },
+    '/master/:id/evaluations': {
+        name: 'master-evaluations',
+        title: '在线鉴定',
+        component: require('./components/MasterEvaluationsView.vue')
+    },
     '/masters': {
         name: 'masters',
         title: '官网秀',
