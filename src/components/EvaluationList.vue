@@ -64,7 +64,7 @@
 </style>
 <template>
 <div class="evaluation-list bg-white">
-    <template v-for="item in items">
+    <template v-for="item in items" track-by="id">
         <div :class="{'separator-20': $index !=0 , 'separator': $index === 0}"></div>
         <div class="item" v-link="{name: 'evaluation', params: {id: item.post_id}}">
             <div class="header">
