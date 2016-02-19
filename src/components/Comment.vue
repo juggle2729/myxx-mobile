@@ -13,7 +13,8 @@
             display: -webkit-box;
             display: -webkit-inline-box;
             -webkit-box-align: center;
-            height: 108px;
+            /*height: 108px;*/
+            margin: 20px 0;
         }
         span {
             line-height: 46px;
@@ -39,16 +40,16 @@
         <div v-if="!hasInput" @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="border-bottom" v-for="c in items" @click="clicked(c, $event)">
-            <div class="author" v-link="c.reply_from | profile">
-                <div class="avatar margin-right" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+        <li class="border-bottom" v-for="c in items" @click="clicked(c, $event, $index)">
+            <div class="author">
+                <div class="avatar margin-right" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
                 <div>
-                    <h3 class="font-26" v-link="c.reply_from | profile">{{c.reply_from.name}}</h3>
+                    <h3 class="font-26">{{c.reply_from.name}}</h3>
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
             <div class="font-30 content">
-                <span v-if="c.reply_to" class="label">回复<span v-link="c.reply_to | profile">{{c.reply_to.name}}</span>:</span><span>{{c.content}}</span>
+                <span v-if="c.reply_to" class="label">回复<span @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}</span>:</span><span>{{c.content}}</span>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
@@ -104,86 +105,87 @@ export default {
         this.$on('comment', (e) => {
             this.comment(e);
         });
-        this.$on('reply', (e, user) => {
-            this.reply(e, user);
-        });
         this.$on('fetch', () => {
             this.fetch();
         });
     },
     methods: {
-        clicked(comment, e) {
+        clicked(comment, e, index) {
             const currUserId = _.get(this, 'self.id');
             if(!currUserId) {
                 this.action('login');
-            } else if(+currUserId === comment.reply_from.id) {
+            } else if(currUserId == comment.reply_from.id) {
                 this.action('delete', '')
                     .then((confirm) => {
                         if(confirm === '1') {
-                            this.$delete(`${this.api}/${comment.id}`)
-                                .then(() => {
-                                    this.action('toast', {success: 1, text: '评论删除成功'});
-                                    this.fetch(true);
-                                });
+                            return this.$delete(`${this.api}/${comment.id}`);
+                        }
+                    }).then((result) => {
+                        if(result) {
+                            this.action('toast', {success: 1, text: '删除成功'});
+                            this.items.splice(index, 1);
                         }
                     });
             } else {
-                console.log('reply');
+                const id = this.uid + _.get(this, 'self.id', '');
+                const placeholder = '回复' + comment.reply_from.name;
+                const position = this._getPosition(e);
+                this.action('keyboard', {id, placeholder, position})
+                    .then((content) => {
+                        if(content) {
+                            let reply_to = comment.reply_from;
+                            this.$post(this.api, {content, reply_to: reply_to.id})
+                                .then((result) => {
+                                    _.merge(result, {
+                                        content,
+                                        create_at: Date.now(),
+                                        reply_to,
+                                        reply_from: {
+                                            id: this.self.id,
+                                            photo: this.self.photo,
+                                            name: this.self.nickname
+                                        }
+                                    });
+                                    this.items.splice(0, 0, result);
+                                    this.action('toast', {success: 1, text: '回复成功'});
+                                });
+                        }
+                    });
             }
         },
         comment(e) {
             const id = this.uid;
             const placeholder = '';
-            const rect = e.target.getBoundingClientRect();
-            const position = rect.top + rect.height + window.scrollY;
+            const position = this._getPosition(e);
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
-                    if(content && typeof content === 'string') {
+                    if(content) {
                         this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content})
-                            .then(() => {
-                                this.fetch(true);
-                            });
-                    }
-                });
-        },
-        reply(user, e) {
-            this.to = user;
-            const id = this.uid + _.get(this, 'self.id', '');
-            const placeholder = '回复' + user.name;
-            const rect = e.target.getBoundingClientRect();
-            const position = rect.top + rect.height + window.scrollY;
-            this.action('keyboard', {id, placeholder, position})
-                .then((content) => {
-                    if(content && typeof content === 'string') {
-                        let reply_to = user.id;
-                        this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content, reply_to})
-                            .then(() => {
-                                this.fetch(true);
-                            });
-                    }
-                });
-        },
-        remove(comment, index) {
-            if(this.self && this.self.id == comment.reply_from.id) {
-                this.action('delete', '')
-                    .then((confirm) => {
-                        if(confirm === '1') {
-                            this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
-                                .then(() => {
-                                    this.action('toast', {success: 1, text: '评论删除成功'});
-                                    this.fetch(true);
+                            .then((result) => {
+                                _.merge(result, {
+                                    content,
+                                    create_at: Date.now(),
+                                    reply_from: {
+                                        id: this.self.id,
+                                        photo: this.self.photo,
+                                        name: this.self.nickname
+                                    }
                                 });
-                        }
-                    });
-            }
+                                this.items.splice(0, 0, result);
+                                this.action('toast', {success: 1, text: '回复成功'});
+                            });
+                    }
+                });
         },
-        // clickContent(comment, index, e) {
-        //     if(this.self && this.self.id == comment.reply_from.id) {
-        //         this.remove(comment, index);
-        //     } else {
-        //         this.reply(e, comment.reply_from);
-        //     }
-        // }
+        gotoProfile(user) {
+            let id = user.id || user.user_id;
+            let name = user.website_status === true ? 'master' : 'user-profile';
+            this.$route.router.go({name, params: {id}});
+        },
+        _getPosition(e) {
+            const rect = e.target.getBoundingClientRect();
+            return rect.top + rect.height + window.scrollY;
+        }
     }
 }
 </script>
