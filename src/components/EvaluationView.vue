@@ -58,7 +58,7 @@
         .social {
             margin-top: 20px;
             > div {
-                width: calc(50% - 10px);
+                width: -webkit-calc(50% - 10px);
                 padding: 20px 0;
                 border: 1px solid #b2b2b2;
                 border-radius: 8px;
