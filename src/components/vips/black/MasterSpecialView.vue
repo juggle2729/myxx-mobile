@@ -66,10 +66,13 @@
                 return this.interview.title.substr(0, separator);
             },
             subTitle() {
-                if (!this.interview.title) {
+                if (this.interview.sub_title) { //如果有副标题,则用副标题
+                    return this.interview.sub_title;
+                } else if (!this.interview.title) {
                     return '';
                 }
 
+                // 没有副标题,则从主标题截取副标题
                 const separator = this.interview.title.indexOf('\\n');
                 if (separator === -1) {
                     return '';
