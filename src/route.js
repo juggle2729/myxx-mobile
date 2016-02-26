@@ -27,7 +27,7 @@ export default {
     },
     '/story/:id': {
         name: 'story',
-        title: '话题详情',
+        title: '晒宝详情',
         component: require('./components/StoryView.vue')
     },
     '/jade/:id': {
@@ -73,7 +73,7 @@ export default {
     },
     '/profile/:id/story': {
         name: 'user-story',
-        title: '话题',
+        title: '晒宝',
         component: require('./components/UserStoryView.vue')
     },
     '/profile/:id/following': {

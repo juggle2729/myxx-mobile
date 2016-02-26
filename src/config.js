@@ -24,7 +24,7 @@ export default {
             route: 'evaluation'
         }, {
             id: 30,
-            name: '话题',
+            name: '晒宝',
             route: 'story'
         }, {
             id: 40,
