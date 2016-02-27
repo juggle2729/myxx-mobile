@@ -30,6 +30,7 @@ export default {
                 path: 'sns/topics',
                 list: 'topics',
                 params: {
+                    limit: 10,
                     [this.tab]: 1
                 }
             }

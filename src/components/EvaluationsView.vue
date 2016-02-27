@@ -52,6 +52,7 @@ export default {
                 path: 'sns/jianbao',
                 list: 'jianbaos',
                 params: {
+                    limit: 10,
                     [this.tab]: 1
                 }
             }
