@@ -10,10 +10,10 @@
             <a href="/evaluations/popularity">鉴宝/最热 - evaluations/popularity</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/stories/time">话题/最新 - stories/time</a>
+            <a href="/stories/time">晒宝/最新 - stories/time</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/stories/popularity">话题/最热 - stories/popularity</a>
+            <a href="/stories/popularity">晒宝/最热 - stories/popularity</a>
         </li>
         <li class="tab">发现</li>
         <li class="font-26 border-top padding center">
@@ -54,7 +54,7 @@
             <a href="myxx://web/%2Fevaluation%2F1">鉴宝1</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fstory%2F23">话题2</a>
+            <a href="myxx://web/%2Fstory%2F23">晒宝2</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="myxx://web/%2Fjade%2F2">宝贝2</a>

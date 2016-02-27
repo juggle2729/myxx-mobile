@@ -86,6 +86,9 @@ const mixin = {
                 } else if('share,shareable'.indexOf(handler) !== -1) {
                     if(params.desc.length > 20) {
                         params.desc = params.desc.substr(0, 20) + '...';
+                        if(/([\uD800-\uDBFF])/g.test(params.desc.charAt(19))){
+                            params.desc = params.desc.substr(0, 19) + '...';
+                        }
                     }
                     params.url += `&user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`;
                 }
@@ -118,7 +121,7 @@ const mixin = {
                         } else if(resp.status === 601) {// 统计接口缺少参数
                             defer.reject();
                             console.log(resp.message);
-                        } else if(resp.status === 3002) {// 商品话题个人页面缺少内容
+                        } else if(resp.status === 3002) {// 商品晒宝个人页面缺少内容
                             defer.reject();
                             console.log(resp.message);
                             this.$route.router.replace({'name': 'nocontent'});

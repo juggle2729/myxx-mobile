@@ -20,7 +20,7 @@
         <div class="img" :style="{backgroundImage: 'url('+config.www+'/coin/use-y.svg)'}"></div>
         <div class="right">
             <div class="title red">广告&置顶</div>
-            <p class="detail font-26">你有宣传自己的需求么？<br>高点击的banner广告、社区话题置顶<br>帮助你解决需求，让你人气爆棚</p>
+            <p class="detail font-26">你有宣传自己的需求么？<br>高点击的banner广告、社区晒宝置顶<br>帮助你解决需求，让你人气爆棚</p>
             <p class="remark font-22 gray">【准备中———敬请期待！】</p>
         </div>
     </div>

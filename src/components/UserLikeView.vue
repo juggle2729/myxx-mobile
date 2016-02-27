@@ -74,7 +74,7 @@ export default {
                                 entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
                                 entry.result = '鉴定结果为 ' + entry.result;
                             } else if (item.type === 30) {//media
-                                entry.description = '发布的话题';
+                                entry.description = '发布的晒宝';
                                 if(entry.content_type === 'short_text' && entry.content !== ''){
                                     entry.description = entry.content;
                                 }

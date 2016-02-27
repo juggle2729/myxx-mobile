@@ -13,7 +13,7 @@ export default {
     mixins: [PagingMixin],
     data() {
         return {
-            emptyTitle: '你还没有话题'
+            emptyTitle: '你还没有晒宝'
         }
     },
     computed: {

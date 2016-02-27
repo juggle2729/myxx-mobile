@@ -12,7 +12,7 @@
     <div class="community bg-white flex">
         <div v-link="{name: 'user-story', params: {id: userId}}" class="border-right">
             <p class="font-30" align="center">{{topic_count}}</p>
-            <p class="font-26 gray" align="center">话题</p>
+            <p class="font-26 gray" align="center">晒宝</p>
         </div>
         <div v-link="{name: 'following', params: {id: userId }}" class="border-right">
             <p class="font-30" align="center">{{follow_count}}</p>
