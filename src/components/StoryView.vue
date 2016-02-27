@@ -97,7 +97,7 @@
     <div class="separator-20"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
-        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div @click="share()" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>
@@ -125,6 +125,9 @@ export default {
             return medias.length === 1 && medias[0].type==='picture';
         }
     },
+    ready() {
+        this.share('shareable');
+    },
     route: {
         data({to}) {
             const storyId = to.params.id;
@@ -142,7 +145,7 @@ export default {
         play(id) {
             this.action('play', {id});
         },
-        share() {
+        share(action='share') {
             let title = '分享[美玉秀秀]话题！';
             if(this.story.topic_type === '晒宝') {
                 title = '快来帮我看看这个宝贝怎么样！';
@@ -162,7 +165,7 @@ export default {
                 type: 'topic'
             });
             url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            this.action('share', {title, desc, icon, url});
+            this.action(action, {title, desc, icon, url});
         }
     }
 }

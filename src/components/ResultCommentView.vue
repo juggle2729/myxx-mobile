@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="font-30 content">
-                <span v-if="c.reply_to" class="label">回复<span @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}</span>:</span><span>{{c.content}}</span>
+                <span v-if="c.reply_to" class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}</span>：</span><span>{{c.content}}</span>
             </div>
         </li>
     </ul>

@@ -38,7 +38,7 @@
             background-size: cover;
             background-position: center;
             &.video {
-                padding-top: calc(200% + 10px);
+                padding-top: -webkit-calc(200% + 10px);
                 position: relative;
                 img {
                     height: 60px;

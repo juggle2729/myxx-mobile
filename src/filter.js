@@ -25,7 +25,7 @@ function moment(time) {
     } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
         m = `昨天${d.getHours()}:${d.getMinutes() < 10 ? '0' :''}${d.getMinutes()}`;
     } else { // N天前
-        m = Math.ceil(diff / DAY) + '天前';
+        m = Math.ceil((now - d) / DAY) + '天前';  // 这里需要用now - d，而不是diff
     }
 
     return m;

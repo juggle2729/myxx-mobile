@@ -31,7 +31,9 @@ body {
     -webkit-transform-style: preserve-3d;
     -webkit-user-select: none;
 }
-
+h1, h2, h3, h4, h5 {
+    font-weight: normal;
+}
 ol, ul, li {
     list-style: none;
 }
