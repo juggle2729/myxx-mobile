@@ -41,7 +41,7 @@ Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
 router.beforeGo((from, to) => {
-    let stopAppRoute = to.raw && (to.query.replace === 'true');
+    let stopAppRoute = (to.name === '404') || to.raw && (to.query.replace === 'true');
     let stop = /myxx/i.test(navigator.userAgent)
                  && !stopAppRoute
                  && from.fullPath !== to.fullPath;

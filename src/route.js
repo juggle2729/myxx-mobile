@@ -161,11 +161,6 @@ export default {
         name: '404',
         component: require('./components/NotFoundView.vue')
     },
-    '/nocontent': {
-        title: '内容不存在',
-        name: 'nocontent',
-        component: require('./components/NoContentView.vue')
-    },
     '*': {
         title: '找不到北',
         component: require('./components/NotFoundView.vue')
