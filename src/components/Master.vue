@@ -12,19 +12,7 @@
                transition-mode="out-in"></component>
 </template>
 <script>
-    import MasterBasicHome from './MasterHomeView.vue'
-    import MasterBasicWorks from './MasterWorksView.vue';
-    import MasterBasicSpecial from './MasterSpecialView.vue';
-    import MasterBasicStudio from './MasterStudioView.vue';
-    import MasterBasicStore from './MallStoreView.vue';
-    import MasterBasicCraftDetail from './CraftDetailView.vue';
-
-    import MasterVipBlackHome from './vips/black/MasterHomeView.vue'
-    import MasterVipBlackActivities from './vips/black/MasterActivitiesView.vue';
-    import MasterVipBlackWorks from './vips/black/MasterWorksView.vue';
-    import MasterVipBlackSpecial from './vips/black/MasterSpecialView.vue';
-    import MasterVipBlackStudio from './vips/black/MasterStudioView.vue';
-
+    import MasterVipBlackSpecial from './vips/black_new/MasterSpecialView.vue';
     export default{
         data(){
             return {
@@ -42,18 +30,7 @@
             }
         },
         components: {
-            MasterBasicHome,
-            MasterBasicWorks,
-            MasterBasicSpecial,
-            MasterBasicStudio,
-            MasterBasicStore,
-            MasterBasicCraftDetail,
-
-            MasterVipBlackHome,
-            MasterVipBlackActivities,
-            MasterVipBlackWorks,
-            MasterVipBlackSpecial,
-            MasterVipBlackStudio
+            MasterVipBlackSpecial
         },
         route: {
             data(transition) {
@@ -86,23 +63,23 @@
                 return this.$get(`sites/${this.userId}/base`, {}).then(data => {
                     this.masterBaseData = data;
 
-                    let preCurrentView = '';
-                    if (data.site_type === 'general') {
-                        this.isVip = true;
-                        preCurrentView = 'MasterBasic';
-
-                    } else if (data.site_type === 'vip') {
-                        this.isVip = true;
-
-                        const vipTemplate = this.vipTemplates[data.display_template];
-                        if(vipTemplate && (this.tab.toLowerCase() !== 'store' &&
-                            this.tab.toLowerCase() !== 'craftDetail')) {
-                            preCurrentView = 'MasterVip' + vipTemplate;
-                        } else {
-                            preCurrentView = 'MasterBasic';
-                        }
-                    }
-                    this.currentView = (preCurrentView + this.tab);
+//                    let preCurrentView = '';
+//                    if (data.site_type === 'general') {
+//                        this.isVip = true;
+//                        preCurrentView = 'MasterBasic';
+//
+//                    } else if (data.site_type === 'vip') {
+//                        this.isVip = true;
+//
+//                        const vipTemplate = this.vipTemplates[data.display_template];
+//                        if(vipTemplate && (this.tab.toLowerCase() !== 'store' &&
+//                            this.tab.toLowerCase() !== 'craftDetail')) {
+//                            preCurrentView = 'MasterVip' + vipTemplate;
+//                        } else {
+//                            preCurrentView = 'MasterBasic';
+//                        }
+//                    }
+                    this.currentView = 'MasterVipBlackSpecial';
                 });
             }
         }

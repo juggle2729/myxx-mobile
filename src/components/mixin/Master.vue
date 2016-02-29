@@ -37,7 +37,7 @@
                     this.setShare();
                 }
             },
-            setShare() {
+            getShareInfo() {
                 const isSelf = _.get(this, 'self.id') == this.id;
                 const [title, desc, icon] = [
                     isSelf ? '快来逛逛我的个人官网!' : this.masterBaseData.name + '的官网，快来一睹大师风采',
@@ -54,7 +54,13 @@
                 query.tab && (delete query.tab); //官网分享出去全部指向首页,所以remove tab parameter
 
                 url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-                this.action('shareable', {title, desc, icon, url });
+                return {title, desc, icon, url };
+            },
+            setShare() {
+                this.action('shareable', this.getShareInfo());
+            },
+            clickShare() {
+                this.action('share', this.getShareInfo());
             },
             link(tab, isReplace = true, additionalParams = null) {
                 const linkObj = {

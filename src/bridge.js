@@ -23,7 +23,7 @@ let adapter = {
         //         let comment = prompt("少年，来鉴宝吧！");
         //         comment && cb(comment);
         //     }
-        // } 
+        // }
         else if(handler === 'delete') {
             cb.call(this, window.confirm('删除评论？') ? '1' : '0');
         }
@@ -34,7 +34,7 @@ let adapter = {
                 let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
                 WeixinJSBridge.invoke('imagePreview', {
                     urls,
-                    current: urls[+params.index] 
+                    current: urls[+params.index]
                 });
             } else {
                 this.$root.img = {
@@ -42,7 +42,7 @@ let adapter = {
                     i: +params.index
                 }
             }
-        } else if('shareable,toggleTopRefresh'.indexOf(handler) === -1){
+        } else if(['shareable', 'toggleTopRefresh'].indexOf(handler) === -1){
             const toast = document.querySelector('.toast');
             if(toast) {
                 toast.parentNode.removeChild(toast);
