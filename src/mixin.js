@@ -111,25 +111,18 @@ const mixin = {
                         this.$http.headers.common['X-Auth-Token'] = token;
                     }
                     this.$http[method](url, data).then(({data: resp}) => {
+                        // http://wiki.jimhuang.cn/dokuwiki/doku.php?id=dev_team:dev_sub_team_server:myxx_console_api:errorcode&#
                         if(resp.status === 200) {
                             defer.resolve(resp.data);
-                        } else if(resp.status === 605 || resp.status === 608){//token问题
-                            this.action('login');
-                        } else if(resp.status === 5004){
-                            defer.reject();
-                            this.$route.router.replace({name: '404'});
-                        } else if(resp.status === 601) {// 统计接口缺少参数
-                            defer.reject();
-                            console.log(resp.message);
-                        } else if(resp.status === 3002) {// 商品晒宝个人页面缺少内容
-                            defer.reject();
-                            console.log(resp.message);
-                            this.$route.router.replace({'name': 'nocontent'});
-                        } else if (resp.status === 2000) { //商家店铺被关闭
-                            defer.reject(resp.message);
                         } else {
-                            defer.reject();
-                            console.log('resp.status:'+resp.status);
+                            defer.reject(resp.message);
+                            if([605, 608].indexOf(resp.status) !== -1) {
+                                this.action('login');
+                            } else if([3002, 5004, 2001, 2000].indexOf(resp.status) !== -1) {
+                                this.$route.router.replace({'name': '404'});
+                            } else {
+                                console.log('resp.status:'+resp.status);
+                            }
                         }
                     });
                 }

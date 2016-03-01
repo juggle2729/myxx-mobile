@@ -2,7 +2,7 @@
     <div class="nocontent-view">
         <div class="content">
             <div class="img center-horizontal"></div>
-            <div class="text font-30">页面找不到了...</div>
+            <div class="text font-30">内容不存在...</div>
         </div>
     </div>
 </template>

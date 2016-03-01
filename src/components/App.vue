@@ -174,12 +174,6 @@ export default {
 
         if(this.isShare) {
             this.$get('log/content_readings', this.$route.query).then(_.noop);
-
-            // 添加分享图标
-            var shareIcon = document.createElement('img');
-            shareIcon.src = this.config.www + 'logo.png';
-            shareIcon.style = 'width: 0; height: 0; position: absolute; top: -999px;';
-            document.body.insertBefore(shareIcon, document.body.firstChild);
         }
 
         if(this.$route.name === 'evaluation') {
