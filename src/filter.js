@@ -40,20 +40,22 @@ function truncate(str, len) {
 
 function profile(user) {
     let id = user.id || user.user_id;
-    let name = user.website_status === true ? 'master' : 'user-profile';
+    // let name = user.website_status === true ? 'master' : 'user-profile';
+    let name = 'user-profile';
     return {name, params: {id}};
 }
 
 function percent(num) {
-    var str = num +'';
-    if(str.length === 2){
-      str = '0' +str;
-    } else if(str.length === 1){
-      str = '00' +str;
-    } else if(str.length === 0){
-      return '0.00';
+    if(!num) {
+        return '0.00';
     }
-    return str.substring(0,str.length-2)+'.'+ str.substring(str.length-2,str.length);;
+    let str = num + '';
+    while(str.length < 3){//把长度补成3，因为要加点
+        str = '0' +str;
+    }
+    let strs = str.split('');
+    strs.splice(-2, 0, '.');
+    return strs.join('');
 }
 
 function role(id) {
