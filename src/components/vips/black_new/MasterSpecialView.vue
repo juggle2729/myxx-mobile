@@ -4,8 +4,8 @@
              @touchmove="coverTouchMove($event)" @touchend="coverTouchEnd($event)">
             <div class="bg img" v-bg="interview.img" query="imageView2/1/w/750/h/1334/interlace/1"></div>
             <div class="cover-bar">
-                <div class="main-title" v-text="mainTitle"></div>
-                <div class="sub-title" v-if="subTitle" v-text="subTitle"></div>
+                <div class="main-title">{{interview.title}}</div>
+                <div class="sub-title" v-if="interview.sub_title">{{interview.sub_title}}</div>
                 <div class="arrow">
                     <span class="icon-down"></span>
                 </div>
@@ -47,7 +47,7 @@
                 coverMoved: 0,
                 contentStartPos: 0,
                 contentMoved: 0,
-                minMove: 100,
+                minMove: 80,
                 coverDom: null,
                 contentDom: null,
                 following: false // 是否正在进行follow操作
@@ -66,34 +66,6 @@
             this.fetchMasterInterviewInfo().then(() => {
                 done();
             });
-        },
-        computed: {
-            mainTitle() {
-                if (!this.interview.title) {
-                    return '';
-                }
-
-                const separator = this.interview.title.indexOf('\\n');
-                if (separator === -1) {
-                    return this.interview.title;
-                }
-
-                return this.interview.title.substr(0, separator);
-            },
-            subTitle() {
-                if (this.interview.sub_title) { //如果有副标题,则用副标题
-                    return this.interview.sub_title;
-                } else if (!this.interview.title) {
-                    return '';
-                }
-
-                // 没有副标题,则从主标题截取副标题
-                const separator = this.interview.title.indexOf('\\n');
-                if (separator === -1) {
-                    return '';
-                }
-                return this.interview.title.substr(separator + 2, this.interview.title.length);
-            }
         },
         methods: {
             enableRefresh(enable) {
