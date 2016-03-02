@@ -30,7 +30,7 @@
             <p class="font-26" :class="{'gray': !isActive('Story')}" align="center">晒宝</p>
         </div>
         <div v-link="link('Evaluation')"  :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Evaluation')}">
-            <p class="font-30" align="center">{{jianbao_count}}</p>
+            <p class="font-30" align="center">{{jianbao_count + jianbao_request_count}}</p>
             <p class="font-26" :class="{'gray': !isActive('Evaluation')}" align="center">鉴宝</p>
         </div>
     </div>
@@ -53,18 +53,20 @@ export default {
     },
     data() {
         return {
-            titles: []
+            titles: [],
+            tab: 'Story'
         }
     },
     route: {
         data({to}) {
             this.userId = this.$route.params.id;
-            this.tab = to.query.tab;
+            this.tab = to.query.tab? to.query.tab: 'Story';
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
                     this.isSelf = (this.self && this.self.id == this.userId);
-                    this.currentView = this.tab ? 'HomePage' + this.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
                     this.$data = data;
+                    this.tab = to.query.tab? to.query.tab: 'Story';
+                    this.currentView = this.tab ? 'HomePage' + this.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
                     this.setShare();
                 });
         }
