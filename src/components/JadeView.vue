@@ -66,7 +66,7 @@
 <div class="jade-view bg-white">
     <slider :ids="info.imgs"></slider>
     <div class="titles">
-        <p class="font-34">{{info.name}}·{{info.moral.name}}</p>
+        <p class="font-34">{{info.name}}{{info.moral? '·'+info.moral.name: ''}}</p>
         <div class="flex" v-if="info.product_rewards.length >0">
             <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
         </div>
@@ -79,10 +79,10 @@
     <div class="avatars flex">
         <div class="flex flex-1">
             <div class="avatar-68 margin-right" v-bg.sm="info.user.photo"></div>
-            <span class="font-30 flex">{{info.user.nickname}}</span>
+            <span class="font-30 flex">{{info.user? (info.user.nickname? info.user.nickname: info.user.name): ''}}</span>
         </div>
         <div class="font-26 red flex" v-link="info.user | profile">
-            <p class="flex">进入{{info.user.website_status? '官网':'主页'}}</p>
+            <p class="flex">进入{{info.user? (info.user.website_status? '官网': '主页'): '主页'}}</p>
             <p class="icon-enter gray"></p>
         </div>
     </div>
@@ -94,19 +94,19 @@
         <div class="content">
             <p class="font-26">
                 <span class="light">类型</span>
-                <span>{{info.category.name}}</span>
+                <span>{{info.category? info.category.name: ''}}</span>
             </p>
             <p class="font-26" v-if="info.category.parent">
                 <span class="light">器型</span>
-                <span>{{info.category.parent.name}}</span>
+                <span>{{info.category? (info.category.parent? info.category.parent.name:''): ''}}</span>
             </p>
             <p class="font-26">
                 <span class="light">重量</span>
-                <span>{{info.weight | percent}}&nbsp;g</span>
+                <span>{{info.weight | percent}}&nbsp;(g)</span>
             </p>
             <p class="font-26">
                 <span class="light">尺寸</span>
-                <span>{{info.size}}&nbsp;(cm)</span>
+                <span>{{info.size? info.size: 0}}&nbsp;(cm)</span>
             </p>
             <p class="font-26">
                 <span class="light">皮色</span>
@@ -114,11 +114,11 @@
             </p>
             <p class="font-26">
                 <span class="light">肉色</span>
-                <span>{{info.inner_color.name}}</span>
+                <span>{{info.inner_color? info.inner_color.name: ''}}</span>
             </p>
             <p class="font-26">
                 <span class="light">产地</span>
-                <span>{{info.origin_place.name}}</span>
+                <span>{{info.origin_place? info.origin_place.name: ''}}</span>
             </p>
         </div>
     </div>
@@ -175,7 +175,7 @@ export default {
     computed: {
         productReward() {
             let reward = this.info.product_rewards[0];
-            return reward ? reward.reward.name : '';
+            return reward? reward.reward.name : '';
         }
     },
     route: {

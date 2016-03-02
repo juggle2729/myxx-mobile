@@ -1,57 +1,71 @@
 <template>
-<div class="homepage-view bg-default">
-    <div class="account border-bottom bg-white">
-        <div class="avatar-240 center-avatar" v-bg.sm="photo" @click="coverflow(0)"></div>
-        <p class="font-30 red center">{{nickname}}</p>
-        <button v-if="!(follow || isSelf)" class="bg-red font-26 white center-horizontal" @click="toggleFollow">
-            <span class="icon-like-active center"> 关注</span></button>
-        <button v-if="follow && !isSelf" class="bg-gray font-26 white center-horizontal" @click="toggleFollow">
-            <span class="center">已关注</span></button>
+<div class="homepage-view">
+    <div class="account flex">
+        <div class="title flex">
+            <div class="avatar-90" v-bg.sm="photo"></div>
+            <div class="white flex-1">
+                <p class="font-30 margin-bottom"><span>{{nickname}}</span><span class="font-26">{{titles.length? titles[0].name:''}}</span></p>
+                <p class="font-26"><span v-link="{name:'following', params: {id: userId}}">关注&nbsp;&nbsp;{{follow_count}}</span><span v-link="{name:'follower', params: {id: userId}}">粉丝&nbsp;&nbsp;{{fans_count}}</span></p>
+            </div>
+            <div class="button bg-white font-26 red" v-if="!(follow || isSelf)" @click="toggleFollow">
+                <span class="icon-follow">关注</span>
+            </div>
+            <div class="button font-26 white bg-disable" v-if="follow && !isSelf" @click="toggleFollow">
+                <span>已关注</span>
+            </div>
+        </div>
     </div>
-    <div class="community bg-white flex">
-        <div v-link="{name: 'user-story', params: {id: userId}}" class="border-right">
+    <div class="site flex font-26 border-bottom bg-white" v-if="website_status" v-link="{name: 'master', params:{id: userId}}">
+        <div class="icon bg-red white">官网</div>
+        <div class="flex-1 red margin-left">{{website_interview_title}}</div>
+        <div class="icon-enter"></div>
+    </div>
+    <div class="community bg-white flex border-bottom">
+        <div v-link="link('Jade')" class="border-right three" v-if="shop_status" :class="{'red': isActive('Jade')}">
+            <p class="font-30" align="center">{{products_count}}</p>
+            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{role===4? '作品': '商品'}}</p>
+        </div>
+        <div v-link="link('Story')" class="border-right" :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Story')}">
             <p class="font-30" align="center">{{topic_count}}</p>
-            <p class="font-26 gray" align="center">晒宝</p>
+            <p class="font-26" :class="{'gray': !isActive('Story')}" align="center">晒宝</p>
         </div>
-        <div v-link="{name: 'following', params: {id: userId }}" class="border-right">
-            <p class="font-30" align="center">{{follow_count}}</p>
-            <p class="font-26 gray" align="center">关注</p>
-        </div>
-        <div v-link="{name: 'follower', params: {id: userId }}">
-            <p class="font-30" align="center">{{fans_count}}</p>
-            <p class="font-26 gray" align="center">粉丝</p>
+        <div v-link="link('Evaluation')"  :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Evaluation')}">
+            <p class="font-30" align="center">{{jianbao_count}}</p>
+            <p class="font-26" :class="{'gray': !isActive('Evaluation')}" align="center">鉴宝</p>
         </div>
     </div>
-    <div class="separator-20"></div>
-    <div class="his border-bottom bg-white">
-        <div class="row font-30 border-bottom" v-link="{name: 'user-like', params: {id: userId}}">
-            <span class="red icon-like"></span>
-            <span>TA的赞</span>
-            <span class="icon-enter gray font-26"></span>
-        </div>
-        <div class="row font-30" :class="{'border-bottom': shop_status}" v-link="{name: 'user-evaluation', params: {id: userId}}">
-            <span class="red icon-eval"></span>
-            <span>TA的鉴宝</span>
-            <span class="icon-enter gray font-26"></span>
-        </div>
-        <div class="row font-30" v-if="shop_status" v-link="{name: 'master', params: {id: userId}, query: {tab: 'store'}}">
-            <span class="red icon-store"></span>
-            <span>TA的店铺</span>
-            <span class="icon-enter gray font-26"></span>
-        </div>
+    <div class="content">
+        <component :is="currentView" :id="userId" :role="role" :params="params" :from-params="fromParams" transition="fade"
+                   transition-mode="out-in"></component>
     </div>
 </div>
 </template>
 <script>
+import HomePageJade from './HomePageJade.vue'
+import HomePageStory from './HomePageStory.vue'
+import HomePageEvaluation from './HomePageEvaluation.vue'
 export default {
     name: 'HomePageView',
+    components: {
+        HomePageJade,
+        HomePageStory,
+        HomePageEvaluation
+    },
+    data() {
+        return {
+            titles: []
+        }
+    },
     route: {
-        data() {
+        data({to}) {
             this.userId = this.$route.params.id;
+            this.tab = to.query.tab;
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
                     this.isSelf = (this.self && this.self.id == this.userId);
+                    this.currentView = this.tab ? 'HomePage' + this.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
                     this.$data = data;
+                    this.setShare();
                 });
         }
     },
@@ -72,47 +86,108 @@ export default {
             }
         },
         coverflow(index) {
-            if(this.photo != '')
+            if(this.photo != '') {
                 this.action('coverflow', {ids: [this.photo], index: 0});
-            else
+            } else {
                 console.log('头像为空');
-        }
+            }
+        },
+        link(tab) {
+            const linkObj = {
+                name: 'user-profile',
+                replace: true,
+                params: { id: this.$route.params.id },
+                query: _.merge({}, this.$route.query, {
+                    tab: tab,
+                    replace: true
+                })
+            };
+
+            return linkObj;
+        },
+        isActive(tab) {
+            return tab === this.tab;
+        },
+        setShare() {
+            const [title, desc, icon] = [`这是${this.nickname}在【美玉秀秀】的主页，一起开启玉石生活吧！`, this.nickname, this.photo];
+            let url = location.origin + location.pathname;
+            let query = _.merge({}, this.$route.query, {
+                id: this.userId,
+                replace: true,
+                tab: this.tab,
+                type: 'homepage'
+            });
+            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
+            this.action('shareable', {title, desc, icon, url});
+        },
     }
 }
 </script>
 <style lang="sass">
+@import '../styles/partials/var';
 .homepage-view {
     height: 100%;
     .account {
-        height: 420px;
-        padding-top: 20px;
-        > p {
-            margin-top: 36px;
+        height: 630px;
+        padding: 20px 32px;
+        background-image: url('#{$qn}/homepage/top.png');
+        background-size: cover;
+        -webkit-box-align: end;
+        .title {
+            width: 100%;
+            .avatar-90 {
+                border: 1px white solid;
+            }
+            .flex-1 {
+                margin-left: 30px;
+                >p span+span {
+                    margin-left: 50px;
+                }
+            }
+            .button {
+                height: 56px;
+                width: 117px;
+                border-width: 0;
+                border-radius: 10px;
+                text-align: center;
+                line-height: 56px;
+            }
         }
-        > button {
-            margin-top: 20px;
-            height: 44px;
-            width: 124px;
-            border-width: 0;
-            border-radius: 22px;
+
+    }
+    .site {
+        height: 120px;
+        width: 100%;
+        padding-left: 40px;
+        padding-right: 10px;
+        .icon {
+            width: 82px;
+            height: 46px;
+            line-height: 46px;
+            text-align: center;
+            border-radius: 5px;
         }
     }
     .community {
-        height: 120px;
+        height: 100px;
         width: 100%;
-        padding: 25px 0;
-        > div {
+        padding: 18px 0;
+        .two {
+            width: 50%;
+            p + p {
+                margin-top: 10px;
+            }
+        }
+        .three {
             width: 33.3%;
-            > p:nth-of-type(2) {
-                margin-top: 14px;
+            p + p {
+                margin-top: 10px;
             }
         }
     }
-    .his {
-        padding-left: 32px;
-        .row {
-            padding-left: 0;
-        }
+    .content {
+        position: relative;
+        height: 50%;
     }
 }
 </style>
