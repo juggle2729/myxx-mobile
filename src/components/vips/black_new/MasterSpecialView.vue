@@ -23,8 +23,8 @@
                 <div class="name">{{masterBaseData.name}}</div>
                 <div class="title" v-if="masterBaseData.titles.length > 0">{{masterBaseData.titles[0].name | truncate 300}}</div>
                 <ul class="operation">
-                    <li class="attention" @click="followMaster()" v-if="!masterBaseData.follow"><span class="icon-follow"></span>关注</li>
-                    <li class="attentioned" @click="followMaster()" v-if="masterBaseData.follow">已关注</li>
+                    <li class="attention" @click="followMaster()" v-if="!masterBaseData.follow && !isSelf"><span class="icon-follow"></span>关注</li>
+                    <li class="attentioned" @click="followMaster()" v-if="masterBaseData.follow && !isSelf">已关注</li>
                     <li class="share" @click="share()">分享</li>
                     <li class="store" v-link="{name: 'user-profile', params: {id: masterBaseData.id}}">店铺</li>
                 </ul>
@@ -160,6 +160,7 @@
                     this.$delete(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
                         this.following = false;
                         this.masterBaseData.follow = false;
+                        this.action('toast', {success: 1, text: '已取消关注'});
                     }).catch(() => {
                         this.following = false;
                     });
@@ -167,6 +168,7 @@
                     this.$post(`users/follow/${this.masterBaseData.id}`, {}).then((data) => {
                         this.following = false;
                         this.masterBaseData.follow = true;
+                        this.action('toast', {success: 1, text: '已关注'});
                     }).catch(() => {
                         this.following = false;
                     });
