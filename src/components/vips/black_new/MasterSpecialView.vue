@@ -284,7 +284,7 @@
             li {
                 display: inline-block;
                 line-height: 67px;
-                border-radius: 30px;
+                border-radius: 36px;
                 width: 195px;
             }
 
