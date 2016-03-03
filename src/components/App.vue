@@ -42,7 +42,7 @@
                 height: 100%;
             }
             &.browser {
-                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right no-repeat;
+                background: rgba(black, .6) url('#{$qn}/open-in-browser.png') top right/516px 487px no-repeat;
             }
             &.share {
                 background: rgba(black, .6) url('#{$qn}/artist/share.png') top right/100% auto no-repeat;
@@ -172,8 +172,8 @@ export default {
         openApp() {
             if(!this.env.isBrowser) {
                 const backdrop = document.querySelector('#hint-with-backdrop');
-                background.classList.add('browser');
-                background.classList.add('show');
+                backdrop.classList.add('browser');
+                backdrop.classList.add('show');
             } else {
                 if(/version\/9/i.test(navigator.userAgent)) { // iOS 9
                     location.href = this.appCmd;
