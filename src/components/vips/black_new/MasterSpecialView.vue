@@ -50,7 +50,8 @@
                 minMove: 80,
                 coverDom: null,
                 contentDom: null,
-                following: false // 是否正在进行follow操作
+                following: false, // 是否正在进行follow操作
+                isSelf: false
             };
         },
         ready() {
@@ -58,6 +59,7 @@
 
             this.coverDom = document.querySelector('.master-vip-black-special .cover');
             this.contentDom = document.querySelector('.master-vip-black-special .interview');
+            this.isSelf = (this.self && this.self.id == this.id);
 
             this.initDom();
         },

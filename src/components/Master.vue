@@ -26,8 +26,7 @@
                 vipTemplates: {
                     1: 'Black'
                 },
-                isVip: false,
-                isSelf: false
+                isVip: false
             }
         },
         components: {
@@ -36,8 +35,6 @@
         route: {
             data(transition) {
                 this.userId = transition.to.params.id;
-                this.isSelf = (this.self && this.self.id == this.userId);
-
                 this.tab = this.tabName(transition.to.query.tab);
                 this.params = _.merge(transition.to.params, transition.to.query);
                 this.fromParams = _.merge(transition.from.params, transition.from.query) || {};
