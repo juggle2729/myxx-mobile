@@ -84,13 +84,7 @@ const mixin = {
                 } else if('confirm,delete,version'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
                 } else if('share,shareable'.indexOf(handler) !== -1) {
-                    if(params.desc.length > 20) {
-                        params.desc = params.desc.substr(0, 20) + '...';
-                        if(/([\uD800-\uDBFF])/g.test(params.desc.charAt(19))){
-                            params.desc = params.desc.substr(0, 19) + '...';
-                        }
-                    }
-                    params.url += `&user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`;
+                    
                 }
                 if(resolver === undefined) {
                     bridge.callHandler.call(this, handler, params);
@@ -137,6 +131,74 @@ const mixin = {
         },
         $delete(url, data) {
             return this.$req(url, 'delete', data);
+        },
+        // 设置页面分享所需数据
+        setShareData(type, entry, shareable) {
+            let data = {hasDownloadLink: true};
+            if(type === 'jianbao') {
+                data.title = entry.unidentified ? '快帮我鉴定一下这个宝贝！' : '快来看看我的鉴定吧！';
+                data.desc = entry.description;
+                data.icon = entry.pictures[0];
+                data.text = '我也要鉴宝';
+            } else if(type === 'topic') {
+                const titles = {
+                    '晒宝': '快来帮我看看这个宝贝怎么样！', 
+                    '工艺展示': '快来围观这个精湛的工艺！', 
+                    '淘玉故事': '好玉原来是这么淘来的！',
+                    '其它': '分享[美玉秀秀]晒宝！'
+                };
+                data.title = titles[entry.topic_type];
+                data.desc = entry.content;
+                data.icon = entry.medias[0].id;
+                if(entry.medias[0].type === 'video') {
+                    data.icon = this.config.video + icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
+                }
+                data.text = '我也要晒宝';
+            } else if(type === 'product') {
+                data.title = '我在 [美玉秀秀] 发现一个宝贝！';
+                data.desc = entry.name;
+                data.icon = entry.imgs[0];
+                data.text = '我也要逛逛';
+            } else if(type === 'website') {
+                data.title = _.get(this, 'self.id') == entry.id ? '快来逛逛我的个人官网!' : entry.name + '的官网，快来一睹大师风采';
+                data.desc = entry.name + _.get(entry.titles[0], name, '');
+                data.icon = entry.photo;
+                data.hasDownloadLink = false;
+            } else if(type === 'profile') {
+                data.title = `这是${entry.name}在【美玉秀秀】的主页，一起开启玉石生活吧！`;
+                data.desc = entry.name;
+                data.icon = entry.photo;
+                data.text = '我也要逛逛';
+            }
+            // 截取描述
+            if(/([\uD800-\uDBFF])/.test(data.desc.charAt(19))){
+                data.desc = data.desc.substr(0, 19) + '...';
+            } else if(data.desc.length > 20) {
+                data.desc = data.desc.substr(0, 20) + '...';
+            }
+            let query = _.merge({}, this.$route.query, {
+                type, 
+                id: (entry.post_id || entry.id),
+                user: _.get(this, 'self.id', -1),
+                time: Date.now()
+            });
+            data.url = location.origin + location.pathname + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
+
+            this.$root.shareData = data;
+            document.title = data.title;
+            let shareIconSrc = data.icon;
+            if(!/^http/.test(shareIconSrc)) {
+                shareIconSrc = this.config.img + shareIconSrc + '?imageView2/1/w/310';
+            }
+            document.querySelector("#share-icon").src = shareIconSrc;
+            if(shareable) {
+                let {title, desc, icon, url} = data;
+                this.action('shareable', {title, desc, icon, url});
+            }
+        },
+        share() {
+            let {title, desc, icon, url} = this.$root.shareData;
+            this.action('share', {title, desc, icon, url});
         }
     }
 };

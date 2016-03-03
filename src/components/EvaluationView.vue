@@ -222,26 +222,14 @@ export default {
             return {label, action};
         }
     },
-    ready() {
-        let title = '快帮我鉴定一下这个宝贝！';
-        if(!this.evaluation.unidentified) {
-            title = '快来看看我的鉴定吧！';
-        }
-        let desc = this.evaluation.description;
-        let icon = this.evaluation.pictures[0];
-        let url = location.origin + location.pathname;
-        let query = _.merge({}, this.$route.query, {
-            id: this.evaluation.post_id,
-            type: 'jianbao'
-        });
-        url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-        this.action('shareable', {title, desc, icon, url});
-    },
     route: {
         data({to}) {
             const evaluationId = to.params.id;
             return this.$get(`sns/jianbao/${evaluationId}`)
-                    .then((evaluation) => ({evaluation}));
+                    .then((evaluation) => {
+                        this.setShareData('jianbao', evaluation, true);
+                        return {evaluation};
+                    });
         }
     },
     methods: {
@@ -278,6 +266,15 @@ export default {
         },
         play(id) {
             this.action('play', {id});
+            if(!this.isApp) { // 分享页面，视频自动播放
+                var timer = setInterval(() => {
+                    var v = document.querySelector('video');
+                    if(v) {
+                        clearInterval(timer);
+                        v.play();
+                    }
+                }, 10);
+            }
         }
     }
 }

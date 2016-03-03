@@ -1,10 +1,12 @@
 // hosts设置
-let [api, img, video, download] = ['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
+let [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
+//['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
 if(/^app/.test(location.hostname)) {
     [api, img, video, download] = ['//api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/', 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'];
-} else if(/^test/.test(location.hostname)) {
-    [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
-}
+} 
+// else if(/^test/.test(location.hostname)) {
+//     [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
+// }
 
 export default {
     api,

@@ -75,7 +75,7 @@
             <p class="light font-22 flex">{{info.display_count}}人浏览</p>
         </div>
     </div>
-    <div class="separator-20"></div>
+<!--     <div class="separator-20"></div>
     <div class="avatars flex">
         <div class="flex flex-1">
             <div class="avatar-68 margin-right" v-bg.sm="info.user.photo"></div>
@@ -85,7 +85,7 @@
             <p class="flex">进入{{info.user? (info.user.website_status? '官网': '主页'): '主页'}}</p>
             <p class="icon-enter gray"></p>
         </div>
-    </div>
+    </div> -->
     <div class="separator-20"></div>
     <div class="params">
         <div class="title border-bottom flex">
@@ -183,6 +183,7 @@ export default {
             return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
+                    this.setShareData('product', data, false);
                     this.$get('users/target/'+ this.info.id +'/type/40/likers')
                         .then((data) => {
                             this.likes = data.users;
@@ -199,18 +200,15 @@ export default {
         },
         play(id) {
             this.action('play', {id});
-        },
-        share() {
-            let title = '我在 [美玉秀秀] 发现一个宝贝！';
-            let desc = this.info.name;
-            let icon = this.info.imgs[0];
-            let url = location.origin + location.pathname;
-            let query = _.merge({}, this.$route.query, {
-                id: this.info.id,
-                type: 'product'
-            });
-            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            this.action('share', {title, desc, icon, url});
+            if(!this.isApp) { // 分享页面，视频自动播放
+                var timer = setInterval(() => {
+                    var v = document.querySelector('video');
+                    if(v) {
+                        clearInterval(timer);
+                        v.play();
+                    }
+                }, 10);
+            }
         }
     }
 }

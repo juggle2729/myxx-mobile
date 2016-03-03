@@ -25,7 +25,7 @@
                 <ul class="operation">
                     <li class="attention" @click="followMaster()" v-if="!masterBaseData.follow && !isSelf"><span class="icon-follow"></span>关注</li>
                     <li class="attentioned" @click="followMaster()" v-if="masterBaseData.follow && !isSelf">已关注</li>
-                    <li class="share" @click="share()">分享</li>
+                    <li class="share" @click="share">分享</li>
                     <li class="store" v-link="{name: 'user-profile', params: {id: masterBaseData.id}}">店铺</li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
             this.initDom();
         },
         activate(done) {
-            this.checkShare();
+            this.setShareData('website', this.masterBaseData, true);
             this.fetchMasterInterviewInfo().then(() => {
                 done();
             });
@@ -177,49 +177,6 @@
                 setTimeout(() => {
                     this.following = false;
                 }, 200);
-            },
-            share() {
-                if (this.env.isApp) {
-                    this.clickShare();
-                } else if (this.env.isWechat) {
-                    let shareOverlay = document.querySelector('.share-overlay');
-                    if(!shareOverlay) {
-                        shareOverlay = document.createElement('div');
-
-                        shareOverlay.classList.add('share-overlay');
-                        shareOverlay.classList.add('show');
-
-                        const shareIcon = document.createElement('div');
-                        document.querySelector('.master-vip-black-special').appendChild(shareOverlay);
-
-                        shareIcon.classList.add('share-icon');
-                        shareOverlay.appendChild(shareIcon);
-
-                        if(!this.env.isMobile) {
-                            this.contentDom.style['-webkit-transform'] = 'translateY(0px)';
-                        }
-
-                        shareOverlay.onclick = this.toggleShare.bind(this, shareOverlay);
-                    } else {
-                        this.toggleShare(shareOverlay);
-                    }
-                } else {
-                    this.clickShare();
-                }
-            },
-            toggleShare(shareOverlay) {
-                const shareClassList = shareOverlay.classList;
-                if (shareClassList.contains('show')) {
-                    shareOverlay.classList.remove('show');
-                    shareOverlay.classList.add('hide');
-
-                    if(!this.env.isMobile) {
-                        this.contentDom.style['-webkit-transform'] = 'translateY(0px)';
-                    }
-                } else {
-                    shareOverlay.classList.remove('hide');
-                    shareOverlay.classList.add('show');
-                }
             }
         }
     }

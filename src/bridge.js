@@ -6,15 +6,17 @@ let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
             let user = {
-              // "id" : "2",
-              // "token" : "e6f1855f-2592-4815-8ae2-ce65a9db5b91",
-              // "gender" : "1",
-              // "phone" : "15871705303",
-              // "nickname" : "余长春",
-              // "delete_flag" : "0",
-              // "role" : "4",
-              // "create_at" : "1448249072000",
-              // "photo" : "1287933.jpeg"
+            //   "id" : "2",
+            //   "token" : "cb111493-2fe1-4eda-a6d3-40ea5e475f40"
+            // ,
+            //   "gender" : "1",
+            //   "phone" : "15871705303",
+            //   "nickname" : "余长春",
+            //   "role" : "8",
+            //   "delete_flag" : "0",
+            //   "create_at" : "1448249072000",
+            //   "photo" : "47a31e63-bb96-4e05-8d4e-dae351ab0515",
+            //   "locale_id" : "269"
             };
             cb(JSON.stringify(user));
         }
@@ -42,7 +44,11 @@ let adapter = {
                     i: +params.index
                 }
             }
-        } else if(['shareable', 'toggleTopRefresh'].indexOf(handler) === -1){
+        } else if(handler === 'share') {
+            const backdrop = document.querySelector('#hint-with-backdrop');
+            backdrop.classList.add('share');
+            backdrop.classList.add('show');
+        } else if(['shareable', 'toggleTopRefresh'].indexOf(handler) === -1) {
             const toast = document.querySelector('.toast');
             if(toast) {
                 toast.parentNode.removeChild(toast);

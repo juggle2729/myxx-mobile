@@ -56,14 +56,7 @@ router.beforeGo((from, to) => {
 });
 router.beforeEach(({from, to, abort, next}) => {
     appContainer.classList.add('loading');
-    if (to.query.tab && to.query.tab.toLowerCase() === 'store') {
-        document.title = '店铺详情';
-    } else if (to.query.tab && to.query.tab.toLowerCase() === 'craftdetail') {
-        document.title = '工艺详情';
-    } else {
-        document.title = (to.title || '美玉秀秀');
-    }
-
+    document.title = (to.title || '美玉秀秀');
     next();
 });
 router.afterEach(({to}) => {

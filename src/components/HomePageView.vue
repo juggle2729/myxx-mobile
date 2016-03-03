@@ -23,7 +23,7 @@
     <div class="community bg-white flex border-bottom">
         <div v-link="link('Jade')" class="border-right three" v-if="shop_status" :class="{'red': isActive('Jade')}">
             <p class="font-30" align="center">{{products_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{role===4? '作品': '商品'}}</p>
+            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{has_website ? '作品': '商品'}}</p>
         </div>
         <div v-link="link('Story')" class="border-right" :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Story')}">
             <p class="font-30" align="center">{{topic_count}}</p>
@@ -63,11 +63,11 @@ export default {
             this.tab = to.query.tab? to.query.tab: 'Story';
             return this.$get('users/'+ this.userId +'/profile')
                 .then((data) => {
-                    this.isSelf = (this.self && this.self.id == this.userId);
                     this.$data = data;
-                    this.tab = to.query.tab? to.query.tab: 'Story';
+                    this.isSelf = (this.self && this.self.id == this.userId);
                     this.currentView = this.tab ? 'HomePage' + this.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
-                    this.setShare();
+                    this.tab = this.currentView.replace('HomePage', '');
+                    this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
                 });
         }
     },
@@ -104,24 +104,11 @@ export default {
                     replace: true
                 })
             };
-
             return linkObj;
         },
         isActive(tab) {
             return tab === this.tab;
-        },
-        setShare() {
-            const [title, desc, icon] = [`这是${this.nickname}在【美玉秀秀】的主页，一起开启玉石生活吧！`, this.nickname, this.photo];
-            let url = location.origin + location.pathname;
-            let query = _.merge({}, this.$route.query, {
-                id: this.userId,
-                replace: true,
-                tab: this.tab,
-                type: 'homepage'
-            });
-            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            this.action('shareable', {title, desc, icon, url});
-        },
+        }
     }
 }
 </script>

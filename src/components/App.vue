@@ -1,3 +1,4 @@
+
 <style lang="sass">
     @import '../styles/myxx';
     #app {
@@ -28,7 +29,7 @@
                 height: 100%;
             }
         }
-        #open-in-browser {
+        #hint-with-backdrop {
             position: fixed;
             top: 0;
             left: 0;
@@ -36,11 +37,15 @@
             height: 0;
             overflow: hidden;
             z-index: 999;
-            background: rgba(black, .6) url('#{$qn}/open-in-browser.png') top right no-repeat;
-            background-size: 487px 516px;
             transition: height .4s ease-in-out;
             &.show {
                 height: 100%;
+            }
+            &.browser {
+                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right no-repeat;
+            }
+            &.share {
+                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right/100% no-repeat;
             }
         }
         #video-player {
@@ -86,7 +91,7 @@
 </style>
 <template>
   <div class="loading">
-    <div v-if="isShare && !isMaster" class="share-top flex bg-default border-bottom">
+    <div v-if="isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
@@ -95,19 +100,19 @@
         <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="isShare && !isMaster" @click="openApp()" class="share-bottom flex bg-red white font-30">
+    <div v-if="isShare && shareData.text" @click="openApp()" class="share-bottom flex bg-red white font-30">
         <img :src="'share/left.png' | qn" alt="left">
-        <div class="flex-1 center bold">{{text}}</div>
+        <div class="flex-1 center bold">{{shareData.text}}</div>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="open-in-browser" v-if="isShare && !env.isBrowser" @click="$event.target.classList.remove('show')"></div>
+    <div id="hint-with-backdrop" v-if="isShare" @click="$event.target.classList.remove('show')"></div>
     <div id="video-player" v-if="video" @click="video = undefined">
         <video v-if="video" autoplay controls @ended="video = undefined">
             <source :src="config.video + video">
         </video>
     </div>
-    <div id="img-player" v-if="img" @click="img = undefined"
-        @touchstart.prevent="img.x=$event.pageX" @touchend.prevent="transform($event.pageX-img.x)">
+    <div id="img-player" v-if="img" @click="toast(3)"
+        @touchstart.prevent="alert(1)" @touchend.prevent="alert(2 )">
         <img :src="config.img + img.ids[img.i] + '?imageView2/3/w/600/interlace/1'" onload="javascript:if(this.clientHeight>this.parentNode.clientHeight){this.style.top=0;this.style.transform='none';}" />
         <div class="paging font-30">{{+img.i+1 + '/' + img.ids.length}}</div>
     </div>
@@ -120,6 +125,7 @@ export default {
     data() {
         return {
             user: {},
+            shareData: {},
             video: undefined,
             img: undefined,
             scrollY: 0
@@ -127,26 +133,12 @@ export default {
     },
     computed: {
         isShare() {
-            return !this.env.isApp && _.get(this.$route, 'query.user') && this.text;
-        },
-        text() {
-            if(this.$route.name === 'evaluation') {
-                return '我也要鉴宝';
-            } else if(this.$route.name === 'story') {
-                return '我也要晒宝';
-            } else if(this.$route.name === 'jade') {
-                return '我也要逛逛';
-            } else if(this.$route.name === 'master' && this.$route.query.tab === 'store') {
-                return '我也要逛逛';
-            }
+            return !this.env.isApp && _.get(this.$route, 'query.user');
         },
         appCmd() {
             let path = this.$route.path;
             path = path.replace(/user=\d+&?/, '').replace(/\?$/, '');  // 去掉分享过程中加的参数
             return 'myxx://web/' + encodeURIComponent(path);
-        },
-        isMaster() {
-            return this.$route.name === 'master';
         }
     },
     ready() {
@@ -175,25 +167,13 @@ export default {
         if(this.isShare) {
             this.$get('log/content_readings', this.$route.query).then(_.noop);
         }
-
-        if(this.$route.name === 'evaluation') {
-            document.title = '[美玉秀秀]鉴宝';
-        } else if(this.$route.name === 'story') {
-            document.title = '[美玉秀秀]晒宝';
-        } else if(this.$route.name === 'jade') {
-            document.title = '[美玉秀秀]宝贝';
-        } else if(this.$route.name === 'master') {
-            if(this.$route.query.tab === 'store') {
-                document.title = '[美玉秀秀]店铺';
-            } else {
-                document.title = '大师官网';
-            }
-        }
     },
     methods: {
         openApp() {
             if(!this.env.isBrowser) {
-                document.querySelector('#open-in-browser').classList.add('show');
+                const backdrop = document.querySelector('#hint-with-backdrop');
+                background.classList.add('browser');
+                background.classList.add('show');
             } else {
                 if(/version\/9/i.test(navigator.userAgent)) { // iOS 9
                     location.href = this.appCmd;

@@ -97,7 +97,7 @@
     <div class="separator-20"></div>
     <comment :id="story.post_id" type="30"></comment>
     <social-bar :id="story.post_id" type="30" :total="story.like" :list="story.likes" :active="story.liked" class="border-top social bg-white">
-        <div @click="share()" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
+        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
 </div>
 </template>
@@ -125,14 +125,14 @@ export default {
             return medias.length === 1 && medias[0].type==='picture';
         }
     },
-    ready() {
-        this.share('shareable');
-    },
     route: {
         data({to}) {
             const storyId = to.params.id;
             return this.$get(`sns/topics/${storyId}`)
-                .then((story) => ({story}));
+                .then((story) => {
+                    this.setShareData('topic', story, true);
+                    return {story};
+                });
         }
     },
     methods: {
@@ -144,28 +144,15 @@ export default {
         },
         play(id) {
             this.action('play', {id});
-        },
-        share(action='share') {
-            let title = '分享[美玉秀秀]话题！';
-            if(this.story.topic_type === '晒宝') {
-                title = '快来帮我看看这个宝贝怎么样！';
-            } else if(this.story.topic_type === '工艺展示') {
-                title = '快来围观这个精湛的工艺！';
-            } else if(this.story.topic_type === '淘玉故事') {
-                title = '好玉原来是这么淘来的！';
+            if(!this.isApp) { // 分享页面，视频自动播放
+                var timer = setInterval(() => {
+                    var v = document.querySelector('video');
+                    if(v) {
+                        clearInterval(timer);
+                        v.play();
+                    }
+                }, 10);
             }
-            let desc = this.story.content;
-            let icon = this.story.medias[0].id;
-            if(this.story.medias[0].type === 'video') {
-                icon = this.config.video + icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
-            }
-            let url = location.origin + location.pathname;
-            let query = _.merge({}, this.$route.query, {
-                id: this.story.post_id,
-                type: 'topic'
-            });
-            url += ('?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&'));
-            this.action(action, {title, desc, icon, url});
         }
     }
 }
