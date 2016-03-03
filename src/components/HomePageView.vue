@@ -2,40 +2,40 @@
 <div class="homepage-view">
     <div class="account flex">
         <div class="title flex">
-            <div class="avatar-90" v-bg.sm="photo"></div>
+            <div class="avatar-90" v-bg.sm="profile.photo"></div>
             <div class="white flex-1">
-                <p class="font-30 margin-bottom"><span>{{nickname}}</span><span class="font-26">{{titles.length? titles[0].name:''}}</span></p>
-                <p class="font-26"><span v-link="{name:'following', params: {id: userId}}">关注&nbsp;&nbsp;{{follow_count}}</span><span v-link="{name:'follower', params: {id: userId}}">粉丝&nbsp;&nbsp;{{fans_count}}</span></p>
+                <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{titles.length? titles[0].name:''}}</span></p>
+                <p class="font-26"><span v-link="{name:'following', params: {id: profile.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span><span v-link="{name:'follower', params: {id: profile.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
             </div>
-            <div class="button bg-white font-26 red" v-if="!(follow || isSelf)" @click="toggleFollow">
+            <div class="button bg-white font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
                 <span class="icon-follow">关注</span>
             </div>
-            <div class="button font-26 white bg-disable" v-if="follow && !isSelf" @click="toggleFollow">
+            <div class="button font-26 white bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
                 <span>已关注</span>
             </div>
         </div>
     </div>
-    <div class="site flex font-26 border-bottom bg-white" v-if="website_status" v-link="{name: 'master', params:{id: userId}}">
+    <div class="site flex font-26 border-bottom bg-white" v-if="profile.website_status" v-link="{name: 'master', params:{id: profile.id}}">
         <div class="icon bg-red white">官网</div>
-        <div class="flex-1 red margin-left">{{website_interview_title}}</div>
+        <div class="flex-1 red margin-left">{{profile.website_interview_title}}</div>
         <div class="icon-enter"></div>
     </div>
     <div class="community bg-white flex border-bottom">
-        <div v-link="link('Jade')" class="border-right three" v-if="shop_status" :class="{'red': isActive('Jade')}">
-            <p class="font-30" align="center">{{products_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{role > 3 ? '作品': '商品'}}</p>
+        <div v-link="link('Jade')" class="border-right three" v-if="profile.shop_status" :class="{'red': isActive('Jade')}">
+            <p class="font-30" align="center">{{profile.products_count}}</p>
+            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{profile.has_website ? '作品': '商品'}}</p>
         </div>
-        <div v-link="link('Story')" class="border-right" :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Story')}">
-            <p class="font-30" align="center">{{topic_count}}</p>
+        <div v-link="link('Story')" class="border-right" :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('Story')}">
+            <p class="font-30" align="center">{{profile.topic_count}}</p>
             <p class="font-26" :class="{'gray': !isActive('Story')}" align="center">晒宝</p>
         </div>
-        <div v-link="link('Evaluation')"  :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Evaluation')}">
-            <p class="font-30" align="center">{{jianbao_count + jianbao_request_count}}</p>
+        <div v-link="link('Evaluation')"  :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('Evaluation')}">
+            <p class="font-30" align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
             <p class="font-26" :class="{'gray': !isActive('Evaluation')}" align="center">鉴宝</p>
         </div>
     </div>
     <div class="content">
-        <component :is="currentView" :id="userId" :role="role" :params="params" :from-params="fromParams" transition="fade"
+        <component :is="currentView" :id="$route.params.id" :role="profile.role" :params="params" :from-params="fromParams" transition="fade"
                    transition-mode="out-in"></component>
     </div>
 </div>
@@ -53,19 +53,20 @@ export default {
     },
     data() {
         return {
+            profile: {},
             titles: [],
-            tab: 'Story'
+            tab: 'Story',
+            currentView: ''
         }
     },
     route: {
         data({to}) {
-            this.userId = this.$route.params.id;
             this.tab = to.query.tab? to.query.tab: 'Story';
-            return this.$get('users/'+ this.userId +'/profile')
+            return this.$get(`users/${this.$route.params.id}/profile`)
                 .then((data) => {
-                    this.$data = data;
-                    this.isSelf = (this.self && this.self.id == this.userId);
-                    this.currentView = to.query.tab? 'HomePage'+ to.query.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
+                    this.profile = data;
+                    this.isSelf = (this.self && this.self.id == this.profile.id);
+                    this.currentView = to.query.tab ? 'HomePage' + to.query.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
                     this.tab = this.currentView.replace('HomePage', '');
                     this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
                 });
@@ -74,24 +75,22 @@ export default {
     methods: {
         toggleFollow() {
             if (this.follow) {
-                this.$delete('users/follow/'+ this.userId)
+                this.$delete('users/follow/'+ this.profile.id)
                     .then(() => {
-                        this.follow = false;
+                        this.profile.follow = false;
                         this.action('toast', {success: 1, text: '取消关注成功'});
                     });
             } else {
-                this.$post('users/follow/' + this.userId)
+                this.$post('users/follow/' + this.profile.id)
                     .then(() => {
-                        this.follow = true;
+                        this.profile.follow = true;
                         this.action('toast', {success: 1, text: '关注成功'});
                     });
             }
         },
         coverflow(index) {
-            if(this.photo != '') {
+            if(this.profile.photo) {
                 this.action('coverflow', {ids: [this.photo], index: 0});
-            } else {
-                console.log('头像为空');
             }
         },
         link(tab) {

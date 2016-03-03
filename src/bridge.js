@@ -56,7 +56,7 @@ let adapter = {
             const span = document.createElement('span');
             span.className = 'toast white visible font-30';
             if(isMobile) {
-                span.innerText = '请在【美玉秀秀】里使用该功能';
+                location.href = this.config.download;
             } else {
                 span.innerText = handler;
             }

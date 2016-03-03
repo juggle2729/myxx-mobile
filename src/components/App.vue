@@ -45,7 +45,7 @@
                 background: rgba(black, .6) url('#{$qn}/artist/share.png') top right no-repeat;
             }
             &.share {
-                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right/100% no-repeat;
+                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right/100% auto no-repeat;
             }
         }
         #video-player {
@@ -106,13 +106,13 @@
         <img :src="'share/right.png' | qn" alt="right">
     </div>
     <div id="hint-with-backdrop" v-if="isShare" @click="$event.target.classList.remove('show')"></div>
-    <div id="video-player" v-if="video" @click="video = undefined">
-        <video v-if="video" autoplay controls @ended="video = undefined">
+    <div id="video-player" v-if="video" @click="video=undefined">
+        <video v-if="video" autoplay controls @ended="video=undefined">
             <source :src="config.video + video">
         </video>
     </div>
-    <div id="img-player" v-if="img" @click="toast(3)"
-        @touchstart.prevent="alert(1)" @touchend.prevent="alert(2 )">
+    <div id="img-player" v-if="img" @click="img=undefined"
+        @touchstart.prevent="img.x=$event.changedTouches[0].pageX" @touchend.prevent="transform($event.changedTouches[0].pageX-img.x)">
         <img :src="config.img + img.ids[img.i] + '?imageView2/3/w/600/interlace/1'" onload="javascript:if(this.clientHeight>this.parentNode.clientHeight){this.style.top=0;this.style.transform='none';}" />
         <div class="paging font-30">{{+img.i+1 + '/' + img.ids.length}}</div>
     </div>

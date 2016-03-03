@@ -47,8 +47,7 @@ router.beforeGo((from, to) => {
                  && from.fullPath !== to.fullPath;
     if(stop) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-    } else if(from.query && from.query.user && (to.name !== 'master' ||
-        to.query.tab === 'store' || from.name !== 'master')) {//   禁止分享页面导航
+    } else if(from.query && from.query.user && (to.name !== 'user-profile')) {//   禁止分享页面导航
             from.router.app.toast('请在【美玉秀秀】里查看');
             stop = true;
     }
