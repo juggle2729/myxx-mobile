@@ -4,8 +4,11 @@
         <div class="title flex">
             <div class="avatar-90" v-bg.sm="profile.photo"></div>
             <div class="white flex-1">
-                <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{titles.length? titles[0].name:''}}</span></p>
-                <p class="font-26"><span v-link="{name:'following', params: {id: profile.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span><span v-link="{name:'follower', params: {id: profile.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
+                <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span></p>
+                <p class="font-26">
+                    <span v-link="{name:'following', params: {id: $route.params.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span>
+                    <span v-link="{name:'follower', params: {id: $route.params.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
+                </p>
             </div>
             <div class="button bg-white font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
                 <span class="icon-follow">关注</span>
@@ -15,23 +18,23 @@
             </div>
         </div>
     </div>
-    <div class="site flex font-26 border-bottom bg-white" v-if="profile.website_status" v-link="{name: 'master', params:{id: profile.id}}">
+    <div class="site flex font-26 border-bottom bg-white" v-if="profile.website_status" v-link="{name: 'master', params:{id: $route.params.id}}">
         <div class="icon bg-red white">官网</div>
         <div class="flex-1 red margin-left">{{profile.website_interview_title}}</div>
         <div class="icon-enter"></div>
     </div>
     <div class="community bg-white flex border-bottom">
-        <div v-link="link('Jade')" class="border-right three" v-if="profile.shop_status" :class="{'red': isActive('Jade')}">
+        <div v-link="link('jade')" class="border-right three" v-if="profile.shop_status" :class="{'red': isActive('jade')}">
             <p class="font-30" align="center">{{profile.products_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{profile.has_website ? '作品': '商品'}}</p>
+            <p class="font-26" :class="{'gray': !isActive('jade')}" align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
         </div>
-        <div v-link="link('Story')" class="border-right" :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('Story')}">
+        <div v-link="link('story')" class="border-right" :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('story')}">
             <p class="font-30" align="center">{{profile.topic_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Story')}" align="center">晒宝</p>
+            <p class="font-26" :class="{'gray': !isActive('story')}" align="center">晒宝</p>
         </div>
-        <div v-link="link('Evaluation')"  :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('Evaluation')}">
+        <div v-link="link('evaluation')"  :class="{'three': profile.shop_status, 'two': !profile.shop_status, 'red': isActive('evaluation')}">
             <p class="font-30" align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Evaluation')}" align="center">鉴宝</p>
+            <p class="font-26" :class="{'gray': !isActive('evaluation')}" align="center">鉴宝</p>
         </div>
     </div>
     <div class="content">
@@ -41,47 +44,49 @@
 </div>
 </template>
 <script>
-import HomePageJade from './HomePageJade.vue'
-import HomePageStory from './HomePageStory.vue'
-import HomePageEvaluation from './HomePageEvaluation.vue'
+import jadeView from './HomePageJade.vue'
+import storyView from './HomePageStory.vue'
+import evaluationView from './HomePageEvaluation.vue'
 export default {
     name: 'HomePageView',
     components: {
-        HomePageJade,
-        HomePageStory,
-        HomePageEvaluation
+        jadeView,
+        storyView,
+        evaluationView
     },
     data() {
         return {
-            profile: {},
             titles: [],
-            tab: 'Story',
+            tab: 'story',
+            profile: {
+                titles: []
+            },
             currentView: ''
         }
     },
     route: {
         data({to}) {
-            this.tab = to.query.tab? to.query.tab: 'Story';
+            to.query.tab && (this.tab = to.query.tab);
             return this.$get(`users/${this.$route.params.id}/profile`)
                 .then((data) => {
                     this.profile = data;
-                    this.isSelf = (this.self && this.self.id == this.profile.id);
-                    this.currentView = to.query.tab ? 'HomePage' + to.query.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
-                    this.tab = this.currentView.replace('HomePage', '');
+                    this.isSelf = (this.self && this.self.id == this.$route.params.id);
+                    this.currentView = to.query.tab? to.query.tab + 'View': (data.shop_status? 'jadeView': 'storyView');
+                    this.tab = this.currentView.replace('View', '');
                     this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
                 });
         }
     },
     methods: {
         toggleFollow() {
-            if (this.follow) {
-                this.$delete('users/follow/'+ this.profile.id)
+            if (this.profile.follow) {
+                this.$delete(`users/follow/${this.$route.params.id}`)
                     .then(() => {
                         this.profile.follow = false;
                         this.action('toast', {success: 1, text: '取消关注成功'});
                     });
             } else {
-                this.$post('users/follow/' + this.profile.id)
+                this.$post(`users/follow/${this.$route.params.id}`)
                     .then(() => {
                         this.profile.follow = true;
                         this.action('toast', {success: 1, text: '关注成功'});
@@ -89,8 +94,10 @@ export default {
             }
         },
         coverflow(index) {
-            if(this.profile.photo) {
-                this.action('coverflow', {ids: [this.photo], index: 0});
+            if(this.profile.photo != '') {
+                this.action('coverflow', {ids: [this.profile.photo], index: 0});
+            } else {
+                console.log('头像为空');
             }
         },
         link(tab) {
