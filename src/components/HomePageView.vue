@@ -23,7 +23,7 @@
     <div class="community bg-white flex border-bottom">
         <div v-link="link('Jade')" class="border-right three" v-if="shop_status" :class="{'red': isActive('Jade')}">
             <p class="font-30" align="center">{{products_count}}</p>
-            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{has_website ? '作品': '商品'}}</p>
+            <p class="font-26" :class="{'gray': !isActive('Jade')}" align="center">{{role > 3 ? '作品': '商品'}}</p>
         </div>
         <div v-link="link('Story')" class="border-right" :class="{'three': shop_status, 'two': !shop_status, 'red': isActive('Story')}">
             <p class="font-30" align="center">{{topic_count}}</p>
@@ -65,7 +65,7 @@ export default {
                 .then((data) => {
                     this.$data = data;
                     this.isSelf = (this.self && this.self.id == this.userId);
-                    this.currentView = this.tab ? 'HomePage' + this.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
+                    this.currentView = to.query.tab? 'HomePage'+ to.query.tab: (data.shop_status? 'HomePageJade': 'HomePageStory');
                     this.tab = this.currentView.replace('HomePage', '');
                     this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
                 });
