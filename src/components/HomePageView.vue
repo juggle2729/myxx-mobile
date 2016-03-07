@@ -2,7 +2,7 @@
 <div class="homepage-view">
     <div class="account flex">
         <div class="title flex">
-            <div class="avatar-90" v-bg.sm="profile.photo"></div>
+            <div class="avatar-90" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
             <div class="white flex-1">
                 <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span></p>
                 <p class="font-26">
@@ -20,7 +20,7 @@
     </div>
     <div class="site flex font-26 border-bottom bg-white" v-if="profile.website_status" v-link="{name: 'master', params:{id: $route.params.id}}">
         <div class="icon bg-red white">官网</div>
-        <div class="flex-1 red margin-left">{{profile.website_interview_title}}</div>
+        <div class="flex-1 red margin-left font-30">{{profile.website_interview_title}}</div>
         <div class="icon-enter"></div>
     </div>
     <div class="community bg-white flex border-bottom">
