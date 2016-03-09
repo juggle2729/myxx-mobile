@@ -66,26 +66,9 @@
             left: 0;
             top: 0;
             z-index: 999;
-            width: 100%;
-            height: 100%;
             overflow-y: auto;
             color: white;
             background: black url('#{$qn}/loading.svg') no-repeat center;
-            background-size: 60px 34px;
-            img {
-                position: relative;
-                width: 100%;
-                height: auto;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            .paging {
-                position: fixed;
-                width: 100%;
-                text-align: center;
-                bottom: 1em;
-                mix-blend-mode: difference;
-            }
         }
     }
 </style>
@@ -111,17 +94,17 @@
             <source :src="config.video + video">
         </video>
     </div>
-    <div id="img-player" v-if="img" @click="img=undefined"
-        @touchstart.prevent="img.x=$event.changedTouches[0].pageX" @touchend.prevent="transform($event.changedTouches[0].pageX-img.x)">
-        <img :src="config.img + img.ids[img.i] + '?imageView2/3/w/600/interlace/1'" onload="javascript:if(this.clientHeight>this.parentNode.clientHeight){this.style.top=0;this.style.transform='none';}" />
-        <div class="paging font-30">{{+img.i+1 + '/' + img.ids.length}}</div>
-    </div>
+    <slider id="img-player" v-if="img" @click="img=undefined" :ids="img.ids" :i="img.i" height="100%"></slider>
   </div>
 </template>
 <script>
 import emitter from '../utils/emitter';
+import Slider from './Slider.vue';
 export default {
     name: 'App',
+    components: {
+        Slider
+    },
     data() {
         return {
             user: {},
@@ -184,16 +167,6 @@ export default {
                     myxxIframe.height = 0;
                     myxxIframe.frameBorder = 0;
                     document.body.appendChild(myxxIframe);
-                }
-            }
-        },
-        transform(x) {
-            const delta = 50;
-            if(Math.abs(x) > 50) {
-                if(x > 0 && this.img.i > 0) {
-                    this.img.i -= 1;
-                } else if(x < 0 && this.img.ids.length-this.img.i > 1) {
-                    this.img.i += 1;
                 }
             }
         }

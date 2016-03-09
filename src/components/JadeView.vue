@@ -2,7 +2,6 @@
 .jade-view {
     padding-bottom: 80px;
     .titles {
-        display: -webkit-box-;
         /*height: 238px;*/
         padding: 32px 32px 36px 32px;
         position: relative;
@@ -39,19 +38,6 @@
         }
         .medias {
             padding: 32px 0;
-            /*.text{
-                margin-top: 32px;
-                line-height: 46px;
-            }
-            .picture {
-                margin-top: 32px;
-                background-size: cover;
-            }
-            .picture:after {
-                content: '';
-                display: block;
-                padding-bottom: 100%;
-            }*/
         }
     }
     .social {
@@ -66,8 +52,8 @@
 <div class="jade-view bg-white">
     <slider :ids="info.imgs"></slider>
     <div class="titles">
-        <p class="font-34">{{info.name}}{{info.moral? '·'+info.moral.name: ''}}</p>
-        <div class="flex" v-if="info.product_rewards.length >0">
+        <div class="font-34">{{info.name}}{{info.moral? '·'+info.moral.name: ''}}</div>
+        <div v-if="info.product_rewards.length >0">
             <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
         </div>
         <div class="flex">
@@ -75,17 +61,6 @@
             <p class="light font-22 flex">{{info.display_count}}人浏览</p>
         </div>
     </div>
-<!--     <div class="separator-20"></div>
-    <div class="avatars flex">
-        <div class="flex flex-1">
-            <div class="avatar-68 margin-right" v-bg.sm="info.user.photo"></div>
-            <span class="font-30 flex">{{info.user? (info.user.nickname? info.user.nickname: info.user.name): ''}}</span>
-        </div>
-        <div class="font-26 red flex" v-link="info.user | profile">
-            <p class="flex">进入{{info.user? (info.user.website_status? '官网': '主页'): '主页'}}</p>
-            <p class="icon-enter gray"></p>
-        </div>
-    </div> -->
     <div class="separator-20"></div>
     <div class="params">
         <div class="title border-bottom flex">
@@ -129,11 +104,6 @@
         </div>
         <div class="medias font-30">
             {{{info.detail}}}
-            <!-- <template v-for="media in info.detail.medias">
-                <div class="media text" v-if="media.media_type==='text'">{{media.media_content}}</div>
-                <div class="media picture" v-if="media.media_type==='inner_img'" v-bg.md="media.media_content"></div>
-                <div class="media play" @click="play(media.media_content)" v-if="media.media_type==='video'" v-bg.video="media.media_content"></div>
-            </template> -->
         </div>
     </div>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
@@ -164,7 +134,7 @@ export default {
                 origin_place: {},
                 product_rewards: [{reward: {}}],
                 creator_reward: {},
-                imgs: ['img.png'], // 占位图，误删
+                imgs: [],
                 detail: {
                     medias: [{}]
                 }

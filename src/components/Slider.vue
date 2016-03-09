@@ -2,18 +2,16 @@
 .slider {
     position: relative;
     width: 100%;
-    height: 540px;
     overflow: hidden;
-    .slide-container {
+    .container {
         display: -webkit-box;
-        transition: transform .3s linear;
+        /*transition: transform .3s linear;*/
         height: 100%;
         min-height: 100%;
     }
     .slide {
         background-size: cover;
         background-position: center;
-        /*background-color: #e0e0e0;*/
         width: 100%;
         min-height: 100%;
         height: 100%;
@@ -38,12 +36,12 @@
 }
 </style>
 <template>
-<div class="slider">
-    <div class="slide-container">
-        <div v-for="id in ids" data-index={{$index}} class="slide" v-bg="id"></div>
+<div class="slider" :style="{height: height}">
+    <div class="container">
+        <div v-for="id in ids" class="slide" v-bg="id"></div>
     </div>
     <div class="paging center">
-        <div class="dot" :class="{'active': !$index}" data-index={{$index}} v-for="id in ids"></div>
+        <div class="dot" :class="{'active': i === $index}" v-for="id in ids"></div>
     </div>
 </div>
 </template>
@@ -53,49 +51,97 @@ export default {
     props: {
         ids: {
             default: []
+        },
+        i: {
+            default: 0
+        },
+        height: {
+          default: '7rem' // 默认高度
+        }
+    },
+    data() {
+        return {
+            container: undefined,
+            containerWidth: 0,
+            touchable: true,
+            xy: {
+                start: {x: 0, y: 0, time: 0},
+                end: {x: 0, y: 0, time: 0},
+                direction: undefined
+            },
+            tap: {
+                start: 'touchstart',
+                move: 'touchmove',
+                end: 'touchend'
+            }
         }
     },
     ready() {
-        this.$watch('ids', (ids) => {
-            const threshold = 50;
+        // 初始化
+        this.container = this.$el.querySelector('.container');
+        this.containerWidth = this.container.clientWidth;
+        this.touchable = ('ontouchstart' in document);
+        if(!this.touchable) {
+            this.tap.start = 'mousedown';
+            this.tap.move = 'mousemove';
+            this.tap.end = 'mouseup';
+        }
+        this.$el.addEventListener(this.tap.start, this.start, true);
+        this.$el.addEventListener(this.tap.end, this.end, true);
 
-            let [pageX, slideList] = [0, document.querySelectorAll('.slide')];
-            let slides = Array.prototype.slice.call(slideList, 0, slideList.length);
-
-            slides.forEach((slide) => {
-                slide.addEventListener('touchstart', (e) => {
-                    pageX = e.pageX;
-                }, false);
-                slide.addEventListener('touchend', (e) => {
-                    let diff = e.pageX - pageX;
-                    if(Math.abs(diff) > threshold) {
-                        if(diff < 0) {
-                            this.transform(1, e.target.dataset.index);
-                        } else {
-                            this.transform(-1, e.target.dataset.index);
-                        }
-                    } else {
-                        e.preventDefault();
-                    }
-                }, false);
-            });
+        this.container.addEventListener('webkitTransitionEnd', () => {
+            this.xy.end.x = -1 * this.i * this.containerWidth;
+            this.container.style.transitionDuration = '0ms';
         });
+        this.slide();
     },
     methods: {
-        transform(step, index) {
-            let nextSlideIndex = step + Number.parseInt(index);
-            if(nextSlideIndex >= 0 && nextSlideIndex < this.ids.length) {
-                const container = document.querySelector('.slide-container');
-                container.style.transform = `translate3d(-${nextSlideIndex*100}%, 0px, 0px)`;
-                let dots = [...document.querySelectorAll('.dot[data-index]')];
-                dots.forEach((dot) => {
-                    if(dot.dataset.index == nextSlideIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
+        start(e) {
+            const {pageX, pageY} = e || e.touches[0];
+            this.xy.start.x = pageX;
+            this.xy.start.y = pageY;
+            this.xy.start.time = Date.now();
+            this.$el.addEventListener(this.tap.move, this.moving, true);
+        },
+        moving(e) {
+            const {pageX, pageY} = e || e.touches[0];
+            this.xy.end.x = pageX;
+            this.xy.end.y = pageY;
+            if(!this.touchable || this.xy.direction === 'x') {
+                e.preventDefault();
+                let translateX = this.xy.end.x - this.xy.start.x - this.i * this.containerWidth;
+                this.container.style.transform = `translate3d(${translateX}px, 0, 0)`;
+            } else if(!this.xy.direction){
+                this.xy.direction = 
+                    Math.abs(this.xy.end.x - this.xy.start.x) >= Math.abs(this.xy.end.y - this.xy.start.y) ? 'x' : 'y';
             }
+        },
+        end(e) {
+            this.xy.end.x = e.pageX || e.changedTouches[0].pageX;
+            this.xy.end.time = Date.now();
+            // 重置
+            this.xy.direction = undefined;
+            this.$el.removeEventListener(this.tap.move,  this.moving, true);
+            const [deltaX, deltaTime] = [this.xy.end.x - this.xy.start.x, this.xy.end.time - this.xy.start.time];
+            // 确定当前图片
+            if(deltaX > this.containerWidth/2 || (deltaX > 50 && deltaTime < 300)) {
+                this.slide(this.i - 1);
+            } else if(-deltaX > this.containerWidth/2 || (-deltaX > 50 && deltaTime < 300)) {
+                this.slide(this.i + 1);
+            } else {
+                this.slide(this.i);
+            }
+        },
+        slide(index) {
+            if(index) {
+                this.container.style.transitionDuration = '300ms';
+            } else {
+                index = this.i;
+            }
+            index = Math.min(index, this.ids.length-1);
+            index = Math.max(index, 0);
+            this.i = index;
+            this.container.style.transform = `translate3d(${-100*index}%, 0, 0)`;
         }
     }
 }

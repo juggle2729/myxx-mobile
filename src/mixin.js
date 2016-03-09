@@ -151,7 +151,7 @@ const mixin = {
                 data.desc = entry.content;
                 data.icon = entry.medias[0].id;
                 if(entry.medias[0].type === 'video') {
-                    data.icon = this.config.video + icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
+                    data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
                 }
                 data.text = '我也要晒宝';
             } else if(type === 'product') {
