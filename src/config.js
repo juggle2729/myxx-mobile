@@ -1,12 +1,29 @@
 // hosts设置
-// let [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
-//['http://dev.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
-// if(/^app/.test(location.hostname)) {
-    let [api, img, video, download] = ['//api.meiyuxiuxiu.com', 'http://img.meiyuxiuxiu.com/', 'http://video.meiyuxiuxiu.com/', 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'];
-// } 
-// else if(/^test/.test(location.hostname)) {
-//     [api, img, video, download] = ['http://test.api.meiyuxiuxiu.net', 'http://img.meiyuxiuxiu.net/', 'http://video.meiyuxiuxiu.net/', 'http://build.meiyuxiuxiu.net/'];
-// }
+const hosts = {
+    api: {
+        dev: 'http://dev.api.meiyuxiuxiu.net',
+        test: 'http://test.api.meiyuxiuxiu.net',
+        prod: 'http://api.meiyuxiuxiu.com'
+    },
+    img: {
+        dev: 'http://img.meiyuxiuxiu.net/',
+        test: 'http://img.meiyuxiuxiu.net/',
+        prod: 'http://img.meiyuxiuxiu.com/'
+    },
+    video: {
+        dev: 'http://video.meiyuxiuxiu.net/',
+        test: 'http://video.meiyuxiuxiu.net/',
+        prod: 'http://video.meiyuxiuxiu.com/'
+    },
+    download: {
+        dev: 'http://build.meiyuxiuxiu.net/',
+        test: 'http://build.meiyuxiuxiu.net/',
+        prod: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
+    }
+};
+const env = '' || /^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : 'dev');
+let [api, img, video, download] = [hosts.api[env], hosts.img[env], hosts.video[env], hosts.download[env]];
+
 
 export default {
     api,

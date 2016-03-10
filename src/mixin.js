@@ -101,10 +101,14 @@ const mixin = {
                 if(method !== 'get' && !token) {
                     this.action('login');
                 } else {
+                    const [path, version] = url.split('|');
+                    if(version) {
+                        this.$http.headers.common['X-Api-Version'] = version;
+                    }
                     if(token) {
                         this.$http.headers.common['X-Auth-Token'] = token;
                     }
-                    this.$http[method](url, data).then(({data: resp}) => {
+                    this.$http[method](path, data).then(({data: resp}) => {
                         // http://wiki.jimhuang.cn/dokuwiki/doku.php?id=dev_team:dev_sub_team_server:myxx_console_api:errorcode&#
                         if(resp.status === 200) {
                             defer.resolve(resp.data);
