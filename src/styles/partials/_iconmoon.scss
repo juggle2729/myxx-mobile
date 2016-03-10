@@ -19,6 +19,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-story:before {
+    content: "\e91d";
+}
 .icon-down:before {
     content: "\e91c";
 }
