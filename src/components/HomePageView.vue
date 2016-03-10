@@ -67,11 +67,11 @@ export default {
     route: {
         data({to}) {
             to.query.tab && (this.tab = to.query.tab);
-            return this.$get(`users/${this.$route.params.id}/profile`)
+            return this.$get(`users/${this.$route.params.id}/profile|v2`)
                 .then((data) => {
                     this.profile = data;
-                    this.isSelf = (this.self && this.self.id == this.$route.params.id);
-                    this.currentView = to.query.tab? to.query.tab + 'View': (data.shop_status? 'jadeView': 'storyView');
+                    this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
+                    this.currentView = to.query.tab ? to.query.tab + 'View': (data.shop_status ? 'jadeView': 'storyView');
                     this.tab = this.currentView.replace('View', '');
                     this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
                 });
@@ -93,21 +93,17 @@ export default {
                     });
             }
         },
-        coverflow(index) {
-            if(this.profile.photo != '') {
-                this.action('coverflow', {ids: [this.profile.photo], index: 0});
-            } else {
-                console.log('头像为空');
+        coverflow(index=0) {
+            if(this.profile.photo) {
+                this.action('coverflow', {ids: [this.profile.photo], index});
             }
         },
         link(tab) {
             const linkObj = {
                 name: 'user-profile',
-                replace: true,
                 params: { id: this.$route.params.id },
                 query: _.merge({}, this.$route.query, {
-                    tab: tab,
-                    replace: true
+                    tab: tab
                 })
             };
             return linkObj;

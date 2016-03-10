@@ -86,7 +86,7 @@
             submit() {
                 this.$post('users/feedbacks', this.result)
                     .then(() => {
-                        this.action('modal', {text: '您的申请已成功提交！请耐心等待客服联系。'});
+                        this.action('modal');
                     });
             }
         }
