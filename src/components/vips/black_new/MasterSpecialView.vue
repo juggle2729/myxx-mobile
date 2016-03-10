@@ -15,7 +15,7 @@
              @touchmove="contentTouchMove($event)" @touchend="contentTouchEnd($event)">
             <div class="top img"></div>
             <div class="brief">
-                <div class="detail">{{masterBaseData.brief}}</div>
+                <div class="detail">{{masterBaseData.brief | truncate 90}}</div>
             </div>
             <div class="content" v-html="interview.content"></div>
             <div class="base-info">
@@ -237,21 +237,23 @@
                 @include border(vertical, #b7b7b7);
                 padding: 40px 0;
                 line-height: 36px;
+                text-align: justify;
             }
         }
 
         /*强制覆盖富文本的样式*/
         .content {
-            padding: 65px 50px;
-            font-size: 28px;
+            padding: 65px 24px;
+            font-size: 30px;
             line-height: 26px;
+
             * {
-                font-size: 28px !important;
+                font-size: 30px !important;
                 line-height: 54px !important;
             }
 
             img {
-                margin: 50px 0 !important;
+                width: 100% !important;
             }
 
             img:last-child {

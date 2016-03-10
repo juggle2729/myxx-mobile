@@ -2,12 +2,16 @@
 .story-view {
     padding-bottom: 80px;
     min-height:100%;
-    .story {
+    .story-header {
         padding: 32px 32px;
+    }
+    .header {
+      position: relative;
     }
     .user {
         display: -webkit-box;
         -webkit-box-align: center;
+        float: left;
         .avatar {
             height: 68px;
             width: 68px;
@@ -17,30 +21,70 @@
         }
         .name {
             margin-left: 20px;
-            .moment {
-                margin-top: 12px;
-            }
         }
     }
-    .desc {
-        margin: 30px 0 24px;
-        > p:nth-of-type(2){
-            margin-top: 16px;
-            line-height: 46px;
-            line-height: 1.5em;
+    .comment-cnt {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        color: #9f9f9f;
+    }
+    .cover {
+        width: 750px;
+        height: 750px;
+    }
+    .play::after {
+        left: 32px;
+        bottom: 30px;
+        background-position: left bottom;
+    }
+    .store-detail {
+        padding: 0 32px 36px;
+        .content {
+            font-size: 30px;
+            color: #666666;
+            text-align: center;
+            margin: 0 auto;
+            padding: 60px 0;
+            width: 480px;
+            line-height: 42px;
+            font-family: 'song-simple';
         }
     }
     .medias {
+        .first-row, .second-row {
+            display: -webkit-box;
+        }
+
         .media {
-            vertical-align: top;
-            display: inline-block;
+            -webkit-box-flex: 1;
+        }
+
+        .third {
             width: percentage(1/3);
             padding-top: 33.3333%;
             padding-top: -webkit-calc(33.3333% - 10px);
-            border: 5px solid white;
         }
-        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-            margin-right: percentage(1/3);
+
+        .half {
+            width: percentage(1/2);
+            padding-top: 50%;
+            padding-top: -webkit-calc(50% - 10px);
+        }
+
+        .full {
+            width: 100%;
+            padding-top: 100%;
+            padding-top: -webkit-calc(100% - 10px);
+        }
+
+        .media:not(:first-child) {
+            margin-left: 10px;
+        }
+
+        .second-row {
+            margin-top: 10px;
         }
     }
     .comments {
@@ -69,8 +113,8 @@
 </style>
 <template>
 <div class="story-view bg-default">
-    <div class="story bg-white">
-        <div class="header">
+    <div class="story-header bg-white">
+        <div class="header clearfix">
             <div class="user">
                 <div class="avatar" v-link="story.user | profile" v-bg.sm="story.user.photo"></div>
                 <div class="name">
@@ -80,18 +124,31 @@
                     </div>
                 </div>
             </div>
-            <div class="desc font-30"><p class="gray">#{{story.topic_type}}</p><p>{{story.content}}</p></div>
-        </div>
-        <div class="medias">
-            <div v-if="unique">
-                <img class="img" @click="coverflow(0)" :src="config.img + story.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
+            <div class="comment-cnt font-30">
+                <span class="icon-like-active"></span>
+                <span class="cnt-text">{{story.comment}}</span>
             </div>
-            <template v-else>
-                <template v-for="media in story.medias"
-                    ><div class="media img" @click="coverflow($index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                    ><div class="media play" @click="play(media.id)" v-if="media.type==='video'" v-bg.video="media.id"></div
-                ></template>
-            </template>
+        </div>
+    </div>
+    <template v-if="story.cover_type === 'picture'">
+        <div class="cover img" v-bg="story.cover" query="imageView2/1/w/750/h/750/interlace/1"></div>
+    </template>
+    <template v-if="story.cover_type === 'video'">
+        <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="imageView2/1/w/750/h/750/interlace/1"></div>
+    </template>
+    <div class="store-detail bg-white">
+        <div class="content" v-if="story.content">{{story.content}}</div>
+        <div class="medias">
+            <div class="first-row" v-if="firstRowMedias.length">
+                <template v-for="media in firstRowMedias">
+                    <div class="media img {{firstRowClass}}" v-bg="media.id" query="imageView2/1/w/343/h/343/interlace/1"></div>
+                </template>
+            </div>
+            <div class="second-row" v-if="twoRowMedias.length">
+                <template v-for="media in twoRowMedias">
+                    <div class="media img {{twoRowClass}}" v-bg="media.id" query="imageView2/1/w/343/h/343/interlace/1"></div>
+                </template>
+            </div>
         </div>
     </div>
     <div class="separator-20"></div>
@@ -111,7 +168,7 @@ export default {
             story: {
                 user: {},
                 medias: [],
-                likes: [],
+                likes: []
             }
         };
     },
@@ -120,15 +177,45 @@ export default {
         Comment
     },
     computed: {
-        unique() {
-            let medias = this.story.medias;
-            return medias.length === 1 && medias[0].type==='picture';
+        firstRowClass() {
+            const mediasLen = this.story.medias.length;
+            if (mediasLen === 1) {
+                return 'full';
+            } else if (mediasLen === 2 || mediasLen === 4 || mediasLen === 5) {
+                return 'half';
+            } else if (mediasLen === 3 || mediasLen === 6) {
+                return 'third';
+            }
+            return '';
+        },
+        twoRowClass() {
+            const mediasLen = this.story.medias.length;
+            if (mediasLen === 4) {
+                return 'half';
+            } else if (mediasLen === 5 || mediasLen === 6) {
+                return 'third';
+            }
+            return '';
+        },
+        firstRowMedias() {
+            let [mediasLen, truncateEnd] = [this.story.medias.length, 3];
+            if (mediasLen === 4 || mediasLen === 5) {
+                truncateEnd = 2;
+            }
+            return this.story.medias.slice(0, truncateEnd);
+        },
+        twoRowMedias() {
+            let [mediasLen, truncateStart] = [this.story.medias.length, 3];
+            if (mediasLen === 4 || mediasLen === 5) {
+                truncateStart = 2;
+            }
+            return this.story.medias.slice(truncateStart, this.story.medias.length);
         }
     },
     route: {
         data({to}) {
             const storyId = to.params.id;
-            return this.$get(`sns/topics/${storyId}`)
+            return this.$get(`sns/topics/${storyId}|v2`)
                 .then((story) => {
                     this.setShareData('topic', story, true);
                     return {story};
