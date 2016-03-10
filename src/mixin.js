@@ -143,6 +143,7 @@ const mixin = {
                 data.title = entry.unidentified ? '快帮我鉴定一下这个宝贝！' : '快来看看我的鉴定吧！';
                 data.desc = entry.description;
                 data.icon = entry.pictures[0];
+                data.url = location.origin + '/share' +  location.pathname;
                 data.text = '我也要鉴宝';
             } else if(type === 'topic') {
                 const titles = {
@@ -186,7 +187,10 @@ const mixin = {
                 user: _.get(this, 'self.id', -1),
                 time: Date.now()
             });
-            data.url = location.origin + location.pathname + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
+            if(!data.url) {
+                data.url = location.origin + location.pathname;
+            } 
+            data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
 
             this.$root.shareData = data;
             document.title = data.title;

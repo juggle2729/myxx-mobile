@@ -1,4 +1,5 @@
 <style lang="sass">
+@import '../styles/partials/var';
 .homepage-evaluation {
     height: 100%;
     .head {
@@ -12,13 +13,54 @@
         width: 100%;
         padding-top: percentage(1/1.15);
         background-size: cover;
+        position: relative;
+        &[data-genuine='真'] {
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 144px;
+                width: 144px;
+                background: transparent url('#{$qn}/result-true.png') center;
+                background-size: contain;
+            }
+        }
+        &[data-genuine='假'] {
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 144px;
+                width: 144px;
+                background: transparent url('#{$qn}/result-false.png') center;
+                background-size: contain;
+            }
+        }
+        &[data-genuine*='疑'] {
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 144px;
+                width: 144px;
+                background: transparent url('#{$qn}/result-unknow.png') center;
+                background-size: contain;
+            }
+        }
     }
     .masters {
-        margin: 10px 10px 24px;
+        padding: 10px 10px 24px;
         .left, .right {
             width: 204px;
             height: 204px;
             background-size: cover;
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
         .middle {
             height: 204px;
@@ -32,9 +74,21 @@
             }
             .l {
                 padding-top: 12px;
+                .margin-top {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 100%;
+                    overflow: hidden;
+                }
             }
             .r {
                 text-align: right;
+                .margin-top {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 100%;
+                    overflow: hidden;
+                }
             }
         }
     }
@@ -61,9 +115,9 @@
             <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
             <div class="gray font-26"><i class="icon-comment"></i><span>{{item.comment}}</span></div>
         </div>
-        <div class="cover" v-bg="item.picture"></div>
+        <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         <div v-if="item.results.length">
-            <div class="masters flex">
+            <div class="masters flex bg-white">
                 <div class="left" v-link="item.results[0].identifier | profile" v-bg.sm="item.results[0].identifier.portrait"></div>
                 <div class="middle flex-1">
                     <div class="l font-26">
@@ -114,7 +168,27 @@ export default {
     },
     methods: {
         invite(evaluation) {
-            this.action('show', {view: 'invite-master', data: {id: evaluation.post_id}});
+            if(this.self.id) {
+                this.action('inviteMaster', {id: evaluation.post_id});
+            } else {
+                this.action('login');
+            }
+        },
+        genuine(item) {
+            let result = '';
+            if(item.results.length === 1) {
+                result = item.results[0].result;
+            } else if(item.results.length > 1) {
+                let results = item.results.map((result) => result.result).join('');
+                if(results.replace(/真/g, '').length === 0) {
+                    result = '真';
+                } else if(results.replace(/假/g, '').length === 0) {
+                    result = '假';
+                } else {
+                    result = '疑';
+                }
+            }
+            return result;
         }
     }
 }

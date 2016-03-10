@@ -2,6 +2,9 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
+    '/msg': {
+        component: require('./components/MsgTempView.vue')
+    },
     '/evaluations/:tab': {
         name: 'evaluations',
         component: require('./components/EvaluationsView.vue')

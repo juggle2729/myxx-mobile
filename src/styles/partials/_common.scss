@@ -115,6 +115,10 @@
         clear: both;
     }
 }
+.scrollable {
+    -webkit-overflow-scrolling: touch;
+}
+
 /****************************
 *           常用组件          *
 * **************************/

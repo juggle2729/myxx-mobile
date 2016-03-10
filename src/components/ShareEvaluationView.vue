@@ -8,6 +8,7 @@
         height: 854px;
         padding: 52px 78px;
         background: #202020 url('#{$qn}/evaluation/result-bg.png') no-repeat;
+        background-size: 100% auto; 
         .portrait {
             width: 594px;
             height: 594px;
@@ -31,6 +32,12 @@
                 background-size: 1rem;
                 pointer-events: none;
             }
+        }
+        .title {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 435px;
+            overflow: hidden;
         }
     }
     .results-empty {
@@ -83,18 +90,18 @@
 </style>
 <template>
 <div class="share-evaluation-detail">
-    <div v-if="evaluation.results.length" class="results">
+    <div v-if="evaluation.results.length" class="results scrollable">
         <div v-for="result in evaluation.results">
             <div class="result-head flex">
                 <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
                 <div class="flex-1 margin-left">
                     <div class="font-30 white">{{result.identifier.name}}</div>
-                    <div class="font-26 white margin-top">{{result.identifier.title}}</div>
+                    <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
                 </div>
                 <div class="font-30 red"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
             </div>
             <img class="portrait" @click="play(result.video)" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
-            <div class="font-30 white center">鉴定结果为{{result.result}}&nbsp;估价为{{prices}}</div>
+            <div class="font-30 white center">鉴定结果为{{result.result}}<span v-if="result.result!=='假'">&nbsp;估价为{{prices[$index]}}</span></div>
         </div>
     </div>
     <div v-else class="results-empty border-bottom font-34 center gray">还没有大师鉴定这个宝贝！</div>
@@ -110,7 +117,7 @@
         </div>
         <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
-    <ul class="images">
+    <ul class="images scrollable">
         <li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)">
             <img :src="config.img+picture+'?imageView2/2/h/450'" />
         </li>
