@@ -23,12 +23,15 @@
             margin-left: 20px;
         }
     }
-    .comment-cnt {
+    .like-cnt {
         position: absolute;
         top: 50%;
         right: 0;
         transform: translateY(-50%);
         color: #9f9f9f;
+        &.liked {
+            color: #cc3f4f;
+         }
     }
     .cover {
         width: 750px;
@@ -124,9 +127,9 @@
                     </div>
                 </div>
             </div>
-            <div class="comment-cnt font-30">
+            <div class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
                 <span class="icon-like-active"></span>
-                <span class="cnt-text">{{story.comment}}</span>
+                <span class="cnt-text">{{story.like}}</span>
             </div>
         </div>
     </div>
@@ -168,7 +171,8 @@ export default {
             story: {
                 user: {},
                 medias: [],
-                likes: []
+                likes: [],
+                post_id: ''
             }
         };
     },
@@ -243,6 +247,20 @@ export default {
                         v.play();
                     }
                 }, 10);
+            }
+        },
+        like() {
+            const likeApi = `users/target/${this.story.post_id}/type/30/like`;
+            if (this.story.liked) {
+                this.$delete(likeApi).then(() => {
+                    this.story.liked = false;
+                    this.story.like -= 1;
+                });
+            } else {
+                this.$post(likeApi).then(() => {
+                    this.story.liked = true;
+                    this.story.like += 1;
+                });
             }
         }
     }
