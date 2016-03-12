@@ -69,77 +69,42 @@ export default {
         title: '我的',
         component: require('./components/ProfileView.vue')
     },
-    '/profile/:id': { // 个人主页
-        name: 'user-profile',
-        title: '个人主页',
-        component: require('./components/HomePageView.vue')
-    },
-    '/profile/:id/story': {
-        name: 'user-story',
-        title: '晒宝',
-        component: require('./components/UserStoryView.vue')
-    },
-    '/profile/:id/following': {
-        name: 'following',
-        title: '关注的人',
-        component: require('./components/FollowingView.vue')
-    },
-    '/profile/:id/follower': {
-        name: 'follower',
-        title: '粉丝',
-        component: require('./components/FollowerView.vue')
-    },
-    '/profile/:id/evaluation': {
-        name: 'user-evaluation',
+    '/profile/evaluation': {
+        name: 'my-evaluation',
         title: '鉴宝',
-        component: require('./components/UserEvaluationView.vue')
+        component: require('./components/MyEvaluationView.vue')
     },
-    '/profile/:id/like': {
-        name: 'user-like',
+    '/profile/story': {
+        name: 'my-story',
+        title: '晒宝',
+        component: require('./components/MyStoryView.vue')
+    },
+    '/profile/like': {
+        name: 'my-like',
         title: '赞',
-        component: require('./components/UserLikeView.vue')
+        component: require('./components/MyLikeView.vue')
     },
-    // '/profile/coin': {
-    //     name: 'user-coin',
-    //     title: '我的金币',
-    //     component: require('./components/UserCoinView.vue')
-    // },
-    // '/profile/coin/rule': {
-    //     name: 'coin-rule',
-    //     title: '金币规则',
-    //     component: require('./components/CoinRuleView.vue')
-    // },
-    // '/profile/coin/use': {
-    //     name: 'coin-use',
-    //     title: '金币的用处',
-    //     component: require('./components/CoinUsageView.vue')
-    // },
-    // "/profile/coin/redeem": {
-    //     name: 'coin-redeem',
-    //     title: '兑换列表',
-    //     component: require('./components/CoinRedeemView.vue')
-    // },
-    // '/profile/coin/:id/detail': {
-    //     name: 'coin-redeem-detail',
-    //     title: '兑换详情',
-    //     component: require('./components/CoinRedeemDetailView.vue')
-    // },
-    // '/profile/coin/:id/success': {
-    //     name: 'coin-redeem-success',
-    //     title: '兑换成功',
-    //     component: require('./components/CoinRedeemSuccessView.vue')
-    // },
-    // '/profile/:id/invite': {
-    //     name: 'user-invite',
-    //     title: '邀请有奖',
-    //     component: require('./components/UserLikeView.vue')
-    // },
-    '/profile/:id/shop/request': {
+    '/user/:id/following': {
+        name: 'user-following',
+        title: '关注的人',
+        component: require('./components/UserFollowingView.vue')
+    },
+    '/user/:id/follower': {
+        name: 'user-follower',
+        title: '粉丝',
+        component: require('./components/UserFollowerView.vue')
+    },
+    '/user/:id/:tab': { // 个人主页
+        name: 'user',
+        title: '个人主页',
+        component: require('./components/UserView.vue')
+    },
+    '/profile/shop/request': {
         name: 'shop-request',
         title: '申请店铺',
         component: require('./components/ShopRequestView.vue')
     },
-    '/profile/:id/site/request': {
+    '/profile/site/request': {
         name: 'site-request',
         title: '申请官网',
         component: require('./components/SiteRequestView.vue')

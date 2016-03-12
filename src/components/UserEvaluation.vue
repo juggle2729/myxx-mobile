@@ -1,6 +1,6 @@
 <style lang="sass">
 @import '../styles/partials/var';
-.homepage-evaluation {
+.user-evaluation {
     height: 100%;
     .head {
         padding: 20px;
@@ -107,8 +107,8 @@
 }
 </style>
 <template>
-<div class="homepage-evaluation bg-white">
-    <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}">
+<div class="user-evaluation bg-white">
+    <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
         <div class="head flex">
             <div class="avatar-50" v-bg.sm="item.user.photo"></div>
             <div class="font-26 margin-left">{{item.user.name}}</div>
@@ -118,7 +118,7 @@
         <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         <div v-if="item.results.length">
             <div class="masters flex bg-white">
-                <div class="left" v-link="item.results[0].identifier | profile" v-bg.sm="item.results[0].identifier.portrait"></div>
+                <div class="left" v-link="item.results[0].identifier.id | profile" v-bg.sm="item.results[0].identifier.portrait"></div>
                 <div class="middle flex-1">
                     <div class="l font-26">
                         <div>{{item.results[0].identifier.name}}</div>
@@ -147,16 +147,10 @@
 <script>
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'HomePageEvaluation',
+    name: 'UserEvaluation',
     mixins: [PagingMixin],
-    props: {
-        id: {
-            type: String,
-            required: true
-        }
-    },
-    created() {
-        this.fetch();
+    activate(done) {
+        this.fetch().then(done);
     },
     computed: {
         paging() {

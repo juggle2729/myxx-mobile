@@ -1,5 +1,5 @@
 <style lang="sass">
-.homepage-story {
+.user-story {
     .item {
         padding: 0 16px 32px 16px;
     }
@@ -48,11 +48,11 @@
 }
 </style>
 <template>
-<div class="homepage-story bg-default">
-    <div v-for="item in items" track-by="id" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
+<div class="user-story bg-default">
+    <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
         <div class="header flex">
             <div class="flex-1 flex">
-                <div v-if="$route.name === 'user-profile'" class="avatar-50" v-bg.sm="item.user.photo"></div>
+                <div v-if="$route.name === 'user'" class="avatar-50" v-bg.sm="item.user.photo"></div>
                 <div v-else class="avatar-50" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
                 <div class="name margin-left font-26">{{item.user.name}}</div>
             </div>
@@ -75,16 +75,10 @@
 import StoryList from './StoryList.vue';
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'HomePageStory',
+    name: 'UserStory',
     mixins: [PagingMixin],
-    props: {
-        id: {
-            type: String,
-            required: true
-        }
-    },
-    created() {
-        this.fetch();
+    activate(done) {
+        this.fetch().then(done);
     },
     components: {
         StoryList
@@ -92,7 +86,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'sns/users/'+ this.id +'/topics',
+                path: 'sns/users/'+ this.$route.params.id +'/topics',
                 list: 'topics'
             }
         }

@@ -178,9 +178,8 @@ export default {
                 });
         },
         gotoProfile(user) {
-            let id = user.id || user.user_id;
-            let name = user.website_status === true ? 'master' : 'user-profile';
-            this.$route.router.go({name, params: {id}});
+            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
+            this.$route.router.go({name: 'user', params: {id, tab}});
         },
         _getPosition(e) {
             const rect = e.target.getBoundingClientRect();

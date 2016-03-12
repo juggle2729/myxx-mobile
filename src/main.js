@@ -58,10 +58,9 @@ router.beforeEach(({from, to, abort, next}) => {
     document.title = (to.title || '美玉秀秀');
     next();
 });
-router.afterEach(({to}) => {
-    //if(!_.get(to, 'query.position')) {
-    //    window.scrollTo(0, 0);
-    //}
-});
+router.afterEach(({to}) => {});
+router.alias({
+  '/user/:id': '/user/:id/jade'
+})
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

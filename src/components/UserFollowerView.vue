@@ -1,9 +1,9 @@
 <template>
-<div class="follower-view bg-default">
+<div class="user-follower-view bg-default">
     <div v-if="!items.isEmpty" class="separator"></div>
     <partial v-else name="empty-page" :empty-title.literal="xxx"></partial>
     <div class="user border-bottom bg-white flex" v-for="user in items">
-        <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile"></div>
+        <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile}"></div>
         <div class="flex-1" v-link="user | profile">
             <p class="font-30">{{user.nickname}}</p>
             <p class="font-26 light margin-top">{{user.role | role}}</p>
@@ -19,7 +19,7 @@
 <script>
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'SelfFollower',
+    name: 'UserFollowingView',
     mixins: [PagingMixin],
     data() {
         return {
@@ -32,7 +32,7 @@ export default {
         },
         paging() {
             return {
-                path: 'users/'+ this.$route.params.id +'/fans_list',
+                path: 'users/'+ this.self.id +'/fans_list',
                 list: 'entries',
                 params: {
                     limit: 10
@@ -70,7 +70,7 @@ export default {
 }
 </script>
 <style lang="sass">
-.follower-view {
+.user-follower-view {
     height: 100%;
     .user {
         height: 180px;

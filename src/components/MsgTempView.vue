@@ -42,6 +42,30 @@
 </div>
 </xmp>
             </li>
+            <li>
+                <span style="color: #888888;">评论了你：</span>这个看起来不错ye~
+            </li>
+            <li>
+<xmp>
+<span style="color: #888888;">评论了你：</span>这个看起来不错ye~
+</xmp>
+            </li>
+            <li>
+                赞了你的鉴宝
+            </li>
+            <li>
+<xmp>
+赞了你的鉴宝
+</xmp>
+            </li>
+            <li>
+                鉴定了你的宝贝
+            </li>
+            <li>
+<xmp>
+鉴定了你的宝贝
+</xmp>
+            </li>
         </ul>
         
     </div>

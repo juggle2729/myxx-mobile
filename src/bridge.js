@@ -6,17 +6,16 @@ let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
             let user = {
-            //   "id" : "2",
-            //   "token" : "cb111493-2fe1-4eda-a6d3-40ea5e475f40"
-            // ,
-            //   "gender" : "1",
-            //   "phone" : "15871705303",
-            //   "nickname" : "余长春",
-            //   "role" : "8",
-            //   "delete_flag" : "0",
-            //   "create_at" : "1448249072000",
-            //   "photo" : "47a31e63-bb96-4e05-8d4e-dae351ab0515",
-            //   "locale_id" : "269"
+            "id" : "1023",
+  "token" : "099769ac-eba9-49e7-87a0-55e7b2787584"
+,
+  "gender" : "0",
+  "phone" : "15871705303",
+  "nickname" : "余长春",
+  "delete_flag" : "0",
+  "role" : "0",
+  "create_at" : "1451999342000",
+  "photo" : ""
             };
             cb(JSON.stringify(user));
         }

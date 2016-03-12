@@ -1,11 +1,11 @@
 <template>
-<div class="userredeem-view bg-white">
+<div class="my-redeem-view bg-white">
     我的兑换
 </div>
 </template>
 <script>
 export default {
-    name: 'UserRedeemView',
+    name: 'MyRedeemView',
     data() {
         return {
             coins: []
@@ -16,7 +16,5 @@ export default {
 }
 </script>
 <style lang="sass">
-.userredeem-view {
-
-}
+.my-redeem-view {}
 </style>

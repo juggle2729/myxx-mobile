@@ -39,10 +39,8 @@ function truncate(str, len) {
 }
 
 function profile(user) {
-    let id = user.id || user.user_id;
-    // let name = user.website_status === true ? 'master' : 'user-profile';
-    let name = 'user-profile';
-    return {name, params: {id}};
+    const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
+    return {name: 'user', params: {id, tab}};
 }
 
 function percent(num) {

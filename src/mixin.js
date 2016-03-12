@@ -150,7 +150,7 @@ const mixin = {
                     '晒宝': '快来帮我看看这个宝贝怎么样！', 
                     '工艺展示': '快来围观这个精湛的工艺！', 
                     '淘玉故事': '好玉原来是这么淘来的！',
-                    '其它': '分享[美玉秀秀]晒宝！'
+                    '其他': '分享[美玉秀秀]晒宝！'
                 };
                 data.title = titles[entry.topic_type];
                 data.desc = entry.content;
@@ -193,12 +193,14 @@ const mixin = {
             data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
 
             this.$root.shareData = data;
-            document.title = data.title;
-            let shareIconSrc = data.icon;
-            if(!/^http/.test(shareIconSrc)) {
-                shareIconSrc = this.config.img + shareIconSrc + '?imageView2/1/w/310';
+            if(!this.env.isApp) {
+                document.title = data.title;
+                let shareIconSrc = data.icon;
+                if(!/^http/.test(shareIconSrc)) {
+                    shareIconSrc = this.config.img + shareIconSrc + '?imageView2/1/w/310';
+                }
+                document.querySelector("#share-icon").src = shareIconSrc;
             }
-            document.querySelector("#share-icon").src = shareIconSrc;
             if(shareable) {
                 let {title, desc, icon, url} = data;
                 this.action('shareable', {title, desc, icon, url});

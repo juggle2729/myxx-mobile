@@ -1,7 +1,7 @@
 <template>
 <div class="masters-view bg-default">
     <template v-for="site in items">
-        <div class="cell bg-white flex" v-link="{name: 'master', params: {id: site.item.id}, query: {replace: false}}" v-bg="site.image">
+        <div class="cell bg-white flex" v-link="{name: 'master', params: {id: site.item.id}}" v-bg="site.image">
             <div class="txt">
                 <p class="font-34 white">{{site.item.name}}</p>
                 <div class="flex">

@@ -69,7 +69,7 @@
         <div class="item" v-link="{name: 'evaluation', params: {id: item.post_id}}">
             <div class="header">
                 <div class="user">
-                    <div v-if="$route.name === 'user-profile'" class="avatar" v-bg.sm="item.user.photo"></div>
+                    <div v-if="$route.name === 'user'" class="avatar" v-bg.sm="item.user.photo"></div>
                     <div v-else class="avatar" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
                     <div class="name">
                         <p class="font-26">{{item.user.name}}</p>

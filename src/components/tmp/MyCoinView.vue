@@ -1,5 +1,5 @@
 <template>
-<div class="usercoin-view bg-white">
+<div class="my-coin-view bg-white">
     <div class="header">
         <div class="nums">
             <div class="wrap">
@@ -52,7 +52,7 @@
 </template>
 <script>
 export default {
-    name: 'UserCoinView',
+    name: 'MyCoinView',
     data() {
         return {
             coins: [],
@@ -70,7 +70,7 @@ export default {
 </script>
 <style lang="sass">
 @import '../styles/partials/var';
-.usercoin-view {
+.my-coin-view {
     .header {
         height: 446px;
         background-color: #3e99ef;

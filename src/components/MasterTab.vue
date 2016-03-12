@@ -69,11 +69,9 @@
             link(tab) {
                 const linkObj = {
                     name: 'master',
-                    replace: true,
                     params: { id: this.masterInfo.id },
                     query: _.merge({}, this.$route.query, {
-                        tab: tab,
-                        replace: true
+                        tab: tab
                     })
                 };
 

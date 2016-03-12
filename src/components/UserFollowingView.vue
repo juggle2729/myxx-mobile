@@ -1,5 +1,5 @@
 <template>
-<div class="following-view bg-default">
+<div class="user-following-view bg-default">
     <div v-if="!items.isEmpty" class="separator"></div>
     <partial v-else name="empty-page"></partial>
     <div class="user border-bottom bg-white flex" v-for="user in items">
@@ -19,7 +19,7 @@
 <script>
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'FollowingView',
+    name: 'UserFollowingView',
     mixins: [PagingMixin],
     data() {
         return {
@@ -32,7 +32,7 @@ export default {
         },
         paging() {
             return {
-                path: 'users/'+ this.$route.params.id +'/follow_list',
+                path: 'users/'+ this.self.id +'/follow_list',
                 list: 'entries',
                 params: {
                     limit: 10
@@ -70,7 +70,7 @@ export default {
 }
 </script>
 <style lang="sass">
-.following-view {
+.user-following-view {
     height: 100%;
     .user {
         height: 180px;

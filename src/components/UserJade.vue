@@ -1,5 +1,5 @@
 <style lang="sass">
-.homepage-jade {
+.user-jade {
     height: 100%;
     .cell {
         height: 590px;
@@ -22,9 +22,9 @@
 }
 </style>
 <template>
-<div class="homepage-jade bg-white">
+<div class="user-jade bg-white">
     <partial v-if="items.isEmpty" name="empty-page"></partial>
-    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}">
+    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
         <div class="img" v-bg.lg="item.imgs[0]"></div>
         <div class="txt font-30">
             <p>{{item.name}}</p>
@@ -37,20 +37,10 @@
 <script>
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'HomePageJade',
+    name: 'UserJade',
     mixins: [PagingMixin],
-    props: {
-        id: {
-            type: String,
-            required: true
-        },
-        role: {
-            type: Number,
-            required: true
-        }
-    },
-    created() {
-        this.fetch();
+    activate(done) {
+        this.fetch().then(done);
     },
     computed: {
         paging() {
@@ -58,15 +48,10 @@ export default {
                 path: 'mall/products',
                 list: 'products',
                 params: {
-                    user_id: this.id,
-                    limit: 6
+                    limit: 6,
+                    user_id: this.$route.params.id
                 }
             }
-        }
-    },
-    events: {
-        scrollToBottom(e) {
-            this.fetch();
         }
     }
 }

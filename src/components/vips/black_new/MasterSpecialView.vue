@@ -19,14 +19,14 @@
             </div>
             <div class="content" v-html="interview.content"></div>
             <div class="base-info">
-                <div class="center-avatar head avatar-222" v-link="{name: 'user-profile', params: {id: masterBaseData.id}}" v-bg.sm="masterBaseData.photo"></div>
+                <div class="center-avatar head avatar-222" v-link="{name: 'user', params: {id: masterBaseData.id}}" v-bg.sm="masterBaseData.photo"></div>
                 <div class="name">{{masterBaseData.name}}</div>
                 <div class="title" v-if="masterBaseData.titles.length > 0">{{masterBaseData.titles[0].name | truncate 300}}</div>
                 <ul class="operation">
                     <li class="attention" @click="followMaster()" v-if="!masterBaseData.follow && !isSelf"><span class="icon-follow"></span>关注</li>
                     <li class="attentioned" @click="followMaster()" v-if="masterBaseData.follow && !isSelf">已关注</li>
                     <li class="share" @click="share">分享</li>
-                    <li class="store" v-link="{name: 'user-profile', params: {id: masterBaseData.id}}">店铺</li>
+                    <li class="store" v-link="{name: 'user', params: {id: masterBaseData.id}}">店铺</li>
                 </ul>
             </div>
         </div>

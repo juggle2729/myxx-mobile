@@ -1,7 +1,7 @@
 <template>
 <div class="profile-view bg-default">
     <div class="separator"></div>
-    <div class="account bg-white border-bottom flex" v-link="{name: 'user-profile', params:{id: userId}}">
+    <div class="account bg-white border-bottom flex" v-link="self | profile">
         <div class="avatar-120" v-bg.sm="photo"></div>
         <div class="user flex-1">
             <p class="font-30">{{nickname}}</p>
@@ -10,15 +10,15 @@
         <span class="font-26 red flex">进入个人主页<i class="icon-enter gray margin-left"></i></span>
     </div>
     <div class="community bg-white flex">
-        <div v-link="{name: 'user-like', params:{id: userId}}" class="border-right">
+        <div v-link="{name: 'my-like'}" class="border-right">
             <p class="font-30" align="center">{{like_count || 0}}</p>
             <p class="font-26 gray" align="center">我的赞</p>
         </div>
-        <div v-link="{name: 'following', params: {id: userId }}" class="border-right">
+        <div v-link="{name: 'user-following', params: {id: self.id}}" class="border-right">
             <p class="font-30" align="center">{{follow_count}}</p>
             <p class="font-26 gray" align="center">关注</p>
         </div>
-        <div v-link="{name: 'follower', params: {id: userId }}">
+        <div v-link="{name: 'user-follower', params: {id: self.id}}">
             <p class="font-30" align="center">{{fans_count}}</p>
             <p class="font-26 gray" align="center">粉丝</p>
         </div>
@@ -33,38 +33,25 @@
     </div>
     <div class="separator-40"></div>
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: userId}}">
+        <div class="row bg-white font-30 border-bottom" v-link="{name: 'my-evaluation'}">
             <span class="red icon-eval"></span>
             <span class="">我的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" v-link="{name: 'user-story', params: {id: userId}}">
+        <div class="row bg-white font-30" v-link="{name: 'my-story'}">
             <span class="icon-story red"></span>
             <span>我的晒宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
     </div>
-    <!-- <div class="separator-40"></div>
-    <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-coin'}">
-            <span class="red icon-eval"></span>
-            <span class="">我的金币</span>
-            <span class="icon-enter gray font-26"></span>
-        </div>
-        <div class="row bg-white font-30">
-            <span class="icon-like red"></span>
-            <span>邀请有奖</span>
-            <span class="icon-enter gray font-26"></span>
-        </div>
-    </div> -->
     <div class="separator-40"></div>
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: shop_status ? 'master' : 'shop-request', params: {id: userId}, query: {tab: 'store'}}">
+        <div class="row bg-white font-30 border-bottom" v-link="{name: shop_status ? 'master' : 'shop-request'}">
             <span class="icon-store red"></span>
             <span>{{shop_status ? '我的店铺' : '申请开通店铺'}}</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" v-link="{name: website_status ? 'master' : 'site-request', params: {id: userId}}">
+        <div class="row bg-white font-30" v-link="{name: website_status ? 'master' : 'site-request'}">
             <span class="icon-site red"></span>
             <span>{{website_status ? '我的官网' : '申请开通官网'}}</span>
             <span class="icon-enter gray font-26"></span>
