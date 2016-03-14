@@ -162,10 +162,12 @@ export default {
     },
     methods: {
         invite(evaluation) {
-            if(this.self.id) {
-                this.action('inviteMaster', {id: evaluation.post_id});
-            } else {
-                this.action('login');
+            if(this.env.version >= '1.1') {
+                if(this.self.id) {
+                    this.action('inviteMaster', {id: evaluation.post_id});
+                } else {
+                    this.action('login');
+                }
             }
         },
         genuine(item) {

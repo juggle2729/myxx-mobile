@@ -115,6 +115,21 @@ export default {
         }
     },
     computed: {
+        env() {
+            const ua = navigator.userAgent;
+            let env = {
+                isApp: /myxx/i.test(ua),
+                isMobile: /android|iphone|ipod|ipad/i.test(ua),
+                isIOS: /iphone|ipod|ipad/i.test(ua),
+                isAndroid: /android/i.test(ua),
+                isWechat: /micromessenger/i.test(ua),
+                isQQ: /qq\//i.test(ua),
+                isWeibo: /weibo/i.test(ua),
+                version: undefined
+            };
+            env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
+            return env;
+        },
         isShare() {
             return !this.env.isApp && _.get(this.$route, 'query.user');
         },
@@ -125,6 +140,10 @@ export default {
         }
     },
     ready() {
+        this.action('version', '')
+            .then((v) => {
+                this.env.version = v;
+            });
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
         emitter.on('open-app', (e) => this.openApp());

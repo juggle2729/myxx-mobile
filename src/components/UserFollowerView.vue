@@ -32,7 +32,7 @@ export default {
         },
         paging() {
             return {
-                path: 'users/'+ this.self.id +'/fans_list',
+                path: 'users/'+ this.$route.params.id +'/fans_list',
                 list: 'entries',
                 params: {
                     limit: 10

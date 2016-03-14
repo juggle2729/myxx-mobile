@@ -130,7 +130,7 @@
         </div>
         <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" qid="{{picture}}" track-by="$index"></li><li class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video" qid="{{evaluation.video}}"></li></ul>
+    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li v-if="evaluation.video" class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
     <div class="separator-20"></div>
     <div class="results bg-white">
         <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>

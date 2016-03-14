@@ -1,6 +1,6 @@
 <template>
 <div class="user-view">
-    <div class="account flex">
+    <div class="account flex" v-bg="profile.background_img">
         <div class="title flex">
             <div class="avatar-90" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
             <div class="white flex-1">
@@ -38,7 +38,8 @@
         </div>
     </div>
     <div class="content">
-        <component :is="view" keep-alive transition-mode="in-out"></component>
+        <!-- TODO use keep-alive -->
+        <component :is="view" transition-mode="out-in" transition="fade"></component>
     </div>
 </div>
 </template>
@@ -68,13 +69,15 @@ export default {
             .then((data) => {
                 this.profile = data;
                 this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
-                this.view = (this.view || data.shop_status ? 'jade': 'story');
+                if(!this.view) {
+                    this.view = data.shop_status ? 'jade': 'story';
+                }
                 this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
             });
     },
     route: {
-        data({to, next}) {
-            this.isDefaultView = ['jade', 'story', 'evaluation'].indexOf(to.params.tab) === -1;
+        data({from, to, next}) {
+            this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
             if(!this.isDefaultView) {
                 this.view = to.params.tab;
             }
@@ -112,7 +115,6 @@ export default {
     .account {
         height: 630px;
         padding: 20px 32px;
-        background-image: url('#{$qn}/homepage/top.png');
         background-size: cover;
         -webkit-box-align: end;
         .title {

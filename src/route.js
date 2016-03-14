@@ -51,7 +51,6 @@ export default {
     '/master/:id': {
         name: 'master',
         title: '大师官网',
-        raw: true,
         component: require('./components/Master.vue')
     },
     '/messages': {
@@ -69,20 +68,20 @@ export default {
         title: '我的',
         component: require('./components/ProfileView.vue')
     },
-    '/profile/evaluation': {
-        name: 'my-evaluation',
+    '/profile/:id/evaluation': {
+        name: 'user-evaluation',
         title: '鉴宝',
-        component: require('./components/MyEvaluationView.vue')
+        component: require('./components/UserEvaluationView.vue')
     },
-    '/profile/story': {
-        name: 'my-story',
+    '/profile/:id/story': {
+        name: 'user-story',
         title: '晒宝',
-        component: require('./components/MyStoryView.vue')
+        component: require('./components/UserStoryView.vue')
     },
-    '/profile/like': {
-        name: 'my-like',
+    '/user/:id/like': {
+        name: 'user-like',
         title: '赞',
-        component: require('./components/MyLikeView.vue')
+        component: require('./components/UserLikeView.vue')
     },
     '/user/:id/following': {
         name: 'user-following',

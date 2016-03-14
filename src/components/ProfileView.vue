@@ -10,7 +10,7 @@
         <span class="font-26 red flex">进入个人主页<i class="icon-enter gray margin-left"></i></span>
     </div>
     <div class="community bg-white flex">
-        <div v-link="{name: 'my-like'}" class="border-right">
+        <div v-link="{name: 'user-like', params: {id: self.id}}" class="border-right">
             <p class="font-30" align="center">{{like_count || 0}}</p>
             <p class="font-26 gray" align="center">我的赞</p>
         </div>
@@ -33,12 +33,12 @@
     </div>
     <div class="separator-40"></div>
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" v-link="{name: 'my-evaluation'}">
+        <div class="row bg-white font-30 border-bottom" @click="goToMyEvaluation">
             <span class="red icon-eval"></span>
-            <span class="">我的鉴宝</span>
+            <span>我的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" v-link="{name: 'my-story'}">
+        <div class="row bg-white font-30" @click="goToMyStory">
             <span class="icon-story red"></span>
             <span>我的晒宝</span>
             <span class="icon-enter gray font-26"></span>
@@ -77,7 +77,7 @@ export default {
             return this.action('user')
                 .then((user) => {
                     if(user) {
-                        return this.$get(`users/${user.id}/profile`)
+                        return this.$get(`users/${user.id}/profile|v2`)
                             .then((data) => {
                                 this.$data = data;
                                 this.userId = user.id;
@@ -86,6 +86,22 @@ export default {
                         return this.action('login');
                     }
                 });
+        }
+    },
+    methods: {
+        goToMyEvaluation() {
+            if(this.env.version >= '1.1') {
+                this.action('myEvaluations')
+            } else {
+                this.$router.go({name: 'user-evaluation', params: {id: this.self.id}});
+            }
+        },
+        goToMyStory() {
+            if(this.env.version >= '1.1') {
+                this.action('myStories')
+            } else {
+                this.$router.go({name: 'user-story', params: {id: this.self.id}});
+            }
         }
     }
 }

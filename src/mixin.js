@@ -9,18 +9,7 @@ const mixin = {
     },
     computed: {
         env() {
-            const ua = navigator.userAgent;
-            let env = {
-                isApp: /myxx/i.test(ua),
-                isMobile: /android|iphone|ipod|ipad/i.test(ua),
-                isIOS: /iphone|ipod|ipad/i.test(ua),
-                isAndroid: /android/i.test(ua),
-                isWechat: /micromessenger/i.test(ua),
-                isQQ: /qq\//i.test(ua),
-                isWeibo: /weibo/i.test(ua)
-            };
-            env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
-            return env;
+            return this.$root.env;
         },
         self() {
             return this.$root.user;
@@ -68,7 +57,7 @@ const mixin = {
             bridge.then((bridge) => {
                 if('user' === handler) {
                     resolver = (resp) => {
-                        let user = (resp ? JSON.parse(resp) : undefined);
+                        let user = (resp ? JSON.parse(resp) : {});
                         this.$root.user = user;
                         defer.resolve(user);
                     };
@@ -102,9 +91,7 @@ const mixin = {
                     this.action('login');
                 } else {
                     const [path, version] = url.split('|');
-                    if(version) {
-                        this.$http.headers.common['X-Api-Version'] = version;
-                    }
+                    this.$http.headers.common['X-Api-Version'] = version;
                     if(token) {
                         this.$http.headers.common['X-Auth-Token'] = token;
                     }

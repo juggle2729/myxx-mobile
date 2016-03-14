@@ -47,7 +47,7 @@ let adapter = {
             const backdrop = document.querySelector('#hint-with-backdrop');
             backdrop.classList.add('share');
             backdrop.classList.add('show');
-        } else if(['shareable', 'toggleTopRefresh'].indexOf(handler) === -1) {
+        } else if(['shareable', 'toggleTopRefresh', 'version'].indexOf(handler) === -1) {
             const toast = document.querySelector('.toast');
             if(toast) {
                 toast.parentNode.removeChild(toast);
@@ -79,7 +79,7 @@ if(/myxx/i.test(navigator.userAgent)) {
         defer.resolve(bridge);
         if(!bridge.initalized) {
             bridge.initalized = true; // 防止bridge多次初始化报错
-            bridge.init(() => {});
+            bridge.init(_.noop);
         }
     });
 } else {

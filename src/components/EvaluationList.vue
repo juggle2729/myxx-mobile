@@ -79,8 +79,8 @@
                 <div class="desc font-30 user-input">{{item.description}}</div>
             </div>
             <div class="eval-video" v-bg="item.picture">
-                <div class="result white font-22" v-if="item.results.length">
-                    <i class="icon-eval"></i><span class="">已有{{item.results.length}}位大师鉴定</span>
+                <div class="result white font-22" v-if="item.status">
+                    <i class="icon-eval"></i><span class="">已有{{item.status}}位大师鉴定</span>
                 </div>
                 <div class="svg flex">
                     <img :src="'placeholder/video.svg' | qn" class="flex center-horizontal">

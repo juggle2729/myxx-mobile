@@ -1,5 +1,5 @@
 <template>
-<div class="my-like-view bg-default">
+<div class="user-like-view bg-default">
     <template v-for="thumb in items">
         <div v-if="$index === 0" class="separator"></div>
         <div v-else class="separator-20"></div>
@@ -34,7 +34,7 @@
 <script>
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'MyLikeView',
+    name: 'UserLikeView',
     mixins: [PagingMixin],
     data() {
         return {
@@ -42,12 +42,9 @@ export default {
         }
     },
     computed: {
-        currentUserId() {
-            return _.get(this, 'self.id');
-        },
         paging() {
             return {
-                path: 'users/'+ this.self.id +'/like_list',
+                path: 'users/'+ this.$route.params.id +'/like_list|v2',
                 list: 'entries',
                 params: {
                     limit: 10
@@ -78,7 +75,7 @@ export default {
                                 if(entry.content_type === 'short_text' && entry.content !== ''){
                                     entry.description = entry.content;
                                 }
-                                entry.imgPreview = entry.media[0].id;
+                                entry.imgPreview = entry.cover;
                             } else if (item.type === 40) {
                                 entry.post_id = entry.id;
                                 entry.description = entry.name + ' ' + (entry.moral? entry.moral.name: '');
@@ -94,7 +91,7 @@ export default {
                     });
                 }
             }
-        }
+            }
     },
     route: {
         data() {
@@ -104,7 +101,7 @@ export default {
 }
 </script>
 <style lang="sass">
-.my-like-view {
+.user-like-view {
     height: 100%;
     .notice {
         padding-left: 32px;

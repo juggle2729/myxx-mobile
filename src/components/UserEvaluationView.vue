@@ -1,49 +1,42 @@
 <template>
-<div class="my-story bg-default">
-    <story-list :items="items"></story-list>
+<div class="user-evaluation bg-default">
+    <evaluation-list :items="items"></evaluation-list>
     <partial name="load-more" v-if="items.hasMore"></partial>
     <partial v-if="items.isEmpty" name="empty-page"></partial>
 </div>
 </template>
 <script>
-import StoryList from './StoryList.vue';
+import EvaluationList from './EvaluationList.vue';
 import PagingMixin from './mixin/Paging.vue';
 export default {
-    name: 'MyStoryView',
+    name: 'UserEvaluationView',
     mixins: [PagingMixin],
+    components: {
+        EvaluationList
+    },
     data() {
         return {
-            emptyTitle: '你还没有晒宝'
+            emptyTitle: '你还没有鉴宝'
         }
     },
     computed: {
         paging() {
             return {
-                path: 'sns/users/'+ this.self.id +'/topics',
-                list: 'topics'
+                path: 'sns/users/'+ this.$route.params.id +'/jianbao',
+                list: 'jianbaos'
             }
         }
-    },
-    components: {
-        StoryList
     },
     route: {
         data() {
             return this.fetch();
         }
-    },
-    methods: {
-        coverflow(story, index) {
-            let ids = story.medias
-                        .filter(media => media.type==='picture')
-                        .map(media => media.id);
-            this.action('coverflow', {ids, index});
-        }
     }
 }
 </script>
 <style lang="sass">
-.my-story {
+@import '../styles/partials/var';
+.user-evaluation {
     height: 100%;
     .tabs {
         display: -webkit-box;
@@ -61,7 +54,7 @@ export default {
         }
     }
     .item {
-        padding: 24px 32px;
+        padding: 24px 0;
     }
     .user {
         display: -webkit-box;
@@ -83,24 +76,32 @@ export default {
     .desc {
         margin: 30px 0 24px;
     }
-    .medias {
-        .media {
-            vertical-align: top;
-            display: inline-block;
-            width: percentage(1/3);
-            padding-top: percentage(1/3);
-            border: thick solid white;
+    .video {
+        height: 500px;
+    }
+    .result {
+        height: 116px;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        .avatar {
+            height: 68px;
+            width: 68px;
+            border-radius: 50%;
             background-size: cover;
-            background-position: center;
+            vertical-align: middle;
         }
-        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-            margin-right: percentage(1/3);
+        .master {
+            -webkit-box-flex: 1;
+            padding-left: 20px;
+            .title {
+                margin-top: 12px;
+            }
         }
-        .unique {
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
-            background-position: center;
+        .mark {
+            padding: 5px 0 5px 35px;
+            background-image: url('#{$qn}/ico_identify.png');
+            background-position: left center;
+            background-size: 26px;
         }
     }
 }

@@ -41,17 +41,14 @@ Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
 router.beforeGo((from, to) => {
-    let stopAppRoute = (to.name === '404') || to.raw && (to.query.replace === 'true');
-    let stop = /myxx/i.test(navigator.userAgent)
-                 && !stopAppRoute
-                 && from.fullPath !== to.fullPath;
-    if(stop) {
+    let canGo = !/myxx/i.test(navigator.userAgent) || from.name === to.name || to.name === '404';
+    if(!canGo) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-    } else if(from.query && from.query.user && (to.name !== 'user-profile')) {//   禁止分享页面导航
+    } else if(from.query && from.query.user && (to.name !== 'user')) {//   禁止分享页面导航
             from.router.app.toast('请在【美玉秀秀】里查看');
-            stop = true;
+            canGo = false;
     }
-    return !stop;
+    return canGo;
 });
 router.beforeEach(({from, to, abort, next}) => {
     appContainer.classList.add('loading');
@@ -60,7 +57,7 @@ router.beforeEach(({from, to, abort, next}) => {
 });
 router.afterEach(({to}) => {});
 router.alias({
-  '/user/:id': '/user/:id/jade'
-})
+  '/user/:id': '/user/:id/home'
+});
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');
