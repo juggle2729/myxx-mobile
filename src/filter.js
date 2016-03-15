@@ -20,7 +20,7 @@ function moment(time) {
         } else if (diff <= HOUR) {
             m = Math.ceil(diff / MINUTE) + '分钟前';
         } else {
-            m = Math.ceil(diff / HOUR) + '小时前';
+            m = Math.floor(diff / HOUR) + '小时前';
         }
     } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
         m = `昨天${d.getHours()}:${d.getMinutes() < 10 ? '0' :''}${d.getMinutes()}`;

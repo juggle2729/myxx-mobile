@@ -154,10 +154,10 @@
         </div>
     </div>
     <template v-if="story.cover_type === 'picture'">
-        <div class="cover img" v-bg="story.cover" query="imageView2/1/w/750/h/750/interlace/1"></div>
+        <div class="cover img" v-bg="story.cover"></div>
     </template>
     <template v-if="story.cover_type === 'video'">
-        <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="imageView2/1/w/750/h/750/interlace/1"></div>
+        <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
     <div class="store-detail bg-white">
         <div class="content" v-if="story.content">{{story.content}}</div>
@@ -175,7 +175,7 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <comment :id="story.post_id" type="30" has-input="true"></comment>
+    <comment type="30" :id="story.post_id" has-input="true"></comment>
     <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
@@ -252,6 +252,9 @@ export default {
         }
     },
     methods: {
+        xxx($event) {
+            this.$broadcast('comment', $event);
+        },
         coverflow(index) {
             let ids = this.story.medias
                         .filter(media => media.type==='picture')

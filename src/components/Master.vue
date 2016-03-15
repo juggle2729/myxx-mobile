@@ -62,23 +62,6 @@
             fetchMasterBaseInfo() {
                 return this.$get(`sites/${this.userId}/base`, {}).then(data => {
                     this.masterBaseData = data;
-
-//                    let preCurrentView = '';
-//                    if (data.site_type === 'general') {
-//                        this.isVip = true;
-//                        preCurrentView = 'MasterBasic';
-//
-//                    } else if (data.site_type === 'vip') {
-//                        this.isVip = true;
-//
-//                        const vipTemplate = this.vipTemplates[data.display_template];
-//                        if(vipTemplate && (this.tab.toLowerCase() !== 'store' &&
-//                            this.tab.toLowerCase() !== 'craftDetail')) {
-//                            preCurrentView = 'MasterVip' + vipTemplate;
-//                        } else {
-//                            preCurrentView = 'MasterBasic';
-//                        }
-//                    }
                     this.currentView = 'MasterVipBlackSpecial';
                 });
             }

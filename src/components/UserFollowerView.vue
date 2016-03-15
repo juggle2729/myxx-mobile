@@ -1,9 +1,9 @@
 <template>
 <div class="user-follower-view bg-default">
     <div v-if="!items.isEmpty" class="separator"></div>
-    <partial v-else name="empty-page" :empty-title.literal="xxx"></partial>
+    <partial v-else name="empty-page"></partial>
     <div class="user border-bottom bg-white flex" v-for="user in items">
-        <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile}"></div>
+        <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile"></div>
         <div class="flex-1" v-link="user | profile">
             <p class="font-30">{{user.nickname}}</p>
             <p class="font-26 light margin-top">{{user.role | role}}</p>

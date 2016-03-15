@@ -19,25 +19,12 @@
         <li class="font-26 border-top padding center">
             <a href="/masters">官网秀 - masters</a>
         </li>
-        <li class="tab">消息</li>
-        <li class="font-26 border-top padding center">
-            <a href="/messages">消息 - messages</a>
-        </li>
         <li class="tab">我的</li>
         <li class="font-26 border-top padding center">
             <a href="/profile">个人中心 - profile</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/profile/2">个人主页 - profile/:id</a>
-        </li>
-        <li class="font-26 border-top padding center">
-            <a href="/profile/coin">我的金币 - profile/:id</a>
-        </li>
-        <li class="font-26 border-top padding center">
-            <a href="/jades">宝贝秀 - jades</a>
-        </li>
-        <li class="font-26 border-top padding center">
-            <a href="/masters">官网秀 - masters</a>
+            <a href="/user/2">个人主页 - user/:id</a>
         </li>
         <li class="tab">设置</li>
         <li class="font-26 border-top padding center">
@@ -46,21 +33,22 @@
         <li class="font-26 border-top padding center">
             <a href="/feedback">意见反馈 - feedback</a>
         </li>
-        <li class="tab">打开Native</li>
+        <li class="tab">分享相关</li>
+        <li class="font-26">客户端须在分享url的基础上要加上相应参数，参考<a class="red" href="http://wiki.jimhuang.cn/dokuwiki/doku.php?id=dev_team:dev_sub_team_server:myxx_console_api:operation_log">运营数据统计接口</a></li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://">美玉秀秀</a>
+            <a href="/master/1016">大师官网 - master/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fevaluation%2F1">鉴宝1</a>
+            <a href="/share/evaluation/528">鉴宝 - share/evaluation/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fstory%2F23">晒宝2</a>
+            <a href="/story/521">晒宝 - story/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fjade%2F2">宝贝2</a>
+            <a href="/jade/138">商品 - jade/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="myxx://web/%2Fmaster%2F1%2Fhome%3Ftitle%3D%25E8%25B5%25B5%25E5%2585%25B0-%25E5%25AE%2598%25E7%25BD%2591">大师官网1</a>
+            <a href="/user/1023">个人主页 - user/:id</a>
         </li>
     </ul>
 </div>

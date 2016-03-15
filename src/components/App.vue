@@ -94,7 +94,8 @@
             <source :src="config.video + video">
         </video>
     </div>
-    <slider id="img-player" v-if="img" @click="img=undefined" :ids="img.ids" :i="img.i" height="100%"></slider>
+    <slider id="img-player" v-if="img && isTouchable" @touchstart.prevent.stop="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
+    <slider id="img-player" v-if="img && !isTouchable" @click="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
   </div>
 </template>
 <script>
@@ -125,6 +126,7 @@ export default {
                 isWechat: /micromessenger/i.test(ua),
                 isQQ: /qq\//i.test(ua),
                 isWeibo: /weibo/i.test(ua),
+                isTouchable: 'ontouchstart' in document,
                 version: undefined
             };
             env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
@@ -188,7 +190,32 @@ export default {
                     document.body.appendChild(myxxIframe);
                 }
             }
-        }
+        },
+        sliderClick: (() => {
+            let [click, timer] = [0];
+            return (context, e) => {
+                e.preventDefault();
+                click += 1;
+                if(timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(() => {
+                    action(context, e.target);
+                }, 500);
+            }
+            function action(context, slide) {
+                if(click > 1) {
+                    if(slide.className.indexOf('zoom') === -1) {
+                        slide.classList.add('zoom');
+                    } else {
+                        slide.classList.remove('zoom');
+                    }
+                } else {
+                    context.img = undefined;
+                }
+                click = 0;
+            }
+        })()
     }
 }
 </script>

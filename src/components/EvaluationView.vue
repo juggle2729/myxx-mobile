@@ -162,7 +162,7 @@
     </div>
     <div class="separator-20"></div>
     <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
-    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
+    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
     </div>
@@ -254,7 +254,7 @@ export default {
                 this.action('confirm', {text: '抱歉，只有大师才可鉴定。您可以联系我们进行大师身份认证'})
                     .then((confirm) => {
                         if(confirm === '1') {
-                            this.$route.router.go({name: 'master-request', params: {id: this.self.id}});
+                            this.$route.router.go({name: 'apply-master', params: {id: this.self.id}});
                         }
                     });
             } else if(action === 'evaluate'){

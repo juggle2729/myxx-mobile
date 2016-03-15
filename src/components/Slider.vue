@@ -5,7 +5,6 @@
     overflow: hidden;
     .container {
         display: -webkit-box;
-        /*transition: transform .3s linear;*/
         height: 100%;
         min-height: 100%;
     }
@@ -33,10 +32,19 @@
             }
         }
     }
+    &.fullscreen {
+        .slide {
+            transition: background-size .3s ease-in;
+            background-size: 100%;
+            &.zoom {
+                background-size: 200%;
+            }
+        }
+    }
 }
 </style>
 <template>
-<div class="slider" :style="{height: height}">
+<div class="slider" :style="{height: height}" :class="{'fullscreen': height=='100%'}">
     <div class="container">
         <div v-for="id in ids" class="slide" v-bg="id"></div>
     </div>
@@ -133,7 +141,7 @@ export default {
             }
         },
         slide(index) {
-            if(index) {
+            if(index !== undefined) {
                 this.container.style.transitionDuration = '300ms';
             } else {
                 index = this.i;

@@ -1,5 +1,5 @@
 <template>
-<div class="master-request">
+<div class="apply-master">
       <p class="text font-30">
           申请和田玉鉴定权限————需要您是玉石行业的匠师、雕刻师、资深藏家。<br>
           如果您有意向请填写以下信息，美玉秀秀客服人员会在两个工作日内联系您！
@@ -38,7 +38,7 @@
 </template>
 <script>
     export default {
-        name: 'MasterRequest',
+        name: 'ApplyMaster',
         data() {
             return {
                 type: 'jianbao',
@@ -93,7 +93,7 @@
     }
 </script>
 <style lang="sass">
-.master-request {
+.apply-master {
     padding: 39px 32px;
     position: relative;
     .text {

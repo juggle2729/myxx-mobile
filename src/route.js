@@ -53,16 +53,11 @@ export default {
         title: '大师官网',
         component: require('./components/Master.vue')
     },
-    '/messages': {
-        name: 'messages',
-        title: '消息',
-        component: require('./components/MessagesView.vue')
-    },
-    '/master/:id/request': {
-        name: 'master-request',
-        title: '申请大师鉴定权限',
-        component: require('./components/MasterRequestView.vue')
-    },
+    // '/messages': {
+    //     name: 'messages',
+    //     title: '消息',
+    //     component: require('./components/MessagesView.vue')
+    // },
     '/profile': {   // 个人中心
         name: 'profile',
         title: '我的',
@@ -98,15 +93,20 @@ export default {
         title: '个人主页',
         component: require('./components/UserView.vue')
     },
-    '/profile/shop/request': {
-        name: 'shop-request',
+    '/:id/apply/shop': {
+        name: 'apply-shop',
         title: '申请店铺',
-        component: require('./components/ShopRequestView.vue')
+        component: require('./components/ApplyShopView.vue')
     },
-    '/profile/site/request': {
-        name: 'site-request',
+    '/:id/apply/site': {
+        name: 'apply-site',
         title: '申请官网',
-        component: require('./components/SiteRequestView.vue')
+        component: require('./components/ApplySiteView.vue')
+    },
+    '/:id/apply/master': {
+        name: 'apply-master',
+        title: '申请大师鉴定权限',
+        component: require('./components/ApplyMasterView.vue')
     },
     '/feedback': {
         name: 'feedback',

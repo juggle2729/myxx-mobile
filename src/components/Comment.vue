@@ -124,6 +124,7 @@ export default {
                         if(result) {
                             this.action('toast', {success: 1, text: '删除成功'});
                             this.items.splice(index, 1);
+                            this.items.total -= 1;
                         }
                     });
             } else {
@@ -147,6 +148,7 @@ export default {
                                         }
                                     });
                                     this.items.splice(0, 0, result);
+                                    this.items.total += 1;
                                     this.action('toast', {success: 1, text: '回复成功'});
                                 });
                         }
@@ -172,6 +174,7 @@ export default {
                                     }
                                 });
                                 this.items.splice(0, 0, result);
+                                this.items.total += 1;
                                 this.action('toast', {success: 1, text: '回复成功'});
                             });
                     }

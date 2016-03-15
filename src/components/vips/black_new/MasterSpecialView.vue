@@ -64,7 +64,6 @@
             this.initDom();
         },
         activate(done) {
-            this.setShareData('website', this.masterBaseData, true);
             this.fetchMasterInterviewInfo().then(() => {
                 done();
             });
@@ -143,6 +142,8 @@
             fetchMasterInterviewInfo() {
                 return this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {
                     this.interview = data;
+
+                    this.setShareData('website', {baseData: this.masterBaseData, interview: this.interview}, true);
                 });
             },
             initDom() {

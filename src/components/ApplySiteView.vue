@@ -1,86 +1,66 @@
 <template>
-<div class="shop-request">
-    <div class="openshop bg-white" :class="{'hide': requestShow}">
+<div class="site-request">
+    <div class="opensite bg-white" :class="{'hide': requestShow}">
         <div class="banner">
-            <img class="center-horizontal" :src="'open/odbanner.png' | qn" />
-            <p class="font-30 center-horizontal">{{title}}</p>
-            <button @click="toggleShow" class="font-30 center-horizontal white">
+            <img :src="'open/osbanner.png' | qn" />
+            <p>{{title}}</p>
+            <button @click="toggleShow">
                 <span>立即申请</span>
             </button>
         </div>
         <div class="separ"></div>
         <div class="textarea">
-            <div class="content">
-                <p class="font-22 blue"> 快速申请开通店铺，也可联系我们，400-0587-266</p>
-                <p class="font-30 line-42"> 美玉秀秀是国内最大的和田玉鉴定社交交易平台，全国各地超过4000家高品质店铺现已入驻，期待您的加入。</p>
+            <p> 快速申请开通官网，也可联系我们，400-0587-266</p>
+            <div class="inner1">
+              <p > 美玉秀秀是全国最大最权威的和田玉鉴定、社交、交易平台，倾力打造的大师官网正虚位以待，期待您的加入。</p>
             </div>
-            <div class="title border-bottom font-30">
-                <p >开通店铺优势</p>
+            <div class="title border-bottom">
+                <p>开通官网优势</p>
             </div>
-            <div class="text flex">
-                <div class="left font-22">
-                    <img :src="'open/od1.png' | qn" />
-                    <p>海量用户</p>
-                </div>
-                <div class="right font-26 flex">
-                    <p>高品质和田玉资源齐聚
-                        <br>全国海量高端用户云集
-                        <br>广阔市场为您的店铺打开</p>
-                </div>
+            <div class="text">
+                <p>汇聚海量高端用户
+                    <br>领略大师风采尽在美玉秀秀</p>
+                <p>海量用户</p>
+                <img :src="'open/os1.png' | qn" />
             </div>
-            <div class="text flex">
-                <div class="left font-22">
-                    <img :src="'open/od2.png' | qn" />
-                    <p>精准推广</p>
-                </div>
-                <div class="right font-26 flex">
-                    <p>各种推广方式，全方位精准推广
-                        <br>全面提升店铺的知名度和交易量</p>
-                </div>
+            <div class="text">
+                <p>私人定制，精雕细琢
+                    <br>全方位打造玉界明星</p>
+                <p>个性定制</p>
+                <img :src="'open/os2.png' | qn" />
             </div>
-            <div class="text flex">
-                <div class="left font-22">
-                    <img :src="'open/od3.png' | qn" />
-                    <p>鉴宝权限</p>
-                </div>
-                <div class="right font-26 flex">
-                    <p valign="middle">私人定制，精雕细琢
-                        <br>彰显您高端的品牌文化</p>
-                </div>
+            <div class="text">
+                <p>入驻美玉秀秀，获得鉴宝权限
+                    <br>突显您渊博的学识和丰富的经验</p>
+                <p>鉴宝权限</p>
+                <img :src="'open/os3.png' | qn" />
             </div>
-            <div class="text flex">
-                <div class="left font-22">
-                    <img :src="'open/od4.png' | qn" />
-                    <p>精准推广</p>
-                </div>
-                <div class="right font-26 flex">
-                    <p>多渠道销售途径全面打开市场
-                        <br>为您打造高效的销售网络</p>
-                </div>
+            <div class="text">
+                <p>多种运营方式，精准推广大师
+                    <br>全面提升您的知名度</p>
+                <p>精准推广</p>
+                <img :src="'open/os4.png' | qn" />
             </div>
-            <div class="separ-38"></div>
-            <div class="title border-bottom font-30">
+            <div class="title border-bottom">
                 <p>申请条件</p>
             </div>
-            <div class="content">
-                <p class="font-26">只要您想提升自己的知名度，均可提出申请。</p>
-            </div>
-            <div class="title border-bottom font-30">
+            <p class="inner2">只要您想提升自己的知名度，均可提出申请。</p>
+            <div class="title border-bottom">
                 <p>开通流程</p>
             </div>
             <div class="bottom">
-                <img class="center-horizontal" :src="'open/od5.png' | qn" />
+                <img :src="'open/os5.png' | qn" />
             </div>
         </div>
     </div>
     <div class="request" :class="{'hide': !requestShow}">
         <div class="text font-30">
-            <p>您正在申请开通店铺，请填写以下信息。</p>
+            <p>您正在申请开通官网，请填写以下信息。</p>
             <p style="margin-top:8px">我们会在两个工作日内联系你。</p>
         </div>
         <div class="input">
-            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact" maxlength="20"><div></div>
-            <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name" maxlength="20"><div></div>
+            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact" maxlength="20">
+            <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name" maxlength="20">
             <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" maxlength="50" v-model="content"></textarea>
             <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
                 <span>提交</span>
@@ -96,7 +76,7 @@ export default {
         return {
             title: '【人人皆可拥有】',
             requestShow: false,
-            type: 'shop',
+            type: 'website',
             contact: 0,
             photo: 0,
             name: '',
@@ -115,7 +95,7 @@ export default {
     },
     route: {
         data() {
-            return this.$get(`users/${this.self.id}/basic`)
+            return this.$get(`users/${this.$route.params.id}/basic`)
                .then((data) => {
                    this.contact = data.phone;
                });
@@ -152,90 +132,120 @@ export default {
 }
 </script>
 <style lang="sass">
-.shop-request {
-    .openshop {
+.site-request {
+    .opensite {
         .banner {
+            display: -webkit-box;
             height: 600px;
             position: relative;
-            padding-top: 108px;
-            background-color: #3865a7;
+            background-color: #ce3f3f;
             > img {
-                height: 280px;
-                width: 320px;
+                height: 260px;
+                width: 340px;
+                position: absolute;
+                left: 50%;
+                margin-left: -170px;
+                margin-top: 120px;
             }
             > p {
-                margin-top: 54px;
+                position: absolute;
+                margin-top: 438px;
                 width: 340px;
+                left: 50%;
+                margin-left: -170px;
                 text-align: center;
-                color: #4cd18e;
+                font-size: 30px;
+                color: #f7bd40;
             }
             > button {
-                margin-top: 55px;
+                position: absolute;
+                color: #fff;
                 height: 90px;
                 width: 392px;
                 border: 0;
-                background-color: #4cd18e;
+                left: 50%;
+                margin-left: -196px;
+                margin-top: 526px;
+                font-size: 30px;
+                background-color: #f7bd40;
             }
         }
         .textarea {
-            padding: 0 32px;
-            .content {
-                padding: 32px 64px;
-                .blue {
-                    color: #3865a7;
-                    text-align: center;
-                }
-                .line-42 {
-                    margin-top: 58px;
+            > p:nth-of-type(1) {
+                font-size: 22px;
+                color: #cc3f3f;
+                margin-top: 32px;
+                width: 100%;
+                text-align: center;
+            }
+            .inner1 {
+                margin: 64px 80px 0 96px;
+                > p {
+                    margin: -6px 0;
+                    font-size: 30px;
                     line-height: 42px;
+                    width: 100%;
                 }
+            }
+            .inner2 {
+                font-size: 26px;
+                margin-top: 36px;
+                padding-left: 96px;
+                padding-right: 96px;
+                width: 100%;
             }
             .title {
-                margin-top: 22px;
-                padding: 24px 0;
+                margin-top: 84px;
+                padding-bottom: 24px;
+                margin-right: 32px;
+                background-position: 32px 100%;
+                > p {
+                    font-size: 30px;
+                    padding-left: 32px;
+                    width: 100%;
+                }
+                > hr {
+                    margin: 24px 32px 0;
+                }
             }
             .text {
-                padding-left: 64px;
+                padding-left: 96px;
                 margin-top: 50px;
                 height: 108px;
                 position: relative;
-                .left {
-                    width: 100px;
-                    > img {
-                        margin-left: 10px;
-                        width: 72px;
-                        height: 72px;
-                    }
-                    > p {
-                        margin-top: 14px;
-                    }
+                > img {
+                    margin-left: 10px;
+                    width: 72px;
+                    height: 72px;
                 }
-                .right {
-                    margin-left: 88px;
-                    height: 108px;
-                    p {
-                        line-height: 38px;
-                    }
+                > p:nth-of-type(1) {
+                    margin-left: 188px;
+                    margin-top: 16px;
+                    line-height: 38px;
+                    position: absolute;
+                    font-size: 26px;
+                }
+                > p:nth-of-type(2) {
+                    position: absolute;
+                    margin-top: 86px;
+                    font-size: 22px;
                 }
             }
             .bottom {
                 height: 382px;
                 position: relative;
-                margin-top: 50px;
-                > img {
+                margin: 50px 96px 0;
+                img {
                     width: 558px;
                     height: 182px;
                 }
             }
         }
         .separ {
-            background-color: #184b96;
+            background-color: #a43232;
             display: block;
             width: 100%;
             height: 16px;
-        }
-        .separ-38 {
-            height: 38px;
         }
     }
     .request {
@@ -259,11 +269,11 @@ export default {
                 textarea:active, textarea:focus{
                     border-color: #cc3f4f;
                 }
-                div {
-                    height: 14px;
+                input:nth-of-type(2) {
+                    margin-top: 30px;
                 }
                 textarea {
-                    margin-top: 14px;
+                    margin-top: 30px;
                     width: 100%;
                     padding: 28px 32px;
                     height: 180px;

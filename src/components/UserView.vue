@@ -24,15 +24,15 @@
         <div class="icon-enter"></div>
     </div>
     <div class="tabs bg-white flex border-bottom" :class="{'default': isDefaultView}">
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}}" v-if="profile.shop_status">
+        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
             <p class="font-30" align="center">{{profile.products_count}}</p>
             <p class="font-26" align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
         </div>
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}}">
+        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
             <p class="font-30" align="center">{{profile.topic_count}}</p>
             <p class="font-26" align="center">晒宝</p>
         </div>
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}}">
+        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
             <p class="font-30" align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
             <p class="font-26" align="center">鉴宝</p>
         </div>
@@ -81,7 +81,9 @@ export default {
             if(!this.isDefaultView) {
                 this.view = to.params.tab;
             }
-            setTimeout(next, 1000); //添加延时，hack全局loading
+            this.$watch('profile', () => {
+                setTimeout(next, 500); //添加延时，hack全局loading
+            });
         }
     },
     methods: {

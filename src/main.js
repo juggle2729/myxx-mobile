@@ -61,3 +61,7 @@ router.alias({
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');
+
+window.onerror = (error) => {
+    console.debug(error);
+};
