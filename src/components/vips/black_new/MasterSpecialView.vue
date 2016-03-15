@@ -244,11 +244,11 @@
         /*强制覆盖富文本的样式*/
         .content {
             padding: 65px 24px;
-            font-size: 30px;
+            font-size: 34px;
             line-height: 26px;
 
             * {
-                font-size: 30px !important;
+                font-size: 34px !important;
                 line-height: 54px !important;
             }
 
