@@ -1,8 +1,49 @@
 <style lang="sass">
+@import '../styles/partials/var';
 .evaluation-detail {
     padding-bottom: 130px;
     .results {
-        padding: 24px 32px;
+        overflow-x: auto;
+        overflow-y: hidden; 
+        white-space: nowrap;
+        height: 854px;
+        padding: 52px 78px;
+        background: #202020 url('#{$qn}/evaluation/result-bg.png') no-repeat;
+        background-size: 100% auto; 
+        .portrait {
+            width: 594px;
+            height: 594px;
+            margin: 22px 0 36px;
+            position: relative;
+        }
+        > div {
+            display: inline-block;
+            position: relative;
+            &:not(:last-of-type) {
+                margin-right: 39px;
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                left: 15px;
+                bottom: 100px;
+                width: 1rem;
+                height: 1rem;
+                background: transparent url('#{$qn}/icon/play.png') no-repeat center;
+                background-size: 1rem;
+                pointer-events: none;
+            }
+        }
+        .title {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 435px;
+            overflow: hidden;
+        }
+    }
+    .results-empty {
+        margin: 0 32px;
+        padding: 32px;
     }
     .header {
         padding: 32px 32px 0 32px;
@@ -17,62 +58,20 @@
     }
     .images {
         font-size: 0;
-        padding: 24px 27px 19px;
+        margin: 32px;
+        overflow-x: auto;
+        white-space: nowrap; 
         > li {
             display: inline-block;
-            position: relative;
-            width: 338px;
-            padding: percentage(1/2.6) 0 0;
-            margin: 5px;
-        }
-    }
-    .results {
-        .padding-bottom {
-            padding-bottom: 24px;
-        }
-    }
-    .result {
-        .result-header {
-            display: -webkit-box;
-            -webkit-box-align: center;
-            height: 120px;
-            .master {
-                margin-left: 20px;
-                -webkit-box-flex: 1;
-            }
-            .site-mark {
-                display: inline-block;
-                height: 36px;
-                line-height: 36px;
-                border-radius: 5px;
-                padding: 0 12px;
-                margin-left: 16px;
-            }
-        }
-        .play {
-            padding-top: 250px;
-            &::after {
-                background-size: 60px;
-            }
-        }
-        .social {
-            margin-top: 20px;
-            > div {
-                width: -webkit-calc(50% - 10px);
-                padding: 20px 0;
-                border: 1px solid #b2b2b2;
-                border-radius: 8px;
-            }
-            .like {
-                margin-right: 10px;
-            }
-            .comment {
-                margin-left: 10px;
+            margin-right: 6px;
+            img {
+                height: 450px;
             }
         }
     }
     .evaluation-btn {
-        margin: 16px 0 8px 0;
+        margin: 0 32px;
+        padding-bottom: 60px;
         button {
             height: 80px;
             width: 100%;
@@ -117,8 +116,26 @@
 }
 </style>
 <template>
-<div class="evaluation-detail bg-default">
-    <div class="header bg-white">
+<div class="evaluation-detail">
+    <div v-if="evaluation.results.length" class="results scrollable">
+        <div v-for="result in evaluation.results">
+            <div class="result-head flex">
+                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
+                <div class="flex-1 margin-left">
+                    <div class="font-30 white">{{result.identifier.name}}</div>
+                    <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
+                </div>
+                <div v-if="!env.isShare" class="font-30 red"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
+            </div>
+            <img class="portrait" @click="play(result.video)" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
+            <div class="font-30 white center">
+                <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
+                <span v-if="result.result!=='fake'">&nbsp;估价为{{prices[$index]}}</span>
+            </div>
+        </div>
+    </div>
+    <div v-else class="results-empty border-bottom font-34 center gray">还没有大师鉴定这个宝贝！</div>
+    <div class="header">
         <div class="user">
             <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
             <div class="margin-left">
@@ -130,39 +147,19 @@
         </div>
         <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
-    <ul class="images bg-white"><li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)" v-bg.md="picture" track-by="$index"></li><li v-if="evaluation.video" class="play" @click="play(evaluation.video)" v-bg.video="evaluation.video"></li></ul>
-    <div class="separator-20"></div>
-    <div class="results bg-white">
-        <div class="font-22 light border-bottom padding-bottom">大师鉴定 {{evaluation.results.length}}</div>
-        <div class="result" v-for="result in evaluation.results">
-            <div class="result-header">
-                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
-                <div class="master">
-                    <h3 class="font-26">{{result.identifier.name}}<span v-if="result.identifier.website_status" class="site-mark font-22 bg-yellow white">个人官网</span></h3>
-                    <p v-if="result.identifier.title" class="font-22 gray margin-top">{{result.identifier.title}}</p>
-                </div>
-                <div class="font-22 light">{{result.create_at | moment}}</div>
-            </div>
-            <div class="flex bg-light border-all font-30">
-                <div class="play w-50" @click="play(result.video)" v-bg.video="result.video"></div>
-                <div class="center w-50">
-                    鉴宝结果：<span class="red">{{result.result}}</span>
-                    <p v-if="result.result === '真'" class="font-26 margin-top"><span>估价：{{prices[$index]}}</span></p>
-                </div>
-            </div>
-            <div class="social flex gray font-26">
-                <div @click="like(result)" class="like center" :class="{'red': result.liked}"><i class="{{result.liked ? 'icon-like-active' : 'icon-like'}}"></i><span>{{result.like}}</span></div>
-                <div v-link="{name: 'result-comment', params: {id: result.id}}" class="comment center"><i class="icon-comment"></i><span>{{result.comment}}</span></div>
-            </div>
-        </div>
-        <div v-show="!evaluation.results.length" class="center light font-26 nocontent">还没有大师来鉴定</div>
-        <div class="evaluation-btn">
-            <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
-        </div>
+    <ul class="images scrollable">
+        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)">
+            <img :src="config.img+picture+'?imageView2/2/h/450'" />
+        </li>
+        <li v-if="evaluation.video" class="play" @click="play(evaluation.video)">
+            <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
+        </li>
+    </ul>
+    <div class="evaluation-btn border-bottom">
+        <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
     </div>
-    <div class="separator-20"></div>
     <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
-    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)">
+    <div v-if="!env.isShare" class="fake-input font-30 flex" @click="$broadcast('comment', $event)">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
     </div>
@@ -190,9 +187,9 @@ export default {
     computed: {
         prices() {
             return this.evaluation.results.map((result) => {
-                if(result.result === '真') {
+                if(result.result !== 'fake') {
                     if(result.value_min && result.value_max) {
-                        return `${Math.round(result.value_min/1000)/10} ~ ${Math.round(result.value_max/1000)/10}万`;
+                        return `${Math.round(result.value_min/1000)/10}-${Math.round(result.value_max/1000)/10}万`;
                     } else if(result.value_min) {
                         return `${Math.round(result.value_min/1000)/10}万以上`;
                     } else if(result.value_max) {
@@ -225,7 +222,7 @@ export default {
     route: {
         data({to}) {
             const evaluationId = to.params.id;
-            return this.$get(`sns/jianbao/${evaluationId}`)
+            return this.$get(`sns/jianbao/${evaluationId}|v2`)
                     .then((evaluation) => {
                         this.setShareData('jianbao', evaluation, true);
                         return {evaluation};
@@ -233,34 +230,6 @@ export default {
         }
     },
     methods: {
-        like(result) {
-            const api = `users/target/${result.id}/type/20/like`;
-            if (result.liked) {
-                this.$delete(api).then(() => {
-                    result.liked = false;
-                    result.like -= 1;
-                });
-            } else {
-                this.$post(api).then(() => {
-                    result.liked = true;
-                    result.like += 1;
-                });
-            }
-        },
-        evaluate(action) {
-            if(action === 'login') {
-                this.action('login');
-            } else if(action === 'request'){
-                this.action('confirm', {text: '抱歉，只有大师才可鉴定。您可以联系我们进行大师身份认证'})
-                    .then((confirm) => {
-                        if(confirm === '1') {
-                            this.$route.router.go({name: 'apply-master', params: {id: this.self.id}});
-                        }
-                    });
-            } else if(action === 'evaluate'){
-                this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
-            }
-        },
         coverflow(index) {
             this.action('coverflow', {ids: this.evaluation.pictures, index});
         },

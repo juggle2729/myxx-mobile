@@ -14,7 +14,7 @@
         padding-top: percentage(1/1.15);
         background-size: cover;
         position: relative;
-        &[data-genuine='真'] {
+        &[data-genuine='genuine'] {
             &::after {
                 content: '';
                 position: absolute;
@@ -26,7 +26,7 @@
                 background-size: contain;
             }
         }
-        &[data-genuine='假'] {
+        &[data-genuine='fake'] {
             &::after {
                 content: '';
                 position: absolute;
@@ -38,7 +38,7 @@
                 background-size: contain;
             }
         }
-        &[data-genuine*='疑'] {
+        &[data-genuine='unsure'] {
             &::after {
                 content: '';
                 position: absolute;
@@ -108,7 +108,7 @@
 </style>
 <template>
 <div class="user-evaluation bg-white">
-    <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
+    <div v-for="item in items" @click="goToEvaluation(item.post_id)" track-by="$index">
         <div class="head flex">
             <div class="avatar-50" v-bg.sm="item.user.photo"></div>
             <div class="font-26 margin-left">{{item.user.name}}</div>
@@ -156,7 +156,8 @@ export default {
         paging() {
             return {
                 path: 'sns/users/'+ this.$route.params.id +'/jianbao|v2',
-                list: 'jianbaos'
+                list: 'jianbaos',
+                id: 'post_id'
             }
         }
     },
@@ -176,15 +177,22 @@ export default {
                 result = item.results[0].result;
             } else if(item.results.length > 1) {
                 let results = item.results.map((result) => result.result).join('');
-                if(results.replace(/真/g, '').length === 0) {
-                    result = '真';
-                } else if(results.replace(/假/g, '').length === 0) {
-                    result = '假';
+                if(results.replace(/genuine/g, '').length === 0) {
+                    result = 'genuine';
+                } else if(results.replace(/fake/g, '').length === 0) {
+                    result = 'fake';
                 } else {
-                    result = '疑';
+                    result = 'unsure';
                 }
             }
             return result;
+        },
+        goToEvaluation(id) {
+            if(this.env.version >= '1.1') {
+                this.action('evaluation')
+            } else {
+                this.$router.go({name: 'evaluation', params: {id}});
+            }
         }
     }
 }

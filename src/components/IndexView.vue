@@ -39,7 +39,7 @@
             <a href="/master/1016">大师官网 - master/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/share/evaluation/528">鉴宝 - share/evaluation/:id</a>
+            <a href="/evaluation/528">鉴宝 - evaluation/:id</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="/story/521">晒宝 - story/:id</a>

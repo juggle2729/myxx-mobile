@@ -20,9 +20,9 @@ export default {
                 this.items.loading = true;
                 let options = {limit: 10};
                 
-                if(this.paging.path.substr(-2) === 'v2') { // v2列表，采用last_id
+                if(this.paging.id) { // 采用last_id
                     if(!fresh && this.items.length) {
-                        options.last_id = this.items[this.items.length-1].post_id || this.items[this.items.length-1].id;
+                        options.last_id = _.get(this.items[this.items.length-1], this.paging.id);
                     }
                 } else {
                     options.offset = fresh ? 0 : this.items.length;
@@ -39,16 +39,16 @@ export default {
                         }
                         this.items.loading = false;
 
-                        if(options.offset !== undefined) {
+                        if(this.paging.id) {
+                            _.merge(this.items, {
+                                hasMore: this.items.length < data.total,
+                                isEmpty: data.total === 0 && this.items.length === 0
+                            });
+                        } else {
                             _.merge(this.items, {
                                 total: data.total,
                                 hasMore: this.items.length < data.total,
                                 isEmpty: data.total === 0
-                            });
-                        } else {
-                            _.merge(this.items, {
-                                hasMore: data.total > 0 && items.length >= options.limit,
-                                isEmpty: data.total === 0 && this.items.length === 0
                             });
                         }
                 });

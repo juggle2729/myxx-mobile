@@ -46,9 +46,7 @@ export default {
             return {
                 path: 'users/'+ this.$route.params.id +'/like_list|v2',
                 list: 'entries',
-                params: {
-                    limit: 10
-                },
+                id: 'id',
                 transform(items) {
                     return items.map((item) => {
                         let entry = item.entry;

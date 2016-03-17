@@ -44,9 +44,10 @@ router.beforeGo((from, to) => {
     let canGo = !/myxx/i.test(navigator.userAgent) || from.name === to.name || to.name === '404';
     if(!canGo) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-    } else if(from.query && from.query.user && (to.name !== 'user')) {//   禁止分享页面导航
-            from.router.app.toast('请在【美玉秀秀】里查看');
+    } else if(_.get(from, 'query.user')) {
+        if(to.name === 'user' && from.name !== 'user') {//  禁止分享页面导航
             canGo = false;
+        }
     }
     return canGo;
 });

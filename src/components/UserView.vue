@@ -6,8 +6,14 @@
             <div class="white flex-1">
                 <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span></p>
                 <p class="font-26">
-                    <span v-link="{name:'user-following', params: {id: $route.params.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span>
-                    <span v-link="{name:'user-follower', params: {id: $route.params.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
+                    <template v-if="env.isShare">
+                        <span>关注&nbsp;&nbsp;{{profile.follow_count}}</span>
+                        <span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
+                    </template>
+                    <template v-else>
+                        <span v-link="{name:'user-following', params: {id: $route.params.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span>
+                        <span v-link="{name:'user-follower', params: {id: $route.params.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
+                    </template>
                 </p>
             </div>
             <div class="button bg-white font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">

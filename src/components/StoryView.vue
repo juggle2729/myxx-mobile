@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
+            <div v-if="!env.isShare" class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
                 <span class="icon-like-active"></span>
                 <span class="cnt-text">{{story.like}}</span>
             </div>

@@ -53,11 +53,6 @@ export default {
         title: '大师官网',
         component: require('./components/Master.vue')
     },
-    // '/messages': {
-    //     name: 'messages',
-    //     title: '消息',
-    //     component: require('./components/MessagesView.vue')
-    // },
     '/profile': {   // 个人中心
         name: 'profile',
         title: '我的',
@@ -121,11 +116,6 @@ export default {
     '/css': {
         name: 'cssview',
         component: require('./components/CssView.vue')
-    },
-    '/share/evaluation/:id': {
-        name: 'share-evaluation',
-        title: '鉴宝详情',
-        component: require('./components/ShareEvaluationView.vue')
     },
     '/404': {
         title: '页面不存在',

@@ -74,7 +74,7 @@
 </style>
 <template>
   <div class="loading">
-    <div v-if="isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
+    <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">
             <div class="name font-30 bold">美玉秀秀</div>
@@ -83,12 +83,12 @@
         <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="isShare && shareData.text" @click="openApp()" class="share-bottom flex bg-red white font-30">
+    <div v-if="env.isShare && shareData.text" @click="openApp()" class="share-bottom flex bg-red white font-30">
         <img :src="'share/left.png' | qn" alt="left">
         <div class="flex-1 center bold">{{shareData.text}}</div>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="hint-with-backdrop" v-if="isShare" @click="$event.target.classList.remove('show')"></div>
+    <div id="hint-with-backdrop" v-if="env.isShare" @click="$event.target.classList.remove('show')"></div>
     <div id="video-player" v-if="video" @click="video=undefined">
         <video v-if="video" autoplay controls @ended="video=undefined">
             <source :src="config.video + video">
@@ -130,10 +130,8 @@ export default {
                 version: undefined
             };
             env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
+            env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
             return env;
-        },
-        isShare() {
-            return !this.env.isApp && _.get(this.$route, 'query.user');
         },
         appCmd() {
             let path = this.$route.path;
