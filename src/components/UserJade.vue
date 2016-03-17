@@ -1,6 +1,5 @@
 <style lang="sass">
 .user-jade {
-    height: 100%;
     .cell {
         height: 590px;
         width: 365px;
@@ -18,6 +17,9 @@
                 margin-top: 24px;
             }
         }
+    }
+    .empty-page {
+        height: 700px;
     }
 }
 </style>

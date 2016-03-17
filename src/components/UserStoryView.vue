@@ -44,7 +44,6 @@ export default {
 </script>
 <style lang="sass">
 .user-story {
-    height: 100%;
     .tabs {
         display: -webkit-box;
         height: 80px;

@@ -66,7 +66,13 @@ export default {
             isDefaultView: false,
             view: undefined,
             profile: {
-                titles: []
+                titles: [],
+                jianbao_count: 0,
+                jianbao_request_count: 0,
+                follow_count: 0,
+                fans_count: 0,
+                products_count: 0,
+                topic_count: 0
             }
         }
     },
@@ -177,7 +183,7 @@ export default {
                 padding-right: 1px;
             }
             &.v-link-active {
-                color: #cc3f4f;   
+                color: #cc3f4f;
             }
         }
         > div:first-child:nth-last-child(2), > div:first-child:nth-last-child(2) ~ div {

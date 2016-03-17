@@ -160,7 +160,7 @@
         <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
     <div class="store-detail bg-white">
-        <div class="content" v-if="story.content">{{story.content}}</div>
+        <div class="content user-input" v-if="story.content">{{story.content}}</div>
         <div class="medias">
             <div class="first-row" v-if="firstRowMedias.length">
                 <template v-for="media in firstRowMedias">
@@ -262,7 +262,7 @@ export default {
             this.action('coverflow', {ids, index});
         },
         play(id) {
-            this.action('play', {id});
+            this.action('play', {id, targetType: 'topic', targetId: this.story.post_id});
             if(!this.isApp) { // 分享页面，视频自动播放
                 var timer = setInterval(() => {
                     var v = document.querySelector('video');

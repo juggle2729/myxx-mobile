@@ -19,6 +19,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-like-solid:before {
+    content: "\e91e";
+}
+.icon-comment-solid:before {
+    content: "\e91f";
+}
 .icon-story:before {
     content: "\e91d";
 }

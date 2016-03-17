@@ -37,7 +37,6 @@ export default {
 <style lang="sass">
 @import '../styles/partials/var';
 .user-evaluation {
-    height: 100%;
     .tabs {
         display: -webkit-box;
         height: 80px;

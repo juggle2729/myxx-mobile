@@ -19,7 +19,7 @@
                     <p v-if="thumb.result" class="font-22 gray">{{{thumb.result}}}</p>
                 </div>
                 <div v-if="thumb.imgPreview" v-bg.sm="thumb.imgPreview" class="right"></div>
-                <div v-if="thumb.videoPreview" v-bg.video="thumb.videoPreview" class="right"></div>
+                <div v-if="thumb.videoPreview" v-bg.video="thumb.videoPreview" class="right play"></div>
             </div>
             <div class="info flex font-30" v-else>
                 <span style="margin-left:32px;">该{{thumb.title}}已被删除!</span>
@@ -73,7 +73,11 @@ export default {
                                 if(entry.content_type === 'short_text' && entry.content !== ''){
                                     entry.description = entry.content;
                                 }
-                                entry.imgPreview = entry.cover;
+                                if(entry.cover_type === 'video') {
+                                    entry.videoPreview = entry.cover;
+                                } else {
+                                    entry.imgPreview = entry.cover;
+                                }
                             } else if (item.type === 40) {
                                 entry.post_id = entry.id;
                                 entry.description = entry.name + ' ' + (entry.moral? entry.moral.name: '');
@@ -99,6 +103,7 @@ export default {
 }
 </script>
 <style lang="sass">
+@import '../styles/partials/var';
 .user-like-view {
     height: 100%;
     .notice {
@@ -143,6 +148,7 @@ export default {
             .right {
                 background-size: cover;
                 background-position: center;
+                background-image: url('#{$qn}/placeholder/img.png');
             }
         }
     }

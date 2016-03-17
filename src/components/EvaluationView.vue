@@ -4,12 +4,12 @@
     padding-bottom: 130px;
     .results {
         overflow-x: auto;
-        overflow-y: hidden; 
+        overflow-y: hidden;
         white-space: nowrap;
         height: 854px;
         padding: 52px 78px;
         background: #202020 url('#{$qn}/evaluation/result-bg.png') no-repeat;
-        background-size: 100% auto; 
+        background-size: 100% auto;
         .portrait {
             width: 594px;
             height: 594px;
@@ -60,7 +60,7 @@
         font-size: 0;
         margin: 32px;
         overflow-x: auto;
-        white-space: nowrap; 
+        white-space: nowrap;
         > li {
             display: inline-block;
             margin-right: 6px;
@@ -233,8 +233,8 @@ export default {
         coverflow(index) {
             this.action('coverflow', {ids: this.evaluation.pictures, index});
         },
-        play(id) {
-            this.action('play', {id});
+        play(id, targetType, targetId) {
+            this.action('play', {id, targetType, targetId});
             if(!this.isApp) { // 分享页面，视频自动播放
                 var timer = setInterval(() => {
                     var v = document.querySelector('video');

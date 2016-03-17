@@ -1,4 +1,5 @@
 <style lang="sass">
+@import '../styles/partials/var';
 .user-story {
     .item {
         padding: 0 16px 32px 16px;
@@ -15,6 +16,7 @@
             padding-top: 100%;
             background-size: cover;
             background-position: center;
+            background-image: url('#{$qn}/placeholder/img.png');
         }
         .title {
             color: #666666;
@@ -59,11 +61,12 @@
             <div class="moment font-22 light">{{item.create_at | moment}}</div>
         </div>
         <div class="content bg-white">
-            <div class="cover" v-bg="item.cover" :class="{'video': item.cover_type==='video'}"></div>
-            <div class="title font-30 user-input" v-if="item.content">{{item.content}}</div>
+            <div v-if="item.cover_type==='video'" class="cover video" v-bg.video="item.cover"></div>
+            <div v-else class="cover" v-bg="item.cover"></div>
+            <div class="title font-30 user-input">{{item.content}}</div>
             <div class="social font-26">
-                <div class="left border-right"><i class="icon-like"></i><span>{{item.like}}</span></div>
-                <div class="right"><i class="icon-comment"></i><span>{{item.comment}}</span></div>
+                <div class="left border-right"><i class="icon-like-solid"></i><span>{{item.like}}</span></div>
+                <div class="right"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
             </div>
         </div>
     </div>

@@ -1,7 +1,6 @@
 <style lang="sass">
 @import '../styles/partials/var';
 .user-evaluation {
-    height: 100%;
     .head {
         padding: 20px;
         background-color: #f0f0f0;
@@ -57,6 +56,7 @@
             width: 204px;
             height: 204px;
             background-size: cover;
+            background-image: url('#{$qn}/placeholder/img.png');
             img {
                 width: 100%;
                 height: 100%;
@@ -70,7 +70,7 @@
             }
             .hr {
                 height: 1px;
-                margin: 26px 0; 
+                margin: 26px 0;
             }
             .l {
                 padding-top: 12px;
@@ -103,6 +103,9 @@
             border-radius: 50px;
             line-height: 66px;
         }
+    }
+    .empty-page {
+        height: 700px;
     }
 }
 </style>
