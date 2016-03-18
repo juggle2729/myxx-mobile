@@ -53,6 +53,11 @@
             width: 480px;
             line-height: 42px;
             font-family: 'song-simple';
+            .user-input {
+                overflow: hidden;
+                display: block;
+                height: 60px;
+            }
         }
     }
     .medias {
@@ -160,7 +165,7 @@
         <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
     <div class="store-detail bg-white">
-        <div class="content user-input" v-if="story.content">{{story.content}}</div>
+        <div class="content" v-if="story.content"><span class="user-input">{{story.content}}</span></div>
         <div class="medias">
             <div class="first-row" v-if="firstRowMedias.length">
                 <template v-for="media in firstRowMedias">

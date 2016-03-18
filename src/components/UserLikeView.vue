@@ -66,8 +66,8 @@ export default {
                             } else if (item.type === 20) {//video
                                 entry.videoPreview = entry.video;
                                 entry.user = entry.identifier;
-                                entry.description = '鉴定了 ' + entry.applier.name + ' 的宝贝';
-                                entry.result = '鉴定结果为 ' + entry.result;
+                                entry.description = '鉴定了 ' + (entry.applier ? entry.applier.name : 'NULL') + ' 的宝贝';
+                                entry.result = '鉴定结果为 ' + (entry.result === 'genuine' ? '真': entry.result === 'fake' ? '假': '存疑');
                             } else if (item.type === 30) {//media
                                 entry.description = '发布的晒宝';
                                 if(entry.content_type === 'short_text' && entry.content !== ''){

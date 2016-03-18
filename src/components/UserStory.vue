@@ -26,6 +26,11 @@
             width: 480px;
             line-height: 42px;
             font-family: 'song-simple';
+            .user-input {
+                overflow: hidden;
+                display: block;
+                height: 60px;
+            }
         }
         .social {
             color: #d9d9d9;
@@ -63,9 +68,9 @@
         <div class="content bg-white">
             <div v-if="item.cover_type==='video'" class="cover video" v-bg.video="item.cover"></div>
             <div v-else class="cover" v-bg="item.cover"></div>
-            <div class="title font-30 user-input">{{item.content}}</div>
+            <div class="title font-30"><span class="user-input">{{item.content}}</span></div>
             <div class="social font-26">
-                <div class="left border-right"><i class="icon-like-solid"></i><span>{{item.like}}</span></div>
+                <div class="left border-right" :class="{'red': item.liked}"><i class="icon-like-solid"></i><span>{{item.like}}</span></div>
                 <div class="right"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
             </div>
         </div>
