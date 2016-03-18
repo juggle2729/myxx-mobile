@@ -15,6 +15,7 @@
             height: 594px;
             margin: 22px 0 36px;
             position: relative;
+            background-color: black;
         }
         > div {
             display: inline-block;
@@ -205,9 +206,9 @@ export default {
             let action;
             if(this.self && this.self.id == this.evaluation.user.id) {
                 label = '不能鉴定自己的宝贝';
-            } else if(!this.evaluation.unidentified) {
+            } else if(!this.evaluation.identifiable) {
                 label = '您已鉴定过';
-            } else if(!this.evaluation.has_seat) {
+            } else if(this.evaluation.status >= 2) {
                 label = '鉴定已完成';
             } else if(this.evaluation.jianbao_permission) {
                 action = 'evaluate';
@@ -243,6 +244,20 @@ export default {
                         v.play();
                     }
                 }, 10);
+            }
+        },
+        evaluate(action) {
+            if(action === 'login') {
+                this.action('login');
+            } else if(action === 'request'){
+                this.action('confirm', {text: '抱歉，只有大师才可鉴定。您可以联系我们进行大师身份认证'})
+                    .then((confirm) => {
+                        if(confirm === '1') {
+                            this.$route.router.go({name: 'apply-master', params: {id: this.self.id}});
+                        }
+                    });
+            } else if(action === 'evaluate'){
+                this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
             }
         }
     }

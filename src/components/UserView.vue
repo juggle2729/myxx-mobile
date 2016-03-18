@@ -45,7 +45,7 @@
     </div>
     <div class="content">
         <!-- TODO use keep-alive -->
-        <component :is="view" transition-mode="out-in" transition="fade"></component>
+        <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
     </div>
 </div>
 </template>
@@ -76,26 +76,30 @@ export default {
             }
         }
     },
-    created() {
-        return this.$get(`users/${this.$route.params.id}/profile|v2`)
-            .then((data) => {
-                this.profile = data;
-                this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
-                if(!this.view) {
-                    this.view = data.shop_status ? 'jade': 'story';
-                }
-                this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
-            });
-    },
     route: {
+        canReuse({from, to}) {
+            return from.name === to.name && from.params.id === to.params.id;
+        },
         data({from, to, next}) {
-            this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
-            if(!this.isDefaultView) {
+            if(from.name !== to.name || from.params.id !== to.params.id) {// 初次进入个人主页
+                this.$get(`users/${to.params.id}/profile|v2`)
+                    .then((data) => {
+                        this.profile = data;
+                        this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
+                        this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
+                        if(this.isDefaultView) {
+                            this.view = data.shop_status ? 'jade': 'story';
+                        } else {
+                            this.view = to.params.tab;
+                        }
+                        this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
+                        next();
+                    });
+            } else { // 个人主页内部跳转
+                this.isDefaultView = false;
                 this.view = to.params.tab;
+                next();
             }
-            this.$watch('profile', () => {
-                setTimeout(next, 500); //添加延时，hack全局loading
-            });
         }
     },
     methods: {

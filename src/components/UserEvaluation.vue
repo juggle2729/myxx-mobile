@@ -56,7 +56,7 @@
             width: 204px;
             height: 204px;
             background-size: cover;
-            background-image: url('#{$qn}/placeholder/img.png');
+            background-image: url('#{$qn}/placeholder/portrait.png');
             img {
                 width: 100%;
                 height: 100%;
@@ -121,7 +121,7 @@
         <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         <div v-if="item.results.length">
             <div class="masters flex bg-white">
-                <div class="left" v-link="item.results[0].identifier.id | profile" v-bg.sm="item.results[0].identifier.portrait"></div>
+                <div class="left" @click.stop="goToProfile(item.results[0].identifier)" v-bg.sm="item.results[0].identifier.portrait"></div>
                 <div class="middle flex-1">
                     <div class="l font-26">
                         <div>{{item.results[0].identifier.name}}</div>
@@ -133,7 +133,7 @@
                         <div class="light margin-top">{{item.results[1].identifier.title}}</div>
                     </div>
                 </div>
-                <div v-if="item.results[1]" class="right" v-link="item.results[1].identifier | profile" v-bg.sm="item.results[1].identifier.portrait"></div>
+                <div v-if="item.results[1]" class="right" @click.stop="goToProfile(item.results[1].identifier)" v-bg.sm="item.results[1].identifier.portrait"></div>
                 <div v-else class="right">
                     <img @click.stop="invite(item)" :class="size" :src="'invite-master.png' | qn">
                 </div>
@@ -192,10 +192,14 @@ export default {
         },
         goToEvaluation(id) {
             if(this.env.version >= '1.1') {
-                this.action('evaluation')
+                this.action('evaluation', {id});
             } else {
                 this.$router.go({name: 'evaluation', params: {id}});
             }
+        },
+        goToProfile(user) {
+            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
+            this.$router.go({name: 'user', params: {id, tab}});
         }
     }
 }

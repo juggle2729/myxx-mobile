@@ -31,6 +31,10 @@
         margin-top: 48px;
         margin-bottom: 24px;
     }
+    .label .bg-yellow {
+        padding: 0 5px;
+        border-radius: 5px;
+    }
 }
 </style>
 <template>
@@ -49,7 +53,11 @@
                 </div>
             </div>
             <div class="font-30 content">
-                <span v-if="c.reply_to" class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}</span>：</span><span>{{c.content}}</span>
+                <template v-if="c.reply_to">
+                    <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
+                    <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
+                </template>
+                <span>{{c.content}}</span>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
@@ -85,7 +93,7 @@ export default {
         },
         paging() {
             return {
-                path: `users/target/${this.id}/type/${this.type}/comments`,
+                path: `users/target/${this.id}/type/${this.type}/comments|v2`,
                 list: 'comments',
                 params: {
                     limit: 10

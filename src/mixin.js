@@ -172,9 +172,16 @@ const mixin = {
                 data.url = location.origin + location.pathname;
             } 
             data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
-
+            // 分享页面底部按钮动作
+            if(data.text) {
+                if(type === 'jianbao') {
+                    data.cmd = 'myxx://home/jianbao/' + entry.post_id;
+                } else {
+                    data.cmd = 'myxx://web/' + encodeURIComponent(this.$route.path.replace(/user=\d+&?/, '').replace(/\?$/, ''));
+                }
+            }
             this.$root.shareData = data;
-            if(!this.env.isApp) {
+            if(!this.env.isShare) {
                 document.title = data.title;
                 let shareIconSrc = data.icon;
                 if(!/^http/.test(shareIconSrc)) {

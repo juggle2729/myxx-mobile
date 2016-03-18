@@ -132,11 +132,6 @@ export default {
             env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
             env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
             return env;
-        },
-        appCmd() {
-            let path = this.$route.path;
-            path = path.replace(/user=\d+&?/, '').replace(/\?$/, '');  // 去掉分享过程中加的参数
-            return 'myxx://web/' + encodeURIComponent(path);
         }
     },
     ready() {
@@ -178,10 +173,10 @@ export default {
                 backdrop.classList.add('show');
             } else {
                 if(/version\/9/i.test(navigator.userAgent)) { // iOS 9
-                    location.href = this.appCmd;
+                    location.href = this.shareData.cmd;
                 } else {
                     let myxxIframe = document.createElement('iframe');
-                    myxxIframe.src = this.appCmd;
+                    myxxIframe.src = this.shareData.cmd;
                     myxxIframe.width = 0;
                     myxxIframe.height = 0;
                     myxxIframe.frameBorder = 0;

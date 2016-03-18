@@ -66,7 +66,7 @@ export default {
                             } else if (item.type === 20) {//video
                                 entry.videoPreview = entry.video;
                                 entry.user = entry.identifier;
-                                entry.description = '鉴定了 ' + entry.jianbao.applier.nickname + ' 的宝贝';
+                                entry.description = '鉴定了 ' + entry.applier.name + ' 的宝贝';
                                 entry.result = '鉴定结果为 ' + entry.result;
                             } else if (item.type === 30) {//media
                                 entry.description = '发布的晒宝';

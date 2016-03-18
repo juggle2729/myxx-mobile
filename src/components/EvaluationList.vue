@@ -82,7 +82,7 @@
                 <div class="result white font-22" v-if="item.status">
                     <i class="icon-eval"></i><span class="">已有{{item.status}}位大师鉴定</span>
                 </div>
-                <div class="svg flex">
+                <div v-if="item.video" class="svg flex">
                     <img :src="'placeholder/video.svg' | qn" class="flex center-horizontal">
                 </div>
             </div>
