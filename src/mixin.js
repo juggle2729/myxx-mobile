@@ -73,7 +73,7 @@ const mixin = {
                 } else if('confirm,delete,version'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
                 } else if('share,shareable'.indexOf(handler) !== -1) {
-                    
+
                 }
                 if(resolver === undefined) {
                     bridge.callHandler.call(this, handler, params);
@@ -163,14 +163,14 @@ const mixin = {
                 data.desc = data.desc.substr(0, 20) + '...';
             }
             let query = _.merge({}, this.$route.query, {
-                type, 
+                type,
                 id: (entry.post_id || entry.id),
                 user: _.get(this, 'self.id', -1),
                 time: Date.now()
             });
             if(!data.url) {
                 data.url = location.origin + location.pathname;
-            } 
+            }
             data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
             // 分享页面底部按钮动作
             if(data.text) {
@@ -181,6 +181,7 @@ const mixin = {
                 }
             }
             this.$root.shareData = data;
+
             if(!this.env.isShare) {
                 document.title = data.title;
                 let shareIconSrc = data.icon;
@@ -189,6 +190,17 @@ const mixin = {
                 }
                 document.querySelector("#share-icon").src = shareIconSrc;
             }
+
+            if(this.env.isWechat) {
+                const shareData = {
+                    title: data.title,
+                    desc: data.desc,
+                    link: data.url,
+                    imgUrl: this.config.img + data.icon + '?imageView2/1/w/310'
+                };
+                this.wechatShareInit(shareData);
+            }
+
             if(shareable) {
                 let {title, desc, icon, url} = data;
                 this.action('shareable', {title, desc, icon, url});
@@ -197,6 +209,64 @@ const mixin = {
         share() {
             let {title, desc, icon, url} = this.$root.shareData;
             this.action('share', {title, desc, icon, url});
+        },
+        wechatShareInit(shareData) {
+            // load script
+            const script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            script.setAttribute('src', '//res.wx.qq.com/open/js/jweixin-1.0.0.js');
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+            script.onload = () => {
+                const timeStamp = ~~(+new Date() / 1000);
+                const nonceStr = this.randomWord();
+                const url = location.href.split('#')[0];
+
+                const formData = new FormData();
+                formData.append('noncestr', nonceStr);
+                formData.append('timestamp', timeStamp);
+                formData.append('url', url);
+
+                this.$post('wx/jsapisignature', formData).then((result) => {
+                    // config
+                    wx.config({
+                        debug: true,
+                        appId: 'wxcc40bf300d6200a3',
+                        timestamp: timeStamp,
+                        nonceStr: nonceStr,
+                        signature: result.signature,
+                        jsApiList: [
+                            'checkJsApi',
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'onMenuShareQZone'
+                        ]
+                    });
+                    // share list
+                    wx.ready(() => {
+                        wx.onMenuShareAppMessage(shareData);
+                        wx.onMenuShareTimeline(shareData);
+                        wx.onMenuShareQQ(shareData);
+                        wx.onMenuShareWeibo(shareData);
+                        wx.onMenuShareQZone(shareData);
+                    });
+                });
+            }
+        },
+        randomWord: function(len) {
+            var str = '',
+                range,
+                i = 0,
+                o,
+                arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            range = (len && typeof len === 'number') ? len : (Math.round(Math.random() * (32 - 8)) + 8);
+            for (; i < range; i++) {
+                o = Math.round(Math.random() * (arr.length - 1));
+                str += arr[o];
+            }
+            return str;
         }
     }
 };

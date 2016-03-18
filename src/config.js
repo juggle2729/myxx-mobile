@@ -21,7 +21,7 @@ const hosts = {
         prod: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
     }
 };
-const env = 'test' || (/^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : 'dev'));
+const env = 'dev' || (/^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : 'dev'));
 let [api, img, video, download] = [hosts.api[env], hosts.img[env], hosts.video[env], hosts.download[env]];
 
 export default {
