@@ -58,6 +58,7 @@ export default {
                         const type = _.find(this.config.types, {'id': item.type});
                         entry.route = type.route;
                         entry.title = type.name;
+                        entry.id = item.id;
                         if(!entry.isEmpty){
                             if (item.type === 10) {//picture
                                 entry.imgPreview = entry.picture;
@@ -70,7 +71,7 @@ export default {
                                 entry.result = '鉴定结果为 ' + (entry.result === 'genuine' ? '真': entry.result === 'fake' ? '假': '存疑');
                             } else if (item.type === 30) {//media
                                 entry.description = '发布的晒宝';
-                                if(entry.content_type === 'short_text' && entry.content !== ''){
+                                if(entry.content !== ''){
                                     entry.description = entry.content;
                                 }
                                 if(entry.cover_type === 'video') {
