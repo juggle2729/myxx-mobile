@@ -61,7 +61,7 @@ router.alias({
   '/user/:id': '/user/:id/home'
 });
 router.map(routes);
-router.start(require('./components/App.vue'), '#app');
+router.start(require('./components/App.vue'), appContainer);
 
 window.onerror = (error) => {
     console.debug(error);

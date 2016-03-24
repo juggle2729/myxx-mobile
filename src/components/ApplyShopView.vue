@@ -51,7 +51,7 @@
             <div class="text flex">
                 <div class="left font-22">
                     <img :src="'open/od4.png' | qn" />
-                    <p>精准推广</p>
+                    <p>多种渠道</p>
                 </div>
                 <div class="right font-26 flex">
                     <p>多渠道销售途径全面打开市场

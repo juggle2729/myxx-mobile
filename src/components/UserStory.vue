@@ -28,8 +28,11 @@
             font-family: 'song-simple';
             .user-input {
                 overflow: hidden;
-                display: block;
-                height: 60px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                line-height: 1.5;
             }
         }
         .social {

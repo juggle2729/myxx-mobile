@@ -73,7 +73,7 @@
     }
 </style>
 <template>
-  <div class="loading">
+  <div>
     <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1">

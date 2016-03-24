@@ -48,7 +48,7 @@
             <div class="author">
                 <div class="avatar margin-right" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
                 <div>
-                    <h3 class="font-26">{{c.reply_from.name}}</h3>
+                    <h3 class="font-26" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</h3>
                     <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
                 </div>
             </div>
