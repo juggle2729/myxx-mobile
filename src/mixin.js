@@ -131,7 +131,6 @@ const mixin = {
                 data.title = entry.unidentified ? '速来帮我掌掌眼！' : '快来看看我的鉴定吧！';
                 data.desc = entry.description;
                 data.icon = entry.pictures[0];
-                data.url = location.origin + '/share' +  location.pathname;
                 data.text = '我要求鉴宝';
             } else if(type === 'topic') {
                 data.title = '这样精美的宝贝，只能献上膝盖了';

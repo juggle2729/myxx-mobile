@@ -51,12 +51,13 @@
             margin: 0 auto;
             padding: 60px 0;
             width: 480px;
-            line-height: 42px;
-            font-family: 'song-simple';
             .user-input {
                 overflow: hidden;
-                display: block;
-                height: 60px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                line-height: 1.5;
             }
         }
     }
@@ -165,7 +166,7 @@
         <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
     <div class="store-detail bg-white">
-        <div class="content" v-if="story.content"><span class="user-input">{{story.content}}</span></div>
+        <div class="content"><span v-if="story.content" class="user-input">{{story.content}}</span></div>
         <div class="medias">
             <div class="first-row" v-if="firstRowMedias.length">
                 <template v-for="media in firstRowMedias">

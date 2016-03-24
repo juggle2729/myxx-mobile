@@ -1,7 +1,7 @@
 <style lang="sass">
 @import '../styles/partials/var';
 .evaluation-detail {
-    padding-bottom: 130px;
+    padding-bottom: 80px;
     .results {
         overflow-x: auto;
         overflow-y: hidden;
@@ -126,16 +126,15 @@
                     <div class="font-30 white">{{result.identifier.name}}</div>
                     <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
                 </div>
-                <div v-if="!env.isShare" class="font-30 red"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
+                <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
             </div>
             <img class="portrait" @click="play(result.video)" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="font-30 white center">
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
-                <span v-if="result.result!=='fake'">&nbsp;估价为{{prices[$index]}}</span>
+                <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
             </div>
         </div>
     </div>
-    <div v-else class="results-empty border-bottom font-34 center gray">还没有大师鉴定这个宝贝！</div>
     <div class="header">
         <div class="user">
             <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
@@ -156,7 +155,7 @@
             <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
         </li>
     </ul>
-    <div class="evaluation-btn border-bottom">
+    <div v-if="jb.label" class="evaluation-btn border-bottom">
         <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
     </div>
     <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
@@ -188,7 +187,7 @@ export default {
     computed: {
         prices() {
             return this.evaluation.results.map((result) => {
-                if(result.result !== 'fake') {
+                if(result.result === 'genuine') {
                     if(result.value_min && result.value_max) {
                         return `${Math.round(result.value_min/1000)/10}-${Math.round(result.value_max/1000)/10}万`;
                     } else if(result.value_min) {
@@ -202,20 +201,16 @@ export default {
             });
         },
         jb() {
-            let label = '我来鉴定';
-            let action;
-            if(this.self && this.self.id == this.evaluation.user.id) {
-                label = '不能鉴定自己的宝贝';
-            } else if(!this.evaluation.identifiable) {
-                label = '您已鉴定过';
-            } else if(this.evaluation.status >= 2) {
-                label = '鉴定已完成';
-            } else if(this.evaluation.jianbao_permission) {
-                action = 'evaluate';
-            } else if(this.self){
-                action = 'request';
-            } else {
-                action = 'login';
+            let label, action;
+            if(this.evaluation.identifiable && this.self.id != this.evaluation.user.id) {
+                label = '我要鉴定';
+                if(this.evaluation.jianbao_permission) {
+                    action = 'evaluate';
+                } else if(this.self.id){
+                    action = 'request';
+                } else {
+                    action = 'login';
+                }
             }
             return {label, action};
         }
@@ -244,6 +239,20 @@ export default {
                         v.play();
                     }
                 }, 10);
+            }
+        },
+        like(result) {
+            const api = `users/target/${result.id}/type/20/like`;
+            if (result.liked) {
+                this.$delete(api).then(() => {
+                    result.liked = false;
+                    result.like -= 1;
+                });
+            } else {
+                this.$post(api).then(() => {
+                    result.liked = true;
+                    result.like += 1;
+                });
             }
         },
         evaluate(action) {

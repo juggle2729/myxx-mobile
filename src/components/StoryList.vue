@@ -61,12 +61,12 @@
             </div>
             <div class="medias">
                 <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">
-                    <img class="unique" :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'" @click.stop="coverflow(item, 0)">
+                    <img class="unique" :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
                 </div>
                 <template v-else>
                     <template v-for="media in item.medias"
-                        ><div class="media img" @click.stop="coverflow(item, $index)" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                        ><div class="media play" v-if="media.type==='video'" @click.stop="play(media.id)" v-bg.video="media.id"></div
+                        ><div class="media img" v-if="media.type==='picture'" v-bg.md="media.id"></div
+                        ><div class="media play" v-if="media.type==='video'" v-bg.video="media.id"></div
                     ></template>
                 </template>
             </div>
@@ -93,24 +93,24 @@ export default {
         SocialBar
     },
     methods: {
-        coverflow(story, index) {
-            let ids = story.medias
-                        .filter(media => media.type==='picture')
-                        .map(media => media.id);
-            this.action('coverflow', {ids, index});
-        },
-        play(id) {
-            this.action('play', {id});
-            if(!this.isApp) { // 分享页面，视频自动播放
-                var timer = setInterval(() => {
-                    var v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
-            }
-        }
+        // coverflow(story, index) {
+        //     let ids = story.medias
+        //                 .filter(media => media.type==='picture')
+        //                 .map(media => media.id);
+        //     this.action('coverflow', {ids, index});
+        // },
+        // play(id) {
+        //     this.action('play', {id});
+        //     if(!this.isApp) { // 分享页面，视频自动播放
+        //         var timer = setInterval(() => {
+        //             var v = document.querySelector('video');
+        //             if(v) {
+        //                 clearInterval(timer);
+        //                 v.play();
+        //             }
+        //         }, 10);
+        //     }
+        // }
     }
 }
 </script>

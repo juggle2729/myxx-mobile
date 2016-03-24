@@ -6,15 +6,15 @@ let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
             let user = {
-                "id" : "1023",
-                "token" : "099769ac-eba9-49e7-87a0-55e7b2787584",
-                "gender" : "0",
-                "phone" : "15871705303",
-                "nickname" : "余长春",
-                "delete_flag" : "0",
-                "role" : "0",
-                "create_at" : "1451999342000",
-                "photo" : ""
+  //           "gender" : "0",
+  // "phone" : "15871705303",
+  // "nickname" : "余长春",
+  // "delete_flag" : "0",
+  // "role" : "4",
+  // "id" : "1023",
+  // "create_at" : "1451999342000",
+  // "photo" : "9c7af84f-4dbd-43bc-b3b7-c3de865f1d36",
+  // "token" : "a13c66d6-5bca-4add-95b9-784ce1042977"
             };
             cb(JSON.stringify(user));
         }

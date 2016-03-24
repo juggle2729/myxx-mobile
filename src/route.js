@@ -14,11 +14,11 @@ export default {
         title: '鉴宝详情',
         component: require('./components/EvaluationView.vue')
     },
-    '/result/:id/comment': {
-        name: 'result-comment',
-        title: '给大师的评论',
-        component: require('./components/ResultCommentView.vue')
-    },
+    // '/result/:id/comment': {
+    //     name: 'result-comment',
+    //     title: '给大师的评论',
+    //     component: require('./components/ResultCommentView.vue')
+    // },
     '/likes/:type/:id': {
         name: 'likes',
         title: '赞过的人',

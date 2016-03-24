@@ -39,18 +39,11 @@ export default {
                         }
                         this.items.loading = false;
 
-                        if(this.paging.id) {
-                            _.merge(this.items, {
-                                hasMore: this.items.length < data.total,
-                                isEmpty: data.total === 0 && this.items.length === 0
-                            });
-                        } else {
-                            _.merge(this.items, {
-                                total: data.total,
-                                hasMore: this.items.length < data.total,
-                                isEmpty: data.total === 0
-                            });
-                        }
+                        _.merge(this.items, {
+                            total: data.total,
+                            hasMore: this.items.length < data.total,
+                            isEmpty: data.total === 0
+                        });
                 });
             }
         }

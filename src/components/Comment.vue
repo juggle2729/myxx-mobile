@@ -1,6 +1,6 @@
 <style lang="sass">
 .comment-component {
-    padding: 0 32px 24px 32px;
+    padding: 0 32px;
     .comment-header {
         display: -webkit-box;
         -webkit-box-align: center;
@@ -38,7 +38,7 @@
 }
 </style>
 <template>
-<div class="comment-component bg-white border-bottom">
+<div class="comment-component bg-white">
     <div class="comment-header border-bottom font-22">
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
         <div v-if="!hasInput" @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
@@ -95,6 +95,7 @@ export default {
             return {
                 path: `users/target/${this.id}/type/${this.type}/comments|v2`,
                 list: 'comments',
+                id: 'id',
                 params: {
                     limit: 10
                 }
