@@ -97,15 +97,17 @@
             </p>
         </div>
     </div>
-    <div class="separator-20"></div>
-    <div class="params">
+    <template v-if="info.detail">
+      <div class="separator-20"></div>
+      <div class="params">
         <div class="title border-bottom flex">
-            <span class="font-22 gray flex">图文详情</span>
+          <span class="font-22 gray flex">图文详情</span>
         </div>
         <div class="medias font-30">
-            {{{info.detail}}}
+          {{{info.detail}}}
         </div>
-    </div>
+      </div>
+    </template>
     <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
         <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
     </social-bar>
