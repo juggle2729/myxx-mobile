@@ -15,7 +15,13 @@
              @touchmove="contentTouchMove($event)" @touchend="contentTouchEnd($event)">
             <div class="top img"></div>
             <div class="brief">
-                <div class="detail">{{masterBaseData.brief | truncate 90}}</div>
+                <div class="detail">{{masterBaseData.brief | truncate 78}}</div>
+            </div>
+            <div class="interview-video">
+                <div class="play" v-if="masterBaseData.video"
+                     @click.stop="play(masterBaseData.video)"
+                     v-bg="masterBaseData.video"
+                     query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/460/interlace/1"></div>
             </div>
             <div class="content" v-html="interview.content"></div>
             <div class="base-info">
@@ -69,6 +75,18 @@
             });
         },
         methods: {
+            play(id) {
+                this.action('play', {id});
+                if(!this.isApp) { // 分享页面，视频自动播放
+                    const timer = setInterval(() => {
+                            const v = document.querySelector('video');
+                    if(v) {
+                        clearInterval(timer);
+                        v.play();
+                    }
+                }, 10);
+                }
+            },
             enableRefresh(enable) {
                 this.action('toggleTopRefresh', {
                     enable: enable
@@ -197,6 +215,15 @@
             position: relative;
         }
 
+        .play {
+            width: 100%;
+            padding-top: 77%;
+        }
+
+        .interview-video {
+            padding: 40px 32px 10px;
+        }
+
         .cover-bar {
             background: rgba(0, 0, 0, 0.5);
             width: 100%;
@@ -232,19 +259,22 @@
 
         .brief {
             color: #b7b7b7;
-            font-size: 28px;
-            padding: 0 50px;
+            font-size: 30px;
             .detail {
-                @include border(vertical, #b7b7b7);
-                padding: 40px 0;
-                line-height: 36px;
+                margin: 0 auto;
+                padding: 20px 20px;
+                line-height: 46px;
                 text-align: justify;
+                width: 650px;
+                height: 218px;
+                background-size: cover;
+                background-image: url('#{$qn}/artist/special_desc_bg.png');
             }
         }
 
         /*强制覆盖富文本的样式*/
         .content {
-            padding: 65px 24px;
+            padding: 0 24px 65px;
             font-size: 34px;
             line-height: 26px;
 
