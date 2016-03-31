@@ -1,20 +1,16 @@
 <template>
 <div class="masters-view bg-default">
     <template v-for="site in items">
-        <div class="cell bg-white flex" v-link="{name: 'master', params: {id: site.item.id}}" v-bg="site.image">
-            <div class="txt">
-                <p class="font-34 white">{{site.item.name}}</p>
-                <div class="flex">
-                    <p class="font-26 white flex-1">{{site.item.titles.length > 0 ? site.item.titles[0].name : ''}}</p>
-                    <p class="font-26 white">
-                        <span>粉丝:{{site.item.fans_count}}</span>
-                        <span>鉴宝数:{{site.item.jianbao_count}}</span>
-                    </p>
-                </div>
+        <div class="cell bg-white" v-link="{name: 'master', params: {id: site.id}}">
+            <div class="head img" v-bg="site.user_info.portrait"></div>
+            <div class="info">
+                <div v-if="site.user_info.interview_video" class="video-icon img"></div>
+                <div class="font-30 name">{{site.user_info.nickname}}</div>
+                <div class="font-26 title gray" v-html="site.user_info.title.length > 0 ? site.user_info.title[0].name : '&nbsp;'"></div>
             </div>
         </div>
     </template>
-    <partial name="load-more" v-if="hasMore"></partial>
+    <partial name="load-more" v-if="items.hasMore"></partial>
 </div>
 </template>
 <script>
@@ -25,7 +21,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'cms/promotes?section=website',
+                path: 'cms/discoveries?section=biography',
                 list: 'promotes'
             }
         }
@@ -38,31 +34,53 @@ export default {
 }
 </script>
 <style lang="sass">
-.masters-view {
-    height: 100%;
-    padding: 20px;
-    .cell {
-        margin-bottom: 20px;
-        width: 100%;
-        height: 385px;
-        border-radius: 8px;
-        background-size: cover;
-        align-items: flex-end;
-        padding-bottom: 28px;
-        padding-left: 44px;
-        padding-right: 22px;
-        .txt {
-            padding-right: 22px;
-            width: 100%;
-            > div {
-                margin-top: 28px;
-                >p{
-                    > span:nth-of-type(1) {
-                        margin-right: 72px;
-                    }
-                }
+    @import '../styles/partials/_var.scss';
+    @import '../styles/partials/_mixin.scss';
+
+    .masters-view {
+        padding: 16px;
+        .cell {
+            @include border();
+            text-align: center;
+            display: inline-block;
+            width: -webkit-calc(50% - 8px);
+
+            .head {
+                width: 100%;
+                padding-top: 100%;
+            }
+
+            .info {
+                position: relative;
+            }
+
+            .video-icon {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+
+                background-image: url('#{$qn}/artist/video_icon.png');
+                width: 250px;
+                height: 72px;
+            }
+
+            &:nth-child(even) {
+                margin-left: 16px;
+             }
+
+             &:nth-child(odd):not(:first-child) {
+                  margin-top: 16px;
+              }
+
+            .name {
+                padding-top: 28px;
+            }
+
+            .title {
+                margin-top: 20px;
+                padding-bottom: 20px;
             }
         }
     }
-}
 </style>

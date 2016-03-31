@@ -17,11 +17,9 @@
             <div class="brief">
                 <div class="detail">{{masterBaseData.brief | truncate 78}}</div>
             </div>
-            <div class="interview-video">
-                <div class="play" v-if="masterBaseData.video"
-                     @click.stop="play(masterBaseData.video)"
-                     v-bg="masterBaseData.video"
-                     query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/460/interlace/1"></div>
+            <div class="interview-video" v-if="interview.video">
+                <div class="play" @click.stop="play(interview.video)"
+                     v-bg="interview.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/460/interlace/1"></div>
             </div>
             <div class="content" v-html="interview.content"></div>
             <div class="base-info">

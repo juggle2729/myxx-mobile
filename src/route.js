@@ -45,7 +45,7 @@ export default {
     },
     '/masters': {
         name: 'masters',
-        title: '官网秀',
+        title: '人物志',
         component: require('./components/MastersView.vue')
     },
     '/master/:id': {
