@@ -2,8 +2,8 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/msg': {
-        component: require('./components/MsgTempView.vue')
+    '/video': {
+        component: require('./components/VideoView.vue')
     },
     '/evaluations/:tab': {
         name: 'evaluations',
@@ -14,11 +14,11 @@ export default {
         title: '鉴宝详情',
         component: require('./components/EvaluationView.vue')
     },
-    // '/result/:id/comment': {
-    //     name: 'result-comment',
-    //     title: '给大师的评论',
-    //     component: require('./components/ResultCommentView.vue')
-    // },
+    '/result/:evaluationId/:id': {
+        name: 'result',
+        title: '鉴宝结果',
+        component: require('./components/ResultView.vue')
+    },
     '/likes/:type/:id': {
         name: 'likes',
         title: '赞过的人',

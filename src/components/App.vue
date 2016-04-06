@@ -161,7 +161,7 @@ export default {
             }
         });
 
-        if(this.isShare) {
+        if(this.env.isShare) {
             this.$get('log/content_readings', this.$route.query).then(_.noop);
         }
     },
