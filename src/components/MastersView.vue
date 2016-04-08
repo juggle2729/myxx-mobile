@@ -52,6 +52,9 @@ export default {
 
             .info {
                 position: relative;
+                &:hover {
+                    background-color: #d9d9d9;
+                }
             }
 
             .video-icon {
