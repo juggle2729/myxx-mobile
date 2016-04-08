@@ -193,18 +193,6 @@
                 } else {
                     return 40;
                 }
-            },
-            play(id) {
-                this.action('play', {id});
-                if(!this.isApp) { // 分享页面，视频自动播放
-                    var timer = setInterval(() => {
-                        var v = document.querySelector('video');
-                        if(v) {
-                            clearInterval(timer);
-                            v.play();
-                        }
-                    }, 10);
-                }
             }
         }
     }

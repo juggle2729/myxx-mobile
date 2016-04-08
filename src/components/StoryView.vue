@@ -34,8 +34,9 @@
          }
     }
     .cover {
-        width: 750px;
-        height: 750px;
+        width: 686px;
+        height: 686px;
+        margin: 0 32px 10px;
     }
     .play::after {
         left: 32px;
@@ -44,21 +45,18 @@
     }
     .store-detail {
         padding: 0 32px 36px;
-        .content {
-            font-size: 30px;
-            color: #666666;
-            text-align: center;
-            margin: 0 auto;
-            padding: 60px 0;
-            width: 480px;
-            .user-input {
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                line-height: 1.5;
-            }
+    }
+    .content {
+        font-size: 30px;
+        color: #666666;
+        padding: 40px;
+        .user-input {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
         }
     }
     .medias {
@@ -141,8 +139,8 @@
 }
 </style>
 <template>
-<div class="story-view bg-default">
-    <div class="story-header bg-white">
+<div class="story-view">
+    <div class="story-header">
         <div class="header clearfix">
             <div class="user">
                 <div class="avatar" v-link="story.user | profile" v-bg.sm="story.user.photo"></div>
@@ -159,14 +157,14 @@
             </div>
         </div>
     </div>
+    <div class="content user-input">{{story.content}}</div>
     <template v-if="story.cover_type === 'picture'">
-        <div class="cover img" v-bg="story.cover"></div>
+        <div class="cover img" v-bg="story.cover" @click="coverflow(-1)"></div>
     </template>
     <template v-if="story.cover_type === 'video'">
         <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
-    <div class="store-detail bg-white">
-        <div class="content"><span class="user-input">{{story.content}}</span></div>
+    <div class="store-detail">
         <div class="medias">
             <div class="first-row" v-if="firstRowMedias.length">
                 <template v-for="media in firstRowMedias">
@@ -258,26 +256,15 @@ export default {
         }
     },
     methods: {
-        xxx($event) {
-            this.$broadcast('comment', $event);
-        },
         coverflow(index) {
             let ids = this.story.medias
                         .filter(media => media.type==='picture')
                         .map(media => media.id);
+            if(this.story.cover_type === 'picture') {
+                index += 1;
+                ids.splice(0, 0, this.story.cover);
+            } 
             this.action('coverflow', {ids, index});
-        },
-        play(id) {
-            this.action('play', {id, targetType: 'topic', targetId: this.story.post_id});
-            if(!this.isApp) { // 分享页面，视频自动播放
-                var timer = setInterval(() => {
-                    var v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
-            }
         },
         like() {
             const likeApi = `users/target/${this.story.post_id}/type/30/like`;

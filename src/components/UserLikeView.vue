@@ -9,7 +9,7 @@
                     赞了一个{{thumb.title}}
                 </p>
             </div>
-            <div class="info flex" v-if="!thumb.isEmpty" v-link="{ name: thumb.route, params: { id: thumb.post_id }}">
+            <div class="info flex" v-if="!thumb.isEmpty" v-link="{name: thumb.route, params: {id: thumb.post_id}}">
                 <div class="left">
                     <div class="flex">
                         <div v-bg.sm="thumb.user.photo" class="avatar-50"></div>
@@ -100,6 +100,15 @@ export default {
         data() {
             return this.fetch();
         }
+    },
+    methods: {
+        goToEvaluation(id) {
+            if(this.env.version >= '1.1') {
+                this.action('evaluation', {id});
+            } else {
+                this.$router.go({name: 'evaluation', params: {id}});
+            }
+        },
     }
 }
 </script>

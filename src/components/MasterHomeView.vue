@@ -206,7 +206,6 @@
                     </div>
                     <div class="description font-30">{{(dynamic.event.description || dynamic.event.content) | truncate 62}}</div>
                     <div v-if="dynamic.event_type === 'jianbao_add'">
-                        <!-- <div class="media video" @click.stop="play(dynamic.event.video)" v-bg.lg="dynamic.event.picture"></div> -->
                         <div class="eval" v-bg.lg="dynamic.event.picture">
                             <div class="result white font-22" v-if="dynamic.event.results.length">
                                 <i class="icon-eval"></i><span class="">已有{{dynamic.event.results.length}}位大师鉴定</span>
@@ -303,18 +302,6 @@ export default {
                 }).catch(() => {
                     this.following = false;
                 });
-            }
-        },
-        play(id) {
-            this.action('play', {id});
-            if(!this.isApp) { // 分享页面，视频自动播放
-                var timer = setInterval(() => {
-                    var v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
             }
         },
         coverflow(medias, index) {

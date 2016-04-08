@@ -6,14 +6,14 @@
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
-        height: 854px;
+        height: 926px;
         padding: 52px 78px;
         background: #202020 url('#{$qn}/evaluation/result-bg.png') no-repeat;
-        background-size: 100% auto;
+        background-size: cover;
         .portrait {
             width: 594px;
             height: 594px;
-            margin: 22px 0 36px;
+            margin-top: 22px;
             position: relative;
             background-color: black;
         }
@@ -27,7 +27,7 @@
                 content: '';
                 position: absolute;
                 left: 15px;
-                bottom: 100px;
+                bottom: 172px;
                 width: 1rem;
                 height: 1rem;
                 background: transparent url('#{$qn}/icon/play.png') no-repeat center;
@@ -40,6 +40,21 @@
             text-overflow: ellipsis;
             max-width: 435px;
             overflow: hidden;
+        }
+        .price {
+            height: 76px;
+            line-height: 76px;
+        }
+        .action {
+            border-radius: 10px;
+            margin: 0 auto;
+            width: 464px;
+            height: 72px;
+            line-height: 72px;
+            text-align: center;
+            i {
+                margin-right: 28px;
+            }
         }
     }
     .results-empty {
@@ -80,9 +95,6 @@
             border: 0;
             cursor: pointer;
         }
-    }
-    .w-50 {
-        width: 50%;
     }
     .nocontent {
         margin-top: 48px;
@@ -128,10 +140,19 @@
                 </div>
                 <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
             </div>
-            <img class="portrait" @click="play(result.video)" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
-            <div class="font-30 white center">
+            <img class="portrait" @click="play(result.video, 'result')" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
+            <div class="price font-30 white center">
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
+            </div>
+            <div v-if="result.promote_type==='auction'" class="action white bg-yellow font-30">
+                <i class="icon-like-active"></i><span>进入拍卖预展</span>
+            </div>
+            <div v-if="result.promote_type==='newproduct'" class="action white bg-blue font-30">
+                <i class="icon-like-active"></i><span>进入新品发布</span>
+            </div>
+            <div class="action white bg-green font-30"  v-link="result.identifier | profile">
+                <i class="icon-like-active"></i><span>进入个人主页</span>
             </div>
         </div>
     </div>
@@ -229,18 +250,18 @@ export default {
         coverflow(index) {
             this.action('coverflow', {ids: this.evaluation.pictures, index});
         },
-        play(id, targetType, targetId) {
-            this.action('play', {id, targetType, targetId});
-            if(!this.isApp) { // 分享页面，视频自动播放
-                var timer = setInterval(() => {
-                    var v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
-            }
-        },
+        // play(id, targetType='jianbaoresult', targetId=this.evaluation.post_id) {
+        //     this.action('play', {id, targetType, targetId});
+        //     if(!this.isApp) { // 分享页面，视频自动播放
+        //         var timer = setInterval(() => {
+        //             var v = document.querySelector('video');
+        //             if(v) {
+        //                 clearInterval(timer);
+        //                 v.play();
+        //             }
+        //         }, 10);
+        //     }
+        // },
         like(result) {
             const api = `users/target/${result.id}/type/20/like`;
             if (result.liked) {
