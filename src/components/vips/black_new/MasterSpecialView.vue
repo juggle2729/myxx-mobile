@@ -73,18 +73,6 @@
             });
         },
         methods: {
-            play(id) {
-                this.action('play', {id});
-                if(!this.isApp) { // 分享页面，视频自动播放
-                    const timer = setInterval(() => {
-                            const v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
-                }
-            },
             enableRefresh(enable) {
                 this.action('toggleTopRefresh', {
                     enable: enable

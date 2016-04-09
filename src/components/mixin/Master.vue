@@ -20,11 +20,6 @@
                 type: Object,
                 required: true,
                 default: {}
-            },
-            fromParams: {
-                type: Object,
-                required: true,
-                default: {}
             }
         },
         methods: {

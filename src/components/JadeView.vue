@@ -169,18 +169,6 @@ export default {
                         .filter(media => media.media_type==='picture')
                         .map(media => media.media_content);
             this.action('coverflow', {ids, index});
-        },
-        play(id) {
-            this.action('play', {id});
-            if(!this.isApp) { // 分享页面，视频自动播放
-                var timer = setInterval(() => {
-                    var v = document.querySelector('video');
-                    if(v) {
-                        clearInterval(timer);
-                        v.play();
-                    }
-                }, 10);
-            }
         }
     }
 }

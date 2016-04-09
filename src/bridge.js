@@ -5,30 +5,23 @@ const isMobile = /android|iphone|ipod|ipad/i.test(navigator.userAgent);
 let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
-            let user = {
-  //           "gender" : "0",
-  // "phone" : "15871705303",
-  // "nickname" : "余长春",
-  // "delete_flag" : "0",
-  // "role" : "4",
-  // "id" : "1023",
-  // "create_at" : "1451999342000",
-  // "photo" : "9c7af84f-4dbd-43bc-b3b7-c3de865f1d36",
-  // "token" : "a13c66d6-5bca-4add-95b9-784ce1042977"
-            };
+            let user = {};
             cb(JSON.stringify(user));
         }
-        // else if(handler === 'keyboard') {
-        //     if(!isMobile) {
-        //         let comment = prompt("少年，来鉴宝吧！");
-        //         comment && cb(comment);
-        //     }
-        // }
         else if(handler === 'delete') {
             cb.call(this, window.confirm('删除评论？') ? '1' : '0');
         }
         else if(handler === 'play') {
-            this.$root.video = params.id;
+            let playlist = [params.id];
+            // targetType 可选值 topic,jianbao,jianbaoresult
+            if(params.targetType === 'result' && _.get(this.evaluation.ad_video)) {
+                playlist.splice(1, 0, this.evaluation.ad_picture, this.evaluation.ad_video);
+            } 
+            // TEST
+            // else {
+            //     playlist.splice(1, 0, '6bb0eeb4-8b16-4e34-b504-4424883988a8', '422e4af4-70e1-401f-9287-97438022fbb1');
+            // }
+            this.$root.playlist = playlist;
         } else if(handler === 'coverflow') {
             if(window.WeixinJSBridge) {
                 let urls = params.ids.split(',').map((id) => {return this.config.img + id;});

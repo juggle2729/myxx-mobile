@@ -72,8 +72,6 @@ const mixin = {
                     resolver = _.noop;
                 } else if('confirm,delete,version'.indexOf(handler) !== -1) {
                     resolver = (resp) => defer.resolve(resp);
-                } else if('share,shareable'.indexOf(handler) !== -1) {
-
                 }
                 if(resolver === undefined) {
                     bridge.callHandler.call(this, handler, params);
@@ -87,7 +85,7 @@ const mixin = {
             let defer = Q.defer();
             this.action('user').then((user) => {
                 let token = _.get(user, 'token');
-                if(method !== 'get' && !token) {
+                if(method !== 'get' && !token && !/^wx/.test(url)) {
                     this.action('login');
                 } else {
                     const [path, version] = url.split('|');
@@ -128,18 +126,41 @@ const mixin = {
         setShareData(type, entry, shareable) {
             let data = {hasDownloadLink: true};
             if(type === 'jianbao') {
-                data.title = entry.unidentified ? '速来帮我掌掌眼！' : '快来看看我的鉴定吧！';
+                data.title = entry.status ? entry.results[0].identifier.name+'的视频鉴宝' : '大师在线视频鉴宝';
                 data.desc = entry.description;
                 data.icon = entry.pictures[0];
-                data.text = '我要求鉴宝';
+                data.text = '免费找大师看看我的宝贝';
+            } else if(type === 'result') {
+                const result = entry.results[0];
+                const identifier = result.identifier.name;
+                if(result.identifier.id == this.$route.query.user) {
+                    if(result.result === 'genuine') {
+                        data.title = '我给出的鉴定结果为真，你看怎样';
+                    } else if(result.result === 'fake') {
+                        data.title = '我给出的鉴定结果为假，你看怎样';
+                    } else {
+                        data.title = '这块玉我拿不准，你来看看';
+                    }
+                } else {
+                    if(result.result === 'genuine') {
+                        data.title = identifier + '鉴定这块玉为真，你看怎样';
+                    } else if(result.result === 'fake') {
+                        data.title = identifier + '鉴定这块玉为真，你看怎样';
+                    } else {
+                        data.title = '这块玉我拿不准，你来看看';
+                    }
+                }
+                data.desc = entry.description;
+                data.icon = entry.pictures[0];
+                data.text = '免费找大师看看我的宝贝';
             } else if(type === 'topic') {
-                data.title = '这样精美的宝贝，只能献上膝盖了';
+                data.title = '我在美玉秀秀晒了个宝';
                 data.desc = entry.content;
                 data.icon = entry.cover;
                 if(entry.cover_type !== 'picture') {
                     data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
                 }
-                data.text = '我要去晒宝';
+                data.text = '秀出的我宝贝';
             } else if(type === 'product') {
                 data.title = '我在 [美玉秀秀] 发现一个宝贝！';
                 data.desc = entry.name;
@@ -197,7 +218,7 @@ const mixin = {
                     link: data.url,
                     imgUrl: this.config.img + data.icon + '?imageView2/1/w/310'
                 };
-                this.wechatShareInit(shareData);
+                /^app/.test(location.hostname) && this.wechatShareInit(shareData);
             }
 
             if(shareable) {
@@ -266,7 +287,77 @@ const mixin = {
                 str += arr[o];
             }
             return str;
-        }
+        },
+        play(id, targetType, targetId) {
+            if(!targetId) {
+                targetId = (this.$route.params.id || -1);
+            }
+            if(!targetType) {
+                switch(this.$route.name) {
+                    case 'evaluation':
+                        targetType = 'jianbao';
+                        break;
+                    case 'jade':
+                        targetType = 'topic';
+                        break;
+                    default:
+                        targetType = this.$route.name;
+                }
+            }
+
+            this.action('play', {id, targetType, targetId});
+            if(!this.isApp) { // 分享页面，视频自动播放, FIXME...
+                _.delay(() => {
+                    const medias = this.$root.playlist;
+                    if(medias.length === 1) {
+                        const v = document.querySelector(`[src$='${medias[0]}']`);
+                        v.classList.add('on');
+                        v.play();
+                        v.onended = (e) => {
+                            if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
+                                e.target.webkitExitFullscreen();
+                            }
+                            this.$root.playlist = undefined;
+                        }
+                    } else {
+                        const pic = document.querySelector(`[src$='${medias[1]}']`);
+                        const v2 = document.querySelector(`[src$='${medias[2]}']`);
+                        v2 && v2.play();
+                        const v1 = document.querySelector(`[src$='${medias[0]}']`);
+                        v1.play();
+                        v1.classList.add('on');
+                        v1.onended = (e) => {
+                            if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
+                                e.target.webkitExitFullscreen();
+                            }
+                            v1.classList.remove('on');
+                            pic.classList.add('on');
+                            _.delay(() => {
+                                pic.classList.remove('on');  
+                                v2.classList.add('on');
+                                v2.play();
+                                v2.onended = (e) => {
+                                    if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
+                                        e.target.webkitExitFullscreen();
+                                    }
+                                    v2.classList.remove('on');
+                                    this.$root.playlist = undefined;
+                                }
+                            }, 2000);
+                        }
+                    }
+                }, 50);
+                // 处理手动暂停视频
+                // let timer = setInterval(() => {
+                //     const playing = document.querySelector('video.on');  
+                //     if(_.get(playing, 'paused')) {
+                //         clearInterval(this.timer);
+                //         this.timer = undefined;
+                //         this.$root.playlist = undefined;
+                //     }
+                // }, 200);
+            }
+        },
     }
 };
 export default {

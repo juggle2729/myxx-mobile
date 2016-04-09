@@ -18,7 +18,7 @@ const hosts = {
     download: {
         dev: 'http://build.meiyuxiuxiu.net/',
         test: 'http://build.meiyuxiuxiu.net/',
-        prod: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
+        prod: 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share'
     }
 };
 

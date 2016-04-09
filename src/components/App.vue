@@ -28,24 +28,8 @@
             img {
                 height: 100%;
             }
-        }
-        #hint-with-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 0;
-            overflow: hidden;
-            z-index: 999;
-            transition: height .4s ease-in-out;
-            &.show {
-                height: 100%;
-            }
-            &.browser {
-                background: rgba(black, .6) url('#{$qn}/open-in-browser.png') top right/516px 487px no-repeat;
-            }
-            &.share {
-                background: rgba(black, .6) url('#{$qn}/artist/share.png') top right/100% auto no-repeat;
+            a {
+                display: block;
             }
         }
         #video-player {
@@ -56,9 +40,18 @@
             z-index: 999;
             width: 100%;
             height: 100%;
-            video {
+            video.on, img.on {
+                position: relative;
+                top: 50%;
+                transform: translate3d(0, -50%, 0);
                 width: 100%;
-                height: 100%;
+                height: auto;
+                opacity: 1;
+            }
+            video, img {
+                opacity: 0;
+                width: 0;
+                height: 0;
             }
         }
         #img-player {
@@ -76,23 +69,27 @@
   <div>
     <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
-        <div class="flex-1">
+        <div class="flex-1 flex">
             <div class="name font-30 bold">美玉秀秀</div>
-            <div class="slogan font-26 gray padding-top">中国最大的和田玉爱好者平台</div>
+            <div class="slogan font-26 gray margin-left">大师在线视频鉴宝</div>
         </div>
         <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
     </div>
     <router-view></router-view>
-    <div v-if="env.isShare && shareData.text" @click="openApp()" class="share-bottom flex bg-red white font-30">
+    <div v-if="env.isShare && shareData.text" class="share-bottom flex bg-red white font-30">
         <img :src="'share/left.png' | qn" alt="left">
-        <div class="flex-1 center bold">{{shareData.text}}</div>
+        <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="hint-with-backdrop" v-if="env.isShare" @click="$event.target.classList.remove('show')"></div>
-    <div id="video-player" v-if="video" @click="video=undefined">
-        <video v-if="video" autoplay controls @ended="video=undefined">
-            <source :src="config.video + video">
-        </video>
+    <div id="video-player" v-if="playlist" @click="playlist=undefined">
+        <template v-if="playlist.length===1">
+            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[0]"></video>
+        </template>
+        <template v-else>
+            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[0]"></video>
+            <img v-if="playlist" :src="config.img + playlist[1]"/>
+            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[2]"></video>
+        </template>
     </div>
     <slider id="img-player" v-if="img && isTouchable" @touchstart.prevent.stop="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
     <slider id="img-player" v-if="img && !isTouchable" @click="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
@@ -110,7 +107,7 @@ export default {
         return {
             user: {},
             shareData: {},
-            video: undefined,
+            playlist: undefined,
             img: undefined,
             scrollY: 0
         }
@@ -141,7 +138,6 @@ export default {
             });
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
-        emitter.on('open-app', (e) => this.openApp());
         this.$watch('img', (img) => {
                 if(img) {
                     this.scrollY = window.scrollY;
@@ -151,8 +147,8 @@ export default {
                     window.scrollTo(0, this.scrollY);
                 }
             });
-        this.$watch('video', (video) => {
-            if(video) {
+        this.$watch('playlist', (playlist) => {
+            if(playlist) {
                 this.scrollY = window.scrollY;
                 this.$el.classList.add('frozen');
             } else {
@@ -166,24 +162,6 @@ export default {
         }
     },
     methods: {
-        openApp() {
-            if(!this.env.isBrowser) {
-                const backdrop = document.querySelector('#hint-with-backdrop');
-                backdrop.classList.add('browser');
-                backdrop.classList.add('show');
-            } else {
-                if(/version\/9/i.test(navigator.userAgent)) { // iOS 9
-                    location.href = this.shareData.cmd;
-                } else {
-                    let myxxIframe = document.createElement('iframe');
-                    myxxIframe.src = this.shareData.cmd;
-                    myxxIframe.width = 0;
-                    myxxIframe.height = 0;
-                    myxxIframe.frameBorder = 0;
-                    document.body.appendChild(myxxIframe);
-                }
-            }
-        },
         sliderClick: (() => {
             let [click, timer] = [0];
             return (context, e) => {
