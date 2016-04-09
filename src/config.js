@@ -22,7 +22,7 @@ const hosts = {
     }
 };
 
-const env = '' || (/^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : 'dev'));
+const env = 'test' || (/^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : 'dev'));
 let [api, img, video, download] = [hosts.api[env], hosts.img[env], hosts.video[env], hosts.download[env]];
 
 export default {
@@ -32,6 +32,14 @@ export default {
     download,
     www: '//o0x80w5li.qnssl.com/',
     roles: {0: '普通用户', 1: '商家', 2: '藏家', 4: '大师', 8: '权威'},
+    shareables: {   //分享 type 和 route 的对应关系
+        'evaluation': 'jianbao',
+        'story': 'topic',
+        'jade': 'product',
+        'master': 'website',
+        'user': 'profile',
+        'result': 'result'
+    },
     types: [
         {
             id: 10,
@@ -39,8 +47,8 @@ export default {
             route: 'evaluation'
         }, {
             id: 20,
-            name: '大师鉴定',
-            route: 'evaluation'
+            name: '鉴定结果',
+            route: 'result'
         }, {
             id: 30,
             name: '晒宝',
@@ -51,7 +59,7 @@ export default {
             route: 'jade'
         }, {
             id: 50,
-            name: '官网',
+            name: '人物志',
             route: 'master'
         }
     ]

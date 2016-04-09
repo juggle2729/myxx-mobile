@@ -158,7 +158,14 @@ export default {
         });
 
         if(this.env.isShare) {
-            this.$get('log/content_readings', this.$route.query).then(_.noop);
+            _.delay(() => { // 分享统计                
+                this.$get('log/content_readings', 
+                    _.merge(
+                            {}, 
+                            {id: this.$route.params.id, type: this.config.shareables[this.$route.name]},
+                            this.$route.query
+                        )).then(_.noop);
+            }, 3000);
         }
     },
     methods: {

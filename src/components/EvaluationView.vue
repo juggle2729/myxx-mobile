@@ -46,6 +46,7 @@
             line-height: 76px;
         }
         .action {
+            display: block;
             border-radius: 10px;
             margin: 0 auto;
             width: 464px;
@@ -145,15 +146,17 @@
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
             </div>
-            <div v-if="result.promote_type==='auction'" class="action white bg-yellow font-30">
-                <i class="icon-like-active"></i><span>进入拍卖预展</span>
-            </div>
-            <div v-if="result.promote_type==='newproduct'" class="action white bg-blue font-30">
-                <i class="icon-like-active"></i><span>进入新品发布</span>
-            </div>
-            <div class="action white bg-green font-30"  v-link="result.identifier | profile">
-                <i class="icon-like-active"></i><span>进入个人主页</span>
-            </div>
+            <a v-if="result.promote_type==='auction'" class="action white bg-yellow font-30"
+                :href="result.promote_url">
+                <i class="icon-auction"></i><span>进入拍卖预展</span>
+            </a>
+            <a v-if="result.promote_type==='new_product'" class="action white bg-blue font-30"
+                :href="result.promote_url">
+                <i class="icon-new-product"></i><span>进入新品发布</span>
+            </a>
+            <a v-if="result.promote_type!=='auction' && result.promote_type!=='new_product'" class="action white bg-green font-30" v-link="result.identifier | profile">
+                <i class="icon-user-profile"></i><span>进入个人主页</span>
+            </a>
         </div>
     </div>
     <div class="header">
@@ -176,9 +179,9 @@
             <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
         </li>
     </ul>
-    <div v-if="jb.label" class="evaluation-btn border-bottom">
+<!--     <div v-if="jb.label" class="evaluation-btn border-bottom">
         <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
-    </div>
+    </div> -->
     <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
     <div v-if="!env.isShare" class="fake-input font-30 flex" @click="$broadcast('comment', $event)">
         <div class="input flex-1">点击此处发表评论...</div>
@@ -220,28 +223,28 @@ export default {
                     return '';
                 }
             });
-        },
-        jb() {
-            let label, action;
-            if(this.evaluation.identifiable && this.self.id != this.evaluation.user.id) {
-                label = '我要鉴定';
-                if(this.evaluation.jianbao_permission) {
-                    action = 'evaluate';
-                } else if(this.self.id){
-                    action = 'request';
-                } else {
-                    action = 'login';
-                }
-            }
-            return {label, action};
         }
+        // jb() {
+        //     let label, action;
+        //     if(this.evaluation.identifiable && this.self.id != this.evaluation.user.id) {
+        //         label = '我要鉴定';
+        //         if(this.evaluation.jianbao_permission) {
+        //             action = 'evaluate';
+        //         } else if(this.self.id){
+        //             action = 'request';
+        //         } else {
+        //             action = 'login';
+        //         }
+        //     }
+        //     return {label, action};
+        // }
     },
     route: {
         data({to}) {
             const evaluationId = to.params.id;
             return this.$get(`sns/jianbao/${evaluationId}|v2`)
                     .then((evaluation) => {
-                        this.setShareData('jianbao', evaluation, true);
+                        this.setShareData(evaluation, true);
                         return {evaluation};
                     });
         }
@@ -250,18 +253,6 @@ export default {
         coverflow(index) {
             this.action('coverflow', {ids: this.evaluation.pictures, index});
         },
-        // play(id, targetType='jianbaoresult', targetId=this.evaluation.post_id) {
-        //     this.action('play', {id, targetType, targetId});
-        //     if(!this.isApp) { // 分享页面，视频自动播放
-        //         var timer = setInterval(() => {
-        //             var v = document.querySelector('video');
-        //             if(v) {
-        //                 clearInterval(timer);
-        //                 v.play();
-        //             }
-        //         }, 10);
-        //     }
-        // },
         like(result) {
             const api = `users/target/${result.id}/type/20/like`;
             if (result.liked) {

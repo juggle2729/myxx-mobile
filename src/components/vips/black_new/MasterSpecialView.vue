@@ -147,7 +147,7 @@
                 return this.$get(`sites/${this.id}/articles/${this.masterBaseData.interview_id}`, {}).then((data) => {
                     this.interview = data;
 
-                    this.setShareData('website', {baseData: this.masterBaseData, interview: this.interview}, true);
+                    this.setShareData({baseData: this.masterBaseData, interview: this.interview}, true);
                 });
             },
             initDom() {

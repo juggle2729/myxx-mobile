@@ -131,7 +131,7 @@ export default {
                                     create_at: Date.now(),
                                     reply_from: {
                                         id: this.self.id,
-                                        photo: this.self.photo,
+                                        photo: this.self.avatarId,
                                         name: this.self.nickname
                                     }
                                 });
@@ -175,7 +175,7 @@ export default {
                                         reply_to,
                                         reply_from: {
                                             id: this.self.id,
-                                            photo: this.self.photo,
+                                            photo: this.self.avatarId,
                                             name: this.self.nickname
                                         }
                                     });

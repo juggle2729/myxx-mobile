@@ -92,7 +92,7 @@ export default {
                         } else {
                             this.view = to.params.tab;
                         }
-                        this.setShareData('profile', {id: data.id, name: data.nickname, photo: data.photo} , true);
+                        this.setShareData({id: data.id, name: data.nickname, photo: data.photo} , true);
                         next();
                     });
             } else { // 个人主页内部跳转

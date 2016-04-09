@@ -45,9 +45,9 @@ router.beforeGo((from, to) => {
     if(!canGo) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
     } else if(_.get(from, 'query.user')) {
-        if(to.name === 'user' && from.name !== 'user') {//  禁止分享页面导航
-            canGo = false;
-        }
+        // if(to.name === 'user' && from.name !== 'user') {//  禁止分享页面导航
+        //     canGo = false;
+        // }
     }
     return canGo;
 });

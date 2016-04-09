@@ -2,9 +2,6 @@ export default {
     '/': {
         component: require('./components/IndexView.vue')
     },
-    '/video': {
-        component: require('./components/VideoView.vue')
-    },
     '/evaluations/:tab': {
         name: 'evaluations',
         component: require('./components/EvaluationsView.vue')

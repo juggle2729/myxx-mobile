@@ -123,8 +123,12 @@ const mixin = {
             return this.$req(url, 'delete', data);
         },
         // 设置页面分享所需数据
-        setShareData(type, entry, shareable) {
+        setShareData(entry, shareable) {
+            if(!this.env.isShare) {
+                return;
+            }
             let data = {hasDownloadLink: true};
+            const type = this.config.shareables[this.$route.name];
             if(type === 'jianbao') {
                 data.title = entry.status ? entry.results[0].identifier.name+'的视频鉴宝' : '大师在线视频鉴宝';
                 data.desc = entry.description;
@@ -183,8 +187,6 @@ const mixin = {
                 data.desc = data.desc.substr(0, 20) + '...';
             }
             let query = _.merge({}, this.$route.query, {
-                type,
-                id: (entry.post_id || entry.id),
                 user: _.get(this, 'self.id', -1),
                 time: Date.now()
             });
@@ -192,24 +194,9 @@ const mixin = {
                 data.url = location.origin + location.pathname;
             }
             data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
-            // 分享页面底部按钮动作
-            if(data.text) {
-                if(type === 'jianbao') {
-                    data.cmd = 'myxx://home/jianbao/' + entry.post_id;
-                } else {
-                    data.cmd = 'myxx://web/' + encodeURIComponent(this.$route.path.replace(/user=\d+&?/, '').replace(/\?$/, ''));
-                }
-            }
+ 
             this.$root.shareData = data;
-
-            if(!this.env.isShare) {
-                document.title = data.title;
-                let shareIconSrc = data.icon;
-                if(!/^http/.test(shareIconSrc)) {
-                    shareIconSrc = this.config.img + shareIconSrc + '?imageView2/1/w/310';
-                }
-                document.querySelector("#share-icon").src = shareIconSrc;
-            }
+            document.title = data.title;
 
             if(this.env.isWechat) {
                 const shareData = {
@@ -293,16 +280,7 @@ const mixin = {
                 targetId = (this.$route.params.id || -1);
             }
             if(!targetType) {
-                switch(this.$route.name) {
-                    case 'evaluation':
-                        targetType = 'jianbao';
-                        break;
-                    case 'jade':
-                        targetType = 'topic';
-                        break;
-                    default:
-                        targetType = this.$route.name;
-                }
+                targetType = this.config.shareables[this.$route.name];
             }
 
             this.action('play', {id, targetType, targetId});
@@ -347,15 +325,6 @@ const mixin = {
                         }
                     }
                 }, 50);
-                // 处理手动暂停视频
-                // let timer = setInterval(() => {
-                //     const playing = document.querySelector('video.on');  
-                //     if(_.get(playing, 'paused')) {
-                //         clearInterval(this.timer);
-                //         this.timer = undefined;
-                //         this.$root.playlist = undefined;
-                //     }
-                // }, 200);
             }
         },
     }

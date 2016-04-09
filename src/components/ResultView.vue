@@ -86,6 +86,18 @@
         margin-top: 48px;
         margin-bottom: 32px;
     }
+    .action {
+        display: block;
+        border-radius: 10px;
+        margin: 0 auto;
+        width: 464px;
+        height: 72px;
+        line-height: 72px;
+        text-align: center;
+        i {
+            margin-right: 28px;
+        }
+    }
 }
 </style>
 <template>
@@ -104,17 +116,17 @@
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
             </div>
-            <template v-if="result.promote_type">
-                <div v-if="result.promote_type==='auction'" class="action white bg-yellow font-30">
-                    <i class="icon-like-active"></i><span>进入拍卖预展</span>
-                </div>
-                <div v-else class="action white bg-blue font-30">
-                    <i class="icon-like-active"></i><span>进入新品发布</span>
-                </div>
-            </template>
-            <div v-else class="action white bg-green font-30"  v-link="result.identifier | profile">
-                <i class="icon-like-active"></i><span>进入个人主页</span>
-            </div>
+            <a v-if="result.promote_type==='auction'" class="action white bg-yellow font-30"
+                :href="result.promote_url">
+                <i class="icon-auction"></i><span>进入拍卖预展</span>
+            </a>
+            <a v-if="result.promote_type==='new_product'" class="action white bg-blue font-30"
+                :href="result.promote_url">
+                <i class="icon-new-product"></i><span>进入新品发布</span>
+            </a>
+            <a v-if="result.promote_type!=='auction' && result.promote_type!=='new_product'" class="action white bg-green font-30" v-link="result.identifier | profile">
+                <i class="icon-user-profile"></i><span>进入个人主页</span>
+            </a>
         </div>
     </div>
     <div class="header">
@@ -182,7 +194,7 @@ export default {
             return this.$get(`sns/jianbao/${evaluationId}|v2`)
                     .then((evaluation) => {
                         evaluation.results = evaluation.results.filter((result) => result.id == id);
-                        this.setShareData('result', evaluation);
+                        this.setShareData(evaluation);
                         return {evaluation};
                     });
         }

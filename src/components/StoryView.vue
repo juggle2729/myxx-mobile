@@ -46,7 +46,7 @@
     .store-detail {
         padding: 0 32px 36px;
     }
-    .content {
+    .description {
         font-size: 30px;
         color: #666666;
         padding: 40px;
@@ -157,7 +157,7 @@
             </div>
         </div>
     </div>
-    <div class="content user-input">{{story.content}}</div>
+    <div class="description user-input">{{story.content}}</div>
     <template v-if="story.cover_type === 'picture'">
         <div class="cover img" v-bg="story.cover" @click="coverflow(-1)"></div>
     </template>
@@ -250,7 +250,7 @@ export default {
             const storyId = to.params.id;
             return this.$get(`sns/topics/${storyId}|v2`)
                 .then((story) => {
-                    this.setShareData('topic', story, true);
+                    this.setShareData(story, true);
                     return {story};
                 });
         }

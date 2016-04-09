@@ -13,15 +13,24 @@ let adapter = {
         }
         else if(handler === 'play') {
             let playlist = [params.id];
-            // targetType 可选值 topic,jianbao,jianbaoresult
-            if(params.targetType === 'result' && _.get(this.evaluation.ad_video)) {
-                playlist.splice(1, 0, this.evaluation.ad_picture, this.evaluation.ad_video);
+            if(params.targetType === 'result') {
+                const result = _.get(this, 'evaluation.results')
+                    .filter((result) => result.video === params.id)
+                    .pop();
+                if(result.ad_picture && result.ad_video) {
+                    playlist.splice(1, 0, result.ad_picture, result.ad_video);
+                }
             } 
-            // TEST
-            // else {
-            //     playlist.splice(1, 0, '6bb0eeb4-8b16-4e34-b504-4424883988a8', '422e4af4-70e1-401f-9287-97438022fbb1');
-            // }
             this.$root.playlist = playlist;
+            if(this.env.isShare) {
+                _.delay(() => { // 播放统计                
+                    this.$get('log/video_play', {
+                            id: this.$route.params.id, 
+                            type: this.config.shareables[this.$route.name],
+                            percentage: -1
+                        }).then(_.noop);
+                }, 3000);
+            }
         } else if(handler === 'coverflow') {
             if(window.WeixinJSBridge) {
                 let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
