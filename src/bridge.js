@@ -59,21 +59,38 @@ let adapter = {
 
 let defer = Q.defer();
 if(/myxx/i.test(navigator.userAgent)) {
-    ((w, cb) => {
-        if (w.WebViewJavascriptBridge) {
-            cb(WebViewJavascriptBridge);
-        } else {
-            w.document.addEventListener('WebViewJavascriptBridgeReady', () => {
+    //"MYXX/iOS/1.2;..."
+    // iOS v1.2后采用新的 WebviewBridgeW 注入方式
+    if(/ios/i.test(navigator.userAgent) && (+navigator.userAgent.split(';')[0].split('/').pop() > 1.1)) {
+        ((callback) => {
+            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(() => { document.documentElement.removeChild(WVJBIframe) }, 0);
+        })((bridge) => {
+            defer.resolve(bridge);
+        });
+    } else {
+        ((w, cb) => {
+            if (w.WebViewJavascriptBridge) {
                 cb(WebViewJavascriptBridge);
-            }, false);
-        }
-    })(window, (bridge) => {
-        defer.resolve(bridge);
-        if(!bridge.initalized) {
-            bridge.initalized = true; // 防止bridge多次初始化报错
-            bridge.init(_.noop);
-        }
-    });
+            } else {
+                w.document.addEventListener('WebViewJavascriptBridgeReady', () => {
+                    cb(WebViewJavascriptBridge);
+                }, false);
+            }
+        })(window, (bridge) => {
+            defer.resolve(bridge);
+            if(!bridge.initalized) {
+                bridge.initalized = true; // 防止bridge多次初始化报错
+                bridge.init(_.noop);
+            }
+        });
+    }
 } else {
     defer.resolve(adapter);
 }
