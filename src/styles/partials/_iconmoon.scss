@@ -19,6 +19,15 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-product:before {
+    content: "\e920";
+}
+.icon-auction:before {
+    content: "\e921";
+}
+.icon-user-profile:before {
+    content: "\e927";
+}
 .icon-like-solid:before {
     content: "\e91e";
 }
