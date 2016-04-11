@@ -1,126 +1,212 @@
 export default {
     '/': {
-        component: require('./components/IndexView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/IndexView.vue'));
+                }, 'other');
+            }
     },
     '/evaluations/:tab': {
         name: 'evaluations',
-        component: require('./components/EvaluationsView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/EvaluationsView.vue'));
+                }, 'evaluation');
+            }
     },
     '/evaluation/:id': {
         name: 'evaluation',
         title: '鉴宝详情',
-        component: require('./components/EvaluationView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/EvaluationView.vue'));
+                }, 'evaluation');
+            }
     },
     '/result/:evaluationId/:id': {
         name: 'result',
         title: '鉴宝结果',
-        component: require('./components/ResultView.vue')
-    },
-    '/likes/:type/:id': {
-        name: 'likes',
-        title: '赞过的人',
-        component: require('./components/LikesView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/ResultView.vue'));
+                }, 'evaluation');
+            }
     },
     '/stories/:tab': {
         name: 'stories',
-        component: require('./components/StoriesView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/StoriesView.vue'));
+                }, 'story');
+            }
     },
     '/story/:id': {
         name: 'story',
         title: '晒宝详情',
-        component: require('./components/StoryView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/StoryView.vue'));
+                }, 'story');
+            }
     },
     '/jade/:id': {
         name: 'jade',
         title: '宝贝详情',
-        component: require('./components/JadeView.vue')
-    },
-    '/master/:id/evaluations': {
-        name: 'master-evaluations',
-        title: '在线鉴定',
-        component: require('./components/MasterEvaluationsView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/JadeView.vue'));
+                }, 'jade');
+            }
     },
     '/masters': {
         name: 'masters',
         title: '人物志',
-        component: require('./components/MastersView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/MastersView.vue'));
+                }, 'master');
+            }
     },
     '/master/:id': {
         name: 'master',
         title: '大师官网',
-        component: require('./components/Master.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/Master.vue'));
+                }, 'master');
+            }
     },
     '/profile': {   // 个人中心
         name: 'profile',
         title: '我的',
-        component: require('./components/ProfileView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/ProfileView.vue'));
+                }, 'profile');
+            }
     },
     '/profile/:id/evaluation': {
         name: 'user-evaluation',
         title: '鉴宝',
-        component: require('./components/UserEvaluationView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserEvaluationView.vue'));
+                }, 'profile');
+            }
     },
     '/profile/:id/story': {
         name: 'user-story',
         title: '晒宝',
-        component: require('./components/UserStoryView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserStoryView.vue'));
+                }, 'profile');
+            }
     },
     '/user/:id/like': {
         name: 'user-like',
         title: '赞',
-        component: require('./components/UserLikeView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserLikeView.vue'));
+                }, 'profile');
+            }
     },
     '/user/:id/following': {
         name: 'user-following',
         title: '关注的人',
-        component: require('./components/UserFollowingView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserFollowingView.vue'));
+                }, 'profile');
+            }
     },
     '/user/:id/follower': {
         name: 'user-follower',
         title: '粉丝',
-        component: require('./components/UserFollowerView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserFollowerView.vue'));
+                }, 'profile');
+            }
     },
     '/user/:id/:tab': { // 个人主页
         name: 'user',
         title: '个人主页',
-        component: require('./components/UserView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/UserView.vue'));
+                }, 'profile');
+            }
     },
     '/:id/apply/shop': {
         name: 'apply-shop',
         title: '申请店铺',
-        component: require('./components/ApplyShopView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/ApplyShopView.vue'));
+                }, 'other');
+            }
     },
     '/:id/apply/site': {
         name: 'apply-site',
         title: '申请官网',
-        component: require('./components/ApplySiteView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/ApplySiteView.vue'));
+                }, 'other');
+            }
     },
     '/:id/apply/master': {
         name: 'apply-master',
-        title: '申请大师鉴定权限',
-        component: require('./components/ApplyMasterView.vue')
+        title: '申请鉴定师权限',
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/ApplyMasterView.vue'));
+                }, 'other');
+            }
     },
     '/feedback': {
         name: 'feedback',
         title: '意见反馈',
-        component: require('./components/FeedbackView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/FeedbackView.vue'));
+                }, 'other');
+            }
     },
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',
-        component: require('./components/AboutView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/AboutView.vue'));
+                }, 'other');
+            }
     },
     '/css': {
         name: 'cssview',
-        component: require('./components/CssView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/CssView.vue'));
+                }, 'other');
+            }
     },
     '/404': {
         title: '页面不存在',
         name: '404',
-        component: require('./components/NotFoundView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/NotFoundView.vue'));
+                }, 'other');
+            }
     },
     '*': {
         title: '找不到北',
-        component: require('./components/NotFoundView.vue')
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('./components/NotFoundView.vue'));
+                }, 'other');
+            }
     }
 }

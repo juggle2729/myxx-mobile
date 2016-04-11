@@ -1,5 +1,5 @@
-require('./utils/resize');
-require('./utils/scroll');
+// require('./utils/resize');
+// require('./utils/scroll');
 require('fastclick').attach(document.body);
 import _ from 'lodash';
 import config from './config';
@@ -66,3 +66,17 @@ router.start(require('./components/App.vue'), appContainer);
 window.onerror = (error) => {
     console.debug(error);
 };
+(() => {
+    let first = true;
+    const adjustBase = () => {
+        let clientWidth = document.body.clientWidth;
+        if(first && !/mobile/i.test(navigator.userAgent)) {
+            // 如果页面有纵向滚动条，会占去clientWidth的空间，极端情况下会导致页面布局混乱，故减去滚动条宽度 15
+            clientWidth = clientWidth - 15;
+            first = false;
+        }
+        document.querySelector('html').style['font-size'] = (clientWidth / 10) + 'px';
+    }
+    adjustBase();
+    window.onresize = _.debounce(adjustBase, 150);
+})();

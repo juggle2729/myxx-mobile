@@ -1,11 +1,15 @@
-var path = require('path');
-var vue = require('vue-loader');
-var webpack = require('webpack');
+const path = require('path');
+const vue = require('vue-loader');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/main.js',
     output: {
-        filename: 'app.js'
+        filename: '[name].js',
+        chunkFilename: '[name].bundle.js',
+        publicPath: '/',
+        path: path.resolve(process.cwd(), 'build')
     },
     resolve: {
         extensions: ['', '.js'],
@@ -80,8 +84,20 @@ if (process.env.NODE_ENV === 'production') {
                 comments: false
             } 
         }),
-        new webpack.optimize.OccurenceOrderPlugin()
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            minify: {collapseWhitespace: true, minifyCSS: true},
+            inject: true,
+            hash: true
+        })
     ]
 } else {
-    module.exports.devtool = '#source-map'
+    module.exports.plugins = [
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            inject: true
+        })
+    ];
+    module.exports.devtool = '#source-map';
 }
