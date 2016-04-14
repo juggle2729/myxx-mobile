@@ -15,7 +15,7 @@
              @touchmove="contentTouchMove($event)" @touchend="contentTouchEnd($event)">
             <div class="top img"></div>
             <div class="brief">
-                <div class="detail">{{masterBaseData.brief | truncate 78}}</div>
+                <div class="detail">{{masterBaseData.brief | truncate 76}}</div>
             </div>
             <div class="interview-video" v-if="interview.video">
                 <div class="play" @click.stop="play(interview.video)"
@@ -260,7 +260,7 @@
 
         /*强制覆盖富文本的样式*/
         .content {
-            padding: 0 24px 65px;
+            padding: 24px 24px 65px;
             font-size: 34px;
             line-height: 26px;
 

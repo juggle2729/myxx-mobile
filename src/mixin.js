@@ -194,7 +194,7 @@ const mixin = {
                 data.url = location.origin + location.pathname;
             }
             data.url = data.url + '?' + Object.keys(query).map((k) => `${k}=${query[k]}`).join('&');
- 
+
             this.$root.shareData = data;
             document.title = data.title;
 
@@ -237,7 +237,7 @@ const mixin = {
                 this.$post('wx/jsapisignature', formData).then((result) => {
                     // config
                     wx.config({
-                        debug: true,
+                        debug: false,
                         appId: 'wxcc40bf300d6200a3',
                         timestamp: timeStamp,
                         nonceStr: nonceStr,
@@ -311,7 +311,7 @@ const mixin = {
                             v1.classList.remove('on');
                             pic.classList.add('on');
                             _.delay(() => {
-                                pic.classList.remove('on');  
+                                pic.classList.remove('on');
                                 v2.classList.add('on');
                                 v2.play();
                                 v2.onended = (e) => {
