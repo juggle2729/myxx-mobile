@@ -13,9 +13,11 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js'],
-        alias: {
-            'style': __dirname + '/src/styles/'
-        }
+        modulesDirectories: [
+            'components',
+            'mixins',
+            'node_modules'
+        ]
     },
     module: {
         loaders: [{
@@ -82,7 +84,7 @@ if (process.env.NODE_ENV === 'production') {
             },
             output: {
                 comments: false
-            } 
+            }
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({

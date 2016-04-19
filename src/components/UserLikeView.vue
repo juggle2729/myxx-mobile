@@ -32,10 +32,10 @@
 </div>
 </template>
 <script>
-import PagingMixin from './mixin/Paging.vue';
+import paging from 'paging';
 export default {
     name: 'UserLikeView',
-    mixins: [PagingMixin],
+    mixins: [paging],
     data() {
         return {
             emptyTitle: '你还没有赞'
@@ -57,6 +57,9 @@ export default {
                         }
                         const type = _.find(this.config.types, {'id': item.type});
                         entry.route = type.route;
+                        if(entry.route === 'result') {
+                            entry.route = 'evaluation';
+                        }
                         entry.title = type.name;
                         entry.id = item.id;
                         if(!entry.isEmpty){

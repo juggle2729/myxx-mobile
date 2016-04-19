@@ -66,7 +66,7 @@
 </div>
 </template>
 <script>
-import PagingMixin from './mixin/Paging.vue';
+import PagingMixin from 'paging';
 export default {
     name: 'Comment',
     mixins: [PagingMixin],

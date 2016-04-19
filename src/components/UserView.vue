@@ -50,11 +50,13 @@
 </div>
 </template>
 <script>
+import shareable from 'shareable';
 import jade from './UserJade.vue'
 import story from './UserStory.vue'
 import evaluation from './UserEvaluation.vue'
 export default {
     name: 'UserView',
+    mixins: [shareable],
     components: {
         jade,
         story,

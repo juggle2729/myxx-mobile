@@ -2,7 +2,7 @@ export default {
     '/': {
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/IndexView.vue'));
+                    resolve(require('IndexView.vue'));
                 }, 'other');
             }
     },
@@ -10,7 +10,7 @@ export default {
         name: 'evaluations',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/EvaluationsView.vue'));
+                    resolve(require('EvaluationsView.vue'));
                 }, 'evaluation');
             }
     },
@@ -19,7 +19,7 @@ export default {
         title: '鉴宝详情',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/EvaluationView.vue'));
+                    resolve(require('EvaluationView.vue'));
                 }, 'evaluation');
             }
     },
@@ -28,7 +28,7 @@ export default {
         title: '鉴宝结果',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/ResultView.vue'));
+                    resolve(require('ResultView.vue'));
                 }, 'evaluation');
             }
     },
@@ -36,7 +36,7 @@ export default {
         name: 'stories',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/StoriesView.vue'));
+                    resolve(require('StoriesView.vue'));
                 }, 'story');
             }
     },
@@ -45,7 +45,7 @@ export default {
         title: '晒宝详情',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/StoryView.vue'));
+                    resolve(require('StoryView.vue'));
                 }, 'story');
             }
     },
@@ -54,7 +54,7 @@ export default {
         title: '宝贝详情',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/JadeView.vue'));
+                    resolve(require('JadeView.vue'));
                 }, 'jade');
             }
     },
@@ -63,16 +63,16 @@ export default {
         title: '官网秀',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/MastersView.vue'));
+                    resolve(require('MastersView.vue'));
                 }, 'master');
             }
     },
     '/master/:id': {
         name: 'master',
-        title: '大师官网',
+        title: '人物志',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/Master.vue'));
+                    resolve(require('MasterView.vue'));
                 }, 'master');
             }
     },
@@ -81,7 +81,7 @@ export default {
         title: '我的',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/ProfileView.vue'));
+                    resolve(require('ProfileView.vue'));
                 }, 'profile');
             }
     },
@@ -90,7 +90,7 @@ export default {
         title: '鉴宝',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserEvaluationView.vue'));
+                    resolve(require('UserEvaluationView.vue'));
                 }, 'profile');
             }
     },
@@ -99,7 +99,7 @@ export default {
         title: '晒宝',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserStoryView.vue'));
+                    resolve(require('UserStoryView.vue'));
                 }, 'profile');
             }
     },
@@ -108,7 +108,7 @@ export default {
         title: '赞',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserLikeView.vue'));
+                    resolve(require('UserLikeView.vue'));
                 }, 'profile');
             }
     },
@@ -117,7 +117,7 @@ export default {
         title: '关注的人',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserFollowingView.vue'));
+                    resolve(require('UserFollowingView.vue'));
                 }, 'profile');
             }
     },
@@ -126,7 +126,7 @@ export default {
         title: '粉丝',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserFollowerView.vue'));
+                    resolve(require('UserFollowerView.vue'));
                 }, 'profile');
             }
     },
@@ -135,7 +135,7 @@ export default {
         title: '个人主页',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/UserView.vue'));
+                    resolve(require('UserView.vue'));
                 }, 'profile');
             }
     },
@@ -144,7 +144,7 @@ export default {
         title: '申请店铺',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/ApplyShopView.vue'));
+                    resolve(require('ApplyShopView.vue'));
                 }, 'other');
             }
     },
@@ -153,7 +153,7 @@ export default {
         title: '申请官网',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/ApplySiteView.vue'));
+                    resolve(require('ApplySiteView.vue'));
                 }, 'other');
             }
     },
@@ -162,7 +162,16 @@ export default {
         title: '申请鉴定师权限',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/ApplyMasterView.vue'));
+                    resolve(require('ApplyMasterView.vue'));
+                }, 'other');
+            }
+    },
+    '/likes/:type/:id': {
+        name: 'likes',
+        title: '赞过的人',
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('LikesView.vue'));
                 }, 'other');
             }
     },
@@ -171,7 +180,7 @@ export default {
         title: '意见反馈',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/FeedbackView.vue'));
+                    resolve(require('FeedbackView.vue'));
                 }, 'other');
             }
     },
@@ -180,7 +189,7 @@ export default {
         title: '关于美玉秀秀',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/AboutView.vue'));
+                    resolve(require('AboutView.vue'));
                 }, 'other');
             }
     },
@@ -188,7 +197,7 @@ export default {
         name: 'cssview',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/CssView.vue'));
+                    resolve(require('CssView.vue'));
                 }, 'other');
             }
     },
@@ -197,7 +206,7 @@ export default {
         name: '404',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/NotFoundView.vue'));
+                    resolve(require('NotFoundView.vue'));
                 }, 'other');
             }
     },
@@ -205,7 +214,7 @@ export default {
         title: '找不到北',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('./components/NotFoundView.vue'));
+                    resolve(require('NotFoundView.vue'));
                 }, 'other');
             }
     }

@@ -33,11 +33,11 @@
 </div>
 </template>
 <script>
-import PagingMixin from './mixin/Paging.vue';
+import paging from 'paging';
 import EvaluationList from './EvaluationList.vue';
 export default {
     name: 'EvaluationsView',
-    mixins: [PagingMixin],
+    mixins: [paging],
     components: {
         EvaluationList
     },

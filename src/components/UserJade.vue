@@ -37,10 +37,10 @@
 </div>
 </template>
 <script>
-import PagingMixin from './mixin/Paging.vue';
+import paging from 'paging';
 export default {
     name: 'UserJade',
-    mixins: [PagingMixin],
+    mixins: [paging],
     activate(done) {
         this.fetch().then(done);
     },

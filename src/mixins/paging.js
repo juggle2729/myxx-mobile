@@ -1,4 +1,3 @@
-<script>
 import Q from 'q';
 export default {
     data() {
@@ -49,4 +48,3 @@ export default {
         }
     }
 };
-</script>

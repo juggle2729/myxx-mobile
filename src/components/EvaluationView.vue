@@ -130,7 +130,7 @@
 }
 </style>
 <template>
-<div class="evaluation-detail">
+<div class="evaluation-detail" v-if="!$loadingRouteData">
     <div v-if="evaluation.results.length" class="results scrollable">
         <div v-for="result in evaluation.results">
             <div class="result-head flex">
@@ -191,14 +191,12 @@
 </template>
 <script>
 import Comment from './Comment.vue';
+import shareable from 'shareable';
 export default {
     name: 'EvaluationView',
+    mixins: [shareable],
     data() {
         return {
-            evaluation: {
-                user: {},
-                results: []
-            },
             comment: {
                 items: [],
                 total: 0

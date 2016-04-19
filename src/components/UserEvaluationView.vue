@@ -7,10 +7,10 @@
 </template>
 <script>
 import EvaluationList from './EvaluationList.vue';
-import PagingMixin from './mixin/Paging.vue';
+import paging from 'paging';
 export default {
     name: 'UserEvaluationView',
-    mixins: [PagingMixin],
+    mixins: [paging],
     components: {
         EvaluationList
     },

@@ -116,8 +116,10 @@
 <script>
 import SocialBar from './SocialBar.vue';
 import Slider from './Slider.vue';
+import shareable from 'shareable';
 export default {
     name: 'JadeView',
+    mixins: [shareable],
     components: {
         SocialBar,
         Slider

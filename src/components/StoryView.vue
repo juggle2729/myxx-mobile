@@ -139,7 +139,7 @@
 }
 </style>
 <template>
-<div class="story-view">
+<div class="story-view" v-if="!$loadingRouteData">
     <div class="story-header">
         <div class="header clearfix">
             <div class="user">
@@ -187,22 +187,12 @@
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
 import Comment from './Comment.vue';
+import shareable from 'shareable';
 export default {
     name: 'StoryView',
-    data() {
-        return {
-            story: {
-                user: {},
-                medias: [],
-                likes: [],
-                post_id: ''
-            }
-        };
-    },
+    mixins: [shareable],
     components: {
-        SocialBar,
         Comment
     },
     computed: {

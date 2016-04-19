@@ -5,7 +5,25 @@ const isMobile = /android|iphone|ipod|ipad/i.test(navigator.userAgent);
 let adapter = {
     callHandler(handler, params, cb) {
         if(handler === 'user') {
-            let user = {};
+            let user = {
+              // "supportCount" : 31,
+              // "id" : "5011",
+              // "fansCount" : 4,
+              // "phone" : "15871705303",
+              // "followCount" : 4,
+              // "followStatus" : false,
+              // "wxNickname" : "余长春",
+              // "avatarId" : "bd28a8d4-020f-4cb7-948f-80aecd09f336",
+              // "shaibaCount" : 1,
+              // "hasWebsite" : false,
+              // "userId" : "5011",
+              // "hasShop" : false,
+              // "token" : "3dbcf04d-4e89-443a-a9d4-11c923030e8e",
+              // "jianbaoCount" : 0,
+              // "role" : "0",
+              // "nickname" : "余小二",
+              // "gender" : "0"
+            };
             cb(JSON.stringify(user));
         }
         else if(handler === 'delete') {
@@ -69,7 +87,7 @@ let adapter = {
 let defer = Q.defer();
 if(/myxx/i.test(navigator.userAgent)) {
     //"MYXX/iOS/1.2;..."
-    // iOS v1.2后采用新的 WebviewBridgeW 注入方式
+    // iOS v1.2后采用新的 WebviewBridge 注入方式
     if(/ios/i.test(navigator.userAgent) && (+navigator.userAgent.split(';')[0].split('/').pop() > 1.1)) {
         ((callback) => {
             if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
