@@ -1,5 +1,5 @@
 //分享 type 和 route 的对应关系
-const TYPES = {'evaluation': 'jianbao', 'story': 'topic', 'jade': 'product', 'master': 'website', 'user': 'profile'};
+
 export default {
     ready() {
         if(this.env.isShare) {
@@ -7,7 +7,7 @@ export default {
                 this.$get('log/content_readings', 
                     _.merge(
                             {}, 
-                            {id: this.$route.params.id, type: TYPES[this.$route.name] || this.$route.name},
+                            {id: this.$route.params.id, type: this.config.shareables[this.$route.name] || this.$route.name},
                             this.$route.query
                         )).then(_.noop);
             }, 3000);
@@ -51,7 +51,7 @@ export default {
                     if(entry.cover_type !== 'picture') {
                         data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
                     }
-                    data.text = '秀出的我宝贝';
+                    data.text = '秀出我的宝贝';
                     break;
                 case 'jade':
                     data.title = '我在 [美玉秀秀] 发现一个宝贝！';

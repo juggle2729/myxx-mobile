@@ -8,19 +8,18 @@
         height: 80px;
     }
     li {
+        -webkit-box-align: start;
         padding-bottom: 20px;
+        .avatar {
+            margin: 20px 20px 0 0;
+        }
         .author {
-            display: -webkit-box;
-            display: -webkit-inline-box;
-            -webkit-box-align: center;
-            /*height: 108px;*/
             margin: 20px 0;
         }
         span {
             line-height: 46px;
         }
         .content {
-            margin-left: 88px;
             line-height: 1.5;
         }
     }
@@ -44,20 +43,20 @@
         <div v-if="!hasInput" @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="border-bottom" v-for="c in items" @click="clicked(c, $event, $index)">
-            <div class="author">
-                <div class="avatar margin-right" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
-                <div>
-                    <h3 class="font-26" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</h3>
-                    <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
+        <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $event, $index)">
+            <div class="avatar" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+            <div class="flex-1">
+                <div class="author flex">    
+                    <div class="font-26 flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
+                    <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                 </div>
-            </div>
-            <div class="font-30 content">
-                <template v-if="c.reply_to">
-                    <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
-                    <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
-                </template>
-                <span>{{c.content}}</span>
+                <div class="font-30 content">
+                    <template v-if="c.reply_to">
+                        <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
+                        <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
+                    </template>
+                    <span>{{c.content}}</span>
+                </div>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
@@ -66,10 +65,10 @@
 </div>
 </template>
 <script>
-import PagingMixin from 'paging';
+import paging from 'paging';
 export default {
     name: 'Comment',
-    mixins: [PagingMixin],
+    mixins: [paging],
     props: {
         id: {
             default: -1

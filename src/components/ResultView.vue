@@ -195,7 +195,6 @@ export default {
             const {id, evaluationId} = to.params;
             return this.$get(`sns/jianbao/${evaluationId}|v2`)
                     .then((evaluation) => {
-                        debugger;
                         evaluation.results = evaluation.results.filter((result) => result.id == id);
                         this.setShareData(evaluation);
                         return {evaluation};

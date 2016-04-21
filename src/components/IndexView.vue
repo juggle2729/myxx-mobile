@@ -4,16 +4,10 @@
     <ul>
         <li class="tab">首页</li>
         <li class="font-26 border-top padding center">
-            <a href="/evaluations/time">鉴宝/最新 - evaluations/time</a>
+            <a href="/evaluations">鉴宝列表 - evaluations</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/evaluations/popularity">鉴宝/最热 - evaluations/popularity</a>
-        </li>
-        <li class="font-26 border-top padding center">
-            <a href="/stories/time">晒宝/最新 - stories/time</a>
-        </li>
-        <li class="font-26 border-top padding center">
-            <a href="/stories/popularity">晒宝/最热 - stories/popularity</a>
+            <a href="/stories">晒宝列表 - stories</a>
         </li>
         <li class="tab">发现</li>
         <li class="font-26 border-top padding center">

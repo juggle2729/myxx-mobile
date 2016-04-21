@@ -127,7 +127,7 @@ const mixin = {
                 targetId = (this.$route.params.id || -1);
             }
             if(!targetType) {
-                targetType = this.config.shareables[this.$route.name];
+                targetType = this.config.shareables[this.$route.name] || this.$route.name;
             }
 
             this.action('play', {id, targetType, targetId});

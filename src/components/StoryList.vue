@@ -1,86 +1,86 @@
 <style lang="sass">
+@import '../styles/partials/var';
 .story-list {
     .item {
-        padding: 24px 32px;
+        padding: 0 16px 32px 16px;
     }
-    .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
+    .header {
+        padding: 20px 4px;
         .name {
-            margin-left: 20px;
-            .moment {
-                margin-top: 12px;
+            color: #666666;
+        }
+    }
+    .content {
+        .cover {
+            width: 100%;
+            padding-top: 100%;
+            background-size: cover;
+            background-position: center;
+            background-image: url('#{$qn}/placeholder/img.png');
+        }
+        .title {
+            color: #666666;
+            text-align: center;
+            margin: 0 auto;
+            padding: 60px 0;
+            width: 480px;
+            line-height: 42px;
+            font-family: 'song-simple';
+            .user-input {
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                line-height: 1.5;
+            }
+        }
+        .social {
+            color: #d9d9d9;
+            text-align: center;
+            padding-bottom: 36px;
+            > div {
+                display: inline-block;
+                height: 28px;
+                line-height: 28px;
+            }
+            .left {
+                padding-right: 36px;
+            }
+            .right {
+                padding-left: 36px;
             }
         }
     }
-    .desc {
-        line-height: 44px;
-        margin: 30px 0 24px;
-        line-height: 1.5em;
-    }
-    .medias {
-        .media {
-            vertical-align: top;
-            display: inline-block;
-            width: percentage(1/3);
-            padding-top: 33.3333%;
-            padding-top: -webkit-calc(33.3333% - 10px);
-            border: 5px solid white;
-        }
-        .media:first-child:nth-last-child(4) ~ .media:nth-of-type(2) {
-            margin-right: percentage(1/3);
-        }
-        .unique {
-            max-width: 100%;
-        }
+    .empty-page {
+        height: 700px;
     }
 }
 </style>
 <template>
-<div class="story-list bg-white">
-    <template v-for="item in items" track-by="id">
-        <div :class="{'separator-20': $index !=0 , 'separator': $index === 0}"></div>
-        <div class="item" v-link="{name: 'story', params: {id: item.post_id}}">
-            <div class="header">
-                <div class="user">
-                    <div v-if="$route.name === 'user'" class="avatar" v-bg.sm="item.user.photo"></div>
-                    <div v-else class="avatar" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
-                    <div class="name">
-                        <p class="font-26">{{item.user.name}}</p>
-                        <p class="moment font-22 light">{{item.create_at | moment}}</p>
-                  </div>
-                </div>
-                <div class="desc font-30 user-input">{{item.content}}</div>
+<div class="story-list bg-default">
+    <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
+        <div class="header flex">
+            <div class="flex-1 flex">
+                <div v-if="$route.name === 'user'" class="avatar-50" v-bg.sm="item.user.photo"></div>
+                <div v-else class="avatar-50" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
+                <div class="name margin-left font-26">{{item.user.name}}</div>
             </div>
-            <div class="medias">
-                <div v-if="item.medias.length===1 && item.medias[0].type==='picture'">
-                    <img class="unique" :src="config.img + item.medias[0].id + '?imageView2/0/w/343/h/343/interlace/1'">
-                </div>
-                <template v-else>
-                    <template v-for="media in item.medias"
-                        ><div class="media img" v-if="media.type==='picture'" v-bg.md="media.id"></div
-                        ><div class="media play" v-if="media.type==='video'" v-bg.video="media.id"></div
-                    ></template>
-                </template>
+            <div class="moment font-22 light">{{item.create_at | moment}}</div>
+        </div>
+        <div class="content bg-white">
+            <div v-if="item.cover_type==='video'" class="cover video" v-bg.video="item.cover"></div>
+            <div v-else class="cover" v-bg="item.cover"></div>
+            <div class="title font-30"><span class="user-input">{{item.content}}</span></div>
+            <div class="social font-26">
+                <div class="left border-right" :class="{'red': item.liked}"><i class="icon-like-solid"></i><span>{{item.like}}</span></div>
+                <div class="right"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
             </div>
         </div>
-        <social-bar :id="item.post_id" type="30" :active="item.liked" :total="item.like" :list="item.likes" class="border-top social bg-white">
-            <div class="center border-left gray extra-action" v-link="{name: 'story', params: {id: item.post_id}, query: {comment: 'show'}}">
-                <i class="icon-comment"></i><span>{{item.comment}}</span>
-            </div>
-        </social-bar>
-    </template>
+    </div>
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
 export default {
     name: 'StoryList',
     props: {
@@ -88,9 +88,6 @@ export default {
             type: Array,
             required: true
         }
-    },
-    components: {
-        SocialBar
     }
 }
 </script>
