@@ -1,20 +1,23 @@
 <style lang="sass">
 .user-jade {
+    padding: 0 16px;
+    .margin-right {
+        margin-right: 14px;
+    }
     .cell {
-        height: 590px;
-        width: 365px;
+        height: 554px;
+        width: 352px;
         float: left;
-        margin-left: 7px;
-        margin-top: 5px;
+        margin-top: 14px;
         .img {
-            height: 450px;
-            width: 365px;
+            height: 434px;
+            width: 352px;
         }
         .txt {
             text-align: center;
-            padding: 20px;
+            padding: 22px 0;
             p + p {
-                margin-top: 24px;
+                margin-top: 16px;
             }
         }
     }
@@ -24,11 +27,11 @@
 }
 </style>
 <template>
-<div class="user-jade bg-white">
+<div class="user-jade">
     <partial v-if="items.isEmpty" name="empty-page"></partial>
-    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
+    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index" :class="{'margin-right': ($index % 2 === 0)}">
         <div class="img" v-bg.lg="item.imgs[0]"></div>
-        <div class="txt font-30">
+        <div class="txt font-30 bg-white">
             <p>{{item.name}}</p>
             <p class="red">￥{{item.price | percent}}</p>
         </div>

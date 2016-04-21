@@ -1,59 +1,268 @@
+<style lang="sass">
+    @import '../styles/partials/var';
+    .user-view {
+        height: 100%;
+        .account {
+            height: 392px;
+            padding: 60px 0 32px;
+            .title {
+                width: 100%;
+                .avatar-180 {
+                    margin: 0 auto 40px;
+                    border: 1px white solid;
+                }
+                .flex-1 {
+                    margin: 24px 0 32px;
+                    >p span+span {
+                         margin-left: 60px;
+                    }
+                }
+            }
+            .follow {
+                position: absolute;
+                top: 36px;
+                right: 0;
+                .button {
+                    height: 56px;
+                    width: 112px;
+                    border-width: 0;
+                    border-radius: 6px 0 0 6px;
+                    text-align: center;
+                    line-height: 56px;
+                }
+            }
+        }
+
+        .video-list {
+            padding: 22px 32px 32px;
+            .arrival {
+                position: absolute;
+                top: 22px;
+                right: 64px;
+                z-index: 99;
+                img {
+                    height: 90px;
+                    width: 70px;
+
+                }
+                &::before {
+                     content: '新品';
+                     font-size: 26px;
+                     position: absolute;
+                     right: 10px;
+                     top: 28px;
+                     color: white;
+                     z-index: 999;
+                 }
+            }
+            .video {
+                height: 520px;
+                background-position: center;
+                background-size: cover;
+                &::before {
+                     background: transparent url('#{$qn}/icon/play.png') no-repeat center;
+                     background-size: 120px 120px;
+                }
+            }
+            .desc {
+                height: 90px;
+                line-height: 90px;
+                padding: 0 94px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .switch {
+                margin-top: 32px;
+                justify-content: center;
+                img {
+                    height: 44px;
+                    width: 44px;
+                }
+                span {
+                    display: block;
+                    margin: 10px 36px 0;
+                }
+            }
+        }
+
+        .site {
+            height: 86px;
+            width: 100%;
+            padding: 0 32px;
+            .icon {
+                width: 96px;
+                height: 46px;
+                line-height: 46px;
+                text-align: center;
+                border-radius: 4px;
+                background-color: #77a153;
+            }
+        }
+
+        .master {
+            height: 114px;
+            padding: 0 32px;
+            .info {
+                padding: 24px 0 20px 20px;
+                .gray {
+                    margin-top: 14px;
+                }
+            }
+            .follow {
+                padding: 18px 0 24px;
+                .font-22 {
+                    margin-bottom: 12px;
+                }
+                .button {
+                    float: right;
+                    border-radius: 6px;
+                    width: 84px;
+                    height: 36px;
+                    line-height: 36px;
+                }
+                p {
+                    clear: both;
+                    span:not(:first-child) {
+                        margin-left: 40px;
+                    }
+                }
+            }
+        }
+
+        .tabs {
+            height: 106px;
+            width: 100%;
+            padding-top: 20px;
+            > div {
+                color: #888888;
+                p:first-child {
+                    margin-bottom: 14px;
+                }
+                .line:not(:last-child) {
+                    background-image: linear-gradient(270deg, #efefef 51%, transparent 51%);
+                    background-position: right center;
+                    background-repeat: no-repeat;
+                    background-size: 1px 100%;
+                    padding-right: 1px;
+                }
+                &.v-link-active {
+                    color: #cc3f4f;
+                    .dash {
+                        margin: 8px auto 6px;
+                        width: 204px;
+                        height: 6px;
+                    }
+                }
+            }
+            > div:first-child:nth-last-child(2), > div:first-child:nth-last-child(2) ~ div {
+                width: 50%;
+            }
+            > div:first-child:nth-last-child(3), > div:first-child:nth-last-child(3) ~ div {
+                width: percentage(1/3);
+            }
+            &.default {
+                > div:first-child {
+                      color: #cc3f4f;
+                }
+            }
+        }
+        .content {
+            position: relative;
+            height: 100%;
+        }
+    }
+</style>
 <template>
-<div class="user-view">
-    <div class="account flex" v-bg="profile.background_img">
-        <div class="title flex">
-            <div class="avatar-90" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
-            <div class="white flex-1">
-                <p class="font-30 margin-bottom"><span>{{profile.nickname}}</span><span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span></p>
-                <p class="font-26">
-                    <template v-if="env.isShare">
+    <div class="user-view">
+        <div class="account center border-bottom" v-if="profile.role !== 4">
+            <div class="follow">
+                <div class="button bg-red font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
+                    <span class="icon-follow white">关注</span>
+                </div>
+                <div class="button font-26 bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
+                    <span>已关注</span>
+                </div>
+            </div>
+            <div class="title">
+                <div class="avatar-180" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
+                <div class="flex-1">
+                    <p class="font-30 margin-bottom">
+                        <span>{{profile.nickname}}</span>
+                        <!--<span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span>-->
+                    </p>
+                    <p class="font-26 gray">
                         <span>关注&nbsp;&nbsp;{{profile.follow_count}}</span>
                         <span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
-                    </template>
-                    <template v-else>
-                        <span v-link="{name:'user-following', params: {id: $route.params.id}}">关注&nbsp;&nbsp;{{profile.follow_count}}</span>
-                        <span v-link="{name:'user-follower', params: {id: $route.params.id}}">粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
-                    </template>
-                </p>
-            </div>
-            <div class="button bg-white font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
-                <span class="icon-follow">关注</span>
-            </div>
-            <div class="button font-26 white bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
-                <span>已关注</span>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="site flex font-26 border-bottom bg-white" v-if="profile.website_status" v-link="{name: 'master', params:{id: $route.params.id}}">
-        <div class="icon bg-red white">官网</div>
-        <div class="flex-1 red margin-left font-30">{{profile.website_interview_title}}</div>
-        <div class="icon-enter"></div>
-    </div>
-    <div class="tabs bg-white flex border-bottom" :class="{'default': isDefaultView}">
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
-            <p class="font-30" align="center">{{profile.products_count}}</p>
-            <p class="font-26" align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
+        <div class="video-list bg-default" v-if="profile.role === 4" v-for="(index, item) in profile.videos"  :class="{'hide': (index !== number)}">
+            <div class="arrival">
+                <img :src="'user/arrival.png' | qn">
+            </div>
+            <div class="video" v-bg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450" @click="play(item.video, 'jade')"></div>
+            <div class="desc font-26 bg-white center">{{item.desc}}</div>
+            <div class="switch flex">
+                <img :src="leftIcon(index) | qn" @click="previous(index)">
+                <span class="font-30">{{index + 1}}&nbsp;/&nbsp;{{profile.videos.length}}</span>
+                <img :src="rightIcon(index) | qn" @click="next(index)">
+            </div>
         </div>
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
-            <p class="font-30" align="center">{{profile.topic_count}}</p>
-            <p class="font-26" align="center">晒宝</p>
+        <div class="master border-bottom flex" v-if="profile.role === 4">
+            <div class="avatar-68" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
+            <div class="info flex-1">
+                <p class="font-30">{{profile.nickname}}</p>
+                <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
+            </div>
+            <div class="follow font-26 gray">
+                <div class="button bg-red font-22 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
+                    <span class="icon-follow white">关注</span>
+                </div>
+                <div class="button font-22 bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
+                    <span>已关注</span>
+                </div>
+                <p><span>关注&nbsp;&nbsp;{{profile.follow_count}}</span><span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
+            </div>
         </div>
-        <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
-            <p class="font-30" align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
-            <p class="font-26" align="center">鉴宝</p>
+        <div class="site flex font-26 bg-white border-bottom" v-if="profile.website_status" v-link="{name: 'master', params:{id: $route.params.id}}">
+            <div class="icon white">人物志</div>
+            <div class="flex-1 margin-left font-30">{{profile.website_interview_title}}</div>
+            <div class="icon-enter"></div>
+        </div>
+        <div class="tabs bg-white flex font-26" :class="{'default': isDefaultView}">
+            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
+                <div class="line">
+                    <p align="center">{{profile.products_count}}</p>
+                    <p align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
+                </div>
+                <div class="dash bg-red"></div>
+            </div>
+            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
+                <div class="line">
+                    <p align="center">{{profile.topic_count}}</p>
+                    <p align="center">晒宝</p>
+                </div>
+                <div class="dash bg-red"></div>
+            </div>
+            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
+                <p align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
+                <p align="center">鉴宝</p>
+                <div class="dash bg-red"></div>
+            </div>
+        </div>
+        <div class="content border-top bg-default">
+            <!-- TODO use keep-alive -->
+            <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
         </div>
     </div>
-    <div class="content">
-        <!-- TODO use keep-alive -->
-        <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
-    </div>
-</div>
 </template>
 <script>
 import shareable from 'shareable';
-import jade from './UserJade.vue'
-import story from './UserStory.vue'
-import evaluation from './UserEvaluation.vue'
+import jade from './UserJade.vue';
+import story from './UserStory.vue';
+import evaluation from './UserEvaluation.vue';
 export default {
     name: 'UserView',
     mixins: [shareable],
@@ -65,17 +274,10 @@ export default {
     data() {
         return {
             titles: [],
+            number: 0, // 视频从第一个开始
             isDefaultView: false,
             view: undefined,
-            profile: {
-                titles: [],
-                jianbao_count: 0,
-                jianbao_request_count: 0,
-                follow_count: 0,
-                fans_count: 0,
-                products_count: 0,
-                topic_count: 0
-            }
+            profile: {}
         }
     },
     route: {
@@ -87,6 +289,20 @@ export default {
                 this.$get(`users/${to.params.id}/profile|v2`)
                     .then((data) => {
                         this.profile = data;
+                        this.profile.videos = [
+                            {
+                                video: 'c526c633-9ad9-430e-a0de-0e91b06b87db',
+                                desc: '一块绝世好玉一块绝世好玉一块绝世好玉超过18个字了'
+                            },
+                            {
+                                video: '1896fd49-7bb8-4e56-b1b5-7686aa32228b',
+                                desc: '一块绝世好玉'
+                            },
+                            {
+                                video: 'e4ba2645-74db-4246-96e9-fbc8d0fe8706',
+                                desc: '一块绝世好玉'
+                            }
+                        ];
                         this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
                         this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
                         if(this.isDefaultView) {
@@ -124,89 +340,19 @@ export default {
             if(this.profile.photo) {
                 this.action('coverflow', {ids: [this.profile.photo], index});
             }
+        },
+        next(index) {
+            (index < this.profile.videos.length - 1) && this.number++;
+        },
+        previous(index) {
+            (index > 0) && this.number--;
+        },
+        leftIcon(index) {
+            return (index === 0) ? 'user/leftArrow_default.png' : 'user/leftArrow_active.png';
+        },
+        rightIcon(index) {
+            return (index === (this.profile.videos.length - 1)) ? 'user/rightArrow_default.png' : 'user/rightArrow_active.png';
         }
     }
 }
 </script>
-<style lang="sass">
-@import '../styles/partials/var';
-.user-view {
-    height: 100%;
-    .account {
-        height: 630px;
-        padding: 20px 32px;
-        background-size: cover;
-        -webkit-box-align: end;
-        .title {
-            width: 100%;
-            .avatar-90 {
-                border: 1px white solid;
-            }
-            .flex-1 {
-                margin-left: 30px;
-                >p span+span {
-                    margin-left: 50px;
-                }
-            }
-            .button {
-                height: 56px;
-                width: 117px;
-                border-width: 0;
-                border-radius: 10px;
-                text-align: center;
-                line-height: 56px;
-            }
-        }
-
-    }
-    .site {
-        height: 120px;
-        width: 100%;
-        padding-left: 40px;
-        padding-right: 10px;
-        .icon {
-            width: 82px;
-            height: 46px;
-            line-height: 46px;
-            text-align: center;
-            border-radius: 5px;
-        }
-    }
-    .tabs {
-        height: 100px;
-        width: 100%;
-        padding: 18px 0;
-        > div {
-            color: #888888;
-            p:last-child {
-                margin-top: 10px;
-            }
-            &:not(:last-child) {
-                background-image: linear-gradient(270deg, #efefef 51%, transparent 51%);
-                background-position: right center;
-                background-repeat: no-repeat;
-                background-size: 1px 100%;
-                padding-right: 1px;
-            }
-            &.v-link-active {
-                color: #cc3f4f;
-            }
-        }
-        > div:first-child:nth-last-child(2), > div:first-child:nth-last-child(2) ~ div {
-            width: 50%;
-        }
-        > div:first-child:nth-last-child(3), > div:first-child:nth-last-child(3) ~ div {
-            width: percentage(1/3);
-        }
-        &.default {
-            > div:first-child {
-                color: #cc3f4f;
-            }
-        }
-    }
-    .content {
-        position: relative;
-        height: 50%;
-    }
-}
-</style>
