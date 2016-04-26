@@ -60,7 +60,7 @@ export default {
     },
     '/masters': {
         name: 'masters',
-        title: '官网秀',
+        title: '人物志',
         component: (resolve) => {
                 require.ensure([], (require) => {
                     resolve(require('MastersView.vue'));
