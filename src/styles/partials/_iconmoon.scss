@@ -19,6 +19,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-like-solid:before {
+    content: "\e926";
+}
 .icon-new-product:before {
     content: "\e920";
 }
@@ -28,7 +31,7 @@
 .icon-user-profile:before {
     content: "\e927";
 }
-.icon-like-solid:before {
+.icon-like-heart:before {
     content: "\e91e";
 }
 .icon-comment-solid:before {
