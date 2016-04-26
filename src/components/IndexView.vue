@@ -13,6 +13,9 @@
         <li class="font-26 border-top padding center">
             <a href="/masters">官网秀 - masters</a>
         </li>
+        <li class="font-26 border-top padding center">
+            <a href="/lessons">公开课 - lessons</a>
+        </li>
         <li class="tab">我的</li>
         <li class="font-26 border-top padding center">
             <a href="/profile">个人中心 - profile</a>

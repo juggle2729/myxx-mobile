@@ -3,10 +3,10 @@
 export default {
     ready() {
         if(this.env.isShare) {
-            _.delay(() => { // 分享统计                
-                this.$get('log/content_readings', 
+            _.delay(() => { // 分享统计
+                this.$get('log/content_readings',
                     _.merge(
-                            {}, 
+                            {},
                             {id: this.$route.params.id, type: this.config.shareables[this.$route.name] || this.$route.name},
                             this.$route.query
                         )).then(_.noop);
@@ -28,11 +28,11 @@ export default {
                     break;
                 case 'result':
                     const [result, identifier, isSelf] = [
-                        entry.results[0], 
+                        entry.results[0],
                         entry.results[0].identifier.name,
                         entry.results[0].identifier.id == this.$route.query.user
                         ];
-                    
+
                     if(result.result === 'genuine') {
                         data.title = isSelf ? '我给出的鉴定结果为真，你看怎样' : (identifier + '鉴定这块玉为真，你看怎样');
                     } else if(result.result === 'fake') {
@@ -70,6 +70,11 @@ export default {
                     data.desc = entry.name;
                     data.icon = entry.photo;
                     break;
+                case 'lesson':
+                    data.title = entry.title;
+                    data.desc = '我在美玉秀秀讲了这堂课，听听你的想法!';
+                    data.icon = entry.user.photo;
+                    break;
                 default:
                     data.title = '美玉秀秀';
                     data.desc = '大师在线视频鉴宝';
@@ -78,7 +83,7 @@ export default {
             }
             // 截取描述文字前20字符,防止emoji表情被截断导致iOS平台无法识别
             data.desc = data.desc.substr(0, /([\uD800-\uDBFF])/.test(data.desc.charAt(19)) ? 19 : 20) + '...';
-            
+
             // 拼接分享落地页地址
             let query = _.merge({}, this.$route.query, {
                 user: _.get(this, 'self.id', -1),
@@ -130,7 +135,7 @@ export default {
                 formData.append('noncestr', nonceStr);
                 formData.append('timestamp', timeStamp);
                 formData.append('url', url);
-                
+
                 // 不要使用封装后的$post,只有采用$http
                 this.$http.post('wx/jsapisignature', formData).then((result) => {
                     // config

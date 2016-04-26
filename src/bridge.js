@@ -34,6 +34,7 @@ const adapter = {
                 cb.call(this, window.confirm('删除评论？') ? '1' : '0');
                 break;
             case 'play':
+            case 'playCourses':
                 let playlist = [params.id];
                 if(params.targetType === 'result') {
                     const result = _.get(this, 'evaluation.results')
@@ -42,12 +43,15 @@ const adapter = {
                     if(result.ad_picture && result.ad_video) {
                         playlist.splice(1, 0, result.ad_picture, result.ad_video);
                     }
-                } 
+                } else if (params.targetType === 'open_course') {
+                    playlist.splice(0, 1, params.courseVideoId);
+                }
+
                 this.$root.playlist = playlist;
                 if(this.env.isShare) {
-                    _.delay(() => { // 播放统计                
+                    _.delay(() => { // 播放统计
                         this.$get('log/video_play', {
-                                id: this.$route.params.id, 
+                                id: this.$route.params.id,
                                 type: this.config.shareables[this.$route.name],
                                 percentage: -1
                             }).then(_.noop);

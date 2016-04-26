@@ -50,6 +50,31 @@ export default {
                 }, 'story');
             }
     },
+    '/lessons': {
+        name: 'lessons',
+        title: '美玉公开课',
+        component: (resolve) => {
+            require.ensure([], (require) => {
+                resolve(require('LessonsView.vue'));
+            }, 'lesson');
+        }
+    },
+    '/lesson/:id': {
+        name: 'lesson',
+        component: (resolve) => {
+            require.ensure([], (require) => {
+                resolve(require('LessonView.vue'));
+            }, 'lesson');
+        }
+    },
+    '/lecturer/:userId': {
+        name: 'lecturer',
+        component: (resolve) => {
+            require.ensure([], (require) => {
+                resolve(require('LecturerView.vue'));
+            }, 'lesson');
+        }
+    },
     '/jade/:id': {
         name: 'jade',
         title: '宝贝详情',
