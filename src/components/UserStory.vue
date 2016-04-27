@@ -2,7 +2,7 @@
 @import '../styles/partials/var';
 .user-story {
     .item {
-        padding: 0 16px 32px 16px;
+        padding: 0 16px 32px;
     }
     .header {
         padding: 20px 4px;

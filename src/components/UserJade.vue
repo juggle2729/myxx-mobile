@@ -1,11 +1,9 @@
 <style lang="sass">
 .user-jade {
-    padding: 0 16px;
     .margin-right {
         margin-right: 14px;
     }
     .cell {
-        height: 554px;
         width: 352px;
         float: left;
         margin-top: 14px;
@@ -20,19 +18,28 @@
                 margin-top: 16px;
             }
         }
+        &:nth-child(odd) {
+            margin: 14px 14px 0 16px;
+        }
     }
     .empty-page {
         height: 700px;
     }
+    &::after {
+        content: '';
+        height: 14px;
+        display: table;
+        clear: both;
+    }
 }
 </style>
 <template>
-<div class="user-jade">
+<div class="user-jade bg-default">
     <partial v-if="items.isEmpty" name="empty-page"></partial>
-    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index" :class="{'margin-right': ($index % 2 === 0)}">
-        <div class="img" v-bg.lg="item.imgs[0]"></div>
+    <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
+        <div class="img" v-bg.lg="item.first_picture"></div>
         <div class="txt font-30 bg-white">
-            <p>{{item.name}}</p>
+            <p>{{item.title}}</p>
             <p class="red">￥{{item.price | percent}}</p>
         </div>
     </div>
@@ -50,6 +57,7 @@ export default {
     computed: {
         paging() {
             return {
+                id: 'id',
                 path: 'mall/products',
                 list: 'products',
                 params: {

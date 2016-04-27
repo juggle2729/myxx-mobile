@@ -1,7 +1,6 @@
 <style lang="sass">
     @import '../styles/partials/var';
     .user-view {
-        height: 100%;
         .account {
             height: 392px;
             padding: 60px 0 32px;
@@ -33,8 +32,8 @@
             }
         }
 
-        .video-list {
-            padding: 22px 32px 32px;
+        .video-list, .placeholder {
+            margin: 22px 32px 32px;
             .arrival {
                 position: absolute;
                 top: 22px;
@@ -71,6 +70,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                box-shadow: 0 4px 10px #c6c6c6;
             }
             .switch {
                 margin-top: 32px;
@@ -83,6 +83,15 @@
                     display: block;
                     margin: 10px 36px 0;
                 }
+            }
+        }
+
+        .placeholder .video {
+            line-height: 520px;
+            background-color: #c6c6c6;
+            &::before {
+                 content: '暂无新品视频';
+                 background: transparent;
             }
         }
 
@@ -164,33 +173,31 @@
             &.default {
                 > div:first-child {
                       color: #cc3f4f;
+                      .dash {
+                          margin: 8px auto 6px;
+                          width: 204px;
+                          height: 6px;
+                      }
                 }
             }
         }
         .content {
             position: relative;
-            height: 100%;
         }
     }
 </style>
 <template>
-    <div class="user-view">
-        <div class="account center border-bottom" v-if="profile.role !== 4">
+    <div class="user-view bg-default">
+        <div class="account center border-bottom" v-if="!profile.special">
             <div class="follow">
-                <div class="button bg-red font-26 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
+                <div class="button bg-red font-26 red" @click="toggleFollow">
                     <span class="icon-follow white">关注</span>
-                </div>
-                <div class="button font-26 bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
-                    <span>已关注</span>
                 </div>
             </div>
             <div class="title">
                 <div class="avatar-180" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
                 <div class="flex-1">
-                    <p class="font-30 margin-bottom">
-                        <span>{{profile.nickname}}</span>
-                        <!--<span class="font-26">{{profile.titles.length? profile.titles[0].name:''}}</span>-->
-                    </p>
+                    <p class="font-30 margin-bottom">{{profile.nickname}}</p>
                     <p class="font-26 gray">
                         <span>关注&nbsp;&nbsp;{{profile.follow_count}}</span>
                         <span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span>
@@ -198,30 +205,31 @@
                 </div>
             </div>
         </div>
-        <div class="video-list bg-default" v-if="profile.role === 4" v-for="(index, item) in profile.videos"  :class="{'hide': (index !== number)}">
+        <div class="video-list"  v-if="profile.special && products.length > 0" v-for="(index, item) in products" :class="{'hide': (index !== number)}">
             <div class="arrival">
                 <img :src="'user/arrival.png' | qn">
             </div>
             <div class="video" v-bg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450" @click="play(item.video, 'jade')"></div>
-            <div class="desc font-26 bg-white center">{{item.desc}}</div>
+            <div class="desc font-26 bg-white center">{{item.title}}</div>
             <div class="switch flex">
                 <img :src="leftIcon(index) | qn" @click="previous(index)">
-                <span class="font-30">{{index + 1}}&nbsp;/&nbsp;{{profile.videos.length}}</span>
+                <span class="font-30">{{index + 1}}&nbsp;/&nbsp;{{products.length}}</span>
                 <img :src="rightIcon(index) | qn" @click="next(index)">
             </div>
         </div>
-        <div class="master border-bottom flex" v-if="profile.role === 4">
+        <div class="placeholder" v-if="profile.special && products.length === 0">
+            <div class="video center font-34 primary"></div>
+            <div class="desc bg-white"></div>
+        </div>
+        <div class="master border-bottom flex bg-white" v-if="profile.special">
             <div class="avatar-68" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
             <div class="info flex-1">
                 <p class="font-30">{{profile.nickname}}</p>
                 <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
             </div>
             <div class="follow font-26 gray">
-                <div class="button bg-red font-22 red" v-if="!(profile.follow || isSelf)" @click="toggleFollow">
+                <div class="button bg-red font-22 red" @click="toggleFollow">
                     <span class="icon-follow white">关注</span>
-                </div>
-                <div class="button font-22 bg-disable" v-if="profile.follow && !isSelf" @click="toggleFollow">
-                    <span>已关注</span>
                 </div>
                 <p><span>关注&nbsp;&nbsp;{{profile.follow_count}}</span><span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
             </div>
@@ -234,7 +242,7 @@
         <div class="tabs bg-white flex font-26" :class="{'default': isDefaultView}">
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
                 <div class="line">
-                    <p align="center">{{profile.products_count}}</p>
+                    <p align="center">{{profile.product_count}}</p>
                     <p align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
                 </div>
                 <div class="dash bg-red"></div>
@@ -277,7 +285,8 @@ export default {
             number: 0, // 视频从第一个开始
             isDefaultView: false,
             view: undefined,
-            profile: {}
+            profile: {},
+            products: []
         }
     },
     route: {
@@ -289,21 +298,8 @@ export default {
                 this.$get(`users/${to.params.id}/profile|v2`)
                     .then((data) => {
                         this.profile = data;
-                        this.profile.videos = [
-                            {
-                                video: 'c526c633-9ad9-430e-a0de-0e91b06b87db',
-                                desc: '一块绝世好玉一块绝世好玉一块绝世好玉超过18个字了'
-                            },
-                            {
-                                video: '1896fd49-7bb8-4e56-b1b5-7686aa32228b',
-                                desc: '一块绝世好玉'
-                            },
-                            {
-                                video: 'e4ba2645-74db-4246-96e9-fbc8d0fe8706',
-                                desc: '一块绝世好玉'
-                            }
-                        ];
-                        this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
+                        this.profile.special = (this.profile.role === 4 || this.profile.role === 1);
+                        // this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
                         this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
                         if(this.isDefaultView) {
                             this.view = data.shop_status ? 'jade': 'story';
@@ -311,6 +307,13 @@ export default {
                             this.view = to.params.tab;
                         }
                         this.setShareData({id: data.id, name: data.nickname, photo: data.photo} , true);
+                        if(this.profile.special) {
+                            return this.$get(`mall/users/${to.params.id}/product_cards`);
+                        } else {
+                            next();
+                        }
+                    }).then((item) => {
+                        this.products = item.products;
                         next();
                     });
             } else { // 个人主页内部跳转
@@ -342,7 +345,7 @@ export default {
             }
         },
         next(index) {
-            (index < this.profile.videos.length - 1) && this.number++;
+            (index < this.products.length - 1) && this.number++;
         },
         previous(index) {
             (index > 0) && this.number--;
@@ -351,7 +354,7 @@ export default {
             return (index === 0) ? 'user/leftArrow_default.png' : 'user/leftArrow_active.png';
         },
         rightIcon(index) {
-            return (index === (this.profile.videos.length - 1)) ? 'user/rightArrow_default.png' : 'user/rightArrow_active.png';
+            return (index === (this.products.length - 1)) ? 'user/rightArrow_default.png' : 'user/rightArrow_active.png';
         }
     }
 }

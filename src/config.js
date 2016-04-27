@@ -25,7 +25,7 @@ let [api, img, video, download] = ((env='dev') => {
         }
     };
     return _.map(hosts, env);
-})('test');
+})('dev');
 
 export default {
     api,
@@ -61,5 +61,19 @@ export default {
             name: '公开课',
             route: 'lesson'
         }
-    ]
+    ],
+    tags: {
+        product: {
+            id: 'pd',
+            name: '商品'
+        },
+        lesson: {
+            id: 'oc',
+            name: '公开课'
+        },
+        evaluation: {
+            id: 'jb',
+            name: '鉴宝'
+        }
+    }
 };

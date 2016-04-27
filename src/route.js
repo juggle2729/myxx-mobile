@@ -227,6 +227,22 @@ export default {
                 }, 'other');
             }
     },
+    '/tag/:type/:tag': {
+        name: 'tags',
+        component: (resolve) => {
+               require.ensure([], (require) => {
+                   resolve(require('TagsView.vue'));
+               }, 'mall');
+        }
+    },
+    '/tag/:type/:tag/:category': {
+        name: 'tag',
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('TagView.vue'));
+                }, 'mall');
+        }
+    },
     '/404': {
         title: '页面不存在',
         name: '404',
