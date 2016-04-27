@@ -1,5 +1,5 @@
 //分享 type 和 route 的对应关系
-const TYPES = {'evaluation': 'jianbao', 'story': 'topic', 'jade': 'product', 'master': 'website', 'user': 'profile'};
+
 export default {
     ready() {
         if(this.env.isShare) {
@@ -7,7 +7,7 @@ export default {
                 this.$get('log/content_readings', 
                     _.merge(
                             {}, 
-                            {id: this.$route.params.id, type: TYPES[this.$route.name] || this.$route.name},
+                            {id: this.$route.params.id, type: this.config.shareables[this.$route.name] || this.$route.name},
                             this.$route.query
                         )).then(_.noop);
             }, 3000);
@@ -51,7 +51,7 @@ export default {
                     if(entry.cover_type !== 'picture') {
                         data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
                     }
-                    data.text = '秀出的我宝贝';
+                    data.text = '秀出我的宝贝';
                     break;
                 case 'jade':
                     data.title = '我在 [美玉秀秀] 发现一个宝贝！';
@@ -130,11 +130,12 @@ export default {
                 formData.append('noncestr', nonceStr);
                 formData.append('timestamp', timeStamp);
                 formData.append('url', url);
-
-                this.$post('wx/jsapisignature', formData).then((result) => {
+                
+                // 不要使用封装后的$post,只有采用$http
+                this.$http.post('wx/jsapisignature', formData).then((result) => {
                     // config
                     wx.config({
-                        debug: false,
+                        debug: process.env.NODE_ENV !== 'production',
                         appId: 'wxcc40bf300d6200a3',
                         timestamp: timeStamp,
                         nonceStr: nonceStr,

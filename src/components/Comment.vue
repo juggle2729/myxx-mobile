@@ -8,19 +8,18 @@
         height: 80px;
     }
     li {
+        -webkit-box-align: start;
         padding-bottom: 20px;
+        .avatar {
+            margin: 20px 20px 0 0;
+        }
         .author {
-            display: -webkit-box;
-            display: -webkit-inline-box;
-            -webkit-box-align: center;
-            /*height: 108px;*/
             margin: 20px 0;
         }
         span {
             line-height: 46px;
         }
         .content {
-            margin-left: 88px;
             line-height: 1.5;
         }
     }
@@ -35,56 +34,90 @@
         padding: 0 5px;
         border-radius: 5px;
     }
+    .comment-btn {
+        height: 80px;
+        line-height: 80px;
+        width: 100%;
+        border-radius: 10px;
+        border: 0;
+        cursor: pointer;
+        display: block;
+    }
+    .fake-input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f9f9f9;
+        color: red;
+        height: 98px;
+        padding: 16px;
+        .input {
+            background-color: white;
+            color: #c6c6c6;
+            padding: 0 20px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 8px;
+        }
+        .submit {
+            line-height: 72px;
+            margin-left: 16px;
+            width: 140px;
+            height: 72px;
+            color: white;
+            background-color: #b2b2b2;
+            border-radius: 8px;
+        }
+    }
 }
 </style>
 <template>
 <div class="comment-component bg-white">
+    <label v-if="env.isShare" for="comment-textarea" @click="comment()" class="comment-btn white font-30 bg-red center">我要评论</label>
     <div class="comment-header border-bottom font-22">
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
-        <div v-if="!hasInput" @click="comment($event)" class="red"><i class="icon-comment"></i><span>我要评论</span></div>
     </div>
     <ul>
-        <li class="border-bottom" v-for="c in items" @click="clicked(c, $event, $index)">
-            <div class="author">
-                <div class="avatar margin-right" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
-                <div>
-                    <h3 class="font-26" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</h3>
-                    <p class="font-22 light margin-top">{{c.create_at | moment}}</p>
+        <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $index)">
+            <div class="avatar" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+            <div class="flex-1">
+                <div class="author flex">    
+                    <div class="font-26 flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
+                    <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                 </div>
-            </div>
-            <div class="font-30 content">
-                <template v-if="c.reply_to">
-                    <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
-                    <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
-                </template>
-                <span>{{c.content}}</span>
+                <div class="font-30 content">
+                    <template v-if="c.reply_to">
+                        <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
+                        <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
+                    </template>
+                    <span>{{c.content}}</span>
+                </div>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
     <partial name="load-more" v-if="items.hasMore"></partial>
+    <div v-if="!env.isShare" class="fake-input font-30 flex" @click="comment()">
+        <div class="input flex-1">点击此处发表评论...</div>
+        <div class="submit center">发送</div>
+    </div>
 </div>
 </template>
 <script>
-import PagingMixin from 'paging';
+import Q from 'q';
+import paging from 'paging';
 export default {
     name: 'Comment',
-    mixins: [PagingMixin],
+    mixins: [paging],
     props: {
         id: {
-            default: -1
+            type: Number,
+            required: true
         },
         type: {
-            default: 10
-        },
-        hasInput: {
-            default: false
-        }
-    },
-    data() {
-        return {
-            uid: 0,
-            to: undefined
+            type: String,
+            required: true
         }
     },
     computed: {
@@ -103,99 +136,71 @@ export default {
         }
     },
     created() {
-        this.uid = ('' + Date.now()).substr(-5);
-        this.$watch('id', () => {
-            this.fetch();
-            if(this.$route.query.comment) {
-                this.$el.scrollIntoView();
-            }
-        });
-        // 监听广播事件
-        this.$on('comment', (e) => {
-            this.comment(e);
-        });
-        this.$on('fetch', () => {
-            this.fetch();
-        });
+        this.fetch();
     },
     methods: {
-        clicked(comment, e, index) {
-            const currUserId = _.get(this, 'self.id');
-            if(!currUserId) {
+        clicked(comment, index) {
+            if(!this.self) {
                 this.action('login');
-            } else if(currUserId == comment.reply_from.id) {
-                this.action('delete', '')
+            } else if(this.self.id == comment.reply_from.id) {
+                this.action('delete')
                     .then((confirm) => {
-                        if(confirm === '1') {
-                            return this.$delete(`${this.api}/${comment.id}`);
-                        }
-                    }).then((result) => {
-                        if(result) {
-                            this.action('toast', {success: 1, text: '删除成功'});
-                            this.items.splice(index, 1);
-                            this.items.total -= 1;
-                        }
+                        return Q.Promise((resolve, reject) => {
+                            if(confirm === '1') {
+                                this.$delete(`${this.api}/${comment.id}`)
+                                    .then(() => resolve());
+                            } else {
+                                reject();
+                            }
+                        });
+                    }).then(() => {
+                        this.action('toast', {success: 1, text: '删除成功'});
+                        this.items.splice(index, 1);
+                        this.items.total -= 1;
                     });
             } else {
-                const id = this.uid + _.get(this, 'self.id', '');
-                const placeholder = '回复' + comment.reply_from.name;
-                const position = this._getPosition(e);
-                this.action('keyboard', {id, placeholder, position})
-                    .then((content) => {
-                        if(content) {
-                            let reply_to = comment.reply_from;
-                            this.$post(this.api, {content, reply_to: reply_to.id})
-                                .then((result) => {
-                                    _.merge(result, {
-                                        content,
-                                        create_at: Date.now(),
-                                        reply_to,
-                                        reply_from: {
-                                            id: this.self.id,
-                                            photo: this.self.avatarId,
-                                            name: this.self.nickname
-                                        }
-                                    });
-                                    this.items.splice(0, 0, result);
-                                    this.items.total += 1;
-                                    this.action('toast', {success: 1, text: '回复成功'});
-                                });
-                        }
-                    });
+                this.comment(comment.reply_from);
             }
         },
-        comment(e) {
-            const id = this.uid;
-            const placeholder = '';
-            const position = this._getPosition(e);
+        comment(to) {
+            // 鉴于客户端没有实现接口定义的细节， id, position 为废弃的参数
+            let [id, placeholder, position, reply_to] = [1, '', 0, ''];
+            if(to) {
+                [placeholder, reply_to] = [`回复${to.name}`, to.id];
+            }
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
-                    if(content) {
-                        this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content})
-                            .then((result) => {
-                                _.merge(result, {
-                                    content,
-                                    create_at: Date.now(),
-                                    reply_from: {
-                                        id: this.self.id,
-                                        photo: this.self.avatarId,
-                                        name: this.self.nickname
-                                    }
+                    return Q.Promise((resolve, reject) => {
+                        if(content) {
+                            let comment = {content};
+                            to && _.merge(comment, {reply_to: to.id});
+                            this.$post(this.api, comment)
+                                .then((resp) => {
+                                    resolve(_.merge(resp, {
+                                        content,
+                                        reply_to: to,
+                                        create_at: Date.now(),
+                                        reply_from: {
+                                            id: this.self.id,
+                                            photo: this.self.photo || this.self.avatarId,
+                                            name: this.self.nickname
+                                        }
+                                    }));
                                 });
-                                this.items.splice(0, 0, result);
-                                this.items.total += 1;
-                                this.action('toast', {success: 1, text: '回复成功'});
-                            });
-                    }
+                        } else {
+                            reject();
+                        }
+                    });
+                }).then((comment) => {
+                    this.items.splice(0, 0, comment);
+                    this.items.total += 1;
+                    this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'});
                 });
         },
+
         gotoProfile(user) {
             const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
             this.$route.router.go({name: 'user', params: {id, tab}});
-        },
-        _getPosition(e) {
-            const rect = e.target.getBoundingClientRect();
-            return rect.top + rect.height + window.scrollY;
         }
     }
 }

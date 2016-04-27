@@ -54,19 +54,20 @@
                 height: 0;
             }
         }
-        #img-player {
+        #logout {
+            background-color: #F44336;
+            z-index: 99;
             position: fixed;
-            left: 0;
             top: 0;
-            z-index: 999;
-            overflow-y: auto;
-            color: white;
-            background: black url('#{$qn}/loading.svg') no-repeat center;
+            right: 0;
+            font-size: 34px;
+            padding: 20px;
+            border-radius: 0 0 0 50%;
         }
     }
 </style>
 <template>
-  <div>
+<div>
     <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1 flex">
@@ -91,25 +92,24 @@
             <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[2]"></video>
         </template>
     </div>
-    <slider id="img-player" v-if="img && isTouchable" @touchstart.prevent.stop="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
-    <slider id="img-player" v-if="img && !isTouchable" @click="sliderClick(this, $event)" :ids="img.ids" :i="img.i" height="100%"></slider>
-  </div>
+    <div id="logout" @click="logout" v-if="self && env.isBrowser">🤔</div>
+    <component :is="popup.handler" :params.sync="popup"></component>
+</div>
 </template>
 <script>
 import emitter from '../utils/emitter';
-import Slider from './Slider.vue';
+import components from 'actions';
 export default {
     name: 'App',
-    components: {
-        Slider
-    },
+    components,
     data() {
         return {
-            user: {},
+            user: JSON.parse(localStorage.getItem('MYXX_USER')),
             shareData: {},
             playlist: undefined,
-            img: undefined,
-            scrollY: 0
+            comment: undefined,
+            scrollY: 0,
+            popup: {}
         }
     },
     computed: {
@@ -132,21 +132,12 @@ export default {
         }
     },
     ready() {
-        this.action('version', '')
+        this.action('version')
             .then((v) => {
                 this.env.version = v;
             });
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
-        this.$watch('img', (img) => {
-                if(img) {
-                    this.scrollY = window.scrollY;
-                    this.$el.classList.add('frozen');
-                } else {
-                    this.$el.classList.remove('frozen');
-                    window.scrollTo(0, this.scrollY);
-                }
-            });
         this.$watch('playlist', (playlist) => {
             if(playlist) {
                 this.scrollY = window.scrollY;
@@ -159,31 +150,10 @@ export default {
 
     },
     methods: {
-        sliderClick: (() => {
-            let [click, timer] = [0];
-            return (context, e) => {
-                e.preventDefault();
-                click += 1;
-                if(timer) {
-                    clearTimeout(timer);
-                }
-                timer = setTimeout(() => {
-                    action(context, e.target);
-                }, 500);
-            }
-            function action(context, slide) {
-                if(click > 1) {
-                    if(slide.className.indexOf('zoom') === -1) {
-                        slide.classList.add('zoom');
-                    } else {
-                        slide.classList.remove('zoom');
-                    }
-                } else {
-                    context.img = undefined;
-                }
-                click = 0;
-            }
-        })()
+        logout() {
+            localStorage.removeItem('MYXX_USER');
+            this.user = undefined;
+        }
     }
 }
 </script>

@@ -1,5 +1,6 @@
 require('fastclick').attach(document.body);
 import _ from 'lodash';
+import Q from 'q';
 import config from './config';
 import emitter from './utils/emitter';
 import Vue from 'vue';
@@ -19,21 +20,16 @@ Vue.use(directive);
 Vue.use(partial);
 
 Vue.use(Resource);
-_.merge(Vue.http.options, {
-    root: config.api,
-    emulateJSON: true,
-    // beforeSend(xhr, req) {
-    //     if(this.$route.query.user && req.method !== 'GET') {
-    //         this.toast('请在【美玉秀秀】里使用该功能');
-    //     }
-    // },
-    catch(resp, status, req) {
-        console.error(status, req.responseURL);
-        this.toggleLoading(false);
-        this.toast('获取数据失败，请稍后再试！');
+Vue.http.interceptors.push({
+    request(req) {
+        // 如果url是全路径,忽略root
+        /\/\//.test(req.url) && (req.root = '');
+        return req;
+    },
+    response(resp) {
+        return resp;
     }
 });
-
 Vue.use(Router);
 const appContainer = document.querySelector('#app');
 let router = new Router({history: true});
@@ -41,7 +37,7 @@ router.beforeGo((from, to) => {
     let canGo = !/myxx/i.test(navigator.userAgent) || from.name === to.name || to.name === '404';
     if(!canGo) {
         window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
-    } 
+    }
     // else if(_.get(from, 'query.user')) {
     //     if(to.name === 'user' && from.name !== 'user') {//  禁止分享页面导航
     //         canGo = false;
@@ -56,7 +52,9 @@ router.beforeEach(({from, to, abort, next}) => {
 });
 router.afterEach(({to}) => {});
 router.alias({
-  '/user/:id': '/user/:id/home'
+  '/user/:id': '/user/:id/home',
+  '/evaluations/:tab': '/evaluations',
+  '/stories/:tab': '/stories'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), appContainer);
@@ -74,7 +72,7 @@ window.onerror = (error) => {
             first = false;
         }
         document.querySelector('html').style['font-size'] = (clientWidth / 10) + 'px';
-    }
+    };
     adjustBase();
     window.onresize = _.debounce(adjustBase, 150);
 })();

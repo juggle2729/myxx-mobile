@@ -110,32 +110,6 @@
             }
         }
     }
-    .fake-input {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: #f9f9f9;
-        color: red;
-        height: 98px;
-        padding: 16px;
-        .input {
-            background-color: white;
-            color: #c6c6c6;
-            padding: 0 20px;
-            height: 72px;
-            line-height: 72px;
-            border-radius: 8px;
-        }
-        .submit {
-            line-height: 72px;
-            margin-left: 16px;
-            width: 140px;
-            height: 72px;
-            color: white;
-            background-color: #b2b2b2;
-            border-radius: 8px;
-        }
-    }
 }
 </style>
 <template>
@@ -179,11 +153,7 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <comment type="30" :id="story.post_id" has-input="true"></comment>
-    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
-        <div class="input flex-1">点击此处发表评论...</div>
-        <div class="submit center">发送</div>
-    </div>
+    <comment type="30" :id="story.post_id"></comment>
 </div>
 </template>
 <script>

@@ -1,3 +1,4 @@
+// FIXME require.ensure within loop won't work
 export default {
     '/': {
         component: (resolve) => {
@@ -6,7 +7,7 @@ export default {
                 }, 'other');
             }
     },
-    '/evaluations/:tab': {
+    '/evaluations': {
         name: 'evaluations',
         component: (resolve) => {
                 require.ensure([], (require) => {
@@ -28,11 +29,11 @@ export default {
         title: '鉴宝结果',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('ResultView.vue'));
+                    resolve(require('EvaluationView.vue'));
                 }, 'evaluation');
             }
     },
-    '/stories/:tab': {
+    '/stories': {
         name: 'stories',
         component: (resolve) => {
                 require.ensure([], (require) => {
