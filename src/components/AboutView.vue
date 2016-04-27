@@ -16,7 +16,7 @@
 export default {
     name: 'AboutView',
     created() {
-        this.action('version', '').then(version => {
+        this.action('version').then(version => {
             this.$set('version', version);
         });
     }
@@ -45,6 +45,5 @@ export default {
             line-height: 56px;
         }
     }
-
 }
 </style>

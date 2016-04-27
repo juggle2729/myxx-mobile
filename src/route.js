@@ -29,7 +29,7 @@ export default {
         title: '鉴宝结果',
         component: (resolve) => {
                 require.ensure([], (require) => {
-                    resolve(require('ResultView.vue'));
+                    resolve(require('EvaluationView.vue'));
                 }, 'evaluation');
             }
     },

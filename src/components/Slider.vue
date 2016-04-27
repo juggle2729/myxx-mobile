@@ -64,7 +64,11 @@ export default {
             default: 0
         },
         height: {
-          default: '7rem' // 默认高度
+          default: '100%' // 默认高度
+        },
+        close: {
+            type: Function,
+            required: false
         }
     },
     data() {
@@ -138,6 +142,10 @@ export default {
                 this.slide(this.i + 1);
             } else {
                 this.slide(this.i);
+            }
+
+            if(this.close && deltaX === 0 && deltaTime < 200) {
+                this.close();
             }
         },
         slide(index) {

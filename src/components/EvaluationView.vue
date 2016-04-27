@@ -1,7 +1,7 @@
 <style lang="sass">
 @import '../styles/partials/var';
 .evaluation-detail {
-    padding-bottom: 80px;
+    padding-bottom: 100px;
     .results {
         overflow-x: auto;
         overflow-y: hidden;
@@ -86,46 +86,9 @@
             }
         }
     }
-    .evaluation-btn {
-        margin: 0 32px;
-        padding-bottom: 60px;
-        button {
-            height: 80px;
-            width: 100%;
-            border-radius: 10px;
-            border: 0;
-            cursor: pointer;
-        }
-    }
     .nocontent {
         margin-top: 48px;
         margin-bottom: 32px;
-    }
-    .fake-input {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: #f9f9f9;
-        color: red;
-        height: 98px;
-        padding: 16px;
-        .input {
-            background-color: white;
-            color: #c6c6c6;
-            padding: 0 20px;
-            height: 72px;
-            line-height: 72px;
-            border-radius: 8px;
-        }
-        .submit {
-            line-height: 72px;
-            margin-left: 16px;
-            width: 140px;
-            height: 72px;
-            color: white;
-            background-color: #b2b2b2;
-            border-radius: 8px;
-        }
     }
 }
 </style>
@@ -179,14 +142,7 @@
             <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
         </li>
     </ul>
-<!--     <div v-if="jb.label" class="evaluation-btn border-bottom">
-        <button class="white font-30" :class="{'bg-red': jb.action, 'bg-disable': !jb.action}" @click="evaluate(jb.action)">{{jb.label}}</button>
-    </div> -->
-    <comment type="10" :id="evaluation.post_id" has-input="true"></comment>
-    <div v-if="!env.isShare" class="fake-input font-30 flex" @click="$broadcast('comment', $event)">
-        <div class="input flex-1">点击此处发表评论...</div>
-        <div class="submit center">发送</div>
-    </div>
+    <comment type="10" :id="evaluation.post_id"></comment>
 </div>
 </template>
 <script>
@@ -222,26 +178,17 @@ export default {
                 }
             });
         }
-        // jb() {
-        //     let label, action;
-        //     if(this.evaluation.identifiable && this.self.id != this.evaluation.user.id) {
-        //         label = '我要鉴定';
-        //         if(this.evaluation.jianbao_permission) {
-        //             action = 'evaluate';
-        //         } else if(this.self.id){
-        //             action = 'request';
-        //         } else {
-        //             action = 'login';
-        //         }
-        //     }
-        //     return {label, action};
-        // }
     },
     route: {
         data({to}) {
-            const evaluationId = to.params.id;
+            let {id, evaluationId} = to.params;
+            if(!evaluationId) { // 详情页
+                evaluationId = id;
+                id = undefined;
+            }
             return this.$get(`sns/jianbao/${evaluationId}|v2`)
                     .then((evaluation) => {
+                        id && (evaluation.results = evaluation.results.filter((result) => result.id == id));
                         this.setShareData(evaluation, true);
                         return {evaluation};
                     });
