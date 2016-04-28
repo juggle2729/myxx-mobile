@@ -4,6 +4,7 @@
         .account {
             height: 392px;
             padding: 60px 0 32px;
+            position: relative;
             .title {
                 width: 100%;
                 .avatar-180 {
@@ -33,7 +34,8 @@
         }
 
         .video-list, .placeholder {
-            margin: 22px 32px 32px;
+            padding: 22px 32px 32px;
+            position: relative;
             .arrival {
                 position: absolute;
                 top: 22px;
@@ -190,7 +192,7 @@
     <div class="user-view bg-default">
         <div class="account center border-bottom" v-if="!profile.special">
             <div class="follow">
-                <div class="button bg-red font-26 red" @click="toggleFollow">
+                <div class="button bg-red font-26 red" @click="download()">
                     <span class="icon-follow white">关注</span>
                 </div>
             </div>
@@ -228,7 +230,7 @@
                 <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
             </div>
             <div class="follow font-26 gray">
-                <div class="button bg-red font-22 red" @click="toggleFollow">
+                <div class="button bg-red font-22 red" @click="download()">
                     <span class="icon-follow white">关注</span>
                 </div>
                 <p><span>关注&nbsp;&nbsp;{{profile.follow_count}}</span><span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
@@ -324,20 +326,8 @@ export default {
         }
     },
     methods: {
-        toggleFollow() {
-            if (this.profile.follow) {
-                this.$delete(`users/follow/${this.$route.params.id}`)
-                    .then(() => {
-                        this.profile.follow = false;
-                        this.action('toast', {success: 1, text: '取消关注成功'});
-                    });
-            } else {
-                this.$post(`users/follow/${this.$route.params.id}`)
-                    .then(() => {
-                        this.profile.follow = true;
-                        this.action('toast', {success: 1, text: '关注成功'});
-                    });
-            }
+        download() {
+            location.href = this.config.download;
         },
         coverflow(index=0) {
             if(this.profile.photo) {

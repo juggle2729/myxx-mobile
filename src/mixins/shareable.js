@@ -69,6 +69,7 @@ export default {
                     data.title = `${entry.name}的美玉秀show`;
                     data.desc = entry.name;
                     data.icon = entry.photo;
+                    data.text = '下载应用,查看更多详情';
                     break;
                 case 'lesson':
                     data.title = entry.title;

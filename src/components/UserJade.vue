@@ -21,20 +21,22 @@
         &:nth-child(odd) {
             margin: 14px 14px 0 16px;
         }
+        &:last-child {
+             margin-bottom: 14px;
+        }
     }
     .empty-page {
         height: 700px;
     }
     &::after {
         content: '';
-        height: 14px;
         display: table;
         clear: both;
     }
 }
 </style>
 <template>
-<div class="user-jade bg-default">
+<div class="user-jade">
     <partial v-if="items.isEmpty" name="empty-page"></partial>
     <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
         <div class="img" v-bg.lg="item.first_picture"></div>

@@ -3,6 +3,7 @@
 .evaluation-detail {
     padding-bottom: 100px;
     .results {
+        margin-bottom: 50px;
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
@@ -94,34 +95,6 @@
 </style>
 <template>
 <div class="evaluation-detail" v-if="!$loadingRouteData">
-    <div v-if="evaluation.results.length" class="results scrollable">
-        <div v-for="result in evaluation.results">
-            <div class="result-head flex">
-                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
-                <div class="flex-1 margin-left">
-                    <div class="font-30 white">{{result.identifier.name}}</div>
-                    <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
-                </div>
-                <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
-            </div>
-            <img class="portrait" @click="play(result.video, 'result')" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
-            <div class="price font-30 white center">
-                <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
-                <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
-            </div>
-            <a v-if="result.promote_type==='auction'" class="action white bg-yellow font-30"
-                :href="result.promote_url">
-                <i class="icon-auction"></i><span>进入拍卖预展</span>
-            </a>
-            <a v-if="result.promote_type==='new_product'" class="action white bg-blue font-30"
-                :href="result.promote_url">
-                <i class="icon-new-product"></i><span>进入新品发布</span>
-            </a>
-            <a v-if="result.promote_type!=='auction' && result.promote_type!=='new_product'" class="action white bg-green font-30" v-link="result.identifier | profile">
-                <i class="icon-user-profile"></i><span>进入个人主页</span>
-            </a>
-        </div>
-    </div>
     <div class="header">
         <div class="user">
             <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
@@ -142,6 +115,34 @@
             <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
         </li>
     </ul>
+    <div v-if="evaluation.results.length" class="results scrollable">
+        <div v-for="result in evaluation.results">
+            <div class="result-head flex">
+                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
+                <div class="flex-1 margin-left">
+                    <div class="font-30 white">{{result.identifier.name}}</div>
+                    <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
+                </div>
+                <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
+            </div>
+            <img class="portrait" @click="play(result.video, 'result')" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
+            <div class="price font-30 white center">
+                <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
+                <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
+            </div>
+            <a v-if="result.promote_type==='auction'" class="action white bg-yellow font-30"
+               :href="result.promote_url">
+                <i class="icon-auction"></i><span>进入拍卖预展</span>
+            </a>
+            <a v-if="result.promote_type==='new_product'" class="action white bg-blue font-30"
+               :href="result.promote_url">
+                <i class="icon-new-product"></i><span>进入新品发布</span>
+            </a>
+            <a v-if="result.promote_type!=='auction' && result.promote_type!=='new_product'" class="action white bg-green font-30" v-link="result.identifier | profile">
+                <i class="icon-user-profile"></i><span>进入个人主页</span>
+            </a>
+        </div>
+    </div>
     <comment type="10" :id="evaluation.post_id"></comment>
 </div>
 </template>

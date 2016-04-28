@@ -79,7 +79,7 @@
         <!--<div class="title flex">-->
             <!--<div class="line bg-red"></div>-->
             <!--<div class="flex-1 font-30 red">{{lesson.title}}</div>-->
-            <!--<div class="more font-26 border-all center" v-link="{ name: 'tag', params: { tagId:  tagId, itemId: lesson.id }}">更多</div>-->
+            <!--<div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>-->
         <!--</div>-->
         <!--<div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}">-->
             <!--<div class="img lesson" v-bg.lg="item.picture"></div>-->
@@ -111,7 +111,7 @@ export default {
         return {
             mall: {},
             evaluation: {},
-            lessson: {}
+            lesson: {}
         }
     },
     route: {
