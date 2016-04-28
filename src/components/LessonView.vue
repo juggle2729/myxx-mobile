@@ -7,19 +7,20 @@
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
             </div>
-            <div class="like font-26" @click="likeUser">
+            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser">
                 <span class="icon icon-like-solid"></span>
                 <span class="count">{{course.like}}</span>
             </div>
         </div>
         <div class="tags">
             <div class="tag-list" v-if="course.tags && course.tags.length">
-                <div class="tag-item font-26" :class="{'first-line' : $index < 3}" v-for="tag in course.tags">{{tag.title}}</div>
+                <div class="tag-item font-26" :class="{'first-line' : $index < 3}"
+                     v-link="{name: 'tags', params: tagParam(tag)}" v-for="tag in course.tags">{{tagName(tag)}}</div>
             </div>
             <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
         </div>
         <div class="separator"></div>
-        <comment type="60" :id="course.id || 0" has-input="true"></comment>
+        <comment type="60" :id="course.id" has-input="true"></comment>
     </div>
 </template>
 <script>
@@ -35,6 +36,7 @@
         data(){
             return {
                 course: {
+                    id: 0,
                     user: {},
                     column: {}
                 },
@@ -43,9 +45,10 @@
         },
         route: {
             data({to}) {
-                const courseId = to.params.id;
-                this.loadRecommendGoods(courseId);
-                return this.$get(`cms/opencourse/${courseId}|v3`)
+                this.course.id = Number(to.params.id);
+                this.loadRecommendGoods(this.course.id);
+
+                return this.$get(`cms/opencourse/${this.course.id}|v3`)
                         .then(course => {
                         this.course = course;
                         this.setShareData(course, true);
@@ -53,6 +56,26 @@
             }
         },
         methods: {
+            tagParam(tag) {
+                if(_.isObject(tag.tag)) {
+                    return {
+                        type: tag.type,
+                        tag: tag.tag.id
+                    };
+                } else {
+                    return {
+                        type: tag.type,
+                        tag: tag.tag
+                    };
+                }
+            },
+            tagName(tag) {
+                if(_.isObject(tag.tag)) {
+                    return tag.tag.name;
+                } else {
+                    return tag.tag;
+                }
+            },
             playCourse() {
                 let shareUrl = location.origin + location.pathname;
                 let query = _.merge({}, this.$route.query, {
@@ -72,7 +95,7 @@
                     productId: this.course.product_id,
                     productVideoId: this.course.product_video_id,
                     courseShareUrl: shareUrl,
-                    portraitId: this.course.user.id
+                    portraitId: this.course.user.photo
                 });
             },
             loadRecommendGoods(courseId) {
@@ -180,14 +203,19 @@
                 .icon {
                     vertical-align: 3px;
                 }
+
+                * {
+                    color: #c9c9c9;
+                }
             }
 
-            .icon {
-                color: #c9c9c9;
+            .liked {
+                * {
+                    color: #e23d3d;
+                }
             }
 
             .count {
-                color: #c9c9c9;
                 vertical-align: text-top;
             }
         }
