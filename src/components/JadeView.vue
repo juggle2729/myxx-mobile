@@ -183,7 +183,7 @@
     <div class="titles">
         <div class="title font-32">{{info.title}}</div>
         <div class="flex margin-top">
-            <p class="red font-32 icon-price flex-1">{{info.price | percent}}</p>
+            <p class="red font-32 icon-price flex-1">{{info.price | price}}</p>
             <div class="button bg-gray flex font-32 white"><span class="center-horizontal">购买(开发中)</span></div>
         </div>
     </div>
@@ -274,7 +274,7 @@
                               {{rec.item.title}}
                           </p>
                           <p class="red recommend-price title-center">
-                              ￥{{rec.item.price | percent}}
+                              {{rec.item.price | price}}
                           </p>
                       </div>
                   </a>

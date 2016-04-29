@@ -113,7 +113,7 @@ const mixin = {
                     if(user || method === 'get') {
                         const [path, version] = url.split('|');
                         let headers = _.fromPairs([ // 处理请求头
-                                ['X-Auth-Token', _.get(user, 'token')], 
+                                ['X-Auth-Token', _.get(user, 'token')],
                                 ['X-Api-Version', version]
                             ].filter(header => header[1]));
 
@@ -155,8 +155,8 @@ const mixin = {
 
         play(video) {
             let args = {
-                id: video, 
-                targetId: this.$route.params.id, 
+                id: video,
+                targetId: this.$route.params.id,
                 targetType: this.config.shareables[this.$route.name] || this.$route.name
             };
             if(_.isObject(video)) {

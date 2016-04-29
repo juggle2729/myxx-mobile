@@ -71,7 +71,7 @@
             <div class="img" v-bg.lg="item.first_picture"></div>
             <div class="desc font-30 center">
                 <p class="omit">{{item.title}}</p>
-                <p class="red">￥{{item.price | percent}}</p>
+                <p class="red">{{item.price | price}}</p>
             </div>
         </div>
     </div>
