@@ -1,176 +1,416 @@
 <style lang="sass">
 .jade-view {
     padding-bottom: 80px;
-    .titles {
-        /*height: 238px;*/
-        padding: 32px 32px 36px 32px;
-        position: relative;
-        > div {
-            margin-top: 32px;
-            height: 36px;
-        }
-        .icon-price:before {
-            margin-right: 16px;
-        }
-        .icon-trophy:before {
-            margin-right: 16px;
+    .jade-video {
+        height: 577px;
+        img {
+            width: 750px;
+            height: 577px;
         }
     }
-    .avatars {
-        padding: 0 32px;
-        height: 132px;
-        p {
-            margin-left: 16px;
+    .titles {
+        /*height: 238px;*/
+        padding: 36px 32px 32px 32px;
+        position: relative;
+        .title {
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        .icon-price::before {
+            position: relative;
+            bottom: -3px;
+            font-size: 36px;
+            margin-right: 16px;
+        }
+        .button {
+            padding: 0 20px 0 20px;
+            height: 72px;
+            border-width: 0;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 56px;
+        }
+
+    }
+    .master {
+        height: 144px;
+        padding: 32px;
+        .avatar-90 {
+            margin-right: 20px;
+        }
+        .icon-enter {
+            position: relative;
+            bottom: -2px;
+            margin-left: 14px;
+            margin-right: -12px;
+        }
+        .master-name {
+            margin-bottom: 14px;
         }
     }
     .params {
-        padding: 0 32px 32px 32px;
+        .tags {
+            padding: 8px 32px 32px 32px;
+            border-bottom: 1px solid #eee;
+            .tag {
+                display: inline-block;
+                margin-right: 14px;
+                margin-top: 24px;
+                padding: 20px 30px;
+                background-color: #ffecea;
+                border-radius: 20px;
+
+            }
+        }
+        .others {
+            padding-left: 32px;
+            ul > li {
+                padding: 26px 0;
+                line-height: 1.5;
+                border-bottom: 1px solid #eee;
+            }
+            ul > li > p:nth-child(2) {
+                line-height: 1.5;
+                padding-right: 32px;
+            }
+            .label {
+                width: 218px;
+            }
+        }
+    }
+    .recommend {
+        padding: 0 0 22px 32px;
         .title {
             height: 80px;
         }
-        .content {
-            > p {
-                margin-top: 32px;
-                > span {
-                    margin-right: 16px;
-                }
+        ul {
+            padding-bottom: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+        ul > li {
+            display: inline-block;
+            width: 300px;
+            height: 404px;
+            margin-right: 20px;
+            white-space: normal;
+            vertical-align: top;
+        }
+        .recommend-img {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            .label {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100px;
+                height: 44px;
+                text-align: center;
+                line-height: 44px;
+                background-color: rgba(0,0,0,0.5);
+            }
+            .img {
+                width: 100%;
+                height: 100%;
             }
         }
-        .medias {
-            padding: 32px 0;
+        .recommend-title {
+            padding: 20px 16px 16px 16px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .title-center {
+            text-align: center;
+        }
+        .title-left {
+            text-align: left;
+        }
+        .author {
+            margin-top: 16px;
         }
     }
-    .social {
+    .detail {
+        padding: 0 0 32px 0;
+        .title {
+            padding-left: 32px;
+            height: 80px;
+        }
+        .text {
+            padding: 32px;
+
+        }
+        img {
+            max-width: 100%
+        }
+    }
+    .fake-input {
         position: fixed;
-        z-index: 9;
         bottom: 0;
         width: 100%;
+        background-color: #f9f9f9;
+        color: red;
+        height: 98px;
+        padding: 16px;
+        .input {
+            background-color: white;
+            color: #c6c6c6;
+            padding: 0 20px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 8px;
+        }
+        .submit {
+            line-height: 72px;
+            margin-left: 16px;
+            width: 140px;
+            height: 72px;
+            color: white;
+            background-color: #b2b2b2;
+            border-radius: 8px;
+        }
     }
 }
 </style>
 <template>
 <div class="jade-view bg-white">
-    <slider :ids="info.imgs"></slider>
+    <div class="jade-video play" @click="play(info.video)">
+        <img  :src="config.video + info.video + '?vframe/jpg/offset/0/rotate/auto'" alt="{{info.title}}" />
+    </div>
     <div class="titles">
-        <div class="font-34">{{info.name}}{{info.moral? '·'+info.moral.name: ''}}</div>
-        <div v-if="info.product_rewards.length >0">
-            <span class="font-30 icon-trophy flex" style="color:#f3ac1c;">{{productReward}}</span>
-        </div>
-        <div class="flex">
-            <p class="red font-30 icon-price flex-1">{{info.price | percent}}</p>
-            <p class="light font-22 flex">{{info.display_count}}人浏览</p>
+        <div class="title font-32">{{info.title}}</div>
+        <div class="flex margin-top">
+            <p class="red font-32 icon-price flex-1">{{info.price | percent}}</p>
+            <div class="button bg-gray flex font-32 white"><span class="center-horizontal">购买(开发中)</span></div>
         </div>
     </div>
     <div class="separator-20"></div>
+    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'story'}}">
+            <div class="avatar-90" v-bg.sm="info.owner.photo"></div>
+            <div class="flex-1">
+                <p class="font-32 master-name">{{info.owner.name}}</p>
+                <p class="font-26 gray">{{info.owner.title}}</p>
+            </div>
+            <div class="red font-26">
+                进入主页<span class="icon-enter gray"></span>
+            </div>
+    </div>
+    <div class="separator-20"></div>
     <div class="params">
-        <div class="title border-bottom flex">
-            <span class="font-22 gray flex">宝贝参数</span>
+        <div class="tags">
+            <ul>
+                <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.tagName, tag: tag.tagValue}}">{{tag.tagName}}</a></li>
+            </ul>
         </div>
-        <div class="content">
-            <p class="font-26">
-                <span class="light">类型</span>
-                <span>{{info.category? info.category.name: ''}}</span>
-            </p>
-            <p class="font-26" v-if="info.category.parent">
-                <span class="light">器型</span>
-                <span>{{info.category? (info.category.parent? info.category.parent.name:''): ''}}</span>
-            </p>
-            <p class="font-26">
-                <span class="light">重量</span>
-                <span>{{info.weight | percent}}&nbsp;(g)</span>
-            </p>
-            <p class="font-26">
-                <span class="light">尺寸</span>
-                <span>{{info.size? info.size: 0}}&nbsp;(cm)</span>
-            </p>
-            <p class="font-26">
-                <span class="light">皮色</span>
-                <span>{{info.skin_color}}</span>
-            </p>
-            <p class="font-26">
-                <span class="light">肉色</span>
-                <span>{{info.inner_color? info.inner_color.name: ''}}</span>
-            </p>
-            <p class="font-26">
-                <span class="light">产地</span>
-                <span>{{info.origin_place? info.origin_place.name: ''}}</span>
-            </p>
+        <div class="others">
+            <ul>
+                <li class="flex font-26">
+                    <p class="label gray">分类</p>
+                    <p class="flex-1">{{info.category | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">重量</p>
+                    <p class="flex-1">{{info.weight}}g</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">尺寸</p>
+                    <p class="flex-1">{{info.size}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">原料产地</p>
+                    <p class="flex-1">{{info.place | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">产状</p>
+                    <p class="flex-1">{{info.material | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">品种</p>
+                    <p class="flex-1">{{info.variety | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">皮色</p>
+                    <p class="flex-1">{{info.skin | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">题材</p>
+                    <p class="flex-1">{{themes}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">礼物说</p>
+                    <p class="flex-1">{{gifts}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">寓意</p>
+                    <p class="flex-1">{{morals}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">获奖</p>
+                    <p class="flex-1">{{prizes}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">流派</p>
+                    <p class="flex-1">{{genre}}</p>
+                </li>
+            </ul>
         </div>
     </div>
-    <template v-if="info.detail">
-      <div class="separator-20"></div>
-      <div class="params">
-        <div class="title border-bottom flex">
-          <span class="font-22 gray flex">图文详情</span>
+    <div class="separator-20"></div>
+    <div class="recommend">
+        <div class="titleflex">
+          <span class="font-22 gray flex title">相关推荐</span>
+          <ul>
+              <li class="border-default" v-for="rec in recommend.recommend_data">
+                  <a v-if="rec.biz_type === 'pd'" href="#">
+                      <div class="recommend-img">
+                          <span class="label font-26 white">商品</span>
+                          <div class="media img" v-bg="rec.item.first_picture"></div>
+                      </div>
+                      <div class="font-26">
+                          <p class="recommend-title title-center">
+                              {{rec.item.title}}
+                          </p>
+                          <p class="red recommend-price title-center">
+                              ￥{{rec.item.price | percent}}
+                          </p>
+                      </div>
+                  </a>
+                  <a v-if="rec.biz_type === 'jb'" href="#">
+                      <div class="recommend-img">
+                          <span class="label font-26 white">求鉴宝</span>
+                          <div class="media img" v-bg="rec.item.picture"></div>
+                      </div>
+                      <div class="font-26">
+                          <p class="recommend-title title-left">
+                              {{rec.item.description}}
+                          </p>
+                      </div>
+                  </a>
+                  <a v-if="rec.biz_type === 'oc'" href="#">
+                      <div class="recommend-img">
+                          <span class="label font-26 white">公开课</span>
+                          <div class="media img" v-bg="rec.item.author.portrait"></div>
+                      </div>
+                      <div class="font-26">
+                          <div class="recommend-title title-left">
+                              <p>{{rec.item.title}}</p>
+                              <p class="gray author">{{rec.item.author.name}}</p>
+                         </div>
+                      </div>
+                  </a>
+              </li>
+          </ul>
         </div>
-        <div class="medias font-30">
+    </div>
+    <div class="separator-20"></div>
+    <comment type="40" :id="info.id"></comment>
+    <div class="separator-20"></div>
+    <div class="detail">
+        <div class="title border-bottom flex">
+            <span class="font-22 gray flex">图文详情</span>
+        </div>
+        <div class="text font-30">
           {{{info.detail}}}
         </div>
-      </div>
-    </template>
-    <social-bar :id="info.id" type="40" :active="info.is_liked" :total="info.like_count" :list="likes" class="border-top social bg-white">
-        <div @click="share" class="border-left center gray extra-action"><i class="icon-share"></i><span>分享</span></div>
-    </social-bar>
+        <div v-for="img in info.pictures" >
+          <img :src="config.img + img + '?imageView2'" @click="coverflow($index)"/>
+        </div>
+    </div>
+    <div class="separator-20"></div>
+    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
+        <div class="input flex-1">点击此处发表评论...</div>
+        <div class="submit center">发送</div>
+    </div>
 </div>
 </template>
 <script>
-import SocialBar from './SocialBar.vue';
-import Slider from './Slider.vue';
 import shareable from 'shareable';
+import Comment from './JadeComment.vue';
 export default {
     name: 'JadeView',
     mixins: [shareable],
     components: {
-        SocialBar,
-        Slider
+        Comment
     },
     data() {
         return {
             info: {
-                shop: {},
-                user: {},
-                category: {
-                    parent: {}
-                },
-                theme: {},
-                inner_color: {},
-                moral: {},
-                origin_place: {},
-                product_rewards: [{reward: {}}],
-                creator_reward: {},
-                imgs: [],
-                detail: {
-                    medias: [{}]
-                }
+                owner: {}
             },
-            likes: []
+            recommend: {}
         };
     },
     computed: {
-        productReward() {
-            let reward = this.info.product_rewards[0];
-            return reward? reward.reward.name : '';
+        themes: function() {
+            return this._treeArrayConcat(this.info.themes);
+        },
+        gifts: function() {
+            return this._treeArrayConcat(this.info.gifts);
+        },
+        morals: function() {
+            return this._treeArrayConcat(this.info.morals);
+        },
+        prizes: function() {
+            return this._treeArrayConcat(this.info.prizes);
+        },
+        genre: function() {
+            return this._treeArrayConcat(this.info.genre);
+        },
+        tags: function() {
+            let a = [], tags = this.info.tags || [];
+            if (tags.length) {
+                for (let i = 0; i < tags.length; i++) {
+                    // 如果是string类型的标签
+                    if (typeof tags[i].tag === 'string') {
+                        a.push({
+                            tagType: tags[i].type,
+                            tagName: tags[i].tag,
+                        });
+                    } else {
+                        a.push({
+                            tagType: tags[i].type,
+                            tagName: tags[i].tag.parent.name        // 先显示父标签
+                        },{
+                            tagType: tags[i].type,
+                            tagName: tags[i].tag.name
+                        });
+                    }
+                }
+            }
+            return a;
         }
     },
     route: {
         data() {
-            return this.$get('mall/products/'+ this.$route.params.id)
+            this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
                     this.setShareData(data, true);
-                    this.$get('users/target/'+ this.info.id +'/type/40/likers')
-                        .then((data) => {
-                            this.likes = data.users;
-                        });
+                });
+            this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
+                .then((data) => {
+                    this.recommend = data;
                 });
         }
     },
     methods: {
         coverflow(index) {
-            let ids = this.info.detail.medias
-                        .filter(media => media.media_type==='picture')
-                        .map(media => media.media_content);
-            this.action('coverflow', {ids, index});
+            let ids = this.info.pictures;
+            this.action('coverflow', {ids,index});
+        },
+        _treeArrayConcat(treeArray) {
+            if (treeArray && treeArray.length !== 0) {
+                let a = [];
+                for (let tree of treeArray) {
+                    a.push(tree ? (tree.parent ? `${tree.parent.name}—${tree.name}` : `${tree.name}`) : '无');
+                }
+                return a.join('、');
+            } else {
+                return '无';
+            }
         }
     }
 }

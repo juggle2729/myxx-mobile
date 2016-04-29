@@ -77,11 +77,20 @@ export default {
     },
     '/jade/:id': {
         name: 'jade',
-        title: '宝贝详情',
+        title: '商品详情',
         component: (resolve) => {
                 require.ensure([], (require) => {
                     resolve(require('JadeView.vue'));
-                }, 'jade');
+                }, 'mall');
+            }
+    },
+    '/comments/:id/:type': {
+        name: 'comments',
+        title: '全部评论',
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('CommentsView.vue'));
+                }, 'comments');
             }
     },
     '/masters': {

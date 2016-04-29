@@ -46,7 +46,7 @@
             <a href="/story/521">晒宝 - story/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/jade/138">商品 - jade/:id</a>
+            <a href="/jade/1">商品 - jade/:id</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="/user/1023">个人主页 - user/:id</a>

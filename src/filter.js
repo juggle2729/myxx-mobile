@@ -44,7 +44,9 @@ function profile(user) {
 }
 
 function percent(num) {
-    if(!num) {
+    if(num === null) {
+        return '面议';
+    } else if (typeof num !== 'number') {
         return '0.00';
     }
     let str = num + '';
@@ -67,6 +69,11 @@ function type(id) {
 function qn(path) {
     return config.www + path;
 }
+
+function tree(tr) {
+    return tr ? (tr.parent ? `${tr.parent.name}—${tr.name}` : `${tr.name}`) : '无';
+}
+
 export default {
     install(Vue, options) {
         Vue.filter('moment', moment);
@@ -76,5 +83,6 @@ export default {
         Vue.filter('percent', percent);
         Vue.filter('truncate', truncate);
         Vue.filter('qn', qn);
+        Vue.filter('tree', tree);
     }
 }
