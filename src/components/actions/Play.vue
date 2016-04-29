@@ -31,7 +31,7 @@
 </style>
 <template>
 <div class="play-action" @click="close">
-    <template v-for="media in medias">
+    <template v-for="media in params.medias">
         <video v-if="media.type==='video'" 
             :id="media.id" controls 
             :class="{'on': $index===playing}"
@@ -61,24 +61,14 @@ export default {
             timer: undefined
         }
     },
-    computed: {
-        medias() {
-            let items = [{id: this.params.id, type: 'video'}];
-            if(this.params.ads) {
-                const [i, v] = this.params.ads;
-                items = items.concat({id: i, type: 'img'}, {id: v, type: 'video'});
-            }
-            return items;
-        }
-    },
     ready() {
         this.params.cb(this.start);
     },
     methods: {
         start() {
             const v = document.querySelector('.on');
-            if(this.medias.length  === 3) {
-                const ads = document.querySelector(`[src$='${this.medias[2].id}']`);
+            if(this.params.medias.length  === 3) {
+                const ads = document.querySelector(`[src$='${this.params.medias[2].id}']`);
                 ads.play(); // 必须在这里触发播放
                 setTimeout(() => ads.pause(), 1000);
                 
@@ -98,7 +88,7 @@ export default {
         },
         ended({target}) {
             target.webkitExitFullscreen();
-            if(this.medias[this.playing + 1]) {
+            if(this.params.medias[this.playing + 1]) {
                 this.playing += 1;
             } else {
                 this.close();

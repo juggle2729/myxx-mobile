@@ -34,7 +34,7 @@
             </div>
         </template>
         <div class="separator"></div>
-        <comment type="60" :id="course.id" has-input="true"></comment>
+        <comment type="60" :id="course.id"></comment>
     </div>
 </template>
 <script>

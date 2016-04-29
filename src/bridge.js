@@ -26,13 +26,14 @@ const adapter = {
                 }
                 break;
             case 'playCourses':
+                let medias = [{id: params.courseVideoId, type: 'video'}];
+                if(params.portraitId && params.productVideoId) {
+                    medias = medias.concat({id: params.portraitId, type: 'img'}, {id: params.productVideoId, type: 'video'});
+                }
                 this.$root.popup = {
                         handler: 'play', 
-                        params: {
-                            id: params.courseVideoId,
-                            ads: [params.portraitId, params.productVideoId],
-                            cb: fn => fn()
-                        }
+                        medias,
+                        cb: fn => fn()
                     };
                 break;
             case 'coverflow':

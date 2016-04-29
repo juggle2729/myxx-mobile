@@ -136,7 +136,11 @@ export default {
         }
     },
     created() {
-        this.fetch();
+        this.$watch('id', (id) => {
+            if(id) {
+                this.fetch();
+            }
+        })
     },
     methods: {
         clicked(comment, index) {

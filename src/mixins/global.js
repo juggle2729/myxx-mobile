@@ -75,7 +75,6 @@ const mixin = {
                         break;
                     case 'user':
                         callback = resp => {
-                                console.debug('user cb', resp);
                                 if(resp) {
                                     const user = JSON.parse(resp);
                                     this.$root.user = user; // 更新this.self
@@ -165,7 +164,11 @@ const mixin = {
             if(this.isApp) {
                 this.action('play', args);
             } else {    // 在非App环境，采用回调来触发视频自动播放！
-                this.action('play', args, fn => fn());
+                let medias = [{id: args.id, type: 'video'}];
+                if(args.ads && args.ads.length===2) {
+                    medias = medias.concat({id: args.ads[0], type: 'img'}, {id: args.ads[1], type: 'video'});
+                }
+                this.action('play', {medias} , fn => fn());
             }
         }
     }
