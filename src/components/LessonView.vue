@@ -19,6 +19,19 @@
             </div>
             <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
         </div>
+        <template v-if="recommendGoods.length">
+            <div class="separator"></div>
+            <div class="recommend-goods">
+                <div class="title font-22">商品推荐</div>
+                <div class="goods-list">
+                    <div class="good-item" v-link="{name: 'jade', params: {id: good.item.id}}" v-for="good in recommendGoods">
+                        <div class="good-img" v-bg.md="good.item.first_picture"></div>
+                        <div class="good-title">{{good.item.title}}</div>
+                        <div class="good-price">￥{{good.item.price | percent}}</div>
+                    </div>
+                </div>
+            </div>
+        </template>
         <div class="separator"></div>
         <comment type="60" :id="course.id" has-input="true"></comment>
     </div>
@@ -101,7 +114,7 @@
             loadRecommendGoods(courseId) {
                 return this.$get(`dc/rd|v3`, {
                     obj_id: courseId,
-                    biz_type: 'oc'
+                    biz_type: 'pd' // 推荐商品
                 }).then(data => {
                     this.recommendGoods = data.recommend_data;
                 });
@@ -204,13 +217,13 @@
                     vertical-align: 3px;
                 }
 
-                * {
+                > span {
                     color: #c9c9c9;
                 }
             }
 
             .liked {
-                * {
+                > span {
                     color: #e23d3d;
                 }
             }
@@ -269,6 +282,55 @@
             background-color: #f1f1f1;
             width: 100%;
             height: 20px;
+        }
+
+        .recommend-goods {
+            @include border(bottom);
+            .title {
+                color: #979797;
+                line-height: 78px;
+                text-align: left;
+                margin-left: 32px;
+            }
+
+            .goods-list {
+                padding:0 32px 32px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .good-item {
+                @include border();
+                width: 300px;
+                display: inline-block;
+            }
+
+            .good-item:not(:first-child) {
+                margin-left: 20px;
+            }
+
+            .good-img {
+                width: 100%;
+                height: 300px;
+            }
+
+            .good-title {
+                font-size: 24px;
+                padding: 17px 18px 20px;
+                line-height: 36px;
+                color: #393939;
+                white-space: normal;
+                text-align: center;
+            }
+
+            .good-price {
+                text-align: center;
+                font-size: 20px;
+                color: #cc3f4f;
+                padding-bottom: 22px;
+            }
         }
     }
 </style>
