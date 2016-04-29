@@ -136,11 +136,15 @@ export default {
         }
     },
     created() {
-        this.$watch('id', (id) => {
-            if(id) {
-                this.fetch();
-            }
-        })
+        if(this.id) {
+            this.fetch();
+        } else {
+            this.$watch('id', (id) => {
+                if(id) {
+                    this.fetch();
+                }
+            })
+        }
     },
     methods: {
         clicked(comment, index) {

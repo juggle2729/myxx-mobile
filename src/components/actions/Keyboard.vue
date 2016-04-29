@@ -19,22 +19,25 @@
     .container {
         width: 620px;
         margin: 0 auto;
-        padding-top: 50px;
+        padding-top: 40px;
         border-radius: 8px;
-        font-size: 34px;
+        font-size: 30px;
     }
     .title {
-        margin: 0 50px;
+        margin: 0 40px;
+        .count {
+            float: right;
+        }
     }
     textarea {
         border-radius: 8px;
-        font-size: 34px;
-        width: 520px;
+        font-size: 30px;
+        width: 540px;
         height: 200px;
         border: none;
         resize: none;
         padding: 1em;
-        margin: 1em 50px;
+        margin: 1em 40px;
     }
     .btns {
         > div {
@@ -50,9 +53,9 @@
 <template>
 <div class="keyboard">
     <div class="container bg-default">
-        <div class="title">{{params.placeholder || '发表评论'}}</div>
+        <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>max}">{{content.length}}/{{max}}</span></div>
         <textarea v-model="content"></textarea>
-        <div class="btns border-top"><div @click="close">取消</div><div @click="submit" class="border-left green">发表</div></div>
+        <div class="btns border-top"><div @click="close">取消</div><div @click="submit" class="border-left" :class="{'green': content.length>0 && content.length<max}">发表</div></div>
     </div>
 </div>
 </template>
@@ -67,20 +70,19 @@ export default {
     },
     data() {
         return {
+            max: 150,
             content: ''
         };
     },
-    // ready() { // 会导致微信卡住...
-    //     setTimeout(() => document.querySelector('textarea').focus(), 500);
-    // },
+    ready() {
+        //IMPROVE 输入框autofocus
+    },
     methods: {
         submit() {
             const content = this.content.trim();
-            if(content.length > 0 && content.length <= 150) {
+            if(content.length > 0 && this.content.length <= this.max) {
                 this.params.cb(content);
                 this.close();
-            } else {
-                this.action('toast', {success: false, text: '评论内容为1~150字！'});
             }
         },
         close() {

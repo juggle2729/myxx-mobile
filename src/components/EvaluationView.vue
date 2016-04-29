@@ -154,6 +154,7 @@ export default {
     mixins: [shareable],
     data() {
         return {
+            evaluation: {},
             comment: {
                 items: [],
                 total: 0

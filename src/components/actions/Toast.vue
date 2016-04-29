@@ -9,8 +9,8 @@
     }
     position: fixed;
     z-index: 9999;
-    width: 225px;
-    min-height: 225px;
+    min-width: 200px;
+    min-height: 80px;
     top: 380px;
     left: 50%;
     background: rgba(40,40,40,.75);
@@ -18,22 +18,25 @@
     border-radius: 8px;
     color: white;
     padding: 24px;
-    .status {
-        font-size: 110px;
+    [class^='icon-'] {
+        font-size: 60px;
+        line-height: 80px;
         color: #f76260;
+        margin-bottom: 24px;
+        padding-right: 0;
         &.success {
             color: #04be02;
         }
     }
     .text {
-        margin-top: 24px; 
         font-size: 34px;
     }
 }
 </style>
 <template>
 <div class="toast">
-    <div class="status" :class="{'success': params.success === '1'}">{{params.success === '1' ? '&#10004;': '&#10007;'}}</div>
+    <i v-if="params.success==='1'" class="icon-success success"></i>
+    <i v-if="params.success==='0'" class="icon-error"></i>
     <div class="text">{{params.text}}</div>
 </div>
 </template>

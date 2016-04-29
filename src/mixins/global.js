@@ -41,10 +41,12 @@ const mixin = {
         if(localStorage.getItem(this.uid)) {
             const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
             localStorage.removeItem(this.uid); //立刻去掉缓存数据，防止重复提交
-            this.$req(url, method, data)
-                .then(() => {
-                    this.action('toast', {success: 1, text: '操作成功'});
-                });
+            _.delay(() => { // 延时请求，防止同时触发两次user请求，导致微信code重复请求报错
+                this.$req(url, method, data)
+                    .then(() => {
+                        this.action('toast', {success: 1, text: '操作成功'});
+                    });
+                }, 2000);
         }
     },
     methods: {
@@ -123,7 +125,7 @@ const mixin = {
                                 } else {    // 业务异常处理
                                     defer.reject(resp.message);
                                     if([605, 608].indexOf(resp.status) !== -1) {
-                                        // 暂存请求数据
+                                        // 暂存请求数据,可以考虑把对应回调也暂存
                                         localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
                                         this.action('login');
                                     } else if([3002, 5004, 2001, 2000].indexOf(resp.status) !== -1) {
