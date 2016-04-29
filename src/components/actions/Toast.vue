@@ -1,5 +1,12 @@
 <style lang="sass">
 .toast {
+    &.pop-transition {
+        transition: opacity .3s ease;
+        opacity: 1;
+    }
+    &.pop-enter, &.pop-leave {
+        opacity: 0;
+    }
     position: fixed;
     z-index: 9999;
     width: 225px;

@@ -1,6 +1,13 @@
 <style lang="sass">
 @import '../../styles/partials/var';
-.share {
+.share-action {
+    &.pop-transition {
+        transition: transform .3s ease;
+        transform: translate3d(0, 0, 0);
+    }
+    &.pop-enter, &.pop-leave {
+        transform: translate3d(0, -100%, 0);
+    }
     position: fixed;
     left: 0;
     right: 0;
@@ -11,7 +18,7 @@
 }
 </style>
 <template>
-<div class="share" @click="close"></div>
+<div class="share-action" @click="close"></div>
 </template>
 <script>
 export default {

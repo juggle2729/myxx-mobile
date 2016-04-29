@@ -1,5 +1,12 @@
 <style lang="sass">
 .login {
+    &.pop-transition {
+        transition: transform .3s ease;
+        transform: translate3d(0, 0, 0);
+    }
+    &.pop-enter, &.pop-leave {
+        transform: translate3d(0, 100%, 0);
+    }
     position: fixed;
     left: 0;
     right: 0;
@@ -13,6 +20,7 @@
         text-align: right;
         color: #888888;
         padding-top: 20px;
+        cursor: pointer;
     }
     img {
         padding-top: 130px;
@@ -135,7 +143,7 @@ export default {
             }
         },
         close() {
-            // localStorage.removeItem(this.uid);
+            localStorage.removeItem(this.uid);
             this.params.handler = undefined;
         }
     }

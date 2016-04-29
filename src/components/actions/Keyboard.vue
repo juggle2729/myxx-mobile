@@ -1,5 +1,14 @@
 <style lang="sass">
-.keyboard-view {
+.keyboard {
+    &.pop-transition .container {
+        transition: transform .3s ease, opacity .3s linear;
+        transform: translate3d(0, 100px, 0);
+        opacity: 1;
+    }
+    &.pop-enter .container, &.pop-leave .container {
+        transform: translate3d(0, -100%, 0);
+        opacity: 0;
+    }
     position: fixed;
     left: 0;
     right: 0;
@@ -9,7 +18,7 @@
     background-color: rgba(0, 0, 0, .3);
     .container {
         width: 620px;
-        margin: 100px auto 0;
+        margin: 0 auto;
         padding-top: 50px;
         border-radius: 8px;
         font-size: 34px;
@@ -39,7 +48,7 @@
 }
 </style>
 <template>
-<div class="keyboard-view">
+<div class="keyboard">
     <div class="container bg-default">
         <div class="title">{{params.placeholder || '发表评论'}}</div>
         <textarea v-model="content"></textarea>

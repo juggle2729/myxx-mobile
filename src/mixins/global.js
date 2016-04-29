@@ -19,9 +19,7 @@ const mixin = {
     },
     http: {
         root: config.api,
-        emulateJSON: true,
-        xxx: 1,
-        headers: {}
+        emulateJSON: true
     },
     route: {
         waitForData: false
@@ -62,7 +60,7 @@ const mixin = {
          * @param  {String|Object} params   接口参数
          * @return {Promise}                Q的promise
          */
-        action(handler, params = '') {
+        action(handler, params = '', callback) {
             // 所有参数采用字符串形式传递
             if(_.isObject(params)) {
                 Object.keys(params).forEach(k => params[k] = _.isObjectLike(params[k]) ? params[k] : _.toString(params[k]));
@@ -70,7 +68,6 @@ const mixin = {
                 params = _.toString(params);
             }
             let defer = Q.defer();
-            let callback = undefined;
             bridge.then((bridge) => {
                 switch(handler) {
                     case 'login':
@@ -156,58 +153,21 @@ const mixin = {
             return this.$req(url, 'delete', data);
         },
 
-        play(id, targetType, targetId) {
-            if(!targetId) {
-                targetId = (this.$route.params.id || -1);
+        play(video) {
+            let args = {
+                id: video, 
+                targetId: this.$route.params.id, 
+                targetType: this.config.shareables[this.$route.name] || this.$route.name
+            };
+            if(_.isObject(video)) {
+                _.merge(args, video);
             }
-            if(!targetType) {
-                targetType = this.config.shareables[this.$route.name] || this.$route.name;
+            if(this.isApp) {
+                this.action('play', args);
+            } else {    // 在非App环境，采用回调来触发视频自动播放！
+                this.action('play', args, fn => fn());
             }
-
-            this.action('play', {id, targetType, targetId});
-            if(!this.isApp) { // 分享页面，视频自动播放, FIXME...
-                _.delay(() => {
-                    const medias = this.$root.playlist;
-                    if(medias.length === 1) {
-                        const v = document.querySelector(`[src$='${medias[0]}']`);
-                        v.classList.add('on');
-                        v.play();
-                        v.onended = (e) => {
-                            if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
-                                e.target.webkitExitFullscreen();
-                            }
-                            this.$root.playlist = undefined;
-                        }
-                    } else {
-                        const pic = document.querySelector(`[src$='${medias[1]}']`);
-                        const v2 = document.querySelector(`[src$='${medias[2]}']`);
-                        v2 && v2.play();
-                        const v1 = document.querySelector(`[src$='${medias[0]}']`);
-                        v1.play();
-                        v1.classList.add('on');
-                        v1.onended = (e) => {
-                            if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
-                                e.target.webkitExitFullscreen();
-                            }
-                            v1.classList.remove('on');
-                            pic.classList.add('on');
-                            _.delay(() => {
-                                pic.classList.remove('on');
-                                v2.classList.add('on');
-                                v2.play();
-                                v2.onended = (e) => {
-                                    if(_.isFunction(_.get(e, 'target.webkitExitFullscreen'))) {
-                                        e.target.webkitExitFullscreen();
-                                    }
-                                    v2.classList.remove('on');
-                                    this.$root.playlist = undefined;
-                                }
-                            }, 2000);
-                        }
-                    }
-                }, 50);
-            }
-        },
+        }
     }
 };
 export default mixin;

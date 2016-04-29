@@ -1,55 +1,53 @@
 <style lang="sass">
-.keyboard-view {
+.play-action {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
-    background-color: rgba(0, 0, 0, .3);
-    .container {
-        width: 620px;
-        margin: 100px auto 0;
-        padding-top: 50px;
-        border-radius: 8px;
-        font-size: 34px;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+
+    video.on, img.on {
+        position: relative;
+        transform: translate3d(-50%, -50%, 0);
+        width: 100%;
+        height: auto;
+        opacity: 1;
     }
-    .title {
-        margin: 0 50px;
-    }
-    textarea {
-        border-radius: 8px;
-        font-size: 34px;
-        width: 520px;
-        height: 200px;
-        border: none;
-        resize: none;
-        padding: 1em;
-        margin: 1em 50px;
-    }
-    .btns {
-        > div {
-            cursor: pointer;
-            width: 50%;
-            display: inline-block;
-            text-align: center;
-            padding: 1em 0;
-        }
+    video, img {
+        transition: opacity 1s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+        width: 0;
+        height: 0;
     }
 }
 </style>
 <template>
-<div class="keyboard-view">
-    <div class="container bg-default">
-        <div class="title">{{params.placeholder || '发表评论'}}</div>
-        <textarea v-model="content"></textarea>
-        <div class="btns border-top"><div @click="close">取消</div><div @click="submit" class="border-left green">发表</div></div>
-    </div>
+<div class="play-action" @click="close">
+    <template v-for="media in medias">
+        <video v-if="media.type==='video'" 
+            :id="media.id" controls 
+            :class="{'on': $index===playing}"
+            :src="config.video + media.id"
+             @ended="ended" 
+             @webkitendfullscreen="endFullscreen"></video>
+        <img v-else 
+            :id="media.id" 
+            :class="{'on': $index===playing}"
+            :src="config.img + media.id"/>
+    </template>
 </div>
 </template>
 <script>
 export default {
-    name: 'Keyboard',
+    name: 'Play',
     props: {
         params: {
             type: Object,
@@ -58,20 +56,63 @@ export default {
     },
     data() {
         return {
-            content: ''
-        };
+            playing: 0,
+            interval: undefined,
+            timer: undefined
+        }
+    },
+    computed: {
+        medias() {
+            let items = [{id: this.params.id, type: 'video'}];
+            if(this.params.ads) {
+                const [i, v] = this.params.ads;
+                items = items.concat({id: i, type: 'img'}, {id: v, type: 'video'});
+            }
+            return items;
+        }
+    },
+    ready() {
+        this.params.cb(this.start);
     },
     methods: {
-        submit() {
-            const content = this.content.trim();
-            if(content.length > 0 && content.length <= 150) {
-                this.params.cb(content);
-                this.close();
+        start() {
+            const v = document.querySelector('.on');
+            if(this.medias.length  === 3) {
+                const ads = document.querySelector(`[src$='${this.medias[2].id}']`);
+                ads.play(); // 必须在这里触发播放
+                setTimeout(() => ads.pause(), 1000);
+                
+                // 获取前面视频和图片的总时长
+                this.interval = setInterval(() => {
+                    if(v.readyState > 0) {
+                        clearInterval(this.interval);
+                        this.timer = setTimeout(() => {
+                            this.playing += 1;
+                            console.debug(this.playing);
+                            ads.play();
+                        }, v.duration * 1000 + 3000);
+                    }
+                }, 500);
+            }
+            v.play();
+        },
+        ended({target}) {
+            target.webkitExitFullscreen();
+            if(this.medias[this.playing + 1]) {
+                this.playing += 1;
             } else {
-                this.action('toast', {success: false, text: '评论内容为1~150字！'});
+                this.close();
+            }
+        },
+        endFullscreen({target}) {
+            if(!target.ended) {
+                // 最后一个视频 或者 手动退出 时,结束整个播放
+                this.close();
             }
         },
         close() {
+            this.interval && clearInterval(this.interval);
+            this.timer && clearTimeout(this.timer);
             this.params.handler = undefined;
         }
     }

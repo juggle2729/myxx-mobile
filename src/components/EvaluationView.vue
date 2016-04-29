@@ -125,7 +125,7 @@
                 </div>
                 <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
             </div>
-            <img class="portrait" @click="play(result.video, 'result')" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
+            <img class="portrait" @click="play({id: result.video, ads: [result.ad_picture, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="price font-30 white center">
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>

@@ -1,7 +1,5 @@
 import Q from 'q';
 
-const isMobile = /android|iphone|ipod|ipad/i.test(navigator.userAgent);
-
 const adapter = {
     callHandler(handler, params, cb) {
         switch(handler) {
@@ -27,36 +25,15 @@ const adapter = {
                     cb();
                 }
                 break;
-            case 'keyboard':
-                this.$root.popup = _.merge({}, params, {handler, cb});
-                break;
-            case 'delete':
-                cb.call(this, window.confirm('删除评论？') ? '1' : '0');
-                break;
-            case 'play':
             case 'playCourses':
-                let playlist = [params.id];
-                if(params.targetType === 'result') {
-                    const result = _.get(this, 'evaluation.results')
-                        .filter((result) => result.video === params.id)
-                        .pop();
-                    if(result.ad_picture && result.ad_video) {
-                        playlist.splice(1, 0, result.ad_picture, result.ad_video);
-                    }
-                } else if (params.targetType === 'open_course') {
-                    playlist.splice(0, 1, params.courseVideoId);
-                }
-
-                this.$root.playlist = playlist;
-                if(this.env.isShare) {
-                    _.delay(() => { // 播放统计
-                        this.$get('log/video_play', {
-                                id: this.$route.params.id,
-                                type: this.config.shareables[this.$route.name],
-                                percentage: -1
-                            }).then(_.noop);
-                    }, 3000);
-                }
+                this.$root.popup = {
+                        handler: 'play', 
+                        params: {
+                            id: params.courseVideoId,
+                            ads: [params.portraitId, params.productVideoId],
+                            cb: fn => fn()
+                        }
+                    };
                 break;
             case 'coverflow':
                 if(window.WeixinJSBridge) {
@@ -69,10 +46,11 @@ const adapter = {
                     this.$root.popup = _.merge({}, params, {handler, cb});
                 }
                 break;
+            case 'play':
+            case 'keyboard':
             case 'share':
-                this.$root.popup = _.merge({}, params, {handler, cb});
-                break;
             case 'toast':
+            case 'delete':
                 this.$root.popup = _.merge({}, params, {handler, cb});
                 break;
             case 'shareable':

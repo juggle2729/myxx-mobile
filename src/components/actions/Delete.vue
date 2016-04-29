@@ -1,0 +1,65 @@
+<style lang="sass">
+.delete-action {
+    &.pop-transition .container {
+        transition: transform .2s ease;
+        transform: translate3d(0, 0, 0);
+    }
+    &.pop-enter .container, &.pop-leave .container {
+        /*FIXME leave动画无效*/
+        transform: translate3d(0, 100%, 0);
+    }
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, .6);
+    .container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+    }
+    .delete, .cancle {
+        display: block;
+        text-align: center;
+        font-size: 36px;
+        line-height: 56px;
+        padding: 20px 0;
+    }
+}
+</style>
+<template>
+<div class="delete-action" @click="close">
+    <div class="container">
+        <div class="delete red" @click="delete">删除</div>
+        <div class="separator"></div>
+        <div class="cancle" @click="cancle">取消</div>
+    </div>
+</div>
+</template>
+<script>
+export default {
+    name: 'Delete',
+    props: {
+        params: {
+            type: Object,
+            required: true
+        }
+    },
+    methods: {
+        delete() {
+            this.params.cb('1');
+            this.close();
+        },
+        cancle() {
+            this.params.cb('0');
+            this.close();
+        },
+        close() {
+            this.params.handler = undefined;
+        }
+    }
+}
+</script>

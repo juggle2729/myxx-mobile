@@ -4,5 +4,6 @@ import play from './Play.vue';
 import share from './Share.vue';
 import login from './Login.vue';
 import toast from './Toast.vue';
+import choice from './Delete.vue';
 
-export default {coverflow, keyboard, play, share, login, toast};
+export default {coverflow, keyboard, play, share, login, toast, 'delete': choice};

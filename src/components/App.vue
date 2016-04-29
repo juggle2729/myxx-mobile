@@ -1,73 +1,50 @@
-
 <style lang="sass">
-    @import '../styles/myxx';
-    #app {
-        min-height: 100%;
-        height: 100%;
-        .share-top {
-            height: 100px;
-            padding: 0px 32px;
-            .logo {
-                height: 68px;
-                width: 68px;
-                margin: 5px 20px 0 0;
-            }
-            .download-btn {
-                display: block;
-                padding: 10px 20px;
-                border-width: 3px;
-                border-radius: 5px;
-            }
+@import '../styles/myxx';
+#app {
+    min-height: 100%;
+    height: 100%;
+    .share-top {
+        height: 100px;
+        padding: 0px 32px;
+        .logo {
+            height: 68px;
+            width: 68px;
+            margin: 5px 20px 0 0;
         }
-        .share-bottom {
-            z-index: 990;
-            position: fixed;
-            bottom: 0;
-            height: 100px;
-            width: 100%;
-            img {
-                height: 100%;
-            }
-            a {
-                display: block;
-            }
-        }
-        #video-player {
-            background-color: black;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 999;
-            width: 100%;
-            height: 100%;
-            video.on, img.on {
-                position: relative;
-                top: 50%;
-                transform: translate3d(0, -50%, 0);
-                width: 100%;
-                height: auto;
-                opacity: 1;
-            }
-            video, img {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-        }
-        #logout {
-            background-color: #F44336;
-            z-index: 99;
-            position: fixed;
-            top: 0;
-            right: 0;
-            font-size: 34px;
-            padding: 20px;
-            border-radius: 0 0 0 50%;
+        .download-btn {
+            display: block;
+            padding: 10px 20px;
+            border-width: 3px;
+            border-radius: 5px;
         }
     }
+    .share-bottom {
+        z-index: 990;
+        position: fixed;
+        bottom: 0;
+        height: 100px;
+        width: 100%;
+        img {
+            height: 100%;
+        }
+        a {
+            display: block;
+        }
+    }
+    #logout {
+        background-color: #F44336;
+        z-index: 99;
+        position: fixed;
+        top: 0;
+        right: 0;
+        font-size: 34px;
+        padding: 20px;
+        border-radius: 0 0 0 50%;
+    }
+}
 </style>
 <template>
-<div>
+<div :class="{'frozen': popup.handler}">
     <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
         <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
         <div class="flex-1 flex">
@@ -82,18 +59,8 @@
         <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="video-player" v-if="playlist" @click="playlist=undefined">
-        <template v-if="playlist.length===1">
-            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[0]"></video>
-        </template>
-        <template v-else>
-            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[0]"></video>
-            <img v-if="playlist" :src="config.img + playlist[1]"/>
-            <video v-if="playlist" autoplay preload="true" controls :src="config.video + playlist[2]"></video>
-        </template>
-    </div>
     <div id="logout" @click="logout" v-if="self && env.isBrowser">🤔</div>
-    <component :is="popup.handler" :params.sync="popup"></component>
+    <component :is="popup.handler" :params.sync="popup" transition="pop"></component>
 </div>
 </template>
 <script>
@@ -106,8 +73,6 @@ export default {
         return {
             user: JSON.parse(localStorage.getItem('MYXX_USER')),
             shareData: {},
-            playlist: undefined,
-            comment: undefined,
             scrollY: 0,
             popup: {}
         }
@@ -126,28 +91,15 @@ export default {
                 isTouchable: 'ontouchstart' in document,
                 version: undefined
             };
-            env.isBrowser = !(env.isWechat || env.isQQ || env.isWeibo);
+            env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo);
             env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
             return env;
         }
     },
     ready() {
-        this.action('version')
-            .then((v) => {
-                this.env.version = v;
-            });
+        this.action('version').then(v => this.env.version = v);
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
-        this.$watch('playlist', (playlist) => {
-            if(playlist) {
-                this.scrollY = window.scrollY;
-                this.$el.classList.add('frozen');
-            } else {
-                this.$el.classList.remove('frozen');
-                window.scrollTo(0, this.scrollY);
-            }
-        });
-
     },
     methods: {
         logout() {
