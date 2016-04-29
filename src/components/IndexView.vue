@@ -48,6 +48,10 @@
         <li class="font-26 border-top padding center">
             <a href="/jade/1">商品 - jade/:id</a>
         </li>
+        <li class="tab">拍卖</li>
+        <li class="font-26 border-top padding center">
+            <a href="/auctions/1">我的微信拍卖列表 - auctions/:id</a>
+        </li>
         <li class="font-26 border-top padding center">
             <a href="/user/1023">个人主页 - user/:id</a>
         </li>

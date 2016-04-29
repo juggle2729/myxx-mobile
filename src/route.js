@@ -93,6 +93,15 @@ export default {
                 }, 'comments');
             }
     },
+    '/auctions/:id': {
+        name: 'auctions',
+        title: '全部拍卖',
+        component: (resolve) => {
+                require.ensure([], (require) => {
+                    resolve(require('AuctionsView.vue'));
+                }, 'auction');
+        }
+    },
     '/masters': {
         name: 'masters',
         title: '人物志',
