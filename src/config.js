@@ -73,7 +73,7 @@ export default {
         },
         evaluation: {
             id: 'jb',
-            name: '鉴宝'
+            name: '求鉴宝'
         }
     }
 };

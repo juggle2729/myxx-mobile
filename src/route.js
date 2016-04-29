@@ -247,6 +247,7 @@ export default {
     },
     '/tag/:type/:tag': {
         name: 'tags',
+        title: '标签',
         component: (resolve) => {
                require.ensure([], (require) => {
                    resolve(require('TagsView.vue'));

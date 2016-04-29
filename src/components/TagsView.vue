@@ -67,7 +67,7 @@
             <div class="flex-1 font-30 red">{{mall.title}}</div>
             <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: mall.biz_type }}">更多</div>
         </div>
-        <div class="cell" v-for="(idx, item) in mall.items" :class="{'space': (idx % 2 === 0)}">
+        <div class="cell" v-for="(idx, item) in mall.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'jade', params: {id: item.id }}">
             <div class="img" v-bg.lg="item.first_picture"></div>
             <div class="desc font-30 center">
                 <p class="omit">{{item.title}}</p>
@@ -75,27 +75,27 @@
             </div>
         </div>
     </div>
-    <!--<div class="lesson">-->
-        <!--<div class="title flex">-->
-            <!--<div class="line bg-red"></div>-->
-            <!--<div class="flex-1 font-30 red">{{lesson.title}}</div>-->
-            <!--<div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>-->
-        <!--</div>-->
-        <!--<div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}">-->
-            <!--<div class="img lesson" v-bg.lg="item.picture"></div>-->
-            <!--<div class="desc font-30">-->
-                <!--<p class="omit">{{item.title}}</p>-->
-                <!--<p class="gray">{{item.master}}</p>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="lesson">
+        <div class="title flex">
+            <div class="line bg-red"></div>
+            <div class="flex-1 font-30 red">{{lesson.title}}</div>
+            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>
+        </div>
+        <div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'lesson', params: {id: item.id }}">
+            <div class="img lesson" v-bg.lg="item.picture"></div>
+            <div class="desc font-30">
+                <p class="omit">{{item.title}}</p>
+                <p class="gray">{{item.author.name}}</p>
+            </div>
+        </div>
+    </div>
     <div class="evaluation">
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{evaluation.title}}</div>
             <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: evaluation.biz_type }}">更多</div>
         </div>
-        <div class="cell" v-for="(idx, item) in evaluation.items" :class="{'space': (idx % 2 === 0)}">
+        <div class="cell" v-for="(idx, item) in evaluation.items" :class="{'space': (idx % 2 === 0)}" @click="goToEvaluation(item.id)">
             <div class="img" v-bg.lg="item.picture"></div>
             <div class="desc font-30">
                 <p class="omit-2">{{item.description}}</p>
@@ -125,6 +125,15 @@ export default {
                     (item.biz_type === tags.evaluation.id) && (this.evaluation = item) && (this.evaluation.title = tags.evaluation.name);
                 });
             });
+        }
+    },
+    methods: {
+        goToEvaluation(id) {
+            if(this.env.version >= '1.1') {
+                this.action('evaluation', {id});
+            } else {
+                this.$router.go({name: 'evaluation', params: {id}});
+            }
         }
     }
 }

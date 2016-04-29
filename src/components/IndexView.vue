@@ -18,7 +18,7 @@
         </li>
         <li class="tab">标签</li>
         <li class="font-26 border-top padding center">
-            <a href="/tag/certificate/242">标签 - tags</a>
+            <a href="/tag/material/1">标签 - tags</a>
         </li>
         <li class="tab">我的</li>
         <li class="font-26 border-top padding center">

@@ -34,23 +34,27 @@
                 -webkit-box-orient: vertical;
                 line-height: 37px;
             }
-            .red::before {
-                content: '￥';
-            }
         }
     }
 }
 </style>
 <template>
     <div class="tag-detail">
-        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'pd'">
+        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'pd'" v-link="{ name: 'jade', params: {id: item.id }}" >
             <div class="img" v-bg.lg="item.first_picture"></div>
             <div class="desc font-30 center">
                 <p class="omit">{{item.title}}</p>
                 <p class="red">{{item.price | price}}</p>
             </div>
         </div>
-        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'jb'">
+        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'oc'" v-link="{ name: 'lesson', params: {id: item.id }}" >
+            <div class="img lesson" v-bg.lg="item.picture"></div>
+            <div class="desc font-30 center">
+                <p class="omit">{{item.title}}</p>
+                <p class="gray">{{item.author.name}}</p>
+            </div>
+        </div>
+        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'jb'" @click="goToEvaluation(item.id)">
             <div class="img" v-bg.lg="item.picture"></div>
             <div class="desc font-30">
                 <p class="omit-2">{{item.description}}</p>
@@ -80,8 +84,26 @@ export default {
     },
     route: {
         data({to}) {
+            this.loadPageTitle();
             [this.type, this.tag, this.category] = [to.params.type, to.params.tag, to.params.category];
             return this.fetch();
+        }
+    },
+    methods: {
+        goToEvaluation(id) {
+            if(this.env.version >= '1.1') {
+                this.action('evaluation', {id});
+            } else {
+                this.$router.go({name: 'evaluation', params: {id}});
+            }
+        },
+        setTitle() {
+            const tags = this.config.tags;
+            const category = (this.category === tags.product.id ? tags.product.name : (this.category === tags.lesson.id ? tags.lesson.name : tags.evaluation.name));
+            document.title = '标签-' + category;
+        },
+        loadPageTitle() {
+            setTimeout(this.setTitle, 100);
         }
     }
 }
