@@ -42,7 +42,7 @@
         <div class="img" v-bg.lg="item.first_picture"></div>
         <div class="txt font-30 bg-white">
             <p>{{item.title}}</p>
-            <p class="red">￥{{item.price | percent}}</p>
+            <p class="red">{{item.price | price}}</p>
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>

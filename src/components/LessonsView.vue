@@ -9,11 +9,11 @@
                     <div class="video-bg" v-bg="course.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/318/h/246/interlace/1">
                         <div class="like font-22">
                             <span class="icon icon-like-solid"></span>
-                            <span class="count">{{course.like}}</span>
+                            <span class="count">{{course.like || 0}}</span>
                         </div>
                         <div class="comment font-22">
                             <span class="icon icon-comment-solid"></span>
-                            <span class="count">{{course.comment}}</span>
+                            <span class="count">{{course.comment || 0}}</span>
                         </div>
                     </div>
                     <div class="course-title font-26">{{course.title}}</div>

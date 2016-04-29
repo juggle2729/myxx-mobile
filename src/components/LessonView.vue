@@ -1,23 +1,24 @@
 <template>
     <div class="lesson-view">
-        <div class="course-video" @click="playCourse" v-bg="course.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/750/h/580/interlace/1"></div>
+        <div class="course-video" @click="playCourse" v-bg="course.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/750/h/580/interlace/1">
+            <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
+        </div>
         <div class="course-user">
             <div class="head avatar-68" v-bg="course.user.photo" v-link="course.user | profile"></div>
             <div class="info">
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
             </div>
-            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser">
+            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser" v-if="config.isApp">
                 <span class="icon icon-like-solid"></span>
                 <span class="count">{{course.like}}</span>
             </div>
         </div>
-        <div class="tags">
-            <div class="tag-list" v-if="course.tags && course.tags.length">
+        <div class="tags" v-if="course.tags && course.tags.length">
+            <div class="tag-list">
                 <div class="tag-item font-26" :class="{'first-line' : $index < 3}"
                      v-link="{name: 'tags', params: tagParam(tag)}" v-for="tag in course.tags">{{tagName(tag)}}</div>
             </div>
-            <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
         </div>
         <template v-if="recommendGoods.length">
             <div class="separator"></div>
@@ -27,7 +28,7 @@
                     <div class="good-item" v-link="{name: 'jade', params: {id: good.item.id}}" v-for="good in recommendGoods">
                         <div class="good-img" v-bg.md="good.item.first_picture"></div>
                         <div class="good-title">{{good.item.title}}</div>
-                        <div class="good-price">￥{{good.item.price | percent}}</div>
+                        <div class="good-price">{{good.item.price | price}}</div>
                     </div>
                 </div>
             </div>
@@ -124,7 +125,7 @@
                     return;
                 }
 
-                const url = `users/target/${this.course.user.id}/type/60/like`;
+                const url = `users/target/${this.course.id}/type/60/like`;
                 this.liking = true;
                 if (this.course.liked) {
                     this.$delete(url, {}).then((data) => {
@@ -167,6 +168,8 @@
             background-size: cover;
 
             &:before {
+                 @include border(all, #fff);
+                 border-radius: 100px;
                  content: '';
                  display: block;
 
@@ -235,7 +238,6 @@
 
         .tags {
             @include border(bottom, #d9d9d9);
-            position: relative;
             min-height: 108px;
 
             .tag-list {
@@ -243,12 +245,12 @@
             }
 
             .tag-item {
-                @include border(all, #979797);
-                    display: inline-block;
-                    margin: 28px 0;
-                    line-height: 60px;
-                    padding: 0 26px;
-                    border-radius: 26px;
+                display: inline-block;
+                margin: 28px 0;
+                line-height: 60px;
+                padding: 0 26px;
+                border-radius: 26px;
+                background-color: #ffecea;
 
                 &:nth-child(3n+1) {
                      margin-left: 32px;
@@ -267,8 +269,7 @@
         .his-course {
             position: absolute;
             right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 28px;
 
             display: inline-block;
             line-height: 70px;

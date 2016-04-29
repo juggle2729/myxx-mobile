@@ -43,19 +43,15 @@ function profile(user) {
     return {name: 'user', params: {id, tab}};
 }
 
-function percent(num) {
-    if(num === null) {
+function price(num, unit = '￥') {
+    num = Number(num);
+    if (num === 0) {
         return '面议';
-    } else if (typeof num !== 'number') {
-        return '0.00';
+    } else if (Number.isNaN(num)) {
+        num = 0;
     }
-    let str = num + '';
-    while(str.length < 3){//把长度补成3，因为要加点
-        str = '0' +str;
-    }
-    let strs = str.split('');
-    strs.splice(-2, 0, '.');
-    return strs.join('');
+
+    return unit + num.toFixed(2);
 }
 
 function role(id) {
@@ -80,7 +76,7 @@ export default {
         Vue.filter('role', role);
         Vue.filter('type', type);
         Vue.filter('profile', profile);
-        Vue.filter('percent', percent);
+        Vue.filter('price', price);
         Vue.filter('truncate', truncate);
         Vue.filter('qn', qn);
         Vue.filter('tree', tree);
