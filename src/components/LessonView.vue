@@ -16,8 +16,11 @@
         </div>
         <div class="tags" v-if="course.tags && course.tags.length">
             <div class="tag-list">
-                <div class="tag-item font-26" :class="{'first-line' : $index < 3}"
-                     v-link="{name: 'tags', params: tagParam(tag)}" v-for="tag in course.tags">{{tagName(tag)}}</div>
+                <template v-for="tag in course.tags">
+                    <div class="row-separator" v-if="$index % 4 === 0"></div>
+                    <div class="tag-item font-26" :class="{'first-line' : $index < 4}"
+                         v-link="{name: 'tags', params: tagParam(tag)}" >{{tagName(tag)}}</div>
+                </template>
             </div>
         </div>
         <template v-if="recommendGoods.length">
@@ -240,29 +243,21 @@
             @include border(bottom, #d9d9d9);
             min-height: 108px;
 
-            .tag-list {
-                width: -webkit-calc(100% - 246px);
-            }
-
             .tag-item {
                 display: inline-block;
-                margin: 28px 0;
+                margin: 28px 0 28px 16px;
                 line-height: 60px;
                 padding: 0 26px;
                 border-radius: 26px;
                 background-color: #ffecea;
 
-                &:nth-child(3n+1) {
-                     margin-left: 32px;
-                 }
-
-                &:not(:nth-child(3n+1)) {
-                     margin-left: 20px;
-                 }
-
                 &:not(.first-line) {
                      margin-top: 0;
                  }
+            }
+
+            .row-separator + .tag-item {
+                margin-left: 32px;
             }
         }
 

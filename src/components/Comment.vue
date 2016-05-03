@@ -122,11 +122,11 @@ export default {
     },
     computed: {
         api() {
-            return `users/target/${this.id}/type/${this.type}/comments`;
+            return `users/target/${this.id}/type/${this.type}/comments|v3`;
         },
         paging() {
             return {
-                path: `users/target/${this.id}/type/${this.type}/comments|v2`,
+                path: `users/target/${this.id}/type/${this.type}/comments|v3`,
                 list: 'comments',
                 id: 'id',
                 params: {
