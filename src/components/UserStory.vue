@@ -62,8 +62,7 @@
     <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
         <div class="header flex">
             <div class="flex-1 flex">
-                <div v-if="$route.name === 'user'" class="avatar-50" v-bg.sm="item.user.photo"></div>
-                <div v-else class="avatar-50" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
+                <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
                 <div class="name margin-left font-26">{{item.user.name}}</div>
             </div>
             <div class="moment font-22 light">{{item.create_at | moment}}</div>
@@ -85,6 +84,7 @@
 <script>
 import StoryList from './StoryList.vue';
 import paging from 'paging';
+import Avatar from './Avatar.vue';
 export default {
     name: 'UserStory',
     mixins: [paging],
@@ -92,7 +92,8 @@ export default {
         this.fetch().then(done);
     },
     components: {
-        StoryList
+        StoryList,
+        Avatar
     },
     computed: {
         paging() {

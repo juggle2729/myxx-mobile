@@ -7,13 +7,6 @@
                 padding: 0 32px;
                 display: -webkit-box;
                 -webkit-box-align: center;
-                .avatar {
-                    height: 68px;
-                    width: 68px;
-                    border-radius: 50%;
-                    background-size: cover;
-                    vertical-align: middle;
-                }
                 .name {
                     margin-left: 20px;
                     .moment {
@@ -69,8 +62,7 @@
         <div class="item" v-link="{name: 'evaluation', params: {id: item.post_id}}">
             <div class="header">
                 <div class="user">
-                    <div v-if="$route.name === 'user'" class="avatar" v-bg.sm="item.user.photo"></div>
-                    <div v-else class="avatar" v-link="item.user | profile" v-bg.sm="item.user.photo"></div>
+                    <avatar :user="item.user"></avatar>
                     <div class="name">
                         <p class="font-26">{{item.user.name}}</p>
                         <p class="moment font-22 light">{{item.create_at | moment}}</p>
@@ -91,8 +83,12 @@
 </div>
 </template>
 <script>
+import Avatar from './Avatar.vue';
 export default {
     name: 'EvaluationList',
+    components: {
+        Avatar
+    },
     props: {
         items: {
             type: Array,

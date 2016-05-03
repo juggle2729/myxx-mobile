@@ -12,13 +12,6 @@
         display: -webkit-box;
         -webkit-box-align: center;
         float: left;
-        .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
-        }
         .name {
             margin-left: 20px;
         }
@@ -117,7 +110,7 @@
     <div class="story-header">
         <div class="header clearfix">
             <div class="user">
-                <div class="avatar" v-link="story.user | profile" v-bg.sm="story.user.photo"></div>
+                <avatar :user="story.user"></avatar>
                 <div class="name">
                     <p class="font-26">{{story.user.name}}</p>
                     <div class="margin-top font-22 gray">
@@ -158,12 +151,14 @@
 </template>
 <script>
 import Comment from './Comment.vue';
+import Avatar from './Avatar.vue';
 import shareable from 'shareable';
 export default {
     name: 'StoryView',
     mixins: [shareable],
     components: {
-        Comment
+        Comment,
+        Avatar
     },
     computed: {
         firstRowClass() {
@@ -223,7 +218,7 @@ export default {
             if(this.story.cover_type === 'picture') {
                 index += 1;
                 ids.splice(0, 0, this.story.cover);
-            } 
+            }
             this.action('coverflow', {ids, index});
         },
         like() {

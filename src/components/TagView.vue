@@ -12,7 +12,16 @@
             height: 352px;
             width: 352px;
             &.lesson {
-                height: 286px;
+                 height: 286px;
+                 position: relative;
+                 > div {
+                     position: absolute;
+                     right: 16px;
+                     bottom: 12px;
+                 }
+            }
+            .icon-like-solid {
+                vertical-align: 3px;
             }
         }
         .desc {
@@ -48,8 +57,15 @@
             </div>
         </div>
         <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'oc'" v-link="{ name: 'lesson', params: {id: item.id }}" >
-            <div class="img lesson" v-bg.lg="item.picture"></div>
-            <div class="desc font-30 center">
+            <div class="img lesson" v-bg.lg="item.picture">
+                <div class="white font-22">
+                    <span class="icon icon-like-solid"></span>
+                    <span class="margin-right">{{item.like || 0}}</span>
+                    <span class="icon icon-comment-solid"></span>
+                    <span>{{item.comment || 0}}</span>
+                </div>
+            </div>
+            <div class="desc font-30">
                 <p class="omit">{{item.title}}</p>
                 <p class="gray">{{item.author.name}}</p>
             </div>

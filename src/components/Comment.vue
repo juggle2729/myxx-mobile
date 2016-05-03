@@ -80,7 +80,7 @@
     </div>
     <ul>
         <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $index)">
-            <div class="avatar" @click.stop="gotoProfile(c.reply_from)" v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+            <avatar :user="c.reply_from"></avatar>
             <div class="flex-1">
                 <div class="author flex">
                     <div class="font-26 flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
@@ -107,9 +107,13 @@
 <script>
 import Q from 'q';
 import paging from 'paging';
+import Avatar from './Avatar.vue';
 export default {
     name: 'Comment',
     mixins: [paging],
+    components: {
+        Avatar
+    },
     props: {
         id: {
             type: Number,

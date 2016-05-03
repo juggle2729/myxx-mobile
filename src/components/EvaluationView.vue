@@ -97,7 +97,7 @@
 <div class="evaluation-detail" v-if="!$loadingRouteData">
     <div class="header">
         <div class="user">
-            <div class="avatar" v-link="evaluation.user | profile" v-bg.sm="evaluation.user.photo"></div>
+            <avatar :user="evaluation.user"></avatar>
             <div class="margin-left">
                 <div class="font-26">{{evaluation.user.name}}</div>
                 <div class="margin-top font-22 gray">
@@ -118,7 +118,7 @@
     <div v-if="evaluation.results.length" class="results scrollable">
         <div v-for="result in evaluation.results">
             <div class="result-head flex">
-                <div class="avatar" v-link="result.identifier | profile" v-bg.sm="result.identifier.photo"></div>
+                <avatar :user="result.identifier"></avatar>
                 <div class="flex-1 margin-left">
                     <div class="font-30 white">{{result.identifier.name}}</div>
                     <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
@@ -148,6 +148,7 @@
 </template>
 <script>
 import Comment from './Comment.vue';
+import Avatar from './Avatar.vue';
 import shareable from 'shareable';
 export default {
     name: 'EvaluationView',
@@ -162,7 +163,8 @@ export default {
         };
     },
     components: {
-        Comment
+        Comment,
+        Avatar
     },
     computed: {
         prices() {
