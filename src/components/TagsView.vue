@@ -32,7 +32,16 @@
                 width: 352px;
                 &.lesson {
                     height: 286px;
-                 }
+                    position: relative;
+                    > div {
+                         position: absolute;
+                         right: 16px;
+                         bottom: 12px;
+                      }
+                }
+                .icon-like-solid {
+                    vertical-align: 3px;
+                }
             }
             .desc {
                 height: 114px;
@@ -82,7 +91,14 @@
             <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>
         </div>
         <div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'lesson', params: {id: item.id }}">
-            <div class="img lesson" v-bg.lg="item.picture"></div>
+            <div class="img lesson" v-bg.lg="item.picture">
+                <div class="white font-22">
+                    <span class="icon icon-like-solid"></span>
+                    <span class="margin-right">{{item.like || 0}}</span>
+                    <span class="icon icon-comment-solid"></span>
+                    <span>{{item.comment || 0}}</span>
+                </div>
+            </div>
             <div class="desc font-30">
                 <p class="omit">{{item.title}}</p>
                 <p class="gray">{{item.author.name}}</p>

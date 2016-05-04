@@ -10,6 +10,12 @@
                 .avatar-180 {
                     margin: 0 auto 40px;
                     border: 1px white solid;
+                    width: 180px;
+                    height: 180px;
+                }
+                .vip-180 {
+                    height: 180px;
+                    width: 180px;
                 }
                 .flex-1 {
                     margin: 24px 0 32px;
@@ -197,7 +203,7 @@
                 </div>
             </div>
             <div class="title">
-                <div class="avatar-180" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
+                <avatar :user="profile" :size="180" :is-self="$route.name === 'user'"></avatar>
                 <div class="flex-1">
                     <p class="font-30 margin-bottom">{{profile.nickname}}</p>
                     <p class="font-26 gray">
@@ -224,7 +230,7 @@
             <div class="desc bg-white"></div>
         </div>
         <div class="master border-bottom flex bg-white" v-if="profile.special">
-            <div class="avatar-68" v-bg.sm="profile.photo" @click="coverflow(0)"></div>
+            <avatar :user="profile" :is-self="$route.name === 'user'"></avatar>
             <div class="info flex-1">
                 <p class="font-30">{{profile.nickname}}</p>
                 <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
@@ -273,13 +279,15 @@ import shareable from 'shareable';
 import jade from './UserJade.vue';
 import story from './UserStory.vue';
 import evaluation from './UserEvaluation.vue';
+import Avatar from './Avatar.vue';
 export default {
     name: 'UserView',
     mixins: [shareable],
     components: {
         jade,
         story,
-        evaluation
+        evaluation,
+        Avatar
     },
     data() {
         return {

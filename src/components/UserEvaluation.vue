@@ -113,7 +113,7 @@
 <div class="user-evaluation bg-white">
     <div v-for="item in items" @click="goToEvaluation(item.post_id)" track-by="$index">
         <div class="head flex">
-            <div class="avatar-50" v-bg.sm="item.user.photo"></div>
+            <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
             <div class="font-26 margin-left">{{item.user.name}}</div>
             <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
             <div class="gray font-26"><i class="icon-comment"></i><span>{{item.comment}}</span></div>
@@ -149,9 +149,13 @@
 </template>
 <script>
 import paging from 'paging';
+import Avatar from './Avatar.vue';
 export default {
     name: 'UserEvaluation',
     mixins: [paging],
+    components: {
+        Avatar
+    },
     activate(done) {
         this.fetch().then(done);
     },

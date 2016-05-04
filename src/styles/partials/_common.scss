@@ -33,9 +33,20 @@
         background-image: url('#{$qn}/placeholder/avatar.svg');
         background-size: cover;
     }
+    .vip-#{$size} {
+        width: #{$size}px;
+        height: #{$size}px;
+        background-image: url('#{$qn}/vip.svg');
+        background-position: right bottom;
+        background-size: 30%;
+    }
 }
 .avatar {
     @extend .avatar-68;
+}
+
+.vip {
+    @extend .vip-68;
 }
 
 @each $direction in (all, top, right, bottom, left, vertical, horizontal) {

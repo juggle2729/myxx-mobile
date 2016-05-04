@@ -4,7 +4,7 @@
             <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
         </div>
         <div class="course-user">
-            <div class="head avatar-68" v-bg="course.user.photo" v-link="course.user | profile"></div>
+            <avatar :user="course.user"></avatar>
             <div class="info">
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
@@ -43,12 +43,13 @@
 <script>
     import shareable from 'shareable';
     import Comment from './Comment.vue';
-
+    import Avatar from './Avatar.vue';
     export default {
         name: 'LessonView',
         mixins: [shareable],
         components: {
-            Comment
+            Comment,
+            Avatar
         },
         data(){
             return {
@@ -198,7 +199,7 @@
                   position: absolute;
               }
 
-            .head {
+           .avatar {
                 left: 40px;
                 top: 50%;
                 margin-top: -34px;
