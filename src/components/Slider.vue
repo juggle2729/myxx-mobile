@@ -26,7 +26,7 @@
             width: 20px;
             height: 20px;
             border-radius: 100%;
-            border: 2px solid #d9d9d9;
+            border: 3px solid #d9d9d9;
             &.active {
                 background-color: white;
             }
@@ -103,32 +103,34 @@ export default {
 
         this.container.addEventListener('webkitTransitionEnd', () => {
             this.xy.end.x = -1 * this.i * this.containerWidth;
-            this.container.style.transitionDuration = '0ms';
+            this.container.style.webkitTransitionDuration = '0ms';
         });
         this.slide();
     },
     methods: {
         start(e) {
-            const {pageX, pageY} = e || e.touches[0];
+            e.preventDefault();
+            const {pageX, pageY} = _.get(e, 'touches.0', e);
             this.xy.start.x = pageX;
             this.xy.start.y = pageY;
             this.xy.start.time = Date.now();
             this.$el.addEventListener(this.tap.move, this.moving, true);
         },
         moving(e) {
-            const {pageX, pageY} = e || e.touches[0];
+            const {pageX, pageY} = _.get(e, 'touches.0', e);
             this.xy.end.x = pageX;
             this.xy.end.y = pageY;
             if(!this.touchable || this.xy.direction === 'x') {
                 e.preventDefault();
                 let translateX = this.xy.end.x - this.xy.start.x - this.i * this.containerWidth;
-                this.container.style.transform = `translate3d(${translateX}px, 0, 0)`;
+                this.container.style.webkitTransform = `translate3d(${translateX}px, 0, 0)`;
             } else if(!this.xy.direction){
                 this.xy.direction = 
                     Math.abs(this.xy.end.x - this.xy.start.x) >= Math.abs(this.xy.end.y - this.xy.start.y) ? 'x' : 'y';
             }
         },
         end(e) {
+            
             this.xy.end.x = e.pageX || e.changedTouches[0].pageX;
             this.xy.end.time = Date.now();
             // 重置
@@ -150,14 +152,14 @@ export default {
         },
         slide(index) {
             if(index !== undefined) {
-                this.container.style.transitionDuration = '300ms';
+                this.container.style.webkitTransitionDuration = '300ms';
             } else {
                 index = this.i;
             }
             index = Math.min(index, this.ids.length-1);
             index = Math.max(index, 0);
             this.i = index;
-            this.container.style.transform = `translate3d(${-100*index}%, 0, 0)`;
+            this.container.style.webkitTransform = `translate3d(${-100*index}%, 0, 0)`;
         }
     }
 }

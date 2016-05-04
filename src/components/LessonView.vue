@@ -160,11 +160,11 @@
 <style lang="sass">
     @import '../styles/partials/_var.scss';
     @import '../styles/partials/_mixin.scss';
-
     .lesson-view {
         position: relative;
         min-height: 100%;
         background-color: #fff;
+        padding-bottom: 100px;
 
         .course-video {
             width: 100%;

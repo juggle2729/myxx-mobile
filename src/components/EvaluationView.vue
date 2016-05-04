@@ -3,7 +3,6 @@
 .evaluation-detail {
     padding-bottom: 100px;
     .results {
-        margin-bottom: 50px;
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
@@ -94,7 +93,7 @@
 }
 </style>
 <template>
-<div class="evaluation-detail" v-if="!$loadingRouteData">
+<div class="evaluation-detail">
     <div class="header">
         <div class="user">
             <avatar :user="evaluation.user"></avatar>
@@ -123,7 +122,6 @@
                     <div class="font-30 white">{{result.identifier.name}}</div>
                     <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
                 </div>
-                <div v-if="!env.isShare" @click="like(result)" class="font-30" :class="{red: result.liked, gray: !result.liked}"><i class="icon-like-active"></i><span>{{result.like}}</span></div>
             </div>
             <img class="portrait" @click="play({id: result.video, ads: [result.ad_picture, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="price font-30 white center">
@@ -155,7 +153,11 @@ export default {
     mixins: [shareable],
     data() {
         return {
-            evaluation: {},
+            evaluation: {
+                post_id: 0,
+                results: [],
+                user: {}
+            },
             comment: {
                 items: [],
                 total: 0
@@ -201,34 +203,6 @@ export default {
     methods: {
         coverflow(index) {
             this.action('coverflow', {ids: this.evaluation.pictures, index});
-        },
-        like(result) {
-            const api = `users/target/${result.id}/type/20/like`;
-            if (result.liked) {
-                this.$delete(api).then(() => {
-                    result.liked = false;
-                    result.like -= 1;
-                });
-            } else {
-                this.$post(api).then(() => {
-                    result.liked = true;
-                    result.like += 1;
-                });
-            }
-        },
-        evaluate(action) {
-            if(action === 'login') {
-                this.action('login');
-            } else if(action === 'request'){
-                this.action('confirm', {text: '抱歉，只有大师才可鉴定。您可以联系我们进行大师身份认证'})
-                    .then((confirm) => {
-                        if(confirm === '1') {
-                            this.$route.router.go({name: 'apply-master', params: {id: this.self.id}});
-                        }
-                    });
-            } else if(action === 'evaluate'){
-                this.action('evaluate', {id: this.evaluation.id, imgId: this.evaluation.pictures[0]});
-            }
         }
     }
 }
