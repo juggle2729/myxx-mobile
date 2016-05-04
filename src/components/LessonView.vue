@@ -112,6 +112,7 @@
                     productId: this.course.product_id,
                     productVideoId: this.course.product_video_id,
                     courseShareUrl: shareUrl,
+                    userId: this.course.user.id,
                     portraitId: this.course.user.photo
                 });
             },
