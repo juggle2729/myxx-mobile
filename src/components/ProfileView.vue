@@ -33,12 +33,12 @@
     </div>
     <div class="separator-40"></div>
     <div class="rows">
-        <div class="row bg-white font-30 border-bottom" @click="goToMyEvaluation">
+        <div class="row bg-white font-30 border-bottom" v-link="{name: 'user-evaluation', params: {id: self.id}}">
             <span class="red icon-eval"></span>
             <span>我的鉴宝</span>
             <span class="icon-enter gray font-26"></span>
         </div>
-        <div class="row bg-white font-30" @click="goToMyStory">
+        <div class="row bg-white font-30" v-link="{name: 'user-story', params: {id: self.id}}">
             <span class="icon-story red"></span>
             <span>我的晒宝</span>
             <span class="icon-enter gray font-26"></span>
@@ -86,22 +86,6 @@ export default {
                         return this.action('login');
                     }
                 });
-        }
-    },
-    methods: {
-        goToMyEvaluation() {
-            if(this.env.version >= '1.1') {
-                this.action('myEvaluations')
-            } else {
-                this.$router.go({name: 'user-evaluation', params: {id: this.self.id}});
-            }
-        },
-        goToMyStory() {
-            if(this.env.version >= '1.1') {
-                this.action('myStories')
-            } else {
-                this.$router.go({name: 'user-story', params: {id: this.self.id}});
-            }
         }
     }
 }

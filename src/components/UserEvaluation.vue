@@ -111,7 +111,7 @@
 </style>
 <template>
 <div class="user-evaluation bg-white">
-    <div v-for="item in items" @click="goToEvaluation(item.post_id)" track-by="$index">
+    <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
         <div class="head flex">
             <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
             <div class="font-26 margin-left">{{item.user.name}}</div>
@@ -135,12 +135,12 @@
                 </div>
                 <div v-if="item.results[1]" class="right" @click.stop="goToProfile(item.results[1].identifier)" v-bg.sm="item.results[1].identifier.portrait"></div>
                 <div v-else class="right">
-                    <img @click.stop="invite(item)" :class="size" :src="'invite-master.png' | qn">
+                    <img :class="size" :src="'invite-master.png' | qn">
                 </div>
             </div>
         </div>
         <div v-else class="results-empty white font-30 center">
-            <div class="center-vertical" @click.stop="invite(item)">- 邀请鉴定师 -</div>
+            <div class="center-vertical">- 邀请鉴定师 -</div>
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
@@ -169,15 +169,6 @@ export default {
         }
     },
     methods: {
-        invite(evaluation) {
-            if(this.env.version >= '1.1') {
-                if(this.self.id) {
-                    this.action('inviteMaster', {id: evaluation.post_id});
-                } else {
-                    this.action('login');
-                }
-            }
-        },
         genuine(item) {
             let result = '';
             if(item.results.length === 1) {
@@ -193,13 +184,6 @@ export default {
                 }
             }
             return result;
-        },
-        goToEvaluation(id) {
-            if(this.env.version >= '1.1') {
-                this.action('evaluation', {id});
-            } else {
-                this.$router.go({name: 'evaluation', params: {id}});
-            }
         },
         goToProfile(user) {
             const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];

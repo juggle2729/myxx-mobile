@@ -70,7 +70,7 @@
                 <p class="gray">{{item.author.name}}</p>
             </div>
         </div>
-        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'jb'" @click="goToEvaluation(item.id)">
+        <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'jb'" v-link="{name: 'evaluation', params: {id: item.id}}">
             <div class="img" v-bg.lg="item.picture"></div>
             <div class="desc font-30">
                 <p class="omit-2">{{item.description}}</p>
@@ -106,13 +106,6 @@ export default {
         }
     },
     methods: {
-        goToEvaluation(id) {
-            if(this.env.version >= '1.1') {
-                this.action('evaluation', {id});
-            } else {
-                this.$router.go({name: 'evaluation', params: {id}});
-            }
-        },
         setTitle() {
             const tags = this.config.tags;
             const category = (this.category === tags.product.id ? tags.product.name : (this.category === tags.lesson.id ? tags.lesson.name : tags.evaluation.name));

@@ -2,6 +2,7 @@
 *   遍历变量，生成class    *
 * **********************/
 @import 'var';
+@import 'mixin';
 @each $size in $fonts {
     .font-#{$size} {
         font-size: #{$size}px;

@@ -3,7 +3,7 @@
         <div class="imgs center">
             <img :src="'profile/about.png' | qn">
             <p class="font-34 default">美玉秀秀</p>
-            <p class="font-22 gray">v{{version || '1.0'}}</p>
+            <p class="font-22 gray">v{{env.version || '1.0'}}</p>
         </div>
         <div class="text">
             <p class="font-30">美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。</p>
@@ -14,12 +14,7 @@
 </template>
 <script>
 export default {
-    name: 'AboutView',
-    created() {
-        this.action('version').then(version => {
-            this.$set('version', version);
-        });
-    }
+    name: 'AboutView'
 }
 </script>
 <style lang="sass">

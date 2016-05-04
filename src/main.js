@@ -31,22 +31,37 @@ Vue.http.interceptors.push({
     }
 });
 Vue.use(Router);
-const appContainer = document.querySelector('#app');
+
 let router = new Router({history: true});
+
+/**
+ * 修改vue-router源码，增加的一个回调。
+ * 和beforeEach不同，该回调在history改变之前被调用，
+ * 而且初次加载时，并不会触发该回调，意味着，from参数一定不为空。
+ * @param  {vue.transition} from    vue-router transition
+ * @param  {Object} to    通过_recognizer解析出来的对象，和from有区别
+ * @return {boolean}      返回布尔值，决定history.go是否执行
+ */
 router.beforeGo((from, to) => {
-    let canGo = !/myxx/i.test(navigator.userAgent) || from.name === to.name || to.name === '404';
-    if(!canGo) {
-        window.WebViewJavascriptBridge.callHandler('go', {url: to.path});
+    const root = from.router.app;
+    let interrupted = false;
+    if(root.env.version) { // 客户端环境
+        let action = to.native && to.native(root.env.version);
+        if(action) {
+            action = _.isObject(action) ? _.merge(to, action) : to; 
+            root.action(action.name, action.params);
+            interrupted = true;
+        } else if(from.name === to.name) { // 同一route内，做tab切换
+        } else if(to.name === '404') {// 404切换
+        } else {
+            root.action('go', {url: to.path});
+            interrupted = true;
+        }
     }
-    // else if(_.get(from, 'query.user')) {
-    //     if(to.name === 'user' && from.name !== 'user') {//  禁止分享页面导航
-    //         canGo = false;
-    //     }
-    // }
-    return canGo;
+    return !interrupted;
 });
 router.beforeEach(({from, to, abort, next}) => {
-    appContainer.classList.add('loading');
+    to.router.app.$el.classList.add('loading');
     document.title = (to.title || '美玉秀秀');
     next();
 });
@@ -57,11 +72,8 @@ router.alias({
   '/stories/:tab': '/stories'
 });
 router.map(routes);
-router.start(require('./components/App.vue'), appContainer);
+router.start(require('./components/App.vue'), '#app');
 
-window.onerror = (error) => {
-    console.debug(error);
-};
 (() => {
     let first = true;
     const adjustBase = () => {

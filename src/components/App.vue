@@ -87,17 +87,15 @@ export default {
                 isAndroid: /android/i.test(ua),
                 isWechat: /micromessenger/i.test(ua),
                 isQQ: /qq\//i.test(ua),
-                isWeibo: /weibo/i.test(ua),
-                isTouchable: 'ontouchstart' in document,
-                version: undefined
+                isWeibo: /weibo/i.test(ua)
             };
+            env.version = env.isApp ?  ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop() : undefined;
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo);
             env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
             return env;
         }
     },
     ready() {
-        this.action('version').then(v => this.env.version = v);
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
     },

@@ -111,7 +111,7 @@
             <div class="flex-1 font-30 red">{{evaluation.title}}</div>
             <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: evaluation.biz_type }}">更多</div>
         </div>
-        <div class="cell" v-for="(idx, item) in evaluation.items" :class="{'space': (idx % 2 === 0)}" @click="goToEvaluation(item.id)">
+        <div class="cell" v-for="(idx, item) in evaluation.items" :class="{'space': (idx % 2 === 0)}" v-link="{name: 'evaluation', params: {id: item.id}}">
             <div class="img" v-bg.lg="item.picture"></div>
             <div class="desc font-30">
                 <p class="omit-2">{{item.description}}</p>
@@ -141,15 +141,6 @@ export default {
                     (item.biz_type === tags.evaluation.id) && (this.evaluation = item) && (this.evaluation.title = tags.evaluation.name);
                 });
             });
-        }
-    },
-    methods: {
-        goToEvaluation(id) {
-            if(this.env.version >= '1.1') {
-                this.action('evaluation', {id});
-            } else {
-                this.$router.go({name: 'evaluation', params: {id}});
-            }
         }
     }
 }

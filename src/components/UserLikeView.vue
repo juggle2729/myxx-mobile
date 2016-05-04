@@ -103,15 +103,6 @@ export default {
         data() {
             return this.fetch();
         }
-    },
-    methods: {
-        goToEvaluation(id) {
-            if(this.env.version >= '1.1') {
-                this.action('evaluation', {id});
-            } else {
-                this.$router.go({name: 'evaluation', params: {id}});
-            }
-        },
     }
 }
 </script>
