@@ -1,6 +1,9 @@
 <style lang="sass">
 .comment-component {
     padding: 0 32px;
+    label {
+        margin-top: 50px;
+    }
     .comment-header {
         display: -webkit-box;
         -webkit-box-align: center;
@@ -14,7 +17,7 @@
             margin: 20px 20px 0 0;
         }
         .author {
-            margin: 20px 0;
+            padding: 20px 0;
         }
         span {
             line-height: 46px;
@@ -125,9 +128,6 @@ export default {
         }
     },
     computed: {
-        api() {
-            return `users/target/${this.id}/type/${this.type}/comments|v3`;
-        },
         paging() {
             return {
                 path: `users/target/${this.id}/type/${this.type}/comments|v3`,
@@ -140,15 +140,26 @@ export default {
         }
     },
     created() {
-        if(this.id) {
+        Q.Promise((resolve, reject) => {
+            if(this.id) {
+                resolve(this.id);
+            } else {
+                this.$watch('id', (id) => {
+                    if(id) {
+                        resolve(this.id);
+                    }
+                })
+            }
+        }).then(id => {
+            if(localStorage.getItem(this.uid)) {
+                const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
+                localStorage.removeItem(this.uid); //立刻去掉缓存数据，防止重复提交
+                return this.$req(url, method, data);          
+            }
+        }).then(resp => {
+            resp && this.action('toast', {success: 1, text: '评论成功'});
             this.fetch();
-        } else {
-            this.$watch('id', (id) => {
-                if(id) {
-                    this.fetch();
-                }
-            })
-        }
+        });
     },
     methods: {
         clicked(comment, index) {
@@ -159,7 +170,7 @@ export default {
                     .then((confirm) => {
                         return Q.Promise((resolve, reject) => {
                             if(confirm === '1') {
-                                this.$delete(`${this.api}/${comment.id}`)
+                                this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}|v3`)
                                     .then(() => resolve());
                             } else {
                                 reject();
@@ -186,7 +197,7 @@ export default {
                         if(content) {
                             let comment = {content};
                             to && _.merge(comment, {reply_to: to.id});
-                            this.$post(this.api, comment)
+                            this.$post(`users/target/${this.id}/type/${this.type}/comments|v3`, comment)
                                 .then((resp) => {
                                     resolve(_.merge(resp, {
                                         content,

@@ -37,18 +37,6 @@ const mixin = {
             }
         }
     },
-    ready() {
-        if(localStorage.getItem(this.uid)) {
-            const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
-            localStorage.removeItem(this.uid); //立刻去掉缓存数据，防止重复提交
-            _.delay(() => { // 延时请求，防止同时触发两次user请求，导致微信code重复请求报错
-                this.$req(url, method, data)
-                    .then(() => {
-                        this.action('toast', {success: 1, text: '操作成功'});
-                    });
-                }, 2000);
-        }
-    },
     methods: {
         toggleLoading(show) {
             const appContainer = document.querySelector('#app');

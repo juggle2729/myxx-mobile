@@ -31,7 +31,7 @@
 </style>
 <template>
 <div class="play-action" @click="close">
-    <template v-for="media in params.medias">
+    <template v-for="media in medias">
         <video v-if="media.type==='video'" 
             :id="media.id" controls 
             :class="{'on': $index===playing}"
@@ -54,6 +54,12 @@ export default {
             required: true
         }
     },
+    computed: {
+        medias() {
+            // 安卓上的插片广告基本无效，放弃
+            return this.env.isAndroid ? this.params.medias.slice(0, 1) : this.params.medias;
+        }
+    },
     data() {
         return {
             playing: 0,
@@ -67,8 +73,8 @@ export default {
     methods: {
         start() {
             const v = document.querySelector('.on');
-            if(this.params.medias.length  === 3) {
-                const ads = document.querySelector(`[src$='${this.params.medias[2].id}']`);
+            if(this.medias.length  === 3) {
+                const ads = document.querySelector(`[src$='${this.medias[2].id}']`);
                 ads.play(); // 必须在这里触发播放
                 setTimeout(() => ads.pause(), 1000);
                 
@@ -88,7 +94,7 @@ export default {
         },
         ended({target}) {
             target.webkitExitFullscreen();
-            if(this.params.medias[this.playing + 1]) {
+            if(this.medias[this.playing + 1]) {
                 this.playing += 1;
             } else {
                 this.close();
