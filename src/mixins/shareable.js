@@ -54,10 +54,10 @@ export default {
                     data.text = '秀出我的宝贝';
                     break;
                 case 'jade':
-                    data.title = '我在 [美玉秀秀] 发现一个宝贝！';
-                    data.desc = entry.name;
-                    data.icon = entry.imgs[0];
-                    data.text = '我要去逛逛';
+                    data.title = `${entry.owner.name}的新品宝贝发布啦!`;
+                    data.desc = entry.title;
+                    data.icon = entry.pictures[0];
+                    data.text = '查看更多商品详情';
                     break;
                 case 'master':
                     data.title = entry.interview.title;
@@ -180,4 +180,4 @@ export default {
             return str;
         }
     }
-};
+}; 
