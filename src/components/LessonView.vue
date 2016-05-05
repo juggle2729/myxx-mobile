@@ -29,13 +29,19 @@
                 <div class="title font-22">相关推荐</div>
                 <div class="data-list">
                     <div class="data-item {{data.biz_type}}" @click="gotoDataUrl(data)" v-for="data in recommendData">
-                        <div class="data-img" v-bg.md="data.item.first_picture || data.item.picture">
+                        <div v-if="data.item.first_picture || data.item.picture" class="data-img" v-bg.md="data.item.first_picture || data.item.picture">
                             <div class="data-title" v-text="recommendTitle(data)"></div>
                         </div>
-                        <div class="data-name">{{(data.item.title || data.item.description) | truncate 20}}</div>
-                        <div v-if="data.biz_type === config.tags.product.id" class="data-price">{{data.item.price | price}}</div>
-                        <div v-if="data.item.author" class="data-user-name">{{data.item.author.name}}</div>
+                        <div v-else class="data-img" v-bg.video="data.item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/300/h/300">
+                            <div class="data-title" v-text="recommendTitle(data)"></div>
+                        </div>
+                        <div class="data-info">
+                            <div class="data-name">{{(data.item.title || data.item.description) | truncate 20}}</div>
+                            <div v-if="data.biz_type === config.tags.product.id" class="data-price">{{data.item.price | price}}</div>
+                            <div v-if="data.item.author" class="data-user-name">{{data.item.author.name}}</div>
+                        </div>
                     </div>
+                    <div class="data-item"></div>
                 </div>
             </div>
         </template>
@@ -93,6 +99,11 @@
                 this.$route.router.go({name: pathName, params: {id: data.item.id}});
             },
             gotoLecturer() {
+                if (this.env.isShare) {
+                    location.href = this.config.download;
+                    return;
+                }
+
                 this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
             },
             recommendTitle(data) {
@@ -168,7 +179,10 @@
                 if (this.course.liked) {
                     this.$delete(url, {}).then((data) => {
                         this.liking = false;
+
                         this.course.liked = false;
+                        this.course.like -= 1;
+
                         this.action('toast', {success: 1, text: '已取消赞'});
                     }).catch(() => {
                         this.liking = false;
@@ -176,7 +190,10 @@
                 } else {
                     this.$post(url, {}).then((data) => {
                         this.liking = false;
+
                         this.course.liked = true;
+                        this.course.like += 1;
+
                         this.action('toast', {success: 1, text: '已赞'});
                     }).catch(() => {
                         this.liking = false;
@@ -330,16 +347,24 @@
                 overflow-y: hidden;
                 white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
+                display: -webkit-box;
             }
 
             .data-item {
-                @include border();
                 width: 300px;
-                display: inline-table;
+                -wekit-box-flex: 1;
             }
 
             .data-item:not(:first-child) {
                 margin-left: 20px;
+            }
+
+            .data-item:not(:last-child) {
+                @include border();
+            }
+
+            .data-item:last-child {
+                width: 1px;
             }
 
             .data-img {
