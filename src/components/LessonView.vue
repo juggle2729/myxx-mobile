@@ -1,7 +1,7 @@
 <template>
     <div class="lesson-view">
         <div class="course-video" @click="playCourse" v-bg="course.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/750/h/580/interlace/1">
-            <a class="his-course font-30" v-link="{name: 'lecturer', params: {userId: course.user.id}}">他的课堂</a>
+            <a class="his-course font-30" @click.stop="gotoLecturer">他的课堂</a>
         </div>
         <div class="course-user">
             <avatar :user="course.user"></avatar>
@@ -69,21 +69,28 @@
                 return this.$get(`cms/opencourse/${this.course.id}|v3`)
                         .then(course => {
                         this.course = course;
+
                         this.setShareData(course, true);
+                        this.updateTitle(course.title);
                 });
             }
         },
         methods: {
+            gotoLecturer() {
+                this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
+            },
             tagParam(tag) {
                 if(_.isObject(tag.tag)) {
                     return {
                         type: tag.type,
-                        tag: tag.tag.id
+                        tag: tag.tag.id,
+                        name: tag.tag.name
                     };
                 } else {
                     return {
                         type: tag.type,
-                        tag: tag.tag
+                        tag: tag.tag,
+                        name: tag.tag
                     };
                 }
             },
@@ -110,8 +117,8 @@
                     courseVideoId: this.course.video,
                     targetId: this.course.id,
                     targetType: 'open_course',
-                    productId: this.course.product_id,
-                    productVideoId: this.course.product_video_id,
+                    productId: this.course.ad_product_id,
+                    productVideoId: this.course.ad_video,
                     courseShareUrl: shareUrl,
                     userId: this.course.user.id,
                     portraitId: this.course.user.photo

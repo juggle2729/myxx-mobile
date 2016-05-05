@@ -46,7 +46,7 @@
         methods: {
             setTitle() {
                 if(this.items.length > 0) {
-                    document.title = this.items[0].user.name + '的公开课';
+                    this.updateTitle(this.items[0].user.name + '的公开课');
                 } else {
                     setTimeout(this.setTitle, 100);
                 }

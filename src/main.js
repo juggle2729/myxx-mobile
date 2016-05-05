@@ -48,7 +48,7 @@ router.beforeGo((from, to) => {
     if(root.env.version) { // 客户端环境
         let action = to.native && to.native(root.env.version);
         if(action) {
-            action = _.isObject(action) ? _.merge(to, action) : to; 
+            action = _.isObject(action) ? _.merge(to, action) : to;
             root.action(action.name, action.params);
             interrupted = true;
         } else if(from.name === to.name) { // 同一route内，做tab切换
@@ -62,14 +62,14 @@ router.beforeGo((from, to) => {
 });
 router.beforeEach(({from, to, abort, next}) => {
     to.router.app.$el.classList.add('loading');
-    document.title = (to.title || '美玉秀秀');
+    document.title = (to.title || '');
     next();
 });
 router.afterEach(({to}) => {});
 router.alias({
-  '/user/:id': '/user/:id/home',
-  '/evaluations/:tab': '/evaluations',
-  '/stories/:tab': '/stories'
+    '/user/:id': '/user/:id/home',
+    '/evaluations/:tab': '/evaluations',
+    '/stories/:tab': '/stories'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

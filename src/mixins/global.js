@@ -160,6 +160,17 @@ const mixin = {
                 }
                 this.action('play', {medias} , fn => fn());
             }
+        },
+
+        updateTitle(newTitle) {
+            if(!this.env.isApp) {
+                document.title = newTitle;
+                return;
+            }
+
+            this.action('updateTitle', {
+                text: newTitle
+            });
         }
     }
 };
