@@ -61,7 +61,7 @@ router.beforeGo((from, to) => {
     return !interrupted;
 });
 router.beforeEach(({from, to, abort, next}) => {
-    to.router.app.$el.classList.add('loading');
+    // to.router.app.$el.classList.add('loading');
     document.title = (to.title || '');
     next();
 });

@@ -22,7 +22,7 @@ const mixin = {
         emulateJSON: true
     },
     route: {
-        waitForData: false
+        waitForData: true
     },
     created() {
         if(this.$root === this.$parent) {
@@ -39,9 +39,9 @@ const mixin = {
     },
     methods: {
         toggleLoading(show) {
-            const appContainer = document.querySelector('#app');
-            show = (show === undefined ? !appContainer.classList.contains('loading') : show);
-            document.querySelector('#app').classList[show ? 'add' : 'remove']('loading');
+            const classList = this.$root.$el.classList;
+            show = (show === undefined ? !classList.contains('loading') : show);
+            classList[show ? 'add' : 'remove']('loading');
         },
 
         /**
@@ -61,7 +61,7 @@ const mixin = {
             bridge.then((bridge) => {
                 switch(handler) {
                     case 'login':
-                        callback = console.debug.bind(console);
+                        callback = _.noop;
                         break;
                     case 'user':
                         callback = resp => {
