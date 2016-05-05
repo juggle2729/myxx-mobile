@@ -147,7 +147,7 @@
 
         }
         img {
-            max-width: 100%
+            width: 100%
         }
     }
     .fake-input {
@@ -381,7 +381,7 @@ export default {
     },
     route: {
         data() {
-            this.$get('mall/products/'+ this.$route.params.id)
+            return this.$get('mall/products/'+ this.$route.params.id)
                 .then((data) => {
                     this.info = data;
                     this.setShareData(data, true);

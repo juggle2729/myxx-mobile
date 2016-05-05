@@ -96,7 +96,7 @@ export default {
     },
     computed: {
         api() {
-            return `users/target/${this.$route.params.id}/type/${this.$route.params.type}/comments`;
+            return `users/target/${this.$route.params.id}/type/${this.$route.params.type}/comments|v3`;
         },
         paging() {
             return {
