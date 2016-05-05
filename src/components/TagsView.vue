@@ -69,7 +69,7 @@
 }
 </style>
 <template>
-<div class="tags-view">
+<div class="tags-view" v-if="!$loadingRouteData">
     <div class="mall">
         <div class="title flex">
             <div class="line bg-red"></div>
@@ -91,7 +91,7 @@
             <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>
         </div>
         <div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'lesson', params: {id: item.id }}">
-            <div class="img lesson" v-bg.lg="item.picture">
+            <div class="img lesson" v-bg.lg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1">
                 <div class="white font-22">
                     <span class="icon icon-like-solid"></span>
                     <span class="margin-right">{{item.like || 0}}</span>
@@ -134,6 +134,7 @@ export default {
         data({to}) {
             const tags = this.config.tags;
             [this.type, this.tag] = [to.params.type, to.params.tag];
+            this.updateTitle(to.params.name);
             return this.$get('dc/tag/tops', { tag_name: this.type, tag_value: this.tag }).then((data) => {
                 _.forEach(data.tops, (item) => {
                     (item.biz_type === tags.product.id) && (this.mall = item) && (this.mall.title = tags.product.name);

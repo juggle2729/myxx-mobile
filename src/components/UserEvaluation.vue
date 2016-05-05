@@ -116,7 +116,7 @@
             <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
             <div class="font-26 margin-left">{{item.user.name}}</div>
             <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
-            <div class="gray font-26"><i class="icon-comment"></i><span>{{item.comment}}</span></div>
+            <div class="gray font-26"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
         </div>
         <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         <div v-if="item.results.length">

@@ -48,7 +48,7 @@
 }
 </style>
 <template>
-    <div class="tag-detail">
+    <div class="tag-detail" v-if="!$loadingRouteData">
         <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'pd'" v-link="{ name: 'jade', params: {id: item.id }}" >
             <div class="img" v-bg.lg="item.first_picture"></div>
             <div class="desc font-30 center">
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="cell" v-for="(index, item) in items" :class="{'space': (index % 2 === 0)}" v-if="category === 'oc'" v-link="{ name: 'lesson', params: {id: item.id }}" >
-            <div class="img lesson" v-bg.lg="item.picture">
+            <div class="img lesson" v-bg.lg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1">
                 <div class="white font-22">
                     <span class="icon icon-like-solid"></span>
                     <span class="margin-right">{{item.like || 0}}</span>
@@ -100,19 +100,11 @@ export default {
     },
     route: {
         data({to}) {
-            this.loadPageTitle();
             [this.type, this.tag, this.category] = [to.params.type, to.params.tag, to.params.category];
-            return this.fetch();
-        }
-    },
-    methods: {
-        setTitle() {
             const tags = this.config.tags;
             const category = (this.category === tags.product.id ? tags.product.name : (this.category === tags.lesson.id ? tags.lesson.name : tags.evaluation.name));
-            document.title = '标签-' + category;
-        },
-        loadPageTitle() {
-            setTimeout(this.setTitle, 100);
+            this.updateTitle(to.params.name + '-' + category);
+            return this.fetch();
         }
     }
 }

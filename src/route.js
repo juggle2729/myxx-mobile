@@ -250,16 +250,15 @@ export default {
             }, 'other');
         }
     },
-    '/tag/:type/:tag': {
+    '/tag/:type/:tag/:name': {
         name: 'tags',
-        title: '标签',
         component(resolve) {
                require.ensure([], (require) => {
                    resolve(require('TagsView.vue'));
                }, 'mall');
         }
     },
-    '/tag/:type/:tag/:category': {
+    '/tag/:type/:tag/:category/:name': {
         name: 'tag',
         component(resolve) {
             require.ensure([], (require) => {
