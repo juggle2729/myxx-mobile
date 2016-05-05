@@ -190,8 +190,8 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'jade'}}">
-            <div class="avatar-90" v-bg.sm="info.owner.photo"></div>
+    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'story'}}">
+            <avatar :user="info.owner" :size="90"></avatar>
             <div class="flex-1">
                 <p class="font-32 master-name">{{info.owner.name}}</p>
                 <p class="font-26 gray">{{info.owner.title}}</p>
@@ -335,11 +335,13 @@
 <script>
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
+import Avatar from './Avatar.vue';
 export default {
     name: 'JadeView',
     mixins: [shareable],
     components: {
-        Comment
+        Comment,
+        Avatar
     },
     data() {
         return {

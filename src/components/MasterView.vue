@@ -102,7 +102,8 @@
             font-size: 24px;
         }
 
-        .head {
+        .avatar-222 {
+            margin: 0 auto;
             border: 1px solid #737373;
         }
     }
@@ -198,7 +199,7 @@
             </div>
             <div class="content" v-html="interview.content"></div>
             <div class="base-info">
-                <div class="center-avatar head avatar-222" v-link="{name: 'user', params: {id: base.id}}" v-bg.sm="base.photo"></div>
+                <avatar :user="base" :size="222"></avatar>
                 <div class="name">{{base.name}}</div>
                 <div class="title" v-if="base.titles.length > 0">{{base.titles[0].name | truncate 300}}</div>
                 <ul class="operation">
@@ -213,9 +214,13 @@
 </template>
 <script>
 import shareable from 'shareable';
+import Avatar from './Avatar.vue';
 export default {
     name: 'MasterSpecialView',
     mixins: [shareable],
+    components: {
+        Avatar
+    },
     data(){
         return {
             base: {},

@@ -1,9 +1,9 @@
 <template>
-    <div v-if="isSelf" class="avatar avatar-{{size}}"  @click="coverflow(0)" v-bg.sm="user.photo">
-        <div v-if="user.vip_flag" class="vip vip-{{size}}"></div>
+    <div v-if="isSelf" class="avatar-{{size}}"  @click="coverflow(0)" v-bg.sm="user.photo">
+        <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
-    <div v-else class="avatar avatar-{{size}}" @click="goToProfile(user)" v-bg.sm="user.photo">
-        <div v-if="user.vip_flag" class="vip vip-{{size}}"></div>
+    <div v-else class="avatar-{{size}}" @click="goToProfile(user)" v-bg.sm="user.photo">
+        <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
 </template>
 <script>
@@ -20,7 +20,8 @@ export default {
             type: Boolean
         },
         size: {
-            type: Number
+            type: Number,
+            default: 68
         }
     },
     methods: {

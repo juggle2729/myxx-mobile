@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
-    "start": "webpack-dev-server --inline --history-api-fallback --hot --quiet --host 192.168.0.188 --port 80",
+    "start": "webpack-dev-server --inline --history-api-fallback --hot --quiet --host 192.168.0.121 --port 8080",
     "build": "NODE_ENV=production webpack --progress --hide-modules"
   },
   "devDependencies": {

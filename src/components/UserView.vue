@@ -10,12 +10,6 @@
                 .avatar-180 {
                     margin: 0 auto 40px;
                     border: 1px white solid;
-                    width: 180px;
-                    height: 180px;
-                }
-                .vip-180 {
-                    height: 180px;
-                    width: 180px;
                 }
                 .flex-1 {
                     margin: 24px 0 32px;
