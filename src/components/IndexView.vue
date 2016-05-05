@@ -60,7 +60,7 @@
             <a href="/story/521">晒宝 - story/:id</a>
         </li>
         <li class="font-26 border-top padding center">
-            <a href="/jade/1">商品 - jade/:id</a>
+            <a href="/jade/35">商品 - jade/:id</a>
         </li>
         <li class="tab">拍卖</li>
         <li class="font-26 border-top padding center">
