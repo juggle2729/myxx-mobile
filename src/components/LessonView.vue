@@ -9,7 +9,7 @@
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
             </div>
-            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser" v-if="config.isApp">
+            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser" v-if="env.isApp">
                 <span class="icon icon-like-solid"></span>
                 <span class="count">{{course.like}}</span>
             </div>
@@ -23,15 +23,18 @@
                 </template>
             </div>
         </div>
-        <template v-if="recommendGoods.length">
+        <template v-if="recommendData.length">
             <div class="separator"></div>
-            <div class="recommend-goods">
-                <div class="title font-22">商品推荐</div>
-                <div class="goods-list">
-                    <div class="good-item" v-link="{name: 'jade', params: {id: good.item.id}}" v-for="good in recommendGoods">
-                        <div class="good-img" v-bg.md="good.item.first_picture"></div>
-                        <div class="good-title">{{good.item.title}}</div>
-                        <div class="good-price">{{good.item.price | price}}</div>
+            <div class="recommend-data">
+                <div class="title font-22">相关推荐</div>
+                <div class="data-list">
+                    <div class="data-item {{data.biz_type}}" @click="gotoDataUrl(data)" v-for="data in recommendData">
+                        <div class="data-img" v-bg.md="data.item.first_picture || data.item.picture">
+                            <div class="data-title" v-text="recommendTitle(data)"></div>
+                        </div>
+                        <div class="data-name">{{(data.item.title || data.item.description) | truncate 20}}</div>
+                        <div v-if="data.biz_type === config.tags.product.id" class="data-price">{{data.item.price | price}}</div>
+                        <div v-if="data.item.author" class="data-user-name">{{data.item.author.name}}</div>
                     </div>
                 </div>
             </div>
@@ -58,13 +61,13 @@
                     user: {},
                     column: {}
                 },
-                recommendGoods: []
+                recommendData: []
             };
         },
         route: {
             data({to}) {
                 this.course.id = Number(to.params.id);
-                this.loadRecommendGoods(this.course.id);
+                this.loadRecommendData(this.course.id);
 
                 return this.$get(`cms/opencourse/${this.course.id}|v3`)
                         .then(course => {
@@ -76,8 +79,31 @@
             }
         },
         methods: {
+            gotoDataUrl(data) {
+                const type = data.biz_type;
+                let pathName = '';
+                if (type === this.config.tags.lesson.id) {
+                    pathName = 'lesson';
+                } else if (type === this.config.tags.product.id) {
+                    pathName = 'jade';
+                } else if (type === this.config.tags.evaluation.id) {
+                    pathName = 'evaluation';
+                }
+
+                this.$route.router.go({name: pathName, params: {id: data.item.id}});
+            },
             gotoLecturer() {
                 this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
+            },
+            recommendTitle(data) {
+                for (const tagName in this.config.tags) {
+                    const tag = this.config.tags[tagName];
+                    if (tag.id === data.biz_type) {
+                        return tag.name;
+                    }
+                }
+
+                return '';
             },
             tagParam(tag) {
                 if(_.isObject(tag.tag)) {
@@ -124,12 +150,12 @@
                     portraitId: this.course.user.photo
                 });
             },
-            loadRecommendGoods(courseId) {
+            loadRecommendData(courseId) {
                 return this.$get(`dc/rd|v3`, {
                     obj_id: courseId,
-                    biz_type: 'pd' // 推荐商品
+                    biz_type: 'oc' // 推荐商品
                 }).then(data => {
-                    this.recommendGoods = data.recommend_data;
+                    this.recommendData = data.recommend_data;
                 });
             },
             likeUser() {
@@ -206,7 +232,7 @@
                   position: absolute;
               }
 
-           .avatar {
+           .avatar-68 {
                 left: 40px;
                 top: 50%;
                 margin-top: -34px;
@@ -289,7 +315,7 @@
             height: 20px;
         }
 
-        .recommend-goods {
+        .recommend-data {
             @include border(bottom);
             .title {
                 color: #979797;
@@ -298,7 +324,7 @@
                 margin-left: 32px;
             }
 
-            .goods-list {
+            .data-list {
                 padding:0 32px 32px;
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -306,22 +332,23 @@
                 -webkit-overflow-scrolling: touch;
             }
 
-            .good-item {
+            .data-item {
                 @include border();
                 width: 300px;
-                display: inline-block;
+                display: inline-table;
             }
 
-            .good-item:not(:first-child) {
+            .data-item:not(:first-child) {
                 margin-left: 20px;
             }
 
-            .good-img {
+            .data-img {
                 width: 100%;
                 height: 300px;
+                background-size: cover;
             }
 
-            .good-title {
+            .data-name {
                 font-size: 24px;
                 padding: 17px 18px 20px;
                 line-height: 36px;
@@ -330,7 +357,33 @@
                 text-align: center;
             }
 
-            .good-price {
+            .oc {
+                .data-name {
+                    text-align: left;
+                }
+
+                .data-user-name {
+                    font-size: 24px;
+                    color: #888;
+                    padding: 0 0 17px 20px;
+                }
+            }
+
+            .jb .data-name{
+                height: 115px;
+                text-align: left;
+            }
+
+            .data-title {
+                font-size: 20px;
+                text-align: center;
+                color: #fff;
+                background: rgba(0, 0, 0, 0.6);
+                width: 100px;
+                line-height: 44px;
+            }
+
+            .data-price {
                 text-align: center;
                 font-size: 20px;
                 color: #cc3f4f;
