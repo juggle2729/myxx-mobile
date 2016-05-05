@@ -75,6 +75,7 @@ export default {
                     data.title = entry.title;
                     data.desc = '我在美玉秀秀讲了这堂课，听听你的想法!';
                     data.icon = entry.user.photo;
+                    data.text = '查看更多和田玉知识';
                     break;
                 default:
                     data.title = '美玉秀秀';
@@ -83,7 +84,9 @@ export default {
                     data.url = this.config.download;
             }
             // 截取描述文字前20字符,防止emoji表情被截断导致iOS平台无法识别
-            data.desc = data.desc.substr(0, /([\uD800-\uDBFF])/.test(data.desc.charAt(19)) ? 19 : 20) + '...';
+            data.desc = _.truncate(data.desc, {
+                length: /[\uD800-\uDBFF]/.test(data.desc.charAt(25)) ? 24 : 25
+            });
 
             // 拼接分享落地页地址
             let query = _.merge({}, this.$route.query, {
