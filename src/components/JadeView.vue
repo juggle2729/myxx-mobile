@@ -385,10 +385,10 @@ export default {
                 .then((data) => {
                     this.info = data;
                     this.setShareData(data, true);
-                });
-            this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
-                .then((data) => {
-                    this.recommend = data.recommend_data;
+                    this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
+                        .then((data) => {
+                            this.recommend = data.recommend_data;
+                        });
                 });
         }
     },
