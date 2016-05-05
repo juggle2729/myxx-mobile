@@ -128,7 +128,7 @@ const mixin = {
                                         // 暂存请求数据,可以考虑把对应回调也暂存
                                         localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
                                         this.action('login');
-                                    } else if([3002, 5004, 2001, 2000].indexOf(resp.status) !== -1) {
+                                    } else if([3002, 5004, 2001, 2000, 2100].indexOf(resp.status) !== -1) {
                                         console.debug('404', location.href);
                                         this.$route.router.replace({'name': '404'});
                                     } else {

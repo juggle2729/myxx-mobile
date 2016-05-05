@@ -48,7 +48,7 @@
         <div class="comment-header flex font-22 border-bottom">
             <div class="gray">评论&nbsp;&nbsp;{{total}}</div>
         </div>
-            <div v-if="!!total" class="comment" @click="gotoComments(this.id, 30)">
+            <div v-if="!!total" class="comment" @click="gotoComments(this.id, 40)">
                 <div class="author">
                     <div class="avatar margin-right"  v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
                     <div class="flex">
@@ -88,7 +88,7 @@ export default {
     },
     computed: {
         api() {
-            return `users/target/${this.id}/type/30/comments?limit=1`;
+            return `users/target/${this.id}/type/40/comments?limit=1|v3`;
         }
     },
     created() {
@@ -100,58 +100,12 @@ export default {
                 }
             });
         });
-        this.uid = ('' + Date.now()).substr(-5);
         // 监听广播事件
         this.$on('comment', (e) => {
             this.comment(e);
         });
     },
     methods: {
-        clicked(comment, e, index) {
-            const currUserId = _.get(this, 'self.id');
-            if(!currUserId) {
-                this.action('login');
-            } else if(currUserId == comment.reply_from.id) {
-                this.action('delete', '')
-                    .then((confirm) => {
-                        if(confirm === '1') {
-                            return this.$delete(`${this.api}/${comment.id}`);
-                        }
-                    }).then((result) => {
-                        if(result) {
-                            this.action('toast', {success: 1, text: '删除成功'});
-                            this.items.splice(index, 1);
-                            this.items.total -= 1;
-                        }
-                    });
-            } else {
-                const id = this.uid + _.get(this, 'self.id', '');
-                const placeholder = '回复' + comment.reply_from.name;
-                const position = this._getPosition(e);
-                this.action('keyboard', {id, placeholder, position})
-                    .then((content) => {
-                        if(content) {
-                            let reply_to = comment.reply_from;
-                            this.$post(this.api, {content, reply_to: reply_to.id})
-                                .then((result) => {
-                                    _.merge(result, {
-                                        content,
-                                        create_at: Date.now(),
-                                        reply_to,
-                                        reply_from: {
-                                            id: this.self.id,
-                                            photo: this.self.avatarId,
-                                            name: this.self.nickname
-                                        }
-                                    });
-                                    this.items.splice(0, 0, result);
-                                    this.items.total += 1;
-                                    this.action('toast', {success: 1, text: '回复成功'});
-                                });
-                        }
-                    });
-            }
-        },
         comment(e) {
             const id = this.uid;
             const placeholder = '';
@@ -159,27 +113,14 @@ export default {
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
                     if(content) {
-                        this.$post(`users/target/${this.id}/type/${this.type}/comments`, {content})
+                        this.$post(`users/target/${this.id}/type/40/comments|v3`, {content})
                             .then((result) => {
-                                _.merge(result, {
-                                    content,
-                                    create_at: Date.now(),
-                                    reply_from: {
-                                        id: this.self.id,
-                                        photo: this.self.avatarId,
-                                        name: this.self.nickname
-                                    }
-                                });
-                                this.items.splice(0, 0, result);
-                                this.items.total += 1;
+                                this.c = result;
+                                this.total += 1;
                                 this.action('toast', {success: 1, text: '回复成功'});
                             });
                     }
                 });
-        },
-        gotoProfile(user) {
-            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
-            this.$route.router.go({name: 'user', params: {id, tab}});
         },
         gotoComments(id, type) {
             this.$route.router.go({name: 'comments', params: {id, type}});

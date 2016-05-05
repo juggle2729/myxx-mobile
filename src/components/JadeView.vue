@@ -97,6 +97,9 @@
             white-space: normal;
             vertical-align: top;
         }
+        a {
+            display: block;
+        }
         .recommend-img {
             position: relative;
             width: 300px;
@@ -177,18 +180,17 @@
 </style>
 <template>
 <div class="jade-view bg-white">
-    <div class="jade-video play" @click="play(info.video)">
-        <img  :src="config.video + info.video + '?vframe/jpg/offset/0/rotate/auto'" alt="{{info.title}}" />
+    <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2">
     </div>
     <div class="titles">
         <div class="title font-32">{{info.title}}</div>
         <div class="flex margin-top">
-            <p class="red font-32 icon-price flex-1">{{info.price | price}}</p>
+            <p class="red font-32 icon-price flex-1">{{info.price | price ''}}</p>
             <div class="button bg-gray flex font-32 white"><span class="center-horizontal">购买(开发中)</span></div>
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'story'}}">
+    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'jade'}}">
             <div class="avatar-90" v-bg.sm="info.owner.photo"></div>
             <div class="flex-1">
                 <p class="font-32 master-name">{{info.owner.name}}</p>
@@ -200,11 +202,13 @@
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <div class="tags">
-            <ul>
-                <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.tagName, tag: tag.tagValue}}">{{tag.tagName}}</a></li>
-            </ul>
-        </div>
+        <template v-if="tags.length">
+            <div class="tags">
+                <ul >
+                    <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.type, tag: tag.id}}">{{tag.name}}</a></li>
+                </ul>
+            </div>
+        </template>
         <div class="others">
             <ul>
                 <li class="flex font-26">
@@ -258,53 +262,55 @@
             </ul>
         </div>
     </div>
-    <div class="separator-20"></div>
-    <div class="recommend">
-        <div class="titleflex">
-          <span class="font-22 gray flex title">相关推荐</span>
-          <ul>
-              <li class="border-default" v-for="rec in recommend.recommend_data">
-                  <a v-if="rec.biz_type === 'pd'" href="#">
-                      <div class="recommend-img">
-                          <span class="label font-26 white">商品</span>
-                          <div class="media img" v-bg="rec.item.first_picture"></div>
-                      </div>
-                      <div class="font-26">
-                          <p class="recommend-title title-center">
-                              {{rec.item.title}}
-                          </p>
-                          <p class="red recommend-price title-center">
-                              {{rec.item.price | price}}
-                          </p>
-                      </div>
-                  </a>
-                  <a v-if="rec.biz_type === 'jb'" href="#">
-                      <div class="recommend-img">
-                          <span class="label font-26 white">求鉴宝</span>
-                          <div class="media img" v-bg="rec.item.picture"></div>
-                      </div>
-                      <div class="font-26">
-                          <p class="recommend-title title-left">
-                              {{rec.item.description}}
-                          </p>
-                      </div>
-                  </a>
-                  <a v-if="rec.biz_type === 'oc'" href="#">
-                      <div class="recommend-img">
-                          <span class="label font-26 white">公开课</span>
-                          <div class="media img" v-bg="rec.item.author.portrait"></div>
-                      </div>
-                      <div class="font-26">
-                          <div class="recommend-title title-left">
-                              <p>{{rec.item.title}}</p>
-                              <p class="gray author">{{rec.item.author.name}}</p>
-                         </div>
-                      </div>
-                  </a>
-              </li>
-          </ul>
+    <template v-if="recommend.length">
+        <div class="separator-20"></div>
+        <div class="recommend">
+            <div class="titleflex">
+              <span class="font-22 gray flex title">相关推荐</span>
+              <ul>
+                  <li class="border-default" v-for="rec in recommend">
+                      <a v-if="rec.biz_type === 'pd'" v-link="{name: 'jade', params: {id: rec.item.id}}">
+                          <div class="recommend-img">
+                              <span class="label font-26 white">商品</span>
+                              <div class="media img" v-bg="rec.item.first_picture"></div>
+                          </div>
+                          <div class="font-26">
+                              <p class="recommend-title title-center">
+                                  {{rec.item.title}}
+                              </p>
+                              <p class="red recommend-price title-center">
+                                  {{rec.item.price | price ''}}
+                              </p>
+                          </div>
+                      </a>
+                      <a v-if="rec.biz_type === 'jb'" v-link="{name: 'evaluation', params: {id: rec.item.id}}">
+                          <div class="recommend-img">
+                              <span class="label font-26 white">求鉴宝</span>
+                              <div class="media img" v-bg="rec.item.picture"></div>
+                          </div>
+                          <div class="font-26">
+                              <p class="recommend-title title-left">
+                                  {{rec.item.description}}
+                              </p>
+                          </div>
+                      </a>
+                      <a v-if="rec.biz_type === 'oc'" v-link="{name: 'lesson', params: {id: rec.item.id}}">
+                          <div class="recommend-img">
+                              <span class="label font-26 white">公开课</span>
+                              <div class="media img" v-bg="rec.item.author.portrait"></div>
+                          </div>
+                          <div class="font-26">
+                              <div class="recommend-title title-left">
+                                  <p>{{rec.item.title}}</p>
+                                  <p class="gray author">{{rec.item.author.name}}</p>
+                             </div>
+                          </div>
+                      </a>
+                  </li>
+              </ul>
+            </div>
         </div>
-    </div>
+    </template>
     <div class="separator-20"></div>
     <comment type="40" :id="info.id"></comment>
     <div class="separator-20"></div>
@@ -360,26 +366,14 @@ export default {
             return this._treeArrayConcat(this.info.genre);
         },
         tags: function() {
-            let a = [], tags = this.info.tags || [];
-            if (tags.length) {
-                for (let i = 0; i < tags.length; i++) {
-                    // 如果是string类型的标签
-                    if (typeof tags[i].tag === 'string') {
-                        a.push({
-                            tagType: tags[i].type,
-                            tagName: tags[i].tag,
-                        });
-                    } else {
-                        a.push({
-                            tagType: tags[i].type,
-                            tagName: tags[i].tag.parent.name        // 先显示父标签
-                        },{
-                            tagType: tags[i].type,
-                            tagName: tags[i].tag.name
-                        });
-                    }
+            let a = [];
+            _(this.info.tags).forEach(function(tag){
+                if (typeof tag.tag === 'string') {
+                    a.push({type: tag.type, name: tag.tag, id: tag.tag});
+                } else {
+                    a.push({type: tag.type, name: tag.tag.name, id: tag.tag.id});
                 }
-            }
+            });
             return a;
         }
     },
@@ -392,7 +386,7 @@ export default {
                 });
             this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
                 .then((data) => {
-                    this.recommend = data;
+                    this.recommend = data.recommend_data;
                 });
         }
     },
