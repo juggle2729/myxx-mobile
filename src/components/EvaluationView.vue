@@ -107,7 +107,7 @@
         <div class="desc font-30 user-input">{{evaluation.description}}</div>
     </div>
     <ul class="images scrollable">
-        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow($index)">
+        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow(evaluation.pictures, $index)">
             <img :src="config.img+picture+'?imageView2/2/h/450'" />
         </li>
         <li v-if="evaluation.video" class="play" @click="play(evaluation.video)">
@@ -123,7 +123,7 @@
                     <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
                 </div>
             </div>
-            <img class="portrait" @click="play({id: result.video, ads: [result.ad_picture, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
+            <img class="portrait" @click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="price font-30 white center">
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
@@ -192,17 +192,12 @@ export default {
                 evaluationId = id;
                 id = undefined;
             }
-            return this.$get(`sns/jianbao/${evaluationId}|v2`)
+            return this.$get(`sns/jianbao/${evaluationId}|v3`)
                     .then((evaluation) => {
                         id && (evaluation.results = evaluation.results.filter((result) => result.id == id));
                         this.setShareData(evaluation, true);
                         return {evaluation};
                     });
-        }
-    },
-    methods: {
-        coverflow(index) {
-            this.action('coverflow', {ids: this.evaluation.pictures, index});
         }
     }
 }

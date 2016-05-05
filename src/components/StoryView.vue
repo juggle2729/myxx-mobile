@@ -53,40 +53,35 @@
         }
     }
     .medias {
-        .first-row, .second-row {
-            display: -webkit-box;
-        }
-
-        .media {
-            -webkit-box-flex: 1;
-        }
-
-        .third {
-            width: percentage(1/3);
-            padding-top: 33.3333%;
-            padding-top: -webkit-calc(33.3333% - 10px);
-        }
-
-        .half {
-            width: percentage(1/2);
-            padding-top: 50%;
-            padding-top: -webkit-calc(50% - 10px);
-        }
-
-        .full {
-            width: 100%;
-            padding-top: 100%;
-            padding-top: -webkit-calc(100% - 10px);
-        }
-
-        .media:not(:first-child) {
-            margin-left: 10px;
-        }
-
-        .second-row {
-            margin-top: 10px;
-        }
+        font-size: 0;
+        margin: 0 -5px; 
     }
+    .media {
+        display: inline-block;
+        border: 5px solid white; 
+        background-size: cover;
+    }
+    .media:first-child:nth-last-child(1) {
+        width: 100%;
+        padding-top: 100%;
+    }
+    .media:first-child:nth-last-child(2),
+    .media:first-child:nth-last-child(2) ~ .media,
+    .media:first-child:nth-last-child(4),
+    .media:first-child:nth-last-child(4) ~ .media {
+        width: 50%;
+        padding-top: 50%;
+    }
+    .media:first-child:nth-last-child(3),
+    .media:first-child:nth-last-child(3) ~ .media,
+    .media:first-child:nth-last-child(5),
+    .media:first-child:nth-last-child(5) ~ .media,
+    .media:first-child:nth-last-child(6),
+    .media:first-child:nth-last-child(6) ~ .media {
+        width: 33.3333%;
+        padding-top: 33.3333%;
+    }
+
     .comments {
         padding: 24px 32px;
         .header {
@@ -126,23 +121,14 @@
     </div>
     <div class="description user-input">{{story.content}}</div>
     <template v-if="story.cover_type === 'picture'">
-        <div class="cover img" v-bg="story.cover" @click="coverflow(-1)"></div>
+        <div class="cover img" v-bg="story.cover"></div>
     </template>
     <template v-if="story.cover_type === 'video'">
         <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
     <div class="store-detail">
         <div class="medias">
-            <div class="first-row" v-if="firstRowMedias.length">
-                <template v-for="media in firstRowMedias">
-                    <div class="media img {{firstRowClass}}" @click="coverflow($index)" v-bg="media.id" query="imageView2/1/w/343/h/343/interlace/1"></div>
-                </template>
-            </div>
-            <div class="second-row" v-if="twoRowMedias.length">
-                <template v-for="media in twoRowMedias">
-                    <div class="media img {{twoRowClass}}" @click="coverflow(firstRowMedias.length + $index)" v-bg="media.id" query="imageView2/1/w/343/h/343/interlace/1"></div>
-                </template>
-            </div>
+            <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
         </div>
     </div>
     <div class="separator-20"></div>
@@ -161,43 +147,8 @@ export default {
         Avatar
     },
     computed: {
-        firstRowClass() {
-            const mediasLen = this.story.medias.length;
-            if (mediasLen === 1) {
-                return 'full';
-            } else if (mediasLen === 2 || mediasLen === 4 || mediasLen === 5) {
-                return 'half';
-            } else if (mediasLen === 3 || mediasLen === 6) {
-                return 'third';
-            }
-            return '';
-        },
-        twoRowClass() {
-            const mediasLen = this.story.medias.length;
-            if (mediasLen === 4) {
-                return 'half';
-            } else if (mediasLen === 5 || mediasLen === 6) {
-                return 'third';
-            }
-            return '';
-        },
-        firstRowMedias() {
-            let [mediasLen, truncateEnd] = [this.story.medias.length, 3];
-            if (mediasLen === 4 || mediasLen === 5) {
-                truncateEnd = 2;
-            }
-
-            return this.story.medias.slice(0, truncateEnd)
-                .filter(media => media.type === 'picture');
-        },
-        twoRowMedias() {
-            let [mediasLen, truncateStart] = [this.story.medias.length, 3];
-            if (mediasLen === 4 || mediasLen === 5) {
-                truncateStart = 2;
-            }
-
-            return this.story.medias.slice(truncateStart, this.story.medias.length)
-                .filter(media => media.type === 'picture');
+        pictures() {
+            return this.story.medias.map(media => media.id);
         }
     },
     route: {
@@ -211,16 +162,6 @@ export default {
         }
     },
     methods: {
-        coverflow(index) {
-            let ids = this.story.medias
-                        .filter(media => media.type==='picture')
-                        .map(media => media.id);
-            if(this.story.cover_type === 'picture') {
-                index += 1;
-                ids.splice(0, 0, this.story.cover);
-            }
-            this.action('coverflow', {ids, index});
-        },
         like() {
             const likeApi = `users/target/${this.story.post_id}/type/30/like`;
             if (this.story.liked) {

@@ -331,11 +331,6 @@ export default {
         download() {
             location.href = this.config.download;
         },
-        coverflow(index=0) {
-            if(this.profile.photo) {
-                this.action('coverflow', {ids: [this.profile.photo], index});
-            }
-        },
         next(index) {
             (index < this.products.length - 1) && this.number++;
         },

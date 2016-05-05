@@ -13,7 +13,7 @@
     li {
         -webkit-box-align: start;
         padding-bottom: 20px;
-        .avatar {
+        .avatar-68 {
             margin: 20px 20px 0 0;
         }
         .author {

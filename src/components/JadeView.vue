@@ -322,7 +322,7 @@
           {{{info.detail}}}
         </div>
         <div v-for="img in info.pictures" >
-          <img :src="config.img + img + '?imageView2'" @click="coverflow($index)"/>
+          <img :src="config.img + img + '?imageView2'" @click="coverflow(info.pictures, $index)"/>
         </div>
     </div>
     <div class="separator-20"></div>
@@ -393,10 +393,6 @@ export default {
         }
     },
     methods: {
-        coverflow(index) {
-            let ids = this.info.pictures;
-            this.action('coverflow', {ids,index});
-        },
         _treeArrayConcat(treeArray) {
             if (treeArray && treeArray.length !== 0) {
                 let a = [];

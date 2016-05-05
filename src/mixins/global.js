@@ -75,7 +75,11 @@ const mixin = {
                             }
                         break;
                     case 'keyboard':
-                        callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject();
+                        if(this.env.isApp && !this.self) {// 在客户端，要确保用户已经登录
+                            return this.action('login');
+                        } else {
+                            callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject();
+                        }
                         break;
                     case 'confirm':
                     case 'delete':
@@ -162,15 +166,18 @@ const mixin = {
             }
         },
 
-        updateTitle(newTitle) {
-            if(!this.env.isApp) {
-                document.title = newTitle;
-                return;
+        coverflow(ids, index=0) {
+            if(!_.isEmpty(ids) && _.every(ids, id => id)) {
+                this.action('coverflow', {ids, index});
             }
+        },
 
-            this.action('updateTitle', {
-                text: newTitle
-            });
+        updateTitle(title) {
+            if(this.env.isApp) {
+                this.action('updateTitle', {text: title});
+            } else {
+                document.title = title;
+            }
         }
     }
 };

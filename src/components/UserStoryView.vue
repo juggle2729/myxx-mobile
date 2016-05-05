@@ -31,14 +31,6 @@ export default {
         data() {
             return this.fetch();
         }
-    },
-    methods: {
-        coverflow(story, index) {
-            let ids = story.medias
-                        .filter(media => media.type==='picture')
-                        .map(media => media.id);
-            this.action('coverflow', {ids, index});
-        }
     }
 }
 </script>
