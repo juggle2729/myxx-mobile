@@ -70,6 +70,12 @@
                 recommendData: []
             };
         },
+        ready() {
+            this.$on('restore', () => {
+                this.updateTitle(this.course.title);
+                this.setShareData(this.course, true);
+            });
+        },
         route: {
             data({to}) {
                 this.course.id = Number(to.params.id);

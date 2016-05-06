@@ -1,4 +1,5 @@
 import Q from 'q';
+import emitter from './utils/emitter';
 let userPromise;    // 把wx用户接口缓存起来，防止多次请求报错
 const adapter = {
     callHandler(handler, params, cb) {
@@ -82,7 +83,7 @@ if(/myxx/i.test(navigator.userAgent)) {
             document.documentElement.appendChild(WVJBIframe);
             setTimeout(() => { document.documentElement.removeChild(WVJBIframe) }, 0);
         })((bridge) => {
-            bridge.registerHandler('back', data => console.log('back', data));
+            bridge.registerHandler('back', () => emitter.emit('back'));
             defer.resolve(bridge);
         });
     } else {

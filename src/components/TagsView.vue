@@ -74,7 +74,7 @@
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{mall.title}}</div>
-            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: mall.biz_type }}">更多</div>
+            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, name: decodeURIComponent($route.params.name), category: mall.biz_type }}">更多</div>
         </div>
         <div class="cell" v-for="(idx, item) in mall.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'jade', params: {id: item.id }}">
             <div class="img" v-bg.lg="item.first_picture"></div>
@@ -88,7 +88,7 @@
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{lesson.title}}</div>
-            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: lesson.biz_type }}">更多</div>
+            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, name: decodeURIComponent($route.params.name), category: lesson.biz_type }}">更多</div>
         </div>
         <div class="cell" v-for="(idx, item) in lesson.items" :class="{'space': (idx % 2 === 0)}" v-link="{ name: 'lesson', params: {id: item.id }}">
             <div class="img lesson" v-bg.lg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1">
@@ -109,7 +109,7 @@
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{evaluation.title}}</div>
-            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, category: evaluation.biz_type }}">更多</div>
+            <div class="more font-26 border-all center" v-link="{ name: 'tag', params: { type: type, tag: tag, name: decodeURIComponent($route.params.name), category: evaluation.biz_type }}">更多</div>
         </div>
         <div class="cell" v-for="(idx, item) in evaluation.items" :class="{'space': (idx % 2 === 0)}" v-link="{name: 'evaluation', params: {id: item.id}}">
             <div class="img" v-bg.lg="item.picture"></div>
@@ -129,6 +129,9 @@ export default {
             evaluation: {},
             lesson: {}
         }
+    },
+    ready() {
+        this.$on('restore', () => this.updateTitle(decodeURIComponent(this.$route.params.name)));
     },
     route: {
         data({to}) {

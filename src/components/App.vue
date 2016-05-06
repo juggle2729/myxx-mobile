@@ -95,6 +95,7 @@ export default {
         }
     },
     ready() {
+        emitter.on('back', () => this.$broadcast('restore'));
         emitter.on('scroll', (e) => this.$broadcast('scroll', e));
         emitter.on('scroll-to-bottom', (e) => this.$broadcast('scrollToBottom', e));
     },
