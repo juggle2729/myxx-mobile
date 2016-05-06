@@ -62,6 +62,9 @@ router.beforeGo((from, to) => {
 });
 router.beforeEach(({from, to, abort, next}) => {
     // to.router.app.$el.classList.add('loading');
+    if (from.name === to.name) {
+        window.scroll(0, 0);
+    }
     document.title = (to.title || '');
     next();
 });
