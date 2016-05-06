@@ -19,6 +19,7 @@ export default {
                 hasDownloadLink: true,
                 url: location.origin + location.pathname
             };
+            let mergeDesc = false; // 分享朋友圈的时候, 是否需要合并描述到title
             switch(this.$route.name) {
                 case 'evaluation':
                     data.title = entry.status ? entry.results[0].identifier.name+'的视频鉴宝' : '大师在线视频鉴宝';
@@ -72,7 +73,7 @@ export default {
                     data.text = '下载应用,查看更多详情';
                     break;
                 case 'lesson':
-                    data.title = entry.title;
+                    data.title = '大师讲知识：' + entry.title;
                     data.desc = '我在美玉秀秀讲了这堂课，听听你的想法!';
                     data.icon = entry.user.photo;
                     data.text = '查看更多和田玉知识';
@@ -116,14 +117,15 @@ export default {
                     link: data.url,
                     imgUrl: this.config.img + data.icon + '?imageView2/1/w/310'
                 };
-                this.wechatShareInit(shareData);
+
+                this.wechatShareInit(shareData, mergeDesc);
             }
         },
         share() {
             let {title, desc, icon, url} = this.$root.shareData;
             this.action('share', {title, desc, icon, url});
         },
-        wechatShareInit(shareData) {
+        wechatShareInit(shareData, mergeDesc) {
             // load script
             const script = document.createElement('script');
             script.setAttribute('type', 'text/javascript');
@@ -161,7 +163,9 @@ export default {
                     // share list
                     wx.ready(() => {
                         wx.onMenuShareAppMessage(shareData);
-                        wx.onMenuShareTimeline(shareData);
+                        wx.onMenuShareTimeline(mergeDesc ? _.extend({}, shareData, {
+                            title: shareData.title + (shareData.desc ? ' | ' + shareData.desc : '')
+                        }) : shareData);
                         wx.onMenuShareQQ(shareData);
                         wx.onMenuShareWeibo(shareData);
                         wx.onMenuShareQZone(shareData);
@@ -183,4 +187,4 @@ export default {
             return str;
         }
     }
-}; 
+};
