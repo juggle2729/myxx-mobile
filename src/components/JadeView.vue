@@ -205,7 +205,7 @@
         <template v-if="tags.length">
             <div class="tags">
                 <ul >
-                    <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.type, tag: tag.id}}">{{tag.name}}</a></li>
+                    <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.type, tag: tag.id, name: tag.name}}">{{tag.name}}</a></li>
                 </ul>
             </div>
         </template>
