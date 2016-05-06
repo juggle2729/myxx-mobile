@@ -104,6 +104,15 @@ export default {
             }, 'auction');
         }
     },
+    '/auctions/bidding/:id/price/:price/range/:range': {
+        name: 'bidding',
+        title: '我要出价',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionsBiddingView.vue'));
+            }, 'auction');
+        }
+    },
     '/masters': {
         name: 'masters',
         title: '人物志',
