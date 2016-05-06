@@ -62,7 +62,7 @@
     <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
         <div class="header flex">
             <div class="flex-1 flex">
-                <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
+                <avatar :user="item.user" :is-self="($route.name === 'user') && ($route.params.tab)" :size="50"></avatar>
                 <div class="name margin-left font-26">{{item.user.name}}</div>
             </div>
             <div class="moment font-22 light">{{item.create_at | moment}}</div>

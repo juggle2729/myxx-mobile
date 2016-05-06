@@ -180,7 +180,6 @@ export default {
     },
     '/user/:id/:tab': { // 个人主页
         name: 'user',
-        title: '个人主页',
         native: v => v >= 1.3 && {name: 'profile'},
         component(resolve) {
             require.ensure([], (require) => {

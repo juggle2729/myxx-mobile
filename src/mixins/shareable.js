@@ -67,8 +67,8 @@ export default {
                     data.hasDownloadLink = false;
                     break;
                 case 'user':
-                    data.title = `${entry.name}的美玉秀show`;
-                    data.desc = entry.name;
+                    data.title = entry.isMaster ? `${entry.name}的官方主页` : `${entry.name}的个人主页`;
+                    data.desc = '我在美玉秀秀晒了不少宝贝，你也来看看吧！';
                     data.icon = entry.photo;
                     data.text = '下载应用,查看更多详情';
                     break;

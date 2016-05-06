@@ -1,6 +1,7 @@
 <style lang="sass">
     @import '../styles/partials/var';
     .user-view {
+        padding-bottom: 100px;
         .account {
             height: 392px;
             padding: 60px 0 32px;
@@ -302,7 +303,7 @@ export default {
                 this.$get(`users/${to.params.id}/profile|v2`)
                     .then((data) => {
                         this.profile = data;
-                        this.profile.special = (this.profile.role === 4 || this.profile.role === 1);
+                        this.profile.special = (this.profile.role === 4 || this.profile.role === 1 || this.profile.role === 8);
                         // this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
                         this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
                         if(this.isDefaultView) {
@@ -310,7 +311,7 @@ export default {
                         } else {
                             this.view = to.params.tab;
                         }
-                        this.setShareData({id: data.id, name: data.nickname, photo: data.photo} , true);
+                        this.setShareData({id: data.id, name: data.nickname, photo: data.photo, isMaster: this.profile.special} , true);
                         if(this.profile.special) {
                             return this.$get(`mall/users/${to.params.id}/product_cards`);
                         } else {
