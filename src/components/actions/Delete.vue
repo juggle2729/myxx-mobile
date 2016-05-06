@@ -1,12 +1,18 @@
 <style lang="sass">
 .delete-action {
-    &.pop-transition .container {
-        transition: transform .2s ease;
-        transform: translate3d(0, 0, 0);
+    &.pop-transition {
+        opacity: 1;
+        transition: opacity .2s ease;
+        .container {
+            transition: transform .2s ease;
+            transform: translate3d(0, 0, 0);
+        }
     }
-    &.pop-enter .container, &.pop-leave .container {
-        /*FIXME leave动画无效*/
-        transform: translate3d(0, 100%, 0);
+    &.pop-enter , &.pop-leave {
+        opacity: 0;
+        .container {
+            transform: translate3d(0, 100%, 0);
+        }
     }
     position: fixed;
     left: 0;

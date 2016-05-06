@@ -53,7 +53,7 @@ const mixin = {
         action(handler, params = '', callback) {
             // 所有参数采用字符串形式传递
             if(_.isObject(params)) {
-                Object.keys(params).forEach(k => params[k] = _.isObjectLike(params[k]) ? params[k] : _.toString(params[k]));
+                Object.keys(params).forEach(k => params[k] = _.toString(params[k]));
             } else {
                 params = _.toString(params);
             }
@@ -155,7 +155,7 @@ const mixin = {
             if(_.isObject(video)) {
                 _.merge(args, video);
             }
-            if(this.isApp) {
+            if(this.env.isApp) {
                 this.action('play', args);
             } else {    // 在非App环境，采用回调来触发视频自动播放！
                 let medias = [{id: args.id, type: 'video'}];

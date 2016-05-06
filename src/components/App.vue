@@ -73,7 +73,6 @@ export default {
         return {
             user: JSON.parse(localStorage.getItem('MYXX_USER')),
             shareData: {},
-            scrollY: 0,
             popup: {}
         }
     },

@@ -103,7 +103,7 @@ export default {
             [this.type, this.tag, this.category] = [to.params.type, to.params.tag, to.params.category];
             const tags = this.config.tags;
             const category = (this.category === tags.product.id ? tags.product.name : (this.category === tags.lesson.id ? tags.lesson.name : tags.evaluation.name));
-            this.updateTitle(to.params.name + '-' + category);
+            this.updateTitle(decodeURIComponent(to.params.name) + '-' + category);
             return this.fetch();
         }
     }

@@ -19,7 +19,7 @@
 </style>
 <template>
 <div class="coverflow">
-    <slider :ids="params.ids" :i="params.index" :close="close"></slider>
+    <slider :ids="ids" :i="params.index" :close="close"></slider>
 </div>
 </template>
 <script>
@@ -33,6 +33,11 @@ export default {
         params: {
             type: Object,
             required: true
+        }
+    },
+    computed: {
+        ids() {
+            return this.params.ids.split(',');
         }
     },
     methods: {

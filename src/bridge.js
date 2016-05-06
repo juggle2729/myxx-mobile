@@ -1,5 +1,5 @@
 import Q from 'q';
-
+let userPromise;    // 把wx用户接口缓存起来，防止多次请求报错
 const adapter = {
     callHandler(handler, params, cb) {
         switch(handler) {
@@ -15,8 +15,11 @@ const adapter = {
                 if(localStorage.getItem('MYXX_USER')) {
                     cb(localStorage.getItem('MYXX_USER'));
                 } else if(this.$route.query.code) {
-                    this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'})
-                        .then((resp) => {
+                    if(!userPromise) {
+                        userPromise = this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'}).promise;
+                    }
+                    Q.when(userPromise, resp => {
+                            console.debug('get user', resp);   
                             const user = JSON.stringify(resp.data.data);
                             localStorage.setItem('MYXX_USER', user);
                             cb(user);
@@ -79,6 +82,7 @@ if(/myxx/i.test(navigator.userAgent)) {
             document.documentElement.appendChild(WVJBIframe);
             setTimeout(() => { document.documentElement.removeChild(WVJBIframe) }, 0);
         })((bridge) => {
+            bridge.registerHandler('back', data => console.log('back', data));
             defer.resolve(bridge);
         });
     } else {

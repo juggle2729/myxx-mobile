@@ -134,7 +134,7 @@ export default {
         data({to}) {
             const tags = this.config.tags;
             [this.type, this.tag] = [to.params.type, to.params.tag];
-            this.updateTitle(to.params.name);
+            this.updateTitle(decodeURIComponent(to.params.name));
             return this.$get('dc/tag/tops', { tag_name: this.type, tag_value: this.tag }).then((data) => {
                 _.forEach(data.tops, (item) => {
                     (item.biz_type === tags.product.id) && (this.mall = item) && (this.mall.title = tags.product.name);

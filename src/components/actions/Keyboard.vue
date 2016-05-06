@@ -1,13 +1,18 @@
 <style lang="sass">
 .keyboard {
-    &.pop-transition .container {
-        transition: transform .3s ease, opacity .3s linear;
-        transform: translate3d(0, 100px, 0);
+    &.pop-transition {
         opacity: 1;
+        transition: opacity .3s ease;
+        .container {
+            transition: transform .3s linear;
+            transform: translate3d(0, 100px, 0);
+        }
     }
-    &.pop-enter .container, &.pop-leave .container {
-        transform: translate3d(0, -100%, 0);
+    &.pop-enter, &.pop-leave {
         opacity: 0;
+        .container {
+            transform: translate3d(0, -100%, 0);
+        }
     }
     position: fixed;
     left: 0;
