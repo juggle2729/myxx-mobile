@@ -216,40 +216,48 @@
                     <p class="flex-1">{{info.category | tree}}</p>
                 </li>
                 <li class="flex font-26">
-                    <p class="label gray">重量</p>
-                    <p class="flex-1">{{info.weight}}g</p>
-                </li>
-                <li class="flex font-26">
                     <p class="label gray">尺寸</p>
                     <p class="flex-1">{{info.size}}</p>
                 </li>
                 <li class="flex font-26">
-                    <p class="label gray">原料产地</p>
-                    <p class="flex-1">{{info.place | tree}}</p>
+                    <p class="label gray">重量</p>
+                    <p class="flex-1">{{info.weight}}g</p>
                 </li>
                 <li class="flex font-26">
-                    <p class="label gray">产状</p>
-                    <p class="flex-1">{{info.material | tree}}</p>
-                </li>
-                <li class="flex font-26">
-                    <p class="label gray">品种</p>
+                    <p class="label gray">种类</p>
                     <p class="flex-1">{{info.variety | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">产地</p>
+                    <p class="flex-1">{{info.place | tree}}</p>
                 </li>
                 <li class="flex font-26">
                     <p class="label gray">皮色</p>
                     <p class="flex-1">{{info.skin | tree}}</p>
                 </li>
                 <li class="flex font-26">
-                    <p class="label gray">题材</p>
-                    <p class="flex-1">{{themes}}</p>
+                    <p class="label gray">产状</p>
+                    <p class="flex-1">{{info.material | tree}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">证书</p>
+                    <p class="flex-1">{{info.certificate | tree}}</p>
                 </li>
                 <li class="flex font-26">
                     <p class="label gray">礼物说</p>
                     <p class="flex-1">{{gifts}}</p>
                 </li>
                 <li class="flex font-26">
+                    <p class="label gray">题材</p>
+                    <p class="flex-1">{{themes}}</p>
+                </li>
+                <li class="flex font-26">
                     <p class="label gray">寓意</p>
                     <p class="flex-1">{{morals}}</p>
+                </li>
+                <li class="flex font-26">
+                    <p class="label gray">作者</p>
+                    <p class="flex-1">{{info.creator ? info.creator : '无'}}</p>
                 </li>
                 <li class="flex font-26">
                     <p class="label gray">获奖</p>

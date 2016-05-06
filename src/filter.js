@@ -44,14 +44,14 @@ function profile(user) {
 }
 
 function price(num, unit = '￥') {
-    num = Number(num);
+    num = +num;
     if (num === 0) {
         return '面议';
-    } else if (Number.isNaN(num)) {
+    } else if (_.isNaN(num)) {
         num = 0;
     }
 
-    return unit + num.toFixed(2);
+    return unit + num / 100;
 }
 
 function role(id) {
