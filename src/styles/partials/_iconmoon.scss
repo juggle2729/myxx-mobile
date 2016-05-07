@@ -19,7 +19,24 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-add:before {
+    content: "\e92a";
+}
+.icon-subtract:before {
+    content: "\e92b";
+}
+.icon-record:before {
+    content: "\e92c";
+}
+.icon-clock:before {
+    content: "\e92d";
+}
+.icon-weixin:before {
+    content: "\e931";
+}
+.icon-down-slim:before {
+    content: "\e934";
+}
 .icon-success:before {
     content: "\e928";
 }
