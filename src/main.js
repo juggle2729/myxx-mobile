@@ -65,7 +65,7 @@ router.beforeEach(({from, to, abort, next}) => {
     if (from.name === to.name) {
         window.scroll(0, 0);
     }
-    document.title = (to.title || '');
+    document.title = (to.title || '美玉秀秀');
     next();
 });
 router.afterEach(({to}) => {});

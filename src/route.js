@@ -9,6 +9,7 @@ export default {
     },
     '/evaluations': {
         name: 'evaluations',
+        title: '鉴宝列表',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('EvaluationsView.vue'));
@@ -36,6 +37,7 @@ export default {
     },
     '/stories': {
         name: 'stories',
+        title: '晒宝列表',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('StoriesView.vue'));
@@ -63,6 +65,7 @@ export default {
     },
     '/lesson/:id': {
         name: 'lesson',
+        title: '课堂详情',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('LessonView.vue'));
@@ -71,6 +74,7 @@ export default {
     },
     '/lecturer/:userId': {
         name: 'lecturer',
+        title: '大师课堂',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('LecturerView.vue'));
@@ -261,6 +265,7 @@ export default {
     },
     '/tag/:type/:tag/:name': {
         name: 'tags',
+        title: '标签列表',
         component(resolve) {
                require.ensure([], (require) => {
                    resolve(require('TagsView.vue'));
@@ -269,6 +274,7 @@ export default {
     },
     '/tag/:type/:tag/:category/:name': {
         name: 'tag',
+        title: '标签详情',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TagView.vue'));
