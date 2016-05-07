@@ -53,7 +53,7 @@ const mixin = {
         action(handler, params = '', callback) {
             // 所有参数采用字符串形式传递
             if(_.isObject(params)) {
-                Object.keys(params).forEach(k => params[k] = _.toString(params[k]));
+                Object.keys(params).forEach(k => params[k] = _.isObjectLike(params[k]) ? params[k] : _.toString(params[k]));
             } else {
                 params = _.toString(params);
             }
@@ -159,7 +159,7 @@ const mixin = {
                 this.action('play', args);
             } else {    // 在非App环境，采用回调来触发视频自动播放！
                 let medias = [{id: args.id, type: 'video'}];
-                if(args.ads && args.ads.length===2) {
+                if(!_.isEmpty(args.ads) && _.every(args.ads, id => id)) {
                     medias = medias.concat({id: args.ads[0], type: 'img'}, {id: args.ads[1], type: 'video'});
                 }
                 this.action('play', {medias} , fn => fn());
@@ -168,7 +168,7 @@ const mixin = {
 
         coverflow(ids, index=0) {
             if(!_.isEmpty(ids) && _.every(ids, id => id)) {
-                this.action('coverflow', {ids, index});
+                this.action('coverflow', {ids: ids.join(','), index});
             }
         },
 

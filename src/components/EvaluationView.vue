@@ -128,15 +128,10 @@
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
                 <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
             </div>
-            <a v-if="result.promote_type==='auction'" class="action white bg-yellow font-30"
-               :href="result.promote_url">
-                <i class="icon-auction"></i><span>进入拍卖预展</span>
-            </a>
-            <a v-if="result.promote_type==='new_product'" class="action white bg-blue font-30"
-               :href="result.promote_url">
+            <a v-if="result.ad_product_id" class="action white bg-blue font-30" v-link="{name: 'jade', params: {id: result.ad_product_id}}">
                 <i class="icon-new-product"></i><span>进入新品发布</span>
             </a>
-            <a v-if="result.promote_type!=='auction' && result.promote_type!=='new_product'" class="action white bg-green font-30" v-link="result.identifier | profile">
+            <a v-else class="action white bg-green font-30" v-link="result.identifier | profile">
                 <i class="icon-user-profile"></i><span>进入个人主页</span>
             </a>
         </div>

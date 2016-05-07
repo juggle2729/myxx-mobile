@@ -42,7 +42,7 @@ const adapter = {
                 break;
             case 'coverflow':
                 if(window.WeixinJSBridge) {
-                    let urls = params.ids.map((id) => {return this.config.img + id;});
+                    let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
                     WeixinJSBridge.invoke('imagePreview', {
                         urls,
                         current: urls[+params.index]
