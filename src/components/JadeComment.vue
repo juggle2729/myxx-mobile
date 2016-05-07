@@ -14,7 +14,7 @@
                 -webkit-box-align: center;
                 margin: 20px 0;
                 .author-name {
-                    width: 520px;
+                    width: 480px;
                 }
             }
             span {
@@ -49,10 +49,12 @@
             <div class="gray">评论&nbsp;&nbsp;{{total}}</div>
         </div>
             <div v-if="!!total" class="comment" @click="gotoComments(this.id, 40)">
-                <div class="author">
-                    <div class="avatar margin-right"  v-bg.sm="c.reply_from.photo" alt="{{c.reply_from.name}}"></div>
+                <div class="author flex">
+                    <div class="avatar margin-right">
+                        <avatar :user="c.reply_from"></avatar>
+                    </div>
                     <div class="flex">
-                        <h3 class="author-name font-26 light" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</h3>
+                        <h3 class="author-name font-26 light flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</h3>
                         <p class="font-26 light">{{c.create_at | moment}}</p>
                     </div>
                 </div>
@@ -73,12 +75,16 @@
     </div>
 </template>
 <script>
+import Avatar from './Avatar.vue';
 export default {
     name: 'JadeComment',
     props: {
         id: {
             default: 1
         }
+    },
+    components: {
+        Avatar
     },
     data() {
         return {
