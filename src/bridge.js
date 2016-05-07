@@ -35,7 +35,7 @@ const adapter = {
                     medias = medias.concat({id: params.portraitId, type: 'img'}, {id: params.productVideoId, type: 'video'});
                 }
                 this.$root.popup = {
-                        handler: 'play', 
+                        handler: 'play',
                         medias,
                         cb: fn => fn()
                     };
@@ -53,6 +53,7 @@ const adapter = {
                 break;
             case 'play':
             case 'keyboard':
+            case 'affirmAuction':
             case 'share':
             case 'toast':
             case 'delete':

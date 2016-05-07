@@ -15,6 +15,7 @@
 </style>
 <template>
 <div class="index-view bg-default">
+    <h1 @click="auction">affirmAuction</h1>
     <ul>
         <li class="tab">首页</li>
         <li>
@@ -77,6 +78,23 @@
 </template>
 <script>
 export default {
-    name: 'Index'
+    name: 'Index',
+    methods: {
+        toast() {
+            this.action('keyboard');
+        },
+        auction() {
+            this.action('affirmAuction', {
+                img: 'b8605f7b-ef0d-4823-86f3-387e9b7f5600',
+                title: '年年有 余年年有 余年年有余年年 有余年年有余年年有余年年有余年年有余年年有余',
+                origin: '10000元',
+                unit: '10元',
+                beginTime: '1462528501000',
+                endTime: '1462528501000'
+            }).then((data) => {
+                console.log(data.unit + '我是回调函数~~');
+            });
+        }
+    }
 }
 </script>

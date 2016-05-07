@@ -22,7 +22,7 @@ const mixin = {
         emulateJSON: true
     },
     route: {
-        waitForData: true
+        waitForData: false
     },
     created() {
         if(this.$root === this.$parent) {
@@ -81,6 +81,7 @@ const mixin = {
                             callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject();
                         }
                         break;
+                    case 'affirmAuction':
                     case 'confirm':
                     case 'delete':
                     case 'version':

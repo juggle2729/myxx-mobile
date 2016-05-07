@@ -54,11 +54,11 @@
     }
     .medias {
         font-size: 0;
-        margin: 0 -5px; 
+        margin: 0 -5px;
     }
     .media {
         display: inline-block;
-        border: 5px solid white; 
+        border: 5px solid white;
         background-size: cover;
     }
     .media:first-child:nth-last-child(1) {

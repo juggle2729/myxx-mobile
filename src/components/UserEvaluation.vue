@@ -113,7 +113,7 @@
 <div class="user-evaluation bg-white">
     <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
         <div class="head flex">
-            <avatar :user="item.user" :is-self="$route.name === 'user'" :size="50"></avatar>
+            <avatar :user="item.user" :is-self="false" :size="50"></avatar>
             <div class="font-26 margin-left">{{item.user.name}}</div>
             <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
             <div class="gray font-26"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
