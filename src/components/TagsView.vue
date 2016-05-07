@@ -1,5 +1,7 @@
 <style lang="sass">
 .tags-view {
+   min-height: 100%;
+   height: 100%;
    &::after {
        content: '';
        display: table;
@@ -51,12 +53,12 @@
                     margin-top: 14px;
                 }
                 .omit {
-                    overflow: hidden;
+                    overflow-x: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
                 .omit-2 {
-                    overflow: hidden;
+                    overflow-x: hidden;
                     text-overflow: ellipsis;
                     -webkit-line-clamp: 2;
                     display: -webkit-box;
@@ -70,7 +72,7 @@
 </style>
 <template>
 <div class="tags-view" v-if="!$loadingRouteData">
-    <div class="mall">
+    <div class="mall" v-if="mall">
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{mall.title}}</div>
@@ -84,7 +86,7 @@
             </div>
         </div>
     </div>
-    <div class="lesson">
+    <div class="lesson" v-if="lesson">
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{lesson.title}}</div>
@@ -105,7 +107,7 @@
             </div>
         </div>
     </div>
-    <div class="evaluation">
+    <div class="evaluation" v-if="evaluation">
         <div class="title flex">
             <div class="line bg-red"></div>
             <div class="flex-1 font-30 red">{{evaluation.title}}</div>
@@ -118,18 +120,12 @@
             </div>
         </div>
     </div>
+    <partial v-if="isEmpty" name="empty-page"></partial>
 </div>
 </template>
 <script>
 export default {
     name: 'LeadTagView',
-    data() {
-        return {
-            mall: {},
-            evaluation: {},
-            lesson: {}
-        }
-    },
     ready() {
         this.$on('restore', () => this.updateTitle(decodeURIComponent(this.$route.params.name)));
     },
@@ -144,6 +140,7 @@ export default {
                     (item.biz_type === tags.lesson.id) && (this.lesson = item) && (this.lesson.title = tags.lesson.name);
                     (item.biz_type === tags.evaluation.id) && (this.evaluation = item) && (this.evaluation.title = tags.evaluation.name);
                 });
+                this.isEmpty = !(this.mall || this.lesson || this.evaluation);
             });
         }
     }

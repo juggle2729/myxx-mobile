@@ -31,13 +31,13 @@
                 margin-top: 14px;
             }
             .omit {
-                overflow: hidden;
+                overflow-x: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
             .omit-2 {
                 display: -webkit-box;
-                overflow: hidden;
+                overflow-x: hidden;
                 -webkit-line-clamp: 2;
                 text-overflow: ellipsis;
                 -webkit-box-orient: vertical;

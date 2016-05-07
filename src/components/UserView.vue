@@ -2,6 +2,7 @@
     @import '../styles/partials/var';
     .user-view {
         padding-bottom: 100px;
+        min-height: 100%;
         .account {
             height: 392px;
             padding: 60px 0 32px;
@@ -190,8 +191,8 @@
     }
 </style>
 <template>
-    <div class="user-view bg-default">
-        <div class="account center border-bottom" v-if="!profile.special">
+    <div class="user-view bg-default" v-if="!$loadingRouteData">
+        <div class="account center border-bottom" v-if="!isMaster">
             <div class="follow">
                 <div class="button bg-red font-26 red" @click="download()">
                     <span class="icon-follow white">关注</span>
@@ -208,7 +209,7 @@
                 </div>
             </div>
         </div>
-        <div class="video-list"  v-if="profile.special && products.length > 0" v-for="(index, item) in products" :class="{'hide': (index !== number)}">
+        <div class="video-list"  v-if="isMaster && products.length > 0" v-for="(index, item) in products" :class="{'hide': (index !== number)}">
             <div class="arrival">
                 <img :src="'user/arrival.png' | qn">
             </div>
@@ -220,11 +221,11 @@
                 <img :src="rightIcon(index) | qn" @click="next(index)">
             </div>
         </div>
-        <div class="placeholder" v-if="profile.special && products.length === 0">
+        <div class="placeholder" v-if="isMaster && products.length === 0">
             <div class="video center font-34 primary"></div>
             <div class="desc bg-white"></div>
         </div>
-        <div class="master border-bottom flex bg-white" v-if="profile.special">
+        <div class="master border-bottom flex bg-white" v-if="isMaster">
             <avatar :user="profile" :is-self="$route.name === 'user'"></avatar>
             <div class="info flex-1">
                 <p class="font-30">{{profile.nickname}}</p>
@@ -289,6 +290,7 @@ export default {
             titles: [],
             number: 0, // 视频从第一个开始
             isDefaultView: false,
+            isMaster: false,
             view: undefined,
             profile: {},
             products: []
@@ -303,16 +305,15 @@ export default {
                 this.$get(`users/${to.params.id}/profile|v2`)
                     .then((data) => {
                         this.profile = data;
-                        this.profile.special = (this.profile.role === 4 || this.profile.role === 1 || this.profile.role === 8);
-                        // this.isSelf = _.get(this, 'self.id') == this.$route.params.id;
+                        this.isMaster = (this.profile.role === 4 || this.profile.role === 1 || this.profile.role === 8);
                         this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
                         if(this.isDefaultView) {
                             this.view = data.shop_status ? 'jade': 'story';
                         } else {
                             this.view = to.params.tab;
                         }
-                        this.setShareData({id: data.id, name: data.nickname, photo: data.photo, isMaster: this.profile.special} , true);
-                        if(this.profile.special) {
+                        this.setShareData({id: data.id, name: data.nickname, photo: data.photo, isMaster: this.isMaster} , true);
+                        if(this.isMaster) {
                             return this.$get(`mall/users/${to.params.id}/product_cards`);
                         } else {
                             next();

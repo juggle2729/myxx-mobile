@@ -80,9 +80,6 @@
 export default {
     name: 'Index',
     methods: {
-        toast() {
-            this.action('keyboard');
-        },
         auction() {
             this.action('affirmAuction', {
                 img: 'b8605f7b-ef0d-4823-86f3-387e9b7f5600',

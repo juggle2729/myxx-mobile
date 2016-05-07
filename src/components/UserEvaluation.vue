@@ -111,14 +111,16 @@
 </style>
 <template>
 <div class="user-evaluation bg-white">
-    <div v-for="item in items" v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
-        <div class="head flex">
-            <avatar :user="item.user" :is-self="false" :size="50"></avatar>
-            <div class="font-26 margin-left">{{item.user.name}}</div>
-            <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
-            <div class="gray font-26"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
+    <div v-for="item in items">
+        <div v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
+            <div class="head flex">
+                <avatar :user="item.user" :is-self="false" :size="50"></avatar>
+                <div class="font-26 margin-left">{{item.user.name}}</div>
+                <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
+                <div class="gray font-26"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
+            </div>
+            <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         </div>
-        <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         <div v-if="item.results.length">
             <div class="masters flex bg-white">
                 <div class="left" @click.stop="goToProfile(item.results[0].identifier)" v-bg.sm="item.results[0].identifier.portrait"></div>
@@ -139,7 +141,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="results-empty white font-30 center">
+        <div v-else class="results-empty white font-30 center"  @click="invite(item)">
             <div class="center-vertical">- 邀请鉴定师 -</div>
         </div>
     </div>
@@ -188,6 +190,15 @@ export default {
         goToProfile(user) {
             const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
             this.$router.go({name: 'user', params: {id, tab}});
+        },
+        invite(evaluation) {
+            this.action('user').then((user) => {
+                if(user) {
+                    this.action('inviteMaster', {id: evaluation.post_id});
+                } else {
+                    this.action('login');
+                }
+            });
         }
     }
 }
