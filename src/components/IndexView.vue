@@ -67,6 +67,9 @@
             <a href="/auctions/1">我的微信拍卖列表 - auctions/:id</a>
         </li>
         <li class="font-26 border-top padding center">
+            <a href="/auctions/bidding/1/price/1800/range/200">我要出价 - auctions/bidding/:id/price/:price/range/:range</a>
+        </li>
+        <li class="font-26 border-top padding center">
             <a href="/user/1023">个人主页 - user/:id</a>
         </li>
     </ul>
