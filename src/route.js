@@ -99,6 +99,33 @@ export default {
             }, 'comments');
         }
     },
+    '/auction/:id': {
+        name: 'auction',
+        title: '拍卖预览',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionView.vue'));
+            }, 'auction');
+        }
+    },
+    '/addAuction/:id': {
+        name: 'addAuction',
+        title: '添加拍卖信息',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddAuctionView.vue'));
+            }, 'auction');
+        }
+    },
+    '/auctionShare/:id': {
+        name: 'auctionShare',
+        title: '拍卖生成',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionShareView.vue'))
+            }, 'auction')
+        }
+    },
     '/auctions/:id': {
         name: 'auctions',
         title: '全部拍卖',
@@ -108,7 +135,7 @@ export default {
             }, 'auction');
         }
     },
-    '/auctions/bidding/:id/price/:price/range/:range': {
+    '/auctions/bidding/:id': {
         name: 'bidding',
         title: '我要出价',
         component(resolve) {
