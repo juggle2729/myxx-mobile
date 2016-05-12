@@ -275,7 +275,7 @@
         <div class="recommend">
             <div class="titleflex">
               <span class="font-22 gray flex title">相关推荐</span>
-              <ul>
+              <ul class="scrollable">
                   <li class="border-default" v-for="rec in recommend">
                       <a v-if="rec.biz_type === 'pd'" v-link="{name: 'jade', params: {id: rec.item.id}}">
                           <div class="recommend-img">
@@ -386,6 +386,11 @@ export default {
             });
             return a;
         }
+    },
+    ready() {
+        this.$on('restore', () => {
+            this.setShareData(this.info, true);
+        });
     },
     route: {
         data() {

@@ -2,7 +2,7 @@
     <div v-if="isSelf" class="avatar-{{size}}"  @click="coverflow([user.photo])" v-bg.sm="user.photo">
         <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
-    <div v-else class="avatar-{{size}}" @click="goToProfile(user)" v-bg.sm="user.photo">
+    <div v-else class="avatar-{{size}}" v-link="{name: 'user', params: {id: user.id, tab: user.shop_status ? 'jade' : 'story'}}" v-bg.sm="user.photo">
         <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
 </template>
@@ -22,16 +22,6 @@ export default {
         size: {
             type: Number,
             default: 68
-        }
-    },
-    methods: {
-        goToProfile(user) {
-            if(this.env.version > 1.2) {
-               // this.action('profile', {user.id});
-            } else {
-                const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
-                this.$router.go({name: 'user', params: {id, tab}});
-            }
         }
     }
 }

@@ -2,18 +2,14 @@ const path = require('path');
 const vue = require('vue-loader');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 module.exports = {
-    entry: {
-            vendor: ['vue', 'vue-router', 'vue-resource', 'q', 'lodash', 'fastclick'],
-            app: './src/main.js'
-        },
+    entry: './src/main.js',
     output: {
         filename: '[name].js',
-        chunkFilename: '[name].bundle.js',
-        publicPath: '/',
-        path: path.resolve(process.cwd(), 'build')
+        chunkFilename: '[name].chunk.js',
+        path: path.resolve('build'),
+        publicPath: '/'
     },
     resolve: {
         extensions: ['', '.js'],
@@ -30,14 +26,7 @@ module.exports = {
         }, {
             test: /\.jsx?$/,
             loader: 'babel',
-            // excluding some local linked packages.
-            // for normal use cases only node_modules is needed.
-            exclude: [
-                /node_modules|vue\/src|vue-router\/|vue-loader\/|vue-hot-reload-api\//
-            ]
-        }, {
-            test: /\.(ttf|eot|svg|woff?)(\?[a-z0-9]+)?$/,
-            loader: 'file-loader?name=fonts/[name].[ext]'
+            exclude: /node_modules/
         }]
     },
     vue: {
@@ -67,27 +56,18 @@ if (process.env.NODE_ENV === 'production') {
                 comments: false
             }
         }),
-        new CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html',
             minify: {collapseWhitespace: true, minifyCSS: true},
-            inject: true,
             hash: true
         })
     ]
 } else {
     module.exports.plugins = [
-        new CommonsChunkPlugin({
-            name: 'vendor'
-        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
-            template: './index.html',
-            inject: true
+            template: './index.html'
         })
     ];
-    module.exports.devtool = '#source-map';
+    module.exports.devtool = 'source-map';
 }
