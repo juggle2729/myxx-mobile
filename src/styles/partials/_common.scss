@@ -173,6 +173,7 @@
 .play {
     position: relative;
     background-size: cover;
+    background-position: center;
     background-color: #e0e0e0;
     &::after {
         content: '';

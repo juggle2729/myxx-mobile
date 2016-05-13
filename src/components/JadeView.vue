@@ -176,7 +176,7 @@
 </style>
 <template>
 <div class="jade-view bg-white">
-    <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2">
+    <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles">
         <div class="title font-32">{{info.title}}</div>

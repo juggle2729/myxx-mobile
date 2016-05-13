@@ -144,13 +144,13 @@ export default {
 
                 // 不要使用封装后的$post,只有采用$http
                 this.$http.post('wx/jsapisignature', formData).then((result) => {
-                    // config
+                    console.debug('sig');
                     wx.config({
                         debug: process.env.NODE_ENV !== 'production',
                         appId: 'wxcc40bf300d6200a3',
                         timestamp: timeStamp,
                         nonceStr: nonceStr,
-                        signature: result.signature,
+                        signature: result.data.data.signature,
                         jsApiList: [
                             'checkJsApi',
                             'onMenuShareTimeline',
