@@ -15,7 +15,6 @@
 </style>
 <template>
 <div class="index-view bg-default">
-    <h1 @click="auction">affirmAuction</h1>
     <ul>
         <li class="tab">首页</li>
         <li>
@@ -65,11 +64,15 @@
         </li>
         <li class="tab">拍卖</li>
         <li class="font-26 border-top padding center">
+            <a href="/auction/1">拍卖预览 - auction/:id</a>
+        </li>
+        <li class="font-26 border-top padding center">
             <a href="/auctions/1">我的微信拍卖列表 - auctions/:id</a>
         </li>
         <li class="font-26 border-top padding center">
             <a href="/auctions/bidding/1/price/1800/range/200">我要出价 - auctions/bidding/:id/price/:price/range/:range</a>
         </li>
+        <li class="tab">个人主页</li>
         <li class="font-26 border-top padding center">
             <a href="/user/1023">个人主页 - user/:id</a>
         </li>

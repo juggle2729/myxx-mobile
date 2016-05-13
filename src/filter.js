@@ -1,6 +1,7 @@
 import config from './config';
 function moment(time) {
     let m = '神秘时间';
+    time = +time;
     if(typeof time !== 'number') {
         return m;
     }

@@ -86,36 +86,14 @@
             margin: 0 auto;
             border-radius: 8px;
         }
-        .content {
-            margin: 42px 50px;
-            .title {
-                font-size: 30px;
-                color: #393939;
-                padding: 0 0 30px 0;
-                display: -webkit-box;
-                -webkit-box-align: center;
-                &:before, &:after {
-                    display: block;
-                    content: '';
-                    width: 20px;
-                    height: 2px;
-                    background: #888888;
-                    -webkit-box-flex: 1;
-                    -webkit-flex: 1;
-                    -ms-flex: 1;
-                    flex: 1;
-                }
-                &:before {
-                    margin: 0 16px 0 160px;
-                }
-                &:after {
-                     margin: 0 160px 0 16px;
-                }
+        .instruction {
+            padding: 42px 50px 50px 50px;
+            p:first-child {
+                text-align: center;
+
             }
             p {
-                font-size: 30px;
-                color: #888888;
-                padding-bottom: 30px;
+                margin-bottom: 30px;
                 line-height: 44px;
             }
         }
@@ -132,22 +110,34 @@
             <div class="gray font-26 center">我的出价</div>
             <div class="detail gray font-26 center clearfix">
                 <div class="current-price">
-                    当前价格<span>{{product.price}}</span>
+                    当前价格<span>{{product.min_price}}</span>
                 </div>
                 <div class="price-range">
                     加价区间<span>{{product.range}}</span>
                 </div>
             </div>
         </div>
-        <div class="form bg-white">
-            <input type="text" name="phone" placeholder="请输入手机号">
-            <input name="code"  type="text" placeholder="验证码"><input type="button" value="获取验证码">
+        <div v-if="isFirstBid" class="form bg-white">
+            <input type="text" v-model="phone" placeholder="请输入手机号">
+            <input v-model="verifyCode"  type="text" placeholder="验证码"><input @click="getVerifyCode()" type="button" value="{{label}}">
         </div>
-        <div class="confirm white bg-red center bold">确认出价</div>
-        <div class="content">
-            <div class="title center">微信拍卖出价须知</div>
-            <p>1.通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具</p>
-            <p>1.通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具通过微信拍卖工具</p>
+        <div class="confirm white center bold" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}" @click="submit()">确认出价</div>
+        <div class="content instruction font-30">
+            <p>
+                —&nbsp;微信拍卖工具使用须知&nbsp;—
+            </p>
+            <p class="gray">
+                1.通过微信拍卖工具，可以将美玉秀秀中的商品转化为拍卖品，好友登录微信账号可以参与拍卖。目前拍卖工具只能在微信中使用。
+            </p>
+            <p class="gray">
+                2.拍卖过程中的出价为虚拟出价，出价人并未实际付款，具体商品的付款和后续交易需要买卖双方自行协商。
+            </p>
+            <p class="gray">
+                3.微信出价需要验证手机号，拍卖结果将以短信的方式告知，如果拍卖成功，商品所有者将通过手机号与竞拍者取得联系。
+            </p>
+            <p class="gray">
+                美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
+            </p>
         </div>
     </div>
 </template>
@@ -160,17 +150,36 @@
                 product: {
                     id: 0,
                     price: 0,
+                    min_price: 0,
                     range: 1
-                }
+                },
+                isFirstBid: true,
+                phone: '',
+                verifyCode: '',
+                label: '获取验证码',
+                codeGeted: false,
+                isFinish: false,
             };
+        },
+        ready() {
+            this.$watch('phone + verifyCode + product.price', (n, o) => {
+                if (this.phone && this.verifyCode && this.product.price > this.product.min_price) {
+                    this.isFinish = true;
+                } else {
+                    this.isFinish = false;
+                }
+            });
         },
         route: {
             data({to}) {
                 this.product.id = to.params.id;
-                this.product.min_price = Number(to.params.price);
-                this.product.price = Number(to.params.price);
-                this.product.range = Number(to.params.range);
-                return Q(true);
+
+                return this.$get(`mall/auctions/${this.product.id}/price`).then((data) => {
+                    this.product.min_price = data.current_price;
+                    this.product.price = data.current_price;
+                    this.product.range = data.bid_increment;
+                    this.isFirstBid = data.is_first_bid;
+                });
             }
         },
         methods: {
@@ -182,6 +191,39 @@
                     this.product.price = this.product.price - this.product.range;
                 } else if (way === 'add') {
                     this.product.price = this.product.price + this.product.range;
+                }
+            },
+            getVerifyCode() {
+                if (!this.phone) {
+                    this.action('toast', {success: 0, text: '未输入手机号'});
+                    return;
+                }
+                if (!this.codeGeted) {
+                    this.$get('common/sms/verify_code', {biz: 'auction_bid', phone: this.phone}).then((data) => {
+                        let time = 60;
+                        this.codeGeted = true;
+                        let interval =  setInterval(() => {
+                            if (time) {
+                                this.label = `(${--time})`;
+                            } else {
+                                this.label = '获取验证码';
+                                this.codeGeted = false;
+                                clearInterval(interval);
+                            }
+                        }, 1000);
+                    });
+                }
+            },
+            submit() {
+                if (this.isFinish) {
+                    this.$post(`mall/auctions/${this.product.id}/records`, {
+                        bid_price: this.product.price,
+                        phone: this.phone,
+                        verify_code: +this.verifyCode
+                    }).then((data) => {
+                        this.action('toast', {success: 1, text: '出价成功'});
+                        this.$router.go({name: 'auction', params: {id: this.product.id}});
+                    });
                 }
             }
         }

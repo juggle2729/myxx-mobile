@@ -20,7 +20,7 @@ const adapter = {
                         userPromise = this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'}).promise;
                     }
                     Q.when(userPromise, resp => {
-                            console.debug('get user', resp);   
+                            console.debug('get user', resp);
                             const user = JSON.stringify(resp.data.data);
                             localStorage.setItem('MYXX_USER', user);
                             cb(user);
@@ -54,6 +54,7 @@ const adapter = {
             case 'play':
             case 'keyboard':
             case 'affirmAuction':
+            case 'datetime':
             case 'share':
             case 'toast':
             case 'delete':

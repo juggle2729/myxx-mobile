@@ -3,10 +3,6 @@
     padding-bottom: 80px;
     .jade-video {
         height: 577px;
-        img {
-            width: 750px;
-            height: 577px;
-        }
     }
     .titles {
         /*height: 238px;*/
@@ -186,6 +182,9 @@
         <div class="title font-32">{{info.title}}</div>
         <div class="flex margin-top">
             <p class="red font-32 icon-price flex-1">{{info.price | price ''}}</p>
+            <template v-if="isSelf">
+                <div v-link="{name: 'addAuction'}" class="button bg-red margin-right flex font-32 white"><span class="center-horizontal">微信拍卖</span></div>
+            </template>
             <div class="button bg-gray flex font-32 white"><span class="center-horizontal">购买(开发中)</span></div>
         </div>
     </div>
@@ -385,6 +384,12 @@ export default {
                 }
             });
             return a;
+        },
+        isSelf: function() {
+            if (this.self && this.self.id === this.info.owner.id){
+                return true;
+            }
+            return false;
         }
     },
     ready() {
