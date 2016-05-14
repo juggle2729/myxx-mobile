@@ -2,7 +2,7 @@
     <div class="lecturer-view">
         <div class="course-list">
             <div class="course-item" v-for="course in items" :class="{'first-line': $index < 2}" v-link="{name: 'lesson', params: {id: course.id}}">
-                <div class="video-bg" v-bg="course.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/364/h/290/interlace/1">
+                <div class="video-bg" v-bg="course.video" query="vframe/jpg/offset/5/rotate/auto|imageView2/1/w/364/h/290/interlace/1">
                     <div class="like font-22">
                         <span class="icon icon-like-solid"></span>
                         <span class="count">{{course.like}}</span>
