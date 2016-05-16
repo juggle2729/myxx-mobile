@@ -11,10 +11,10 @@
                     height: 114px;
                     line-height: 114px;
                 }
-                input {
+                .price {
                     font-size: 80px;
                     margin: 0 60px;
-                    width: 290px;
+                    min-width: 290px;
                     height: 110px;
                     border: 2px #d9d9d9 solid;
                     border-radius: 8px;
@@ -35,10 +35,6 @@
                         margin-left: 20px;
                     }
 
-                    span:before {
-                        content: '¥';
-                        margin-right: 8px;
-                    }
                     &:not(:last-child) {
                          background-image: linear-gradient(270deg, #d9d9d9 51%, transparent 51%);
                          background-position: right center;
@@ -104,7 +100,9 @@
         <div class="bidding-price bg-white">
             <div class="setting center">
                 <span class="minus" :class="{'gray': product.price <= product.min_price}" @click="settingPrice('minus')">-</span>
-                <input type="text" v-model="product.price" class="center">
+                <span class="center price">
+                    {{product.price}}
+                </span>
                 <span class="add" @click="settingPrice('add')">+</span>
             </div>
             <div class="gray font-26 center">我的出价</div>
@@ -175,9 +173,10 @@
                 this.product.id = to.params.id;
 
                 return this.$get(`mall/auctions/${this.product.id}/price`).then((data) => {
-                    this.product.min_price = data.current_price;
-                    this.product.price = data.current_price;
-                    this.product.range = data.bid_increment;
+                    // 服务器返回的价格单位是分
+                    this.product.price = data.current_price / 100;
+                    this.product.min_price = data.current_price / 100;
+                    this.product.range = data.bid_increment / 100;
                     this.isFirstBid = data.is_first_bid;
                 });
             }
@@ -219,7 +218,7 @@
                     this.$post(`mall/auctions/${this.product.id}/records`, {
                         bid_price: this.product.price,
                         phone: this.phone,
-                        verify_code: +this.verifyCode
+                        verify_code: this.verifyCode
                     }).then((data) => {
                         this.action('toast', {success: 1, text: '出价成功'});
                         this.$router.go({name: 'auction', params: {id: this.product.id}});

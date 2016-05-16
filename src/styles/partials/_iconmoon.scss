@@ -19,6 +19,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-enter-slim:before {
+    content: "\e92e";
+}
 .icon-add:before {
     content: "\e92a";
 }

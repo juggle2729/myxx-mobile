@@ -47,7 +47,7 @@
                     margin-right: 18px;
                 }
             }
-            .icon-enter {
+            .icon-enter-slim {
                 text-align: right;
                 width: 480px;
             }
@@ -78,6 +78,8 @@
             height: 144px;
             padding: 32px;
             .avatar-90 {
+                position: relative;
+                bottom: 4px;
                 margin-right: 20px;
             }
             .icon-enter {
@@ -88,6 +90,12 @@
             }
             .master-name {
                 margin-bottom: 14px;
+            }
+            .icon-enter-slim {
+                position: relative;
+                top: 1px;
+                margin-left: 16px;
+                padding: 0px;
             }
         }
         .detail-title {
@@ -119,16 +127,16 @@
 </style>
 <template>
     <div class="auction-view">
-        <div class="auction-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2"></div>
+        <div class="auction-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750"></div>
         <div class="banner font-30 white flex" :class="info.status">
             <p class="icon-clock"></p>
             <template v-if="info.status === 'waiting'">
                 <p>尚未开始</p>
-                <p>{{info.start_time | moment}}开始</p>
+                <p>{{info.start_time | date}}开始</p>
             </template>
             <template v-if="info.status === 'ongoing'">
                 <p>进行中</p>
-                <p>{{info.start_time | moment}}结束</p>
+                <p>{{info.end_time | date}}结束</p>
             </template>
             <template v-if="info.status === 'successful'">
                 <p>已结束，拍品已成交</p>
@@ -141,18 +149,18 @@
             <div class="title font-32">{{info.title}}</div>
             <div class="flex margin-top">
                 <p class="red font-32 flex-1"><span class="gray margin-right">当前价:</span><span class="font-40" :class="'font-' + info.status">{{info.current_price | price}}</span></p>
-                <div v-if="info.status === 'ongoing'" v-link="{name: 'bidding', params: {id: info.id}}" class="button bg-disable flex font-30 white"><span class="center-horizontal">我要出价</span></div>
+                <div v-if="info.status === 'ongoing' && env.isWechat" v-link="{name: 'bidding', params: {id: info.id}}" class="button bg-red flex font-30 white"><span class="center-horizontal">我要出价</span></div>
                 <div v-else class="button bg-disable flex font-30 white"><span class="center-horizontal">我要出价</span></div>
             </div>
         </div>
         <div class="separator-20"></div>
         <div class="records">
-            <div class="title flex border-bottom font-26">
+            <div class="title flex border-bottom font-26" v-link="{name: 'actionRecord', parmas: {id: info.id}}">
                 <p class="gray icon-record"></p>
                 <p class="gray">拍卖记录</p>
                 <p class="gray">|</p>
                 <p class="light">{{records.length}}条</p>
-                <p class="gray icon-enter"></p>
+                <p class="gray icon-enter-slim"></p>
             </div>
             <div class="content">
                 <template v-if="records.length">
@@ -182,8 +190,8 @@
                     <p class="font-32 master-name">{{info.owner.name}}</p>
                     <p class="font-26 gray">{{info.owner.title}}</p>
                 </div>
-                <div class="red font-26">
-                    更多拍卖<span class="icon-enter gray"></span>
+                <div class="red font-26 flex">
+                    <span>更多拍卖</span><span class="icon-enter-slim gray"></span>
                 </div>
         </div>
         <div class="detail-title bg-default border-bottom">
@@ -227,6 +235,7 @@ export default {
     data() {
         return {
             info: {
+                id: 0,
                 owner: {},
                 status: ''
             },
@@ -237,7 +246,7 @@ export default {
         data({to}){
             return this.$get(`mall/auctions/${to.params.id}`).then((data) => {
                 this.info = data;
-
+                this.setShareData(data, true);
                 this.$get(`mall/auctions/${to.params.id}/records`, {limit: 3}).then((data) => {
                     this.records = data.records;
                 });

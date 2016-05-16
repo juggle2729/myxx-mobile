@@ -69,12 +69,13 @@ export default {
     },
     methods: {
         share() {
-            let title = '商品拍卖',
-                desc = `${this.title}开始拍卖`,
-                icon = this.icon,
-                url = `${location.origin}/auction/${this.id}`,
-                targets = '0,1'
-            this.action('share', title, desc, icon, url, targets);
+            this.action('share', {
+                title: '商品拍卖',
+                desc: `${this.title}开始拍卖`,
+                icon: this.icon,
+                url: `${location.origin}/auction/${this.id}`,
+                targets: '0,1'
+            });
         }
     }
 }

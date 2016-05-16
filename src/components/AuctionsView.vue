@@ -4,7 +4,6 @@
         padding-top: 1px;
         height: 100%;
         .auction {
-            margin-top:20px;
             .auction-info {
                 padding: 18px 32px;
                 img {
@@ -43,6 +42,7 @@
 <template>
     <div class="auctions-view bg-default">
         <div class="auction  bg-white" v-for="auction in items" v-link="{name: 'auction', params: {id: auction.id}}">
+            <div class="separator-20"></div>
             <div class="auction-info border-bottom flex">
                 <img :src="config.img + auction.product_picture + '?imageView2'" @click="coverflow(auction.product_picture, 0)"/>
                 <div class="auction-title info flex-1">
@@ -57,11 +57,12 @@
                 <div class="flex center-vertical font-30">
                     <p class="icon-clock {{color[$index]}}"></p>
                     <p class="{{color[$index]}} margin-right">{{dsc[$index]}}</p>
-                    <p class="{{color[$index]}}" v-if="auction.status==='ongoing'">{{auction.end_time | moment}}结束</p>
-                    <p class="{{color[$index]}}" v-if="auction.status==='waiting'">{{auction.start_time | moment}}开始</p>
+                    <p class="{{color[$index]}}" v-if="auction.status==='ongoing'">{{auction.end_time | date}}结束</p>
+                    <p class="{{color[$index]}}" v-if="auction.status==='waiting'">{{auction.start_time | date}}开始</p>
                 </div>
             </div>
         </div>
+        <div class="separator-20"></div>
     </div>
 </template>
 <script>

@@ -99,21 +99,21 @@ export default {
             }, 'comments');
         }
     },
-    '/auction/:id': {
-        name: 'auction',
-        title: '拍卖预览',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionView.vue'));
-            }, 'auction');
-        }
-    },
     '/auction/add/:id': {
         name: 'addAuction',
         title: '添加拍卖信息',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AddAuctionView.vue'));
+            }, 'auction');
+        }
+    },
+    '/auction/:id': {
+        name: 'auction',
+        title: '拍卖预览',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionView.vue'));
             }, 'auction');
         }
     },
@@ -126,21 +126,30 @@ export default {
             }, 'auction')
         }
     },
-    '/user/:id/auctions': {
-        name: 'auctions',
-        title: '全部拍卖',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsView.vue'));
-            }, 'auction');
-        }
-    },
     '/auction/:id/bidding': {
         name: 'bidding',
         title: '我要出价',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionsBiddingView.vue'));
+            }, 'auction');
+        }
+    },
+    '/auction/:id/record': {
+        name: 'actionRecord',
+        title: '拍卖记录',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionRecordView.vue'));
+            }, 'auction');
+        }
+    },
+    '/user/:id/auctions': {
+        name: 'auctions',
+        title: '全部拍卖',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionsView.vue'));
             }, 'auction');
         }
     },

@@ -72,7 +72,8 @@ router.afterEach(({to}) => {});
 router.alias({
     '/user/:id': '/user/:id/home',
     '/evaluations/:tab': '/evaluations',
-    '/stories/:tab': '/stories'
+    '/stories/:tab': '/stories',
+    '/auctions/:id': 'user/:id/auctions'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

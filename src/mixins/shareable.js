@@ -60,6 +60,11 @@ export default {
                     data.icon = entry.pictures[0];
                     data.text = '查看更多商品详情';
                     break;
+                case 'auction':
+                    data.title = '商品拍卖';
+                    data.desc = `${entry.title}开始拍卖`;
+                    data.icon = entry.pictures[0]
+                    break;
                 case 'master':
                     data.title = entry.interview.title;
                     data.desc = entry.baseData.name + ' ' + _.get(entry.baseData.titles[0], 'name', '');

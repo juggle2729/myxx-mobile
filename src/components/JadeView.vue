@@ -32,6 +32,8 @@
         height: 144px;
         padding: 32px;
         .avatar-90 {
+            position: relative;
+            bottom: 4px;
             margin-right: 20px;
         }
         .icon-enter {
@@ -359,7 +361,8 @@ export default {
                 prizes: [],
                 owner: {}
             },
-            recommend: {}
+            recommend: {},
+            isSelf: false
         };
     },
     computed: {
@@ -388,12 +391,6 @@ export default {
                 }
             });
             return a;
-        },
-        isSelf: function() {
-            if (this.self && this.self.id === this.info.owner.id){
-                return true;
-            }
-            return false;
         }
     },
     ready() {
@@ -411,6 +408,11 @@ export default {
                         .then((data) => {
                             this.recommend = data.recommend_data;
                         });
+                    this.action('user').then((user) => {
+                        if (user && +user.id === +data.owner.id) {
+                            this.isSelf = true;
+                        }
+                    });
                 });
         }
     },

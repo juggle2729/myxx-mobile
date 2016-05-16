@@ -2,7 +2,7 @@
 .affirmAuction {
     &.pop-transition .container {
          transition: transform .3s ease, opacity .3s linear;
-         transform: translate3d(0, 200px, 0);
+         transform: translate3d(0, 100px, 0);
          opacity: 1;
     }
     &.pop-enter .container, &.pop-leave .container {
@@ -87,11 +87,11 @@
         </div>
         <div class="info flex font-30 border-bottom">
             <div class="flex-1">开始时间</div>
-            <div class="red">{{params.beginTime | moment}}</div>
+            <div class="red">{{params.beginTime | date}}</div>
         </div>
         <div class="info flex font-30">
             <div class="flex-1">结束时间</div>
-            <div class="red">{{params.endTime | moment}}</div>
+            <div class="red">{{params.endTime | date}}</div>
         </div>
         <div class="btns flex font-30 white">
             <div class="bg-gray center" @click="close">取消</div>

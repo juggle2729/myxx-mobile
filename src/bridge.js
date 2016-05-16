@@ -5,7 +5,7 @@ const adapter = {
     callHandler(handler, params, cb) {
         switch(handler) {
             case 'login':
-                localStorage.removeItem('MYXX_USER'); // 清楚本地用户缓存
+                localStorage.removeItem('MYXX_USER'); // 清除本地用户缓存
                 if(this.env.isWechat) {
                     location.href = 'http://activity.meiyuxiuxiu.com/?wechat_auth=true';
                 } else if(this.env.isBrowser) {

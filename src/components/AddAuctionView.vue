@@ -32,13 +32,24 @@
             .auction-price {
                 padding-left: 32px;
                 input {
-                    margin-right: 38px;
+                    width: 490px;
+                    margin-right: 30px;
                 }
             }
             .auction-range {
                 padding-left: 32px;
                 div {
                     margin-right: 20px;
+                }
+                select {
+                    border: 0;
+                    background: transparent;
+                    //剔除 select 默认样式
+                    -webkit-appearance: none;
+                    width: 130px;
+                }
+                .icon-enter-slim {
+                    margin-left: -50px;
                 }
             }
             .auction-price, .auction-range {
@@ -123,7 +134,7 @@
                         <option>1000</option>
                         <option>3000</option>
                     </select>
-                    <p class="icon-enter"></p>
+                    <p class="icon-enter-slim gray"></p>
                 </div>
             </div>
             <div class="auction-time bg-white flex font-30">
@@ -132,7 +143,7 @@
                     <p class="font-34 light">
                         <span :class="{red: beginTime}">
                             <template v-if="beginTime">
-                                {{beginTime | moment}}
+                                {{beginTime | date 'm月dd日 H:MM'}}
                             </template>
                             <template v-else>
                                 尚未选择
@@ -140,14 +151,13 @@
                         </span>
                         <span class="icon-down-slim red"></span>
                     </p>
-
                 </div>
                 <div class="end" @click.stop="setEndTime()">
                     <p>结束时间</p>
                     <p class="font-34 light">
                         <span :class="{red: endTime}">
                             <template v-if="endTime">
-                                {{endTime | moment}}
+                                {{endTime | date 'm月dd日 H:MM'}}
                             </template>
                             <template v-else>
                                 尚未选择
@@ -159,7 +169,7 @@
             </div>
         </div>
         <div class="other bg-default">
-            <div @click="confirm" class="button flex font-30 white" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}">
+            <div @click="confirm()" class="button flex font-30 white" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}">
                 <p class="center-horizontal">
                     生成拍卖
                 </p>
@@ -185,13 +195,14 @@
     </div>
 </template>
 <script>
+import dateformat from 'dateformat';
 export default {
     name: 'AddAuctionView',
     data() {
         return {
             id: 0,
-            price: '',
-            unit: '',
+            price: null,
+            unit: null,
             beginTime: '',
             endTime: '',
             info: {
@@ -205,15 +216,12 @@ export default {
             return this.$get(`mall/products/${to.params.id}`).then((data) => {
                 this.id = to.params.id;
                 this.info = data;
-                if (!this.self || this.self.id !== this.info.owner.id) {
-                    this.$router.go({name: 'jade', params: {id: to.params.id}});
-                }
             });
         }
     },
     ready() {
         this.$watch('price + unit + beginTime + endTime', function(n, o){
-            if (this.price && this.unit && this.beginTime && this.endTime) {
+            if (this.price && this.unit && this.beginTime && this.endTime && this.beginTime < this.endTime) {
                 this.isFinish = true;
             } else {
                 this.isFinish = false;
@@ -221,47 +229,78 @@ export default {
         });
     },
     methods: {
-        confirm: function() {
+        confirm() {
             if (this.isFinish) {
-                this.action('affirmAuction', {
-                    img: this.info.pictures[0],
+                // 确认框无客户端接口，直接调用web
+                this.$root.popup = {
+                    handler: 'affirmAuction',
                     title: this.info.title,
+                    img: this.info.pictures[0],
                     origin: this.price,
                     unit: this.unit,
                     beginTime: this.beginTime,
-                    endTime: this.endTime
-
-                }).then((params) => {
-                    this.$post('mall/auctions', {
-                        product_id: this.id,
-                        upset_price: this.price,
-                        bid_increment: this.unit,
-                        start_time: this.beginTime,
-                        end_time: this.endTime
-
-                    }).then((data) => {
-                        this.$router.go({
-                            name: 'auctionShare',
-                            params: {
-                                id: data.id
-                        }});
-                    });
+                    endTime: this.endTime,
+                    cb: (params) => {
+                        this.submit().then((data) => {
+                            this.$router.go({
+                                name: 'auctionShare',
+                                params: {
+                                    id: data.id
+                                }
+                            });
+                        });
+                    }
+                };
+            }
+        },
+        submit() {
+            return this.$post('mall/auctions', {
+                product_id: this.id,
+                upset_price: this._priceFormat(this.price),
+                bid_increment: this._priceFormat(this.unit),
+                start_time: this._dateFormat(this.beginTime),
+                end_time: this._dateFormat(this.endTime)
+            });
+        },
+        setBeginTime() {
+            if (this.beginTime) {
+                this.action('datetime', this.beginTime).then((date) => {
+                    this.beginTime = +date;
+                });
+            } else {
+                this.action('datetime', this._getTime()).then((date) => {
+                    this.beginTime = +date;
                 });
             }
         },
-        setBeginTime: function() {
-            this.action('datetime').then((date) => {
-                this.beginTime = date;
-            });
+        setEndTime() {
+            if (this.endTime) {
+                this.action('datetime', this.endTime).then((date) => {
+                    this.endTime = +date;
+                });
+            } else {
+                this.action('datetime', this._getTime()).then((date) => {
+                    this.endTime = +date;
+                });
+            }
         },
-        setEndTime: function() {
-            this.action('datetime').then((date) => {
-                this.endTime = date;
-            });
+        _getTime() {
+            let date = new Date(),
+                minutes = date.getMinutes();
+            // 调整当前时间的分钟数可以被 5 整除
+            return date.setMinutes(minutes + (5 - minutes%5));
         },
         _dateFormat(msec) {
-            const date = new Date(msec);
-            return `${date.getFullYear()}-${date.getMonth() + 1 > 12 ? 1 : date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            if (!msec || typeof +msec !== 'number') {
+                return '';
+            }
+            return dateformat(new Date(+msec), 'yyyy-m-dd H:MM');
+        },
+        _priceFormat(price) {
+            if (!price || typeof +price !== 'number') {
+                return null;
+            }
+            return price * 100;
         }
     }
 }
