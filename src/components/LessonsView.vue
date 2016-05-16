@@ -6,7 +6,7 @@
             </div>
             <div class="course-list">
                 <div class="course-item" v-for="course in lesson.courses" v-link="{name: 'lesson', params: {id: course.id}}">
-                    <div class="video-bg" v-bg="course.video" query="vframe/jpg/offset/5/rotate/auto|imageView2/1/w/318/h/246/interlace/1">
+                    <div class="video-bg" v-bg="course.video" query="vframe/jpg/offset/5/rotate/auto|imageView2/0/w/318/h/246/interlace/1">
                         <div class="like font-22">
                             <span class="icon icon-like-solid"></span>
                             <span class="count">{{course.like || 0}}</span>
@@ -68,6 +68,7 @@
             }
 
             .course-item {
+                width: 318px;
                 background-color: #fff;
                 display: inline-block;
                 margin-left: 10px;
@@ -79,14 +80,17 @@
 
             .video-bg {
                 width: 318px;
-                height: 246px;
-                background-size: cover;
+                height: 318px;
+                background-size: contain;
+                background-color: #000;
+                background-position: center;
                 position: relative;
             }
 
             .course-title {
                 padding: 22px 0 0 12px;
                 color: #000;
+                white-space: initial;
             }
 
             .course-user {

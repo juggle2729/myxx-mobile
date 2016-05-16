@@ -1,6 +1,6 @@
 <template>
     <div class="lesson-view">
-        <div class="course-video" @click="playCourse" v-bg="course.video" query="vframe/jpg/offset/5/rotate/auto|imageView2/1/w/750/h/580/interlace/1">
+        <div class="course-video" @click="playCourse" v-bg="course.video" query="vframe/jpg/offset/5/rotate/auto|imageView2/0/w/750/h/580/interlace/1">
             <a class="his-course font-30" @click.stop="gotoLecturer">他的课堂</a>
         </div>
         <div class="course-user">
@@ -226,7 +226,9 @@
             width: 100%;
             padding-top: 77.33%;
             position: relative;
-            background-size: cover;
+            background-size: contain;
+            background-position: center;
+            background-color: #000;
 
             &:before {
                  @include border(all, #fff);
