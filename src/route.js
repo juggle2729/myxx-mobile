@@ -108,7 +108,7 @@ export default {
             }, 'auction');
         }
     },
-    '/addAuction/:id': {
+    '/auction/add/:id': {
         name: 'addAuction',
         title: '添加拍卖信息',
         component(resolve) {
@@ -117,7 +117,7 @@ export default {
             }, 'auction');
         }
     },
-    '/auctionShare/:id': {
+    '/auction/:id/share': {
         name: 'auctionShare',
         title: '拍卖生成',
         component(resolve) {
@@ -126,7 +126,7 @@ export default {
             }, 'auction')
         }
     },
-    '/auctions/:id': {
+    '/user/:id/auctions': {
         name: 'auctions',
         title: '全部拍卖',
         component(resolve) {
@@ -135,7 +135,7 @@ export default {
             }, 'auction');
         }
     },
-    '/auctions/bidding/:id': {
+    '/auction/:id/bidding': {
         name: 'bidding',
         title: '我要出价',
         component(resolve) {

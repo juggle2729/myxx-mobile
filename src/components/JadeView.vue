@@ -210,61 +210,61 @@
         </template>
         <div class="others">
             <ul>
-                <li class="flex font-26">
+                <li v-if="info.category" class="flex font-26">
                     <p class="label gray">分类</p>
                     <p class="flex-1">{{info.category | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.size" class="flex font-26">
                     <p class="label gray">尺寸</p>
                     <p class="flex-1">{{info.size}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.weight" class="flex font-26">
                     <p class="label gray">重量</p>
                     <p class="flex-1">{{info.weight}}g</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.variety" class="flex font-26">
                     <p class="label gray">种类</p>
                     <p class="flex-1">{{info.variety | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.place" class="flex font-26">
                     <p class="label gray">产地</p>
                     <p class="flex-1">{{info.place | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.skin" class="flex font-26">
                     <p class="label gray">皮色</p>
                     <p class="flex-1">{{info.skin | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.material" class="flex font-26">
                     <p class="label gray">产状</p>
                     <p class="flex-1">{{info.material | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.certificate" class="flex font-26">
                     <p class="label gray">证书</p>
                     <p class="flex-1">{{info.certificate | tree}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.gifts.length" class="flex font-26">
                     <p class="label gray">礼物说</p>
                     <p class="flex-1">{{gifts}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.themes.length" class="flex font-26">
                     <p class="label gray">题材</p>
                     <p class="flex-1">{{themes}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.morals.length" class="flex font-26">
                     <p class="label gray">寓意</p>
                     <p class="flex-1">{{morals}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.creator" class="flex font-26">
                     <p class="label gray">作者</p>
-                    <p class="flex-1">{{info.creator ? info.creator : '无'}}</p>
+                    <p class="flex-1">{{info.creator}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.prizes.length" class="flex font-26">
                     <p class="label gray">获奖</p>
                     <p class="flex-1">{{prizes}}</p>
                 </li>
-                <li class="flex font-26">
+                <li v-if="info.genre" class="flex font-26">
                     <p class="label gray">流派</p>
-                    <p class="flex-1">{{genre}}</p>
+                    <p class="flex-1">{{info.genre | tree}}</p>
                 </li>
             </ul>
         </div>
@@ -286,7 +286,7 @@
                                   {{rec.item.title}}
                               </p>
                               <p class="red recommend-price title-center">
-                                  {{rec.item.price | price ''}}
+                                  {{rec.item.price | price}}
                               </p>
                           </div>
                       </a>
@@ -353,6 +353,10 @@ export default {
     data() {
         return {
             info: {
+                gifts: [],
+                themes: [],
+                morals: [],
+                prizes: [],
                 owner: {}
             },
             recommend: {}
