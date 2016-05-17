@@ -41,12 +41,15 @@
                 div {
                     margin-right: 20px;
                 }
+                .select {
+                    text-align: left;
+                }
                 select {
                     border: 0;
                     background: transparent;
                     //剔除 select 默认样式
                     -webkit-appearance: none;
-                    width: 130px;
+                    width: 110px;
                 }
                 .icon-enter-slim {
                     margin-left: -50px;
@@ -72,6 +75,11 @@
                     span {
                         margin-left: 15px;
                         margin-top: 1px;
+                    }
+                    .icon-down-slim {
+                        margin-left: 10px;
+                        position: relative;
+                        top: 3px;
                     }
                 }
             }
@@ -124,16 +132,18 @@
                 <p class="font-30">加价幅度</p>
                 <div class="flex font-30">
                     <!-- <input type="select" v-model="unit" number class="font-30" placeholder="单次加价的最小金额"> -->
-                    <select class="font-30" v-model="unit">
-                        <option selected>50</option>
-                        <option>100</option>
-                        <option>200</option>
-                        <option>300</option>
-                        <option>600</option>
-                        <option>800</option>
-                        <option>1000</option>
-                        <option>3000</option>
-                    </select>
+                    <div class="select">
+                        <select class="font-30" v-model="unit">
+                            <option selected>50</option>
+                            <option>100</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>600</option>
+                            <option>800</option>
+                            <option>1000</option>
+                            <option>3000</option>
+                        </select>
+                    </div>
                     <p class="icon-enter-slim gray"></p>
                 </div>
             </div>
@@ -188,7 +198,7 @@
                     3.微信出价需要验证手机号，拍卖结果将以短信的方式告知，如果拍卖成功，商品所有者将通过手机号与竞拍者取得联系。
                 </p>
                 <p class="gray">
-                    美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
+                    4.美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
                 </p>
             </article>
         </div>
@@ -231,26 +241,30 @@ export default {
     methods: {
         confirm() {
             if (this.isFinish) {
-                // 确认框无客户端接口，直接调用web
-                this.$root.popup = {
-                    handler: 'affirmAuction',
-                    title: this.info.title,
-                    img: this.info.pictures[0],
-                    origin: this.price,
-                    unit: this.unit,
-                    beginTime: this.beginTime,
-                    endTime: this.endTime,
-                    cb: (params) => {
-                        this.submit().then((data) => {
-                            this.$router.go({
-                                name: 'auctionShare',
-                                params: {
-                                    id: data.id
-                                }
+                if (_.isSafeInteger(this.price)) {
+                    // 确认框无客户端接口，直接调用web
+                    this.$root.popup = {
+                        handler: 'affirmAuction',
+                        title: this.info.title,
+                        img: this.info.pictures[0],
+                        origin: this.price,
+                        unit: this.unit,
+                        beginTime: this.beginTime,
+                        endTime: this.endTime,
+                        cb: (params) => {
+                            this.submit().then((data) => {
+                                this.$router.go({
+                                    name: 'auctionShare',
+                                    params: {
+                                        id: data.id
+                                    }
+                                });
                             });
-                        });
-                    }
-                };
+                        }
+                    };
+                } else {
+                    this.action('toast', {success: '0', text: '请填写正确的起拍价格，不能包含小数点和特殊符号'});
+                }
             }
         },
         submit() {

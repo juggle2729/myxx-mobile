@@ -2,7 +2,7 @@
 .affirmAuction {
     &.pop-transition .container {
          transition: transform .3s ease, opacity .3s linear;
-         transform: translate3d(0, 100px, 0);
+         transform: translate3d(0, 200px, 0);
          opacity: 1;
     }
     &.pop-enter .container, &.pop-leave .container {

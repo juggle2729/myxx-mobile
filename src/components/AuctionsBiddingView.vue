@@ -47,7 +47,7 @@
         }
 
         .form {
-            margin: 30px 0 50px;
+            margin: 30px 0 50px 0;
             input {
                 border: 0;
                 font-size: 30px;
@@ -79,7 +79,7 @@
             height: 80px;
             font-size: 30px;
             line-height: 80px;
-            margin: 0 auto;
+            margin: 30px auto;
             border-radius: 8px;
         }
         .instruction {
@@ -134,7 +134,7 @@
                 3.微信出价需要验证手机号，拍卖结果将以短信的方式告知，如果拍卖成功，商品所有者将通过手机号与竞拍者取得联系。
             </p>
             <p class="gray">
-                美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
+                4.美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
             </p>
         </div>
     </div>
@@ -161,10 +161,12 @@
         },
         ready() {
             this.$watch('phone + verifyCode + product.price', (n, o) => {
-                if (this.phone && this.verifyCode && this.product.price > this.product.min_price) {
-                    this.isFinish = true;
+                if (this.isFirstBid) {
+                    if (this.phone && this.verifyCode && this.product.price > this.product.min_price && !this.isFinish) {
+                        this.isFinish = true;
+                    }
                 } else {
-                    this.isFinish = false;
+                    this.isFinish = this.product.price > this.product.min_price ? true : false;
                 }
             });
         },
@@ -216,11 +218,10 @@
             submit() {
                 if (this.isFinish) {
                     this.$post(`mall/auctions/${this.product.id}/records`, {
-                        bid_price: this.product.price,
+                        bid_price: this.product.price * 100,
                         phone: this.phone,
                         verify_code: this.verifyCode
                     }).then((data) => {
-                        this.action('toast', {success: 1, text: '出价成功'});
                         this.$router.go({name: 'auction', params: {id: this.product.id}});
                     });
                 }

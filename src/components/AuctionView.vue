@@ -61,16 +61,22 @@
                 }
                 ul, .no-record {
                     height: 240px;
+                }
+                .no-record {
                     text-align: center;
                 }
                 .bidder-name {
-                    width: 190px;
+                    width: 130px;
                 }
                 .bidder-status {
-                    width: 140px;
+                    width: 120px;
                 }
                 .bidder-time {
                     width: 200px;
+                }
+                .bidder-price {
+                    width: 170px;
+                    text-align: right;
                 }
             }
         }
@@ -165,7 +171,7 @@
             <div class="content">
                 <template v-if="records.length">
                     <ul>
-                        <li v-for="record in records" class="flex border-bottom font-26" :class="{red: !$index, gray: !!$index}">
+                        <li v-for="record in records" class="flex border-bottom font-26" :class="{red: !$index, gray: !!$index}" v-if="$index < 3">
                                 <avatar :user="record.bidder" :size="50"></avatar>
                                 <p class="bidder-name">{{record.bidder.name}}</p>
                                 <p class="bidder-status">{{$index === 0 ? '领先' : '出局'}}</p>
@@ -242,6 +248,11 @@ export default {
             records: {}
         }
     },
+    ready() {
+        this.$on('restore', () => {
+            this.setShareData(this.info, true);
+        });
+    },
     route: {
         data({to}){
             this.action('datetime', {
@@ -253,7 +264,7 @@ export default {
             return this.$get(`mall/auctions/${to.params.id}`).then((data) => {
                 this.info = data;
                 this.setShareData(data, true);
-                this.$get(`mall/auctions/${to.params.id}/records`, {limit: 3}).then((data) => {
+                this.$get(`mall/auctions/${to.params.id}/records`).then((data) => {
                     this.records = data.records;
                 });
             });

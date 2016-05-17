@@ -63,7 +63,8 @@ export default {
                 case 'auction':
                     data.title = '商品拍卖';
                     data.desc = `${entry.title}开始拍卖`;
-                    data.icon = entry.pictures[0]
+                    data.icon = entry.pictures[0],
+                    data.targets = '0,1'
                     break;
                 case 'master':
                     data.title = entry.interview.title;
@@ -105,8 +106,8 @@ export default {
             this.$root.shareData = data;
 
             if(shareable) {
-                let {title, desc, icon, url} = data;
-                this.action('shareable', {title, desc, icon, url});
+                let {title, desc, icon, url, targets} = data;
+                this.action('shareable', {title, desc, icon, url, targets});
             }
 
             // 设置页面标题
@@ -127,8 +128,8 @@ export default {
             }
         },
         share() {
-            let {title, desc, icon, url} = this.$root.shareData;
-            this.action('share', {title, desc, icon, url});
+            let {title, desc, icon, url, targets} = this.$root.shareData;
+            this.action('share', {title, desc, icon, url, targets});
         },
         wechatShareInit(shareData, mergeDesc) {
             // load script

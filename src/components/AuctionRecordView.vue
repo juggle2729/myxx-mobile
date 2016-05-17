@@ -16,25 +16,31 @@
             width: 480px;
         }
         .content {
-            padding-left: 32px;
             li {
                 height: 80px;
+                padding-left: 32px;
             }
             div[class^=avatar] {
                 margin-right: 22px;
             }
             ul, .no-record {
                 height: 240px;
+            }
+            .no-record {
                 text-align: center;
             }
             .bidder-name {
-                width: 190px;
+                width: 130px;
             }
             .bidder-status {
-                width: 140px;
+                width: 120px;
             }
             .bidder-time {
                 width: 200px;
+            }
+            .bidder-price {
+                width: 170px;
+                text-align: right;
             }
         }
     }
