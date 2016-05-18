@@ -19,6 +19,51 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-checked:before {
+    content: "\e939";
+}
+.icon-argue:before {
+    content: "\e92f";
+}
+.icon-payment:before {
+    content: "\e930";
+}
+.icon-pay-guarantee:before {
+    content: "\e932";
+}
+.icon-address:before {
+    content: "\e933";
+}
+.icon-delete:before {
+    content: "\e935";
+}
+.icon-service:before {
+    content: "\e936";
+}
+.icon-receiving:before {
+    content: "\e937";
+}
+.icon-logistics:before {
+    content: "\e938";
+}
+.icon-contact:before {
+    content: "\e93a";
+}
+.icon-unchecked:before {
+    content: "\e93d";
+}
+.icon-guide:before {
+    content: "\e93e";
+}
+.icon-goods-return:before {
+    content: "\e93f";
+}
+.icon-sf:before {
+    content: "\e940";
+}
+.icon-seven-day:before {
+    content: "\e941";
+}
 .icon-enter-slim:before {
     content: "\e92e";
 }
