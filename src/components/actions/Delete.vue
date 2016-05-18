@@ -27,7 +27,7 @@
         width: 100%;
         background-color: white;
     }
-    .delete, .cancle {
+    .delete, .cancel {
         display: block;
         text-align: center;
         font-size: 36px;
@@ -41,7 +41,7 @@
     <div class="container">
         <div class="delete red" @click="delete">删除</div>
         <div class="separator"></div>
-        <div class="cancle" @click="cancle">取消</div>
+        <div class="cancel" @click="cancel">取消</div>
     </div>
 </div>
 </template>
@@ -59,7 +59,7 @@ export default {
             this.params.cb('1');
             this.close();
         },
-        cancle() {
+        cancel() {
             this.params.cb('0');
             this.close();
         },

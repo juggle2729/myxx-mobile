@@ -244,6 +244,12 @@ export default {
     },
     route: {
         data({to}){
+            this.action('datetime', {
+                timestamp: 1464394140000
+            }).then(function(data) {
+                console.log('data = ', data);
+            });
+
             return this.$get(`mall/auctions/${to.params.id}`).then((data) => {
                 this.info = data;
                 this.setShareData(data, true);
