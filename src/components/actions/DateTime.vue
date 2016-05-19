@@ -246,13 +246,14 @@
             this.currentHour = now.getHours();
             this.currentMinutes = now.getMinutes();
 
-            const savedDate = new Date(Number(this.params.timestamp));
+            const timestamp = Number(this.params.timestamp);
+            const savedDate = new Date(timestamp);
 
-            this.savedYear = savedDate.getFullYear();
-            this.savedMonth = savedDate.getMonth() + 1;
-            this.savedDay = savedDate.getDate();
-            this.savedHour = savedDate.getHours();
-            this.savedMinutes = savedDate.getMinutes();
+            this.savedYear = timestamp > 0 ? savedDate.getFullYear() : 0;
+            this.savedMonth = timestamp > 0 ? savedDate.getMonth() + 1 : 0;
+            this.savedDay = timestamp > 0 ? savedDate.getDate() : 0;
+            this.savedHour = timestamp > 0 ? savedDate.getHours() : 0;
+            this.savedMinutes = timestamp > 0 ? savedDate.getMinutes() : 0;
 
             setTimeout(() => {
                 this.dataBack();
@@ -373,8 +374,10 @@
                             deltaY = -1 * (predictPos - parentScrollTop);
                         }
 
-                        if (Math.abs(deltaY) < 3) {
+                        if ((Math.abs(deltaY) < 3 && activeIndex !== 2) || activeIndex === items.length - 3) {
                             return;
+                        } else if (activeIndex === 2) { // 如果是第一个的时候, 则恢复为默认位置
+                            deltaY = 0;
                         }
 
                         [].slice.call(items, 0).forEach(function(item) {
@@ -394,7 +397,7 @@
                 }
             },
             addItemSelected(type, activeData) {
-                let activeIndex = 0;
+                let activeIndex = 2;
                 const items = document.querySelectorAll('ul.' + type + ' li');
                 for(let i = 0; i < items.length; i++) {
                     if(items[i].getAttribute('data') === activeData) {
