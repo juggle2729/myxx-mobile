@@ -63,8 +63,8 @@ export default {
                 case 'auction':
                     data.title = '商品拍卖';
                     data.desc = `${entry.title}开始拍卖`;
-                    data.icon = entry.pictures[0],
-                    data.targets = '0,1'
+                    data.icon = entry.pictures[0];
+                    data.targets = '0,1';
                     break;
                 case 'master':
                     data.title = entry.interview.title;

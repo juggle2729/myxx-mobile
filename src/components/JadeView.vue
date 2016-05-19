@@ -5,9 +5,10 @@
         height: 577px;
     }
     .titles {
-        /*height: 238px;*/
-        padding: 36px 32px 32px 32px;
-        position: relative;
+        .header {
+            min-height: 190px;
+            padding: 32px;
+        }
         .title {
             margin-bottom: 32px;
             line-height: 1.5;
@@ -26,7 +27,11 @@
             text-align: center;
             line-height: 56px;
         }
-
+        .footer {
+            height: 80px;
+            padding: 0 60px;
+            -webkit-box-pack: justify;
+        }
     }
     .master {
         height: 144px;
@@ -36,11 +41,10 @@
             bottom: 4px;
             margin-right: 20px;
         }
-        .icon-enter {
+        .icon-enter-slim {
             position: relative;
-            bottom: -2px;
-            margin-left: 14px;
-            margin-right: -12px;
+            top: 2px;
+            margin-left: 16px;
         }
         .master-name {
             margin-bottom: 14px;
@@ -142,36 +146,35 @@
         }
         .text {
             padding: 32px;
-
+            line-height: 1.5;
         }
         img {
             width: 100%
         }
     }
-    .fake-input {
+    .float-box {
         position: fixed;
         bottom: 0;
-        width: 100%;
-        background-color: #f9f9f9;
-        color: red;
         height: 98px;
-        padding: 16px;
-        .input {
-            background-color: white;
-            color: #c6c6c6;
-            padding: 0 20px;
-            height: 72px;
-            line-height: 72px;
-            border-radius: 8px;
+        width: 100%;
+        & > div {
+            height: 100%;
+            -webkit-box-orient: vertical;
+            -webkit-box-pack: center;
+            div[class^=icon] {
+                margin-bottom: 14px;
+                padding: 0;
+            }
         }
-        .submit {
-            line-height: 72px;
-            margin-left: 16px;
-            width: 140px;
-            height: 72px;
-            color: white;
-            background-color: #b2b2b2;
-            border-radius: 8px;
+        .contact-btn,.comment-btn {
+            width: 185px;
+            border-top: 1px solid #d9d9d9;
+        }
+        .contact-btn {
+            border-right: 1px solid #d9d9d9;
+        }
+        .buy-btn {
+            width: 380px;
         }
     }
 }
@@ -181,13 +184,28 @@
     <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles">
-        <div class="title font-32">{{info.title}}</div>
-        <div class="flex margin-top">
-            <p class="red font-32 icon-price flex-1">{{info.price | price ''}}</p>
-            <template v-if="isSelf">
-                <div v-link="{name: 'addAuction'}" class="button bg-red margin-right flex font-32 white"><span class="center-horizontal">微信拍卖</span></div>
-            </template>
-            <div class="button bg-gray flex font-32 white"><span class="center-horizontal">购买(开发中)</span></div>
+        <div class="header">
+            <div class="title font-32">{{info.title}}</div>
+            <div class="flex">
+                <p class="red font-32 flex-1">{{info.price | price}}</p>
+                <template v-if="isSelf">
+                    <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><span class="center-horizontal">微信拍卖</span></div>
+                </template>
+            </div>
+        </div>
+        <div class="footer flex font-26 gray border-top">
+            <div class="flex">
+                <span class="icon-pay-guarantee"></span>
+                <span>付款担保</span>
+            </div>
+            <div class="flex">
+                <span class="icon-seven-day"></span>
+                <span>七天退货</span>
+            </div>
+            <div class="flex">
+                <span class="icon-sf"></span>
+                <span>顺丰包邮</span>
+            </div>
         </div>
     </div>
     <div class="separator-20"></div>
@@ -198,7 +216,7 @@
                 <p class="font-26 gray">{{info.owner.title}}</p>
             </div>
             <div class="red font-26">
-                进入主页<span class="icon-enter gray"></span>
+                更多商品<span class="icon-enter-slim gray"></span>
             </div>
     </div>
     <div class="separator-20"></div>
@@ -328,16 +346,25 @@
             <span class="font-22 gray flex">图文详情</span>
         </div>
         <div class="text font-30">
-          {{{info.detail}}}
+          {{info.detail}}
         </div>
         <div v-for="img in info.pictures" >
           <img :src="config.img + img + '?imageView2'" @click="coverflow(info.pictures, $index)"/>
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="fake-input font-30 flex" @click="$broadcast('comment', $event)" >
-        <div class="input flex-1">点击此处发表评论...</div>
-        <div class="submit center">发送</div>
+    <div class="float-box font-30 flex bg-white">
+        <div class="font-22 flex gray contact-btn">
+            <div class="icon-contact"></div>
+            <div>联系商家</div>
+        </div>
+        <div class="font-22 flex gray comment-btn" @click="$broadcast('comment', $event)">
+            <div class="icon-comment"></div>
+            <div>评论</div>
+        </div>
+        <div class="font-30 flex buy-btn bg-red white" v-link="{name: 'order-affirm', params: {id: info.id}}">
+            立即购买
+        </div>
     </div>
 </div>
 </template>
@@ -355,6 +382,7 @@ export default {
     data() {
         return {
             info: {
+                id: 0,
                 gifts: [],
                 themes: [],
                 morals: [],

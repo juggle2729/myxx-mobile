@@ -116,7 +116,7 @@
             </div>
         </div>
         <div v-if="isFirstBid" class="form bg-white">
-            <input type="number" v-model="phone" placeholder="请输入手机号">
+            <input type="tel" v-model="phone" placeholder="请输入手机号">
             <input v-model="verifyCode"  type="number" maxlength="4" placeholder="验证码"><input @click="getVerifyCode()" type="button" value="{{label}}">
         </div>
         <div class="confirm white center bold" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}" @click="submit()">确认出价</div>
