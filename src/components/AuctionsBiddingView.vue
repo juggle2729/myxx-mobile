@@ -116,8 +116,8 @@
             </div>
         </div>
         <div v-if="isFirstBid" class="form bg-white">
-            <input type="text" v-model="phone" placeholder="请输入手机号">
-            <input v-model="verifyCode"  type="text" placeholder="验证码"><input @click="getVerifyCode()" type="button" value="{{label}}">
+            <input type="number" v-model="phone" placeholder="请输入手机号">
+            <input v-model="verifyCode"  type="number" maxlength="4" placeholder="验证码"><input @click="getVerifyCode()" type="button" value="{{label}}">
         </div>
         <div class="confirm white center bold" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}" @click="submit()">确认出价</div>
         <div class="content instruction font-30">
@@ -155,18 +155,34 @@
                 phone: '',
                 verifyCode: '',
                 label: '获取验证码',
-                codeGeted: false,
-                isFinish: false,
+                codeGeted: false,      // 是否已经获取了验证码
+                codeCorrect: false,    // 验证码是否正确
+                isFinish: false,       // 表单是否完成
             };
         },
         ready() {
             this.$watch('phone + verifyCode + product.price', (n, o) => {
                 if (this.isFirstBid) {
-                    if (this.phone && this.verifyCode && this.product.price > this.product.min_price && !this.isFinish) {
-                        this.isFinish = true;
-                    }
+                    this.isFinish = this.phone
+                        && /^1\w{10}$/.test(this.phone)
+                        && this.verifyCode
+                        && this.codeCorrect
+                        && this.product.price > this.product.min_price;
                 } else {
                     this.isFinish = this.product.price > this.product.min_price ? true : false;
+                }
+            });
+
+            this.$watch('verifyCode', (n, o) => {
+                if (n && /^\w{4}$/.test(n) && this.codeGeted) {
+                    this.$get('common/sms/verify_result', {biz: 'auction_bid', phone: this.phone, verify_code: n }).then((data) => {
+                        if (!data.result) {
+                            this.codeCorrect = false;
+                            this.action('toast', {success: 0, text: '验证码错误'});
+                        } else {
+                            this.codeCorrect = true;
+                        }
+                    });
                 }
             });
         },
@@ -186,7 +202,7 @@
         methods: {
             settingPrice(way) {
                 if (typeof this.product.price !== 'number') {
-                    this.product.price = Number(this.product.price);
+                    this.product.price = +this.product.price;
                 }
                 if (way === 'minus' && this.product.price - this.product.range >= this.product.min_price) {
                     this.product.price = this.product.price - this.product.range;
@@ -195,17 +211,20 @@
                 }
             },
             getVerifyCode() {
-                if (!this.phone) {
-                    this.action('toast', {success: 0, text: '未输入手机号'});
-                    return;
-                }
                 if (!this.codeGeted) {
+                    if (!this.phone) {
+                        this.action('toast', {success: 0, text: '未输入手机号'});
+                        return;
+                    } else if (!/^1\w{10}$/.test(this.phone)) {
+                        this.action('toast', {success: 0, text: '手机号不合法'});
+                        return;
+                    }
                     this.$get('common/sms/verify_code', {biz: 'auction_bid', phone: this.phone}).then((data) => {
                         let time = 60;
                         this.codeGeted = true;
                         let interval =  setInterval(() => {
                             if (time) {
-                                this.label = `(${--time})`;
+                                this.label = `${--time}`;
                             } else {
                                 this.label = '获取验证码';
                                 this.codeGeted = false;

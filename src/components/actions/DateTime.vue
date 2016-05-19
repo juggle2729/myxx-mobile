@@ -415,14 +415,15 @@
             },
             cancelSelect() {
                 this.show = false;
+                this.params.handler = {};
             },
             confirmSelect() {
                 const pageContainer = document.querySelector('.datetime-action');
                 const activeDate = pageContainer.querySelector('ul.date li.active').getAttribute('data');
                 const activeHour = pageContainer.querySelector('ul.hour li.active').getAttribute('data');
                 const activeMinutes = pageContainer.querySelector('ul.minutes li.active').getAttribute('data');
-
-                this.params.timestamp = new Date(activeDate + ' ' + [activeHour, activeMinutes, '00'].join(':')).getTime();
+                // 此处对 activeDate 做了兼容性处理  在 webview下，不支持'2016-05-19'格式的时间传入new Date()
+                this.params.timestamp = new Date(`${activeDate.split('-').join('/')} ${activeHour}:${activeMinutes}:00`).getTime();
                 this.params.cb(this.params.timestamp);
 
                 this.cancelSelect();

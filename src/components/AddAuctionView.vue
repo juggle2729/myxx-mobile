@@ -277,26 +277,45 @@ export default {
             });
         },
         setBeginTime() {
-            if (this.beginTime) {
-                this.action('datetime', this.beginTime).then((date) => {
+            // this.beginTime ?
+            //     this.action('datetime', this.beginTime).then((date) => {
+            //         this.beginTime = +date;
+            //     })
+            //     :
+            //     this.action('datetime', this._getTime()).then((date) => {
+            //         this.beginTime = +date;
+            //     });
+
+            this.$root.popup = {
+                handler: 'datetime',
+                timestamp: this.beginTime ? this.beginTime : this._getTime(),
+                cb: (date) => {
+                    window.scroll(0,0);
                     this.beginTime = +date;
-                });
-            } else {
-                this.action('datetime', this._getTime()).then((date) => {
-                    this.beginTime = +date;
-                });
-            }
+                    // 清除popup
+                    this.$root.popup.handler = undefined;
+                }
+            };
         },
         setEndTime() {
-            if (this.endTime) {
-                this.action('datetime', this.endTime).then((date) => {
+            // this.endTime ?
+            //     this.action('datetime', this.endTime).then((date) => {
+            //         this.endTime = +date;
+            //     })
+            //     :
+            //     this.action('datetime', this._getTime()).then((date) => {
+            //         this.endTime = +date;
+            //     });
+            this.$root.popup = {
+                handler: 'datetime',
+                timestamp: this.endTime ? this.endTime : this._getTime(),
+                cb: (date) => {
+                    window.scroll(0,0);
                     this.endTime = +date;
-                });
-            } else {
-                this.action('datetime', this._getTime()).then((date) => {
-                    this.endTime = +date;
-                });
-            }
+                    // 清除popup
+                    this.$root.popup.handler = undefined;
+                }
+            };
         },
         _getTime() {
             let date = new Date(),
