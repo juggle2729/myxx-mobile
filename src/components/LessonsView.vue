@@ -16,7 +16,7 @@
                             <span class="count">{{course.comment || 0}}</span>
                         </div>
                     </div>
-                    <div class="course-title font-26">{{course.title}}</div>
+                    <div class="course-title font-26">{{course.title | truncate 11}}</div>
                     <div class="course-user font-26">{{course.user.name}}</div>
                 </div>
             </div>
