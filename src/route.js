@@ -317,6 +317,58 @@ export default {
             }, 'mall');
         }
     },
+    '/order/affirm/:id': {
+        name: 'order-afffirm',
+        component(resolve) {
+        require.ensure([], (require) => {
+            resolve(require('OrderAffirmView.vue'));
+            }, 'mall');
+        }
+    },
+    '/order/:id': {
+        name: 'order',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderInfoView.vue'));
+            }, 'mall');
+        }
+    },
+    '/order/receive/:id': {
+        name: 'receive',
+        title: '确认收货成功',
+        component(resolve) {
+            require.ensure([], (require) => {
+                    resolve(require('OrderReceiveView.vue'));
+            }, 'mall');
+        }
+    },
+    'order/send/:id': {
+        name: 'send',
+        title: '发货确认',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderSendView.vue'));
+            }, 'mall');
+        }
+    },
+    'order/trace/:id': {
+        name: 'trace',
+        title: '物流追踪',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderTraceView.vue'));
+            }, 'mall');
+        }
+    },
+    '/set-price/:id': {
+        name: 'set-price',
+        title: '修改订单价格',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('SetPriceView.vue'));
+            }, 'mall');
+        }
+    },
     '/404': {
         title: '页面不存在',
         name: '404',

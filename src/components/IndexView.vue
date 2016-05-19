@@ -34,6 +34,16 @@
         <li>
             <a href="/tag/certificate/242">标签 - tags</a>
         </li>
+        <li class="tab">订单</li>
+        <li>
+            <a href="/order/affirm/70">确认订单 - order/affirm/:id</a>
+        </li>
+        <li>
+            <a href="/order/1">订单 - order/:id</a>
+        </li>
+        <li>
+            <a href="/order/receive/1">确认收货成功 - order/receive/:id</a>
+        </li>
         <li class="tab">我的</li>
         <li>
             <a href="/profile">个人中心 - profile</a>

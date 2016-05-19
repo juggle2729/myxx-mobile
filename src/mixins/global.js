@@ -145,6 +145,9 @@ const mixin = {
         $post(url, data) {
             return this.$req(url, 'post', data);
         },
+        $put(url, data) {
+            return this.$req(url, 'put', data);
+        },
         $delete(url, data) {
             return this.$req(url, 'delete', data);
         },
