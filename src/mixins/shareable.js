@@ -120,9 +120,14 @@ export default {
                 const shareData = {
                     title: data.title,
                     desc: data.desc,
-                    link: data.url,
-                    imgUrl: this.config.img + data.icon + '?imageView2/1/w/310'
+                    link: data.url
                 };
+
+                if(data.icon.indexOf('http') !== -1) {
+                    shareData.imgUrl = data.icon;
+                } else {
+                    shareData.imgUrl = this.config.img + data.icon + '?imageView2/1/w/310';
+                }
 
                 this.wechatShareInit(shareData, mergeDesc);
             }
