@@ -38,6 +38,13 @@
 <script>
 export default {
     name: 'OrderReceiveView',
+    route: {
+        data() {
+            this.action('action', {label: '完成'}).then(() => {
+                this.$router.go({name: 'order', params: {id: this.$route.params.id}});
+            });
+        }
+    },
     methods: {
         homepage() {
             this.action('toast', {text: 'native --> homepage homepage homepage'});

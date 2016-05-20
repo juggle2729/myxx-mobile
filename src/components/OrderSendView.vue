@@ -25,23 +25,36 @@
 <template>
 <div class="send-view bg-default">
     <div class="title font-26 gray">物流信息(物流公司只支持顺丰)</div>
-    <input class="traceNo border-vertical font-30" type="text" placeholder="请填写顺丰物流单号" v-model="traceNo">
-    <div class="send font-30 white bg-gray center" :class="{'bg-red': traceNo}" @click="send">确认发货</div>
+    <input class="traceNo border-vertical font-30" type="text" placeholder="请填写顺丰物流单号" v-model="expressNo">
+    <div class="send font-30 white bg-gray center" :class="{'bg-red': expressNo}" @click="send">{{isUpdate ? '更新物流' : '确认发货'}}</div>
 </div>
 </template>
 <script>
 export default {
     name: 'OrderSendView',
+    data() {
+        return {
+            expressNo: '',
+            isUpdate: false
+        }
+    },
+    route: {
+        data({to}) {
+            return this.$get(`mall/order/${to.params.id}`).then((order) => {
+                    this.isUpdate = order.express_no;
+                    this.isUpdate && (this.expressNo = this.isUpdate);
+                });
+        }
+    },
     methods: {
         send() {
-            if(this.traceNo) {
-//                this.$put(`mall/order/${this.order.order_no}/send_goods`, {
-//                    express_no: this.traceNo
-//                }).then(() => {
-//                    this.$router.go({name: 'order', params: { id: this.order.order_no}});
-//                });
-                this.action('toast', {success: '1', text: '已经发货成功!!!'});
-                this.$router.go({name: 'order', params: { id: this.$route.params.id}});
+            if(this.expressNo) {
+                const params = this.isUpdate ? 'change_express' : 'send_goods';
+                this.$put(`mall/order/${this.$route.params.id}/${params}`, {
+                    express_no: this.expressNo
+                }).then(() => {
+                    this.$router.go({name: 'order', params: { id: this.$route.params.id}});
+                });
             } else {
                 this.action('toast', { text: '请输入物流单号'});
             }

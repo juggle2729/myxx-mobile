@@ -317,8 +317,8 @@ export default {
             }, 'mall');
         }
     },
-    '/order/affirm/:id': {
-        name: 'order-afffirm',
+    '/order/affirm/:productId/:addressId': {
+        name: 'order-affirm',
         component(resolve) {
         require.ensure([], (require) => {
             resolve(require('OrderAffirmView.vue'));
@@ -360,13 +360,40 @@ export default {
             }, 'mall');
         }
     },
-    '/set-price/:id': {
+    '/order/set-price/:id': {
         name: 'set-price',
         title: '修改订单价格',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('SetPriceView.vue'));
+                resolve(require('OrderPriceView.vue'));
             }, 'mall');
+        }
+    },
+    '/order/address/:productId': {
+        name: 'address-list',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderAddressView.vue'));
+            }, 'mall');
+        }
+    },
+    '/order/address-add/:productId': {
+        name: 'address-add',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderAddressUpdateView.vue'));
+            }, 'mall');
+        }
+    },
+    '/order/address-update/:productId/:id': {
+        name: 'address-update',
+            title: '收货地址管理',
+            component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderAddressUpdateView.vue'));
+        }, 'mall');
         }
     },
     '/404': {

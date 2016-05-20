@@ -54,11 +54,11 @@
 }
 </style>
 <template>
-<div class="price-view bg-default">
+<div class="price-view bg-default" v-if="!$loadingRouteData">
     <div class="title font-26 gray">订单信息</div>
     <div class="order bg-white border-vertical font-30">
         <div>订单编号: {{order.order_no}}</div>
-        <div>订单创建时间: {{order.create_at | moment}}</div>
+        <div>订单创建时间: {{order.create_at | date}}</div>
     </div>
     <div class="title font-26 gray">商品信息</div>
     <div class="merchant flex border-bottom font-30 bg-white border-vertical">
@@ -80,45 +80,30 @@
 </template>
 <script>
 export default {
-    name: 'price',
+    name: 'OrderPriceView',
     data() {
         return {
             price: '',
             order: {
-                order_no: '2016ACVDGFE',
-                receiver_name: '李四',
-                receiver_phone: '1338888888',
-                receiver_area: '',
-                receiver_address: '湖北省武汉市江汉区创业大街599号599号595595995',
-                product: {
-                    id: 32,
-                    picture: '411496be-fb96-40bf-93de-bce3ed638036',
-                    title: '最新和田玉籽料 最新和田玉籽料 最新和田玉籽料 最新和田玉籽料 最新和田玉籽料 最新和田玉籽料 最新和田玉籽料'
-                },
-                price: 1100,
-                buyer: {
-                    id: 23
-                },
-                seller: {
-                    id: 34,
-                    photo: '00c92f85-60b1-4791-9d7f-456e66241c8f',
-                    nickname: '韵语堂主'
-                },
-                note: '请小心包好...',
-                create_at: '2138483999',
-                status: 'no_price'
-            },
+                product: {}
+            }
+        }
+    },
+    route: {
+        data({to}) {
+            return this.$get(`mall/order/${to.params.id}`).then((order) => {
+                   this.order = order;
+                   this.order.price = order.trans_amount;
+                });
         }
     },
     methods: {
         setPrice() {
             this.action('confirm', { text: `确定将订单价格修改为${this.price}元吗?`}).then((result) => {
                 if(result === '1') {
-//                    this.$put(`mall/order/${this.order.order_no}/change_price`, { price: this.price * 100}).then((data) => {
-//                        this.$router.go({ name: 'order', params: { id: this.order.order_no}});
-//                    });
-                    this.action('toast', { text: '已经改价'});
-                    this.$router.go({ name: 'order', params: { id: this.order.order_no}});
+                    this.$put(`mall/order/${this.order.order_no}/change_price`, { trans_amount: this.price * 100}).then((data) => {
+                        this.$router.go({ name: 'order', params: { id: this.order.order_no}});
+                    });
                 }
             });
         }

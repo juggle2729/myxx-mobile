@@ -181,7 +181,10 @@
 </style>
 <template>
 <div class="jade-view bg-white">
-    <div class="master font-34" v-link="{name: 'order', params: { id: '2016ACVDGFE'}}">order入口</div>
+    <div class="master font-34" v-link="{name: 'order-affirm', params: { productId: '188'}}">确认订单入口</div>
+    <div class="master font-34" v-link="{name: 'order', params: { id: '160520185535031891'}}">订单详情页-重复使用请手动在此修改订单号</div>
+    <div class="master font-34" v-link="{name: 'address-list', params: { productId: '0'}}">订单地址列表</div>
+
     <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles">

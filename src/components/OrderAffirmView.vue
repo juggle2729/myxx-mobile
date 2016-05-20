@@ -1,5 +1,5 @@
 <style lang="sass">
-    .affirm-order-view {
+    .order-affirm-view {
         min-height: 100%;
         height: 100%;
         padding: 20px 0;
@@ -90,22 +90,22 @@
 }
 </style>
 <template>
-    <div class="affirm-order-view bg-default font-30">
+    <div class="order-affirm-view bg-default font-30">
         <div class="address bg-white border-vertical">
-            <div v-if="!address" class="flex first">
+            <div v-if="!address" class="flex first" v-link="{name: 'address-add', params: {productId: this.$route.params.productId}}">
                 <span class="icon-comment gray"></span>
                 <div class="flex-1 tip site">请添加收货地址</div>
                 <span class="icon-enter red"></span>
             </div>
-            <div v-else class="flex">
+            <div v-else class="flex" v-link="{name: 'address-list', params: {productId: this.$route.params.productId}}">
                 <div>
                     <div class="user">
-                        <span>收货人: {{address.name}}</span>
-                        <span>{{address.phone}}</span>
+                        <span>收货人: {{address.receiver_name}}</span>
+                        <span>{{address.receiver_phone}}</span>
                     </div>
                     <div class="flex">
                         <div class="icon-comment gray font-30"></div>
-                        <div class="font-26 site">收货地址: {{address.site}}</div>
+                        <div class="font-26 site">收货地址: {{address.receiver_address_flat}}</div>
                     </div>
                 </div>
                 <div class="icon-enter font-30 red"></div>
@@ -113,11 +113,11 @@
         </div>
         <div class="product bg-white margin-top border-vertical">
             <div class="seller flex border-bottom">
-                <avatar :user="seller" :size="50"></avatar>
+                <avatar :user="product.owner" :size="50"></avatar>
                 <span class="margin-left">{{product.owner.name}}</span>
             </div>
             <div class="merchant flex border-bottom">
-                <img class="img margin-right" :src="config.img + product.pictures + '?imageView2/2/h/450'">
+                <img class="img margin-right" :src="config.img + product.pictures[0] + '?imageView2/2/h/450'">
                 <div>
                     <div class="title">{{product.title}}</div>
                     <div class="red font-26">{{product.price | price}}</div>
@@ -128,7 +128,7 @@
                     <span class="icon-comment gray"></span>
                     <span>买家留言</span>
                 </div>
-                <textarea class="font-26" maxlength="140" placeholder="文字控制在140字以内"></textarea>
+                <textarea class="font-26" maxlength="140" placeholder="文字控制在140字以内" v-model="note"></textarea>
             </div>
         </div>
         <div class="operation bg-white right flex border-top">
@@ -138,7 +138,8 @@
     </div>
 </template>
 <script>
-    import Avatar from './Avatar.vue';
+import Avatar from './Avatar.vue';
+import Q from 'q';
     export default {
         name: 'OrderAffirmView',
         components: {
@@ -146,39 +147,37 @@
         },
         data() {
             return {
+                note: '',
                 product: {
-                    owner: {}
+                    owner: {},
+                    pictures: []
                 },
-                address: {
-                    name: '江湖小龙',
-                    phone: '13989898989',
-                    areaId: 2,
-                    site: '江夏区江夏区江夏区88号'
-                }
+                address: {}
             }
         },
         route: {
             data({to}) {
-                return this.$get(`mall/products/${to.params.id}`).then((product) => {
-                        return {product};
+                return Q.all([this.$get(`mall/address/default`), this.$get(`mall/products/${to.params.productId}`)]).done((data) => {
+                        this.address = data[0];
+                        this.product = data[1];
+                        this.toggleLoading(false);
                     });
             }
         },
         methods: {
             createOrder() {
-//                this.$post('mall/orders', {
-//                    product_id: this.product.id,
-//                    receiver_name: this.address.name,
-//                    receiver_phone: this.address.phone,
-//                    receiver_area_id: this.address.areaId,
-//                    receiver_address: this.address.site
-//                }).then((data) => {
-//                    this.$router.go({name: 'order', params: {id: data.id}})
-//                });
-                if(!this.address) {
-                    this.action('toast', {success: 0, text: '请选择收货地址!'});
+                if(this.address) {
+                    this.$post('mall/orders', {
+                        product_id: this.product.id,
+                        receiver_name: this.address.receiver_name,
+                        receiver_phone: this.address.receiver_phone,
+                        receiver_address: this.address.receiver_address_flat,
+                        buyer_note: this.note
+                    }).then((data) => {
+                        this.$router.go({name: 'order', params: {id: data.order_no}});
+                    });
                 } else {
-                    this.$router.go({name: 'order', params: {id: 2}})
+                    this.action('toast', {success: 0, text: '请选择收货地址!'});
                 }
             }
         }

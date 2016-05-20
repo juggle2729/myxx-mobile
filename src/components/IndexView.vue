@@ -36,13 +36,16 @@
         </li>
         <li class="tab">订单</li>
         <li>
-            <a href="/order/affirm/70">确认订单 - order/affirm/:id</a>
+            <a href="/order/affirm/188/">确认订单 - order/affirm/:productId/:addressId</a>
         </li>
         <li>
-            <a href="/order/1">订单 - order/:id</a>
+            <a href="/order/160520185535031891">订单详情页-重复使用请手动在此修改订单号 --> order/:id</a>
         </li>
         <li>
-            <a href="/order/receive/1">确认收货成功 - order/receive/:id</a>
+            <a href="/order/receive/160520185535031891">确认收货成功 --> order/receive/:id</a>
+        </li>
+        <li>
+            <a href="/order/address">收货地址列表 - order/address/:id</a>
         </li>
         <li class="tab">我的</li>
         <li>
