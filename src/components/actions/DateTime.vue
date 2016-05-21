@@ -126,7 +126,9 @@
                 savedMinutes: 0,
 
                 show: false,
-                adjustPosTimer: null
+                adjustPosTimer: null,
+
+                activeDay: 0 // 当前激活的日期,包括年月日
             }
         },
         computed: {
@@ -191,7 +193,7 @@
                     nextDay = 1;
                 }
 
-                for (let i = 0; i < 27; i++) {
+                for (let i = 0; i < 12; i++) {
                     nextMonthDays = this.getMonthDays(nextMonth);
                     if(nextMonth === 12 && nextDay > nextMonthDays) {
                         nextYear += 1;
@@ -214,20 +216,32 @@
             },
             hours() {
                 const hours = [];
-                for (let i = 0; i < 24; i++) {
+                let start = 0;
+
+                // 如果激活日期等于当前日期,则初始值为当前的小时
+                if(this.activeDay === [this.currentYear, this.zeroLeftPad(this.currentMonth), this.zeroLeftPad(this.currentDay)].join('-')) {
+                    start = this.currentHour;
+                }
+
+                for (let i = start; i < 24; i++) {
                     hours.push({
                         key: this.zeroLeftPad(i),
                         name: i + '点'
                     });
                 }
 
+                // 当小时改了之后,要有默认的选中
+                setTimeout(() => {
+                    this.addItemSelected('hour', this.zeroLeftPad(start));
+                }, 50);
+
                 return this.addPlaceholder(hours);
             },
             minutes() {
                 const minutes = [];
                 let perMinute = 0;
-                for (let i = 0; i < 60; i++) {
-                    perMinute = this.zeroLeftPad(i);
+                for (let i = 0; i < 12; i++) {
+                    perMinute = this.zeroLeftPad(i * 5);
                     minutes.push({
                         key: perMinute,
                         name: perMinute + '分'
@@ -245,6 +259,7 @@
             this.currentDay = now.getDate();
             this.currentHour = now.getHours();
             this.currentMinutes = now.getMinutes();
+            this.activeDay = [this.currentYear, this.zeroLeftPad(this.currentMonth), this.zeroLeftPad(this.currentDay)].join('-')
 
             const timestamp = Number(this.params.timestamp);
             const savedDate = new Date(timestamp);
@@ -254,6 +269,7 @@
             this.savedDay = timestamp > 0 ? savedDate.getDate() : 0;
             this.savedHour = timestamp > 0 ? savedDate.getHours() : 0;
             this.savedMinutes = timestamp > 0 ? savedDate.getMinutes() : 0;
+            this.activeDay = timestamp > 0 ? [this.savedYear, this.zeroLeftPad(this.savedMonth), this.zeroLeftPad(this.savedDay)].join('-') : this.activeDay;
 
             setTimeout(() => {
                 this.dataBack();
@@ -345,6 +361,11 @@
                     activeIndex = scrollTargets[keys[keys.length - 1]];
                 }
 
+                // 表示更新了日期
+                if(target.classList.contains('date')) {
+                    this.activeDay = items[activeIndex].getAttribute('data');
+                }
+
                 this.addItemClass(items, activeIndex, true);
             },
             addItemClass(items, activeIndex, adjustPos = false) {
@@ -422,6 +443,7 @@
                 const activeDate = pageContainer.querySelector('ul.date li.active').getAttribute('data');
                 const activeHour = pageContainer.querySelector('ul.hour li.active').getAttribute('data');
                 const activeMinutes = pageContainer.querySelector('ul.minutes li.active').getAttribute('data');
+
                 // 此处对 activeDate 做了兼容性处理  在 webview下，不支持'2016-05-19'格式的时间传入new Date()
                 this.params.timestamp = new Date(`${activeDate.split('-').join('/')} ${activeHour}:${activeMinutes}:00`).getTime();
                 this.params.cb(this.params.timestamp);
