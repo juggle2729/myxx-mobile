@@ -16,25 +16,43 @@
             margin-left: 20px;
         }
     }
-    .like-cnt {
+    .follow-cnt {
         position: absolute;
         top: 50%;
         right: 0;
+        width: 120px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 26px;
+        text-align: center;
+        border: 1px solid #cc3f4f;
+        border-radius: 12px;
         transform: translateY(-50%);
-        color: #9f9f9f;
-        &.liked {
-            color: #cc3f4f;
-         }
+        &.followed {
+            color: #888888;
+            border-color: #eeeeee;
+            background: #eeeeee;
+        }
+        .cnt-text {
+            color: #696969;
+            .icon {
+                color: #cc3f4f;
+                padding-right: 0;
+            }
+        }
     }
     .cover {
         width: 686px;
         height: 686px;
         margin: 0 32px 10px;
+        &.cover-video {
+            width: 100%;
+            margin: 0;
+        }
     }
+
     .play::after {
-        left: 32px;
-        bottom: 30px;
-        background-position: left bottom;
+        background-size: 144px;
     }
     .store-detail {
         padding: 0 32px 36px;
@@ -82,6 +100,73 @@
         padding-top: 33.3333%;
     }
 
+    .operation {
+        width: 396px;
+        margin: 0 auto 40px;
+        >div {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            line-height:120px;
+            border-radius: 50%;
+            border: 1px solid #888888;
+            text-align: center;
+            color: #888888;
+            padding: 24px;
+
+            >span {
+                display: block;
+            }
+
+            >span:first-child:before {
+                width: 40px;
+                text-align: center;
+            }
+
+            >span:first-child {
+                padding: 0;
+                margin-bottom: 10px;
+            }
+
+            &.liked {
+                >span {
+                    color: #cc3f4f;
+                }
+            }
+        }
+        >div:first-child {
+            margin-right: 132px;
+        }
+    }
+
+    .opration-video {
+        width: 100%;
+        height: 96px;
+        border-top: 1px solid #d9d9d9;
+        >div {
+            height: 48px;
+            width: 50%;
+            line-height: 48px;
+            margin-top: 24px;
+            text-align: center;
+            float: left;
+            color: #888888;
+
+            &.liked {
+                >span {
+                     color: #cc3f4f;
+                 }
+            }
+        }
+        >div:first-child {
+             background-image: linear-gradient(270deg, #efefef 51%, transparent 51%);
+             background-position: right center;
+             background-repeat: no-repeat;
+             background-size: 1px 100%;
+             padding-right: 1px;
+         }
+    }
+
     .comments {
         padding: 24px 32px;
         .header {
@@ -102,6 +187,9 @@
 </style>
 <template>
 <div class="story-view" v-if="!$loadingRouteData">
+    <template v-if="cover_type === 'video'">
+        <div class="cover cover-video play" @click.stop="play(video)" v-bg="video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
+    </template>
     <div class="story-header">
         <div class="header clearfix">
             <div class="user">
@@ -113,24 +201,36 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!env.isShare" class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
-                <span class="icon-like-active"></span>
-                <span class="cnt-text">{{story.like}}</span>
+            <div v-if="!env.isShare" class="follow-cnt font-26" @click="follow()" :class="{ 'followed': followed }">
+                <span class="cnt-text">
+                    <span class="icon icon-follow" v-if="!followed"></span>
+                    {{followed ? '已关注' : '关注'}}
+                </span>
             </div>
         </div>
     </div>
     <div class="description user-input">{{story.content}}</div>
-    <template v-if="story.cover_type === 'picture'">
-        <div class="cover img" v-bg="story.cover"></div>
+    <template v-if="cover_type === 'picture'">
+        <div class="cover img" v-bg="pictures[0]"></div>
     </template>
-    <template v-if="story.cover_type === 'video'">
-        <div class="cover play" @click.stop="play(story.cover)" v-bg="story.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
-    </template>
-    <div class="store-detail">
+    <div class="store-detail" v-if="cover_type === 'picture'">
         <div class="medias">
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
         </div>
     </div>
+    <div :class="{ 'operation': cover_type === 'picture', 'opration-video': cover_type === 'video'}">
+        <div v-if="!env.isShare" class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
+            <span class="icon-like-solid"></span>
+            <span class="cnt-text">{{story.like}}</span>
+        </div>
+        <div class="like-cnt font-30" @click="share">
+            <span class="icon-share"></span>
+            <span class="cnt-text">分享</span>
+        </div>
+    </div>
+    <div class="separator-20"></div>
+    <tags :tags="story.tags"></tags>
+    <recommend :recommend-data="recommendData"></recommend>
     <div class="separator-20"></div>
     <comment type="30" :id="story.post_id"></comment>
 </div>
@@ -138,25 +238,69 @@
 <script>
 import Comment from './Comment.vue';
 import Avatar from './Avatar.vue';
+import Tags from './Tags.vue';
+import Recommend from './Recommend.vue';
 import shareable from 'shareable';
 export default {
     name: 'StoryView',
     mixins: [shareable],
     components: {
         Comment,
-        Avatar
+        Avatar,
+        Tags,
+        Recommend
+    },
+    data() {
+        return {
+            followed: false,
+            cover_type: 'picture',
+            recommendData: [
+                {
+                    'biz_type': 'pd',
+                    'item': {
+                        'video': 'e158c644-a164-459e-930e-8e0fc5b87731',
+                        'create_at': 1462358104000,
+                        'price': 1239,
+                        'first_picture': 'fc27a9b8-8b27-4a35-9a7f-405a08edff38',
+                        'title': '啦啦啦',
+                        'id': 41
+                    }
+                }
+            ]
+        }
     },
     computed: {
         pictures() {
-            return this.story.medias.map(media => media.id);
+            let pic = [];
+            this.story.medias.forEach((media) => {
+                if (media.type === 'picture') {
+                    pic.push(media.id);
+                }
+            });
+
+            if (!pic.length) {
+                this.cover_type = 'video';
+            }
+            return pic;
+        },
+        video() {
+            return this.story.medias.forEach((media) => {
+                if (media.type === 'video') {
+                    this.cover_type = 'video';
+                    return media.id;
+                }
+            });
         }
     },
     route: {
         data({to}) {
             const storyId = to.params.id;
-            return this.$get(`sns/topics/${storyId}|v2`)
+            return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
+                    this.updateTitle(story.topic_type);
+                    this.followed = story.user.is_followed;
+                    this.loadRecommendData(story.post_id);
                     return {story};
                 });
         }
@@ -175,6 +319,28 @@ export default {
                     this.story.like += 1;
                 });
             }
+        },
+        follow() {
+            const followApi = `users/follow/${this.story.user.id}`;
+            if(this.followed) {
+                this.$delete(followApi).then(() => {
+                    this.followed = false;
+                    this.toast('已取消关注');
+                });
+            } else {
+                this.$post(followApi).then(() => {
+                    this.followed = true;
+                    this.toast('已关注');
+                });
+            }
+        },
+        loadRecommendData(id) {
+            return this.$get('dc/rd|v3', {
+                    obj_id: id,
+                    biz_type: 'tp'
+                }).then((data) => {
+                    this.recommendData = data.recommend_data;
+            });
         }
     }
 }
