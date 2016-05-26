@@ -6,6 +6,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -100%);
+        .icon-checked {
+            font-size: 120px;
+            color: #09bb07;
+        }
         .button > div {
             height: 72px;
             line-height: 72px;
@@ -26,7 +30,7 @@
 <template>
 <div class="receive-view center font-30">
     <div>
-        <div class="icon-comment font-34 red"></div>
+        <div class="icon-checked"></div>
         <div class="success">确认收货成功</div>
         <div class="button flex">
             <div v-link="{name: 'order', params: { id: this.$route.params.id}}">查看订单</div>

@@ -35,6 +35,7 @@
     }
     ::-webkit-input-placeholder {
         color: #c6c6c6;
+        padding-top: 7px;
     }
     ::-webkit-textarea-placeholder {
         color: #c6c6c6;
@@ -89,6 +90,8 @@ export default {
                         this.areaId = data.area.id;
                     });
             } else {
+                this.receiver = _.get(this, 'self.nickname');
+                this.phone = _.get(this, 'self.phone');
                 this.toggleLoading(false);
             }
         }

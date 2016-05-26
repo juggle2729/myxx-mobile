@@ -47,6 +47,12 @@
         <li>
             <a href="/order/address">收货地址列表 - order/address/:id</a>
         </li>
+        <li>
+            <a href="/wallet">我的钱包 - wallet</a>
+        </li>
+        <li>
+            <a href="/wallet/detail">明细 - wallet/detail</a>
+        </li>
         <li class="tab">我的</li>
         <li>
             <a href="/profile">个人中心 - profile</a>

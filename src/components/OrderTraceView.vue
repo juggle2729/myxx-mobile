@@ -13,7 +13,7 @@
 <template>
 <div class="trace-view">
     <div class="info font-30 border-bottom">
-        <span class="icon-comment"></span>
+        <span class="icon-logistics gray"></span>
         <span>物流公司: 顺丰速运</span>
         <div>运单编号: {{trace.express_no}}</div>
     </div>

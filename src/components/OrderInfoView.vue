@@ -1,17 +1,21 @@
 <style lang="sass">
 .order-view {
     min-height: 100%;
-    height: 100%;
-    padding: 20px 0;
+    padding: 20px 0 150px;
+    .seperator {
+        height: 200px;
+    }
     .status {
         height: 86px;
         line-height: 86px;
         padding: 0 32px;
-        .icon-comment {
+        .icon-clock {
             padding-right: 12px;
         }
         &.detail {
             height: 146px;
+            line-height: 60px;
+            padding-top: 28px;
             .tip {
                 margin-left: 52px;
             }
@@ -31,7 +35,7 @@
             & + div {
                 width: 610px;
                 -webkit-box-align: start;
-                .icon-comment {
+                .icon-address {
                     padding-top: 3px;
                 }
                 .site {
@@ -68,11 +72,9 @@
         .comment {
             height: 320px;
             padding: 24px 32px;
-            textarea {
-                border: none;
+            .note {
+                margin-left: 48px;
                 height: 220px;
-                width: 100%;
-                padding: 0 16px 16px 16px;
                 line-height: 36px;
             }
         }
@@ -98,12 +100,16 @@
             margin-left: 18px;
             text-align: center;
             background-color: white;
-            border: 1px solid #dcdcdc;
             width: 160px;
             height: 68px;
             &.highlight {
                 background-color: #cc3f4f;
+                border: 0;
                 color: white;
+             }
+            &.disable {
+                 background-color: #c6c6c6;
+                 color: white;
              }
         }
     }
@@ -112,7 +118,7 @@
 <template>
 <div class="order-view bg-default" v-if="!$loadingRouteData">
     <div class="status bg-white border-vertical font-30 red" :class="{'detail': order_status[order.status].tip_buyer}" v-if="!isSeller">
-        <span class="icon-comment"></span>
+        <span class="icon-clock"></span>
         <span>{{order_status[order.status].text_buyer}}</span>
         <div class="font-26 tip flex" v-if="order_status[order.status].tip_buyer" @click="rejectInfo">
             <div class="flex-1">{{order_status[order.status].tip_buyer}}</div>
@@ -122,10 +128,10 @@
             </div>
         </div>
     </div>
-    <div class="status bg-white border-vertical font-30 red" :class="{'detail': order_status[order.status].tip_seller}" v-else>
-        <div class="flex withdraw" @click="withdraw">
+    <div class="status bg-white border-vertical font-30 red" :class="{'detail': order_status[order.status].tip_seller}" v-else @click="refundInfo">
+        <div class="flex withdraw">
             <div class="flex-1">
-                <span class="icon-comment"></span>
+                <span class="icon-clock"></span>
                 <span>{{order_status[order.status].text_seller}}</span>
             </div>
             <div class="red" v-if="applyReturn">
@@ -133,7 +139,7 @@
                 <span class="icon-enter"></span>
             </div>
         </div>
-        <div class="font-26 tip flex" v-if="order_status[order.status].tip_seller" @click="refund">
+        <div class="font-26 tip flex" v-if="order_status[order.status].tip_seller">
             <div class="flex-1">{{order_status[order.status].tip_seller}}</div>
             <div class="red" v-if="applyRefund">
                 <span>查看详情</span>
@@ -147,14 +153,14 @@
             <div>{{order.receiver_phone}}</div>
         </div>
         <div class="flex">
-            <div class="icon-comment gray font-30"></div>
+            <div class="icon-address gray font-30"></div>
             <div class="font-26 site">收货地址: {{order.receiver_address}}</div>
         </div>
     </div>
     <div class="product bg-white font-30 margin-top">
         <div class="seller flex border-top" v-if="!isSeller">
-            <avatar :user="seller" :size="50"></avatar>
-            <span class="margin-left">{{order.seller.nickname}}</span>
+            <avatar :user="order.seller" :size="50"></avatar>
+            <span class="margin-left">{{order.seller.name}}</span>
         </div>
         <div class="merchant flex border-vertical">
             <img class="img margin-right" :src="config.img + order.product.picture + '?imageView2/2/h/450'">
@@ -168,7 +174,7 @@
                 <span class="icon-comment gray"></span>
                 <span>买家留言</span>
             </div>
-            <textarea class="font-26" maxlength="140" placeholder="文字控制在140字以内"></textarea>
+            <div class="note font-26">{{order.buyer_note}}</div>
         </div>
     </div>
     <div class="order margin-top bg-white border-vertical font-30">
@@ -176,8 +182,8 @@
         <div>订单创建时间: {{order.create_at | date}}</div>
     </div>
     <div class="operation font-30 bg-white right flex border-top" v-if="!isSeller">
-        <div @click="contactSeller">联系商家</div>
-        <div v-for="button in order_status[order.status].button_buyer" :class="{'highlight': button_status[button].color}"
+        <div class="border-gray" @click="contactSeller">联系商家</div>
+        <div class="border-gray" v-for="button in order_status[order.status].button_buyer" :class="{'highlight': button_status[button].color, 'disable': (order.status === 'np') && (button_status[button].text === '付款')}"
           @click="button_status[button].method">{{button_status[button].text}}</div>
     </div>
     <div class="operation font-30 bg-white right flex border-top" v-else>
@@ -216,7 +222,7 @@ export default {
             order_status: {
                 'np': {
                     text_buyer: '等待商家修改价格',
-                    button_buyer: ['cancel', 'pay'],
+                    button_buyer: ['cancel', 'pay_not'],
                     text_seller: '请修改商品价格',
                     button_seller: ['price']
                 },
@@ -345,7 +351,7 @@ export default {
                     text_seller: '订单已取消',
                     tip_seller: '订单超时未付款,自动取消'
                 },
-                'rg': {
+                'cg': {
                     text_buyer: '已确认收货',
                     button_buyer: ['trace', 'withdraw'],
                     text_seller: '买家已确认收货',
@@ -361,6 +367,9 @@ export default {
                     text: '付款',
                     color: 'red',
                     method: this.pay
+                },
+                'pay_not': {
+                    text: '付款'
                 },
                 'refund': {
                     text: '申请退款',
@@ -419,7 +428,7 @@ export default {
     },
     methods: {
         cancelOrder() {
-            this.action('confirm', { text: '您确认取消该订单?'}).then((result) => {
+            this.action('confirm', {text: '您确认取消该订单?'}).then((result) => {
                 if(result === '1') {
                     this.$put(`mall/order/${this.order.order_no}/cancel_unpaid`).then(() => {
                         location.reload(true);
@@ -432,6 +441,12 @@ export default {
         },
         refund() {
             this.isSeller ? this.action('refund', {id: this.order.order_no, type: 'money', seller: true}) : this.action('refund', {id: this.order.order_no, type: 'money', seller: false});
+        },
+        refundInfo() {
+            if(this.applyReturn || this.applyRefund) {
+                const params = this.applyReturn ? 'product' : 'money';
+                this.isSeller ? this.action('refund', {id: this.order.order_no, type: params, seller: true}) : this.action('refund', {id: this.order.order_no, type: params, seller: false});
+            }
         },
         receive() {
             this.action('confirm', { text: '确认收货后系统将付款给商家，确认收到购买的商品了？'}).then((result) => {
@@ -473,7 +488,7 @@ export default {
             this.$router.go({name: 'trace', params: {id: this.order.order_no}});
         },
         rejectInfo() {
-            this.order.status === 'rf_rj' ? this.action('result', {id: this.order.order_no, type: 'money'}) : this.action('result', {id: this.order.order_no, type: 'product'});
+            this.applyReject && (this.order.status === 'rf_rj' ? this.action('result', {id: this.order.order_no, type: 'money'}) : this.action('result', {id: this.order.order_no, type: 'product'}));
         },
         timer(day) {
             const currentTime = new Date();
