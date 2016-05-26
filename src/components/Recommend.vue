@@ -93,14 +93,37 @@
     export default {
         name: 'Recommend',
         props: {
-            recommendData: {
-                type: Array,
-                default: function() {
-                    return [];
-                }
+            id: {
+                type: Number
             }
         },
+        data() {
+            return {
+                    recommendData: []
+            }
+        },
+        ready() {
+            this.loadData(this.id);
+        },
         methods: {
+            loadData(id) {
+                let params = {
+                    obj_id: id
+                };
+                // pd, jb, oc, tp
+                switch(this.$route.name) {
+                    case 'story':
+                        params.biz_type = 'tp';
+                        break;
+                    default:
+                        params.biz_type = 'pd';
+                        break;
+                }
+
+                return this.$get('dc/rd|v3', params).then((data) => {
+                    this.recommendData = data.recommend_data;
+                });
+            },
             recommendTitle(data) {
                 for (const tagName in this.config.tags) {
                     const tag = this.config.tags[tagName];

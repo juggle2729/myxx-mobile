@@ -48,8 +48,8 @@ export default {
                 case 'story':
                     data.title = '我在美玉秀秀晒了个宝';
                     data.desc = entry.content;
-                    data.icon = entry.cover;
-                    if(entry.cover_type !== 'picture') {
+                    data.icon = entry.medias[0].id;
+                    if(entry.medias[0].type !== 'picture') {
                         data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
                     }
                     data.text = '秀出我的宝贝';

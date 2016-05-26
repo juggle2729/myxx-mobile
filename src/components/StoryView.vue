@@ -100,6 +100,14 @@
         padding-top: 33.3333%;
     }
 
+    .media:first-child:nth-last-child(5),
+    .media:first-child:nth-last-child(5) ~ .media {
+        &:first-child, &:nth-child(2) {
+            width: 50%;
+            padding-top: 50%;
+        }
+    }
+
     .operation {
         width: 396px;
         margin: 0 auto 40px;
@@ -211,7 +219,7 @@
     </div>
     <div class="description user-input">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
-        <div class="cover img" v-bg="pictures[0]"></div>
+        <div class="cover img" v-bg="cover"></div>
     </template>
     <div class="store-detail" v-if="cover_type === 'picture'">
         <div class="medias">
@@ -230,7 +238,7 @@
     </div>
     <div class="separator-20"></div>
     <tags :tags="story.tags"></tags>
-    <recommend :recommend-data="recommendData"></recommend>
+    <recommend :id="story.post_id"></recommend>
     <div class="separator-20"></div>
     <comment type="30" :id="story.post_id"></comment>
 </div>
@@ -254,19 +262,7 @@ export default {
         return {
             followed: false,
             cover_type: 'picture',
-            recommendData: [
-                {
-                    'biz_type': 'pd',
-                    'item': {
-                        'video': 'e158c644-a164-459e-930e-8e0fc5b87731',
-                        'create_at': 1462358104000,
-                        'price': 1239,
-                        'first_picture': 'fc27a9b8-8b27-4a35-9a7f-405a08edff38',
-                        'title': '啦啦啦',
-                        'id': 41
-                    }
-                }
-            ]
+            cover: ''
         }
     },
     computed: {
@@ -275,21 +271,30 @@ export default {
             this.story.medias.forEach((media) => {
                 if (media.type === 'picture') {
                     pic.push(media.id);
+                } else {
+                    this.cover_type = 'video';
+                    return [];
                 }
             });
 
             if (!pic.length) {
                 this.cover_type = 'video';
+            } else {
+                this.cover = pic[0];
+                pic = _.drop(pic);
             }
+
             return pic;
         },
         video() {
-            return this.story.medias.forEach((media) => {
+            let resource;
+            this.story.medias.forEach((media) => {
                 if (media.type === 'video') {
                     this.cover_type = 'video';
-                    return media.id;
+                    resource = media.id;
                 }
             });
+            return resource;
         }
     },
     route: {
@@ -300,7 +305,6 @@ export default {
                     this.setShareData(story, true);
                     this.updateTitle(story.topic_type);
                     this.followed = story.user.is_followed;
-                    this.loadRecommendData(story.post_id);
                     return {story};
                 });
         }
@@ -333,14 +337,6 @@ export default {
                     this.toast('已关注');
                 });
             }
-        },
-        loadRecommendData(id) {
-            return this.$get('dc/rd|v3', {
-                    obj_id: id,
-                    biz_type: 'tp'
-                }).then((data) => {
-                    this.recommendData = data.recommend_data;
-            });
         }
     }
 }
