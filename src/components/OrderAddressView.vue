@@ -1,6 +1,7 @@
 <style lang="sass">
 .address-list {
     min-height: 100%;
+    padding-bottom: 50px;
     .info {
         padding: 0 32px;
         height: 200px;
@@ -30,7 +31,7 @@
 </style>
 <template>
 <div class="address-list font-30 bg-default">
-    <div class="address bg-white" v-for="address in addresses">
+    <div class="address bg-white" v-for="(index, address) in items">
         <div class="separator-20"></div>
         <div class="info" @click="back(address.id)">
             <div class="flex">
@@ -41,38 +42,46 @@
         </div>
         <div class="operate border-top">
             <div class="flex">
-                <div class="flex-1" @click="default(address.id)">
-                    <span class="icon-followed" v-if="address.is_default"></span>
-                    <span class="icon-comment" v-else></span>
+                <div class="flex-1" @click="defaultAddress(address)">
+                    <span class="icon-checked red" v-if="address.is_default"></span>
+                    <span class="icon-unchecked" v-else></span>
                     <span>默认地址</span>
                 </div>
                 <div v-link="{name: 'address-update', params: { id: address.id}}">
-                    <span class="icon-comment"></span>
+                    <span class="icon-edit"></span>
                     <span>编辑</span>
                 </div>
-                <div class="delete" @click="delete(address.id)">
-                    <span class="icon-comment"></span>
+                <div class="delete" @click="deleteAddress(address, index)">
+                    <span class="icon-delete"></span>
                     <span>删除</span>
                 </div>
             </div>
         </div>
     </div>
+    <partial name="load-more" v-if="items.hasMore"></partial>
     <div class="add bg-red white center" v-link="{name: 'address-add', params: {productId: this.$route.params.productId}}">新增收货地址</div>
 </div>
 </template>
 <script>
+import Q from 'q';
+import paging from 'paging';
 export default {
     name: 'OrderAddressView',
-    data() {
-        return {
-            addresses: []
+    mixins: [paging],
+    computed: {
+        paging() {
+            return {
+                path: 'mall/addresses',
+                list: 'addresses',
+                params: {
+                    limit: 10
+                }
+            }
         }
     },
     route: {
         data() {
-            return this.$get('mall/addresses').then((data) => {
-                    this.addresses = data.addresses;
-                });
+            return this.fetch();
         }
     },
     methods: {
@@ -86,20 +95,27 @@ export default {
                 });
             }
         },
-        default(id) {
-            this.$put(`mall/address/${id}`, {
-                is_default: true
-            }).then(() => {
-                location.reload(true);
-            });
+        defaultAddress(address) {
+            if(!address.is_default) {
+                _.forEach(this.items, (item) => {
+                    item.is_default && (item.is_default = false);
+                });
+                this.$put(`mall/address/${address.id}`, {
+                    is_default: true
+                }).then(() => {
+                    address.is_default = true;
+                });
+            }
         },
-        delete(id) {
+        deleteAddress(address, index) {
             this.action('confirm', {text: '确定删除该条收货地址?'}).then((result) => {
-                if(result === '1') {
-                    this.$delete(`mall/address/${id}`).then(() => {
-                        location.reload(true);
-                    });
-                }
+                return Q.promise((resolve, reject) => {
+                    if(result === '1') {
+                        this.$delete(`mall/address/${address.id}`).then(() => resolve());
+                    }
+                });
+            }).then(() => {
+                this.items.splice(index, 1);
             });
         }
     }

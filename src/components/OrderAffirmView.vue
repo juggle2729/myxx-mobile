@@ -19,7 +19,7 @@
                     & + div {
                         width: 610px;
                         -webkit-box-align: start;
-                        .icon-comment {
+                        .icon-address {
                             padding-top: 3px;
                         }
 
@@ -48,28 +48,28 @@
             height: 160px;
             padding: 0 32px;
             .img {
-            height: 110px;
-            width: 110px;
-        }
+                height: 110px;
+                width: 110px;
+            }
             .title {
-            margin-bottom: 12px;
-            width: 556px;
-            line-height: 38px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-        }
+                margin-bottom: 12px;
+                width: 556px;
+                line-height: 38px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+            }
         }
         .comment {
             height: 320px;
             padding: 24px 32px;
             textarea {
                 border: none;
+                margin-left: 44px;
                 height: 220px;
-                width: 100%;
-                padding: 0 16px 16px 16px;
+                width: 94%;
                 line-height: 36px;
             }
         }
@@ -93,7 +93,7 @@
     <div class="order-affirm-view bg-default font-30">
         <div class="address bg-white border-vertical">
             <div v-if="!address" class="flex first" v-link="{name: 'address-add', params: {productId: this.$route.params.productId}}">
-                <span class="icon-comment gray"></span>
+                <span class="icon-address gray"></span>
                 <div class="flex-1 tip site">请添加收货地址</div>
                 <span class="icon-enter red"></span>
             </div>
@@ -104,7 +104,7 @@
                         <span>{{address.receiver_phone}}</span>
                     </div>
                     <div class="flex">
-                        <div class="icon-comment gray font-30"></div>
+                        <div class="icon-address gray font-30"></div>
                         <div class="font-26 site">收货地址: {{address.receiver_address_flat}}</div>
                     </div>
                 </div>

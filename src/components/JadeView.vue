@@ -181,10 +181,10 @@
 </style>
 <template>
 <div class="jade-view bg-white">
-    <div class="master font-34" v-link="{name: 'order-affirm', params: { productId: '188'}}">确认订单入口</div>
-    <div class="master font-34" v-link="{name: 'order', params: { id: '160520185535031891'}}">订单详情页-重复使用请手动在此修改订单号</div>
-    <div class="master font-34" v-link="{name: 'address-list', params: { productId: '0'}}">订单地址列表</div>
-
+    <div class="master font-30" v-link="{name: 'wallet'}">wallet</div>
+    <div class="master font-30" v-link="{name: 'detail'}">wallet-detail</div>
+    <div class="master font-30" v-link="{name: 'order', params: {id: '160526101107032087'}}">卖家test订单入口-160526101107032087</div>
+    <div class="master font-30" v-link="{name: 'order', params: {id: '160526103437035566'}}">test商家头像-160526103437035566</div>
     <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles">
@@ -366,7 +366,7 @@
             <div class="icon-comment"></div>
             <div>评论</div>
         </div>
-        <div class="font-30 flex buy-btn bg-red white" v-link="{name: 'order-affirm', params: {id: info.id}}">
+        <div class="font-30 flex buy-btn bg-red white" v-link="{name: 'order-affirm', params: {productId: info.id}}">
             立即购买
         </div>
     </div>

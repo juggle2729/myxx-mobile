@@ -64,7 +64,6 @@ const filters = {
     date(msec, format='yyyy年m月dd日 H:MM') {
         return dateformat(new Date(msec), format);
     }
-
 };
 export default {
     install(Vue, options) {

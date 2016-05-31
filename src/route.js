@@ -319,6 +319,7 @@ export default {
     },
     '/order/affirm/:productId/:addressId': {
         name: 'order-affirm',
+        title: '确认订单',
         component(resolve) {
         require.ensure([], (require) => {
             resolve(require('OrderAffirmView.vue'));
@@ -327,6 +328,7 @@ export default {
     },
     '/order/:id': {
         name: 'order',
+        title: '订单详情',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderInfoView.vue'));
@@ -393,7 +395,43 @@ export default {
             component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderAddressUpdateView.vue'));
-        }, 'mall');
+            }, 'mall');
+        }
+    },
+    '/wallet': {
+        name: 'wallet',
+        title: '我的钱包',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WalletView.vue'));
+            }, 'mall');
+        }
+    },
+    '/wallet/cash': {
+        name: 'cash',
+        title: '提现',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CashView.vue'));
+            }, 'mall');
+        }
+    },
+    '/wallet/:id/cash-result': {
+        name: 'cash-result',
+        title: '提现',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CashResultView.vue'));
+            }, 'mall');
+        }
+    },
+    '/wallet/detail': {
+        name: 'detail',
+        title: '明细',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WalletDetailView.vue'));
+            }, 'mall');
         }
     },
     '/404': {
