@@ -227,7 +227,7 @@
         </div>
     </div>
     <div :class="{ 'operation': cover_type === 'picture', 'opration-video': cover_type === 'video'}">
-        <div v-if="!env.isShare" class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
+        <div class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
             <span class="icon-like-solid"></span>
             <span class="cnt-text">{{story.like}}</span>
         </div>
@@ -239,7 +239,6 @@
     <div class="separator-20"></div>
     <tags :tags="story.tags"></tags>
     <recommend :id="story.post_id"></recommend>
-    <div class="separator-20"></div>
     <comment type="30" :id="story.post_id"></comment>
 </div>
 </template>
@@ -292,6 +291,8 @@ export default {
                 if (media.type === 'video') {
                     this.cover_type = 'video';
                     resource = media.id;
+                } else {
+                    this.cover_type = 'picture';
                 }
             });
             return resource;
@@ -303,7 +304,7 @@ export default {
             return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    this.updateTitle(story.topic_type);
+                    this.updateTitle(story.topic_type.name);
                     this.followed = story.user.is_followed;
                     return {story};
                 });

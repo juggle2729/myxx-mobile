@@ -5,7 +5,8 @@ let [api, img, video, download] = ((env='dev') => {
     const hosts = {
         api: {
             dev: '//dev.api.meiyuxiuxiu.net',
-            test: '//test.api.meiyuxiuxiu.net',
+            // test: '//test.api.meiyuxiuxiu.net',
+            test: '//192.168.0.150:18000',
             prod: '//api.meiyuxiuxiu.com'
         },
         img: {
@@ -74,6 +75,10 @@ export default {
         evaluation: {
             id: 'jb',
             name: '求鉴宝'
+        },
+        topic: {
+            id: 'tp',
+            name: '话题'
         }
     }
 };
