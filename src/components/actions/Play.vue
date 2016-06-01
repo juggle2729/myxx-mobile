@@ -1,8 +1,6 @@
 <style lang="sass">
 .play-action {
-    position: fixed;
-    left: 0;
-    right: 0;
+    width: 100%;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -30,7 +28,7 @@
 }
 </style>
 <template>
-<div class="play-action" @click="close">
+<div class="play-action fixed" @click="close">
     <template v-for="media in medias">
         <video v-if="media.type==='video'" 
             :id="media.id" controls 

@@ -16,7 +16,6 @@
         @if $bg {
             background-color: #{$color};
         } @else if $border {
-            //border: 1px solid #{$color};
             @include border(all, #{$color});
         } @else {   // 默认为字体颜色
             color: #{$color};
@@ -74,11 +73,17 @@
 /****************************
 *           常用功能          *
 * **************************/
-@each $position in (relative, absolute, fixed) {
+@each $position in (relative, absolute) {
     .#{$position} {
         position: #{$position};
     }
 }
+.fixed {
+    position: fixed;
+    max-width: 750pX;
+    @extend .center-horizontal;
+}
+
 .flex {
     display: -webkit-box;
     -webkit-box-align: center;
@@ -87,14 +92,13 @@
     }
 }
 .center-horizontal {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
 }
 .center-vertical {
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
 }
 .center-avatar {
     left: 50%;

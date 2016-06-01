@@ -16,15 +16,28 @@ const filters = {
         now.setHours(0);
         now.setMinutes(0);
         now.setSeconds(0);
+        now.setMilliseconds(0);
         const YESTERDAY = now.getTime();
 
-        if(d.getTime() >= YESTERDAY) { //今天
-            if (diff <= MINUTE) {
-                m = '刚刚';
-            } else if (diff <= HOUR) {
-                m = Math.ceil(diff / MINUTE) + '分钟前';
+        if(d.getTime() >= YESTERDAY) { //今天及以后
+            if (diff > 0) {
+                if (diff <= MINUTE) {
+                    m = '刚刚';
+                } else if (diff <= HOUR) {
+                    m = Math.ceil(diff / MINUTE) + '分钟前';
+                } else {
+                    m = Math.floor(diff / HOUR) + '小时前';
+                }
             } else {
-                m = Math.floor(diff / HOUR) + '小时前';
+                if (msec < YESTERDAY + DAY) {
+                    m = dateformat(d, '今天 HH:MM');
+                } else if (msec >= YESTERDAY + DAY && msec < YESTERDAY + 2 * DAY) {
+                    m = dateformat(d, '明天 HH:MM');
+                } else if (msec >= YESTERDAY + 2 * DAY && msec < YESTERDAY + 3 * DAY) {
+                    m = dateformat(d, '后天 HH:MM');
+                } else {
+                    m = dateformat(d, 'm月dd日 HH:MM');
+                }
             }
         } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
             m = `昨天${d.getHours()}:${d.getMinutes() < 10 ? '0' :''}${d.getMinutes()}`;
@@ -45,7 +58,7 @@ const filters = {
             arr.splice(-2, 0, '.');
             return unit + arr.join('');
         } else {
-            return '面议';
+            return unit + '面议';
         }
     },
 
@@ -63,6 +76,11 @@ const filters = {
 
     date(msec, format='yyyy年m月dd日 H:MM') {
         return dateformat(new Date(msec), format);
+    },
+
+    profile(user) {
+        const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
+        return {name: 'user', params: {id, tab}};
     }
 };
 export default {

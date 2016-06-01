@@ -6,6 +6,8 @@
         .jade-detail {
             height: 146px;
             padding: 18px 32px 18px 32px;
+            border-top: 1px solid #d9d9d9;
+            border-bottom: 1px solid #d9d9d9;
             .jade-img {
                 width: 110px;
                 height: 110px;
@@ -13,9 +15,17 @@
             }
             .jade-content {
                 margin-left: 18px;
+                p:first-child {
+                    margin-bottom: 18px;
+                }
             }
         }
         .auction-detail {
+            border-top: 1px solid #d9d9d9;
+            border-bottom: 1px solid #d9d9d9;
+            .wrapper {
+                padding-left: 32px;
+            }
             label {
                 line-height: 86px;
             }
@@ -25,31 +35,29 @@
                 height: 84px;
                 border: 0px;
                 text-align: right;
-                input::-webkit-input-placeholder {
+                &::-webkit-input-placeholder {
                     color: #c6c6c6;
                 }
             }
             .auction-price {
-                padding-left: 32px;
                 input {
                     width: 490px;
                     margin-right: 30px;
                 }
             }
             .auction-range {
-                padding-left: 32px;
-                div {
-                    margin-right: 20px;
-                }
-                .select {
-                    text-align: left;
+                div.select {
+                    margin-right: 30px;
                 }
                 select {
                     border: 0;
                     background: transparent;
+                    outline: none;
                     //剔除 select 默认样式
                     -webkit-appearance: none;
-                    width: 110px;
+                    & > option:first-child {
+                        color: #c9c9c9;
+                    }
                 }
                 .icon-enter-slim {
                     margin-left: -50px;
@@ -85,19 +93,20 @@
             }
         }
         .other {
-            padding: 42px 50px 50px 50px;
+            padding: 42px 32px;
             .button {
+                width: 686px;
                 height: 80px;
                 border-radius: 8px;
             }
             .instruction {
-                padding: 42px 50px 50px 50px;
+                padding: 42px 18px 50px 18px;
                 p:first-child {
                     text-align: center;
 
                 }
                 p {
-                    margin-bottom: 30px;
+                    margin-bottom: 20px;
                     line-height: 44px;
                 }
             }
@@ -112,11 +121,11 @@
         <div class="jade-detail bg-white flex">
             <div class="jade-img" v-bg="info.pictures[0]"></div>
             <div class="jade-content flex-1">
-                <p class="font-30 margin-bottom">
+                <p class="font-30">
                     {{info.title}}
                 </p>
                 <p class="font-30 red">
-                    {{info.price | price}}
+                    {{info.price | price }}
                 </p>
             </div>
         </div>
@@ -124,27 +133,29 @@
             拍卖信息
         </div>
         <div class="auction-detail bg-white">
-            <div class="flex border-bottom auction-price">
-                <p class="font-30">起拍价格</p>
-                <input type="number" v-model="price" number class="font-30" placeholder="请输入起拍价格，0代表0元起拍">
-            </div>
-            <div class="flex border-bottom auction-range">
-                <p class="font-30">加价幅度</p>
-                <div class="flex font-30">
-                    <!-- <input type="select" v-model="unit" number class="font-30" placeholder="单次加价的最小金额"> -->
-                    <div class="select">
-                        <select class="font-30" v-model="unit">
-                            <option selected>50</option>
-                            <option>100</option>
-                            <option>200</option>
-                            <option>300</option>
-                            <option>600</option>
-                            <option>800</option>
-                            <option>1000</option>
-                            <option>3000</option>
-                        </select>
+            <div class="wrapper">
+                <div class="flex border-bottom auction-price">
+                    <p class="font-30">起拍价格</p>
+                    <input type="number" v-model="price" number class="font-30" placeholder="请输入起拍价格，0代表0元起拍">
+                </div>
+                <div class="flex border-bottom auction-range">
+                    <p class="font-30">加价幅度</p>
+                    <div class="flex font-30">
+                        <!-- <input type="select" v-model="unit" number class="font-30" placeholder="单次加价的最小金额"> -->
+                        <div class="select">
+                            <select class="font-30" v-model="unit" dir="rtl" :class="{'light': unit === '单次加价的最小金额'}">
+                                <option dir="rtl" selected disabled="disabled">单次加价的最小金额</option>
+                                <option>50</option>
+                                <option>100</option>
+                                <option>200</option>
+                                <option>300</option>
+                                <option>600</option>
+                                <option>800</option>
+                                <option>1000</option>
+                                <option>3000</option>
+                            </select>
+                        </div>
                     </div>
-                    <p class="icon-enter-slim gray"></p>
                 </div>
             </div>
             <div class="auction-time bg-white flex font-30">
@@ -153,7 +164,7 @@
                     <p class="font-34 light">
                         <span :class="{red: beginTime}">
                             <template v-if="beginTime">
-                                {{beginTime | date 'm月dd日 H:MM'}}
+                                {{beginTime | moment}}
                             </template>
                             <template v-else>
                                 尚未选择
@@ -167,7 +178,7 @@
                     <p class="font-34 light">
                         <span :class="{red: endTime}">
                             <template v-if="endTime">
-                                {{endTime | date 'm月dd日 H:MM'}}
+                                {{endTime | moment}}
                             </template>
                             <template v-else>
                                 尚未选择
@@ -186,7 +197,7 @@
             </div>
             <article class="instruction font-30">
                 <p>
-                    —&nbsp;微信拍卖工具使用须知&nbsp;—
+                    <span class="gray">—</span>&nbsp;微信拍卖工具使用须知&nbsp;<span class="gray">—</span>
                 </p>
                 <p class="gray">
                     1.通过微信拍卖工具，可以将美玉秀秀中的商品转化为拍卖品，好友登录微信账号可以参与拍卖。目前拍卖工具只能在微信中使用。
@@ -211,8 +222,8 @@ export default {
     data() {
         return {
             id: 0,
-            price: null,
-            unit: null,
+            price: '',
+            unit: '',
             beginTime: '',
             endTime: '',
             info: {
@@ -231,7 +242,7 @@ export default {
     },
     ready() {
         this.$watch('price + unit + beginTime + endTime', function(n, o){
-            if (this.price && this.unit && this.beginTime && this.endTime && this.beginTime < this.endTime) {
+            if (this.price !== '' && this.unit && this.beginTime && this.endTime) {
                 this.isFinish = true;
             } else {
                 this.isFinish = false;
@@ -241,6 +252,13 @@ export default {
     methods: {
         confirm() {
             if (this.isFinish) {
+                if (this.beginTime < (new Date()).getTime()) {
+                    this.action('toast', {success: 0, text: '开始时间不应早于当前时间'});
+                    return;
+                } else if (this.beginTime >= this.endTime) {
+                    this.action('toast', {success: 0, text: '结束时间不应早于开始时间'});
+                    return;
+                }
                 if (_.isSafeInteger(this.price)) {
                     // 确认框无客户端接口，直接调用web
                     this.$root.popup = {
@@ -264,6 +282,7 @@ export default {
                     };
                 } else {
                     this.action('toast', {success: '0', text: '请填写正确的起拍价格，不能包含小数点和特殊符号'});
+                    return;
                 }
             }
         },
@@ -277,15 +296,6 @@ export default {
             });
         },
         setBeginTime() {
-            // this.beginTime ?
-            //     this.action('datetime', this.beginTime).then((date) => {
-            //         this.beginTime = +date;
-            //     })
-            //     :
-            //     this.action('datetime', this._getTime()).then((date) => {
-            //         this.beginTime = +date;
-            //     });
-
             this.$root.popup = {
                 handler: 'datetime',
                 timestamp: this.beginTime ? this.beginTime : this._getTime(),
@@ -298,14 +308,6 @@ export default {
             };
         },
         setEndTime() {
-            // this.endTime ?
-            //     this.action('datetime', this.endTime).then((date) => {
-            //         this.endTime = +date;
-            //     })
-            //     :
-            //     this.action('datetime', this._getTime()).then((date) => {
-            //         this.endTime = +date;
-            //     });
             this.$root.popup = {
                 handler: 'datetime',
                 timestamp: this.endTime ? this.endTime : this._getTime(),
@@ -330,7 +332,7 @@ export default {
             return dateformat(new Date(+msec), 'yyyy-m-dd H:MM');
         },
         _priceFormat(price) {
-            if (!price || typeof +price !== 'number') {
+            if (typeof +price !== 'number') {
                 return null;
             }
             return price * 100;

@@ -68,6 +68,7 @@ router.beforeEach(({from, to, abort, next}) => {
     document.title = (to.title || '美玉秀秀');
     next();
 });
+
 router.afterEach(({to}) => {});
 router.alias({
     '/user/:id': '/user/:id/home',
@@ -89,7 +90,7 @@ router.start(require('./components/App.vue'), '#app');
             clientWidth = clientWidth - 15;
             first = false;
         }
-        document.querySelector('html').style['font-size'] = (clientWidth / 10) + 'px';
+        document.querySelector('html').style['font-size'] = Math.min(75, clientWidth / 10) + 'px';
     };
     adjustBase();
     window.onresize = _.debounce(adjustBase, 150);

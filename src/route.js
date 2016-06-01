@@ -391,8 +391,8 @@ export default {
     },
     '/order/address-update/:productId/:id': {
         name: 'address-update',
-            title: '收货地址管理',
-            component(resolve) {
+        title: '收货地址管理',
+        component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderAddressUpdateView.vue'));
             }, 'mall');

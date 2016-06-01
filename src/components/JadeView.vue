@@ -366,13 +366,14 @@
             <div class="icon-comment"></div>
             <div>评论</div>
         </div>
-        <div class="font-30 flex buy-btn bg-red white" v-link="{name: 'order-affirm', params: {productId: info.id}}">
+        <div class="font-30 flex buy-btn bg-red white" @click="buy">
             立即购买
         </div>
     </div>
 </div>
 </template>
 <script>
+import Q from 'q';
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
 import Avatar from './Avatar.vue';
@@ -459,7 +460,19 @@ export default {
             } else {
                 return '无';
             }
-        }
+        },
+
+         buy() {
+            Q.promise((resolve) => {
+                if(this.self) {
+                    resolve();
+                } else {
+                    this.action('login').then(resolve);
+                }
+            }).then(() => {
+                this.$router.go({name: 'order-affirm', params: {productId: this.info.id}});
+            });
+         }
     }
 }
 </script>

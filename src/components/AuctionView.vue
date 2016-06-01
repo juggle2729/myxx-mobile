@@ -40,16 +40,18 @@
                 height: 80px;
                 line-height: 80px;
                 padding: 0 32px;
-                p:nth-child(2) {
+                & > div > p:nth-child(2) {
                     margin-right: 18px;
                 }
-                p:nth-child(3) {
+                & > div > p:nth-child(3) {
                     margin-right: 18px;
                 }
+                -webkit-box-pack: justify;
             }
             .icon-enter-slim {
                 text-align: right;
-                width: 480px;
+                padding: 0px;
+                margin: 0px;
             }
             .content {
                 padding-left: 32px;
@@ -67,12 +69,17 @@
                 }
                 .bidder-name {
                     width: 130px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .bidder-status {
                     width: 120px;
+                    text-align: center;
                 }
                 .bidder-time {
                     width: 200px;
+                    text-align: center;
                 }
                 .bidder-price {
                     width: 170px;
@@ -138,11 +145,11 @@
             <p class="icon-clock"></p>
             <template v-if="info.status === 'waiting'">
                 <p>尚未开始</p>
-                <p>{{info.start_time | date}}开始</p>
+                <p>{{info.start_time | moment}}开始</p>
             </template>
             <template v-if="info.status === 'ongoing'">
                 <p>进行中</p>
-                <p>{{info.end_time | date}}结束</p>
+                <p>{{info.end_time | moment}}结束</p>
             </template>
             <template v-if="info.status === 'successful'">
                 <p>已结束，拍品已成交</p>
@@ -154,7 +161,7 @@
         <div class="titles">
             <div class="title font-32">{{info.title}}</div>
             <div class="flex margin-top">
-                <p class="red font-32 flex-1"><span class="gray margin-right">当前价:</span><span class="font-40" :class="'font-' + info.status">{{info.current_price | price}}</span></p>
+                <p class="red font-32 flex-1"><span class="gray margin-right">当前价:</span><span class="font-40" :class="'font-' + info.status">￥{{info.current_price / 100}}</span></p>
                 <div v-if="info.status === 'ongoing' && env.isWechat" v-link="{name: 'bidding', params: {id: info.id}}" class="button bg-red flex font-30 white"><span class="center-horizontal">我要出价</span></div>
                 <div v-else class="button bg-disable flex font-30 white"><span class="center-horizontal">我要出价</span></div>
             </div>
@@ -162,10 +169,12 @@
         <div class="separator-20"></div>
         <div class="records">
             <div class="title flex border-bottom font-26" v-link="{name: 'actionRecord', parmas: {id: info.id}}">
-                <p class="gray icon-record"></p>
-                <p class="gray">拍卖记录</p>
-                <p class="gray">|</p>
-                <p class="light">{{records.length}}条</p>
+                <div class="flex">
+                    <p class="gray icon-record"></p>
+                    <p class="gray">拍卖记录</p>
+                    <p class="gray">|</p>
+                    <p class="light">{{records.length}}条</p>
+                </div>
                 <p class="gray icon-enter-slim"></p>
             </div>
             <div class="content">
@@ -176,7 +185,7 @@
                                 <p class="bidder-name">{{record.bidder.name}}</p>
                                 <p class="bidder-status">{{$index === 0 ? '领先' : '出局'}}</p>
                                 <p class="bidder-time">{{record.create_at | moment}}</p>
-                                <p class="bidder-price">{{record.bid_price | price}}</p>
+                                <p class="bidder-price">￥{{record.bid_price / 100}}</p>
                         </li>
                     </ul>
                 </template>
@@ -243,7 +252,8 @@ export default {
             info: {
                 id: 0,
                 owner: {},
-                status: ''
+                status: '',
+                current_price: 0
             },
             records: {}
         }

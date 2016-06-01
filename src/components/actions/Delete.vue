@@ -5,24 +5,21 @@
         transition: opacity .2s ease;
         .container {
             transition: transform .2s ease;
-            transform: translate3d(0, 0, 0);
+            transform: translate3d(-50%, 0, 0);
         }
     }
     &.pop-enter , &.pop-leave {
         opacity: 0;
         .container {
-            transform: translate3d(0, 100%, 0);
+            transform: translate3d(-50%, 100%, 0);
         }
     }
-    position: fixed;
-    left: 0;
-    right: 0;
+    width: 100%;
     top: 0;
     bottom: 0;
     z-index: 999;
     background-color: rgba(0, 0, 0, .6);
     .container {
-        position: fixed;
         bottom: 0;
         width: 100%;
         background-color: white;
@@ -37,8 +34,8 @@
 }
 </style>
 <template>
-<div class="delete-action" @click="close">
-    <div class="container">
+<div class="delete-action fixed" @click="close">
+    <div class="container fixed">
         <div class="delete red" @click="delete">删除</div>
         <div class="separator"></div>
         <div class="cancel" @click="cancel">取消</div>

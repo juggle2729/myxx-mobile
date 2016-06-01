@@ -32,14 +32,18 @@
         }
     }
     #logout {
-        background-color: #F44336;
         z-index: 99;
         position: fixed;
         top: 0;
         right: 0;
-        font-size: 34px;
-        padding: 20px;
-        border-radius: 0 0 0 50%;
+        padding: 10px;
+        img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px #4CAF50;
+            cursor: pointer;
+        }
     }
 }
 </style>
@@ -59,7 +63,9 @@
         <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="logout" @click="logout" v-if="self && env.isBrowser">🤔</div>
+    <div id="logout" @click="logout" v-if="self && env.isBrowser">
+        <img :src="config.img + self.photo" :alt="self.nickname" />
+    </div>
     <component :is="popup.handler" :params.sync="popup" transition="pop"></component>
 </div>
 </template>

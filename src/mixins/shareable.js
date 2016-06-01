@@ -48,9 +48,9 @@ export default {
                 case 'story':
                     data.title = '我在美玉秀秀晒了个宝';
                     data.desc = entry.content;
-                    data.icon = entry.medias[0].id;
-                    if(entry.medias[0].type !== 'picture') {
-                        data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto|imageView2/1/w/100';
+                    data.icon = entry.cover;
+                    if(entry.cover_type !== 'picture') {
+                        data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto';
                     }
                     data.text = '秀出我的宝贝';
                     break;
@@ -61,8 +61,8 @@ export default {
                     data.text = '查看更多商品详情';
                     break;
                 case 'auction':
-                    data.title = '商品拍卖';
-                    data.desc = `${entry.title}开始拍卖`;
+                    data.title = `${entry.title}正在拍卖`;
+                    data.desc = `${entry.title}正在拍卖`;
                     data.icon = entry.pictures[0];
                     data.targets = '0,1';
                     break;
@@ -123,7 +123,7 @@ export default {
                     link: data.url
                 };
 
-                if(data.icon.indexOf('http') !== -1) {
+                if(/^http/.test(data.icon)) {
                     shareData.imgUrl = data.icon;
                 } else {
                     shareData.imgUrl = this.config.img + data.icon + '?imageView2/1/w/310';

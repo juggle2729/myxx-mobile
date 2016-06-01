@@ -31,12 +31,17 @@
             }
             .bidder-name {
                 width: 130px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .bidder-status {
                 width: 120px;
+                text-align: center;
             }
             .bidder-time {
                 width: 200px;
+                text-align: center;
             }
             .bidder-price {
                 width: 170px;
@@ -55,7 +60,7 @@
                             <p class="bidder-name">{{record.bidder.name}}</p>
                             <p class="bidder-status">{{$index === 0 ? '领先' : '出局'}}</p>
                             <p class="bidder-time">{{record.create_at | moment}}</p>
-                            <p class="bidder-price">{{record.bid_price | price}}</p>
+                            <p class="bidder-price">￥{{record.bid_price / 100}}</p>
                     </li>
                 </ul>
             </template>

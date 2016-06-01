@@ -24,6 +24,10 @@
         }
         .content {
             line-height: 1.5;
+            img {
+                height: 46px;
+                vertical-align: bottom;
+            }
         }
     }
     li:nth-last-child(2) {
@@ -47,9 +51,7 @@
         display: block;
     }
     .fake-input {
-        position: fixed;
         bottom: 0;
-        left: 0;
         width: 100%;
         background-color: #f9f9f9;
         color: red;
@@ -94,14 +96,14 @@
                         <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
                         <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
                     </template>
-                    <span>{{c.content}}</span>
+                    <span>{{{c.content}}}</span>
                 </div>
             </div>
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <div v-if="!env.isShare" class="fake-input font-30 flex" @click="comment()">
+    <div v-if="!env.isShare" class="fake-input font-30 flex fixed" @click="comment()">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
     </div>
@@ -111,6 +113,7 @@
 import Q from 'q';
 import paging from 'paging';
 import Avatar from './Avatar.vue';
+const emoji = ['微笑', '伤心', '美女', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '愉快', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '悠闲', '奋斗', '咒骂', '疑问', '嘘', '晕', '疯了', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '嘴唇', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '幸运', '礼品', '魔鬼', '幽灵', '商务', '收音机', '电视', '奖杯', '比赛', '赌博'];
 export default {
     name: 'Comment',
     mixins: [paging],
@@ -135,6 +138,21 @@ export default {
                 id: 'id',
                 params: {
                     limit: 10
+                },
+                transform(items) {
+                    return items.map(item => {
+                        if(/\[.{1,3}?\]/.test(item.content)) {
+                            item.content = item.content.replace(/\[(.{1,3}?)\]/g, (alt) => {
+                                const index = emoji.indexOf(alt.replace(/\[|\]/g, ''));
+                                if(index === -1) {
+                                    return alt;
+                                } else {
+                                    return `<img src="${this.config.www}/emoji/${index}.png" alt="${alt}" />`;
+                                }
+                            });
+                        }
+                        return item;
+                    });
                 }
             }
         }

@@ -12,7 +12,7 @@
             padding: 44px 50px 32px 50px;
             text-align: center;
             p:nth-child(1) {
-                margin-bottom: 66px;
+                margin-bottom: 32px;
             }
             p:nth-child(2) {
                 margin-bottom: 102px;
@@ -26,6 +26,10 @@
                 height: 100px;
                 -webkit-box-pack: center;
                 border-radius: 50px;
+                .text {
+                    position: relative;
+                    bottom: 11px;
+                }
             }
         }
     }
@@ -42,8 +46,8 @@
                 —&nbsp;邀请好友参与拍卖&nbsp;—
             </p>
             <div class="button bg-red flex white font-30" @click="share()">
-                <span class="icon-weixin"></span>
-                <span>分享至微信</span>
+                <span class="icon-weixin font-50"></span>
+                <span class="font-30 text">分享至微信</span>
             </div>
         </div>
     </div>
@@ -70,10 +74,10 @@ export default {
     methods: {
         share() {
             this.action('share', {
-                title: '商品拍卖',
-                desc: `${this.title}开始拍卖`,
+                title: `${this.title}正在拍卖`,
+                desc: `${this.title}正在拍卖`,
                 icon: this.icon,
-                url: `${location.origin}/auction/${this.id}`,
+                url: `${location.origin}/auction/${this.id}/?user=${_.get(this, 'self.id', -1)}&time=${Date.now()}`,
                 targets: '0,1'
             });
         }

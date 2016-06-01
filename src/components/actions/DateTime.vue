@@ -1,5 +1,88 @@
+<style lang="sass">
+%separator-line {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    position: absolute;
+    left: 0;
+    background-color: #d9d9d9;
+}
+
+@mixin separator-line($top) {
+    @extend %separator-line;
+    top: $top;
+}
+
+.datetime-action {
+    bottom: 0;
+
+    width: 100%;
+    padding-top: 53.33%;
+
+    .operation {
+        background-color: #d9d9d9;
+        > span {
+              line-height: 80px;
+          }
+    }
+
+    .cancel {
+        padding-left: 32px;
+        float: left;
+    }
+
+    .confirm {
+        padding-right: 32px;
+        float: right;
+    }
+
+    .content {
+        overflow: hidden;
+        height: 300px;
+        background-color: #fff;
+        display: -webkit-box;
+        position: relative;
+
+        &:before {
+            @include separator-line(118px);
+         }
+
+        &:after {
+            @include separator-line(178px);
+         }
+    }
+
+    ul {
+        width: -webkit-calc(100% / 3);
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    li {
+        line-height: 60px;
+        height: 60px;
+        font-size: 30px;
+        text-align: center;
+        color: #c6c6c6;
+        transition: transform 1s;
+    }
+
+    li.active {
+        color: #393939;
+    }
+
+    li.active-near-one {
+        color: #888;
+    }
+
+    li.active-near-two {
+        color: #c6c6c6;
+    }
+}
+</style>
 <template>
-    <div class="datetime-action" v-show="show" @touchmove.stop>
+    <div class="datetime-action fixed" v-show="show" @touchmove.stop>
         <div class="operation clearfix">
             <span class="cancel font-30 gray left" @click="cancelSelect">取消</span>
             <span class="confirm font-30 red right" @click="confirmSelect">确定</span>
@@ -17,91 +100,6 @@
         </div>
     </div>
 </template>
-<style lang="sass">
-
-    %separator-line {
-        content: '';
-        width: 100%;
-        height: 1px;
-        display: block;
-        position: absolute;
-        left: 0;
-        background-color: #d9d9d9;
-    }
-
-    @mixin separator-line($top) {
-        @extend %separator-line;
-        top: $top;
-    }
-
-    .datetime-action {
-        position: fixed;
-        bottom: 0;
-
-        width: 100%;
-        padding-top: 53.33%;
-
-        .operation {
-            background-color: #d9d9d9;
-            > span {
-                  line-height: 80px;
-              }
-        }
-
-        .cancel {
-            padding-left: 32px;
-            float: left;
-        }
-
-        .confirm {
-            padding-right: 32px;
-            float: right;
-        }
-
-        .content {
-            overflow: hidden;
-            height: 300px;
-            background-color: #fff;
-            display: -webkit-box;
-            position: relative;
-
-            &:before {
-                @include separator-line(118px);
-             }
-
-            &:after {
-                @include separator-line(178px);
-             }
-        }
-
-        ul {
-            width: -webkit-calc(100% / 3);
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        li {
-            line-height: 60px;
-            height: 60px;
-            font-size: 30px;
-            text-align: center;
-            color: #c6c6c6;
-            transition: transform 1s;
-        }
-
-        li.active {
-            color: #393939;
-        }
-
-        li.active-near-one {
-            color: #888;
-        }
-
-        li.active-near-two {
-            color: #c6c6c6;
-        }
-    }
-</style>
 <script>
     export default{
         name: 'DateTime',

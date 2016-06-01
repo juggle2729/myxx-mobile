@@ -1,4 +1,5 @@
 <style lang="sass">
+@import '../styles/partials/var';
     .bidding-view {
         .bidding-price {
             .setting {
@@ -19,13 +20,17 @@
                     border: 2px #d9d9d9 solid;
                     border-radius: 8px;
                 }
+                .minus, .add {
+                    position: relative;
+                    top: 8px;
+                }
             }
             .detail {
-                border-top: 2px #d9d9d9 solid;
+                border-top: 1px #d9d9d9 solid;
                 padding: 20px 0;
                 margin-top: 46px;
                 width: 100%;
-                >div {
+                > div {
                     float: left;
                     height: 50px;
                     width: 50%;
@@ -48,30 +53,31 @@
 
         .form {
             margin: 30px 0 50px 0;
-            input {
-                border: 0;
-                font-size: 30px;
-                height: 110px;
-                padding: 20px 20px 20px 40px;
-
-                &[name='phone'] {
+            & > div {
+                padding: 0 50px;
+                height: 100px;
+                input {
+                    display: block;
+                }
+                input[type=tel], input[type=text] {
+                    height: 98px;
+                    border: 0px;
+                }
+                input[type=tel] {
                     width: 100%;
-                    border-bottom: 1px solid #c6c6c6;
-                    border-radius: 0;
                 }
-                &[name='code'] {
-                    width: 58%;
-                    border-right: none;
-                    margin-top: 1px;
-                }
-                &[type='button'] {
-                    height: 90px;
-                    width: 40%;
-                    padding: 24px;
-                    border: 1px solid #c6c6c6;
+                input[type=button] {
+                    padding: 10px;
+                    min-width: 136px;
+                    height: 72px;
+                    border: 1px solid #c9c9c9;
+                    background: none;
                     border-radius: 8px;
-                    margin-right: 2%;
+                    color: #393939;
                 }
+            }
+            .code {
+                -webkit-box-pack: justify;
             }
         }
         .confirm {
@@ -94,30 +100,50 @@
             }
         }
     }
+    .wechat-view {
+        position: relative;
+        height: 100%;
+        .content {
+            -webkit-box-orient: vertical;
+            .warning {
+                width: 160px;
+                height: 160px;
+                margin-bottom: 40px;
+                background-image: url('#{$qn}/warning.png');
+                background-size: 100% 100%;
+            }
+        }
+    }
 </style>
 <template>
-    <div class="bidding-view bg-default">
+    <div class="bidding-view bg-default" v-if="env.isWechat">
         <div class="bidding-price bg-white">
             <div class="setting center">
-                <span class="minus" :class="{'gray': product.price <= product.min_price}" @click="settingPrice('minus')">-</span>
+                <span class="minus icon-subtract font-44" :class="{'gray': product.price <= product.min_price + product.range}" @click="settingPrice('minus')"></span>
                 <span class="center price">
                     {{product.price}}
                 </span>
-                <span class="add" @click="settingPrice('add')">+</span>
+                <span class="add icon-add font-44" @click="settingPrice('add')"></span>
             </div>
             <div class="gray font-26 center">我的出价</div>
             <div class="detail gray font-26 center clearfix">
                 <div class="current-price">
-                    当前价格<span>{{product.min_price}}</span>
+                    当前价格<span>￥{{product.min_price}}</span>
                 </div>
                 <div class="price-range">
-                    加价区间<span>{{product.range}}</span>
+                    加价区间<span>￥{{product.range}}</span>
                 </div>
             </div>
         </div>
         <div v-if="isFirstBid" class="form bg-white">
-            <input type="tel" v-model="phone" placeholder="请输入手机号">
-            <input v-model="verifyCode"  type="number" maxlength="4" placeholder="验证码"><input @click="getVerifyCode()" type="button" value="{{label}}">
+            <div class="border-bottom">
+                <input  v-if="disabled" type="tel" class="font-30" v-model="phone"  disabled="disabled" name="phone">
+                <input  v-else type="tel" v-model="phone" class="font-30" placeholder="请输入手机号" name="phone">
+            </div>
+            <div class="border-bottom flex code">
+                <input v-model="verifyCode"  type="text" class="font-30" maxlength="4" maxlength="4" placeholder="验证码" name="code">
+                <input @click="getVerifyCode()" type="button" class="font-22" value="{{label}}">
+            </div>
         </div>
         <div class="confirm white center bold" :class="{'bg-red': isFinish, 'bg-disable': !isFinish}" @click="submit()">确认出价</div>
         <div class="content instruction font-30">
@@ -135,6 +161,15 @@
             </p>
             <p class="gray">
                 4.美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
+            </p>
+        </div>
+    </div>
+    <div v-else class="wechat-view bg-light">
+        <div class="content flex  center-vertical">
+            <div class="warning">
+            </div>
+            <p class="font-30 gray">
+                请在微信客户端打开链接
             </p>
         </div>
     </div>
@@ -156,33 +191,18 @@
                 verifyCode: '',
                 label: '获取验证码',
                 codeGeted: false,      // 是否已经获取了验证码
-                codeCorrect: false,    // 验证码是否正确
                 isFinish: false,       // 表单是否完成
+                disabled: false
             };
         },
         ready() {
             this.$watch('phone + verifyCode + product.price', (n, o) => {
                 if (this.isFirstBid) {
                     this.isFinish = this.phone
-                        && /^1\w{10}$/.test(this.phone)
                         && this.verifyCode
-                        && this.codeCorrect
                         && this.product.price > this.product.min_price;
                 } else {
                     this.isFinish = this.product.price > this.product.min_price ? true : false;
-                }
-            });
-
-            this.$watch('verifyCode', (n, o) => {
-                if (n && /^\w{4}$/.test(n) && this.codeGeted) {
-                    this.$get('common/sms/verify_result', {biz: 'auction_bid', phone: this.phone, verify_code: n }).then((data) => {
-                        if (!data.result) {
-                            this.codeCorrect = false;
-                            this.action('toast', {success: 0, text: '验证码错误'});
-                        } else {
-                            this.codeCorrect = true;
-                        }
-                    });
                 }
             });
         },
@@ -192,7 +212,7 @@
 
                 return this.$get(`mall/auctions/${this.product.id}/price`).then((data) => {
                     // 服务器返回的价格单位是分
-                    this.product.price = data.current_price / 100;
+                    this.product.price = (data.current_price + data.bid_increment) / 100;
                     this.product.min_price = data.current_price / 100;
                     this.product.range = data.bid_increment / 100;
                     this.isFirstBid = data.is_first_bid;
@@ -204,7 +224,7 @@
                 if (typeof this.product.price !== 'number') {
                     this.product.price = +this.product.price;
                 }
-                if (way === 'minus' && this.product.price - this.product.range >= this.product.min_price) {
+                if (way === 'minus' && this.product.price - this.product.range >= this.product.min_price + this.product.range) {
                     this.product.price = this.product.price - this.product.range;
                 } else if (way === 'add') {
                     this.product.price = this.product.price + this.product.range;
@@ -219,12 +239,13 @@
                         this.action('toast', {success: 0, text: '手机号不合法'});
                         return;
                     }
+                    this.disabled = true;   // disable 手机号
                     this.$get('common/sms/verify_code', {biz: 'auction_bid', phone: this.phone}).then((data) => {
                         let time = 60;
                         this.codeGeted = true;
                         let interval =  setInterval(() => {
                             if (time) {
-                                this.label = `${--time}`;
+                                this.label = `验证码已发送(${--time})`;
                             } else {
                                 this.label = '获取验证码';
                                 this.codeGeted = false;
@@ -238,10 +259,20 @@
                 if (this.isFinish) {
                     this.$post(`mall/auctions/${this.product.id}/records`, {
                         bid_price: this.product.price * 100,
-                        phone: this.phone,
-                        verify_code: this.verifyCode
+                        phone: this.isFirstBid ? this.phone : '',
+                        verify_code: this.isFirstBid ? this.verifyCode : ''
                     }).then((data) => {
-                        this.$router.go({name: 'auction', params: {id: this.product.id}});
+                        this.action('toast', {success: 1, text: '出价成功'});
+                        setTimeout(() => {
+                            this.$router.go({name: 'auction', params: {id: this.product.id}});
+                        }, 2000);
+                    }).catch((message) => {
+                        this.action('toast', {success: 0, text: message});
+                        // 更新当前出价
+                        this.$get(`mall/auctions/${this.product.id}/price`).then((data) => {
+                            this.product.price = (data.current_price + data.bid_increment) / 100;
+                            this.product.min_price = data.current_price / 100;
+                        });
                     });
                 }
             }

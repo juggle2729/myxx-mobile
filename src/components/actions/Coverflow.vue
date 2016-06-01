@@ -2,14 +2,12 @@
 .coverflow {
     &.pop-transition {
         transition: transform .3s ease;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(-50%, 0, 0);
     }
     &.pop-enter, &.pop-leave {
-        transform: translate3d(0, 100%, 0);
+        transform: translate3d(-50%, 100%, 0);
     }
-    position: fixed;
-    left: 0;
-    right: 0;
+    width: 100%;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -18,7 +16,7 @@
 }
 </style>
 <template>
-<div class="coverflow">
+<div class="coverflow fixed">
     <slider :ids="ids" :i="params.index" :close="close"></slider>
 </div>
 </template>

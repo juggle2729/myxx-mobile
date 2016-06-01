@@ -60,9 +60,6 @@ const mixin = {
             let defer = Q.defer();
             bridge.then((bridge) => {
                 switch(handler) {
-                    case 'login':
-                        callback = _.noop;
-                        break;
                     case 'user':
                         callback = resp => {
                                 if(resp) {
@@ -81,8 +78,8 @@ const mixin = {
                             callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject();
                         }
                         break;
+                    case 'login':
                     case 'datetime':
-                        callback = resp => defer.resolve(resp);
                     case 'affirmAuction':
                     case 'confirm':
                     case 'delete':
