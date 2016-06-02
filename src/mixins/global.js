@@ -123,8 +123,7 @@ const mixin = {
                                         localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
                                         this.action('login');
                                     } else if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
-                                        console.debug('404', location.href);
-                                        //this.$route.router.replace({'name': '404'});
+                                        this.$route.router.replace({'name': '404'});
                                     } else {
                                         console.debug(`[${resp.status}]${path}\n${resp.message}`);
                                     }

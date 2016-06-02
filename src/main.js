@@ -40,23 +40,26 @@ let router = new Router({history: true});
  * 而且初次加载时，并不会触发该回调，意味着，from参数一定不为空。
  * @param  {vue.transition} from    vue-router transition
  * @param  {Object} to    通过_recognizer解析出来的对象，和from有区别
- * @return {boolean}      返回布尔值，决定history.go是否执行
+ * @return {boolean|string}      返回布尔值，决定history.go是否执行,或者一个新的路径
  */
-router.beforeGo((from, to) => {
-    const root = from.router.app;
+router.beforeGo((from, to, app) => {
     let interrupted = false;
-    if(root.env.version) { // 客户端环境
-        let action = to.native && to.native(root.env.version);
+    if(app.env.version) { // 客户端环境
+        let action = to.native && to.native(app.env.version);
         if(action) {
             action = _.isObject(action) ? _.merge(to, action) : to;
-            root.action(action.name, action.params);
+            app.action(action.name, action.params);
             interrupted = true;
         } else if(from.name === to.name) { // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
         } else {
-            root.action('go', {url: to.path});
+            app.action('go', {url: to.path});
             interrupted = true;
         }
+    } else if(app.env.isShare) {
+        // 保持分享参数
+        to.query = _.merge(_.pick(from.query, ['user','time','channel']), to.query);
+        return app.$router.stringifyPath(to);
     }
     return !interrupted;
 });

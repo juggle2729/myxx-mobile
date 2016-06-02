@@ -23,6 +23,7 @@
         position: fixed;
         bottom: 0;
         height: 100px;
+        max-width: 750pX;
         width: 100%;
         img {
             height: 100%;

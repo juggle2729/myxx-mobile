@@ -259,6 +259,7 @@ export default {
     },
     data() {
         return {
+            story: {},
             followed: false,
             cover_type: 'picture',
             cover: ''
