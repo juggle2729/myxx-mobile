@@ -107,10 +107,9 @@
             gotoLecturer() {
                 if (this.env.isShare) {
                     location.href = this.config.download;
-                    return;
+                } else {
+                    this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
                 }
-
-                this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
             },
             recommendTitle(data) {
                 for (const tagName in this.config.tags) {

@@ -58,11 +58,9 @@
         height: 98px;
         padding: 16px;
         .emoji {
-            color: #888888;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px #888888;
+            box-shadow: 0 0 0 1px #999999;
             margin-top: 4px; 
-            padding: 15px;
             width: 64px;
             height: 64px;
         }

@@ -100,7 +100,7 @@ export default {
                                 const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
                                 console.debug(url, method, this.$req);
                                 this.$req(url, method, data)
-                                    .then(() => {
+                                    .finally(() => {
                                         localStorage.removeItem(this.uid);
                                         this.action('toast', {success: 1, text: '操作成功'});
                                     });

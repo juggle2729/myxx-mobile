@@ -209,7 +209,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!env.isShare" class="follow-cnt font-26" @click="follow()" :class="{ 'followed': followed }">
+            <div class="follow-cnt font-26" @click="follow()" :class="{ 'followed': followed }">
                 <span class="cnt-text">
                     <span class="icon icon-follow" v-if="!followed"></span>
                     {{followed ? '已关注' : '关注'}}
