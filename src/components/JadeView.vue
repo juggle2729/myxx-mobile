@@ -153,28 +153,21 @@
         }
     }
     .float-box {
-        position: fixed;
         bottom: 0;
         height: 98px;
+        -webkit-box-align: stretch;
         width: 100%;
-        & > div {
-            height: 100%;
-            -webkit-box-orient: vertical;
+        .contact-btn,.comment-btn {
+             -webkit-box-orient: vertical;
             -webkit-box-pack: center;
             div[class^=icon] {
                 margin-bottom: 14px;
                 padding: 0;
             }
         }
-        .contact-btn,.comment-btn {
-            width: 185px;
-            border-top: 1px solid #d9d9d9;
-        }
-        .contact-btn {
-            border-right: 1px solid #d9d9d9;
-        }
         .buy-btn {
-            width: 380px;
+            text-align: center;
+            line-height: 98px;
         }
     }
 }
@@ -296,7 +289,7 @@
     <template v-if="recommend.length">
         <div class="separator-20"></div>
         <div class="recommend">
-            <div class="titleflex">
+            <div>
               <span class="font-22 gray flex title">相关推荐</span>
               <ul class="scrollable">
                   <li class="border-default" v-for="rec in recommend">
@@ -357,16 +350,16 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="float-box font-30 flex bg-white">
-        <div class="font-22 flex gray contact-btn">
+    <div class="float-box flex fixed font-30 bg-white border-top">
+        <div class="font-22 flex flex-1 gray contact-btn border-right">
             <div class="icon-contact"></div>
             <div>联系商家</div>
         </div>
-        <div class="font-22 flex gray comment-btn" @click="$broadcast('comment', $event)">
+        <div class="font-22 flex flex-1 gray comment-btn" @click="$broadcast('comment', $event)">
             <div class="icon-comment"></div>
             <div>评论</div>
         </div>
-        <div class="font-30 flex buy-btn bg-red white" @click="buy">
+        <div class="font-30 flex-2 buy-btn bg-gray white" @click="buy">
             立即购买
         </div>
     </div>
@@ -463,6 +456,7 @@ export default {
         },
 
          buy() {
+            return;
             Q.promise((resolve) => {
                 if(this.self) {
                     resolve();
