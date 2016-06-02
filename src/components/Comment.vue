@@ -57,6 +57,15 @@
         color: red;
         height: 98px;
         padding: 16px;
+        .emoji {
+            color: #888888;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px #888888;
+            margin-top: 4px; 
+            padding: 15px;
+            width: 64px;
+            height: 64px;
+        }
         .input {
             background-color: white;
             color: #c6c6c6;
@@ -64,10 +73,10 @@
             height: 72px;
             line-height: 72px;
             border-radius: 8px;
+            margin:0 16px 0 20px;
         }
         .submit {
             line-height: 72px;
-            margin-left: 16px;
             width: 140px;
             height: 72px;
             color: white;
@@ -104,6 +113,7 @@
     </ul>
     <partial name="load-more" v-if="items.hasMore"></partial>
     <div v-if="!env.isShare" class="fake-input font-30 flex fixed" @click="comment()">
+        <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
     </div>
@@ -140,19 +150,7 @@ export default {
                     limit: 10
                 },
                 transform(items) {
-                    return items.map(item => {
-                        if(/\[.{1,3}?\]/.test(item.content)) {
-                            item.content = item.content.replace(/\[(.{1,3}?)\]/g, (alt) => {
-                                const index = emoji.indexOf(alt.replace(/\[|\]/g, ''));
-                                if(index === -1) {
-                                    return alt;
-                                } else {
-                                    return `<img src="${this.config.www}/emoji/${index}.png" alt="${alt}" />`;
-                                }
-                            });
-                        }
-                        return item;
-                    });
+                    return items.map(this.emojify);
                 }
             }
         }
@@ -233,7 +231,7 @@ export default {
                         }
                     });
                 }).then((comment) => {
-                    this.items.splice(0, 0, comment);
+                    this.items.splice(0, 0, this.emojify(comment));
                     this.items.total += 1;
                     this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'});
                 });
@@ -242,6 +240,20 @@ export default {
         gotoProfile(user) {
             const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
             this.$route.router.go({name: 'user', params: {id, tab}});
+        },
+
+        emojify(comment) {
+            if(/\[.{1,3}?\]/.test(comment.content)) {
+                comment.content = comment.content.replace(/\[(.{1,3}?)\]/g, (alt) => {
+                    const index = emoji.indexOf(alt.replace(/\[|\]/g, ''));
+                    if(index === -1) {
+                        return alt;
+                    } else {
+                        return `<img src="${this.config.www}/emoji/${index}.png" alt="${alt}" />`;
+                    }
+                });
+            }
+            return comment;
         }
     }
 }
