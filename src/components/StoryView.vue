@@ -1,6 +1,6 @@
 <style lang="sass">
 .story-view {
-    padding-bottom: 80px;
+    padding-bottom: 114px;
     min-height:100%;
     .story-header {
         padding: 32px 32px;
@@ -108,46 +108,7 @@
         }
     }
 
-    .operation {
-        width: 396px;
-        margin: 0 auto 40px;
-        >div {
-            display: inline-block;
-            width: 120px;
-            height: 120px;
-            line-height:120px;
-            border-radius: 50%;
-            border: 1px solid #888888;
-            text-align: center;
-            color: #888888;
-            padding: 24px;
-
-            >span {
-                display: block;
-            }
-
-            >span:first-child:before {
-                width: 40px;
-                text-align: center;
-            }
-
-            >span:first-child {
-                padding: 0;
-                margin-bottom: 10px;
-            }
-
-            &.liked {
-                >span {
-                    color: #cc3f4f;
-                }
-            }
-        }
-        >div:first-child {
-            margin-right: 132px;
-        }
-    }
-
-    .opration-video {
+    .opration {
         width: 100%;
         height: 96px;
         >div {
@@ -163,6 +124,10 @@
                 >span {
                      color: #cc3f4f;
                  }
+            }
+            .cnt-text {
+                padding-top: 3px;
+                display: inline-block;
             }
         }
         >div:first-child {
@@ -225,14 +190,14 @@
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
         </div>
     </div>
-    <div class="opration-video border-top">
+    <div class="opration border-top">
         <div class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
             <span class="icon-like-solid"></span>
             <span class="cnt-text">{{story.like}}</span>
         </div>
-        <div class="like-cnt font-30" @click="share">
+        <div class="font-30" @click="share">
             <span class="icon-share"></span>
-            <span class="cnt-text">分享</span>
+            <span>分享</span>
         </div>
     </div>
     <div class="separator-20"></div>

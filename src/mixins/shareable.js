@@ -46,33 +46,32 @@ export default {
                     data.text = '免费找大师看看我的宝贝';
                     break;
                 case 'story':
-                    data.desc = entry.content.slice(0, 14);
-                    data.title = '美玉秀秀';
-                    data.text = '查看更多话题帖子';
+                    data.desc = entry.content.slice(0, 19);
 
                     if (entry.topic_type.code === 'wjx') {
                         data.title = '玩家秀场等你来看';
-                        data.text = '秀出我与和田玉的日常';
-                    } else if (entry.topic_type.code === 'gyx') {
-                        data.title = entry.user.name + '的工艺制作秀场';
+                        data.text = '秀出我与美玉';
+                    } else if (entry.topic_type.code === 'gy') {
+                        data.title = '工艺秀场等你来看';
                         data.desc = '给懂的人一起欣赏';
-                        data.text = '查看更多和田玉工艺秀';
-                    } else if (entry.topic_type.code === 'yzs') {
-                        data.title = '公开课标题';
+                        data.text = '查看更多工艺秀';
+                    } else if (entry.topic_type.code === 'zs') {
+                        data.title = entry.content.slice(0, 19);
                         data.desc = '我在美玉秀秀听了这堂课，听听你的想法';
-                        data.text = '查看更多和田玉知识';
+                        data.text = '查看更多玉知识';
                     } else if (entry.topic_type.code === 'xp') {
-                        data.title = entry.user.name + '的新品上线啦！';
-                        data.text = '查看更多商品详情';
+                        data.title = '你的玉友新品上线啦！';
+                        data.text = '查看更多新品';
                     } else if (entry.topic_type.code === 'sb') {
                         data.title = '私藏宝玉，晒给你看！';
                         data.text = '秀出我的宝贝';
                     } else if (entry.topic_type.code === 'xt') {
                         data.title = '和田玉友的趣事，一起来看看';
-                        data.text = '分享我的和田玉趣事';
+                        data.text = '分享我的趣事';
                     } else {
                         data.title = entry.content.slice(0, 19);
-                        data.desc = '这有点意思，你也来看看？美玉秀秀，国内最专业的和田玉视频社区';
+                        data.desc = '美玉秀秀，国内最专业的和田玉视频社区';
+                        data.text = '查看更多话题';
                     }
 
                     data.icon = entry.medias[0].id;

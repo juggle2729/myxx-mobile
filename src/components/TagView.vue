@@ -54,6 +54,10 @@
                 line-height: 56px;
                 float: left;
             }
+            .like-cnt > .cnt-text {
+                padding-top: 3px;
+                display: inline-block;
+            }
         }
 
         &.product {
@@ -191,7 +195,7 @@
                             <avatar :user="item.entry.user" :size="50"></avatar>
                             <div class="name margin-left font-26">{{item.entry.user.name}}</div>
                         </div>
-                        <div class="follow-cnt font-26" @click="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
+                        <div class="follow-cnt font-26" @click.stop="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
                             <span class="cnt-text">
                                 <span class="icon icon-follow" v-if="!item.entry.user.is_followed"></span>
                                 {{item.entry.user.is_followed ? '已关注' : '关注'}}
@@ -212,13 +216,13 @@
                             <i class="icon-comment-solid"></i>
                             <span>{{item.entry.comment}}</span>
                         </div>
-                        <div class="border-right" :class="{ 'red': item.entry.liked }" @click="like(item)">
+                        <div class="like-cnt border-right" :class="{ 'red': item.entry.liked }" @click.stop="like(item)">
                             <i class="icon-like-solid"></i>
-                            <span>{{item.entry.like}}</span>
+                            <span class="cnt-text">{{item.entry.like}}</span>
                         </div>
-                        <div class="like-cnt font-30">
+                        <div class="font-30">
                             <i class="icon-share"></i>
-                            <span class="cnt-text">分享</span>
+                            <span>分享</span>
                         </div>
                     </div>
                 </div>
@@ -241,9 +245,9 @@
                             <i class="icon-comment-solid"></i>
                             <span>{{item.entry.comment}}</span>
                         </div>
-                        <div class="like-cnt font-30">
+                        <div class="font-30">
                             <i class="icon-share"></i>
-                            <span class="cnt-text">分享</span>
+                            <span>分享</span>
                         </div>
                     </div>
                 </div>
@@ -256,7 +260,7 @@
                             <avatar :user="item.entry.user" :size="50"></avatar>
                             <div class="name margin-left font-26">{{item.entry.user.name}}</div>
                         </div>
-                        <div class="follow-cnt font-26" @click="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
+                        <div class="follow-cnt font-26" @click.stop="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
                             <span class="cnt-text">
                                 <span class="icon icon-follow" v-if="!item.entry.user.is_followed"></span>
                                 {{item.entry.user.is_followed ? '已关注' : '关注'}}
@@ -268,7 +272,7 @@
                     </div>
                     <div v-if="item.entry.results.length">
                         <div class="masters flex bg-white">
-                            <div class="left" @click.stop="goToProfile(item.entry.results[0].identifier)" v-bg.sm="item.entry.results[0].identifier.portrait"></div>
+                            <div class="left" @click.stop.stop="goToProfile(item.entry.results[0].identifier)" v-bg.sm="item.entry.results[0].identifier.portrait"></div>
                             <div class="middle flex-1">
                                 <div class="l font-26">
                                     <div>{{item.entry.results[0].identifier.name}}</div>
@@ -280,7 +284,7 @@
                                     <div class="light margin-top">{{item.entry.results[1].identifier.title}}</div>
                                 </div>
                             </div>
-                            <div v-if="item.entry.results[1]" class="right" @click.stop="goToProfile(item.entry.results[1].identifier)" v-bg.sm="item.entry.results[1].identifier.portrait"></div>
+                            <div v-if="item.entry.results[1]" class="right" @click.stop.stop="goToProfile(item.entry.results[1].identifier)" v-bg.sm="item.entry.results[1].identifier.portrait"></div>
                             <div v-else class="right">
                                 <img :class="size" :src="'invite-master.png' | qn">
                             </div>
