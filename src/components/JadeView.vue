@@ -173,7 +173,7 @@
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <tags :tags="tags"></tags>
+        <tags :tags="jade.tags"></tags>
         <div class="others">
             <ul>
                 <li v-if="jade.category" class="flex font-26">
@@ -316,17 +316,6 @@ export default {
         },
         genre() {
             return this._treeArrayConcat(this.jade.genre);
-        },
-        tags() {
-            let a = [];
-            _(this.jade.tags).forEach(function(tag){
-                if (typeof tag.tag === 'string') {
-                    a.push({type: tag.type, name: tag.tag, id: tag.tag});
-                } else {
-                    a.push({type: tag.type, name: tag.tag.name, id: tag.tag.id});
-                }
-            });
-            return a;
         }
     },
     ready() {
@@ -339,10 +328,6 @@ export default {
             return this.$get('mall/products/'+ this.$route.params.id)
                 .then((jade) => {
                     this.setShareData(jade, true);
-                    // this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
-                    //     .then((data) => {
-                    //         this.recommend = data.recommend_data;
-                    //     });
                     this.action('user').then((user) => {
                         if (user && +user.id === +data.owner.id) {
                             this.isSelf = true;
