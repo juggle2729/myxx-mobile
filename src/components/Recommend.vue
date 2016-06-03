@@ -120,7 +120,7 @@ export default {
             }
 
             return this.$get('dc/rd|v3', params).then((data) => {
-                this.recommendData = data.recommend_data;
+                this.items = data.recommend_data;
             });
         },
         recommendTitle(data) {

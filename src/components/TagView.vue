@@ -301,7 +301,7 @@
     import paging from 'paging';
     import Avatar from './Avatar.vue';
     export default {
-        name: 'TagFlow',
+        name: 'Tag',
         mixins: [paging],
         components: {
             Avatar

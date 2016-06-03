@@ -24,7 +24,7 @@
         <div class="tag-list">
             <template v-for="tag in tags">
                 <div class="row-separator" v-if="$index % 4 === 0"></div>
-                <div class="tag-item font-26" :class="{'first-line' : $index < 4}" v-link="{name: 'tagFlow', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
+                <div class="tag-item font-26" :class="{'first-line' : $index < 4}" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
             </template>
         </div>
     </div>

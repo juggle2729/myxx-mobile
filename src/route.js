@@ -98,21 +98,21 @@ export default {
             }, 'comments');
         }
     },
-    '/auction/add/:id': {
-        name: 'addAuction',
-        title: '添加拍卖信息',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AddAuctionView.vue'));
-            }, 'auction');
-        }
-    },
     '/auction/:id': {
         name: 'auction',
         title: '拍卖预览',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionView.vue'));
+            }, 'auction');
+        }
+    },
+    '/auction/add/:id': {
+        name: 'addAuction',
+        title: '添加拍卖信息',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddAuctionView.vue'));
             }, 'auction');
         }
     },

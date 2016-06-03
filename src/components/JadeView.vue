@@ -67,64 +67,6 @@
             }
         }
     }
-    .recommend {
-        padding: 0 0 22px 32px;
-        .title {
-            height: 80px;
-        }
-        ul {
-            padding-bottom: 10px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
-        }
-        ul > li {
-            display: inline-block;
-            width: 300px;
-            height: 404px;
-            margin-right: 20px;
-            white-space: normal;
-            vertical-align: top;
-        }
-        a {
-            display: block;
-        }
-        .recommend-img {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            .label {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100px;
-                height: 44px;
-                text-align: center;
-                line-height: 44px;
-                background-color: rgba(0,0,0,0.5);
-            }
-            .img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .recommend-title {
-            padding: 20px 16px 16px 16px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-        .title-center {
-            text-align: center;
-        }
-        .title-left {
-            text-align: left;
-        }
-        .author {
-            margin-top: 16px;
-        }
-    }
     .detail {
         padding: 0 0 32px 0;
         .title {
@@ -205,7 +147,7 @@
                 </template>
             </div>
         </div>
-        <div class="footer flex font-26 gray border-top">
+<!--         <div class="footer flex font-26 gray border-top">
             <div class="flex">
                 <span class="icon-pay-guarantee"></span>
                 <span>付款担保</span>
@@ -218,7 +160,7 @@
                 <span class="icon-sf"></span>
                 <span>顺丰包邮</span>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="separator-20"></div>
     <div class="master flex" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
@@ -295,7 +237,6 @@
     </div>
     <div class="separator-20"></div>
     <recommend></recommend>
-    <div class="separator-20"></div>
     <comment type="40" :id="jade.id"></comment>
     <div class="separator-20"></div>
     <div class="detail">

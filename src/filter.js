@@ -54,9 +54,15 @@ const filters = {
     price(cents, unit = '￥') {
         cents = +cents;
         if (_.isNumber(cents) && cents > 0) {
-            let arr = _.padStart(cents, 3, 0).split('');
-            arr.splice(-2, 0, '.');
-            return unit + arr.join('');
+            let price = _.chain(cents)
+                .padStart(3, 0)
+                .split('')
+                .reverse()
+                .map((d, i) => d + (i > 2 && i % 3 === 2 ? ',' : ''))
+                .reverse()
+                .value();
+            price.splice(-2, 0, '.');
+            return unit + price.join('');
         } else {
             return unit + '面议';
         }
