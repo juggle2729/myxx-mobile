@@ -37,6 +37,13 @@
         background-size: 1px 100%, 1px 100%;
         padding-left: 1px;
         padding-right: 1px;
+    } @else if($direction==right-bottom) {
+        background-image: linear-gradient(0deg, $color 51%, transparent 51%), linear-gradient(270deg, $color 51%, transparent 51%);
+        background-position: center bottom, right center;
+        background-repeat: no-repeat, no-repeat;
+        background-size: 100% 1px, 1px 100%;
+        padding-bottom: 1px;
+        padding-right: 1px;
     } @else if ($direction==all) {
         box-shadow: 0 0 1px 0 $color;
     }

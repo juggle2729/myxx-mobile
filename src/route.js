@@ -329,7 +329,7 @@ export default {
     },
     '/order/affirm/:productId/:addressId': {
         name: 'order-affirm',
-        title: '确认订单',
+        title: '订单详情',
         component(resolve) {
         require.ensure([], (require) => {
             resolve(require('OrderAffirmView.vue'));
@@ -435,12 +435,29 @@ export default {
             }, 'mall');
         }
     },
-    '/wallet/detail': {
+    '/wallet-detail/:tab': {
         name: 'detail',
         title: '明细',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletDetailView.vue'));
+            }, 'mall');
+        }
+    },
+    '/instructions': {
+        name: 'instructions',
+        title: '帮助',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('InstructionsView.vue'));
+            }, 'mall');
+        }
+    },
+    '/instruction/:id': {
+        name: 'instruction',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('InstructionView.vue'));
             }, 'mall');
         }
     },

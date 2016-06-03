@@ -167,7 +167,7 @@
         .emoji {
             border-radius: 50%;
             box-shadow: 0 0 0 1px #999999;
-            margin-top: 4px; 
+            margin-top: 4px;
             width: 64px;
             height: 64px;
         }

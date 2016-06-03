@@ -321,17 +321,20 @@ export default {
                 'rt_rc': {
                     text_buyer: '商家已收到商品',
                     tip_buyer: '货款将在1到2个工作日退还到支付账户',
-                    text_seller: '订单已退货'
+                    text_seller: '订单已退货',
+                    button_seller: ['service']
                 },
                 'rt_ap': {
                     text_buyer: '商家已收到商品',
                     tip_buyer: '货款将在1到2个工作日退还到支付账户',
-                    text_seller: '订单已退货'
+                    text_seller: '订单已退货',
+                    button_seller: ['service']
                 },
                 'rt_pp': {
                     text_buyer: '商家已收到商品',
                     tip_buyer: '货款将在1到2个工作日退还到支付账户',
-                    text_seller: '订单已退货'
+                    text_seller: '订单已退货',
+                    button_seller: ['service']
                 },
                 'rt_cm': {
                     text_buyer: '退货完成',

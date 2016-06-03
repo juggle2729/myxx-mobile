@@ -260,6 +260,7 @@ export default {
         return {
             story: {},
             followed: false,
+            story: {},
             cover_type: 'picture',
             cover: ''
         }

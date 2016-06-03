@@ -51,7 +51,10 @@
             <a href="/wallet">我的钱包 - wallet</a>
         </li>
         <li>
-            <a href="/wallet/detail">明细 - wallet/detail</a>
+            <a href="/wallet-detail/expects">明细 - wallet-detail/expects</a>
+        </li>
+        <li>
+            <a href="/instructions">帮助 - instructions</a>
         </li>
         <li class="tab">我的</li>
         <li>

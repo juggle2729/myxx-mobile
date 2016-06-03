@@ -54,14 +54,18 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
-            this.action('action', {label: '常见问题'});
+            this.action('action', {label: '常见问题'}).then(() => {
+                this.$router.go({name: 'instruction', params:{id: 'payment'}});
+            });
         });
     },
     route: {
         data({to}) {
             return this.$get(`balance/withdraw/${to.params.id}`).then((data) => {
                 this.info = data;
-                this.action('action', {label: '常见问题'});
+                this.action('action', {label: '常见问题'}).then(() => {
+                    this.$router.go({name: 'instruction', params:{id: 'payment'}});
+                });
             });
         }
     }

@@ -56,7 +56,7 @@ export default {
     ready() {
         this.$on('restore', () => {
             this.action('action', {label: '明细'}).then(() => {
-                this.$router.go({name: 'detail'});
+                this.$router.go({name: 'detail', params: {tab: 'expects'}});
             });
         });
     },
@@ -64,11 +64,10 @@ export default {
         data() {
             return this.$get('balance/latest').then((balance) => {
                 this.action('action', {label: '明细'}).then(() => {
-                    this.$router.go({name: 'detail'});
+                    this.$router.go({name: 'detail', params: {tab: 'expects'}});
                 });
                 this.balance = balance;
             });
-
         }
     }
 }
