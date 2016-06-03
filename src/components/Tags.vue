@@ -1,7 +1,6 @@
 <style lang="sass">
 .tags {
     min-height: 108px;
-
     .tag-item {
         display: inline-block;
         margin: 28px 0 28px 16px;

@@ -51,19 +51,6 @@
         }
     }
     .params {
-        .tags {
-            padding: 8px 32px 32px 32px;
-            border-bottom: 1px solid #eee;
-            .tag {
-                display: inline-block;
-                margin-right: 14px;
-                margin-top: 24px;
-                padding: 20px 30px;
-                background-color: #ffecea;
-                border-radius: 20px;
-
-            }
-        }
         .others {
             padding-left: 32px;
             ul > li {
@@ -152,7 +139,7 @@
             width: 100%
         }
     }
-    .float-box {
+/*    .float-box {
         bottom: 0;
         height: 98px;
         -webkit-box-align: stretch;
@@ -169,22 +156,50 @@
             text-align: center;
             line-height: 98px;
         }
+    }*/
+    .fake-input {
+        bottom: 0;
+        width: 100%;
+        background-color: #f9f9f9;
+        color: red;
+        height: 98px;
+        padding: 16px;
+        .emoji {
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px #999999;
+            margin-top: 4px; 
+            width: 64px;
+            height: 64px;
+        }
+        .input {
+            background-color: white;
+            color: #c6c6c6;
+            padding: 0 20px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 8px;
+            margin:0 16px 0 20px;
+        }
+        .submit {
+            line-height: 72px;
+            width: 140px;
+            height: 72px;
+            color: white;
+            background-color: #b2b2b2;
+            border-radius: 8px;
+        }
     }
 }
 </style>
 <template>
 <div class="jade-view bg-white">
-    <div class="master font-30" v-link="{name: 'wallet'}">wallet</div>
-    <div class="master font-30" v-link="{name: 'detail'}">wallet-detail</div>
-    <div class="master font-30" v-link="{name: 'order', params: {id: '160526101107032087'}}">卖家test订单入口-160526101107032087</div>
-    <div class="master font-30" v-link="{name: 'order', params: {id: '160526103437035566'}}">test商家头像-160526103437035566</div>
-    <div class="jade-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
+    <div class="jade-video play" v-bg="jade.video" @click="play(jade.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles">
         <div class="header">
-            <div class="title font-32">{{info.title}}</div>
+            <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
-                <p class="red font-32 flex-1">{{info.price | price}}</p>
+                <p class="red font-32 flex-1">{{jade.price | price}}</p>
                 <template v-if="isSelf">
                     <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><span class="center-horizontal">微信拍卖</span></div>
                 </template>
@@ -206,151 +221,97 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex" v-link="{name: 'user', params: {id: info.owner.id, tab: 'story'}}">
-            <avatar :user="info.owner" :size="90"></avatar>
+    <div class="master flex" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
+            <avatar :user="jade.owner" :size="90"></avatar>
             <div class="flex-1">
-                <p class="font-32 master-name">{{info.owner.name}}</p>
-                <p class="font-26 gray">{{info.owner.title}}</p>
+                <p class="font-32 master-name">{{jade.owner.name}}</p>
+                <p class="font-26 gray">{{jade.owner.title}}</p>
             </div>
-            <div class="red font-26">
-                更多商品<span class="icon-enter-slim gray"></span>
-            </div>
+            <div class="red font-26">更多商品<span class="icon-enter-slim gray"></span></div>
     </div>
     <div class="separator-20"></div>
     <div class="params">
-        <template v-if="tags.length">
-            <div class="tags">
-                <ul >
-                    <li v-for="tag in tags" class="tag font-26"><a v-link="{name: 'tags', params: {type: tag.type, tag: tag.id, name: tag.name}}">{{tag.name}}</a></li>
-                </ul>
-            </div>
-        </template>
+        <tags :tags="tags"></tags>
         <div class="others">
             <ul>
-                <li v-if="info.category" class="flex font-26">
+                <li v-if="jade.category" class="flex font-26">
                     <p class="label gray">分类</p>
-                    <p class="flex-1">{{info.category | tree}}</p>
+                    <p class="flex-1">{{jade.category | tree}}</p>
                 </li>
-                <li v-if="info.size" class="flex font-26">
+                <li v-if="jade.size" class="flex font-26">
                     <p class="label gray">尺寸</p>
-                    <p class="flex-1">{{info.size}}</p>
+                    <p class="flex-1">{{jade.size}}</p>
                 </li>
-                <li v-if="info.weight" class="flex font-26">
+                <li v-if="jade.weight" class="flex font-26">
                     <p class="label gray">重量</p>
-                    <p class="flex-1">{{info.weight}}g</p>
+                    <p class="flex-1">{{jade.weight}}g</p>
                 </li>
-                <li v-if="info.variety" class="flex font-26">
+                <li v-if="jade.variety" class="flex font-26">
                     <p class="label gray">种类</p>
-                    <p class="flex-1">{{info.variety | tree}}</p>
+                    <p class="flex-1">{{jade.variety | tree}}</p>
                 </li>
-                <li v-if="info.place" class="flex font-26">
+                <li v-if="jade.place" class="flex font-26">
                     <p class="label gray">产地</p>
-                    <p class="flex-1">{{info.place | tree}}</p>
+                    <p class="flex-1">{{jade.place | tree}}</p>
                 </li>
-                <li v-if="info.skin" class="flex font-26">
+                <li v-if="jade.skin" class="flex font-26">
                     <p class="label gray">皮色</p>
-                    <p class="flex-1">{{info.skin | tree}}</p>
+                    <p class="flex-1">{{jade.skin | tree}}</p>
                 </li>
-                <li v-if="info.material" class="flex font-26">
+                <li v-if="jade.material" class="flex font-26">
                     <p class="label gray">产状</p>
-                    <p class="flex-1">{{info.material | tree}}</p>
+                    <p class="flex-1">{{jade.material | tree}}</p>
                 </li>
-                <li v-if="info.certificate" class="flex font-26">
+                <li v-if="jade.certificate" class="flex font-26">
                     <p class="label gray">证书</p>
-                    <p class="flex-1">{{info.certificate | tree}}</p>
+                    <p class="flex-1">{{jade.certificate | tree}}</p>
                 </li>
-                <li v-if="info.gifts.length" class="flex font-26">
+                <li v-if="jade.gifts.length" class="flex font-26">
                     <p class="label gray">礼物说</p>
                     <p class="flex-1">{{gifts}}</p>
                 </li>
-                <li v-if="info.themes.length" class="flex font-26">
+                <li v-if="jade.themes.length" class="flex font-26">
                     <p class="label gray">题材</p>
                     <p class="flex-1">{{themes}}</p>
                 </li>
-                <li v-if="info.morals.length" class="flex font-26">
+                <li v-if="jade.morals.length" class="flex font-26">
                     <p class="label gray">寓意</p>
                     <p class="flex-1">{{morals}}</p>
                 </li>
-                <li v-if="info.creator" class="flex font-26">
+                <li v-if="jade.creator" class="flex font-26">
                     <p class="label gray">作者</p>
-                    <p class="flex-1">{{info.creator}}</p>
+                    <p class="flex-1">{{jade.creator}}</p>
                 </li>
-                <li v-if="info.prizes.length" class="flex font-26">
+                <li v-if="jade.prizes.length" class="flex font-26">
                     <p class="label gray">获奖</p>
                     <p class="flex-1">{{prizes}}</p>
                 </li>
-                <li v-if="info.genre" class="flex font-26">
+                <li v-if="jade.genre" class="flex font-26">
                     <p class="label gray">流派</p>
-                    <p class="flex-1">{{info.genre | tree}}</p>
+                    <p class="flex-1">{{jade.genre | tree}}</p>
                 </li>
             </ul>
         </div>
     </div>
-    <template v-if="recommend.length">
-        <div class="separator-20"></div>
-        <div class="recommend">
-            <div>
-              <span class="font-22 gray flex title">相关推荐</span>
-              <ul class="scrollable">
-                  <li class="border-default" v-for="rec in recommend">
-                      <a v-if="rec.biz_type === 'pd'" v-link="{name: 'jade', params: {id: rec.item.id}}">
-                          <div class="recommend-img">
-                              <span class="label font-26 white">商品</span>
-                              <div class="media img" v-bg="rec.item.first_picture"></div>
-                          </div>
-                          <div class="font-26">
-                              <p class="recommend-title title-center">
-                                  {{rec.item.title}}
-                              </p>
-                              <p class="red recommend-price title-center">
-                                  {{rec.item.price | price}}
-                              </p>
-                          </div>
-                      </a>
-                      <a v-if="rec.biz_type === 'jb'" v-link="{name: 'evaluation', params: {id: rec.item.id}}">
-                          <div class="recommend-img">
-                              <span class="label font-26 white">求鉴宝</span>
-                              <div class="media img" v-bg="rec.item.picture"></div>
-                          </div>
-                          <div class="font-26">
-                              <p class="recommend-title title-left">
-                                  {{rec.item.description}}
-                              </p>
-                          </div>
-                      </a>
-                      <a v-if="rec.biz_type === 'oc'" v-link="{name: 'lesson', params: {id: rec.item.id}}">
-                          <div class="recommend-img">
-                              <span class="label font-26 white">公开课</span>
-                              <div class="media img" v-bg="rec.item.author.portrait"></div>
-                          </div>
-                          <div class="font-26">
-                              <div class="recommend-title title-left">
-                                  <p>{{rec.item.title}}</p>
-                                  <p class="gray author">{{rec.item.author.name}}</p>
-                             </div>
-                          </div>
-                      </a>
-                  </li>
-              </ul>
-            </div>
-        </div>
-    </template>
     <div class="separator-20"></div>
-    <comment type="40" :id="info.id"></comment>
+    <recommend></recommend>
+    <div class="separator-20"></div>
+    <comment type="40" :id="jade.id"></comment>
     <div class="separator-20"></div>
     <div class="detail">
         <div class="title border-bottom flex">
             <span class="font-22 gray flex">图文详情</span>
         </div>
         <div class="text font-30">
-          {{info.detail}}
+          {{jade.detail}}
         </div>
-        <div v-for="img in info.pictures" >
-          <img :src="config.img + img + '?imageView2'" @click="coverflow(info.pictures, $index)"/>
+        <div v-for="img in jade.pictures" >
+          <img :src="config.img + img + '?imageView2'" @click="coverflow(jade.pictures, $index)"/>
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="float-box flex fixed font-30 bg-white border-top">
+    <!-- <comment type="30" :id="story.post_id"></comment> -->
+<!--     <div class="float-box flex fixed font-30 bg-white border-top">
         <div class="font-22 flex flex-1 gray contact-btn border-right">
             <div class="icon-contact"></div>
             <div>联系商家</div>
@@ -362,6 +323,11 @@
         <div class="font-30 flex-2 buy-btn bg-gray white" @click="buy">
             立即购买
         </div>
+    </div> -->
+    <div v-if="!env.isShare" class="fake-input font-30 flex fixed" @click="$broadcast('comment', $event)">
+        <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
+        <div class="input flex-1">点击此处发表评论...</div>
+        <div class="submit center">发送</div>
     </div>
 </div>
 </template>
@@ -370,17 +336,20 @@ import Q from 'q';
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
 import Avatar from './Avatar.vue';
+import Tags from './Tags.vue';
+import Recommend from './Recommend.vue';
 export default {
     name: 'JadeView',
     mixins: [shareable],
     components: {
         Comment,
-        Avatar
+        Avatar,
+        Tags,
+        Recommend
     },
     data() {
         return {
-            info: {
-                id: 0,
+            jade: {
                 gifts: [],
                 themes: [],
                 morals: [],
@@ -392,24 +361,24 @@ export default {
         };
     },
     computed: {
-        themes: function() {
-            return this._treeArrayConcat(this.info.themes);
+        themes() {
+            return this._treeArrayConcat(this.jade.themes);
         },
-        gifts: function() {
-            return this._treeArrayConcat(this.info.gifts);
+        gifts() {
+            return this._treeArrayConcat(this.jade.gifts);
         },
-        morals: function() {
-            return this._treeArrayConcat(this.info.morals);
+        morals() {
+            return this._treeArrayConcat(this.jade.morals);
         },
-        prizes: function() {
-            return this._treeArrayConcat(this.info.prizes);
+        prizes() {
+            return this._treeArrayConcat(this.jade.prizes);
         },
-        genre: function() {
-            return this._treeArrayConcat(this.info.genre);
+        genre() {
+            return this._treeArrayConcat(this.jade.genre);
         },
-        tags: function() {
+        tags() {
             let a = [];
-            _(this.info.tags).forEach(function(tag){
+            _(this.jade.tags).forEach(function(tag){
                 if (typeof tag.tag === 'string') {
                     a.push({type: tag.type, name: tag.tag, id: tag.tag});
                 } else {
@@ -421,24 +390,24 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
-            this.setShareData(this.info, true);
+            this.setShareData(this.jade, true);
         });
     },
     route: {
         data() {
             return this.$get('mall/products/'+ this.$route.params.id)
-                .then((data) => {
-                    this.info = data;
-                    this.setShareData(data, true);
-                    this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
-                        .then((data) => {
-                            this.recommend = data.recommend_data;
-                        });
+                .then((jade) => {
+                    this.setShareData(jade, true);
+                    // this.$get('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
+                    //     .then((data) => {
+                    //         this.recommend = data.recommend_data;
+                    //     });
                     this.action('user').then((user) => {
                         if (user && +user.id === +data.owner.id) {
                             this.isSelf = true;
                         }
                     });
+                    return {jade};
                 });
         }
     },
@@ -464,7 +433,7 @@ export default {
                     this.action('login').then(resolve);
                 }
             }).then(() => {
-                this.$router.go({name: 'order-affirm', params: {productId: this.info.id}});
+                this.$router.go({name: 'order-affirm', params: {productId: this.jade.id}});
             });
          }
     }

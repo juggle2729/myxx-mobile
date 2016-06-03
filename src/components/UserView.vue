@@ -247,7 +247,7 @@
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
                 <div class="line">
                     <p align="center">{{profile.product_count}}</p>
-                    <p align="center">{{profile.role > 3 ? '作品': '商品'}}</p>
+                    <p align="center">商品</p>
                 </div>
                 <div class="dash bg-red"></div>
             </div>

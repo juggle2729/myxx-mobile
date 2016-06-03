@@ -1,54 +1,54 @@
 <style lang="sass">
-    .jade-comment {
-        padding: 0 0 32px 32px;
-        .comment-header {
+.jade-comment {
+    padding: 0 0 32px 32px;
+    .comment-header {
+        -webkit-box-align: center;
+        -webkit-box-pack: justify;
+        height: 80px;
+    }
+    .comment {
+        padding-bottom: 20px;
+        .author {
+            display: -webkit-box;
+            display: -webkit-inline-box;
             -webkit-box-align: center;
-            -webkit-box-pack: justify;
-            height: 80px;
-        }
-        .comment {
-            padding-bottom: 20px;
-            .author {
-                display: -webkit-box;
-                display: -webkit-inline-box;
-                -webkit-box-align: center;
-                margin: 20px 0;
-                .author-name {
-                    width: 480px;
-                }
-            }
-            span {
-                line-height: 46px;
-            }
-            .content {
-                padding-right: 32px;
-                margin-left: 88px;
-                line-height: 1.5;
-            }
-            .more {
-                margin: 48px 0 16px 0;
-                .button {
-                    width: 378px;
-                    height: 72px;
-                    text-align: center;
-                    line-height: 72px;
-                    border: 1px solid;
-                    border-radius: 8px;
-                }
+            margin: 20px 0;
+            .author-name {
+                width: 480px;
             }
         }
-        .nocomment {
-            margin-top: 48px;
-            margin-bottom: 24px;
+        span {
+            line-height: 46px;
+        }
+        .content {
+            padding-right: 32px;
+            margin-left: 88px;
+            line-height: 1.5;
+        }
+        .more {
+            margin: 48px 0 16px 0;
+            .button {
+                width: 378px;
+                height: 72px;
+                text-align: center;
+                line-height: 72px;
+                border: 1px solid;
+                border-radius: 8px;
+            }
         }
     }
+    .nocomment {
+        margin-top: 48px;
+        margin-bottom: 24px;
+    }
+}
 </style>
 <template>
     <div class="jade-comment bg-white">
         <div class="comment-header flex font-22 border-bottom">
             <div class="gray">评论&nbsp;&nbsp;{{total}}</div>
         </div>
-            <div v-if="!!total" class="comment" @click="gotoComments(this.id, 40)">
+            <div v-if="total > 0" class="comment" v-link="{name: 'comments', params: {id: id, type: 40}}">
                 <div class="author flex">
                     <div class="avatar margin-right">
                         <avatar :user="c.reply_from"></avatar>
@@ -65,7 +65,7 @@
                     </template>
                     <span>{{c.content}}</span>
                 </div>
-                <div class="more">
+                <div v-if="total > 1" class="more">
                     <div class="button font-32 red border-red center-horizontal" >
                         查看全部评论
                     </div>
@@ -115,7 +115,7 @@ export default {
         comment(e) {
             const id = this.uid;
             const placeholder = '';
-            const position = this._getPosition(e);
+            const position = 0;
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
                     if(content) {
@@ -127,15 +127,10 @@ export default {
                             });
                     }
                 });
-        },
-        gotoComments(id, type) {
-            this.$route.router.go({name: 'comments', params: {id, type}});
-        },
-        _getPosition(e) {
-            const rect = e.target.getBoundingClientRect();
-            return rect.top + rect.height + window.scrollY;
         }
+        // gotoComments(id, type) {
+        //     this.$route.router.go({name: 'comments', params: {id, type}});
+        // }
     }
-
 }
 </script>
