@@ -115,10 +115,10 @@ export default {
                     receiver_area_id: this.areaId,
                     receiver_address: this.site
                 }).then((data) => {
-                      if(this.$route.params.productId && this.$route.params.productId !== '0') {
-                          this.$router.go({name: 'order-affirm', params: {productId: this.$route.params.productId, addressId: data.id}});
+                      if(this.$route.params.id && this.$route.params.id !== '0') {
+                          this.$router.go({name: 'order-affirm', params: {id: this.$route.params.id, addressId: data.id}});
                       } else {
-                          this.$router.go({name: 'address-list', params: {productId: ''}});
+                          this.$router.go({name: 'address-list', params: {id: ''}});
                       }
                 });
             }

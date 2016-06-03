@@ -79,7 +79,8 @@ router.alias({
     '/stories/:tab': '/stories',
     '/auctions/:id': 'user/:id/auctions',
     '/order/affirm/:productId': '/order/affirm/:productId/0',
-    '/order/address': '/order/address/0'
+    '/order/address': '/order/address/0',
+    '/tag/:type/:id/:name': '/tag/:id/:name'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

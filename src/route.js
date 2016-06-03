@@ -1,4 +1,3 @@
-// FIXME require.ensure within loop won't work
 export default {
     '/': {
         component(resolve) {
@@ -299,34 +298,34 @@ export default {
             }, 'other');
         }
     },
-    '/tag/flow/:id/:name': {
-        name: 'tagFlow',
+    '/tag/:id/:name': {
+        name: 'tag',
         native: v => v >= 1.4 && {name: 'tag'},
         title: '标签信息流',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('TagFlowView.vue'));
-            }, 'mall');
-        }
-    },
-    '/tag/:type/:tag/:name': {
-        name: 'tags',
-        title: '标签列表',
-        component(resolve) {
-               require.ensure([], (require) => {
-                   resolve(require('TagsView.vue'));
-               }, 'mall');
-        }
-    },
-    '/tag/:type/:tag/:category/:name': {
-        name: 'tag',
-        title: '标签详情',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TagView.vue'));
             }, 'mall');
         }
     },
+    // '/tag/:type/:tag/:name': {
+    //     name: 'tags',
+    //     title: '标签列表',
+    //     component(resolve) {
+    //            require.ensure([], (require) => {
+    //                resolve(require('TagsView.vue'));
+    //            }, 'mall');
+    //     }
+    // },
+    // '/tag/:type/:tag/:category/:name': {
+    //     name: 'tag',
+    //     title: '标签详情',
+    //     component(resolve) {
+    //         require.ensure([], (require) => {
+    //             resolve(require('TagView.vue'));
+    //         }, 'mall');
+    //     }
+    // },
     '/order/affirm/:productId/:addressId': {
         name: 'order-affirm',
         title: '订单详情',
@@ -372,8 +371,8 @@ export default {
             }, 'mall');
         }
     },
-    '/order/set-price/:id': {
-        name: 'set-price',
+    '/order/:id/price': {
+        name: 'order-price',
         title: '修改订单价格',
         component(resolve) {
             require.ensure([], (require) => {
@@ -381,7 +380,7 @@ export default {
             }, 'mall');
         }
     },
-    '/order/address/:productId': {
+    '/order/:id/address': {
         name: 'address-list',
         title: '收货地址管理',
         component(resolve) {
@@ -390,7 +389,7 @@ export default {
             }, 'mall');
         }
     },
-    '/order/address-add/:productId': {
+    '/order/:id/address/add': {
         name: 'address-add',
         title: '收货地址管理',
         component(resolve) {

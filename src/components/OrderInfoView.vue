@@ -464,7 +464,7 @@ export default {
             this.isSeller ? this.action('refund', {id: this.order.order_no, type: 'product', seller: true}) : this.action('refund', {id: this.order.order_no, type: 'product', seller: false});
         },
         setPrice() {
-            this.$router.go({name: 'set-price', params: { id: this.order.order_no}})
+            this.$router.go({name: 'order-price', params: { id: this.order.order_no}})
         },
         send() {
             this.$router.go({name: 'send', params: {id: this.order.order_no}});

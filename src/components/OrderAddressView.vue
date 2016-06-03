@@ -59,7 +59,7 @@
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <div class="add bg-red white center" v-link="{name: 'address-add', params: {productId: this.$route.params.productId}}">新增收货地址</div>
+    <div class="add bg-red white center" v-link="{name: 'address-add', params: {id: this.$route.params.id}}">新增收货地址</div>
 </div>
 </template>
 <script>
@@ -86,7 +86,7 @@ export default {
     },
     methods: {
         back(id) {
-            const productId = this.$route.params.productId;
+            const productId = this.$route.params.id;
             if(productId && productId !== '0') {
                 this.$put(`mall/address/${id}`, {
                     is_default: true
