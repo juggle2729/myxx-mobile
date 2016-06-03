@@ -20,11 +20,11 @@
 }
 </style>
 <template>
-    <div class="tags border-bottom" v-if="tags && tags.length">
+    <div class="tags border-bottom bg-white" v-if="tags && tags.length">
         <div class="tag-list">
             <template v-for="tag in tags">
                 <div class="row-separator" v-if="$index % 4 === 0"></div>
-                <div class="tag-item font-26" :class="{'first-line' : $index < 4}">{{tag.name}}</div>
+                <div class="tag-item font-26" :class="{'first-line' : $index < 4}" v-link="{name: 'tagFlow', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
             </template>
         </div>
     </div>

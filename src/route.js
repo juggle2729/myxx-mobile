@@ -299,6 +299,16 @@ export default {
             }, 'other');
         }
     },
+    '/tag/flow/:id/:name': {
+        name: 'tagFlow',
+        native: v => v >= 1.4 && {name: 'tag'},
+        title: '标签信息流',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('TagFlowView.vue'));
+            }, 'mall');
+        }
+    },
     '/tag/:type/:tag/:name': {
         name: 'tags',
         title: '标签列表',

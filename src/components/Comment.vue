@@ -95,7 +95,7 @@
             <avatar :user="c.reply_from"></avatar>
             <div class="flex-1">
                 <div class="author flex">
-                    <div class="font-26 flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
+                    <div class="font-26 flex-1 gray" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
                     <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                 </div>
                 <div class="font-30 content">

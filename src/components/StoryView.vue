@@ -60,7 +60,7 @@
     .description {
         font-size: 30px;
         color: #666666;
-        padding: 40px;
+        padding: 0 40px 40px 32px;
         .user-input {
             overflow: hidden;
             display: -webkit-box;
@@ -150,7 +150,6 @@
     .opration-video {
         width: 100%;
         height: 96px;
-        border-top: 1px solid #d9d9d9;
         >div {
             height: 48px;
             width: 50%;
@@ -194,7 +193,7 @@
 }
 </style>
 <template>
-<div class="story-view" v-if="!$loadingRouteData">
+<div class="story-view bg-white" v-if="!$loadingRouteData">
     <template v-if="cover_type === 'video'">
         <div class="cover cover-video play" @click.stop="play(video)" v-bg="video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
     </template>
@@ -203,8 +202,8 @@
             <div class="user">
                 <avatar :user="story.user"></avatar>
                 <div class="name">
-                    <p class="font-26">{{story.user.name}}</p>
-                    <div class="margin-top font-22 gray">
+                    <p class="font-30">{{story.user.name}}</p>
+                    <div class="margin-top font-22 light">
                         <span>{{story.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{story.click}}人浏览</span>
                     </div>
                 </div>
@@ -226,7 +225,7 @@
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
         </div>
     </div>
-    <div :class="{ 'operation': cover_type === 'picture', 'opration-video': cover_type === 'video'}">
+    <div class="opration-video border-top">
         <div class="like-cnt font-30" @click="like()" :class="{ 'liked': story.liked }">
             <span class="icon-like-solid"></span>
             <span class="cnt-text">{{story.like}}</span>
@@ -305,7 +304,7 @@ export default {
             return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    this.updateTitle(story.topic_type.name);
+                    this.updateTitle(story.topic_type.name + '详情');
                     this.followed = story.user.is_followed;
                     return {story};
                 });
