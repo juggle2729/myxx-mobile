@@ -1,13 +1,14 @@
 @import 'var';
 @font-face {
     font-family: 'icomoon';
-    src: url('#{$qn}/icomoon.ttf') format('truetype');
+    src: url('#{$qn}/icomoon.ttf?v=1.4.0') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon';
+    font-family: 'icomoon' !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -18,6 +19,19 @@
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-like-solid:before {
+    content: "\e926";
+}
+.icon-follow-big:before {
+    content: "\e93b";
+}
+.icon-share-social:before {
+    content: "\e93c";
+}
+.icon-play:before {
+    content: "\e942";
 }
 .icon-checked:before {
     content: "\e939";
@@ -90,9 +104,6 @@
 }
 .icon-error:before {
     content: "\e929";
-}
-.icon-like-solid:before {
-    content: "\e926";
 }
 .icon-new-product:before {
     content: "\e920";
@@ -219,3 +230,4 @@
 .icon-settings:before {
     content: "\e919";
 }
+

@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?jjqdfg');
-    src:    url('fonts/icomoon.eot?jjqdfg#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?jjqdfg') format('truetype'),
-        url('fonts/icomoon.woff?jjqdfg') format('woff'),
-        url('fonts/icomoon.svg?jjqdfg#icomoon') format('svg');
+    src:    url('fonts/icomoon.eot?5u8vbv');
+    src:    url('fonts/icomoon.eot?5u8vbv#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?5u8vbv') format('truetype'),
+        url('fonts/icomoon.woff?5u8vbv') format('woff'),
+        url('fonts/icomoon.svg?5u8vbv#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,18 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-like-solid:before {
+    content: "\e926";
+}
+.icon-follow-big:before {
+    content: "\e93b";
+}
+.icon-share-social:before {
+    content: "\e93c";
+}
+.icon-play:before {
+    content: "\e942";
+}
 .icon-checked:before {
     content: "\e939";
 }
@@ -95,9 +107,6 @@
 }
 .icon-error:before {
     content: "\e929";
-}
-.icon-like-solid:before {
-    content: "\e926";
 }
 .icon-new-product:before {
     content: "\e920";

@@ -195,9 +195,9 @@
                             <avatar :user="item.entry.user" :size="50"></avatar>
                             <div class="name margin-left font-26">{{item.entry.user.name}}</div>
                         </div>
-                        <div class="follow-cnt font-26" @click.stop="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
+                        <div class="follow-cnt font-26" @click.stop="follow(item)">
                             <span class="cnt-text">
-                                <span class="icon icon-follow" v-if="!item.entry.user.is_followed"></span>
+                                <span class="icon icon-follow-big font-22" v-if="!item.entry.user.is_followed"></span>
                                 {{item.entry.user.is_followed ? '已关注' : '关注'}}
                             </span>
                         </div>
@@ -221,7 +221,7 @@
                             <span class="cnt-text">{{item.entry.like}}</span>
                         </div>
                         <div class="font-30">
-                            <i class="icon-share"></i>
+                            <i class="icon-share-social"></i>
                             <span>分享</span>
                         </div>
                     </div>
@@ -246,7 +246,7 @@
                             <span>{{item.entry.comment}}</span>
                         </div>
                         <div class="font-30">
-                            <i class="icon-share"></i>
+                            <i class="icon-share-social"></i>
                             <span>分享</span>
                         </div>
                     </div>
@@ -260,9 +260,9 @@
                             <avatar :user="item.entry.user" :size="50"></avatar>
                             <div class="name margin-left font-26">{{item.entry.user.name}}</div>
                         </div>
-                        <div class="follow-cnt font-26" @click.stop="follow(item)" :class="{ 'followed': item.entry.user.is_followed }">
+                        <div class="follow-cnt font-26" @click.stop="follow(item)">
                             <span class="cnt-text">
-                                <span class="icon icon-follow" v-if="!item.entry.user.is_followed"></span>
+                                <span class="icon icon-follow-big font-22" v-if="!item.entry.user.is_followed"></span>
                                 {{item.entry.user.is_followed ? '已关注' : '关注'}}
                             </span>
                         </div>

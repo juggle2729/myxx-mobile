@@ -57,17 +57,14 @@ export default {
                         data.text = '查看更多工艺秀';
                     } else if (entry.topic_type.code === 'zs') {
                         data.title = entry.content.slice(0, 19);
-                        data.desc = '我在美玉秀秀听了这堂课，听听你的想法';
+                        data.desc = '美玉秀秀，国内最专业的和田玉视频社区';
                         data.text = '查看更多玉知识';
-                    } else if (entry.topic_type.code === 'xp') {
-                        data.title = '你的玉友新品上线啦！';
-                        data.text = '查看更多新品';
                     } else if (entry.topic_type.code === 'sb') {
                         data.title = '私藏宝玉，晒给你看！';
                         data.text = '秀出我的宝贝';
                     } else if (entry.topic_type.code === 'xt') {
                         data.title = '和田玉友的趣事，一起来看看';
-                        data.text = '分享我的趣事';
+                        data.text = '秀出我的趣事';
                     } else {
                         data.title = entry.content.slice(0, 19);
                         data.desc = '美玉秀秀，国内最专业的和田玉视频社区';
@@ -81,10 +78,10 @@ export default {
 
                     break;
                 case 'jade':
-                    data.title = `${entry.owner.name}的新品宝贝发布啦!`;
-                    data.desc = entry.title;
+                    data.title = '你的玉友新品上线啦！';
+                    data.desc = entry.content.slice(0, 19);
                     data.icon = entry.pictures[0];
-                    data.text = '查看更多商品详情';
+                    data.text = '查看更多新品';
                     break;
                 case 'auction':
                     data.title = `${entry.title}正在拍卖`;

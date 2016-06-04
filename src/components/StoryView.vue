@@ -20,8 +20,8 @@
         position: absolute;
         top: 50%;
         right: 0;
-        width: 120px;
-        height: 60px;
+        width: 122px;
+        height: 62px;
         line-height: 60px;
         font-size: 26px;
         text-align: center;
@@ -58,8 +58,6 @@
         padding: 0 32px 36px;
     }
     .description {
-        font-size: 30px;
-        color: #666666;
         padding: 0 40px 40px 32px;
         .user-input {
             overflow: hidden;
@@ -175,13 +173,13 @@
             </div>
             <div class="follow-cnt font-26" @click="follow()" :class="{ 'followed': followed }">
                 <span class="cnt-text">
-                    <span class="icon icon-follow" v-if="!followed"></span>
+                    <span class="icon icon-follow-big font-22" v-if="!followed"></span>
                     {{followed ? '已关注' : '关注'}}
                 </span>
             </div>
         </div>
     </div>
-    <div class="description user-input">{{story.content}}</div>
+    <div class="description user-input font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
         <div class="cover img" v-bg="cover"></div>
     </template>
@@ -196,7 +194,7 @@
             <span class="cnt-text">{{story.like}}</span>
         </div>
         <div class="font-30" @click="share">
-            <span class="icon-share"></span>
+            <span class="icon-share-social"></span>
             <span>分享</span>
         </div>
     </div>
@@ -225,7 +223,6 @@ export default {
         return {
             story: {},
             followed: false,
-            story: {},
             cover_type: 'picture',
             cover: ''
         }
