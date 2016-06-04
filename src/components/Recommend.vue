@@ -119,7 +119,7 @@ export default {
                     break;
             }
 
-            return this.$get('dc/rd|v3', params).then((data) => {
+            return this.$get('dc/rd|v4', params).then((data) => {
                 this.items = data.recommend_data;
             });
         },
@@ -128,16 +128,12 @@ export default {
             if (data.biz_type === 'tp') {
                 return data.item.topic_type.name;
             }
-            for (const tagName in this.config.tags) {
-                const tag = this.config.tags[tagName];
-                if (tag.id === data.biz_type) {
-                    return tag.name;
-                }
-            }
 
-            return this.$get('dc/rd|v3', params).then((data) => {
-                this.items = data.recommend_data;
+            const key = _.findKey(this.config.tags, (tag)=> {
+                return tag.id === data.biz_type;
             });
+
+            return this.config.tags[key].name;
         },
         goTo(data) {
             const type = data.biz_type;

@@ -356,12 +356,18 @@
                 if(item.entry.user.is_followed) {
                     this.$delete(followApi).then(() => {
                         item.entry.user.is_followed = false;
-                        this.toast('已取消关注');
+                        this.action('toast', {
+                            text: '已取消关注',
+                            sucess: '1'
+                        });
                     });
                 } else {
                     this.$post(followApi).then(() => {
                         item.entry.user.is_followed = true;
-                        this.toast('已关注');
+                        this.action('toast', {
+                            text: '已关注',
+                            sucess: '1'
+                        });
                     });
                 }
             },

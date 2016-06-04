@@ -47,7 +47,9 @@
         margin: 0 32px 10px;
         &.cover-video {
             width: 100%;
-            margin: 0;
+            height: 0;
+            padding-bottom: 100%;
+            margin: 0 auto;
         }
     }
 
@@ -158,7 +160,7 @@
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
     <template v-if="cover_type === 'video'">
-        <div class="cover cover-video play" @click.stop="play(video)" v-bg="video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/440/interlace/1"></div>
+        <div class="cover cover-video play" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
     </template>
     <div class="story-header">
         <div class="header clearfix">
@@ -171,21 +173,21 @@
                     </div>
                 </div>
             </div>
-            <div class="follow-cnt font-26" @click="follow()" :class="{ 'followed': followed }">
+            <div class="follow-cnt font-26" @click="follow()" :class="{ 'followed': story.user.is_followed, 'invisible': isSelf }">
                 <span class="cnt-text">
-                    <span class="icon icon-follow-big font-22" v-if="!followed"></span>
-                    {{followed ? '已关注' : '关注'}}
+                    <span class="icon icon-follow-big font-22" v-if="!story.user.is_followed"></span>
+                    {{story.user.is_followed ? '已关注' : '关注'}}
                 </span>
             </div>
         </div>
     </div>
     <div class="description user-input font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
-        <div class="cover img" v-bg="cover"></div>
+        <div class="cover img" v-bg="cover" @click="coverflow(this.picFlow, 0)"></div>
     </template>
     <div class="store-detail" v-if="cover_type === 'picture'">
         <div class="medias">
-            <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
+            <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(this.picFlow, $index + 1)"></div>
         </div>
     </div>
     <div class="opration border-top">
@@ -222,9 +224,9 @@ export default {
     data() {
         return {
             story: {},
-            followed: false,
             cover_type: 'picture',
-            cover: ''
+            cover: '',
+            picFlow: []
         }
     },
     computed: {
@@ -235,6 +237,7 @@ export default {
                     pic.push(media.id);
                 } else {
                     this.cover_type = 'video';
+                    this.cover = media.id;
                     return [];
                 }
             });
@@ -243,22 +246,17 @@ export default {
                 this.cover_type = 'video';
             } else {
                 this.cover = pic[0];
-                pic = _.drop(pic);
+                this.picFlow = pic;
             }
 
-            return pic;
+            return _.drop(pic);
         },
-        video() {
-            let resource;
-            this.story.medias.forEach((media) => {
-                if (media.type === 'video') {
-                    this.cover_type = 'video';
-                    resource = media.id;
-                } else {
-                    this.cover_type = 'picture';
-                }
-            });
-            return resource;
+        isSelf() {
+            if (this.self) {
+                return this.self.id === this.story.user.id;
+            } else {
+                return false;
+            }
         }
     },
     route: {
@@ -289,17 +287,25 @@ export default {
             }
         },
         follow() {
-            const followApi = `users/follow/${this.story.user.id}`;
-            if(this.followed) {
-                this.$delete(followApi).then(() => {
-                    this.followed = false;
-                    this.toast('已取消关注');
-                });
-            } else {
-                this.$post(followApi).then(() => {
-                    this.followed = true;
-                    this.toast('已关注');
-                });
+            if (!this.isSelf) {
+                const followApi = `users/follow/${this.story.user.id}`;
+                if(this.story.user.is_followed) {
+                    this.$delete(followApi).then(() => {
+                        this.story.user.is_followed = false;
+                        this.action('toast', {
+                            text: '已取消关注',
+                            sucess: '1'
+                        });
+                    });
+                } else {
+                    this.$post(followApi).then(() => {
+                        this.story.user.is_followed = true;
+                        this.action('toast', {
+                            text: '已关注',
+                            sucess: '1'
+                        });
+                    });
+                }
             }
         }
     }

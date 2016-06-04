@@ -46,28 +46,28 @@ export default {
                     data.text = '免费找大师看看我的宝贝';
                     break;
                 case 'story':
-                    data.desc = entry.content.slice(0, 19);
+                    data.title = entry.content;
+                    data.desc = entry.content;
 
                     if (entry.topic_type.code === 'wjx') {
-                        data.title = '玩家秀场等你来看';
+                        data.title = '终于找到组织啦！千万玉友等你来秀';
                         data.text = '秀出我与美玉';
                     } else if (entry.topic_type.code === 'gy') {
-                        data.title = '工艺秀场等你来看';
-                        data.desc = '给懂的人一起欣赏';
+                        data.title = '雕刻原来如此神奇！你见过这种工艺吗？';
                         data.text = '查看更多工艺秀';
                     } else if (entry.topic_type.code === 'zs') {
-                        data.title = entry.content.slice(0, 19);
-                        data.desc = '美玉秀秀，国内最专业的和田玉视频社区';
+                        data.title = `【涨知识】${entry.content}`;
+                        data.desc = '美玉秀秀，最大和田玉视频知识分享社区';
                         data.text = '查看更多玉知识';
                     } else if (entry.topic_type.code === 'sb') {
-                        data.title = '私藏宝玉，晒给你看！';
+                        data.title = `【值得一看】${entry.content}`;
+                        data.desc = '玩玉多年，私藏宝玉，晒给你看！';
                         data.text = '秀出我的宝贝';
                     } else if (entry.topic_type.code === 'xt') {
-                        data.title = '和田玉友的趣事，一起来看看';
+                        data.desc = '和田玉友的趣事，我看这挺有意思';
                         data.text = '秀出我的趣事';
                     } else {
-                        data.title = entry.content.slice(0, 19);
-                        data.desc = '美玉秀秀，国内最专业的和田玉视频社区';
+                        data.desc = '美玉秀秀，最大和田玉视频鉴赏交易社区';
                         data.text = '查看更多话题';
                     }
 
@@ -78,8 +78,8 @@ export default {
 
                     break;
                 case 'jade':
-                    data.title = '你的玉友新品上线啦！';
-                    data.desc = entry.content.slice(0, 19);
+                    data.title = `【限量】${entry.content}`;
+                    data.desc = '玉友的新品上线啦！';
                     data.icon = entry.pictures[0];
                     data.text = '查看更多新品';
                     break;
@@ -113,6 +113,11 @@ export default {
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.png';
                     data.url = this.config.download;
             }
+
+            data.title = _.truncate(data.title, {
+                length: /[\uD800-\uDBFF]/.test(data.title.charAt(25)) ? 24 : 25
+            });
+
             // 截取描述文字前20字符,防止emoji表情被截断导致iOS平台无法识别
             data.desc = _.truncate(data.desc, {
                 length: /[\uD800-\uDBFF]/.test(data.desc.charAt(25)) ? 24 : 25
