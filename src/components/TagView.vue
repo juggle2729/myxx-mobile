@@ -358,7 +358,7 @@
                         item.entry.user.is_followed = false;
                         this.action('toast', {
                             text: '已取消关注',
-                            sucess: '1'
+                            success: '0'
                         });
                     });
                 } else {
@@ -366,7 +366,7 @@
                         item.entry.user.is_followed = true;
                         this.action('toast', {
                             text: '已关注',
-                            sucess: '1'
+                            success: '1'
                         });
                     });
                 }
