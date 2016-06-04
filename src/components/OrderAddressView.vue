@@ -9,6 +9,9 @@
             height: 100px;
             line-height: 100px;
         }
+        .phone {
+            padding-right: 10px;
+        }
         .site {
             line-height: 38px;
         }
@@ -36,16 +39,16 @@
         <div class="info" @click="back(address.id)">
             <div class="flex">
                 <div class="flex-1">{{address.receiver_name}}</div>
-                <div>{{address.receiver_phone}}</div>
+                <div class="phone">{{address.receiver_phone}}</div>
             </div>
             <div class="site">{{address.receiver_address_flat}}</div>
         </div>
         <div class="operate border-top">
-            <div class="flex">
+            <div class="flex gray">
                 <div class="flex-1" @click="defaultAddress(address)">
                     <span class="icon-checked red" v-if="address.is_default"></span>
                     <span class="icon-unchecked" v-else></span>
-                    <span>默认地址</span>
+                    <span>{{address.is_default ? '默认地址' : '设为默认'}}</span>
                 </div>
                 <div v-link="{name: 'address-update', params: { id: address.id}}">
                     <span class="icon-edit"></span>

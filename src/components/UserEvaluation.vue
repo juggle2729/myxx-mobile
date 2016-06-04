@@ -4,6 +4,10 @@
     .head {
         padding: 20px;
         background-color: #f0f0f0;
+        .icon-follow-big {
+            font-size: 20px;
+            padding: 3px 8px 0 0;
+        }
         .name {
             color: #666666;
         }
@@ -117,7 +121,7 @@
                 <avatar :user="item.user" :is-self="false" :size="50"></avatar>
                 <div class="font-26 margin-left">{{item.user.name}}</div>
                 <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
-                <div class="gray font-26"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
+                <div class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
             </div>
             <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         </div>

@@ -6,6 +6,10 @@
     }
     .header {
         padding: 20px 4px;
+        .icon-follow-big {
+            font-size: 20px;
+            padding: 3px 8px 0 0;
+        }
         .name {
             color: #666666;
         }
@@ -20,13 +24,17 @@
         }
         .title {
             color: #666666;
+            height: 114px;
+            position: relative;
+            font-family: 'song-simple';
             text-align: center;
             margin: 0 auto;
-            padding: 60px 0;
-            width: 480px;
-            line-height: 42px;
-            font-family: 'song-simple';
             .user-input {
+                width: 508px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
@@ -36,19 +44,17 @@
             }
         }
         .social {
-            color: #d9d9d9;
-            text-align: center;
-            padding-bottom: 36px;
-            > div {
-                display: inline-block;
-                height: 28px;
-                line-height: 28px;
+            height: 80px;
+            color: #d8d8d8;
+            .icon-like-solid {
+                position: relative;
+                bottom: 2px;
             }
-            .left {
-                padding-right: 36px;
-            }
-            .right {
-                padding-left: 36px;
+            >div {
+                width: 33.3%;
+                span:nth-child(2) {
+                    color: #bcbcbc;
+                }
             }
         }
     }
@@ -65,15 +71,16 @@
                 <avatar :user="item.user" :is-self="false" :size="50"></avatar>
                 <div class="name margin-left font-26">{{item.user.name}}</div>
             </div>
-            <div class="moment font-22 light">{{item.create_at | moment}}</div>
+            <div class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
         </div>
         <div class="content bg-white">
             <div v-if="item.cover_type==='video'" class="cover video" v-bg.video="item.cover"></div>
             <div v-else class="cover" v-bg="item.cover"></div>
-            <div class="title font-30"><span class="user-input">{{item.content}}</span></div>
-            <div class="social font-26">
-                <div class="left border-right" :class="{'red': item.liked}"><i class="icon-like-solid"></i><span>{{item.like}}</span></div>
-                <div class="right"><i class="icon-comment-solid"></i><span>{{item.comment}}</span></div>
+            <div class="title font-30"><div class="user-input">{{item.content}}</div></div>
+            <div class="social font-26 flex border-vertical">
+                <div class="border-right center"><span class="icon-comment-solid"></span><span>{{item.comment}}</span></div>
+                <div class="border-right center" :class="{'red': item.liked}"><span class="icon-like-solid"></span><span>{{item.like}}</span></div>
+                <div class="center"><span class="icon-share-social"></span><span>分享</span></div>
             </div>
         </div>
     </div>

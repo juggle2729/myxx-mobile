@@ -1,5 +1,5 @@
 <style lang="sass">
-.purse {
+.wallet-view {
     min-height: 100%;
     .item {
         height: 166px;
@@ -28,7 +28,7 @@
 }
 </style>
 <template>
-<div class="purse bg-default">
+<div class="wallet-view bg-default">
     <div class="item font-30 bg-white border-bottom">
         <div>可提现金额</div>
         <div class="red font-40">{{balance.current_amount | price}}</div>

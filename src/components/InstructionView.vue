@@ -12,10 +12,12 @@
 }
 </style>
 <template>
-    <div class="instruction-view border-bottom">
-        <div class="item flex font-26 border-bottom" v-for="item in problems[this.$route.params.id]" @click="go(item.url)">
-            <div class="flex-1">{{item.title}}</div>
-            <div class="icon-enter gray"></div>
+    <div class="instruction-view border-bottom bg-default">
+        <div class="bg-white">
+            <div class="item flex font-26 border-bottom" v-for="item in problems[this.$route.params.id]" @click="go(item.url)">
+                <div class="flex-1">{{item.title}}</div>
+                <div class="icon-enter gray"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -181,4 +183,4 @@ export default {
         }
     }
 }
-</script>
+</script>`1
