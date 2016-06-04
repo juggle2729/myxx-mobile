@@ -209,6 +209,7 @@
                 </div>
             </div>
         </div>
+        <!-- 这里应该是只显示一张图，而不是所有的图 -->
         <div class="video-list"  v-if="isMaster && products.length > 0" v-for="(index, item) in products" :class="{'hide': (index !== number)}">
             <div class="arrival">
                 <img :src="'user/arrival.png' | qn">
@@ -254,7 +255,7 @@
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
                 <div class="line">
                     <p align="center">{{profile.topic_count}}</p>
-                    <p align="center">晒宝</p>
+                    <p align="center">视频</p>
                 </div>
                 <div class="dash bg-red"></div>
             </div>
