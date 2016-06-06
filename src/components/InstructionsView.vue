@@ -3,7 +3,7 @@
 @import '../styles/partials/_var.scss';
 .instructions-view {
     min-height: 100%;
-    padding-bottom: 20px;
+    padding-bottom: 22px;
     .title {
         height: 86px;
         line-height: 86px;
@@ -65,7 +65,7 @@
             </div>
             <div class="font-26 container">
                 <div class="category center bg-white" v-for="item in classification" v-link="{name: 'instruction', params: {id: item.id}}">
-                    <div class="{{item.icon}}"></div><div>{{item.title}}</div>
+                    <div class="{{item.icon}} gray"></div><div>{{item.title}}</div>
                 </div>
             </div>
         </div>

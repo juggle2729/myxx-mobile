@@ -8,7 +8,7 @@
     .status {
         height: 86px;
         line-height: 86px;
-        padding: 0 32px;
+        padding: 4px 32px 0;
         .icon-clock {
             padding-right: 12px;
         }
@@ -26,14 +26,15 @@
          }
     }
     .address {
-        padding: 0 32px;
+        margin-top: 20px;
+        padding: 5px 32px 0;
         height: 200px;
         .user {
-            height: 100px;
-            line-height: 100px;
-            margin: 0 44px 0 50px;
+            height: 90px;
+            line-height: 90px;
+            margin: 0 10px 0 50px;
             & + div {
-                width: 610px;
+                width: 638px;
                 -webkit-box-align: start;
                 .icon-address {
                     padding-top: 3px;
@@ -46,6 +47,7 @@
         }
     }
     .product {
+        margin-top: 20px;
         .seller {
             height: 86px;
             line-height: 86px;
@@ -73,20 +75,22 @@
             height: 320px;
             padding: 24px 32px;
             .note {
-                margin-left: 48px;
+                margin: 16px 0 0 48px;
                 height: 220px;
                 line-height: 36px;
             }
         }
     }
     .order {
+        margin-top: 20px;
         height: 146px;
-        padding: 30px 32px;
+        padding: 32px 32px 30px;
         div:first-child {
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
     }
     .operation {
+        margin-top: 20px;
         padding: 0 32px;
         position: fixed;
         bottom: 0;
@@ -109,6 +113,7 @@
              }
             &.disable {
                  background-color: #c6c6c6;
+                 border: 0;
                  color: white;
              }
         }
@@ -147,7 +152,7 @@
             </div>
         </div>
     </div>
-    <div class="address bg-white font-30 margin-top border-vertical">
+    <div class="address bg-white font-30 border-vertical">
         <div class="user flex">
             <div class="flex-1">收货人: {{order.receiver_name}}</div>
             <div>{{order.receiver_phone}}</div>
@@ -157,7 +162,7 @@
             <div class="font-26 site">收货地址: {{order.receiver_address}}</div>
         </div>
     </div>
-    <div class="product bg-white font-30 margin-top">
+    <div class="product bg-white font-30">
         <div class="seller flex border-top" v-if="!isSeller">
             <avatar :user="order.seller" :size="50"></avatar>
             <span class="margin-left">{{order.seller.name}}</span>
@@ -170,21 +175,22 @@
             </div>
         </div>
         <div class="comment border-bottom" v-if="isNote">
-            <div class="margin-bottom">
+            <div>
                 <span class="icon-comment gray"></span>
                 <span>买家留言</span>
             </div>
             <div class="note font-26">{{order.buyer_note}}</div>
         </div>
     </div>
-    <div class="order margin-top bg-white border-vertical font-30">
+    <div class="order bg-white border-vertical font-30">
         <div>订单编号: {{order.order_no}}</div>
         <div>订单创建时间: {{order.create_at | date}}</div>
     </div>
     <div class="operation font-30 bg-white right flex border-top" v-if="!isSeller">
         <div class="border-gray" @click="contactSeller">联系商家</div>
-        <div class="border-gray" v-for="button in order_status[order.status].button_buyer" :class="{'highlight': button_status[button].color, 'disable': (order.status === 'np') && (button_status[button].text === '付款')}"
-          @click="button_status[button].method">{{button_status[button].text}}</div>
+        <div class="border-gray" v-for="button in order_status[order.status].button_buyer"
+             :class="{'highlight': button_status[button].color, 'disable': (order.status === 'np') && (button_status[button].text === '付款')}"
+             @click="button_status[button].method">{{button_status[button].text}}</div>
     </div>
     <div class="operation font-30 bg-white right flex border-top" v-else>
         <div @click="contactBuyer">联系买家</div>

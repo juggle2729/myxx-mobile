@@ -8,16 +8,16 @@
             >div {
                 height: 200px;
                 .icon-enter {
-                    padding: 74px 0 0 55px;
+                    padding: 74px 0 0 18px;
                 }
                 .user {
-                    margin:0 2px 36px 48px;
+                    margin: 0 0 26px 48px;
+                    width: 600px;
                     span:last-child {
                         float: right;
-                        padding-right: 22px;
                     }
                     & + div {
-                        width: 610px;
+                        width: 618px;
                         -webkit-box-align: start;
                         .icon-address {
                             padding-top: 3px;
@@ -39,6 +39,7 @@
         }
     }
     .product {
+        margin-top: 20px;
         .seller {
             height: 86px;
             line-height: 86px;
@@ -67,7 +68,7 @@
             padding: 24px 32px;
             textarea {
                 border: none;
-                margin-left: 44px;
+                margin:16px 0 0 44px;
                 height: 220px;
                 width: 94%;
                 line-height: 36px;
@@ -111,7 +112,7 @@
                 <div class="icon-enter font-30 red"></div>
             </div>
         </div>
-        <div class="product bg-white margin-top border-vertical">
+        <div class="product bg-white border-vertical">
             <div class="seller flex border-bottom">
                 <avatar :user="product.owner" :size="50"></avatar>
                 <span class="margin-left">{{product.owner.name}}</span>
@@ -124,7 +125,7 @@
                 </div>
             </div>
             <div class="comment">
-                <div class="margin-bottom">
+                <div>
                     <span class="icon-comment gray"></span>
                     <span>买家留言</span>
                 </div>
@@ -133,7 +134,7 @@
         </div>
         <div class="operation bg-white right flex border-top">
             <div>订单价格: <span class="red">{{product.price | price}}</span></div>
-            <div class="button bg-red white center margin-left" @click="createOrder">确认订单</div>
+            <div class="button bg-red white center margin-left border-default" @click="createOrder">确认订单</div>
         </div>
     </div>
 </template>

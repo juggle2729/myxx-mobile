@@ -1,4 +1,5 @@
 <style lang="sass">
+    @import '../styles/partials/mixin';
     @import '../styles/partials/var';
     .user-view {
         padding-bottom: 100px;
@@ -153,18 +154,17 @@
                     margin-bottom: 14px;
                 }
                 .line:not(:last-child) {
-                    background-image: linear-gradient(270deg, #efefef 51%, transparent 51%);
-                    background-position: right center;
-                    background-repeat: no-repeat;
-                    background-size: 1px 100%;
-                    padding-right: 1px;
+                    @include border(right, map-get($colors, 'border-light'));
+                }
+                .dash {
+                    margin: 10px auto 6px;
+                    width: 204px;
+                    height: 6px;
                 }
                 &.v-link-active {
                     color: #cc3f4f;
                     .dash {
-                        margin: 8px auto 6px;
-                        width: 204px;
-                        height: 6px;
+                        background-color: map-get($colors, 'bg-red');
                     }
                 }
             }
@@ -176,12 +176,13 @@
             }
             &.default {
                 > div:first-child {
-                      color: #cc3f4f;
-                      .dash {
-                          margin: 8px auto 6px;
-                          width: 204px;
-                          height: 6px;
-                      }
+                    color: #cc3f4f;
+                    .dash {
+                        margin: 8px auto 6px;
+                        width: 204px;
+                        height: 6px;
+                        background-color: map-get($colors, 'bg-red');
+                    }
                 }
             }
         }
@@ -209,13 +210,12 @@
                 </div>
             </div>
         </div>
-        <!-- 这里应该是只显示一张图，而不是所有的图 -->
-        <div class="video-list"  v-if="isMaster && products.length > 0" v-for="(index, item) in products" :class="{'hide': (index !== number)}">
+        <div class="video-list"  v-if="isMaster && products.length > 0">
             <div class="arrival">
                 <img :src="'user/arrival.png' | qn">
             </div>
-            <div class="video" v-bg="item.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450" @click="play(item.video, 'jade')"></div>
-            <div class="desc font-26 bg-white center">{{item.title}}</div>
+            <div class="video" v-bg="products[index].video" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450" @click="play(products[index].video, 'jade')"></div>
+            <div class="desc font-26 bg-white center">{{products[index].title}}</div>
             <div class="switch flex">
                 <img :src="leftIcon(index) | qn" @click="previous(index)">
                 <span class="font-30">{{index + 1}}&nbsp;/&nbsp;{{products.length}}</span>
@@ -233,7 +233,7 @@
                 <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
             </div>
             <div class="follow font-26 gray">
-                <div class="button bg-red font-22 red" @click="download()">
+                <div class="button bg-red font-22 center" @click="download()">
                     <span class="icon-follow white">关注</span>
                 </div>
                 <p><span>关注&nbsp;&nbsp;{{profile.follow_count}}</span><span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
@@ -250,19 +250,21 @@
                     <p align="center">{{profile.product_count}}</p>
                     <p align="center">商品</p>
                 </div>
-                <div class="dash bg-red"></div>
+                <div class="dash"></div>
+            </div>
+            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
+                <div class="line">
+                    <p align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
+                    <p align="center">鉴宝</p>
+                </div>
+                <div class="dash"></div>
             </div>
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
                 <div class="line">
                     <p align="center">{{profile.topic_count}}</p>
                     <p align="center">视频</p>
                 </div>
-                <div class="dash bg-red"></div>
-            </div>
-            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
-                <p align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
-                <p align="center">鉴宝</p>
-                <div class="dash bg-red"></div>
+                <div class="dash"></div>
             </div>
         </div>
         <div class="content border-top bg-default">
@@ -289,7 +291,7 @@ export default {
     data() {
         return {
             titles: [],
-            number: 0, // 视频从第一个开始
+            index: 0, // 视频从第一个开始
             isDefaultView: false,
             isMaster: false,
             view: undefined,
@@ -335,10 +337,10 @@ export default {
             location.href = this.config.download;
         },
         next(index) {
-            (index < this.products.length - 1) && this.number++;
+            (index < this.products.length - 1) && this.index++;
         },
         previous(index) {
-            (index > 0) && this.number--;
+            (index > 0) && this.index--;
         },
         leftIcon(index) {
             return (index === 0) ? 'user/leftArrow_default.png' : 'user/leftArrow_active.png';
