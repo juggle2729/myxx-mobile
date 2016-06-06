@@ -39,7 +39,7 @@
             }
         }
         .empty {
-            margin-top: 120px;
+            padding-top: 120px;
             position: relative;
             height: 100%;
             .empty-img {
@@ -131,7 +131,7 @@ export default {
                 params: {
                     user_id: this.user_id
                 },
-                limit: 10,
+                limit: 10
             }
         },
         color() {

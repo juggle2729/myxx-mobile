@@ -22,7 +22,7 @@ const mixin = {
         emulateJSON: true
     },
     route: {
-        waitForData: false
+        waitForData: true
     },
     created() {
         if(this.$root === this.$parent) {

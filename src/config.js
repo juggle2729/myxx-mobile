@@ -42,11 +42,11 @@ export default {
             route: 'evaluation'
         }, {
             id: 20,
-            name: '鉴定结果',
+            name: '鉴定',
             route: 'result'
         }, {
             id: 30,
-            name: '晒宝',
+            name: '话题',
             route: 'story'
         }, {
             id: 40,
@@ -58,7 +58,7 @@ export default {
             route: 'master'
         }, {
             id: 60,
-            name: '公开课',
+            name: '玉知识',
             route: 'lesson'
         }
     ],

@@ -50,7 +50,8 @@ router.beforeGo((from, to, app) => {
             action = _.isObject(action) ? _.merge(to, action) : to;
             app.action(action.name, action.params);
             interrupted = true;
-        } else if(from.name === to.name) { // 同一route内，做tab切换
+        } else if(from.name === to.name && 'tab' === _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) { 
+            // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
         } else {
             app.action('go', {url: to.path});
@@ -65,7 +66,9 @@ router.beforeGo((from, to, app) => {
 });
 router.beforeEach(({from, to, abort, next}) => {
     // to.router.app.$el.classList.add('loading');
-    if (from.name === to.name) {
+    
+    // 同一路由内，仅切换tab时，不调整滚动位置
+    if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
         window.scroll(0, 0);
     }
     document.title = (to.title || '美玉秀秀');

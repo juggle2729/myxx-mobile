@@ -1,41 +1,67 @@
+<style lang="sass">
+@import '../styles/partials/var';
+.user-like-view {
+    height: 100%;
+    .item {
+        padding-left: 32px;
+        padding-right: 32px;
+        height: 270px;
+        .title {
+            height: 82px;
+            line-height: 82px;
+        }
+        .card {
+            height: 168px;
+            background-color: #efeff4;
+            padding: 0 24px;
+            .avatar-50 {
+                margin: 0 16px 20px 0;
+            }
+            .preview {
+                height: 125px;
+                width: 125px;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
+}
+</style>
 <template>
 <div class="user-like-view bg-default">
-    <template v-for="thumb in items">
-        <div v-if="$index === 0" class="separator"></div>
-        <div v-else class="separator-20"></div>
-        <div class="notice bg-white">
-            <div class="sender flex">
-                <p class="font-30 gray">
-                    赞了一个{{thumb.title}}
-                </p>
-            </div>
-            <div class="info flex" v-if="!thumb.isEmpty" v-link="{name: thumb.route, params: {id: thumb.post_id}}">
-                <div class="left">
-                    <div class="flex">
-                        <div v-bg.sm="thumb.user.photo" class="avatar-50"></div>
-                        <p class="font-26 gray">{{thumb.user.name}}</p>
+    <div v-for="item in items">
+        <div class="separator-20"></div>
+        <div class="item bg-white">
+            <div class="title font-30 gray">赞了一个{{item.type.name}}</div>
+            <div class="card flex font-30" v-if="item.isEmpty">该内容已被删除</div>
+            <div class="card flex" v-else v-link="{name: item.type.route, params: {id: item.id}}">
+                <div class="flex-1">
+                    <div class="user flex">
+                        <avatar :user="item.user" :size="50"></avatar>
+                        <p class="font-26 gray">{{item.user.name}}</p>
                     </div>
-                    <p class="font-30">{{{thumb.description}}}</p>
-                    <p v-if="thumb.result" class="font-22 gray">{{{thumb.result}}}</p>
+                    <p class="font-30">{{{item.description}}}</p>
                 </div>
-                <div v-if="thumb.imgPreview" v-bg.sm="thumb.imgPreview" class="right"></div>
-                <div v-if="thumb.videoPreview" v-bg.video="thumb.videoPreview" class="right play"></div>
-            </div>
-            <div class="info flex font-30" v-else>
-                <span style="margin-left:32px;">该{{thumb.title}}已被删除!</span>
+                <template v-if="item.preview" class="preview">
+                    <div v-if="item.preview.img" v-bg.sm="item.preview.img" class="preview"></div>
+                    <div v-else v-bg.video="item.preview.video" class="preview play"></div>
+                </template>
             </div>
         </div>
-    </template>
-    <div class="border-top" v-if="!items.isEmpty"></div>
-    <partial v-else name="empty-page"></partial>
+    </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
+    <partial name="empty-page" v-if="items.isEmpty"></partial>
 </div>
 </template>
 <script>
 import paging from 'paging';
+import Avatar from './Avatar.vue';
 export default {
     name: 'UserLikeView',
     mixins: [paging],
+    components: {
+        Avatar
+    },
     data() {
         return {
             emptyTitle: '你还没有赞'
@@ -44,60 +70,40 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'users/'+ this.$route.params.id +'/like_list|v2',
+                path: `users/${this.$route.params.id}/like_list|v2`,
                 list: 'entries',
                 id: 'id',
                 transform(items) {
-                    return items.map((item) => {
-                        let entry = _.clone(item.entry);
-                        if(JSON.stringify(entry) === '{}' || item.entry === null || item.entry === undefined){
-                            entry.isEmpty = true;
-                        } else {
-                            entry.isEmpty = false;
-                        }
-                        const type = _.find(this.config.types, {'id': item.type});
-                        entry.route = type.route;
-                        if(entry.route === 'result') {
-                            entry.route = 'evaluation';
-                        }
-                        entry.title = type.name;
-                        entry.id = item.id;
-                        if(!entry.isEmpty){
-                            if (item.type === 10) {//picture
-                                entry.imgPreview = entry.picture;
-                                entry.description = entry.description;
-                                entry.result = entry.status + '条鉴定结果';
-                            } else if (item.type === 20) {//video
-                                entry.videoPreview = entry.video;
-                                entry.user = entry.identifier;
-                                entry.description = '鉴定了 ' + (entry.applier ? entry.applier.name : 'NULL') + ' 的宝贝';
-                                entry.result = '鉴定结果为 ' + (entry.result === 'genuine' ? '真': entry.result === 'fake' ? '假': '存疑');
-                            } else if (item.type === 30) {//media
-                                entry.description = '发布的晒宝';
-                                if(entry.content !== ''){
-                                    entry.description = entry.content;
-                                }
-                                if(entry.cover_type === 'video') {
-                                    entry.videoPreview = entry.cover;
-                                } else {
-                                    entry.imgPreview = entry.cover;
-                                }
-                            } else if (item.type === 40) {
-                                entry.post_id = entry.id;
-                                entry.description = entry.name + ' ' + (entry.moral? entry.moral.name: '');
-                                entry.user.name = entry.user.nickname;
-                                entry.imgPreview = entry.imgs[0];
-                                if(entry.product_rewards.length > 0){
-                                    entry.result = entry.product_rewards[0].reward.name;
-                                }
-                            } else if(item.type === 60) {
-                                entry.post_id = item.entry.id;
-                                entry.result = item.entry.title;
-                                entry.videoPreview = entry.video;
+                    return items.map(({entry, type}) => {
+                        let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});
+                        if(!card.isEmpty) {
+                            card.id = card.post_id || card.id;
+                            card.type = _.find(this.config.types, {'id': type});
+                            switch(type) {
+                                case 10:
+                                    card.preview = {img: entry.picture};
+                                    break;
+                                case 20:
+                                    card.type.route = 'evaluation'; //鉴定结果，跳转到鉴宝页面
+                                    card.preview = {video: entry.video};
+                                    card.user = entry.identifier;
+                                    card.description = '鉴定了 ' + _.get(entry, 'applier.name', '路人') + ' 的宝贝';
+                                    break;
+                                case 30:
+                                    card.description = entry.content || '发布的晒宝';
+                                    card.preview = {[entry.cover_type]: entry.cover};
+                                    break;
+                                case 40:
+                                    card.description = entry.name + ' ' + _.get(entry, 'moral.name', '');
+                                    card.preview = {img: entry.imgs[0]};
+                                    break;
+                                case 60:
+                                    card.description = entry.title;
+                                    entry.preview = {video: entry.video};
+                                    break;
                             }
-                            entry.isEmpty = false;
                         }
-                        return entry;
+                        return card;
                     });
                 }
             }
@@ -110,55 +116,3 @@ export default {
     }
 }
 </script>
-<style lang="sass">
-@import '../styles/partials/var';
-.user-like-view {
-    height: 100%;
-    .notice {
-        padding-left: 32px;
-        padding-right: 32px;
-        height: 270px;
-        position: relative;
-        .sender {
-            height: 82px;
-            position: relative;
-        }
-        .info {
-            position: relative;
-            height: 168px;
-            background-color: #efeff4;
-            .right {
-                height: 125px;
-                width: 125px;
-                margin-left: 28px;
-            }
-            .left {
-                display: -webkit-box-;
-                padding-left: 24px;
-                width: 510px;
-                > div {
-                    height: 50px;
-                    position: relative;
-                    > p {
-                        margin-left: 16px;
-                    }
-                }
-                > p:nth-of-type(1) {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    margin-top: 16px;
-                }
-                > p:nth-of-type(2) {
-                    margin-top: 12px;
-                }
-            }
-            .right {
-                background-size: cover;
-                background-position: center;
-                background-image: url('#{$qn}/placeholder/img.png');
-            }
-        }
-    }
-}
-</style>

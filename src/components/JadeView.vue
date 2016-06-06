@@ -143,7 +143,7 @@
             <div class="flex">
                 <p class="red font-32 flex-1">{{jade.price | price}}</p>
                 <template v-if="isSelf">
-                    <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><span class="center-horizontal">微信拍卖</span></div>
+                    <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
                 </template>
             </div>
         </div>

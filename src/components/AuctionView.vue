@@ -162,8 +162,8 @@
             <div class="title font-32">{{info.title}}</div>
             <div class="flex margin-top">
                 <p class="red font-32 flex-1"><span class="gray margin-right">当前价:</span><span class="font-40" :class="'font-' + info.status">￥{{info.current_price / 100}}</span></p>
-                <div v-if="info.status === 'ongoing' && env.isWechat" v-link="{name: 'bidding', params: {id: info.id}}" class="button bg-red flex font-30 white"><span class="center-horizontal">我要出价</span></div>
-                <div v-else class="button bg-disable flex font-30 white"><span class="center-horizontal">我要出价</span></div>
+                <div v-if="info.status === 'ongoing' && env.isWechat" v-link="{name: 'bidding', params: {id: info.id}}" class="button bg-red flex font-30 white"><div class="center-horizontal">我要出价</div></div>
+                <div v-else class="button bg-disable flex font-30 white"><div class="center-horizontal">我要出价</div></div>
             </div>
         </div>
         <div class="separator-20"></div>
