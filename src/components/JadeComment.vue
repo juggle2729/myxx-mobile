@@ -127,7 +127,7 @@ export default {
                             .then((result) => {
                                 this.c = this.emojify(result);
                                 this.total += 1;
-                                this.action('toast', {success: 1, text: '回复成功'});
+                                this.action('toast', {success: 1, text: '评论成功'});
                             });
                     }
                 });

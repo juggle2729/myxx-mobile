@@ -80,7 +80,7 @@
                         <p class="font-26 gray" align="right">{{border}}</p>
                     </div>
                     <div class="class_display">
-                        <p :class="border" class="font-26">DISPLAY</p>
+                        <p :class="border-all" class="font-26">DISPLAY</p>
                     </div>
                 </div>
             </template>

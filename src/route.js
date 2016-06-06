@@ -45,7 +45,8 @@ export default {
     },
     '/story/:id': {
         name: 'story',
-        title: '晒宝详情',
+        title: ' ',
+        native: v => v == 1.3,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('StoryView.vue'));

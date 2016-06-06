@@ -49,7 +49,7 @@ export default {
                 id: 'id',
                 transform(items) {
                     return items.map((item) => {
-                        let entry = item.entry;
+                        let entry = _.clone(item.entry);
                         if(JSON.stringify(entry) === '{}' || item.entry === null || item.entry === undefined){
                             entry.isEmpty = true;
                         } else {
@@ -90,6 +90,10 @@ export default {
                                 if(entry.product_rewards.length > 0){
                                     entry.result = entry.product_rewards[0].reward.name;
                                 }
+                            } else if(item.type === 60) {
+                                entry.post_id = item.entry.id;
+                                entry.result = item.entry.title;
+                                entry.videoPreview = entry.video;
                             }
                             entry.isEmpty = false;
                         }

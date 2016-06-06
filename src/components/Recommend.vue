@@ -69,7 +69,7 @@
     <div class="recommend-component bg-white" v-if="items.length">
         <div class="title font-22">相关推荐</div>
         <div class="data-list">
-            <div class="data-item border-all" @click="goTo(data)" v-for="data in items">
+            <div class="data-item border-default" @click="goTo(data)" v-for="data in items">
                 <div v-if="data.item.first_picture || data.item.picture || data.item.cover_type==='picture'" class="data-img" v-bg.md="data.item.first_picture || data.item.picture || data.item.cover">
                     <div class="data-title font-22" v-text="recommendTitle(data)"></div>
                 </div>

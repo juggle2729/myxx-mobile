@@ -265,7 +265,7 @@
             立即购买
         </div>
     </div> -->
-    <div v-if="!env.isShare" class="fake-input font-30 flex fixed" @click="$broadcast('comment', $event)">
+    <div v-if="!env.isShare" class="fake-input font-30 flex fixed border-top" @click="$broadcast('comment', $event)">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>

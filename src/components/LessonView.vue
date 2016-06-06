@@ -9,7 +9,7 @@
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
             </div>
-            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser" v-if="env.isApp">
+            <div class="like font-26" :class="{'liked': course.liked}" @click="likeUser">
                 <span class="icon icon-like-solid"></span>
                 <span class="count">{{course.like}}</span>
             </div>
@@ -230,7 +230,7 @@
             background-color: #000;
 
             &:before {
-                 @include border(all, #fff);
+                 @include border(all, #ffffff);
                  border-radius: 100px;
                  content: '';
                  display: block;
@@ -247,7 +247,7 @@
         }
 
         .course-user {
-            @include border(vertical, #d9d9d9);
+            @include border(vertical);
             position: relative;
             height: 114px;
 
@@ -299,7 +299,7 @@
         }
 
         .tags {
-            @include border(bottom, #d9d9d9);
+            @include border(bottom);
             min-height: 108px;
 
             .tag-item {
@@ -367,7 +367,7 @@
             }
 
             .data-item:not(:last-child) {
-                @include border();
+                /*@include border();*/
             }
 
             .data-item:last-child {

@@ -110,7 +110,7 @@
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <div v-if="!env.isShare" class="fake-input font-30 flex fixed" @click="comment()">
+    <div v-if="!env.isShare" class="fake-input font-30 flex fixed border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
@@ -173,6 +173,12 @@ export default {
             resp && this.action('toast', {success: 1, text: '评论成功'});
             this.fetch();
         });
+    },
+    ready() {
+        // 定位到评论区，太突兀
+        // if(location.hash === '#comment') {
+        //     _.delay(() => this.$el.scrollIntoView(), 500);
+        // }
     },
     methods: {
         clicked(comment, index) {

@@ -119,8 +119,10 @@ const mixin = {
                                 } else {    // 业务异常处理
                                     defer.reject(resp.message);
                                     if([605, 608].indexOf(resp.status) !== -1) {
-                                        // 暂存请求数据,可以考虑把对应回调也暂存
-                                        localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
+                                        if(!this.env.isApp) {
+                                            // 暂存请求数据,可以考虑把对应回调也暂存
+                                            localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
+                                        }
                                         this.action('login');
                                     } else if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
                                         this.$route.router.replace({'name': '404'});
@@ -131,7 +133,9 @@ const mixin = {
                             });
                     } else { // token缺失，无法进行数据请求
                         // 暂存请求数据
-                        localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
+                        if(!this.env.isApp) {
+                            localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
+                        }
                         this.action('login');
                     }
                 });
