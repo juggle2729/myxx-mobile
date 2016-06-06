@@ -291,6 +291,7 @@ export default {
     data() {
         return {
             jade: {
+                tags: [],
                 gifts: [],
                 themes: [],
                 morals: [],
@@ -329,7 +330,7 @@ export default {
                 .then((jade) => {
                     this.setShareData(jade, true);
                     this.action('user').then((user) => {
-                        if (user && +user.id === +data.owner.id) {
+                        if (user && +user.id === +jade.owner.id) {
                             this.isSelf = true;
                         }
                     });

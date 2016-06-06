@@ -265,7 +265,7 @@ export default {
             return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    this.updateTitle(story.topic_type.name + '详情');
+                    this.updateTitle(`${story.topic_type.name}详情`);
                     this.followed = story.user.is_followed;
                     return {story};
                 });
