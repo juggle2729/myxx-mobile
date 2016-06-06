@@ -3,6 +3,9 @@
     padding-bottom: 80px;
     .jade-video {
         height: 577px;
+        background-size: contain;
+        background-color: #000000;
+
     }
     .titles {
         .header {

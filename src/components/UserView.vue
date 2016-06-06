@@ -62,7 +62,8 @@
             .video {
                 height: 520px;
                 background-position: center;
-                background-size: cover;
+                background-size: contain;
+                background-color: #000000;
                 &::before {
                      background: transparent url('#{$qn}/icon/play.png') no-repeat center;
                      background-size: 120px 120px;

@@ -32,7 +32,7 @@
         </li>
         <li class="tab">标签</li>
         <li>
-            <a href="/tag/certificate/242">标签 - tags</a>
+            <a href="/tag/242/certificate">标签 - tags</a>
         </li>
         <li class="tab">订单</li>
         <li>
@@ -97,6 +97,10 @@
         <li class="tab">个人主页</li>
         <li class="font-26 border-top padding center">
             <a href="/user/1023">个人主页 - user/:id</a>
+        </li>
+        <li class="tab">其他</li>
+        <li class="font-26 border-top padding center">
+            <a href="/recommend/follower">推荐关注 - recommend/follower</a>
         </li>
     </ul>
 </div>

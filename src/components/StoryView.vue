@@ -23,7 +23,6 @@
         width: 122px;
         height: 62px;
         line-height: 60px;
-        font-size: 26px;
         text-align: center;
         border: 1px solid #cc3f4f;
         border-radius: 12px;
@@ -50,6 +49,7 @@
             height: 0;
             padding-bottom: 100%;
             margin: 0 auto;
+            background-size: contain;
         }
     }
 
@@ -160,7 +160,7 @@
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
     <template v-if="cover_type === 'video'">
-        <div class="cover cover-video play" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
+        <div class="cover play cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
     </template>
     <div class="story-header">
         <div class="header clearfix">

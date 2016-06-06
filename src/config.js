@@ -5,6 +5,7 @@ let [api, img, video, download] = ((env='dev') => {
     const hosts = {
         api: {
             dev: '//dev.api.meiyuxiuxiu.net',
+            // test: '//192.168.0.150:18006',
             test: '//test.api.meiyuxiuxiu.net',
             prod: '//api.meiyuxiuxiu.com'
         },

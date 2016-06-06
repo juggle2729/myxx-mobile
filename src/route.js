@@ -236,6 +236,15 @@ export default {
             }, 'profile');
         }
     },
+    '/recommend/follower': {
+        name: 'recommend-follower',
+        title: '推荐关注',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('RecommendFollowerView.vue'));
+            }, 'profile');
+        }
+    },
     '/:id/apply/shop': {
         name: 'apply-shop',
         title: '申请店铺',
