@@ -52,13 +52,11 @@
 <script>
     import shareable from 'shareable';
     import Comment from './Comment.vue';
-    import Avatar from './Avatar.vue';
     export default {
         name: 'LessonView',
         mixins: [shareable],
         components: {
-            Comment,
-            Avatar
+            Comment
         },
         data(){
             return {
@@ -213,8 +211,8 @@
     }
 </script>
 <style lang="sass">
-    @import '../styles/partials/_var.scss';
-    @import '../styles/partials/_mixin.scss';
+    @import '~style/partials/_var.scss';
+    @import '~style/partials/_mixin.scss';
     .lesson-view {
         position: relative;
         min-height: 100%;

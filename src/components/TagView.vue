@@ -34,9 +34,16 @@
             }
             .title {
                 width: 100%;
-                height: 114px;
                 padding: 40px 60px;
                 text-align: center;
+                .user-input {
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    text-overflow: ellipsis;
+                    -webkit-box-orient: vertical;
+                    line-height: 1.5;
+                }
             }
         }
 
@@ -209,7 +216,7 @@
                         <template v-if="item.entry.cover_type === 'video'">
                             <div class="cover" v-bg.video="item.entry.cover"></div>
                         </template>
-                        <div class="title font-30">{{item.entry.content}}</div>
+                        <div class="title font-30"><span class="user-input">{{item.entry.content}}</span></div>
                     </div>
                     <div class="social font-30 clearfix">
                         <div class="border-right">
@@ -238,7 +245,7 @@
                     </div>
                     <div class="content">
                         <div v-if="item.entry.video" class="cover tag" v-bg.video="item.entry.video"></div>
-                        <div class="title font-30">{{item.entry.title}}</div>
+                        <div class="title font-30"><span class="user-input">{{item.entry.title}}</span></div>
                     </div>
                     <div class="social font-30 clearfix">
                         <div class="border-right">

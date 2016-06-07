@@ -25,9 +25,6 @@
              margin-bottom: 14px;
         }
     }
-    .empty-page {
-        height: 700px;
-    }
     &::after {
         content: '';
         display: table;
@@ -37,7 +34,7 @@
 </style>
 <template>
 <div class="user-jade">
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
+    <empty v-if="items.isEmpty" title="暂无商品"></empty>
     <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
         <div class="img" v-bg.lg="item.first_picture"></div>
         <div class="txt font-30 bg-white">

@@ -1,6 +1,6 @@
 <style lang="sass">
-@import '../styles/partials/_var.scss';
-@import '../styles/partials/_mixin.scss';
+@import '~style/partials/_var.scss';
+@import '~style/partials/_mixin.scss';
 
 .master-view {
     position: relative;
@@ -175,7 +175,7 @@
 }
 </style>
 <template>
-    <div class="master-view" v-if="!$loadingRouteData">
+    <div class="master-view">
         <div class="cover" @touchstart="coverTouchStart($event)"
              @touchmove="coverTouchMove($event)" @touchend="coverTouchEnd($event)">
             <div class="bg img" v-bg="interview.img" query="imageView2/1/w/750/h/1334/interlace/1"></div>
@@ -214,16 +214,14 @@
 </template>
 <script>
 import shareable from 'shareable';
-import Avatar from './Avatar.vue';
 export default {
     name: 'MasterSpecialView',
     mixins: [shareable],
-    components: {
-        Avatar
-    },
     data(){
         return {
-            base: {},
+            base: {
+                titles: []
+            },
             interview: {},
             coverStartPos: 0,
             coverMoved: 0,
@@ -249,18 +247,15 @@ export default {
         }
     },
     ready() {
-        this.$watch('$loadingRouteData', () => {
-            window.scrollTo(0, 0);
-            this.coverDom = document.querySelector('.master-view .cover');
-            this.contentDom = document.querySelector('.master-view .interview');
-            this.isSelf = (this.self && this.self.id == this.base.id);
-            const innerHeight = window.innerHeight;
-            const container = document.querySelector('.master-view');
-            const bgDom = container.querySelector('.cover .bg');
-            bgDom.style.height = innerHeight + 'px';
-        });
+        window.scrollTo(0, 0);
+        this.coverDom = document.querySelector('.master-view .cover');
+        this.contentDom = document.querySelector('.master-view .interview');
+        this.isSelf = (this.self && this.self.id == this.base.id);
+        const innerHeight = window.innerHeight;
+        const container = document.querySelector('.master-view');
+        const bgDom = container.querySelector('.cover .bg');
+        bgDom.style.height = innerHeight + 'px';
     },
-
     methods: {
         enableRefresh(enable) {
             this.action('toggleTopRefresh', {

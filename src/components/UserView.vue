@@ -1,8 +1,7 @@
 <style lang="sass">
-    @import '../styles/partials/mixin';
-    @import '../styles/partials/var';
+    @import '~style/partials/mixin';
+    @import '~style/partials/var';
     .user-view {
-        padding-bottom: 100px;
         min-height: 100%;
         .account {
             height: 392px;
@@ -279,15 +278,13 @@ import shareable from 'shareable';
 import jade from './UserJade.vue';
 import story from './UserStory.vue';
 import evaluation from './UserEvaluation.vue';
-import Avatar from './Avatar.vue';
 export default {
     name: 'UserView',
     mixins: [shareable],
     components: {
         jade,
         story,
-        evaluation,
-        Avatar
+        evaluation
     },
     data() {
         return {

@@ -200,12 +200,8 @@
 </div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 export default {
     name: 'OrderInfoView',
-    components: {
-        Avatar
-    },
     computed: {
         isSeller() {
             return (_.get(this, 'self.id') == this.order.seller.id);

@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .user-story {
     .item {
         padding: 0 16px 32px;
@@ -58,9 +58,6 @@
             }
         }
     }
-    .empty-page {
-        height: 700px;
-    }
 }
 </style>
 <template>
@@ -85,22 +82,16 @@
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
+    <empty v-if="items.isEmpty"></empty>
 </div>
 </template>
 <script>
-import StoryList from './StoryList.vue';
 import paging from 'paging';
-import Avatar from './Avatar.vue';
 export default {
     name: 'UserStory',
     mixins: [paging],
     activate(done) {
         this.fetch().then(done);
-    },
-    components: {
-        StoryList,
-        Avatar
     },
     computed: {
         paging() {

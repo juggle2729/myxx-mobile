@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .evaluation-detail {
     padding-bottom: 100px;
     .results {
@@ -141,7 +141,6 @@
 </template>
 <script>
 import Comment from './Comment.vue';
-import Avatar from './Avatar.vue';
 import shareable from 'shareable';
 export default {
     name: 'EvaluationView',
@@ -160,8 +159,7 @@ export default {
         };
     },
     components: {
-        Comment,
-        Avatar
+        Comment
     },
     computed: {
         prices() {

@@ -17,7 +17,10 @@ module.exports = {
             'components',
             'mixins',
             'node_modules'
-        ]
+        ],
+        alias: {
+            'style': __dirname + '/src/styles'
+        }
     },
     module: {
         loaders: [{

@@ -139,13 +139,9 @@
     </div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 import Q from 'q';
     export default {
         name: 'OrderAffirmView',
-        components: {
-            Avatar
-        },
         data() {
             return {
                 note: '',

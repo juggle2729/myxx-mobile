@@ -1,7 +1,7 @@
 <template>
 <div class="user-following-view bg-default">
     <div v-if="!items.isEmpty" class="separator"></div>
-    <partial v-else name="empty-page"></partial>
+    <empty v-else title="暂无关注"></empty>
     <div class="user border-bottom bg-white flex" v-for="user in items">
         <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile"></div>
         <div class="flex-1" v-link="user | profile">

@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .user-like-view {
     height: 100%;
     .item {
@@ -50,18 +50,14 @@
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial name="empty-page" v-if="items.isEmpty"></partial>
+    <empty v-if="items.isEmpty"></empty>
 </div>
 </template>
 <script>
 import paging from 'paging';
-import Avatar from './Avatar.vue';
 export default {
     name: 'UserLikeView',
     mixins: [paging],
-    components: {
-        Avatar
-    },
     data() {
         return {
             emptyTitle: '你还没有赞'
@@ -91,7 +87,7 @@ export default {
                                     break;
                                 case 30:
                                     card.description = entry.content || '发布的晒宝';
-                                    card.preview = {[entry.cover_type]: entry.cover};
+                                    card.preview = {[entry.cover_type === 'picture' ? 'img' : 'video']: entry.cover};
                                     break;
                                 case 40:
                                     card.description = entry.name + ' ' + _.get(entry, 'moral.name', '');
@@ -99,7 +95,7 @@ export default {
                                     break;
                                 case 60:
                                     card.description = entry.title;
-                                    entry.preview = {video: entry.video};
+                                    card.preview = {video: entry.video};
                                     break;
                             }
                         }

@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/_var.scss';
+@import '~style/partials/_var.scss';
 .recommend-component {
     .title {
         color: #979797;

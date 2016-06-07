@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .user-evaluation {
     .head {
         padding: 20px;
@@ -108,9 +108,6 @@
             line-height: 66px;
         }
     }
-    .empty-page {
-        height: 700px;
-    }
 }
 </style>
 <template>
@@ -150,18 +147,14 @@
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
+    <empty v-if="items.isEmpty"></empty>
 </div>
 </template>
 <script>
 import paging from 'paging';
-import Avatar from './Avatar.vue';
 export default {
     name: 'UserEvaluation',
     mixins: [paging],
-    components: {
-        Avatar
-    },
     activate(done) {
         this.fetch().then(done);
     },

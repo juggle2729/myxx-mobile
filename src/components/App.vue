@@ -1,8 +1,8 @@
 <style lang="sass">
-@import '../styles/myxx';
+@import '~style/myxx';
 #app {
-    min-height: 100%;
-    height: 100%;
+    /*min-height: 100%;*/
+    /*height: 100%;*/
     .share-top {
         height: 100px;
         padding: 0px 32px;
@@ -78,6 +78,7 @@ export default {
     components,
     data() {
         return {
+            id: 160607153549035517,
             user: JSON.parse(localStorage.getItem('MYXX_USER')),
             shareData: {},
             popup: {}

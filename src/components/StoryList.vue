@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .story-list {
     .item {
         padding: 0 16px 32px 16px;
@@ -52,9 +52,6 @@
             }
         }
     }
-    .empty-page {
-        height: 700px;
-    }
 }
 </style>
 <template>
@@ -80,12 +77,8 @@
 </div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 export default {
     name: 'StoryList',
-    components: {
-        Avatar
-    },
     props: {
         items: {
             type: Array,

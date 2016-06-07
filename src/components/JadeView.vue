@@ -279,7 +279,6 @@
 import Q from 'q';
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
-import Avatar from './Avatar.vue';
 import Tags from './Tags.vue';
 import Recommend from './Recommend.vue';
 export default {
@@ -287,7 +286,6 @@ export default {
     mixins: [shareable],
     components: {
         Comment,
-        Avatar,
         Tags,
         Recommend
     },

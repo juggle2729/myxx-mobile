@@ -7,7 +7,7 @@
     </div>
 </template>
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .nocontent-view {
     .content {
         position: relative;

@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
     .auctions-view {
         height: 100%;
         .border-none {
@@ -38,17 +38,7 @@
                 }
             }
         }
-        .empty {
-            padding-top: 120px;
-            position: relative;
-            height: 100%;
-            .empty-img {
-                margin-bottom: 40px;
-                width: 160px;
-                height: 160px;
-                background-image: url('//o0x80w5li.qnssl.com/placeholder/empty.png');
-                background-size: 100% 100%;
-            }
+        .empty-component {
             .instruction {
                 padding: 42px 50px 50px 50px;
                 p:first-child {
@@ -89,10 +79,8 @@
             </div>
             <div class="separator-20 border-none"></div>
         </template>
-        <!-- <partial v-else name="empty-page"></partial> -->
-        <div v-else class="empty bg-white">
-            <div class="empty-img center-horizontal"></div>
-            <div class="center font-30 gray">暂无数据</div>
+        <empty v-else>
+            <div class="center font-30 gray">暂无拍卖</div>
             <article class="instruction font-30">
                 <p>
                     <span class="gray">—</span>&nbsp;微信拍卖工具使用须知&nbsp;<span class="gray">—</span>
@@ -110,7 +98,7 @@
                     4.美玉秀秀平台仅提供技术支持，在实际拍卖过程中，平台不会参与买卖双方的付款、物流等交易环节。
                 </p>
             </article>
-        </div>
+        </empty>
     </div>
 </template>
 <script>

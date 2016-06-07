@@ -83,12 +83,8 @@
 </div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 export default {
     name: 'EvaluationList',
-    components: {
-        Avatar
-    },
     props: {
         items: {
             type: Array,

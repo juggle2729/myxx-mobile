@@ -76,13 +76,9 @@
 </template>
 <script>
 import paging from 'paging';
-import Avatar from './Avatar.vue';
 export default {
     name: 'AuctionRecordView',
     mixins: [paging],
-    components: {
-        Avatar
-    },
     data(){
         return {
             id: 0

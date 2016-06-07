@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
     .bidding-view {
         .bidding-price {
             .setting {

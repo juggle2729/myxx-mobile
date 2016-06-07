@@ -23,6 +23,7 @@
             line-height: 46px;
         }
         .content {
+            word-break: break-all;
             line-height: 1.5;
             img {
                 height: 46px;
@@ -55,12 +56,12 @@
         width: 100%;
         background-color: #f9f9f9;
         color: red;
-        height: 98px;
-        padding: 16px;
+        height: 90px;
+        padding: 12px;
         .emoji {
             border-radius: 50%;
             box-shadow: 0 0 0 1px #999999;
-            margin-top: 4px; 
+            margin-top: 4px;
             width: 60px;
             height: 60px;
         }
@@ -68,15 +69,15 @@
             background-color: white;
             color: #c6c6c6;
             padding: 0 20px;
-            height: 72px;
-            line-height: 72px;
+            height: 68px;
+            line-height: 68px;
             border-radius: 8px;
             margin:0 16px 0 20px;
         }
         .submit {
-            line-height: 72px;
+            line-height: 68px;
             width: 140px;
-            height: 72px;
+            height: 68px;
             color: white;
             background-color: #b2b2b2;
             border-radius: 8px;
@@ -120,13 +121,9 @@
 <script>
 import Q from 'q';
 import paging from 'paging';
-import Avatar from './Avatar.vue';
 export default {
     name: 'Comment',
     mixins: [paging],
-    components: {
-        Avatar
-    },
     props: {
         id: {
             type: Number,
@@ -167,7 +164,7 @@ export default {
             if(localStorage.getItem(this.uid)) {
                 const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
                 localStorage.removeItem(this.uid); //立刻去掉缓存数据，防止重复提交
-                return this.$req(url, method, data);          
+                return this.$req(url, method, data);
             }
         }).then(resp => {
             resp && this.action('toast', {success: 1, text: '评论成功'});

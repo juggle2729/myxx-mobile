@@ -2,7 +2,13 @@ import Q from 'q';
 import _ from 'lodash';
 import bridge from '../bridge';
 import config from '../config';
+import Avatar from 'Avatar.vue';
+import Empty from 'Empty.vue';
 const mixin = {
+    components: {
+        Avatar,
+        Empty
+    },
     data() {
         return {
             config,
@@ -125,7 +131,11 @@ const mixin = {
                                         }
                                         this.action('login');
                                     } else if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
-                                        this.$route.router.replace({'name': '404'});
+                                        if(this.env.isApp) {
+                                            this.$route.router.replace({'name': '404'});
+                                        } else {
+                                            console.debug(404, this.$route.path);
+                                        }
                                     } else {
                                         console.debug(`[${resp.status}]${path}\n${resp.message}`);
                                     }

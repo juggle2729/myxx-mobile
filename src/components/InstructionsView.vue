@@ -1,6 +1,6 @@
 <style lang="sass">
-@import '../styles/partials/_mixin.scss';
-@import '../styles/partials/_var.scss';
+@import '~style/partials/_mixin.scss';
+@import '~style/partials/_var.scss';
 .instructions-view {
     min-height: 100%;
     padding-bottom: 22px;

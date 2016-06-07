@@ -79,16 +79,12 @@
     </div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 export default {
     name: 'JadeComment',
     props: {
         id: {
             default: 1
         }
-    },
-    components: {
-        Avatar
     },
     data() {
         return {

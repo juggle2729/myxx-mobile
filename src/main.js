@@ -7,19 +7,20 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
 import routes from './route';
-import mixin from './mixins/global';
 import directive from './directive';
+import mixin from './mixins/global';
 import filter from './filter';
 import partial from './partial';
 
 // Vue configurations
 Vue.config.debug = process.env.NODE_ENV !== 'production';
-Vue.mixin(mixin);
+Vue.use(Resource);
+Vue.use(Router);
 Vue.use(filter);
 Vue.use(directive);
+Vue.mixin(mixin);
 Vue.use(partial);
 
-Vue.use(Resource);
 Vue.http.interceptors.push({
     request(req) {
         // 如果url是全路径,忽略root
@@ -30,7 +31,6 @@ Vue.http.interceptors.push({
         return resp;
     }
 });
-Vue.use(Router);
 
 let router = new Router({history: true});
 
@@ -50,7 +50,7 @@ router.beforeGo((from, to, app) => {
             action = _.isObject(action) ? _.merge(to, action) : to;
             app.action(action.name, action.params);
             interrupted = true;
-        } else if(from.name === to.name && 'tab' === _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) { 
+        } else if(from.name === to.name && 'tab' === _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
             // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
         } else {
@@ -66,7 +66,7 @@ router.beforeGo((from, to, app) => {
 });
 router.beforeEach(({from, to, abort, next}) => {
     // to.router.app.$el.classList.add('loading');
-    
+
     // 同一路由内，仅切换tab时，不调整滚动位置
     if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
         window.scroll(0, 0);

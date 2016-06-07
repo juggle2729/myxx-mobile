@@ -68,19 +68,15 @@
 				</div>
 			</div>
 			<partial name="load-more" v-if="items.hasMore"></partial>
-        	<partial v-if="items.isEmpty" name="empty-page"></partial>
+        	<empty v-if="items.isEmpty"></empty>
 		</div>
 	</div>
 </template>
 <script>
-import Avatar from './Avatar.vue';
 import paging from 'paging';
 export default {
 	name: 'RecommendFollowerView',
 	mixins: [paging],
-	components: {
-		Avatar
-	},
 	computed: {
         paging() {
             return {

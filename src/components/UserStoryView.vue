@@ -2,7 +2,7 @@
 <div class="user-story bg-default">
     <story-list :items="items"></story-list>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
+    <empty v-if="items.isEmpty" title="暂无话题"></empty>
 </div>
 </template>
 <script>

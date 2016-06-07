@@ -240,13 +240,9 @@
 </template>
 <script>
 import shareable from 'shareable';
-import Avatar from './Avatar.vue';
 export default {
     name: 'AuctionView',
     mixins: [shareable],
-    components: {
-        Avatar
-    },
     data() {
         return {
             info: {

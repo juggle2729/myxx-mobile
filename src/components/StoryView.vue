@@ -43,7 +43,7 @@
     .cover {
         width: 686px;
         height: 686px;
-        margin: 0 32px 10px;
+        margin: 0 32px 5px;
         &.cover-video {
             width: 100%;
             height: 0;
@@ -208,7 +208,6 @@
 </template>
 <script>
 import Comment from './Comment.vue';
-import Avatar from './Avatar.vue';
 import Tags from './Tags.vue';
 import Recommend from './Recommend.vue';
 import shareable from 'shareable';
@@ -217,13 +216,14 @@ export default {
     mixins: [shareable],
     components: {
         Comment,
-        Avatar,
         Tags,
         Recommend
     },
     data() {
         return {
-            story: {},
+            story: {
+                medias: []
+            },
             cover_type: 'picture',
             cover: '',
             picFlow: []
@@ -293,8 +293,7 @@ export default {
                     this.$delete(followApi).then(() => {
                         this.story.user.is_followed = false;
                         this.action('toast', {
-                            text: '已取消关注',
-                            success: '0'
+                            text: '已取消关注'
                         });
                     });
                 } else {

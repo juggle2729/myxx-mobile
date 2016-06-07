@@ -120,7 +120,7 @@
             </div>
         </div>
     </div>
-    <partial v-if="isEmpty" name="empty-page"></partial>
+    <empty v-if="isEmpty"></empty>
 </div>
 </template>
 <script>

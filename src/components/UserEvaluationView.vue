@@ -2,7 +2,7 @@
 <div class="user-evaluation bg-default">
     <evaluation-list :items="items"></evaluation-list>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
+    <empty v-if="items.isEmpty"></empty>
 </div>
 </template>
 <script>
@@ -35,7 +35,7 @@ export default {
 }
 </script>
 <style lang="sass">
-@import '../styles/partials/var';
+@import '~style/partials/var';
 .user-evaluation {
     .tabs {
         display: -webkit-box;

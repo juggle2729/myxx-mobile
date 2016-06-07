@@ -1,5 +1,5 @@
 <style lang="sass">
-@import '../../styles/partials/var';
+@import '~style/partials/var';
 .share-action {
     &.pop-transition {
         transition: transform .3s ease;
