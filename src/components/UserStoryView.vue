@@ -10,7 +10,7 @@ import StoryList from './StoryList.vue';
 import paging from 'paging';
 export default {
     name: 'UserStoryView',
-    mixins: [PagingMixin],
+    mixins: [paging],
     data() {
         return {
             emptyTitle: '你还没有晒宝'

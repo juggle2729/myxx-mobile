@@ -310,13 +310,9 @@
 </template>
 <script>
     import paging from 'paging';
-    import Avatar from './Avatar.vue';
     export default {
         name: 'Tag',
         mixins: [paging],
-        components: {
-            Avatar
-        },
         computed: {
             paging() {
                 return {

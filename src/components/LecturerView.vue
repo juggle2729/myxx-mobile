@@ -32,7 +32,7 @@
                     params: {
                         limit: 20,
                         offset: 0,
-                        user_id: this.$route.params.userId
+                        user_id: this.$route.params.id
                     }
                 }
             }

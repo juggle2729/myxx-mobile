@@ -145,6 +145,9 @@ import shareable from 'shareable';
 export default {
     name: 'EvaluationView',
     mixins: [shareable],
+    components: {
+        Comment
+    },
     data() {
         return {
             evaluation: {
@@ -158,19 +161,16 @@ export default {
             }
         };
     },
-    components: {
-        Comment
-    },
     computed: {
         prices() {
             return this.evaluation.results.map((result) => {
                 if(result.result === 'genuine') {
                     if(result.value_min && result.value_max) {
-                        return `${Math.round(result.value_min/1000)/10}-${Math.round(result.value_max/1000)/10}万`;
+                        return `${Math.round(result.value_min/10000)}-${Math.round(result.value_max/10000)}万`;
                     } else if(result.value_min) {
-                        return `${Math.round(result.value_min/1000)/10}万以上`;
+                        return `${Math.round(result.value_min/10000)}万以上`;
                     } else if(result.value_max) {
-                        return `${Math.round(result.value_max/1000)/10}万以下`;
+                        return `${Math.round(result.value_max/10000)}万以下`;
                     }
                 } else {
                     return '';
@@ -180,14 +180,11 @@ export default {
     },
     route: {
         data({to}) {
-            let {id, evaluationId} = to.params;
-            if(!evaluationId) { // 详情页
-                evaluationId = id;
-                id = undefined;
-            }
-            return this.$get(`sns/jianbao/${evaluationId}|v3`)
-                    .then((evaluation) => {
-                        id && (evaluation.results = evaluation.results.filter((result) => result.id == id));
+            return this.$get(`sns/jianbao/${to.params.id}|v3`)
+                    .then(evaluation => {
+                        if(to.params.result !== 'none') {
+                            evaluation.results = evaluation.results.filter(result => result.id == to.params.result);
+                        }
                         this.setShareData(evaluation, true);
                         return {evaluation};
                     });

@@ -22,24 +22,17 @@ export default {
             let mergeDesc = false; // 分享朋友圈的时候, 是否需要合并描述到title
             switch(this.$route.name) {
                 case 'evaluation':
-                    data.title = entry.status ? entry.results[0].identifier.name+'的视频鉴宝' : '大师在线视频鉴宝';
-                    data.desc = entry.description;
-                    data.icon = entry.pictures[0];
-                    data.text = '免费找大师看看我的宝贝';
-                    break;
-                case 'result':
-                    const [result, identifier, isSelf] = [
-                        entry.results[0],
-                        entry.results[0].identifier.name,
-                        entry.results[0].identifier.id == this.$route.query.user
-                        ];
-
-                    if(result.result === 'genuine') {
-                        data.title = isSelf ? '我给出的鉴定结果为真，你看怎样' : (identifier + '鉴定这块玉为真，你看怎样');
-                    } else if(result.result === 'fake') {
-                        data.title = isSelf ? '我给出的鉴定结果为假，你看怎样' : (identifier + '鉴定这块玉为假，你看怎样');
-                    } else {
-                        data.title = '这块玉我拿不准，你来看看';
+                    const result = _.get(entry, 'results[0]');
+                    if(this.$route.params.result !== 'none') {
+                        data.title = result ? result.identifier.name + '的视频鉴宝' : '大师在线视频鉴宝';
+                    } else if(result){
+                        if(result.result === 'unsure') {
+                            data.title = '这块玉我拿不准，你来看看';
+                        } else if(result.identifier.id == this.$route.query.user) {
+                            data.title = '我给出的鉴定结果为' + (result.result === 'fake' ? '假' : '真') + '，你看怎样';
+                        } else {
+                            data.title = result.identifier.name + '鉴定这块玉为真，你看怎样';
+                        }
                     }
                     data.desc = entry.description;
                     data.icon = entry.pictures[0];
