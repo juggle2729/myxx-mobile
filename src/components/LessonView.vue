@@ -106,7 +106,7 @@
                 if (this.env.isShare) {
                     location.href = this.config.download;
                 } else {
-                    this.$route.router.go({name: 'lecturer', params: {userId: this.course.user.id}});
+                    this.$route.router.go({name: 'lecturer', params: {id: this.course.user.id}});
                 }
             },
             recommendTitle(data) {

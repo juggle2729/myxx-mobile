@@ -77,8 +77,10 @@ router.beforeEach(({from, to, abort, next}) => {
 
 router.afterEach(({to}) => {});
 router.alias({
-    '/user/:id': '/user/:id/home',
+    '/user/:id': '/user/:id/none',
     '/evaluations/:tab': '/evaluations',
+    '/evaluation/:id': '/evaluation/:id/none',
+    '/result/:id/:result': '/evaluation/:id/:result',
     '/stories/:tab': '/stories',
     '/auctions/:id': 'user/:id/auctions',
     '/order/affirm/:productId': '/order/affirm/:productId/0',

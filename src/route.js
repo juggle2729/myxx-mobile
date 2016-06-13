@@ -1,11 +1,6 @@
-export default {
-    '/': {
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('IndexView.vue'));
-            }, 'other');
-        }
-    },
+const UA = navigator.userAgent;
+
+let routes = {
     '/evaluations': {
         name: 'evaluations',
         title: '鉴宝列表',
@@ -15,7 +10,7 @@ export default {
             }, 'evaluation');
         }
     },
-    '/evaluation/:id': {
+    '/evaluation/:id/:result': {
         name: 'evaluation',
         title: '鉴宝详情',
         native: v => v >= 1.1,
@@ -25,15 +20,7 @@ export default {
             }, 'evaluation');
         }
     },
-    '/result/:evaluationId/:id': {
-        name: 'result',
-        title: '鉴宝结果',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('EvaluationView.vue'));
-            }, 'evaluation');
-        }
-    },
+// 晒宝
     '/stories': {
         name: 'stories',
         title: '晒宝列表',
@@ -45,7 +32,7 @@ export default {
     },
     '/story/:id': {
         name: 'story',
-        title: ' ',
+        title: ' ', //标题为空，减缓数据加载后，标题变化的差体验
         native: v => v == 1.3,
         component(resolve) {
             require.ensure([], (require) => {
@@ -53,6 +40,7 @@ export default {
             }, 'story');
         }
     },
+
     '/lessons': {
         name: 'lessons',
         title: '美玉公开课',
@@ -71,7 +59,7 @@ export default {
             }, 'lesson');
         }
     },
-    '/lecturer/:userId': {
+    '/lecturer/:id': {
         name: 'lecturer',
         title: '大师课堂',
         component(resolve) {
@@ -80,6 +68,8 @@ export default {
             }, 'lesson');
         }
     },
+
+
     '/jade/:id': {
         name: 'jade',
         title: '商品详情',
@@ -89,15 +79,7 @@ export default {
             }, 'mall');
         }
     },
-    '/comments/:id/:type': {
-        name: 'comments',
-        title: '全部评论',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CommentsView.vue'));
-            }, 'comments');
-        }
-    },
+
     '/auction/:id': {
         name: 'auction',
         title: '拍卖预览',
@@ -143,15 +125,7 @@ export default {
             }, 'auction');
         }
     },
-    '/user/:id/auctions': {
-        name: 'auctions',
-        title: '全部拍卖',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsView.vue'));
-            }, 'auction');
-        }
-    },
+
     '/masters': {
         name: 'masters',
         title: '人物志',
@@ -170,6 +144,7 @@ export default {
             }, 'master');
         }
     },
+
     '/profile': {   // 个人中心
         name: 'profile',
         title: '我的',
@@ -199,6 +174,7 @@ export default {
             }, 'profile');
         }
     },
+
     '/user/:id/like': {
         name: 'user-like',
         title: '赞',
@@ -226,6 +202,16 @@ export default {
             }, 'profile');
         }
     },
+    '/user/:id/auctions': {
+        name: 'auctions',
+        title: '全部拍卖',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionsView.vue'));
+            }, 'profile');
+        }
+    },
+
     '/user/:id/:tab': { // 个人主页
         name: 'user',
         title: '个人主页',
@@ -236,22 +222,14 @@ export default {
             }, 'profile');
         }
     },
-    '/recommend/follower': {
-        name: 'recommend-follower',
-        title: '推荐关注',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('RecommendFollowerView.vue'));
-            }, 'profile');
-        }
-    },
+
     '/:id/apply/shop': {
         name: 'apply-shop',
         title: '申请店铺',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ApplyShopView.vue'));
-            }, 'other');
+            }, 'apply');
         }
     },
     '/:id/apply/site': {
@@ -260,7 +238,7 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ApplySiteView.vue'));
-            }, 'other');
+            }, 'apply');
         }
     },
     '/:id/apply/master': {
@@ -269,72 +247,10 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ApplyMasterView.vue'));
-            }, 'other');
+            }, 'apply');
         }
     },
-    '/likes/:type/:id': {
-        name: 'likes',
-        title: '赞过的人',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('LikesView.vue'));
-            }, 'other');
-        }
-    },
-    '/feedback': {
-        name: 'feedback',
-        title: '意见反馈',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('FeedbackView.vue'));
-            }, 'other');
-        }
-    },
-    '/about': {
-        name: 'about',
-        title: '关于美玉秀秀',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AboutView.vue'));
-            }, 'other');
-        }
-    },
-    '/css': {
-        name: 'cssview',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CssView.vue'));
-            }, 'other');
-        }
-    },
-    '/tag/:id/:name': {
-        name: 'tag',
-        native: v => v >= 1.4 && {name: 'tag'},
-        title: '标签信息流',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('TagView.vue'));
-            }, 'mall');
-        }
-    },
-    // '/tag/:type/:tag/:name': {
-    //     name: 'tags',
-    //     title: '标签列表',
-    //     component(resolve) {
-    //            require.ensure([], (require) => {
-    //                resolve(require('TagsView.vue'));
-    //            }, 'mall');
-    //     }
-    // },
-    // '/tag/:type/:tag/:category/:name': {
-    //     name: 'tag',
-    //     title: '标签详情',
-    //     component(resolve) {
-    //         require.ensure([], (require) => {
-    //             resolve(require('TagView.vue'));
-    //         }, 'mall');
-    //     }
-    // },
+
     '/order/affirm/:productId/:addressId': {
         name: 'order-affirm',
         title: '订单详情',
@@ -389,31 +305,22 @@ export default {
             }, 'mall');
         }
     },
-    '/order/:id/address': {
+    '/address/list': { // 商品id，可选
         name: 'address-list',
         title: '收货地址管理',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderAddressView.vue'));
-            }, 'mall');
+                resolve(require('AddressView.vue'));
+            }, 'address');
         }
     },
-    '/order/:id/address/add': {
-        name: 'address-add',
-        title: '收货地址管理',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderAddressUpdateView.vue'));
-            }, 'mall');
-        }
-    },
-    '/order/address-update/:productId/:id': {
+    '/address/:id/update': {
         name: 'address-update',
         title: '收货地址管理',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderAddressUpdateView.vue'));
-            }, 'mall');
+                resolve(require('AddressUpdateView.vue'));
+            }, 'address');
         }
     },
     '/wallet': {
@@ -422,34 +329,34 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletView.vue'));
-            }, 'mall');
+            }, 'wallet');
         }
     },
-    '/wallet/cash': {
-        name: 'cash',
+    '/wallet/withdraw': {
+        name: 'withdraw',
         title: '提现',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('CashView.vue'));
-            }, 'mall');
+                resolve(require('WithdrawView.vue'));
+            }, 'wallet');
         }
     },
-    '/wallet/:id/cash-result': {
-        name: 'cash-result',
+    '/wallet/:id/withdraw/result': {
+        name: 'withdraw-result',
         title: '提现',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('CashResultView.vue'));
-            }, 'mall');
+                resolve(require('WithdrawResultView.vue'));
+            }, 'wallet');
         }
     },
-    '/wallet-detail/:tab': {
+    '/wallet/:tab': {
         name: 'detail',
         title: '明细',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletDetailView.vue'));
-            }, 'mall');
+            }, 'wallet');
         }
     },
     '/instructions': {
@@ -458,7 +365,7 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('InstructionsView.vue'));
-            }, 'mall');
+            }, 'other');
         }
     },
     '/instruction/:id': {
@@ -466,9 +373,50 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('InstructionView.vue'));
-            }, 'mall');
+            }, 'other');
         }
     },
+
+    '/tag/:id/:name': {
+        name: 'tag',
+        native: v => v >= 1.4 && {name: 'tag'},
+        title: '标签信息流',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('TagView.vue'));
+            }, 'tag');
+        }
+    },
+
+    '/recommend/follower': {
+        name: 'recommend-follower',
+        title: '推荐关注',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('RecommendFollowerView.vue'));
+            }, 'recommend');
+        }
+    },
+
+    '/feedback': {
+        name: 'feedback',
+        title: '意见反馈',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('FeedbackView.vue'));
+            }, 'other');
+        }
+    },
+    '/about': {
+        name: 'about',
+        title: '关于美玉秀秀',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AboutView.vue'));
+            }, 'other');
+        }
+    },
+
     '/404': {
         title: '页面不存在',
         name: '404',
@@ -478,6 +426,24 @@ export default {
             }, 'other');
         }
     },
+
+    '/': {
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('IndexView.vue'));
+            }, 'browser');
+        }
+    },
+
+    '/css': {
+        name: 'cssview',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CssView.vue'));
+            }, 'browser');
+        }
+    },
+
     '*': {
         title: '找不到北',
         component(resolve) {
@@ -487,3 +453,5 @@ export default {
         }
     }
 }
+
+export default routes;
