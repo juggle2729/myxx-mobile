@@ -1,7 +1,7 @@
 <template>
     <div class="about-view">
         <div class="imgs center">
-            <img :src="'profile/about.png' | qn">
+            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api-test'} : ''">
             <p class="font-34 default">美玉秀秀</p>
             <p class="font-22 gray">v{{env.version || '1.0'}}</p>
         </div>
@@ -14,7 +14,12 @@
 </template>
 <script>
 export default {
-    name: 'AboutView'
+    name: 'AboutView',
+    computed: {
+        isProd() { // 在非生产环境才可以进入客户端接口测试页面
+           return _.includes(this.config.api, 'com');
+        }
+    }
 }
 </script>
 <style lang="sass">

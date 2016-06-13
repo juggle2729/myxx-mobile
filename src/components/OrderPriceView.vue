@@ -37,10 +37,13 @@
             .button {
                 height: 90px;
                 width: 240px;
-                line-height: 90px;
                 border-radius: 8px;
                 border: 1px solid #dcdcdc;
                 margin: 24px auto 0;
+                padding-top: 26px;
+                &.input {
+                    padding-top: 1px;
+                  }
             }
         }
     }
@@ -50,6 +53,10 @@
         line-height: 80px;
         border-radius: 8px;
         margin: 50px auto 0;
+    }
+    ::-webkit-input-placeholder {
+        color: #c6c6c6;
+        padding-top: 3px;
     }
 }
 </style>
@@ -72,7 +79,7 @@
         </div>
         <div class="center">
             <p>修改后价格</p>
-            <input class="button center red font-34" type="number" placeholder="请输入价格" v-model="price">
+            <input class="button center red font-34 input" type="number" placeholder="请输入价格" v-model="price">
         </div>
     </div>
     <div class="confirm bg-red white center font-30" @click="setPrice">确定</div>
@@ -105,6 +112,8 @@ export default {
                         this.$router.go({ name: 'order', params: { id: this.order.order_no}});
                     });
                 }
+            }).catch((data) => {
+                this.action('toast', {success: 0, text: data});
             });
         }
     }

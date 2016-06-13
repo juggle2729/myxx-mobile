@@ -51,12 +51,12 @@ const filters = {
         return _.truncate(str, {length});
     },
 
-    price(cents, unit = '￥') {
+    price(cents, zero='面议') {
         cents = +cents;
         if (_.isNumber(cents) && cents > 0) {
-            return unit + Math.ceil(cents/100);
+            return '￥' + Math.ceil(cents/100);
         } else {
-            return '面议';
+            return '￥' + zero;
         }
     },
 

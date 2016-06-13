@@ -34,7 +34,10 @@
         <li>
             <a href="/tag/242/certificate">标签 - tags</a>
         </li>
-        <li class="tab">订单</li>
+        <li class="tab">商城</li>
+        <li>
+            <a href="/jade/188/none">商品详情 - /jade/:id/:tab</a>
+        </li>
         <li>
             <a href="/order/affirm/188/">确认订单 - order/affirm/:productId/:addressId</a>
         </li>

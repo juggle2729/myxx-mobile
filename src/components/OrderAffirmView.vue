@@ -93,12 +93,12 @@
 <template>
     <div class="order-affirm-view bg-default font-30">
         <div class="address bg-white border-vertical">
-            <div v-if="!address" class="flex first" v-link="{name: 'address-add', params: {productId: this.$route.params.productId}}">
+            <div v-if="!address" class="flex first" v-link="{name: 'address-update', params: {productId: this.product.id}}">
                 <span class="icon-address gray"></span>
                 <div class="flex-1 tip site">请添加收货地址</div>
                 <span class="icon-enter red"></span>
             </div>
-            <div v-else class="flex" v-link="{name: 'address-list', params: {productId: this.$route.params.productId}}">
+            <div v-else class="flex" v-link="{name: 'address-list', params: {productId: this.product.id}}">
                 <div>
                     <div class="user">
                         <span>收货人: {{address.receiver_name}}</span>
@@ -153,11 +153,12 @@ import Q from 'q';
             }
         },
         route: {
-            data({to}) {
+            data({to, next}) {
                 return Q.all([this.$get(`mall/address/default`), this.$get(`mall/products/${to.params.productId}`)]).done((data) => {
                         this.address = data[0];
                         this.product = data[1];
                         this.toggleLoading(false);
+                        next();
                     });
             }
         },
@@ -171,7 +172,9 @@ import Q from 'q';
                         receiver_address: this.address.receiver_address_flat,
                         buyer_note: this.note
                     }).then((data) => {
-                        this.$router.go({name: 'order', params: {id: data.order_no}});
+                        this.$router.go({name: 'order', params: {id: data.order_no.toString()}});
+                    }).catch((data) => {
+                        this.action('toast', {success: 0, text: data});
                     });
                 } else {
                     this.action('toast', {success: 0, text: '请选择收货地址!'});

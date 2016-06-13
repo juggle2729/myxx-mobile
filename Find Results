@@ -1,0 +1,197 @@
+Searching 77 files for "none"
+
+/Users/wxzhang/project/myxx-mobile/src/components/AddAuctionView.vue:
+   53                      border: 0;
+   54                      background: transparent;
+   55:                     outline: none;
+   56                      //剔除 select 默认样式
+   57:                     -webkit-appearance: none;
+   58                      & > option:first-child {
+   59                          color: #c9c9c9;
+
+/Users/wxzhang/project/myxx-mobile/src/components/AddressUpdateView.vue:
+  123                          });
+  124                      } else {
+  125:                         this.$router.go({name: 'address-list', params: {product: 'none'}});
+  126                      }
+  127                  });
+
+/Users/wxzhang/project/myxx-mobile/src/components/AddressView.vue:
+   63      </div>
+   64      <partial name="load-more" v-if="items.hasMore"></partial>
+   65:     <div class="add bg-red white center" v-link="{name: 'address-update', params: {id: $route.params.id ? $route.params.id : 'none', productId: $route.params.productId ? $route.params.productId : 'none'}}">新增收货地址</div>
+   66  </div>
+   67  </template>
+   ..
+   91          back(id) {
+   92              const productId = this.$route.params.productId;
+   93:             if(productId && productId !== 'none') {
+   94                  this.$put(`mall/address/${id}`, {
+   95                      is_default: true
+
+/Users/wxzhang/project/myxx-mobile/src/components/ApplyMasterView.vue:
+  119              padding: 30px 20px;
+  120              height: 180px;
+  121:             resize: none;
+  122              border-radius: 6px;
+  123          }
+
+/Users/wxzhang/project/myxx-mobile/src/components/ApplyShopView.vue:
+  268                      padding: 28px 32px;
+  269                      height: 180px;
+  270:                     resize: none;
+  271                      border-radius: 4px;
+  272                  }
+
+/Users/wxzhang/project/myxx-mobile/src/components/ApplySiteView.vue:
+  278                      padding: 28px 32px;
+  279                      height: 180px;
+  280:                     resize: none;
+  281                      border-radius: 4px;
+  282                  }
+
+/Users/wxzhang/project/myxx-mobile/src/components/AuctionsBiddingView.vue:
+   72                      height: 72px;
+   73                      border: 1px solid #c9c9c9;
+   74:                     background: none;
+   75                      border-radius: 8px;
+   76                      color: #393939;
+
+/Users/wxzhang/project/myxx-mobile/src/components/AuctionsView.vue:
+    3      .auctions-view {
+    4          height: 100%;
+    5:         .border-none {
+    6              border: 0px;
+    7          }
+    .
+   58          <template v-if="items.length">
+   59              <div class="auction  bg-white" v-for="auction in items" v-link="{name: 'auction', params: {id: auction.id}}">
+   60:                 <div class="separator-20 border-bottom-none"></div>
+   61                  <div class="auction-info border-bottom flex">
+   62                      <img :src="config.img + auction.product_picture + '?imageView2'"/>
+   ..
+   78                  </div>
+   79              </div>
+   80:             <div class="separator-20 border-none"></div>
+   81          </template>
+   82          <empty v-else>
+
+/Users/wxzhang/project/myxx-mobile/src/components/Avatar.vue:
+    3          <div v-if="user.vip_flag" class="vip-{{size}}"></div>
+    4      </div>
+    5:     <div v-else class="avatar-{{size}}" @click.stop v-link="{name: 'user', params: {id: user.id, tab: user.shop_status === undefined ? 'none' : (user.shop_status ? 'jade' : 'story')}}" v-bg.sm="user.photo">
+    6          <div v-if="user.vip_flag" class="vip-{{size}}"></div>
+    7      </div>
+
+/Users/wxzhang/project/myxx-mobile/src/components/Comment.vue:
+   33      }
+   34      li:nth-last-child(2) {
+   35:         background-image: none;
+   36      }
+   37      .nocomment {
+
+/Users/wxzhang/project/myxx-mobile/src/components/CssView.vue:
+  413                      position: absolute;
+  414                      background-color: inherit;
+  415:                     border-style: none;
+  416                      top: 50%;
+  417                      margin-top: -13px;
+  ...
+  449                      height: 26px;
+  450                      background-color: inherit;
+  451:                     border-style: none;
+  452                  }
+  453              }
+
+/Users/wxzhang/project/myxx-mobile/src/components/EvaluationView.vue:
+   33                  background: transparent url('#{$qn}/icon/play.png') no-repeat center;
+   34                  background-size: 1rem;
+   35:                 pointer-events: none;
+   36              }
+   37          }
+   ..
+  183              return this.$get(`sns/jianbao/${to.params.id}|v3`)
+  184                      .then(evaluation => {
+  185:                         if(to.params.result !== 'none') {
+  186                              evaluation.results = evaluation.results.filter(result => result.id == to.params.result);
+  187                          }
+
+/Users/wxzhang/project/myxx-mobile/src/components/FeedbackView.vue:
+   88              padding-left: 30px;
+   89              padding-top: 30px;
+   90:             resize: none;
+   91              border-width: 1px;
+   92              overflow: hidden;
+
+/Users/wxzhang/project/myxx-mobile/src/components/IndexView.vue:
+   37          <li class="tab">商城</li>
+   38          <li>
+   39:             <a href="/jade/188/none">商品详情 - /jade/:id/:tab</a>
+   40          </li>
+   41          <li>
+
+/Users/wxzhang/project/myxx-mobile/src/components/InstructionView.vue:
+    7          padding-right: 32px;
+    8          &:last-child {
+    9:             background: none;
+   10           }
+   11      }
+
+/Users/wxzhang/project/myxx-mobile/src/components/JadeDetail.vue:
+   10  	}
+   11  	.tags {
+   12: 		background: none;
+   13  	}
+   14  }
+
+/Users/wxzhang/project/myxx-mobile/src/components/OrderAffirmView.vue:
+   68              padding: 24px 32px;
+   69              textarea {
+   70:                 border: none;
+   71                  margin:16px 0 0 44px;
+   72                  height: 220px;
+
+/Users/wxzhang/project/myxx-mobile/src/components/OrderSendView.vue:
+   11          line-height: 86px;
+   12          padding: 0 32px;
+   13:         border: none;
+   14          width: 100%;
+   15      }
+
+/Users/wxzhang/project/myxx-mobile/src/components/StoriesView.vue:
+   49          }
+   50          input {
+   51:             display: none;
+   52          }
+   53      }
+
+/Users/wxzhang/project/myxx-mobile/src/components/UserEvaluationView.vue:
+   50          }
+   51          input {
+   52:             display: none;
+   53          }
+   54      }
+
+/Users/wxzhang/project/myxx-mobile/src/components/UserStoryView.vue:
+   49          }
+   50          input {
+   51:             display: none;
+   52          }
+   53      }
+
+/Users/wxzhang/project/myxx-mobile/src/components/actions/Keyboard.vue:
+   38          width: 540px;
+   39          height: 200px;
+   40:         border: none;
+   41:         resize: none;
+   42          padding: 1em;
+   43          margin: 1em 40px;
+
+/Users/wxzhang/project/myxx-mobile/src/components/actions/Login.vue:
+   38          &[name='code'] {
+   39              width: 50%;
+   40:             border-right: none;
+   41          }
+   42          &[type='button'] {
+
+31 matches across 23 files

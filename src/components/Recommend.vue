@@ -84,7 +84,6 @@
             </div>
             <div class="data-item"></div>
         </div>
-        <div class="separator-20"></div>
     </div>
 </template>
 <script>

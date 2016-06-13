@@ -53,44 +53,57 @@
             margin-bottom: 14px;
         }
     }
-    .params {
-        .others {
-            padding-left: 32px;
-            ul > li {
-                padding: 26px 0;
-                line-height: 1.5;
-                border-bottom: 1px solid #eee;
+    .tabs {
+        height: 90px;
+        position: relative;
+        top: 0;
+        >div {
+            width: 33.3%;
+            .desc {
+                margin: 38px 0 22px 0;
             }
-            ul > li > p:nth-child(2) {
-                line-height: 1.5;
-                padding-right: 32px;
+            &>div {
+                text-align: center;
+                margin: 0 auto;
             }
-            .label {
-                width: 218px;
+            .dash {
+                display: block;
+                width: 180px;
+                height: 4px;
             }
+            &.v-link-active {
+                color: #cc3f4f;
+                .dash {
+                    background-color: #cc3f4f;
+                }
+            }
+        }
+        &.default {
+            > div:first-child {
+                color: #cc3f4f;
+                .dash {
+                    display: block;
+                    width: 180px;
+                    height: 4px;
+                    background-color: #cc3f4f;
+                }
+            };
+        }
+        &.fixed {
+            position: fixed;
+            z-index: 99;
+            width: 100%;
+            top: 0;
+            background-color: white;
         }
     }
-    .detail {
-        padding: 0 0 32px 0;
-        .title {
-            padding-left: 32px;
-            height: 80px;
-        }
-        .text {
-            padding: 32px;
-            line-height: 1.5;
-        }
-        img {
-            width: 100%
-        }
-    }
-/*    .float-box {
+    .float-box {
         bottom: 0;
         height: 98px;
         -webkit-box-align: stretch;
         width: 100%;
         .contact-btn,.comment-btn {
-             -webkit-box-orient: vertical;
+            -webkit-box-orient: vertical;
             -webkit-box-pack: center;
             div[class^=icon] {
                 margin-bottom: 14px;
@@ -101,8 +114,8 @@
             text-align: center;
             line-height: 98px;
         }
-    }*/
-    .fake-input {
+    }
+    /*.fake-input {
         bottom: 0;
         width: 100%;
         background-color: #f9f9f9;
@@ -133,14 +146,17 @@
             background-color: #b2b2b2;
             border-radius: 8px;
         }
+    }*/
+    .placeholder {
+        height: 90px;
     }
 }
 </style>
 <template>
-<div class="jade-view bg-white">
+<div class="jade-view bg-default">
     <div class="jade-video play" v-bg="jade.video" @click="play(jade.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
-    <div class="titles">
+    <div class="titles bg-white">
         <div class="header">
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
@@ -150,7 +166,7 @@
                 </template>
             </div>
         </div>
-<!--         <div class="footer flex font-26 gray border-top">
+        <div class="footer flex font-26 light border-top">
             <div class="flex">
                 <span class="icon-pay-guarantee"></span>
                 <span>付款担保</span>
@@ -160,118 +176,52 @@
                 <span>七天退货</span>
             </div>
             <div class="flex">
-                <span class="icon-sf"></span>
+                <span class="icon-unchecked"></span>
                 <span>顺丰包邮</span>
             </div>
-        </div> -->
-    </div>
-    <div class="separator-20"></div>
-    <div class="master flex" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
-            <avatar :user="jade.owner" :size="90"></avatar>
-            <div class="flex-1">
-                <p class="font-32 master-name">{{jade.owner.name}}</p>
-                <p class="font-26 gray">{{jade.owner.title}}</p>
-            </div>
-            <div class="red font-26">更多商品<span class="icon-enter-slim gray"></span></div>
-    </div>
-    <div class="separator-20"></div>
-    <div class="params">
-        <tags :tags="jade.tags"></tags>
-        <div class="others">
-            <ul>
-                <li v-if="jade.category" class="flex font-26">
-                    <p class="label gray">分类</p>
-                    <p class="flex-1">{{jade.category | tree}}</p>
-                </li>
-                <li v-if="jade.size" class="flex font-26">
-                    <p class="label gray">尺寸</p>
-                    <p class="flex-1">{{jade.size}}</p>
-                </li>
-                <li v-if="jade.weight" class="flex font-26">
-                    <p class="label gray">重量</p>
-                    <p class="flex-1">{{jade.weight}}g</p>
-                </li>
-                <li v-if="jade.variety" class="flex font-26">
-                    <p class="label gray">种类</p>
-                    <p class="flex-1">{{jade.variety | tree}}</p>
-                </li>
-                <li v-if="jade.place" class="flex font-26">
-                    <p class="label gray">产地</p>
-                    <p class="flex-1">{{jade.place | tree}}</p>
-                </li>
-                <li v-if="jade.skin" class="flex font-26">
-                    <p class="label gray">皮色</p>
-                    <p class="flex-1">{{jade.skin | tree}}</p>
-                </li>
-                <li v-if="jade.material" class="flex font-26">
-                    <p class="label gray">产状</p>
-                    <p class="flex-1">{{jade.material | tree}}</p>
-                </li>
-                <li v-if="jade.certificate" class="flex font-26">
-                    <p class="label gray">证书</p>
-                    <p class="flex-1">{{jade.certificate | tree}}</p>
-                </li>
-                <li v-if="jade.gifts.length" class="flex font-26">
-                    <p class="label gray">礼物说</p>
-                    <p class="flex-1">{{gifts}}</p>
-                </li>
-                <li v-if="jade.themes.length" class="flex font-26">
-                    <p class="label gray">题材</p>
-                    <p class="flex-1">{{themes}}</p>
-                </li>
-                <li v-if="jade.morals.length" class="flex font-26">
-                    <p class="label gray">寓意</p>
-                    <p class="flex-1">{{morals}}</p>
-                </li>
-                <li v-if="jade.creator" class="flex font-26">
-                    <p class="label gray">作者</p>
-                    <p class="flex-1">{{jade.creator}}</p>
-                </li>
-                <li v-if="jade.prizes.length" class="flex font-26">
-                    <p class="label gray">获奖</p>
-                    <p class="flex-1">{{prizes}}</p>
-                </li>
-                <li v-if="jade.genre" class="flex font-26">
-                    <p class="label gray">流派</p>
-                    <p class="flex-1">{{jade.genre | tree}}</p>
-                </li>
-            </ul>
         </div>
     </div>
     <div class="separator-20"></div>
-    <recommend></recommend>
-    <comment type="40" :id="jade.id"></comment>
-    <div class="separator-20"></div>
-    <div class="detail">
-        <div class="title border-bottom flex">
-            <span class="font-22 gray flex">图文详情</span>
+    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
+        <avatar :user="jade.owner" :size="90"></avatar>
+        <div class="flex-1">
+            <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
+            <p class="font-26 gray">{{jade.owner.title}}</p>
         </div>
-        <div class="text font-30">
-          {{jade.detail}}
-        </div>
-        <div v-for="img in jade.pictures" >
-          <img :src="config.img + img + '?imageView2'" @click="coverflow(jade.pictures, $index)"/>
-        </div>
+        <div class="font-26 icon-enter-slim gray"></div>
     </div>
     <div class="separator-20"></div>
-    <!-- <comment type="30" :id="story.post_id"></comment> -->
-<!--     <div class="float-box flex fixed font-30 bg-white border-top">
-        <div class="font-22 flex flex-1 gray contact-btn border-right">
+    <div class="tabs border-bottom flex font-26 bg-white" :class="{'default': isDefaultView, 'fixed': fixed}">
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
+            <div class="desc border-right">详情</div>
+            <div class="dash"></div>
+        </div>
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'attribute'}, replace: true}">
+            <div class="desc border-right">属性</div>
+            <div class="dash"></div>
+        </div>
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'problem'}, replace: true}">
+            <div class="desc">常见问题</div>
+            <div class="dash"></div>
+        </div>
+    </div>
+    <div class="placeholder bg-white" v-if="fixed"></div>
+    <div class="bg-default">
+        <!-- TODO use keep-alive -->
+        <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
+    </div>
+    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white border-top">
+        <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
             <div class="icon-contact"></div>
             <div>联系商家</div>
         </div>
-        <div class="font-22 flex flex-1 gray comment-btn" @click="$broadcast('comment', $event)">
+        <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
             <div class="icon-comment"></div>
             <div>评论</div>
         </div>
-        <div class="font-30 flex-2 buy-btn bg-gray white" @click="buy">
+        <div class="font-30 flex-2 buy-btn bg-red white" v-link="{name: 'order-affirm', params: {productId: jade.id}}">
             立即购买
         </div>
-    </div> -->
-    <div v-if="!env.isShare" class="fake-input font-30 flex fixed border-top" @click="$broadcast('comment', $event)">
-        <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
-        <div class="input flex-1">点击此处发表评论...</div>
-        <div class="submit center">发送</div>
     </div>
 </div>
 </template>
@@ -279,15 +229,19 @@
 import Q from 'q';
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
-import Tags from './Tags.vue';
-import Recommend from './Recommend.vue';
+import Avatar from './Avatar.vue';
+import detail from './JadeDetail.vue';
+import attribute from './JadeAttribute.vue';
+import problem from './JadeProblem.vue';
 export default {
     name: 'JadeView',
     mixins: [shareable],
     components: {
         Comment,
-        Tags,
-        Recommend
+        Avatar,
+        detail,
+        attribute,
+        problem
     },
     data() {
         return {
@@ -300,7 +254,10 @@ export default {
                 owner: {}
             },
             recommend: {},
-            isSelf: false
+            isSelf: false,
+            isDefaultView: false,
+            view: undefined,
+            fixed: false
         };
     },
     computed: {
@@ -324,19 +281,26 @@ export default {
         this.$on('restore', () => {
             this.setShareData(this.jade, true);
         });
+        this.tabHeight = document.querySelector('.tabs').offsetTop;
     },
     route: {
-        data() {
-            return this.$get('mall/products/'+ this.$route.params.id)
-                .then((jade) => {
-                    this.setShareData(jade, true);
-                    this.action('user').then((user) => {
-                        if (user && +user.id === +jade.owner.id) {
-                            this.isSelf = true;
-                        }
-                    });
-                    return {jade};
+        canReuse({from, to}) {
+            return from.name === to.name && from.params.id === to.params.id;
+        },
+        data({from, to}) {
+            if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
+                return this.$get('mall/products/'+ this.$route.params.id)
+                    .then((jade) => {
+                        this.setShareData(jade, true);
+                        this.isSelf = (_.get(this, 'self.id') === jade.owner.id);
+                        this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1;
+                        this.view = this.isDefaultView ? 'detail' : to.params.tab;
+                        this.jade = jade;
                 });
+            } else {
+                this.isDefaultView = false;
+                this.view = to.params.tab;
+            }
         }
     },
     methods: {
@@ -351,19 +315,26 @@ export default {
                 return '无';
             }
         },
-
-         buy() {
-            return;
-            Q.promise((resolve) => {
-                if(this.self) {
-                    resolve();
-                } else {
-                    this.action('login').then(resolve);
-                }
-            }).then(() => {
-                this.$router.go({name: 'order-affirm', params: {productId: this.jade.id}});
-            });
-         }
+         // buy() {
+         //    return;
+         //    Q.promise((resolve) => {
+         //        if(this.self) {
+         //            resolve();
+         //        } else {
+         //            this.action('login').then(resolve);
+         //        }
+         //    }).then(() => {
+         //        this.$router.go({name: 'order-affirm', params: {productId: this.jade.id}});
+         //    });
+         // },
+        contact() {
+            this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+        }
+    },
+    events: {
+        scroll() {
+            this.fixed = (window.scrollY - this.tabHeight) >= -20;
+        }
     }
 }
 </script>

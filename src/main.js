@@ -83,9 +83,10 @@ router.alias({
     '/result/:id/:result': '/evaluation/:id/:result',
     '/stories/:tab': '/stories',
     '/auctions/:id': 'user/:id/auctions',
-    '/order/affirm/:productId': '/order/affirm/:productId/0',
-    '/order/address': '/order/address/0',
+    '/jade/:id': '/jade/:id/none',
+    '/order/affirm/:productId': '/order/affirm/:productId/none',
     '/tag/:type/:id/:name': '/tag/:id/:name'
+    // '/address/list': '/address/list/none'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

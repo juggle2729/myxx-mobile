@@ -15,10 +15,12 @@
         &.detail {
             height: 146px;
             line-height: 60px;
-            padding-top: 28px;
             .tip {
-                margin-left: 52px;
+                margin-left: 51px;
             }
+            &.padding-top {
+                padding-top: 28px;
+             }
         }
         >.withdraw {
             height: 86px;
@@ -122,7 +124,7 @@
 </style>
 <template>
 <div class="order-view bg-default" v-if="!$loadingRouteData">
-    <div class="status bg-white border-vertical font-30 red" :class="{'detail': order_status[order.status].tip_buyer}" v-if="!isSeller">
+    <div class="status bg-white border-vertical font-30 red padding-top" :class="{'detail': order_status[order.status].tip_buyer}" v-if="!isSeller">
         <span class="icon-clock"></span>
         <span>{{order_status[order.status].text_buyer}}</span>
         <div class="font-26 tip flex" v-if="order_status[order.status].tip_buyer" @click="rejectInfo">
@@ -193,8 +195,8 @@
              @click="button_status[button].method">{{button_status[button].text}}</div>
     </div>
     <div class="operation font-30 bg-white right flex border-top" v-else>
-        <div @click="contactBuyer">联系买家</div>
-        <div v-for="button in order_status[order.status].button_seller" :class="{'highlight': button_status[button].color}"
+        <div class="border-gray" @click="contactBuyer">联系买家</div>
+        <div class="border-gray" v-for="button in order_status[order.status].button_seller" :class="{'highlight': button_status[button].color}"
           @click="button_status[button].method">{{button_status[button].text}}</div>
     </div>
 </div>
@@ -420,14 +422,16 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`mall/order/${to.params.id}`).then((order) => {
+                return this.$get(`mall/order/${to.params.id}`).then((order) => {
                     this.order = order;
                     this.order.price = order.trans_amount;
                     this.isNote = order.buyer_note;
                     this.order_status.rf_rq.tip_buyer = '自动退款: ' + this.timer(2);
                     this.order_status.rf_rq.tip_seller = '自动退款: ' + this.timer(2);
-                    this.order_status.wg.tip_buyer = '自动确认收货: ' + this.timer(13);
-                    this.order_status.wg.tip_seller = '自动确认收货: ' + this.timer(13);
+                    this.order_status.wg.tip_buyer = '自动确认收货: ' + this.timer(10);
+                    this.order_status.wg.tip_seller = '自动确认收货: ' + this.timer(10);
+                }).catch((data) => {
+                    this.action('toast', {success: 0, text: data});
                 });
         }
     },
@@ -457,7 +461,7 @@ export default {
             this.action('confirm', { text: '确认收货后系统将付款给商家，确认收到购买的商品了？'}).then((result) => {
                 if(result === '1') {
                     this.$put(`mall/order/${this.order.order_no}/receive_goods`).then(() => {
-                        this.$router.go({name: 'receive'});
+                        this.$router.go({name: 'receive', params: {id: this.order.order_no}});
                     });
                 }
             });
@@ -481,10 +485,10 @@ export default {
             });
         },
         contactBuyer() {
-            this.action('toast', {text: 'native --> contact to buyer'});
+            this.action('chat', {id: this.order.buyer.id, order: this.order.order_no});
         },
         contactSeller() {
-            this.action('toast', {text: 'native --> contact to seller'});
+            this.action('chat', {id: this.order.seller.id, order: this.order.order_no});
         },
         service() {
             this.action('toast', {text: 'native --> contact to 客服'});
@@ -499,8 +503,8 @@ export default {
             const currentTime = new Date();
             const displayTime = (this.order.create_at + 86400000*day - currentTime.getTime());
             const days = (displayTime / (1000 * 60 * 60 * 24)) < 1 ? '00' : Math.round((displayTime / (1000 * 60 * 60 * 24)));
-            const hours = (displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) < 1 ? '00' : Math.round((displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = (displayTime % (1000 * 60 * 60)) / (1000 * 60) < 1 ? '00' : Math.round((displayTime % (1000 * 60 * 60)) / (1000 * 60));
+            const hours = ((displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) < 1 ? '00' : Math.floor((displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = (displayTime % (1000 * 60 * 60)) / (1000 * 60) < 1 ? '00' : Math.floor((displayTime % (1000 * 60 * 60)) / (1000 * 60));
 
             return  days + '天' + hours + '小时' + minutes + '分';
         }

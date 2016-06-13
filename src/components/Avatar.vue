@@ -2,7 +2,7 @@
     <div v-if="isSelf" class="avatar-{{size}}"  @click="$root.coverflow([user.photo])" v-bg.sm="user.photo">
         <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
-    <div v-else class="avatar-{{size}}" @click.stop v-link="{name: 'user', params: {id: user.id, tab: user.shop_status === undefined ? 'home' : (user.shop_status ? 'jade' : 'story')}}" v-bg.sm="user.photo">
+    <div v-else class="avatar-{{size}}" @click.stop v-link="{name: 'user', params: {id: user.id, tab: user.shop_status === undefined ? 'none' : (user.shop_status ? 'jade' : 'story')}}" v-bg.sm="user.photo">
         <div v-if="user.vip_flag" class="vip-{{size}}"></div>
     </div>
 </template>

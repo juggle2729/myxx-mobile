@@ -50,8 +50,7 @@
         <div class="bg-white border-bottom margin-bottom">
             <div class="title flex font-30 red border-bottom">
                 <div class="line bg-red"></div>
-                <div class="flex-1">常见问题</div>
-                <div class="gray font-26 flex">更多<div class="more icon-enter red"></div></div>
+                <div>常见问题</div>
             </div>
             <div class="item flex font-26" v-for="item in problems" @click="go(item.url)">
                 <div class="flex-1">{{item.title}}</div>
@@ -89,22 +88,22 @@ export default {
             problems: [
                 {
                     title: '美玉秀秀服务宝是如何保障交易的?',
-                    url: 'http://www.baidu.com'
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=2&sn=e586d5c1b173e3ff10ae9129f0264001&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                 }, {
-                    title: '付款担保是什么?',
-                    url: ''
+                    title: '付款方式有哪几种?',
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000004&idx=1&sn=d09080bffdb2c01e309dd27446818f73&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                 }, {
                     title: '为什么一定要当面验货?',
-                    url: ''
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000006&idx=1&sn=400115e261bab073565fc180157c91be&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#rd'
                 }, {
-                    title: '收到的货物和商品描述不一致, 怎么办?',
-                    url: ''
+                    title: '"七天退货"支持范围、处理流程及条件',
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=3&sn=ed9941f5caafac854dfbc95bf717adbf&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                 }, {
-                    title: '拍下的商品不想要了, 但是卖家已发货, 怎么办?',
-                    url: ''
+                    title: '商城商品的品质有保证吗?',
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000015&idx=1&sn=e783c3f473b0b1804c72982c7db02a44&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#rd'
                 }, {
-                    title: '"七天无理由退货"支持范围、处理流程及条件?',
-                    url: ''
+                    title: '物流的方式是怎么样的?',
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000015&idx=2&sn=b5680031cd802db76254f3f375d5642b&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#rd'
                 }
             ],
             classification: [
@@ -141,10 +140,10 @@ export default {
             clause: [
                 {
                     title: '消费者服务保障协议',
-                    url: 'http://www.baidu.com'
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000011&idx=1&sn=91906e3f892f51960a6cc1aa35549d67&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#rd'
                 }, {
                     title: '商家诚信交易协议',
-                    url: ''
+                    url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000010&idx=1&sn=27483ddec48986a215296c67ec8d879a&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#rd'
                 }
             ]
         }

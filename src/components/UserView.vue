@@ -308,11 +308,7 @@ export default {
                         this.profile = data;
                         this.isMaster = (this.profile.role === 4 || this.profile.role === 1 || this.profile.role === 8);
                         this.isDefaultView = ['story', 'jade', 'evaluation'].indexOf(to.params.tab) === -1;
-                        if(this.isDefaultView) {
-                            this.view = data.shop_status ? 'jade': 'story';
-                        } else {
-                            this.view = to.params.tab;
-                        }
+                        this.view = this.isDefaultView ? (data.shop_status ? 'jade': 'story') : to.params.tab;
                         this.setShareData({id: data.id, name: data.nickname, photo: data.photo, isMaster: this.isMaster} , true);
                         if(this.isMaster) {
                             return this.$get(`mall/users/${to.params.id}/product_cards`);

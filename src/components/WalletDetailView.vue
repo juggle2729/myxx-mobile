@@ -27,6 +27,9 @@
             line-height: 110px;
         }
     }
+    .empty-page {
+        margin-top: 50%;
+    }
 }
 </style>
 <template>
@@ -46,10 +49,11 @@
         <div>
             <div class="font-22 gray right">{{item.create_at | date 'yyyy-m-dd'}}</div>
             <div class="red margin-top right font-36" :class="{'light-green': item.trans_amount<0}">
-                <span v-if="item.trans_amount>0">+</span>{{item.trans_amount}}
+                <span v-if="item.trans_amount>0">+</span>{{item.trans_amount/100}}
             </div>
         </div>
     </div>
+    <partial name="empty-page" v-if="isEmpty"></partial>
 </div>
 </template>
 <script>
@@ -59,6 +63,7 @@ export default {
     data() {
         return {
             expect: true,
+            isEmpty: false,
             items: {}
         }
     },
@@ -67,8 +72,9 @@ export default {
             const tab = to.params.tab;
             this.expect = (tab === 'expects');
             return this.$get(`balance/${tab}`).then((data) => {
-                   this.items = data.entries;
-                });
+                this.items = data.entries;
+                this.isEmpty = (data.total === 0);
+            });
         }
     }
 }

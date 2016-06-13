@@ -80,7 +80,7 @@ export default {
     },
     route: {
         data({to}) {
-            if(to.params.id) {
+            if(to.params.id && to.params.id !== ':id') {
                 return  this.$get(`mall/address/${to.params.id}`).then((data) => {
                         this.receiver = data.receiver_name;
                         this.phone = data.receiver_phone;
@@ -107,19 +107,23 @@ export default {
         },
         ensure() {
             if(this.complete) {
-                const api = this.$route.params.id ? `mall/address/${this.$route.params.id}` : 'mall/addresses';
-                this.method = this.$route.params.id ? this.$put : this.$post;
+                const api = (this.$route.params.id && this.$route.params.id !== ':id') ? `mall/address/${this.$route.params.id}` : 'mall/addresses';
+                this.method = (this.$route.params.id && this.$route.params.id !== ':id') ? this.$put : this.$post;
                 this.method(api, {
                     receiver_name: this.receiver,
                     receiver_phone: this.phone,
                     receiver_area_id: this.areaId,
                     receiver_address: this.site
                 }).then((data) => {
-                      if(this.$route.params.id && this.$route.params.id !== '0') {
-                          this.$router.go({name: 'order-affirm', params: {id: this.$route.params.id, addressId: data.id}});
-                      } else {
-                          this.$router.go({name: 'address-list', params: {id: ''}});
-                      }
+                    if(this.$route.params.productId && this.$route.params.productId !== ':productId') {
+                        this.$put(`mall/address/${data.id}`, {
+                            is_default: true
+                        }).then(() => {
+                            this.$router.go({name: 'order-affirm', params: {productId: this.$route.params.productId, addressId: data.id}});
+                        });
+                    } else {
+                        this.$router.go({name: 'address-list'});
+                    }
                 });
             }
         }

@@ -69,8 +69,7 @@ let routes = {
         }
     },
 
-
-    '/jade/:id': {
+    '/jade/:id/:tab': {
         name: 'jade',
         title: '商品详情',
         component(resolve) {
@@ -211,7 +210,6 @@ let routes = {
             }, 'profile');
         }
     },
-
     '/user/:id/:tab': { // 个人主页
         name: 'user',
         title: '个人主页',
@@ -248,6 +246,16 @@ let routes = {
             require.ensure([], (require) => {
                 resolve(require('ApplyMasterView.vue'));
             }, 'apply');
+        }
+    },
+
+    '/comments/:id/:type': {
+        name: 'comments',
+        title: '全部评论',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CommentsView.vue'));
+            }, 'comments');
         }
     },
 
@@ -305,7 +313,8 @@ let routes = {
             }, 'mall');
         }
     },
-    '/address/list': { // 商品id，可选
+
+    '/address/list/:productId': { // 商品id，可选
         name: 'address-list',
         title: '收货地址管理',
         component(resolve) {
@@ -314,7 +323,7 @@ let routes = {
             }, 'address');
         }
     },
-    '/address/:id/update': {
+    '/address/:id/update/:productId': {
         name: 'address-update',
         title: '收货地址管理',
         component(resolve) {
@@ -323,6 +332,7 @@ let routes = {
             }, 'address');
         }
     },
+
     '/wallet': {
         name: 'wallet',
         title: '我的钱包',
@@ -359,6 +369,7 @@ let routes = {
             }, 'wallet');
         }
     },
+
     '/instructions': {
         name: 'instructions',
         title: '帮助',
@@ -416,7 +427,15 @@ let routes = {
             }, 'other');
         }
     },
-
+    'api-test': {
+        title: '客户端api测试',
+        name: 'api-test',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ApiTestView.vue'));
+            }, 'other');
+        }
+    },
     '/404': {
         title: '页面不存在',
         name: '404',
@@ -426,7 +445,6 @@ let routes = {
             }, 'other');
         }
     },
-
     '/': {
         component(resolve) {
             require.ensure([], (require) => {
@@ -434,7 +452,6 @@ let routes = {
             }, 'browser');
         }
     },
-
     '/css': {
         name: 'cssview',
         component(resolve) {
@@ -443,7 +460,6 @@ let routes = {
             }, 'browser');
         }
     },
-
     '*': {
         title: '找不到北',
         component(resolve) {
