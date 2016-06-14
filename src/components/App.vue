@@ -32,18 +32,18 @@
             display: block;
         }
     }
-    #logout {
+    #user {
         z-index: 99;
         position: fixed;
         top: 0;
         right: 0;
         padding: 10px;
+        cursor: pointer;
         img {
+            border-radius: 50%;
             width: 60px;
             height: 60px;
-            border-radius: 50%;
             box-shadow: 0 0 10px 5px #4CAF50;
-            cursor: pointer;
         }
     }
 }
@@ -64,8 +64,9 @@
         <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="logout" @click="logout" v-if="self && env.isBrowser">
-        <img :src="config.img + self.photo" :alt="self.nickname" />
+    <div id="user" v-if="env.isBrowser">
+        <img v-if="self" @click="logout" :src="config.img + self.photo" :alt="self.nickname" />
+        <div v-else @click="login" class="font-34">👤</div>
     </div>
     <component :is="popup.handler" :params.sync="popup" transition="pop"></component>
 </div>
@@ -79,7 +80,7 @@ export default {
     data() {
         return {
             id: 160607153549035517,
-            user: JSON.parse(localStorage.getItem('MYXX_USER')),
+            user: this.$store.get('user'),
             shareData: {},
             popup: {}
         }
@@ -109,8 +110,15 @@ export default {
     },
     methods: {
         logout() {
-            localStorage.removeItem('MYXX_USER');
-            this.user = undefined;
+            this.$store.remove('user');
+            location.href = location.href;
+        },
+
+        login() {
+            this.action('login')
+                .then((user) => {
+                    this.user = user;
+                });
         }
     }
 }

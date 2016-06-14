@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import dateformat from 'dateformat';
 import config from './config';
 const filters = {

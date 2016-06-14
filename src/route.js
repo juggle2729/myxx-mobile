@@ -32,7 +32,7 @@ let routes = {
     },
     '/story/:id': {
         name: 'story',
-        title: ' ', //标题为空，减缓数据加载后，标题变化的差体验
+        title: ' ', // 标题为空，减缓数据加载后，标题变化的差体验
         native: v => v == 1.3,
         component(resolve) {
             require.ensure([], (require) => {
@@ -102,8 +102,8 @@ let routes = {
         title: '拍卖生成',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('AuctionShareView.vue'))
-            }, 'auction')
+                resolve(require('AuctionShareView.vue'));
+            }, 'auction');
         }
     },
     '/auction/:id/bidding': {
@@ -263,8 +263,8 @@ let routes = {
         name: 'order-affirm',
         title: '订单详情',
         component(resolve) {
-        require.ensure([], (require) => {
-            resolve(require('OrderAffirmView.vue'));
+            require.ensure([], (require) => {
+                resolve(require('OrderAffirmView.vue'));
             }, 'mall');
         }
     },
@@ -282,7 +282,7 @@ let routes = {
         title: '确认收货成功',
         component(resolve) {
             require.ensure([], (require) => {
-                    resolve(require('OrderReceiveView.vue'));
+                resolve(require('OrderReceiveView.vue'));
             }, 'mall');
         }
     },
@@ -388,6 +388,16 @@ let routes = {
         }
     },
 
+    '/comments/:id/:type': {
+        name: 'comments',
+        title: '全部评论',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CommentsView.vue'));
+            }, 'comments');
+        }
+    },
+
     '/tag/:id/:name': {
         name: 'tag',
         native: v => v >= 1.4 && {name: 'tag'},
@@ -468,6 +478,6 @@ let routes = {
             }, 'other');
         }
     }
-}
+};
 
 export default routes;

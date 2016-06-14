@@ -25,12 +25,14 @@
                 top: 36px;
                 right: 0;
                 .button {
-                    height: 56px;
-                    width: 112px;
-                    border-width: 0;
                     border-radius: 6px 0 0 6px;
-                    text-align: center;
-                    line-height: 56px;
+                    span{
+                        height: 56px;
+                        border-width: 0;
+                        text-align: center;
+                        line-height: 56px;
+                        padding-left: .5em;
+                    }
                 }
             }
         }
@@ -129,11 +131,15 @@
                     margin-bottom: 12px;
                 }
                 .button {
-                    float: right;
-                    border-radius: 6px;
-                    width: 84px;
-                    height: 36px;
-                    line-height: 36px;
+                    text-align: right;
+                    span {
+                        text-align: center;
+                        display: inline-block;
+                        border-radius: 6px;
+                        width: 84px;
+                        height: 36px;
+                        line-height: 36px;
+                    }
                 }
                 p {
                     clear: both;
@@ -192,11 +198,12 @@
     }
 </style>
 <template>
-    <div class="user-view bg-default" v-if="!$loadingRouteData">
+    <div class="user-view" v-if="!$loadingRouteData">
         <div class="account center border-bottom" v-if="!isMaster">
             <div class="follow">
-                <div class="button bg-red font-26 red" @click="download()">
-                    <span class="icon-follow white">关注</span>
+                <div v-if="!isSelf" :class="{'bg-red': !profile.follow, 'bg-gray': profile.follow}" class="button font-26 white" @click="toggleFollow(profile)">
+                    <span v-if="profile.follow">已关注</span>
+                    <span v-else="profile.follow" class="icon-follow">关注</span>
                 </div>
             </div>
             <div class="title">
@@ -233,8 +240,9 @@
                 <p class="font-26 gray">{{profile.titles.length? profile.titles[0].name:''}}</p>
             </div>
             <div class="follow font-26 gray">
-                <div class="button bg-red font-22 center" @click="download()">
-                    <span class="icon-follow white">关注</span>
+                <div v-if="!isSelf" class="button font-22 center" @click="toggleFollow(profile)">
+                    <span v-if="profile.follow" class="bg-gray white">已关注</span>
+                    <span v-else="profile.follow" class="icon-follow bg-red white">关注</span>
                 </div>
                 <p><span>关注&nbsp;&nbsp;{{profile.follow_count}}</span><span>粉丝&nbsp;&nbsp;{{profile.fans_count}}</span></p>
             </div>
@@ -252,13 +260,6 @@
                 </div>
                 <div class="dash"></div>
             </div>
-            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
-                <div class="line">
-                    <p align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
-                    <p align="center">鉴宝</p>
-                </div>
-                <div class="dash"></div>
-            </div>
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
                 <div class="line">
                     <p align="center">{{profile.topic_count}}</p>
@@ -266,8 +267,15 @@
                 </div>
                 <div class="dash"></div>
             </div>
+            <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">
+                <div class="line">
+                    <p align="center">{{profile.jianbao_count + profile.jianbao_request_count}}</p>
+                    <p align="center">鉴宝</p>
+                </div>
+                <div class="dash"></div>
+            </div>
         </div>
-        <div class="content border-top bg-default">
+        <div class="content border-top">
             <!-- TODO use keep-alive -->
             <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
         </div>
@@ -295,6 +303,11 @@ export default {
             view: undefined,
             profile: {},
             products: []
+        }
+    },
+    computed: {
+        isSelf() {
+            return _.get(this, 'self.id') == this.profile.id;
         }
     },
     route: {
@@ -327,8 +340,20 @@ export default {
         }
     },
     methods: {
-        download() {
-            location.href = this.config.download;
+        toggleFollow(user) {
+            if (user.follow) {
+                this.$delete(`users/follow/${user.id}`)
+                .then(() => {
+                    user.follow = false;
+                    this.action('toast', {success: 1, text: '已取消关注'});
+                });
+            } else {
+                this.$post(`users/follow/${user.id}`)
+                .then(() => {
+                    user.follow = true;
+                    this.action('toast', {success: 1, text: '已关注'});
+                });
+            }
         },
         next(index) {
             (index < this.products.length - 1) && this.index++;

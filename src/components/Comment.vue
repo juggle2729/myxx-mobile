@@ -150,7 +150,7 @@ export default {
         }
     },
     created() {
-        Q.Promise((resolve, reject) => {
+        Q.Promise((resolve) => {
             if(this.id) {
                 resolve(this.id);
             } else {
@@ -160,14 +160,7 @@ export default {
                     }
                 })
             }
-        }).then(id => {
-            if(localStorage.getItem(this.uid)) {
-                const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
-                localStorage.removeItem(this.uid); //立刻去掉缓存数据，防止重复提交
-                return this.$req(url, method, data);
-            }
-        }).then(resp => {
-            resp && this.action('toast', {success: 1, text: '评论成功'});
+        }).then(() => {
             this.fetch();
         });
     },

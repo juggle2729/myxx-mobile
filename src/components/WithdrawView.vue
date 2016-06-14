@@ -67,12 +67,12 @@ export default {
             account: '',
             amount: '',
             balance: ''
-        }
+        };
     },
     ready() {
         this.$on('restore', () => {
             this.action('action', {label: '常见问题'}).then(() => {
-                this.$router.go({name: 'instruction', params:{id: 'payment'}});
+                this.$router.go({name: 'instruction', params: {id: 'payment'}});
             });
         });
     },
@@ -92,8 +92,8 @@ export default {
         }
     },
     methods: {
-        withdraw () {
-            if(this.complete) {
+        withdraw() {
+            if (this.complete) {
                 this.$post('balance/withdraws', {
                     name: this.name,
                     bank_account: this.account,
@@ -104,5 +104,5 @@ export default {
             }
         }
     }
-}
+};
 </script>

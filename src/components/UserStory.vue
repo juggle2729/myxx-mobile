@@ -1,11 +1,8 @@
 <style lang="sass">
 @import '~style/partials/var';
 .user-story {
-    .item {
-        padding: 0 16px 32px;
-    }
     .header {
-        padding: 20px 4px;
+        padding: 20px 16px;
         .icon-follow-big {
             font-size: 20px;
             padding: 3px 8px 0 0;
@@ -15,6 +12,7 @@
         }
     }
     .content {
+        padding: 0 16px;
         .cover {
             width: 100%;
             padding-top: 100%;
@@ -43,42 +41,43 @@
                 line-height: 1.5;
             }
         }
-        .social {
-            height: 80px;
-            color: #d8d8d8;
-            .icon-like-solid {
-                position: relative;
-                bottom: 2px;
-            }
-            >div {
-                width: 33.3%;
-                span:nth-child(2) {
-                    color: #bcbcbc;
-                }
+    }
+    .social {
+        height: 80px;
+        color: #d8d8d8;
+        .icon-like-solid {
+            position: relative;
+            bottom: 2px;
+        }
+        >div {
+            width: 33.3%;
+            span:nth-child(2) {
+                color: #bcbcbc;
             }
         }
     }
 }
 </style>
 <template>
-<div class="user-story bg-default">
-    <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.post_id}}" class="item">
+<div class="user-story">
+    <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.entry.post_id}}" class="item">
+        <div class="separator"></div>
         <div class="header flex">
             <div class="flex-1 flex">
-                <avatar :user="item.user" :is-self="false" :size="50"></avatar>
-                <div class="name margin-left font-26">{{item.user.name}}</div>
+                <avatar :user="item.entry.user" :is-self="false" :size="50"></avatar>
+                <div class="name margin-left font-26">{{item.entry.user.name}}</div>
             </div>
-            <div class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
+            <div v-if="!item.entry.user.is_followed" class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
         </div>
         <div class="content bg-white">
-            <div v-if="item.medias[0].type==='video'" class="cover video" v-bg.video="item.medias[0].id"></div>
-            <div v-else class="cover" v-bg="item.medias[0].id"></div>
-            <div class="title font-30"><div class="user-input">{{item.content}}</div></div>
-            <div class="social font-26 flex border-vertical">
-                <div class="border-right center"><span class="icon-comment-solid"></span><span>{{item.comment}}</span></div>
-                <div class="border-right center" :class="{'red': item.liked}"><span class="icon-like-solid"></span><span>{{item.like}}</span></div>
-                <div class="center"><span class="icon-share-social"></span><span>分享</span></div>
-            </div>
+            <div v-if="item.entry.cover_type==='video'" class="cover video" v-bg.video="item.entry.cover"></div>
+            <div v-else class="cover" v-bg="item.entry.cover"></div>
+            <div class="title font-30"><div class="user-input">{{item.entry.content}}</div></div>
+        </div>
+        <div class="social font-26 flex border-vertical">
+            <div class="border-right center"><span class="icon-comment-solid"></span><span>{{item.entry.comment}}</span></div>
+            <div class="border-right center" :class="{'red': item.entry.liked}"><span class="icon-like-solid"></span><span>{{item.entry.like}}</span></div>
+            <div class="center"><span class="icon-share-social"></span><span>分享</span></div>
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
@@ -96,8 +95,11 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'sns/users/'+ this.$route.params.id +'/topics',
-                list: 'topics'
+                path: 'sns/topics|v4',
+                list: 'topics',
+                params: {
+                    user_id: this.$route.params.id
+                }
             }
         }
     },

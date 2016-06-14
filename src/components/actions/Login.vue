@@ -53,7 +53,7 @@
         <img :src="'profile/about.png' | qn">
         <div>
             <input name="phone" v-model="phone" type="text" placeholder="手机号">
-            <input name="code" v-model="code" type="text" placeholder="验证码"><input @click="getCode" type="button" class="white bg-red" v-model="label">
+            <input name="code" v-model="code" type="text" placeholder="验证码"><input @click="requestCode" type="button" class="white bg-red" v-model="label">
         </div>
         <div v-show="msg" class="msg font-34 bg-default red padding">{{msg}}</div>
     </div>
@@ -63,7 +63,7 @@ export default {
     name: 'Login',
     data() {
         return {
-            phone: localStorage.getItem('MYXX_USER') ? JSON.parse(localStorage.getItem('MYXX_USER')).phone : '',
+            phone: '15927607971',
             code: '',
             msg: '',
             label: '获取验证码'
@@ -89,47 +89,53 @@ export default {
         this.$watch('formData', data => {
             if(/^1\w{10}$/.test(data.phone) && /^\w{4}$/.test(data.verify_code)) {
                 this.$http.post('users/login', data)
-                    .then(resp => {
-                        if(resp.data.status === 200) {
+                    .then(({data}) => {
+                        if(data.status === 200) {
                             this.msg = '登录成功';
-                            const user = JSON.stringify(resp.data.data);
-                            localStorage.setItem('MYXX_USER', user);
+                            const user = data.data;
+                            this.$store.set('user', user);
+                            this.$root.user = user;
                             this.params.cb(user);
                             // 处理保存的请求
-                            if(localStorage.getItem(this.uid)) {    
-                                const {url, method, data} = JSON.parse(localStorage.getItem(this.uid));
-                                console.debug(url, method, this.$req);
-                                this.$req(url, method, data)
-                                    .finally(() => {
-                                        localStorage.removeItem(this.uid);
-                                        this.action('toast', {success: 1, text: '操作成功'});
-                                    });
-                            } else {
+                            // if(this.$store.get(this.uid)) {
+                            //     const {url, method, data} = this.$store.get(this.uid);
+                            //     console.debug(url, method, this.$req);
+                            //     this.$req(url, method, data)
+                            //         .finally(() => {
+                            //             debugger;
+                            //             this.$store.remove(this.uid);
+                            //             this.action('toast', {success: 1, text: '操作成功'});
+                            //         });
+                            // } else {
                                 this.close();
-                            }
+                            // }
                         } else {
-                            this.msg = resp.data.message
+                            this.msg = data.message
                         }
                     });
             } else {
+                this.code = '';
                 this.msg = '';
             }
         })
     },
     methods: {
-        getCode() {
-            document.querySelector("[name='code']").focus();
+        requestCode() {
+            this.$el.querySelector("[name='code']").focus();
             if(this.label === '获取验证码') {
                 if(/^1\w{10}$/.test(this.phone)) {
                     this.$http.get(`users/login/verify?phone=${this.phone}`)
                         .then(resp => {
                             if(resp.data.status === 200) {
-                                let countdown = 60;
+                                this.getCode();
+                                let countdown = 10;
+                                this.label = countdown;
                                 let interval = setInterval(() => {
                                     this.label = --countdown;
-                                    if(!countdown) {
+                                    if(!countdown || this.msg) {
                                         clearInterval(interval);
                                         this.label = '获取验证码';
+                                        this.msg = this.msg || '超时,请重试';
                                     }
                                 }, 1000);
                             } else {
@@ -142,8 +148,30 @@ export default {
             }
         },
         close() {
-            localStorage.removeItem(this.uid);
+            this.$store.remove(this.uid);
             this.params.handler = undefined;
+        },
+
+        getCode() {
+            const url = this.config.api + '/common/sms';
+            if(/\/api.meiyuxiuxiu.com/.test(url)) {
+                this.msg = '看手机';
+            } else {
+                // 自动获取验证码
+                this.$http.get(url)
+                    .then(resp => {
+                        if(resp.status === 200) {
+                            const code = resp.data
+                                .split('<hr>')
+                                .slice(0, 3)
+                                .map(record => record.replace(/\D+/g, '-').match(/\d{11}-\d{4}/).pop().split('-'))
+                                .filter(record => record[0] === this.phone)
+                                .shift()
+                                .pop();
+                            this.code = code;
+                        }
+                    })
+            }
         }
     }
 }

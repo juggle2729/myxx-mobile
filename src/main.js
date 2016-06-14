@@ -1,8 +1,4 @@
 require('fastclick').attach(document.body);
-import _ from 'lodash';
-import Q from 'q';
-import config from './config';
-import emitter from './utils/emitter';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Resource from 'vue-resource';
@@ -11,6 +7,7 @@ import directive from './directive';
 import mixin from './mixins/global';
 import filter from './filter';
 import partial from './partial';
+import store from './store';
 
 // Vue configurations
 Vue.config.debug = process.env.NODE_ENV !== 'production';
@@ -20,6 +17,7 @@ Vue.use(filter);
 Vue.use(directive);
 Vue.mixin(mixin);
 Vue.use(partial);
+Vue.use(store);
 
 Vue.http.interceptors.push({
     request(req) {
@@ -75,7 +73,6 @@ router.beforeEach(({from, to, abort, next}) => {
     next();
 });
 
-router.afterEach(({to}) => {});
 router.alias({
     '/user/:id': '/user/:id/none',
     '/evaluations/:tab': '/evaluations',

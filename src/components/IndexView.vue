@@ -110,18 +110,6 @@
 </template>
 <script>
 export default {
-    name: 'Index',
-    ready() {
-        // const total = 600 + Math.floor(Math.random()*600);
-        // const duration = Math.floor(Math.random()*100);
-        // const key = 'ONLINE';
-        // let online = _.toNumber(localStorage.getItem(key));
-        // if(online < total) {
-        //     this.$post('log/heartbeats', {duration})
-        //         .then(() => {
-        //             localStorage.setItem(key, online+duration);
-        //         });
-        // }
-    }
+    name: 'Index'
 }
 </script>

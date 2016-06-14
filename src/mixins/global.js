@@ -1,5 +1,4 @@
 import Q from 'q';
-import _ from 'lodash';
 import bridge from '../bridge';
 import config from '../config';
 import Avatar from 'Avatar.vue';
@@ -28,7 +27,7 @@ const mixin = {
         emulateJSON: true
     },
     route: {
-        waitForData: false
+        waitForData: true
     },
     created() {
         if(this.$root === this.$parent) {
@@ -41,6 +40,26 @@ const mixin = {
             } else {
                 this.toggleLoading(false);
             }
+        }
+    },
+    ready() {
+        const snapshot = this.$store.get(this.uid);
+        if(snapshot) {
+            this.action('user')
+                .then(user => {
+                    if(user) {
+                        const {url, method, data} = snapshot;
+                        this.$store.remove(this.uid); //立刻去掉缓存数据，防止重复提交
+                        this.$req(url, method, data)
+                            .then(() => {
+                                // 首次微信登录，操作成功后，刷新页面，同步页面数据，去掉code参数
+                                location.href = location.href.replace(/code=\w+&?/, '');
+                            });
+                    } else {
+                        // 如果用户信息不存在，丢弃暂存请求，避免无需循环
+                        this.$store.remove(this.uid);
+                    }
+                });
         }
     },
     methods: {
@@ -69,7 +88,7 @@ const mixin = {
                     case 'user':
                         callback = resp => {
                                 if(resp) {
-                                    const user = JSON.parse(resp);
+                                    const user = _.isObject(resp) ? resp : JSON.parse(resp);
                                     this.$root.user = user; // 更新this.self
                                     defer.resolve(user);
                                 } else {
@@ -123,30 +142,24 @@ const mixin = {
                                 if(resp.status === 200) {
                                     defer.resolve(resp.data);
                                 } else {    // 业务异常处理
-                                    defer.reject(resp.message);
                                     if([605, 608].indexOf(resp.status) !== -1) {
-                                        if(!this.env.isApp) {
-                                            // 暂存请求数据,可以考虑把对应回调也暂存
-                                            localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
-                                        }
-                                        this.action('login');
-                                    } else if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
-                                        if(this.env.isApp) {
-                                            this.$route.router.replace({'name': '404'});
-                                        } else {
-                                            console.debug(404, this.$route.path);
-                                        }
+                                        this.snapshot({url, method, data}, defer);
                                     } else {
-                                        console.debug(`[${resp.status}]${path}\n${resp.message}`);
+                                        defer.reject(resp.message);
+                                        if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
+                                            if(this.env.isApp) {
+                                                this.$route.router.replace({'name': '404'});
+                                            } else {
+                                                console.debug(404, this.$route.path);
+                                            }
+                                        } else {
+                                            console.debug(`[${resp.status}]${path}\n${resp.message}`);
+                                        }
                                     }
                                 }
                             });
                     } else { // token缺失，无法进行数据请求
-                        // 暂存请求数据
-                        if(!this.env.isApp) {
-                            localStorage.setItem(this.uid, JSON.stringify({url, method, data}));
-                        }
-                        this.action('login');
+                        this.snapshot({url, method, data}, defer);
                     }
                 });
             return defer.promise;
@@ -162,6 +175,24 @@ const mixin = {
         },
         $delete(url, data) {
             return this.$req(url, 'delete', data);
+        },
+
+        snapshot(request, defer) {
+            if(this.env.isWechat) {
+                this.$store.set(this.uid, request);
+            }
+            this.action('login')
+                .then(() => {
+                    if(!this.env.isWechat && this.self) {//确保self已经有值，防止无限循环
+                        console.debug('deal with request', request);
+                        const {url, method, data} = request;
+                        this.$req(url, method, data)
+                            .then((resp) => {
+                                this.$store.remove(this.uid);
+                                defer.resolve(resp);
+                            });
+                    }
+                });
         },
 
         play(video) {

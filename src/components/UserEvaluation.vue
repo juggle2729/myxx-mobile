@@ -3,7 +3,6 @@
 .user-evaluation {
     .head {
         padding: 20px;
-        background-color: #f0f0f0;
         .icon-follow-big {
             font-size: 20px;
             padding: 3px 8px 0 0;
@@ -113,12 +112,13 @@
 <template>
 <div class="user-evaluation bg-white">
     <div v-for="item in items">
+        <div class="separator"></div>
         <div v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
             <div class="head flex">
                 <avatar :user="item.user" :is-self="false" :size="50"></avatar>
                 <div class="font-26 margin-left">{{item.user.name}}</div>
                 <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
-                <div class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
+                <div v-if="!item.user.is_followed" class="font-26 flex gray"><div class="icon-follow-big red"></div>关注</div>
             </div>
             <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
         </div>
@@ -161,9 +161,12 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'sns/users/'+ this.$route.params.id +'/jianbao|v2',
+                path: 'sns/jianbao|v4',
                 list: 'jianbaos',
-                id: 'post_id'
+                id: 'post_id',
+                params: {
+                    user_id: this.$route.params.id
+                }
             }
         }
     },

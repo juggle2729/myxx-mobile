@@ -1,35 +1,41 @@
 import Q from 'q';
 import emitter from './utils/emitter';
-let userPromise;    // 把wx用户接口缓存起来，防止多次请求报错
+
+let userPromise;  // 把wx用户接口缓存起来，防止多次请求报错
+
 const adapter = {
     callHandler(handler, params, cb) {
         switch(handler) {
             case 'login':
-                localStorage.removeItem('MYXX_USER'); // 清除本地用户缓存
+                this.$store.remove('user'); // 清除本地用户缓存
                 if(this.env.isWechat) {
-                    location.href = 'http://activity.meiyuxiuxiu.com/?wechat_auth=true';
+                    location.href = 'http://activity.meiyuxiuxiu.com/?wechat_auth=true&redirect_uri='+encodeURIComponent(location.href);
                 } else if(this.env.isBrowser) {
                     this.$root.popup = _.merge({}, params, {handler, cb});
                 }
                 break;
-            case 'user':
-                if(localStorage.getItem('MYXX_USER')) {
-                    cb(localStorage.getItem('MYXX_USER'));
+            case 'user': {
+                let user = this.$store.get('user');
+                if(user) {
+                    cb(user);
                 } else if(this.$route.query.code) {
                     if(!userPromise) {
                         userPromise = this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'}).promise;
                     }
                     Q.when(userPromise, resp => {
                             console.debug('get user', resp);
-                            const user = JSON.stringify(resp.data.data);
-                            localStorage.setItem('MYXX_USER', user);
+                            user = resp.data.data;
+                            this.$store.set('user', user);
                             cb(user);
+                        }, () => {  // 获取用户失败
+                            cb();
                         });
                 } else {
                     cb();
                 }
                 break;
-            case 'playCourses':
+            }
+            case 'playCourses': {
                 let medias = [{id: params.courseVideoId, type: 'video'}];
                 if(params.portraitId && params.productVideoId) {
                     medias = medias.concat({id: params.portraitId, type: 'img'}, {id: params.productVideoId, type: 'video'});
@@ -40,10 +46,11 @@ const adapter = {
                         cb: fn => fn()
                     };
                 break;
+            }
             case 'coverflow':
                 if(window.WeixinJSBridge) {
                     let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
-                    WeixinJSBridge.invoke('imagePreview', {
+                    window.WeixinJSBridge.invoke('imagePreview', {
                         urls,
                         current: urls[+params.index]
                     });
@@ -76,7 +83,7 @@ if(/myxx/i.test(navigator.userAgent)) {
     // iOS v1.2后采用新的 WebviewBridge 注入方式
     if(/ios/i.test(navigator.userAgent) && (+navigator.userAgent.split(';')[0].split('/').pop() > 1.1)) {
         ((callback) => {
-            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge); }
             if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
             window.WVJBCallbacks = [callback];
             var WVJBIframe = document.createElement('iframe');
@@ -91,10 +98,10 @@ if(/myxx/i.test(navigator.userAgent)) {
     } else {
         ((w, cb) => {
             if (w.WebViewJavascriptBridge) {
-                cb(WebViewJavascriptBridge);
+                cb(w.WebViewJavascriptBridge);
             } else {
                 w.document.addEventListener('WebViewJavascriptBridgeReady', () => {
-                    cb(WebViewJavascriptBridge);
+                    cb(w.WebViewJavascriptBridge);
                 }, false);
             }
         })(window, (bridge) => {

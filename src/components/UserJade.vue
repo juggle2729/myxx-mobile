@@ -33,7 +33,7 @@
 }
 </style>
 <template>
-<div class="user-jade">
+<div class="user-jade bg-light">
     <empty v-if="items.isEmpty" title="暂无商品"></empty>
     <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
         <div class="img" v-bg.lg="item.first_picture"></div>

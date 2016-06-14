@@ -1,5 +1,4 @@
 const path = require('path');
-const vue = require('vue-loader');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -19,7 +18,7 @@ module.exports = {
             'node_modules'
         ],
         alias: {
-            'style': __dirname + '/src/styles'
+            'style': path.resolve('src/styles')
         }
     },
     module: {
@@ -49,6 +48,7 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
+        new webpack.ProvidePlugin({_: "lodash"}),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false,
             compress: {
@@ -67,6 +67,7 @@ if (process.env.NODE_ENV === 'production') {
     ]
 } else {
     module.exports.plugins = [
+        new webpack.ProvidePlugin({_: "lodash"}),
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html'

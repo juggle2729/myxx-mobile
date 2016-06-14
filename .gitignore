@@ -12,6 +12,7 @@ logs
 *.ipr
 *.iws
 
+.imdone
 .DS_Store
 *log
 *.gz
