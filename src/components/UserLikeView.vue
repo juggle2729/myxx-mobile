@@ -68,13 +68,14 @@ export default {
             return {
                 path: `users/${this.$route.params.id}/like_list|v2`,
                 list: 'entries',
-                id: 'id', // FIXME: id 取错了
+                id: 'lastId',
                 transform(items) {
-                    return items.map(({entry, type}) => {
+                    return items.map(({entry, type, id}) => {
                         let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});
+                        card.type = _.find(this.config.types, {'id': type});
                         if(!card.isEmpty) {
+                            card.lastId = id;
                             card.id = card.post_id || card.id;
-                            card.type = _.find(this.config.types, {'id': type});
                             switch(type) {
                                 case 10:
                                     card.preview = {img: entry.picture};
