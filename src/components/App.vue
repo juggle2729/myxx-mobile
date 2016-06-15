@@ -95,10 +95,11 @@ export default {
                 isAndroid: /android/i.test(ua),
                 isWechat: /micromessenger/i.test(ua),
                 isQQ: /qq\//i.test(ua),
-                isWeibo: /weibo/i.test(ua)
+                isWeibo: /weibo/i.test(ua),
+                isDingTalk: /dingtalk/i.test(ua)
             };
             env.version = env.isApp ?  ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop() : undefined;
-            env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo);
+            env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk);
             env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
             return env;
         }

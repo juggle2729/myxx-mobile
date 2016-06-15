@@ -172,6 +172,24 @@
         0% { margin-top: 0; }
         50% { margin-top: 5px; }
     }
+
+    .download-dock {
+        width: 100%;
+        height: 100px;
+        bottom: 0;
+        padding: 0px 32px;
+        .logo {
+            height: 68px;
+            width: 68px;
+            margin: 5px 20px 0 0;
+        }
+        .download-btn {
+            display: block;
+            padding: 10px 20px;
+            border-width: 1px;
+            border-radius: 5px;
+        }
+    }
 }
 </style>
 <template>
@@ -210,6 +228,14 @@
                 </ul>
             </div>
         </div>
+        <div v-if="showDock" class="download-dock flex bg-default border-bottom fixed">
+            <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
+            <div class="flex-1 flex">
+                <div class="name font-30 bold">美玉秀秀</div>
+                <div class="slogan font-26 gray margin-left">大师在线视频鉴宝</div>
+            </div>
+            <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
+        </div>
     </div>
 </template>
 <script>
@@ -231,7 +257,8 @@ export default {
             coverDom: null,
             contentDom: null,
             following: false, // 是否正在进行follow操作
-            isSelf: false
+            isSelf: false,
+            showDock: false
         };
     },
     route: {
@@ -248,13 +275,11 @@ export default {
     },
     ready() {
         window.scrollTo(0, 0);
-        this.coverDom = document.querySelector('.master-view .cover');
-        this.contentDom = document.querySelector('.master-view .interview');
-        this.isSelf = (this.self && this.self.id == this.base.id);
-        const innerHeight = window.innerHeight;
         const container = document.querySelector('.master-view');
-        const bgDom = container.querySelector('.cover .bg');
-        bgDom.style.height = innerHeight + 'px';
+        this.coverDom = container.querySelector('.master-view .cover');
+        this.contentDom = container.querySelector('.master-view .interview');
+        this.isSelf = (this.self && this.self.id == this.base.id);
+        container.querySelector('.cover .bg').style.height = window.innerHeight + 'px';
     },
     methods: {
         enableRefresh(enable) {
@@ -287,6 +312,12 @@ export default {
                 this.contentDom.style.marginBottom = -pageHeight + 'px';
 
                 this.enableRefresh(false);
+
+                // 展示下载底栏
+                if(this.env.isShare) {
+                    this.contentDom.style.paddingBottom = '50px';
+                    this.showDock = true;
+                }
             }
 
             return true;
@@ -314,17 +345,18 @@ export default {
 
             this.enableRefresh(true);
         },
-        contentTouchEnd(event) {
+        contentTouchEnd() {
             var pageHeight = document.documentElement.clientHeight;
-
             if (this.contentMoved > this.minMove) {
                 this.contentDom.style['-webkit-transform'] = 'translate3d(0,0,0)';
                 this.contentDom.style['-webkit-transition'] = '200ms linear';
+                if(this.env.isShare) {
+                    this.showDock = false;
+                }
             } else {
                 this.contentDom.style['-webkit-transform'] = 'translate3d(0,' + -pageHeight + 'px,0)';
                 this.contentDom.style['-webkit-transition'] = '100ms linear';
             }
-
             return true;
         },
 
