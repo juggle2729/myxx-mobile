@@ -1,6 +1,4 @@
-const UA = navigator.userAgent;
-
-let routes = {
+export default {
     '/evaluations': {
         name: 'evaluations',
         title: '鉴宝列表',
@@ -249,22 +247,12 @@ let routes = {
         }
     },
 
-    '/comments/:id/:type': {
-        name: 'comments',
-        title: '全部评论',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CommentsView.vue'));
-            }, 'comments');
-        }
-    },
-
-    '/order/affirm/:productId/:addressId': {
-        name: 'order-affirm',
+    '/order/confirm/:product': { // product id
+        name: 'order-confirm',
         title: '订单详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderAffirmView.vue'));
+                resolve(require('OrderConfirmView.vue'));
             }, 'mall');
         }
     },
@@ -277,8 +265,8 @@ let routes = {
             }, 'mall');
         }
     },
-    '/order/receive/:id': {
-        name: 'receive',
+    '/order/:id/received': {
+        name: 'received',
         title: '确认收货成功',
         component(resolve) {
             require.ensure([], (require) => {
@@ -286,8 +274,8 @@ let routes = {
             }, 'mall');
         }
     },
-    'order/send/:id': {
-        name: 'send',
+    'order/:id/sent': {
+        name: 'sent',
         title: '发货确认',
         component(resolve) {
             require.ensure([], (require) => {
@@ -295,7 +283,7 @@ let routes = {
             }, 'mall');
         }
     },
-    'order/trace/:id': {
+    'order/:id/trace': {
         name: 'trace',
         title: '物流追踪',
         component(resolve) {
@@ -314,7 +302,7 @@ let routes = {
         }
     },
 
-    '/address/list/:productId': { // 商品id，可选
+    '/address/list': { // 商品id，可选
         name: 'address-list',
         title: '收货地址管理',
         component(resolve) {
@@ -323,7 +311,7 @@ let routes = {
             }, 'address');
         }
     },
-    '/address/:id/update/:productId': {
+    '/address/:id/update': {
         name: 'address-update',
         title: '收货地址管理',
         component(resolve) {
@@ -479,5 +467,3 @@ let routes = {
         }
     }
 };
-
-export default routes;

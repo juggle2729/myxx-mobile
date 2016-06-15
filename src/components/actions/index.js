@@ -7,5 +7,6 @@ import login from './Login.vue';
 import toast from './Toast.vue';
 import choice from './Delete.vue';
 import datetime from './DateTime.vue';
+import confirm from './Confirm.vue';
 
-export default {coverflow, keyboard, affirmAuction, play, share, login, toast, 'delete': choice, datetime};
+export default {coverflow, keyboard, affirmAuction, play, share, login, toast, 'delete': choice, datetime, confirm};

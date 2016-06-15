@@ -97,6 +97,7 @@ export default {
             return {
                 path: 'sns/topics|v4',
                 list: 'topics',
+                id: 'entry.post_id',
                 params: {
                     user_id: this.$route.params.id
                 }

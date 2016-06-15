@@ -62,15 +62,15 @@
 </template>
 <script>
 export default {
-    name: 'OrderAddressUpdateView',
+    name: 'AddressUpdateView',
     data() {
         return {
             receiver: '',
             phone: '',
             site: '',
             province: '',
-            city: '',
-            areaId: ''
+            city: '武汉',
+            areaId: '027'
         }
     },
     computed: {
@@ -79,20 +79,21 @@ export default {
         }
     },
     route: {
-        data({to}) {
-            if(to.params.id && to.params.id !== ':id') {
-                return  this.$get(`mall/address/${to.params.id}`).then((data) => {
-                        this.receiver = data.receiver_name;
-                        this.phone = data.receiver_phone;
-                        this.site = data.receiver_address;
-                        this.province = data.area.parent.name;
-                        this.city = data.area.name;
-                        this.areaId = data.area.id;
-                    });
-            } else {
+        data({to, next}) {
+            if(to.params.id === 'none') {   //  新增
                 this.receiver = _.get(this, 'self.nickname');
                 this.phone = _.get(this, 'self.phone');
-                this.toggleLoading(false);
+                next();
+            } else {    //  修改
+                return this.$get(`mall/address/${to.params.id}`)
+                        .then((data) => {
+                            this.receiver = data.receiver_name;
+                            this.phone = data.receiver_phone;
+                            this.site = data.receiver_address;
+                            this.province = data.area.parent.name;
+                            this.city = data.area.name;
+                            this.areaId = data.area.id;
+                        });
             }
         }
     },
@@ -107,19 +108,21 @@ export default {
         },
         ensure() {
             if(this.complete) {
-                const api = (this.$route.params.id && this.$route.params.id !== ':id') ? `mall/address/${this.$route.params.id}` : 'mall/addresses';
-                this.method = (this.$route.params.id && this.$route.params.id !== ':id') ? this.$put : this.$post;
-                this.method(api, {
+                const address = this.$route.params.id !== 'none' && this.$route.params.id;
+                const product = this.$route.query.product;
+                const api = address ? `mall/address/${address}` : 'mall/addresses';
+                const req = address ? this.$put : this.$post;
+                req(api, {
                     receiver_name: this.receiver,
                     receiver_phone: this.phone,
                     receiver_area_id: this.areaId,
                     receiver_address: this.site
                 }).then((data) => {
-                    if(this.$route.params.productId && this.$route.params.productId !== ':productId') {
+                    if(product) {
                         this.$put(`mall/address/${data.id}`, {
                             is_default: true
                         }).then(() => {
-                            this.$router.go({name: 'order-affirm', params: {productId: this.$route.params.productId, addressId: data.id}});
+                            this.$router.go({name: 'order-confirm', params: {product}});
                         });
                     } else {
                         this.$router.go({name: 'address-list'});

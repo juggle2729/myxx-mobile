@@ -58,6 +58,9 @@ const adapter = {
                     this.$root.popup = _.merge({}, params, {handler, cb});
                 }
                 break;
+            case 'back':
+                window.history.go(-params.step);
+                break;
             case 'play':
             case 'keyboard':
             case 'affirmAuction':
@@ -65,6 +68,7 @@ const adapter = {
             case 'share':
             case 'toast':
             case 'delete':
+            case 'confirm':
                 this.$root.popup = _.merge({}, params, {handler, cb});
                 break;
             case 'shareable':

@@ -267,6 +267,7 @@ module.exports = {
         "yield-star-spacing": "error",
         "yoda": "off",
         // 以上为eslint init生成规则，以下为自定义规则
-        "no-console": "warn"
+        "no-console": "warn",
+        "newline-per-chained-call": "off"
     }
 };

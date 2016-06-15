@@ -34,7 +34,7 @@
 </style>
 <template>
 <div class="address-list font-30 bg-default">
-    <div class="address bg-white" v-for="(index, address) in items">
+    <div class="address bg-white" v-for="(index, address) in addresses">
         <div class="separator-20"></div>
         <div class="info" @click="back(address.id)">
             <div class="flex">
@@ -61,36 +61,30 @@
             </div>
         </div>
     </div>
-    <partial name="load-more" v-if="items.hasMore"></partial>
-    <div class="add bg-red white center" v-link="{name: 'address-update', params: {id: ($route.params.id !== ':id') ? $route.params.id : '', productId: ($route.params.productId !== 'productId') ? $route.params.productId : ''}}">新增收货地址</div>
+    <div class="add bg-red white center"
+    v-link="{name: 'address-update', params: {id: 'none'}, query: {product: $route.query.product}}">新增收货地址</div>
 </div>
 </template>
 <script>
 import Q from 'q';
-import paging from 'paging';
 export default {
     name: 'OrderAddressView',
-    mixins: [paging],
-    computed: {
-        paging() {
-            return {
-                path: 'mall/addresses',
-                list: 'addresses',
-                params: {
-                    limit: 10
-                }
-            }
+    data() {
+        return {
+            addresses: []
         }
     },
     route: {
         data() {
-            return this.fetch();
+            return this.$get('mall/addresses')
+                        .then(({addresses}) => {
+                            return {addresses};
+                        });
         }
     },
     methods: {
         back(id) {
-            const productId = this.$route.params.productId;
-            if(productId && productId !== ':productId') {
+            if(this.$route.query.product) {
                 this.$put(`mall/address/${id}`, {
                     is_default: true
                 }).then(() => {
@@ -100,8 +94,8 @@ export default {
         },
         defaultAddress(address) {
             if(!address.is_default) {
-                _.forEach(this.items, (item) => {
-                    item.is_default && (item.is_default = false);
+                _.forEach(this.addresses, (address) => {
+                    address.is_default && (address.is_default = false);
                 });
                 this.$put(`mall/address/${address.id}`, {
                     is_default: true
@@ -111,15 +105,16 @@ export default {
             }
         },
         deleteAddress(address, index) {
-            this.action('confirm', {text: '确定删除该条收货地址?'}).then((result) => {
-                return Q.promise((resolve, reject) => {
-                    if(result === '1') {
+            this.action('confirm', {text: '确定删除该条收货地址?'})
+                .then((result) => {
+                    return Q.promise((resolve) => {
+                        if(result === '1') {
                         this.$delete(`mall/address/${address.id}`).then(() => resolve());
-                    }
+                        }
+                    });
+                }).then(() => {
+                    this.addresses.splice(index, 1);
                 });
-            }).then(() => {
-                this.items.splice(index, 1);
-            });
         }
     }
 }

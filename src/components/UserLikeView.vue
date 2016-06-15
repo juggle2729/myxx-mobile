@@ -68,7 +68,7 @@ export default {
             return {
                 path: `users/${this.$route.params.id}/like_list|v2`,
                 list: 'entries',
-                id: 'id',
+                id: 'id', // FIXME: id 取错了
                 transform(items) {
                     return items.map(({entry, type}) => {
                         let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});

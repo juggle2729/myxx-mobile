@@ -115,38 +115,6 @@
             line-height: 98px;
         }
     }
-    /*.fake-input {
-        bottom: 0;
-        width: 100%;
-        background-color: #f9f9f9;
-        color: red;
-        height: 98px;
-        padding: 16px;
-        .emoji {
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px #999999;
-            margin-top: 4px;
-            width: 64px;
-            height: 64px;
-        }
-        .input {
-            background-color: white;
-            color: #c6c6c6;
-            padding: 0 20px;
-            height: 72px;
-            line-height: 72px;
-            border-radius: 8px;
-            margin:0 16px 0 20px;
-        }
-        .submit {
-            line-height: 72px;
-            width: 140px;
-            height: 72px;
-            color: white;
-            background-color: #b2b2b2;
-            border-radius: 8px;
-        }
-    }*/
     .placeholder {
         height: 90px;
     }
@@ -219,7 +187,7 @@
             <div class="icon-comment"></div>
             <div>评论</div>
         </div>
-        <div class="font-30 flex-2 buy-btn bg-red white" v-link="{name: 'order-affirm', params: {productId: jade.id}}">
+        <div class="font-30 flex-2 buy-btn bg-red white" @click="buy()">
             立即购买
         </div>
     </div>
@@ -229,7 +197,6 @@
 import Q from 'q';
 import shareable from 'shareable';
 import Comment from './JadeComment.vue';
-import Avatar from './Avatar.vue';
 import detail from './JadeDetail.vue';
 import attribute from './JadeAttribute.vue';
 import problem from './JadeProblem.vue';
@@ -238,7 +205,6 @@ export default {
     mixins: [shareable],
     components: {
         Comment,
-        Avatar,
         detail,
         attribute,
         problem
@@ -259,23 +225,6 @@ export default {
             view: undefined,
             fixed: false
         };
-    },
-    computed: {
-        themes() {
-            return this._treeArrayConcat(this.jade.themes);
-        },
-        gifts() {
-            return this._treeArrayConcat(this.jade.gifts);
-        },
-        morals() {
-            return this._treeArrayConcat(this.jade.morals);
-        },
-        prizes() {
-            return this._treeArrayConcat(this.jade.prizes);
-        },
-        genre() {
-            return this._treeArrayConcat(this.jade.genre);
-        }
     },
     ready() {
         this.$on('restore', () => {
@@ -304,31 +253,28 @@ export default {
         }
     },
     methods: {
-        _treeArrayConcat(treeArray) {
-            if (treeArray && treeArray.length !== 0) {
-                let a = [];
-                for (let tree of treeArray) {
-                    a.push(tree ? (tree.parent ? `${tree.parent.name}—${tree.name}` : `${tree.name}`) : '无');
-                }
-                return a.join('、');
+        buy() {
+            if(!this.env.isApp || this.env.version >= 1.5) {
+                // 先确保用户登录，然后再跳转至订单页面
+                Q.promise((resolve) => {
+                    if(this.self) {
+                        resolve();
+                    } else {
+                        this.action('login').then(resolve);
+                    }
+                }).then(() => {
+                    this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
+                });
             } else {
-                return '无';
+                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
             }
-        },
-         // buy() {
-         //    return;
-         //    Q.promise((resolve) => {
-         //        if(this.self) {
-         //            resolve();
-         //        } else {
-         //            this.action('login').then(resolve);
-         //        }
-         //    }).then(() => {
-         //        this.$router.go({name: 'order-affirm', params: {productId: this.jade.id}});
-         //    });
-         // },
+         },
         contact() {
-            this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+            if(this.env.version >= 1.5) {
+                this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+            } else {
+                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+            }
         }
     },
     events: {

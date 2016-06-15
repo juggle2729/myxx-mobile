@@ -81,7 +81,7 @@ const filters = {
     }
 };
 export default {
-    install(Vue, options) {
+    install(Vue) {
         _.each(filters, (fn, name) => {
            Vue.filter(name, fn);
         });

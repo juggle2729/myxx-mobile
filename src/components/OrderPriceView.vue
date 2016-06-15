@@ -69,7 +69,7 @@
     </div>
     <div class="title font-26 gray">商品信息</div>
     <div class="merchant flex border-bottom font-30 bg-white border-vertical">
-        <img class="img margin-right" :src="config.img + order.product.picture + '?imageView2/2/h/450'">
+        <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
         <div class="name">{{order.product.title}}</div>
     </div>
     <div class="price bg-white border-bottom font-30 flex">
