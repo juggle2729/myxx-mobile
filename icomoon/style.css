@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?5u8vbv');
-    src:    url('fonts/icomoon.eot?5u8vbv#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?5u8vbv') format('truetype'),
-        url('fonts/icomoon.woff?5u8vbv') format('woff'),
-        url('fonts/icomoon.svg?5u8vbv#icomoon') format('svg');
+    src:    url('fonts/icomoon.eot?sr2911');
+    src:    url('fonts/icomoon.eot?sr2911#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?sr2911') format('truetype'),
+        url('fonts/icomoon.woff?sr2911') format('woff'),
+        url('fonts/icomoon.svg?sr2911#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,13 +24,16 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-like-solid:before {
-    content: "\e926";
+.icon-five-day:before {
+    content: "\e900";
+}
+.icon-private-letter:before {
+    content: "\e901";
 }
 .icon-follow-big:before {
     content: "\e93b";
 }
-.icon-share-social:before {
+.icon-share:before {
     content: "\e93c";
 }
 .icon-play:before {
@@ -108,6 +111,9 @@
 .icon-error:before {
     content: "\e929";
 }
+.icon-like-solid:before {
+    content: "\e926";
+}
 .icon-new-product:before {
     content: "\e920";
 }
@@ -116,9 +122,6 @@
 }
 .icon-user-profile:before {
     content: "\e927";
-}
-.icon-like-heart:before {
-    content: "\e91e";
 }
 .icon-comment-solid:before {
     content: "\e91f";
@@ -129,70 +132,14 @@
 .icon-down:before {
     content: "\e91c";
 }
-.icon-coin-y .path1:before {
-    content: "\e91a";
-    color: rgb(216, 216, 216);
-}
-.icon-coin-y .path2:before {
-    content: "\e91b";
-    margin-left: -1.0380859375em;
-    color: rgb(255, 255, 255);
-}
-.icon-m-office:before {
-    content: "\e90b";
-}
-.icon-u-best:before {
-    content: "\e90d";
-}
-.icon-m-best:before {
-    content: "\e90e";
-}
-.icon-u-human:before {
-    content: "\e913";
-}
-.icon-m-human:before {
-    content: "\e914";
-}
-.icon-u-home:before {
-    content: "\e915";
-}
-.icon-m-home:before {
-    content: "\e916";
-}
-.icon-u-office:before {
-    content: "\e917";
-}
 .icon-follow:before {
     content: "\e904";
 }
 .icon-followed:before {
     content: "\e905";
 }
-.icon-trophy:before {
-    content: "\e922";
-}
 .icon-price:before {
     content: "\e923";
-}
-.icon-share:before {
-    content: "\e924";
-}
-.icon-more:before {
-    content: "\e925";
-}
-.icon-location .path1:before {
-    content: "\e900";
-    color: rgb(198, 198, 198);
-}
-.icon-location .path2:before {
-    content: "\e901";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-}
-.icon-location .path3:before {
-    content: "\e902";
-    margin-left: -1em;
-    color: rgb(198, 198, 198);
 }
 .icon-alarm:before {
     content: "\e903";
@@ -212,9 +159,6 @@
 .icon-like-active:before {
     content: "\e90a";
 }
-.icon-menu:before {
-    content: "\e90c";
-}
 .icon-eval:before {
     content: "\e90f";
 }
@@ -223,12 +167,6 @@
 }
 .icon-site:before {
     content: "\e911";
-}
-.icon-phone:before {
-    content: "\e912";
-}
-.icon-search:before {
-    content: "\e918";
 }
 .icon-settings:before {
     content: "\e919";
