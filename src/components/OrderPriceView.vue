@@ -82,7 +82,7 @@
             <input class="button center red font-34 input" type="number" placeholder="请输入价格" v-model="price">
         </div>
     </div>
-    <div class="confirm bg-red white center font-30" @click="setPrice">确定</div>
+    <div class="confirm bg-gray white center font-30" :class="{'bg-red': complete}" @click="setPrice">确定</div>
 </div>
 </template>
 <script>
@@ -96,6 +96,11 @@ export default {
             }
         }
     },
+    computed: {
+        complete() {
+            return this.price;
+        }
+    },
     route: {
         data({to}) {
             return this.$get(`mall/order/${to.params.id}`).then((order) => {
@@ -106,15 +111,17 @@ export default {
     },
     methods: {
         setPrice() {
-            this.action('confirm', { text: `确定将订单价格修改为${this.price}元吗?`}).then((result) => {
-                if(result === '1') {
-                    this.$put(`mall/order/${this.order.order_no}/change_price`, { trans_amount: this.price * 100}).then((data) => {
-                        this.$router.go({ name: 'order', params: { id: this.order.order_no}});
-                    });
-                }
-            }).catch((data) => {
-                this.action('toast', {success: 0, text: data});
-            });
+            if(this.complete) {
+                this.action('confirm', { text: `确定将订单价格修改为${this.price}元吗?`}).then((result) => {
+                    if(result === '1') {
+                        this.$put(`mall/order/${this.order.order_no}/change_price`, { trans_amount: this.price * 100}).then((data) => {
+                            this.$router.go({ name: 'order', params: { id: this.order.order_no}});
+                        });
+                    }
+                }).catch((data) => {
+                    this.action('toast', {success: 0, text: data});
+                });
+            }
         }
     }
 }

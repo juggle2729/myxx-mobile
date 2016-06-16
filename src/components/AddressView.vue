@@ -50,7 +50,7 @@
                     <span class="icon-unchecked" v-else></span>
                     <span>{{address.is_default ? '默认地址' : '设为默认'}}</span>
                 </div>
-                <div v-link="{name: 'address-update', params: { id: address.id}}">
+                <div v-link="{name: 'address-update', params: { id: address.id}, query: {product: $route.query.product}}">
                     <span class="icon-edit"></span>
                     <span>编辑</span>
                 </div>

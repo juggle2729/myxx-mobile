@@ -3,7 +3,7 @@
     min-height: 108px;
     .tag-item {
         display: inline-block;
-        margin: 28px 0 28px 16px;
+        margin: 14px 0 14px 16px;
         line-height: 60px;
         padding: 0 26px;
         border-radius: 26px;
@@ -11,7 +11,7 @@
 
         &:not(.first-line) {
              margin-top: 0;
-         }
+         } 
     }
 
     .row-separator + .tag-item {

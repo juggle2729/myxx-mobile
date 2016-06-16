@@ -83,7 +83,6 @@ router.alias({
     '/jade/:id': '/jade/:id/none',
     '/order/affirm/:productId': '/order/affirm/:productId/none',
     '/tag/:type/:id/:name': '/tag/:id/:name'
-    // '/address/list': '/address/list/none'
 });
 router.map(routes);
 router.start(require('./components/App.vue'), '#app');

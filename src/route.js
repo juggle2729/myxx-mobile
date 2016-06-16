@@ -279,7 +279,7 @@ export default {
         title: '发货确认',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderSendView.vue'));
+                resolve(require('OrderSentView.vue'));
             }, 'mall');
         }
     },

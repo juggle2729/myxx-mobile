@@ -167,13 +167,13 @@
     <div class="product bg-white font-30">
         <div class="seller flex border-top" v-if="!isSeller">
             <avatar :user="order.seller" :size="50"></avatar>
-            <span class="margin-left">{{order.seller.name}}</span>
+            <span class="margin-left">{{order.seller.nickname}}</span>
         </div>
         <div class="merchant flex border-vertical">
             <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
             <div>
                 <div class="title">{{order.product.title}}</div>
-                <div class="red font-26">{{order.price | price}}</div>
+                <div class="red font-26">{{order.trans_amount | price}}</div>
             </div>
         </div>
         <div class="comment border-bottom" v-if="isNote">
@@ -211,7 +211,7 @@ const states = {
         btn: ['price']
     }],
     wp: [{
-        txt: '等待买家付款',
+        txt: '等待付款',
         tip: '20分钟未付款订单自动取消',
         btn: ['cancel', 'pay']
     }, {
@@ -220,7 +220,7 @@ const states = {
         btn: ['price']
     }],
     ws: [{
-        txt: '买家已付款,等待商家发货',
+        txt: '已付款,等待商家发货',
         btn: ['refund']
     }, {
         txt: '买家已付款,请尽快安排发货',
@@ -258,7 +258,7 @@ const states = {
         txt: '退款完成',
         btn: ['service']
     }, {
-        txt: '退款完成'
+        txt: '订单已退款'
     }],
     rf_rj: [{
         txt: '商家拒绝了退款申请',
@@ -276,7 +276,7 @@ const states = {
     }, {
         txt: '等待买家确认收货',
         tip: '',
-        btn: ['trace', 'updateTrace']
+        btn: ['updateTrace']
     }],
     ss: [{
         txt: '订单交易成功'
@@ -363,8 +363,7 @@ const states = {
         txt: '已确认收货',
         btn: ['trace', 'withdraw']
     }, {
-        txt: '买家已确认收货',
-        btn: ['trace']
+        txt: '买家已确认收货'
     }]
 };
 
@@ -513,7 +512,7 @@ export default {
             this.action('chat', {id: this.order.seller.id, order: this.order.order_no});
         },
         service() {
-            this.action('toast', {text: 'native --> contact to 客服'});
+            this.action('kf', {order: this.order.order_no});
         },
         trace() {
             this.$router.go({name: 'trace', params: {id: this.order.order_no}});

@@ -5,15 +5,20 @@
         height: 577px;
         background-size: contain;
         background-color: #000000;
-
+        &.play::after {
+            background-size: 144px 144px;
+        };
     }
     .titles {
         .header {
-            min-height: 190px;
-            padding: 32px;
+            min-height: 164px;
+            padding: 28px 32px;
+            .font-44 {
+                font-weight: bold;
+            }
         }
         .title {
-            margin-bottom: 32px;
+            margin-bottom: 18px;
             line-height: 1.5;
         }
         .icon-price::before {
@@ -112,6 +117,7 @@
         }
         .buy-btn {
             text-align: center;
+            height: 98px;
             line-height: 98px;
         }
     }
@@ -128,7 +134,7 @@
         <div class="header">
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
-                <p class="red font-32 flex-1">{{jade.price | price}}</p>
+                <p class="red font-32 flex-1">￥<span class="font-44">{{jade.price ? jade.price/100 : '面议'}}</span></p>
                 <template v-if="isSelf">
                     <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
                 </template>
@@ -141,10 +147,10 @@
             </div>
             <div class="flex">
                 <span class="icon-seven-day"></span>
-                <span>七天退货</span>
+                <span>五天退货</span>
             </div>
             <div class="flex">
-                <span class="icon-unchecked"></span>
+                <span class="icon-sf"></span>
                 <span>顺丰包邮</span>
             </div>
         </div>
@@ -159,7 +165,7 @@
         <div class="font-26 icon-enter-slim gray"></div>
     </div>
     <div class="separator-20"></div>
-    <div class="tabs border-bottom flex font-26 bg-white" :class="{'default': isDefaultView, 'fixed': fixed}">
+    <div class="tabs border-bottom flex font-30 bg-white gray" :class="{'default': isDefaultView, 'fixed': fixed}">
         <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
@@ -178,17 +184,18 @@
         <!-- TODO use keep-alive -->
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
-    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white border-top">
-        <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-            <div class="icon-contact"></div>
-            <div>联系商家</div>
+    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
+        <div class="border-top flex-1 flex">
+            <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
+                <div class="icon-comment-solid light"></div>
+                <div>联系商家</div>
+            </div>
+            <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
+                <div class="icon-comment-solid light"></div>
+                <div>评论</div>
+            </div>
         </div>
-        <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-            <div class="icon-comment"></div>
-            <div>评论</div>
-        </div>
-        <div class="font-30 flex-2 buy-btn bg-red white" @click="buy()">
-            立即购买
+        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.status === 'online'}" @click="buy()" >立即购买
         </div>
     </div>
 </div>
@@ -254,26 +261,52 @@ export default {
     },
     methods: {
         buy() {
-            if(!this.env.isApp || this.env.version >= 1.5) {
-                // 先确保用户登录，然后再跳转至订单页面
-                Q.promise((resolve) => {
-                    if(this.self) {
-                        resolve();
-                    } else {
-                        this.action('login').then(resolve);
-                    }
-                }).then(() => {
-                    this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
-                });
-            } else {
-                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
-            }
+            // 以下是正式环境代码
+
+            // if(this.env.version >= 1.5 && this.jade.status === 'online') {
+            //     // 先确保用户登录，然后再跳转至订单页面
+            //     Q.promise((resolve) => {
+            //         if(this.self && !this.isSelf) {
+            //             resolve();
+            //         } else if(!this.self){
+            //             this.action('login').then(resolve);
+            //         }
+            //     }).then(() => {
+            //         this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
+            //     });
+            // } else {
+            //     this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+            // }
+
+
+            // 以下供测试使用
+            Q.promise((resolve) => {
+                if(this.self && !this.isSelf) {
+                    resolve();
+                } else if(!this.self){
+                    this.action('login').then(resolve);
+                }
+            }).then(() => {
+                this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
+            });
          },
         contact() {
-            if(this.env.version >= 1.5) {
+            // 正式环境
+
+            // if(this.env.version >= 1.5 && !this.isSelf) {
+            //     this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+            // } else if(this.isSelf) {
+            //     this.action('toast', {success: 0, text: '您不能和自己聊天'});
+            // } else {
+            //     this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+            // }
+
+            // 测试使用
+
+            if(!this.isSelf) {
                 this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
             } else {
-                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+                this.action('toast', {success: 0, text: '您不能和自己聊天'});
             }
         }
     },

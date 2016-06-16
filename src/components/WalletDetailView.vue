@@ -12,12 +12,6 @@
         >div {
             width: 50%;
             text-align: center;
-            padding-top: 28px;
-            .dash {
-                width: 180px;
-                height: 4px;
-                margin: 10px auto 0;
-            }
          }
     }
     .item {
@@ -37,11 +31,9 @@
     <div class="tabs flex font-30 border-bottom">
         <div v-link="{name: 'detail', params: {tab: 'expects'}}">
             <div :class="{'red': expect}">待结算金额</div>
-            <div class="dash bg-red" :class="{'bg-white': !expect}"></div>
         </div>
         <div v-link="{name: 'detail', params: {tab: 'bills'}}">
             <div :class="{'red': !expect}">可提现金额</div>
-            <div class="dash bg-red" :class="{'bg-white': expect}"></div>
         </div>
     </div>
     <div class="item flex font-30 border-bottom" v-for="item in items">

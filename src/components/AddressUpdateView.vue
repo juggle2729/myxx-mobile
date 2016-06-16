@@ -46,7 +46,7 @@
 <div class="address-update-view bg-default">
     <div class="items bg-white">
         <div class="border-bottom"><input class="font-30" type="text" placeholder="收货人" v-model="receiver"></div>
-        <div class="border-bottom"><input class="font-30" type="tel" placeholder="手机号码" v-model="phone" maxlength="11"></div>
+        <div class="border-bottom"><input class="font-30" type="tel" placeholder="手机号码" v-model="phone" maxlength="11" minlength="11"></div>
         <div class="area border-bottom font-30 flex" @click="selectArea">
             <div class="flex-1">
                 <div v-if="!city" class="light">所在地</div>
@@ -69,13 +69,15 @@ export default {
             phone: '',
             site: '',
             province: '',
-            city: '武汉',
-            areaId: '027'
+            city: ''
         }
     },
     computed: {
         complete() {
             return this.receiver && this.phone && this.site && this.city;
+        },
+        isValid() {
+            return this.phone.length === 11;
         }
     },
     route: {
@@ -107,7 +109,7 @@ export default {
             });
         },
         ensure() {
-            if(this.complete) {
+            if(this.complete && this.isValid) {
                 const address = this.$route.params.id !== 'none' && this.$route.params.id;
                 const product = this.$route.query.product;
                 const api = address ? `mall/address/${address}` : 'mall/addresses';
@@ -128,6 +130,8 @@ export default {
                         this.$router.go({name: 'address-list'});
                     }
                 });
+            } else if(!this.isValid) {
+                this.action('toast', {success: 0, text: '请填写正确的手机号'});
             }
         }
     }
