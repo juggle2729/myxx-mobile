@@ -1,7 +1,7 @@
 <template>
     <div class="about-view">
         <div class="imgs center">
-            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api-test'} : ''">
+            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api'} : ''">
             <p class="font-34 default">美玉秀秀</p>
             <p class="font-22 gray">v{{env.version || '1.0'}}</p>
         </div>

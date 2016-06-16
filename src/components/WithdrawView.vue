@@ -1,6 +1,5 @@
 <style lang="sass">
 .cash {
-    min-height: 100%;
     .item {
         height: 86px;
         line-height: 86px;

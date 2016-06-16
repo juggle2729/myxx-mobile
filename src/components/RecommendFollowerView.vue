@@ -10,7 +10,7 @@
             line-height: 100px;
             > span {
                 border-radius: 48px;
-                border-color: #cc3f4f;
+                border: 1px solid #cc3f4f;
                 padding: 48px;
             }
         }
@@ -23,7 +23,7 @@
                 margin-left: 20px;
             }
             .name {
-                margin-top: 2px;
+                margin-top: 4px;
                 >div {
                     margin-top: 12px;
                 }
@@ -52,8 +52,8 @@
                 }
             }
             .content {
-                margin-top: 20px;
-                line-height: 39px;
+                margin-top: 16px;
+                line-height: 36px;
             }
         }
     }
@@ -61,11 +61,11 @@
 <template>
     <div class="recommend-follwer-view bg-default">
         <div class="tips font-30 red bg-default" v-if="!hasLogin" @click="login()">
-            <span class="border-default">登录查看更多关注人的内容</span>
+            <span>登录查看更多关注人的内容</span>
         </div>
         <div class="bg-white">
             <div class="item flex border-bottom clearfix" v-for="item in items">
-                <avatar :user="item" :size="120"></avatar>
+                <avatar :user="item" :size="108"></avatar>
                 <div class="main flex-1">
                     <div class="name">
                         <p class="font-30">{{item.name}}</p>
@@ -99,6 +99,9 @@ export default {
                 list: 'entries',
                 params: {
                     limit: 20
+                },
+                transform(items) {
+                    return _.map(items, item => _.merge(item, {is_followed: false}));
                 }
             }
         },
@@ -116,10 +119,6 @@ export default {
             if (!item.is_followed) {
                 this.$post(`users/follow/${item.id}`).then(() => {
                     item.is_followed = true;
-                    this.action('toast', {
-                        text: '已关注',
-                        success: '1'
-                    });
                 });
             }
         },

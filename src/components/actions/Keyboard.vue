@@ -14,7 +14,9 @@
             transform: translate3d(0, -100%, 0);
         }
     }
-    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -54,7 +56,7 @@
 }
 </style>
 <template>
-<div class="keyboard fixed">
+<div class="keyboard">
     <div class="container bg-default">
         <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>max}">{{content.length}}/{{max}}</span></div>
         <textarea v-model="content"></textarea>

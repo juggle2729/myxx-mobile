@@ -1,6 +1,5 @@
 <style lang="sass">
 .wallet-view {
-    min-height: 100%;
     .item {
         height: 166px;
         padding: 33px 32px 0;

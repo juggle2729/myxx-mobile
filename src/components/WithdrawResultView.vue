@@ -1,6 +1,5 @@
 <style lang="sass">
 .cash-result {
-    min-height: 100%;
     padding-top: 120px;
     .result {
         .icon-checked {

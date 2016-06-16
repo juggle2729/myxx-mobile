@@ -4,7 +4,7 @@ export default emitter;
 
 // 处理滚动
 const scrollListener = ((w) => {
-    const threshold = 100;
+    const threshold = 50;
     let lastPos = w.scrollY;
     return (event) => {
         // 滚动方向检测

@@ -1,10 +1,10 @@
 <style lang="sass">
 .comment-component {
-    padding: 0 32px;
     label {
         margin-top: 50px;
     }
     .comment-header {
+        padding: 0 32px;
         display: -webkit-box;
         -webkit-box-align: center;
         -webkit-box-pack: justify;
@@ -12,12 +12,15 @@
     }
     li {
         -webkit-box-align: start;
-        padding-bottom: 20px;
+        padding: 0 32px 20px;
         .avatar-68 {
             margin: 20px 20px 0 0;
         }
         .author {
             padding: 20px 0;
+            .icon-like-solid + span {
+                vertical-align: initial; //重置对齐
+            }
         }
         span {
             line-height: 46px;
@@ -26,9 +29,12 @@
             word-break: break-all;
             line-height: 1.5;
             img {
-                height: 46px;
+                height: 44px;
                 vertical-align: bottom;
             }
+        }
+        &.highlight {
+            background-color: #ebf9f9;
         }
     }
     li:nth-last-child(2) {
@@ -52,6 +58,7 @@
         display: block;
     }
     .fake-input {
+        position: fixed;
         bottom: 0;
         width: 100%;
         background-color: #f9f9f9;
@@ -92,11 +99,12 @@
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>
     <ul>
-        <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $index)">
+        <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $index)"
+            :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
             <div class="flex-1">
                 <div class="author flex">
-                    <div class="font-26 flex-1 gray" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
+                    <div class="font-26 gray flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
                     <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                 </div>
                 <div class="font-30 content">
@@ -111,7 +119,7 @@
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <div v-if="!env.isShare" class="fake-input font-30 flex fixed border-top" @click="comment()">
+    <div v-if="!env.isShare" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>

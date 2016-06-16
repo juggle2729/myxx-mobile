@@ -1,4 +1,4 @@
-<style lang="sass">
+ <style lang="sass">
     .order-confirm-view {
         min-height: 100%;
         height: 100%;
@@ -166,6 +166,12 @@ export default {
                     });
             return requests;
         }
+    },
+    ready() {
+        this.$on('restore', () => {
+            // 回退的时候，跳过订单确认界面，直接回到商品详情
+            this.action('back', {step: 1, refresh: true});
+        });
     },
     methods: {
         createOrder() {
