@@ -62,13 +62,13 @@
                 <p class="label gray">赠送场合</p>
                 <p class="flex-1">{{jade.gift_when | tree}}</p>
             </li>
-            <li v-if="jade.themes.length" class="flex font-26">
+            <li v-if="jade.theme" class="flex font-26">
                 <p class="label gray">题材</p>
-                <p class="flex-1">{{themes}}</p>
+                <p class="flex-1">{{jade.theme | tree}}</p>
             </li>
-            <li v-if="jade.morals.length" class="flex font-26">
+            <li v-if="jade.moral" class="flex font-26">
                 <p class="label gray">寓意</p>
-                <p class="flex-1">{{morals}}</p>
+                <p class="flex-1">{{jade.moral | tree}}</p>
             </li>
             <li v-if="jade.genre" class="flex font-26">
                 <p class="label gray">流派</p>

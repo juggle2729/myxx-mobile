@@ -47,7 +47,7 @@
     </div>
     <div class="item font-30 border-bottom bg-white">
         <span>提现金额</span>
-        <input type="number" placeholder="本次可提现{{balance | price}}元" v-model="amount">
+        <input type="number" placeholder="本次可提现{{balance | price '0'}}元" v-model="amount">
     </div>
     <div class="button bg-gray white font-30 center" :class="{'bg-red': complete}" @click="withdraw">提交</div>
     <div class="tip gray center"><span class="gray">-</span>&nbsp;提现说明&nbsp;<span class="gray">-</span></div>
@@ -93,14 +93,16 @@ export default {
     },
     methods: {
         withdraw() {
-            if (this.complete) {
+            if (this.complete && this.amount <= (this.balance / 100)) {
                 this.$post('balance/withdraws', {
                     name: this.name,
                     bank_account: this.account,
                     trans_amount: this.amount*100
                 }).then((data) => {
-                    this.$router.go({name: 'cash-result', params: {id: data.trans_no}});
+                    this.$router.go({name: 'withdraw-result', params: {id: data.trans_no}});
                 });
+            } else if(this.amount > (this.balance / 100)) {
+                this.action('toast', {text: '超过最大提现金额'});
             }
         }
     }

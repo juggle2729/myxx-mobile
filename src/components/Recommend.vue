@@ -78,7 +78,7 @@
                 </div>
                 <div class="data-info">
                     <div class="data-name font-26">{{(data.item.title || data.item.description || data.item.content) | truncate 20}}</div>
-                    <div v-if="data.biz_type === config.tags.product.id" class="data-price">{{data.item.price | price}}</div>
+                    <div v-if="data.biz_type === config.tags.product.id" class="data-price font-26">{{data.item.price | price}}</div>
                     <div v-if="data.item.author" class="data-user-name">{{data.item.author.name}}</div>
                 </div>
             </div>

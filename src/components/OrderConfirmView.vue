@@ -81,11 +81,16 @@
         justify-content: flex-end;
         width: 100%;
         height: 98px;
-        line-height: 98px;
+        -webkit-box-align: start;
+        .price {
+            text-align: right;
+            padding: 34px 20px 0 0;
+        }
         .button {
             width: 200px;
             height: 100%;
             padding-top: 34px;
+            background-clip: padding-box;
         }
     }
 }
@@ -132,9 +137,9 @@
                 <textarea class="font-26" maxlength="140" placeholder="文字控制在140字以内" v-model="note"></textarea>
             </div>
         </div>
-        <div class="operation bg-white right flex border-top">
-            <div>订单价格: <span class="red">{{product.price | price}}</span></div>
-            <div class="button bg-red white center margin-left border-default" @click="createOrder">确认订单</div>
+        <div class="operation bg-white flex">
+            <div class="border-top flex-1 price">订单价格: <span class="red">{{product.price ? '￥' + product.price/100 : '确认订单后商家改价'}}</span></div>
+            <div class="button bg-red white center" @click="createOrder">确认订单</div>
         </div>
     </div>
 </template>

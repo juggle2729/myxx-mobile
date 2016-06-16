@@ -25,7 +25,7 @@
 <template>
 <div class="send-view bg-default">
     <div class="title font-26 gray">物流信息(物流公司只支持顺丰)</div>
-    <input class="traceNo border-vertical font-30" type="text" placeholder="请填写顺丰物流单号" v-model="expressNo">
+    <input class="traceNo border-vertical font-30" type="number" maxlength="12" placeholder="请填写顺丰物流单号" v-model="expressNo">
     <div class="send font-30 white bg-gray center" :class="{'bg-red': expressNo}" @click="send">{{isUpdate ? '更新物流' : '确认发货'}}</div>
 </div>
 </template>
