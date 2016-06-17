@@ -1,20 +1,17 @@
 <style lang="sass">
 .affirmAuction {
-    &.pop-transition {
-        transition: opacity .3s ease;
+    &.pop-transition .container {
+         transition: transform .3s ease, opacity .3s linear;
+         transform: translate3d(0, 200px, 0);
          opacity: 1;
-        .container {
-            transition: transform .3s ease;
-            transform: translate3d(-50%, 200px, 0);
-        }
     }
-    &.pop-enter, &.pop-leave {
-        opacity: 0;
-        .container {
-            transform: translate3d(-50%, -100%, 0);
-        } 
+    &.pop-enter .container, &.pop-leave .container {
+         transform: translate3d(0, -100%, 0);
+         opacity: 0;
     }
-    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -73,8 +70,8 @@
 }
 </style>
 <template>
-<div class="affirmAuction fixed">
-    <div class="container fixed bg-white">
+<div class="affirmAuction">
+    <div class="container bg-white">
         <div class="title gray font-26 border-bottom center">确认拍卖信息</div>
         <div class="img">
             <img :src="config.img + params.img + '?imageView2/2/h/450'" alt="拍品图片" />
@@ -90,11 +87,11 @@
         </div>
         <div class="info flex font-30 border-bottom">
             <div class="flex-1">开始时间</div>
-            <div class="red">{{params.beginTime | moment}}</div>
+            <div class="red">{{params.beginTime | date}}</div>
         </div>
         <div class="info flex font-30">
             <div class="flex-1">结束时间</div>
-            <div class="red">{{params.endTime | moment}}</div>
+            <div class="red">{{params.endTime | date}}</div>
         </div>
         <div class="btns flex font-30 white">
             <div class="bg-gray center" @click="close">取消</div>

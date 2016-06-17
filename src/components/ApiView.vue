@@ -1,5 +1,5 @@
 <style lang="sass">
-.api-test {
+.api-view {
     padding-top: 25px;
     .container {
         padding: 5px 32px;
@@ -10,11 +10,9 @@
          }
         .item {
             position: relative;
-            padding: 10px 0;
-            background-color: indianred;
-            border-radius: 8px;
+            padding: 15px 0;
+            background-color: #673AB7;
             width: 420px;
-            /*animation: myfirst 5s ease-in-out 2s 1 normal;*/
             animation: skew 3s infinite;
             transform: skew(20deg);
             animation-direction: alternate;
@@ -30,27 +28,20 @@
                 transform: skewX(-20deg);
             }
         }
-        @keyframes myfirst
-        {
-            0%   {background: indianred; left: 0;}
-            25%  {background: lightcoral; left: 100px;}
-            50%  {background: lightpink; left: 150px;}
-            75%  {background: lightcoral; left: 100px;}
-            100% {background: indianred; left:0;}
-        }
     }
 }
 </style>
 <template>
-<div class="api-test font-30">
+<div class="api-view font-30">
     <div class="container" v-for="item in native">
         <div class="item white center" @click="api(item.label, item.params)">{{item.title}}</div>
     </div>
 </div>
 </template>
 <script>
+import Q from 'q';
 export default {
-    name: 'ApiTestView',
+    name: 'ApiView',
     data() {
         return {
             native: [
@@ -61,74 +52,15 @@ export default {
                     title: '当前登录用户-user',
                     label: 'user'
                 }, {
+                    title: '回退1步-back',
+                    label: 'back',
+                    params: {
+                        step: 1,
+                        refresh: true
+                    }
+                }, {
                     title: '区域选择-region',
                     label: 'region'
-                }, {
-                    title: '邀请大师-inviteMaster',
-                    label: 'inviteMaster',
-                    params: {
-                        id: '1806'
-                    }
-                }, {
-                    title: '标签信息流-tag',
-                    label: 'tag',
-                    params: {
-                        id: '177',
-                        name: '玩家秀1'
-                    }
-                }, {
-                    title: '卖家->查看->退款详情-refund',
-                    label: 'refund',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'money',
-                        seller: true
-                    }
-                }, {
-                    title: '买家->填写->退款信息-refund',
-                    label: 'refund',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'money',
-                        seller: false
-                    }
-                }, {
-                    title: '卖家->查看->退货详情-refund',
-                    label: 'refund',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'product',
-                        seller: true
-                    }
-                }, {
-                    title: '买家->填写->退货信息-refund',
-                    label: 'refund',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'product',
-                        seller: false
-                    }
-                }, {
-                    title: '退款->结果-result',
-                    label: 'result',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'money'
-                    }
-                }, {
-                    title: '退货->结果-result',
-                    label: 'result',
-                    params: {
-                        id: '160606155426035500',
-                        type: 'product'
-                    }
-                }, {
-                    title: '支付-pay',
-                    label: 'pay',
-                    params: {
-                        id: '160606155426035500',
-                        price: '20000'
-                    }
                 }, {
                     title: '右上角动作-action',
                     label: 'action',
@@ -209,9 +141,19 @@ export default {
     },
     methods: {
         api(label, params) {
-            this.action(label, params).then((data) => {
+            const action = () => {
+                return this.action(label, params);
+            };
+            const cb = (data) => {
+                if(typeof data !== 'string') {
+                    data = JSON.stringify(data);
+                }
                 this.action('toast', {success: 1, text: data});
-            });
+                if(label === 'action') {
+                    action().then(cb);
+                }
+            };
+            action().then(cb);
         }
     }
 }

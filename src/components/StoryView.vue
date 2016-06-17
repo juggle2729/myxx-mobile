@@ -61,7 +61,7 @@
     }
     .description {
         padding: 0 40px 40px 32px;
-        .user-input {
+        &.user-input {
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;

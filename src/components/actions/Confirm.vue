@@ -1,18 +1,12 @@
 <style lang="sass">
 .confirm-action {
+    position: fixed;
     &.pop-transition {
         opacity: 1;
         transition: opacity .3s ease;
-        // .container {
-        //     transition: transform .3s linear;
-        //     transform: translate3d(0, 400px, 0);
-        // }
     }
     &.pop-enter, &.pop-leave {
         opacity: 0;
-        // .container {
-        //     transform: translate3d(0, -100%, 0);
-        // }
     }
     width: 100%;
     top: 0;
@@ -40,7 +34,7 @@
 }
 </style>
 <template>
-<div class="confirm-action fixed">
+<div class="confirm-action">
     <div class="container bg-default">
         <div class="center">{{params.text}}</div>
         <div class="btns border-top"><div @click="close('0')">取消</div><div @click="close('1')" class="border-left red">确定</div></div>

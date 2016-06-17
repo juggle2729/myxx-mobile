@@ -3,12 +3,14 @@
 .share-action {
     &.pop-transition {
         transition: transform .3s ease;
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
     &.pop-enter, &.pop-leave {
-        transform: translate3d(-50%, -100%, 0);
+        transform: translate3d(0, -100%, 0);
     }
-    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -16,7 +18,7 @@
 }
 </style>
 <template>
-<div class="share-action fixed" @click="close"></div>
+<div class="share-action" @click="close"></div>
 </template>
 <script>
 export default {

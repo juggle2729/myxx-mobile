@@ -59,8 +59,8 @@
         }
     }
     .tabs {
+        width: 100%;
         height: 90px;
-        position: relative;
         top: 0;
         >div {
             width: 33.3%;
@@ -94,15 +94,9 @@
                 }
             };
         }
-        &.fixed {
-            position: fixed;
-            z-index: 99;
-            width: 100%;
-            top: 0;
-            background-color: white;
-        }
     }
     .float-box {
+        position: fixed;
         bottom: 0;
         height: 98px;
         -webkit-box-align: stretch;
@@ -124,10 +118,31 @@
     .placeholder {
         height: 90px;
     }
+    .tabs-fixed {
+        will-change: visibility;
+        position: fixed;
+        visibility: hidden;
+        width: 100%;
+        z-index: 999;
+    }
 }
 </style>
 <template>
 <div class="jade-view bg-default">
+    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
+            <div class="desc border-right">详情</div>
+            <div class="dash"></div>
+        </div>
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'attribute'}, replace: true}">
+            <div class="desc border-right">属性</div>
+            <div class="dash"></div>
+        </div>
+        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'problem'}, replace: true}">
+            <div class="desc">常见问题</div>
+            <div class="dash"></div>
+        </div>
+    </div>
     <div class="jade-video play" v-bg="jade.video" @click="play(jade.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
     <div class="titles bg-white">
@@ -165,7 +180,7 @@
         <div class="font-26 icon-enter-slim gray"></div>
     </div>
     <div class="separator-20"></div>
-    <div class="tabs border-bottom flex font-30 bg-white gray" :class="{'default': isDefaultView, 'fixed': fixed}">
+    <div class="tabs tabs-static border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
         <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
@@ -179,21 +194,17 @@
             <div class="dash"></div>
         </div>
     </div>
-    <div class="placeholder bg-white" v-if="fixed"></div>
-    <div class="bg-default">
-        <!-- TODO use keep-alive -->
+    <div class="bg-default tab-content">
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
-    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
-        <div class="border-top flex-1 flex">
-            <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-                <div class="icon-comment-solid light"></div>
-                <div>联系商家</div>
-            </div>
-            <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-                <div class="icon-comment-solid light"></div>
-                <div>评论</div>
-            </div>
+    <div v-if="!env.isShare" class="float-box flex font-30 bg-white border-top">
+        <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
+            <div class="icon-contact"></div>
+            <div>联系商家</div>
+        </div>
+        <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
+            <div class="icon-comment"></div>
+            <div>评论</div>
         </div>
         <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.status === 'online'}" @click="buy()" >立即购买
         </div>
@@ -237,7 +248,12 @@ export default {
         this.$on('restore', () => {
             this.setShareData(this.jade, true);
         });
-        this.tabHeight = document.querySelector('.tabs').offsetTop;
+        this.staticTabs = this.$el.querySelector('.tabs-static');
+        this.fixedTabs = this.$el.querySelector('.tabs-fixed');
+        const tabContent = this.$el.querySelector('.tab-content');
+        // FIXME: 采用css解决方案
+        // tab内容最小高度为window高度 - tabs高度 - $el的底部padding
+        tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`;
     },
     route: {
         canReuse({from, to}) {
@@ -261,58 +277,34 @@ export default {
     },
     methods: {
         buy() {
-            // 以下是正式环境代码
-
-            // if(this.env.version >= 1.5 && this.jade.status === 'online') {
-            //     // 先确保用户登录，然后再跳转至订单页面
-            //     Q.promise((resolve) => {
-            //         if(this.self && !this.isSelf) {
-            //             resolve();
-            //         } else if(!this.self){
-            //             this.action('login').then(resolve);
-            //         }
-            //     }).then(() => {
-            //         this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
-            //     });
-            // } else {
-            //     this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
-            // }
-
-
-            // 以下供测试使用
-            Q.promise((resolve) => {
-                if(this.self && !this.isSelf) {
-                    resolve();
-                } else if(!this.self){
-                    this.action('login').then(resolve);
-                }
-            }).then(() => {
-                this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
-            });
+            if(this.env.isBrowser || this.env.version >= 1.5 && this.jade.status === 'online') {
+                // 先确保用户登录，然后再跳转至订单页面
+                Q.promise((resolve) => {
+                    if(this.self && !this.isSelf) {
+                        resolve();
+                    } else if(!this.self){
+                        this.action('login').then(resolve);
+                    }
+                }).then(() => {
+                    this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
+                });
+            } else {
+                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+            }
          },
         contact() {
-            // 正式环境
-
-            // if(this.env.version >= 1.5 && !this.isSelf) {
-            //     this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
-            // } else if(this.isSelf) {
-            //     this.action('toast', {success: 0, text: '您不能和自己聊天'});
-            // } else {
-            //     this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
-            // }
-
-            // 测试使用
-
-            if(!this.isSelf) {
+            if(this.env.version >= 1.5 && !this.isSelf) {
                 this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
-            } else {
+            } else if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'});
+            } else {
+                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
             }
         }
     },
     events: {
         scroll() {
-            this.fixed = (window.scrollY - this.tabHeight) >= -20;
+            this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden';
         }
     }
 }

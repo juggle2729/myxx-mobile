@@ -1,6 +1,5 @@
 <style lang="sass">
 .jade-problem {
-	padding-bottom: 100px;
 	.problem {
 		padding: 32px;
 		.bg-red {

@@ -29,10 +29,10 @@
 <template>
 <div class="wallet-detail" v-if="!$loadingRouteData">
     <div class="tabs flex font-30 border-bottom">
-        <div v-link="{name: 'detail', params: {tab: 'expects'}}">
+        <div v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
             <div :class="{'red': expect}">待结算金额</div>
         </div>
-        <div v-link="{name: 'detail', params: {tab: 'bills'}}">
+        <div v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
             <div :class="{'red': !expect}">可提现金额</div>
         </div>
     </div>

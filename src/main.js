@@ -62,7 +62,7 @@ router.beforeGo((from, to, app) => {
     }
     return !interrupted;
 });
-router.beforeEach(({from, to, abort, next}) => {
+router.beforeEach(({from, to, next}) => {
     // to.router.app.$el.classList.add('loading');
 
     // 同一路由内，仅切换tab时，不调整滚动位置

@@ -1,6 +1,5 @@
 <style lang="sass">
 .jade-attribute {
-	padding-bottom: 100px;
 	.params {
 		padding-left: 32px;
         ul > li {

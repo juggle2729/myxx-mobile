@@ -250,6 +250,7 @@ export default {
     '/order/confirm/:product': { // product id
         name: 'order-confirm',
         title: '订单详情',
+        raw: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderConfirmView.vue'));
@@ -425,12 +426,12 @@ export default {
             }, 'other');
         }
     },
-    'api-test': {
+    'api': {
         title: '客户端api测试',
-        name: 'api-test',
+        name: 'api',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ApiTestView.vue'));
+                resolve(require('ApiView.vue'));
             }, 'other');
         }
     },

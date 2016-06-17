@@ -1,6 +1,8 @@
 <style lang="sass">
 .play-action {
-    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -28,16 +30,16 @@
 }
 </style>
 <template>
-<div class="play-action fixed" @click="close">
+<div class="play-action" @click="close">
     <template v-for="media in medias">
-        <video v-if="media.type==='video'" 
-            :id="media.id" controls 
+        <video v-if="media.type==='video'"
+            :id="media.id" controls
             :class="{'on': $index===playing}"
             :src="config.video + media.id"
-             @ended="ended" 
+             @ended="ended"
              @webkitendfullscreen="endFullscreen"></video>
-        <img v-else 
-            :id="media.id" 
+        <img v-else
+            :id="media.id"
             :class="{'on': $index===playing}"
             :src="config.img + media.id"/>
     </template>
@@ -75,7 +77,7 @@ export default {
                 const ads = document.querySelector(`[src$='${this.medias[2].id}']`);
                 ads.play(); // 必须在这里触发播放
                 setTimeout(() => ads.pause(), 1000);
-                
+
                 // 获取前面视频和图片的总时长
                 this.interval = setInterval(() => {
                     if(v.readyState > 0) {

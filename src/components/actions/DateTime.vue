@@ -15,6 +15,7 @@
 }
 
 .datetime-action {
+    position: fixed;
     bottom: 0;
 
     width: 100%;
@@ -82,7 +83,7 @@
 }
 </style>
 <template>
-    <div class="datetime-action fixed" v-show="show" @touchmove.stop>
+    <div class="datetime-action" v-show="show" @touchmove.stop>
         <div class="operation clearfix">
             <span class="cancel font-30 gray left" @click="cancelSelect">取消</span>
             <span class="confirm font-30 red right" @click="confirmSelect">确定</span>
