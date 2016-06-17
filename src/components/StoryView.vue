@@ -196,7 +196,7 @@
             <span class="cnt-text">{{story.like}}</span>
         </div>
         <div class="font-30" @click="share">
-            <span class="icon-share-social"></span>
+            <span class="icon-share"></span>
             <span>分享</span>
         </div>
     </div>
