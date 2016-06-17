@@ -6,7 +6,9 @@
 	}
 	.img img {
 		width: 100%;
-		margin-bottom: 6px;
+		&:not(:last-child) {
+			margin-bottom: 6px;
+		}
 	}
 	.tags {
 		background: none;

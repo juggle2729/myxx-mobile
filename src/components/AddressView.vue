@@ -76,10 +76,9 @@ export default {
     },
     route: {
         data() {
-            return this.$get('mall/addresses')
-                        .then(({addresses}) => {
-                            return {addresses};
-                        });
+            return this.$get('mall/addresses').then(({addresses}) => {
+                return {addresses};
+            });
         }
     },
     methods: {

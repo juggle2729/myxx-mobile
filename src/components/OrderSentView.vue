@@ -53,7 +53,7 @@ export default {
                 this.$put(`mall/order/${this.$route.params.id}/${params}`, {
                     express_no: this.expressNo
                 }).then(() => {
-                    this.$router.go({name: 'order', params: { id: this.$route.params.id}});
+                    this.action('back', {step: 1, refresh: true});
                 });
             } else {
                 this.action('toast', { text: '请输入物流单号'});

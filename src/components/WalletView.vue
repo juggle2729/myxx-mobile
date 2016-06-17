@@ -41,7 +41,7 @@
         <div class="red font-40">{{balance.expect_amount | price '0'}}</div>
     </div>
     <div class="button bg-gray white font-30 center" :class="{'bg-red': balance.current_amount}" v-link="balance.current_amount ? {name: 'withdraw'} : ''">提现</div>
-    <div class="tip font-30 gray">买家付款后, 货款计入"待结算金额"；买家确认收货后的7天内没有提出退货申请,
+    <div class="tip font-30 gray">买家付款后, 货款计入"待结算金额"；买家确认收货后的5天内没有提出退货申请,
     货款转入"可提现金额", 您可以随时提现。</div>
     <div class="rule font-30" v-link="{name: 'instruction', params: {id: 'payment'}}">
         <span>查看详细规则<span class="icon-enter gray font-30"></span></span>

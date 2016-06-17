@@ -120,17 +120,17 @@ export default {
                     receiver_area_id: this.areaId,
                     receiver_address: this.site
                 }).then((data) => {
-                    if(product) {
+                    if(product && address) {
                         this.$put(`mall/address/${data.id}`, {
                             is_default: true
                         }).then(() => {
-                            this.$router.go({name: 'order-confirm', params: {product}});
+                            this.action('back', {step: 2, refresh: true});
                         });
                     } else {
-                        this.$router.go({name: 'address-list'});
+                        this.action('back', {step: 1, refresh: true});
                     }
                 });
-            } else if(!this.isValid) {
+            } else if(this.complete && !this.isValid) {
                 this.action('toast', {success: 0, text: '请填写正确的手机号'});
             }
         }

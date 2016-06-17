@@ -33,7 +33,7 @@
         <div class="icon-checked"></div>
         <div class="success">确认收货成功</div>
         <div class="button flex">
-            <div v-link="{name: 'order', params: { id: this.$route.params.id}}">查看订单</div>
+            <div @click="back">查看订单</div>
             <div @click="homepage">回首页</div>
         </div>
     </div>
@@ -45,13 +45,16 @@ export default {
     route: {
         data() {
             this.action('action', {label: '完成'}).then(() => {
-                this.$router.go({name: 'order', params: {id: this.$route.params.id}});
+                this.action('back', {step: 1, refresh: true});
             });
         }
     },
     methods: {
+        back() {
+            this.action('back', {step: 1, refresh: true});
+        },
         homepage() {
-            this.action('toast', {text: 'native --> homepage homepage homepage'});
+            this.action('mall');
         }
     }
 }

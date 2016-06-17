@@ -15,6 +15,10 @@
             padding: 28px 32px;
             .font-44 {
                 font-weight: bold;
+                &:first-letter {
+                    font-size: 32px;
+                    font-weight: normal;
+                };
             }
         }
         .title {
@@ -37,8 +41,11 @@
         }
         .footer {
             height: 80px;
-            padding: 0 60px;
+            padding: 3px 60px 0;
             -webkit-box-pack: justify;
+            [class^='icon-'], [class*=' icon-'] {
+                padding-right: 2px;
+            }
         }
     }
     .master {
@@ -65,7 +72,7 @@
         >div {
             width: 33.3%;
             .desc {
-                margin: 38px 0 22px 0;
+                margin: 33px 0 26px 0;
             }
             &>div {
                 text-align: center;
@@ -99,13 +106,18 @@
         position: fixed;
         bottom: 0;
         height: 98px;
-        -webkit-box-align: stretch;
         width: 100%;
+        &>div {
+            width: 50%;
+            height: 100%;
+        }
         .contact-btn,.comment-btn {
             -webkit-box-orient: vertical;
             -webkit-box-pack: center;
-            div[class^=icon] {
-                margin-bottom: 14px;
+            width: 50%;
+            height: 100%;
+            [class^='icon-'], [class*=' icon-'] {
+                margin-bottom: 8px;
                 padding: 0;
             }
         }
@@ -149,7 +161,7 @@
         <div class="header">
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
-                <p class="red font-32 flex-1">￥<span class="font-44">{{jade.price ? jade.price/100 : '面议'}}</span></p>
+                <p class="red font-44 flex-1">{{jade.price | price}}</p>
                 <template v-if="isSelf">
                     <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
                 </template>
@@ -157,15 +169,15 @@
         </div>
         <div class="footer flex font-26 light border-top">
             <div class="flex">
-                <span class="icon-pay-guarantee"></span>
+                <span class="icon-pay-guarantee font-30"></span>
                 <span>付款担保</span>
             </div>
             <div class="flex">
-                <span class="icon-seven-day"></span>
+                <span class="icon-five-day font-30"></span>
                 <span>五天退货</span>
             </div>
             <div class="flex">
-                <span class="icon-sf"></span>
+                <span class="icon-sf font-30"></span>
                 <span>顺丰包邮</span>
             </div>
         </div>
@@ -197,16 +209,18 @@
     <div class="bg-default tab-content">
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
-    <div v-if="!env.isShare" class="float-box flex font-30 bg-white border-top">
-        <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-            <div class="icon-contact"></div>
-            <div>联系商家</div>
+    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
+        <div class="border-top flex-1 flex">
+            <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
+                <div class="icon-private-letter light font-34"></div>
+                <div>联系商家</div>
+            </div>
+            <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
+                <div class="icon-comment-solid light font-34"></div>
+                <div>评论</div>
+            </div>
         </div>
-        <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-            <div class="icon-comment"></div>
-            <div>评论</div>
-        </div>
-        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.status === 'online'}" @click="buy()" >立即购买
+        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >立即购买
         </div>
     </div>
 </div>
@@ -277,7 +291,7 @@ export default {
     },
     methods: {
         buy() {
-            if(this.env.isBrowser || this.env.version >= 1.5 && this.jade.status === 'online') {
+            if(this.env.isBrowser || this.env.version >= 1.5 && this.jade.sell_status === 'selling') {
                 // 先确保用户登录，然后再跳转至订单页面
                 Q.promise((resolve) => {
                     if(this.self && !this.isSelf) {
@@ -288,7 +302,7 @@ export default {
                 }).then(() => {
                     this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
                 });
-            } else {
+            } else if(this.env.version < 1.5) {
                 this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
             }
          },

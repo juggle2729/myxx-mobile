@@ -68,7 +68,7 @@
             padding: 24px 32px;
             textarea {
                 border: none;
-                margin:16px 0 0 44px;
+                margin: 16px 0 0 44px;
                 height: 220px;
                 width: 94%;
                 line-height: 36px;
@@ -156,6 +156,13 @@ export default {
             },
             address: {}
         }
+    },
+    ready() {
+        this.$on('restore', () => {
+            this.$get('mall/address/default').then((address) => {
+                this.$set('address', address);
+            });
+        });
     },
     route: {
         data({to}) {

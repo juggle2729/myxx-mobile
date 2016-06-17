@@ -212,11 +212,11 @@ const states = {
     }],
     wp: [{
         txt: '等待付款',
-        tip: '20分钟未付款订单自动取消',
+        tip: '2小时未付款订单自动取消',
         btn: ['cancel', 'pay']
     }, {
         txt: '等待买家付款',
-        tip: '20分钟未付款订单自动取消',
+        tip: '2小时未付款订单自动取消',
         btn: ['price']
     }],
     ws: [{
@@ -449,10 +449,10 @@ export default {
                     this.states = _.mapValues(states, state => state[_.toNumber(this.isSeller)]);
                     this.order.price = order.trans_amount;
                     this.isNote = order.buyer_note;
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
+                    this.states.rf_rq.tip = '自动退款: ' + this.timer(1);
+                    this.states.rf_rq.tip = '自动退款: ' + this.timer(1);
+                    this.states.wg.tip = '自动确认收货: ' + this.timer(9);
+                    this.states.wg.tip = '自动确认收货: ' + this.timer(9);
                 });
         }
     },
@@ -479,7 +479,7 @@ export default {
             }
         },
         receive() {
-            this.action('confirm', { text: '确认收货后系统将付款给商家，确认收到购买的商品了？'}).then((result) => {
+            this.action('confirm', { text: '确认收到购买的商品了吗？'}).then((result) => {
                 if(result === '1') {
                     this.$put(`mall/order/${this.order.order_no}/receive_goods`).then(() => {
                         this.$router.go({name: 'received', params: {id: this.order.order_no}});

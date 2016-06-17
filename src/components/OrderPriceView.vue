@@ -115,7 +115,7 @@ export default {
                 this.action('confirm', { text: `确定将订单价格修改为${this.price}元吗?`}).then((result) => {
                     if(result === '1') {
                         this.$put(`mall/order/${this.order.order_no}/change_price`, { trans_amount: this.price * 100}).then((data) => {
-                            this.$router.go({ name: 'order', params: { id: this.order.order_no}});
+                            this.action('back', {step: 1, refresh: true});
                         });
                     }
                 }).catch((data) => {

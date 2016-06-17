@@ -36,17 +36,17 @@
 </style>
 <template>
 <div class="cash bg-default font-30">
-    <div class="item font-30 border-bottom bg-white">
-        <span>提现账户</span>
-        <input type="text" placeholder="请输入您本人姓名" v-model="name">
+    <div class="item font-30 border-bottom bg-white flex">
+        <div>提现账户</div>
+        <div><input type="text" placeholder="请输入您本人姓名" v-model="name"></div>
     </div>
-    <div class="item font-30 border-bottom bg-white">
-        <span>银行卡号</span>
-        <input type="number" placeholder="请输入您本人的银行卡号" v-model="account">
+    <div class="item font-30 border-bottom bg-white flex">
+        <div>银行卡号</div>
+        <div><input type="number" placeholder="请输入您本人的银行卡号" v-model="account"></div>
     </div>
-    <div class="item font-30 border-bottom bg-white">
-        <span>提现金额</span>
-        <input type="number" placeholder="本次可提现{{balance | price '0'}}元" v-model="amount">
+    <div class="item font-30 border-bottom bg-white flex">
+        <div>提现金额</div>
+        <div><input type="number" placeholder="本次可提现{{balance | price '0'}}元" v-model="amount"></div>
     </div>
     <div class="button bg-gray white font-30 center" :class="{'bg-red': complete}" @click="withdraw">提交</div>
     <div class="tip gray center"><span class="gray">-</span>&nbsp;提现说明&nbsp;<span class="gray">-</span></div>
