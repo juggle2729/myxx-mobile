@@ -1,32 +1,23 @@
 <style lang="sass">
 .tags {
     min-height: 108px;
-    .tag-item {
-        display: inline-block;
-        margin: 0 0 30px 16px;
-        margin: 14px 0 24px 16px;
-        line-height: 60px;
-        padding: 0 26px;
-        border-radius: 26px;
-        background-color: #ffecea;
-
-        &.first-line {
-            margin-top: 0;
+    .tag-list {
+        padding: 0 32px 28px;
+        .tag-item {
+            display: inline-block;
+            margin-left: 24px;
+            line-height: 60px;
+            padding: 0 26px;
+            border-radius: 26px;
+            background-color: #ffecea;
         }
-    }
-
-    .row-separator + .tag-item {
-        margin-left: 32px;
     }
 }
 </style>
 <template>
     <div class="tags border-bottom bg-white" v-if="tags && tags.length">
-        <div class="tag-list">
-            <template v-for="tag in tags">
-                <div class="row-separator" v-if="$index % 4 === 0"></div>
-                <div class="tag-item font-26" :class="{'first-line' : $index < 4}" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
-            </template>
+        <div class="tag-list flex">
+            <div class="tag-item font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
         </div>
     </div>
 </template>

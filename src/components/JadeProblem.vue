@@ -14,7 +14,7 @@
 		}
 		.help {
 			margin: 0 auto;
-			margin-bottom: 40px;
+			margin-bottom: 50px;
 			.icon-enter {
 				position: relative;
 				top: 3px;
@@ -43,10 +43,10 @@
 
 		<div class="flex">
 			<div class="bg-red"></div>
-			<div class="font-30">7天无理由退货</div>
+			<div class="font-30">5天退货</div>
 		</div>
 		<div class="desc gray font-30">
-			1. 收到商品后的7天内（以确认收货日期为准），可以申请退货，平台和商家不会收取任何费用。<br>
+			1. 收到商品后的5天内（以确认收货日期为准），可以申请退货，平台和商家不会收取任何费用。<br>
 			2. 退货的商品应不影响二次销售，相关附属配件齐全（比如：随商品的赠品或证书等）。<br>
 			3. 为了保证退货商品的安全，物流请采用顺丰速运，运费由顾客先行垫付，退货完成后运费由平台报销。
 		</div>

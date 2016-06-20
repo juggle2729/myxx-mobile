@@ -228,10 +228,12 @@ const states = {
     }],
     rf_rq: [{
         txt: '等待商家处理退款申请',
-        tip: ''
+        tip: '',
+        btn: ['service']
     }, {
         txt: '买家申请退款,请处理',
-        tip: ''
+        tip: '',
+        btn: ['service']
     }],
     rf_ac: [{
         txt: '退款中',
@@ -276,7 +278,7 @@ const states = {
     }, {
         txt: '等待买家确认收货',
         tip: '',
-        btn: ['updateTrace']
+        btn: ['service', 'updateTrace']
     }],
     ss: [{
         txt: '订单交易成功'
@@ -285,9 +287,10 @@ const states = {
     }],
     rt_rq: [{
         txt: '已申请退货,等待商家处理',
-        btn: ['trace']
+        btn: ['service', 'trace']
     }, {
-        txt: '买家已申请退货'
+        txt: '买家已申请退货',
+        btn: ['service']
     }],
     rt_rj: [{
         txt: '商家拒绝了退货申请',
@@ -449,10 +452,10 @@ export default {
                     this.states = _.mapValues(states, state => state[_.toNumber(this.isSeller)]);
                     this.order.price = order.trans_amount;
                     this.isNote = order.buyer_note;
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(1);
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(1);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(9);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(9);
+                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
+                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
+                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
+                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
                 });
         }
     },
@@ -522,12 +525,12 @@ export default {
         },
         timer(day) {
             const currentTime = new Date();
-            const displayTime = (this.order.create_at + 86400000*day - currentTime.getTime());
-            const days = (displayTime / (1000 * 60 * 60 * 24)) < 1 ? '00' : Math.round((displayTime / (1000 * 60 * 60 * 24)));
-            const hours = ((displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) < 1 ? '00' : Math.floor((displayTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = (displayTime % (1000 * 60 * 60)) / (1000 * 60) < 1 ? '00' : Math.floor((displayTime % (1000 * 60 * 60)) / (1000 * 60));
+            const remainHours = (this.order.create_at + 86400000*day - currentTime.getTime())/(1000*60*60);
+            const days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
+            const hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
+            const minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
 
-            return  days + '天' + hours + '小时' + minutes + '分';
+            return  this.xxx = days + '天' + hours + '小时' + minutes + '分';
         }
     }
 }

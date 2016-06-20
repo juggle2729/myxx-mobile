@@ -138,7 +138,7 @@
             </div>
         </div>
         <div class="operation bg-white flex">
-            <div class="border-top flex-1 price">订单价格: <span class="red">{{product.price ? '￥' + product.price/100 : '确认订单后商家改价'}}</span></div>
+            <div class="border-top flex-1 price">订单价格: <span class="red">{{product.price | price}}</span></div>
             <div class="button bg-red white center" @click="createOrder">确认订单</div>
         </div>
     </div>

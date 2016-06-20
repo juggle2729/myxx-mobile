@@ -1,6 +1,6 @@
 <style lang="sass">
 .jade-view {
-    padding-bottom: 80px;
+    /*padding-bottom: 80px;*/
     .jade-video {
         height: 577px;
         background-size: contain;
@@ -83,7 +83,7 @@
                 width: 180px;
                 height: 4px;
             }
-            &.v-link-active {
+            &.active {
                 color: #cc3f4f;
                 .dash {
                     background-color: #cc3f4f;
@@ -127,9 +127,6 @@
             line-height: 98px;
         }
     }
-    .placeholder {
-        height: 90px;
-    }
     .tabs-fixed {
         will-change: visibility;
         position: fixed;
@@ -137,20 +134,23 @@
         width: 100%;
         z-index: 999;
     }
+    .placeholder {
+        height: 98px;
+    }
 }
 </style>
 <template>
 <div class="jade-view bg-default">
     <div class="tabs tabs-fixed border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
+        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
         </div>
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'attribute'}, replace: true}">
+         <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}">
             <div class="desc border-right">属性</div>
             <div class="dash"></div>
         </div>
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'problem'}, replace: true}">
+        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">
             <div class="desc">常见问题</div>
             <div class="dash"></div>
         </div>
@@ -193,15 +193,15 @@
     </div>
     <div class="separator-20"></div>
     <div class="tabs tabs-static border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'detail'}, replace: true}">
+        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
         </div>
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'attribute'}, replace: true}">
+        <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}">
             <div class="desc border-right">属性</div>
             <div class="dash"></div>
         </div>
-        <div v-link="{name: 'jade', params: {id: $route.params.id, tab: 'problem'}, replace: true}">
+        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">
             <div class="desc">常见问题</div>
             <div class="dash"></div>
         </div>
@@ -209,6 +209,7 @@
     <div class="bg-default tab-content">
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
+    <div class="bg-white placeholder"></div>
     <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
@@ -220,7 +221,7 @@
                 <div>评论</div>
             </div>
         </div>
-        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >立即购买
+        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()">{{jade.sell_status === 'sold' ? '已售卖' : '立即购买'}}
         </div>
     </div>
 </div>
@@ -244,18 +245,11 @@ export default {
     data() {
         return {
             jade: {
-                tags: [],
-                gifts: [],
-                themes: [],
-                morals: [],
-                prizes: [],
                 owner: {}
             },
-            recommend: {},
             isSelf: false,
             isDefaultView: false,
-            view: undefined,
-            fixed: false
+            view: undefined
         };
     },
     ready() {
@@ -307,13 +301,24 @@ export default {
             }
          },
         contact() {
-            if(this.env.version >= 1.5 && !this.isSelf) {
-                this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+            if(this.env.isBrowser || this.env.version >= 1.5 && !this.isSelf) {
+                Q.promise((resolve) => {
+                    if(this.self) {
+                        resolve();
+                    } else if(!this.self){
+                        this.action('login').then(resolve);
+                    }
+                }).then(() => {
+                    this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+                });
             } else if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'});
             } else {
                 this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
             }
+        },
+        go(tab) {
+            (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`);
         }
     },
     events: {
