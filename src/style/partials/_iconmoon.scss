@@ -1,10 +1,6 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?tiqu5x');
-    src:    url('fonts/icomoon.eot?tiqu5x#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?tiqu5x') format('truetype'),
-        url('fonts/icomoon.woff?tiqu5x') format('woff'),
-        url('fonts/icomoon.svg?tiqu5x#icomoon') format('svg');
+    src: url('#{$qn}/test/icomoon.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -17,7 +13,6 @@
     font-weight: normal;
     font-variant: normal;
     text-transform: none;
-    line-height: 1;
 
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
@@ -123,4 +118,3 @@
 .icon-edit:before {
     content: "\e908";
 }
-

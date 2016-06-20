@@ -1,5 +1,5 @@
 import Q from 'q';
-import emitter from './utils/emitter';
+import emitter from './util/emitter';
 
 let userPromise;  // 把wx用户接口缓存起来，防止多次请求报错
 

@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import Resource from 'vue-resource';
 import routes from './route';
 import directive from './directive';
-import mixin from './mixins/global';
+import mixin from './mixin/global';
 import filter from './filter';
 import partial from './partial';
 import store from './store';
@@ -78,14 +78,14 @@ router.alias({
     '/evaluations/:tab': '/evaluations',
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',
-    '/stories/:tab': '/stories',
+    '/stories': '/featured',
+    '/stories/:tab': '/featured',
     '/auctions/:id': 'user/:id/auctions',
     '/jade/:id': '/jade/:id/none',
-    '/order/affirm/:productId': '/order/affirm/:productId/none',
     '/tag/:type/:id/:name': '/tag/:id/:name'
 });
 router.map(routes);
-router.start(require('./components/App.vue'), '#app');
+router.start(require('App.vue'), '#app');
 
 (() => {
     let first = true;

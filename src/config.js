@@ -46,7 +46,7 @@ export default {
             route: 'result'
         }, {
             id: 30,
-            name: '话题',
+            name: '帖子',
             route: 'story'
         }, {
             id: 40,

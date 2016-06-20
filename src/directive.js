@@ -3,7 +3,7 @@ let preset = {
     lg: 'imageView2/1/w/750/h/750/interlace/1',
     md: 'imageView2/3/w/300/h/300/interlace/1',
     sm: 'imageView2/1/w/200/h/200/interlace/1',
-    video: 'vframe/jpg/offset/0/rotate/auto|imageView2/1/w/340/h/250'
+    video: 'vframe/jpg/offset/0/rotate/auto|imageView2/0/w/375'
 };
 const bg = {
     params: ['query', 'holder'],

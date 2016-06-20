@@ -13,12 +13,12 @@ module.exports = {
     resolve: {
         extensions: ['', '.js'],
         modulesDirectories: [
-            'components',
-            'mixins',
+            'vue',
+            'mixin',
             'node_modules'
         ],
         alias: {
-            'style': path.resolve('src/styles')
+            'style': path.resolve('src/style')
         }
     },
     module: {

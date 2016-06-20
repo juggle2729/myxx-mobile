@@ -18,13 +18,13 @@ export default {
             }, 'evaluation');
         }
     },
-// 晒宝
-    '/stories': {
-        name: 'stories',
-        title: '晒宝列表',
+// 精选
+    '/featured': {
+        name: 'featured',
+        title: '精选',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('StoriesView.vue'));
+                resolve(require('FeaturedView.vue'));
             }, 'story');
         }
     },
