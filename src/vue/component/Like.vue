@@ -1,5 +1,6 @@
 <style lang="sass">
 .like-component {
+    color: #888888;
     font-size: 30px;
     i {
         transform: scale(1.2) translate3d(0, 2px, 0);

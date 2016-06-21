@@ -1,6 +1,7 @@
 <style lang="sass">
 .comment-component {
     font-size: 30px;
+    color: #888888;
     i {
         transform: scale(1.2) translate3d(0, 2px, 0);
     }

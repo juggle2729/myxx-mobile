@@ -263,7 +263,7 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
-            this.updateTitle(this.course.title);
+            this.action('updateTitle', {text: this.course.title});
             this.setShareData(this.course, true);
         });
     },
@@ -277,7 +277,7 @@ export default {
                     this.course = course;
 
                     this.setShareData(course, true);
-                    this.updateTitle(course.title);
+                    this.action('updateTitle', {text: course.title});
             });
         }
     },

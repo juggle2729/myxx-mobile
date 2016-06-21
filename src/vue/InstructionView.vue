@@ -25,7 +25,9 @@
 export default {
     name: 'InstructionView',
     ready() {
-        this.updateTitle(this.titles[this.$route.params.id]);
+        _.delay(() => {
+            this.action('updateTitle', {text: this.titles[this.$route.params.id]});
+        }, 50);
     },
     data() {
         return {
@@ -43,7 +45,7 @@ export default {
                     }, {
                         title: '付款担保是什么?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=5&sn=d49ebcd3b156a9415417986cba799ffd&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
-                    },
+                    }
                 ],
                 'guide': [
                     {

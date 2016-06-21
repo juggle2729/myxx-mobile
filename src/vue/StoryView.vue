@@ -203,33 +203,10 @@ export default {
             return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    this.updateTitle(`${story.topic_type.name}详情`);
+                    this.action('updateTitle', {text: `${story.topic_type.name}详情`});
                     this.followed = story.user.is_followed;
                     return {story};
                 });
-        }
-    },
-    methods: {
-        follow() {
-            if (!this.isSelf) {
-                const followApi = `users/follow/${this.story.user.id}`;
-                if(this.story.user.is_followed) {
-                    this.$delete(followApi).then(() => {
-                        this.story.user.is_followed = false;
-                        this.action('toast', {
-                            text: '已取消关注'
-                        });
-                    });
-                } else {
-                    this.$post(followApi).then(() => {
-                        this.story.user.is_followed = true;
-                        this.action('toast', {
-                            text: '已关注',
-                            success: '1'
-                        });
-                    });
-                }
-            }
         }
     }
 }

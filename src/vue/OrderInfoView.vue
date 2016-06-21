@@ -4,13 +4,22 @@
     .seperator {
         height: 200px;
     }
+    [class^='icon-'] {
+        width: 40px;
+        & + span {
+            padding-left: 0;
+        }
+        &.icon-clock {
+            transform: scale(.9) translate3d(0, 4px, 0);
+        }
+        &.icon-location {
+            transform: translate3d(0, -3px, 0);
+        }
+    }
     .status {
         height: 86px;
         line-height: 86px;
         padding: 4px 32px 0;
-        .icon-clock {
-            padding-right: 12px;
-        }
         &.detail {
             height: 146px;
             line-height: 60px;
@@ -27,7 +36,6 @@
          }
     }
     .address {
-        margin-top: 20px;
         padding: 5px 32px 0;
         height: 200px;
         .user {
@@ -48,7 +56,6 @@
         }
     }
     .product {
-        margin-top: 20px;
         .seller {
             height: 86px;
             line-height: 86px;
@@ -83,7 +90,6 @@
         }
     }
     .order {
-        margin-top: 20px;
         height: 146px;
         padding: 32px 32px 30px;
         div:first-child {
@@ -97,7 +103,6 @@
         justify-content: flex-end;
         width: 100%;
         height: 98px;
-        line-height: 68px;
         & > div {
             border-radius: 5px;
             margin-left: 18px;
@@ -105,6 +110,7 @@
             background-color: white;
             width: 160px;
             height: 68px;
+            line-height: 68px;
             &.highlight {
                 background-color: #cc3f4f;
                 border: 0;
@@ -151,7 +157,8 @@
             </div>
         </div>
     </div>
-    <div class="address bg-white font-30 border-vertical">
+    <div class="separator"></div>
+    <div class="address bg-white font-30">
         <div class="user flex">
             <div class="flex-1">收货人: {{order.receiver_name}}</div>
             <div>{{order.receiver_phone}}</div>
@@ -161,8 +168,9 @@
             <div class="font-26 site">收货地址: {{order.receiver_address}}</div>
         </div>
     </div>
+    <div class="separator"></div>
     <div class="product bg-white font-30">
-        <div class="seller flex border-top" v-if="!isSeller">
+        <div class="seller flex" v-if="!isSeller">
             <avatar :user="order.seller" :size="50"></avatar>
             <span class="margin-left">{{order.seller.nickname}}</span>
         </div>
@@ -181,7 +189,8 @@
             <div class="note font-26">{{order.buyer_note}}</div>
         </div>
     </div>
-    <div class="order bg-white border-vertical font-30">
+    <div class="separator"></div>
+    <div class="order bg-white font-30 border-bottom">
         <div>订单编号: {{order.order_no}}</div>
         <div>订单创建时间: {{order.create_at | date}}</div>
     </div>

@@ -188,7 +188,7 @@
             <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
             <p class="font-26 gray">{{jade.owner.title}}</p>
         </div>
-        <div class="font-26 icon-enter-slim gray"></div>
+        <div class="font-26 icon-enter gray"></div>
     </div>
     <div class="separator-20"></div>
     <div class="tabs tabs-static border-bottom flex font-26 bg-white gray" :class="{'default': isDefaultView}">
@@ -321,7 +321,9 @@ export default {
     },
     events: {
         scroll() {
-            this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden';
+            if(!this.env.isWechat) {
+                this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden';
+            }
         }
     }
 }

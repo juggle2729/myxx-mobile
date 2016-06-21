@@ -1,5 +1,6 @@
 <style lang="sass">
 .comments-component {
+    padding: 0 32px;
     label {
         margin-top: 50px;
     }

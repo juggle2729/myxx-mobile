@@ -58,6 +58,22 @@ const adapter = {
                     this.$root.popup = _.merge({}, params, {handler, cb});
                 }
                 break;
+            case 'updateTitle':
+                document.title = params.text;
+                if(this.env.isWechat && this.env.isIOS) {
+                    // hack在微信等webview中无法修改document.title的情况
+                    var iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = '//o0x80w5li.qnssl.com/logo.png';
+                    iframe.onload = () => {
+                       _.delay(() => {
+                           iframe.onload = _.noop;
+                           iframe.parentNode.removeChild(iframe);
+                       }, 0);
+                    };
+                    document.body.appendChild(iframe);
+                }
+                break;
             case 'back':
                 window.history.go(-params.step);
                 break;

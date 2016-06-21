@@ -5,13 +5,13 @@
         padding: 20px 0;
         .address {
             padding: 0 32px;
-            >div {
+            > div {
                 height: 200px;
                 .icon-enter {
                     padding: 74px 0 0 18px;
                 }
                 .user {
-                    margin: 0 0 26px 48px;
+                    margin: 0 0 26px 40px;
                     width: 600px;
                     span:last-child {
                         float: right;

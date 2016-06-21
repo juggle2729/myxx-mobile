@@ -9,10 +9,11 @@
     }
     .tabs {
         height: 86px;
-        >div {
-            width: 50%;
+        padding: 0 100px;
+        > div {
+            line-height: 86px;
             text-align: center;
-         }
+        }
     }
     .item {
         height: 110px;
@@ -29,11 +30,11 @@
 <template>
 <div class="wallet-detail" v-if="!$loadingRouteData">
     <div class="tabs flex font-30 border-bottom">
-        <div v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
-            <div :class="{'red': expect}">待结算金额</div>
+        <div class="flex-1" :class="{'red': expect}" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
+            待结算金额
         </div>
-        <div v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
-            <div :class="{'red': !expect}">可提现金额</div>
+        <div class="flex-1" :class="{'red': !expect}" v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
+            可提现金额
         </div>
     </div>
     <div class="item flex font-30 border-bottom" v-for="item in items">

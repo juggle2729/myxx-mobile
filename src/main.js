@@ -69,7 +69,8 @@ router.beforeEach(({from, to, next}) => {
     if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
         window.scroll(0, 0);
     }
-    document.title = (to.title || '美玉秀秀');
+    document.title = to.title || '美玉秀秀';
+    to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'});
     next();
 });
 

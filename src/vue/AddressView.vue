@@ -48,9 +48,14 @@
         </div>
         <div class="operate flex gray border-top">
             <div class="flex-1" @click="defaultAddress(address)">
-                <span class="icon-check-on red" v-if="address.is_default"></span>
-                <span class="icon-check-off" v-else></span>
-                <span>{{address.is_default ? '默认地址' : '设为默认'}}</span>
+                <template v-if="address.is_default">
+                    <span class="icon-check-on red"></span>
+                    <span class="red">默认地址</span>
+                </template>
+                <template v-else>
+                    <span class="icon-check-off"></span>
+                    <span>设为默认</span>
+                </template>
             </div>
             <div v-link="{name: 'address-update', params: { id: address.id}, query: {product: $route.query.product}}">
                 <span class="icon-edit"></span>

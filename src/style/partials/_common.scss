@@ -230,10 +230,8 @@
 }
 [class^='icon-'] {
     display: inline-block;
-    color: #888888;
     & + span {
         display: inline-block;
-        color: #888888;
         padding-left: 8px;
     }
 }

@@ -1,10 +1,10 @@
 <style lang="sass">
 .wallet-view {
     .item {
-        height: 166px;
+        height: 156px;
         padding: 33px 32px 0;
         .red {
-            margin-top: 30px;
+            margin-top: 25px;
         }
     }
     .button {

@@ -319,7 +319,7 @@ export default {
     },
     route: {
         data({to}) {
-            this.updateTitle(to.params.name);
+            this.action('updateTitle', {text: to.params.name});
             this.tagId = to.params.id;
 
             return this.fetch();

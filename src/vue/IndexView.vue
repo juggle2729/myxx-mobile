@@ -18,10 +18,10 @@
     <ul>
         <li class="tab">首页</li>
         <li>
-            <a href="/evaluations">鉴宝列表 - evaluations</a>
+            <a href="/featured">精选 - featured</a>
         </li>
         <li>
-            <a href="/stories">晒宝列表 - stories</a>
+            <a href="/evaluations">鉴宝列表 - evaluations</a>
         </li>
         <li class="tab">发现</li>
         <li>

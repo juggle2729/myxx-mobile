@@ -219,14 +219,6 @@ const mixin = {
             if(!_.isEmpty(ids) && _.every(ids, id => id)) {
                 this.action('coverflow', {ids: ids.join(','), index});
             }
-        },
-
-        updateTitle(title) {
-            if(this.env.isApp) {
-                this.action('updateTitle', {text: title});
-            } else {
-                document.title = title;
-            }
         }
     }
 };

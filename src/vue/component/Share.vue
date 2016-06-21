@@ -1,6 +1,7 @@
 <style lang="sass">
 .share-component {
     font-size: 30px;
+    color: #888888;
     i {
         transform: scale(1.2);
     }
