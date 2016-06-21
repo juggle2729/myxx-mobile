@@ -3,19 +3,23 @@
     min-height: 100%;
     .info {
         height: 134px;
-        padding: 28px 32px 0;
-        div {
-            margin: 18px 0 0 46px;
+        -webkit-box-align: start;
+        padding: 24px 32px;
+        line-height: 45px;
+        .icon-logistics {
+            margin-right: 20px;
         }
     }
 }
 </style>
 <template>
 <div class="trace-view">
-    <div class="info font-30 border-bottom">
-        <span class="icon-logistics gray"></span>
-        <span>物流公司: 顺丰速运</span>
-        <div>运单编号: {{trace.express_no}}</div>
+    <div class="info font-30 border-bottom flex">
+        <div class="icon-logistics"></div>
+        <div>
+            <div>物流公司: 顺丰速运</div>
+            <div>运单编号: {{trace.express_no}}</div>
+        </div>
     </div>
 </div>
 </template>

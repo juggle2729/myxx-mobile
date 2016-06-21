@@ -67,14 +67,15 @@
         >div {
             width: 33.3%;
             line-height: 54px;
-            .desc {
-                margin: 23px 0 9px 0;
-            }
+            position: relative;
             &>div {
                 text-align: center;
                 margin: 0 auto;
             }
             .dash {
+                position: absolute;
+                bottom: -18px;
+                left: 14%;
                 display: block;
                 width: 180px;
                 height: 4px;
@@ -190,7 +191,7 @@
         <div class="font-26 icon-enter-slim gray"></div>
     </div>
     <div class="separator-20"></div>
-    <div class="tabs tabs-static border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
+    <div class="tabs tabs-static border-bottom flex font-26 bg-white gray" :class="{'default': isDefaultView}">
         <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
@@ -211,11 +212,11 @@
     <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-                <div class="icon-contact light font-44"></div>
-                <div>联系商家</div>
+                <div class="icon-contact font-44"></div>
+                <div>私聊</div>
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-                <div class="icon-comment light font-44"></div>
+                <div class="icon-comment font-44"></div>
                 <div>评论</div>
             </div>
         </div>

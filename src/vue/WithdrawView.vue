@@ -9,6 +9,7 @@
             padding-left: 44px;
             width: 555px;
             font-size: 30px;
+            line-height: 1;
         }
     }
     .button {

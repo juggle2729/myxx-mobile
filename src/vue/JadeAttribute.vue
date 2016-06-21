@@ -12,7 +12,7 @@
             padding-right: 32px;
         }
         .label {
-            width: 218px;
+            width: 178px;
         }
 	}
 }

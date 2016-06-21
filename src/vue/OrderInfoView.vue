@@ -230,7 +230,7 @@ const states = {
     }, {
         txt: '买家申请退款,请处理',
         tip: '',
-        btn: ['service']
+        btn: ['doRefund', 'service']
     }],
     rf_ac: [{
         txt: '退款中',
@@ -266,7 +266,7 @@ const states = {
     }, {
         txt: '您拒绝了退款申请',
         tip: '请联系客服处理',
-        btn: ['service', 'send']
+        btn: ['service']
     }],
     wg: [{
         txt: '已发货,请等待收货',
@@ -287,7 +287,7 @@ const states = {
         btn: ['service', 'trace']
     }, {
         txt: '买家已申请退货',
-        btn: ['service']
+        btn: ['doWithdraw', 'service']
     }],
     rt_rj: [{
         txt: '商家拒绝了退货申请',
@@ -436,6 +436,14 @@ export default {
                 updateTrace: {
                     txt: '更新物流',
                     fn: this.send
+                },
+                doWithdraw: {
+                    txt: '处理退货',
+                    fn: this.withdraw
+                },
+                doRefund: {
+                    txt: '处理退款',
+                    fn: this.refund
                 }
             }
         }
