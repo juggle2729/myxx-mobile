@@ -64,11 +64,12 @@
         width: 100%;
         height: 90px;
         top: 0;
-        >div {
+        > div {
             width: 33.3%;
-            line-height: 54px;
+
             position: relative;
-            &>div {
+            & > div {
+                line-height: 54px;
                 text-align: center;
                 margin: 0 auto;
             }

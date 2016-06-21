@@ -25,7 +25,7 @@ let [api, img, video, download] = ((env='dev') => {
         }
     };
     return _.map(hosts, env);
-})('test');
+})('prod');
 
 export default {
     api,

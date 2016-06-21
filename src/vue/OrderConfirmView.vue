@@ -8,7 +8,7 @@
             > div {
                 height: 200px;
                 .icon-enter {
-                    padding: 74px 0 0 18px;
+                    padding: 60px 0 0 18px;
                 }
                 .user {
                     margin: 0 0 26px 40px;
@@ -72,6 +72,9 @@
                 height: 220px;
                 width: 94%;
                 line-height: 36px;
+            }
+            .icon-comment {
+                transform: scale(1.2);
             }
         }
     }
