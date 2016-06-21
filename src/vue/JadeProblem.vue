@@ -18,6 +18,7 @@
 			.icon-enter {
 				position: relative;
 				top: 3px;
+				color: #cc3f4f;
 			}
 		}
 	}
@@ -50,7 +51,7 @@
 			2. 退货的商品应不影响二次销售，相关附属配件齐全（比如：随商品的赠品或证书等）。<br>
 			3. 为了保证退货商品的安全，物流请采用顺丰速运，运费由顾客先行垫付，退货完成后运费由平台报销。
 		</div>
-		<div class="help red font-30 center" v-link="{name: 'instructions'}"><span>查看帮助</span><span class="icon-enter"></span></div>
+		<div class="help red font-30 center" v-link="{name: 'instructions'}"><span>查看帮助</span><span class="icon-enter red"></span></div>
    </div>
 </div>
 </template>

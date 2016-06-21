@@ -1,6 +1,5 @@
 <style lang="sass">
 .jade-view {
-    /*padding-bottom: 80px;*/
     .jade-video {
         height: 577px;
         background-size: contain;
@@ -38,7 +37,9 @@
             padding: 3px 60px 0;
             -webkit-box-pack: justify;
             [class^='icon-'], [class*=' icon-'] {
-                padding-right: 2px;
+                position: relative;
+                right: -4px;
+                top: 3px;
             }
         }
     }
@@ -65,8 +66,9 @@
         top: 0;
         >div {
             width: 33.3%;
+            line-height: 54px;
             .desc {
-                margin: 33px 0 26px 0;
+                margin: 23px 0 9px 0;
             }
             &>div {
                 text-align: center;
@@ -78,7 +80,7 @@
                 height: 4px;
             }
             &.active {
-                line-height: 1; // FIXME: 临时方案
+                line-height: 54px; // FIXME: 临时方案
                 color: #cc3f4f;
                 .dash {
                     background-color: #cc3f4f;
@@ -112,7 +114,8 @@
             width: 50%;
             height: 100%;
             [class^='icon-'], [class*=' icon-'] {
-                margin-bottom: 8px;
+                color: #c6c6c6;
+                margin-bottom: 4px;
                 padding: 0;
             }
         }
@@ -208,11 +211,11 @@
     <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-                <div class="icon-contact light font-34"></div>
+                <div class="icon-contact light font-44"></div>
                 <div>联系商家</div>
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-                <div class="icon-comment light font-34"></div>
+                <div class="icon-comment light font-44"></div>
                 <div>评论</div>
             </div>
         </div>

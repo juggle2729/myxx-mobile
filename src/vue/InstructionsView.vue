@@ -34,7 +34,6 @@
         @include border(right-bottom);
         display: inline-block;
         height: 200px;
-        line-height: 200px;
         width: 25%;
         padding-top: 51px;
         [class^='icon-'] {

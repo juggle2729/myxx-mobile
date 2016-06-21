@@ -4,10 +4,10 @@
 		padding: 32px;
 		line-height: 1.5;
 	}
-	.img img {
-		width: 100%;
-		&:not(:last-child) {
-			margin-bottom: 6px;
+	.img {
+		line-height: 1;
+		img {
+			width: 100%;
 		}
 	}
 	.tags {
@@ -18,8 +18,8 @@
 <template>
 <div class="jade-detail bg-white">
 	<div class="desc font-30">{{jade.detail}}</div>
-	<div v-for="img in jade.pictures" class="img">
-      	<img :src="config.img + img + '?imageView2'" @click="coverflow(jade.pictures, $index)"/>
+	<div class="img">
+      	<img :src="config.img + img + '?imageView2'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
     </div>
     <tags :tags="jade.tags"></tags>
     <div class="separator-20"></div>
