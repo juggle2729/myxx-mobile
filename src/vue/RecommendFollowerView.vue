@@ -56,6 +56,10 @@
                 line-height: 36px;
             }
         }
+
+        .empty-component {
+            color: #888888;
+        }
     }
 </style>
 <template>
@@ -83,7 +87,7 @@
                 </div>
             </div>
             <partial name="load-more" v-if="items.hasMore"></partial>
-            <partial v-if="items.isEmpty" name="empty-page"></partial>
+            <empty v-if="items.isEmpty"></empty>
         </div>
     </div>
 </template>
