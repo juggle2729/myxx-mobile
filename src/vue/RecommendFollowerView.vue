@@ -5,16 +5,19 @@
         .tips {
             width: 100%;
             text-align: center;
-            margin: 60px auto;
+            margin: 40px auto 60px;
             height: 100px;
             line-height: 100px;
             > span {
-                border-radius: 48px;
+                border-radius: 50px;
                 border: 1px solid #cc3f4f;
-                padding: 48px;
+                padding: 30px 50px;
             }
         }
         .item {
+            &:last-child {
+                background-size: 0;
+            }
             position: relative;
             padding: 32px 32px 32px 0;
             margin-left: 32px;
@@ -23,7 +26,7 @@
                 margin-left: 20px;
             }
             .name {
-                margin-top: 4px;
+                margin-top: 2px;
                 >div {
                     margin-top: 12px;
                 }
@@ -48,11 +51,13 @@
                     .icon {
                         color: #cc3f4f;
                         padding-right: 0;
+                        transform: scale(1.5);
+                        display: inline-block;
                     }
                 }
             }
             .content {
-                margin-top: 16px;
+                margin-top: 20px;
                 line-height: 36px;
             }
         }
@@ -73,11 +78,11 @@
                 <div class="main flex-1">
                     <div class="name">
                         <p class="font-30">{{item.name}}</p>
-                        <div class="font-26 light">粉丝{{item.fans_count}}</div>
+                        <div class="font-26 light">粉丝数&nbsp;&nbsp;{{item.fans_count}}</div>
                     </div>
                     <div class="follow-cnt font-26" @click="follow(item)" :class="{ 'followed': item.is_followed }">
                         <span class="cnt-text">
-                            <span class="icon icon-plus font-22 red" v-if="!item.is_followed"></span>
+                            <i class="icon icon-plus font-26 red" v-if="!item.is_followed"></i>
                             {{item.is_followed ? '已关注' : '关注'}}
                         </span>
                     </div>
