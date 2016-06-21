@@ -215,7 +215,7 @@
                 </div>
                 <div class="social font-30 clearfix border-top">
                     <div class="border-right">
-                        <i class="icon-comment"></i>
+                        <i class="icon-comment-solid"></i>
                         <span>{{item.entry.comment}}x</span>
                     </div>
                     <like :active="item.entry.liked" :count="item.entry.like" :target="item.entry.post_id" type="30"></like>
@@ -241,7 +241,7 @@
                 </div>
                 <div class="social font-30 clearfix border-top">
                     <div class="border-right">
-                        <i class="icon-comment"></i>
+                        <i class="icon-comment-solid"></i>
                         <span>{{item.entry.comment}}</span>
                     </div>
                     <div class="font-30">

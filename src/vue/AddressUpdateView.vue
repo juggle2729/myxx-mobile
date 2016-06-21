@@ -33,11 +33,11 @@
         border-radius: 8px;
         margin: 50px auto 0;
     }
-    ::-webkit-input-placeholder {
+    input::-webkit-input-placeholder {
         color: #c6c6c6;
-        padding-top: 7px;
+        padding-top: 6px;
     }
-    ::-webkit-textarea-placeholder {
+    textarea::-webkit-input-placeholder {
         color: #c6c6c6;
     }
 }

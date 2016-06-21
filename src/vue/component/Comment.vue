@@ -9,7 +9,7 @@
 </style>
 <template>
 <div class="comment-component">
-    <i class="icon-comment"></i><span>{{count}}</span>
+    <i class="icon-comment-solid"></i><span>{{count}}</span>
 </div>
 </template>
 <script>

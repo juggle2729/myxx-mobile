@@ -8,7 +8,7 @@
                         <span class="count">{{course.like}}</span>
                     </div>
                     <div class="comment font-22">
-                        <span class="icon icon-comment"></span>
+                        <span class="icon icon-comment-solid"></span>
                         <span class="count">{{course.comment}}</span>
                     </div>
                 </div>

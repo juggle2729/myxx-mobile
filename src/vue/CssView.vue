@@ -211,7 +211,7 @@ export default {
             'icon-alarm',
             'icon-follow',
             'icon-followed',
-            'icon-comment',
+            'icon-comment-solid',
             'icon-enter',
             'icon-edit',
             'icon-like',

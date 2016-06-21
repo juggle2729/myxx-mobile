@@ -10,6 +10,9 @@
                 .icon-enter {
                     padding: 60px 0 0 18px;
                 }
+                .icon-location {
+                    transform: scale(1.2);
+                }
                 .user {
                     margin: 0 0 26px 40px;
                     width: 600px;
@@ -74,7 +77,7 @@
                 line-height: 36px;
             }
             .icon-comment {
-                transform: scale(1.2);
+                transform: scale(1.1);
             }
         }
     }

@@ -13,7 +13,7 @@
             transform: scale(.9) translate3d(0, 4px, 0);
         }
         &.icon-location {
-            transform: translate3d(0, -3px, 0);
+            transform: scale(1.2) translate3d(0, -3px, 0);
         }
     }
     .status {
@@ -82,6 +82,9 @@
         .comment {
             height: 320px;
             padding: 24px 32px;
+            .icon-comment {
+                transform: scale(1.1);
+            }
             .note {
                 margin: 16px 0 0 48px;
                 height: 220px;

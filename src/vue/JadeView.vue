@@ -17,7 +17,7 @@
                 &:first-letter {
                     font-size: 32px;
                     font-weight: normal;
-                };
+                }
             }
         }
         .title {
@@ -141,7 +141,7 @@
 </style>
 <template>
 <div class="jade-view bg-default">
-    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white" :class="{'default': isDefaultView}">
+    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white gray" :class="{'default': isDefaultView}">
         <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
             <div class="desc border-right">详情</div>
             <div class="dash"></div>
@@ -217,7 +217,7 @@
                 <div>私聊</div>
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
-                <div class="icon-comment font-44"></div>
+                <div class="icon-comment-solid font-44"></div>
                 <div>评论</div>
             </div>
         </div>
