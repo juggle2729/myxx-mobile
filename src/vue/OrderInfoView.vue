@@ -19,7 +19,7 @@
     .status {
         height: 86px;
         line-height: 86px;
-        padding: 4px 32px 0;
+        padding: 0 32px;
         &.detail {
             height: 146px;
             line-height: 60px;
@@ -27,7 +27,7 @@
                 margin-left: 51px;
             }
             &.padding-top {
-                padding-top: 28px;
+                padding-top: 24px;
              }
         }
         >.withdraw {
@@ -237,7 +237,7 @@ const states = {
     }, {
         txt: '买家申请退款，请处理',
         tip: '',
-        btn: ['doRefund', 'service']
+        btn: ['service', 'doRefund']
     }],
     rf_ac: [{
         txt: '退款中',
@@ -294,7 +294,7 @@ const states = {
         btn: ['service', 'trace']
     }, {
         txt: '买家已申请退货',
-        btn: ['doWithdraw', 'service']
+        btn: ['service', 'doWithdraw']
     }],
     rt_rj: [{
         txt: '商家拒绝了退货申请',
