@@ -19,7 +19,7 @@
 }
 </style>
 <template>
-<div class="follow-component flex" :class="{active: !follow}" @click.stop="toggle">
+<div v-if="!isSelf" class="follow-component flex" :class="{active: !follow}" @click.stop="toggle">
     <i class="icon-plus"></i><span>{{follow ? '已关注' : '关注'}}</span>
 </div>
 </template>
@@ -39,6 +39,9 @@ export default {
                 throw Error('缺少参数');
             }
             return `users/follow/${this.user}`;
+        },
+        isSelf() {
+            return _.get(this, 'self.id') == this.user;
         }
     },
     methods: {

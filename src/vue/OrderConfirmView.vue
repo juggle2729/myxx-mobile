@@ -12,9 +12,10 @@
                 }
                 .icon-location {
                     transform: scale(1.2);
+                    width: 44px;
                 }
                 .user {
-                    margin: 0 0 26px 40px;
+                    margin: 0 0 26px 44px;
                     width: 600px;
                     span:last-child {
                         float: right;
@@ -29,7 +30,6 @@
                     }
                 }
                 .site {
-                    margin-left: 10px;
                     line-height: 38px;
                 }
                 &.first {
@@ -124,7 +124,7 @@
             </div>
         </div>
         <div class="product bg-white border-vertical">
-            <div class="seller flex border-bottom">
+            <div class="seller flex border-bottom" v-link="{name: 'user', params: {id: product.owner.id}}">
                 <avatar :user="product.owner" :size="50"></avatar>
                 <span class="margin-left">{{product.owner.name}}</span>
             </div>

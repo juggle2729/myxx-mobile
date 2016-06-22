@@ -43,7 +43,7 @@
         padding: 0 32px 36px;
     }
     .description {
-        padding: 0 40px 40px 32px;
+        margin: 0 40px 40px 32px;
         &.user-input {
             overflow: hidden;
             display: -webkit-box;

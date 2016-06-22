@@ -214,14 +214,14 @@
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
                 <div class="icon-contact font-44"></div>
-                <div>私聊</div>
+                <div>私信</div>
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
                 <div class="icon-comment-solid font-44"></div>
                 <div>评论</div>
             </div>
         </div>
-        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >{{jade.sell_status === 'selling' ? '立即购买' : '已售卖'}}</div>
+        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >{{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}</div>
     </div>
 </div>
 </template>
@@ -271,7 +271,7 @@ export default {
                 return this.$get('mall/products/'+ this.$route.params.id)
                     .then((jade) => {
                         this.setShareData(jade, true);
-                        this.isSelf = (_.get(this, 'self.id') === jade.owner.id);
+                        this.isSelf = (_.get(this, 'self.id') == jade.owner.id);
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1;
                         this.view = this.isDefaultView ? 'detail' : to.params.tab;
                         this.jade = jade;
@@ -296,7 +296,7 @@ export default {
                     this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
                 });
             } else if(this.env.version < 1.5) {
-                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+                this.action('toast', {success: 0, text: '商城即将上线，敬请期待'}); // 请将应用更新至v1.5版
             }
          },
         contact() {
@@ -313,7 +313,7 @@ export default {
             } else if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'});
             } else {
-                this.action('toast', {success: 0, text: '请将应用更新至v1.5版'});
+                this.action('toast', {success: 0, text: '商城即将上线，敬请期待'});
             }
         },
         go(tab) {

@@ -5,7 +5,7 @@
         height: 200px;
     }
     [class^='icon-'] {
-        width: 40px;
+        width: 50px;
         & + span {
             padding-left: 0;
         }
@@ -13,7 +13,7 @@
             transform: scale(.9) translate3d(0, 4px, 0);
         }
         &.icon-location {
-            transform: scale(1.2) translate3d(0, -3px, 0);
+            transform: scale(1.2) translate3d(0, -2px, 0);
         }
     }
     .status {
@@ -49,7 +49,6 @@
                     padding-top: 3px;
                 }
                 .site {
-                    padding-left: 10px;
                     line-height: 38px;
                 }
             }
@@ -86,7 +85,7 @@
                 transform: scale(1.1);
             }
             .note {
-                margin: 16px 0 0 48px;
+                margin: 16px 0 0 50px;
                 height: 220px;
                 line-height: 36px;
             }
@@ -131,8 +130,7 @@
 <template>
 <div class="order-view bg-default" v-if="!$loadingRouteData">
     <div class="status bg-white border-vertical font-30 red padding-top" :class="{'detail': states[order.status].tip}" v-if="!isSeller">
-        <span class="icon-clock"></span>
-        <span>{{states[order.status].txt}}</span>
+        <span class="icon-clock"></span><span>{{states[order.status].txt}}</span>
         <div class="font-26 tip flex" v-if="states[order.status].tip" @click="rejectInfo">
             <div class="flex-1">{{states[order.status].tip}}</div>
             <div class="red" v-if="applyReject">
@@ -144,8 +142,7 @@
     <div class="status bg-white border-vertical font-30 red" :class="{'detail': states[order.status].tip}" v-else @click="refundInfo">
         <div class="flex withdraw">
             <div class="flex-1">
-                <span class="icon-clock"></span>
-                <span>{{states[order.status].txt}}</span>
+                <span class="icon-clock"></span><span>{{states[order.status].txt}}</span>
             </div>
             <div class="red" v-if="applyReturn">
                 <span>查看详情</span>
@@ -167,8 +164,7 @@
             <div>{{order.receiver_phone}}</div>
         </div>
         <div class="flex">
-            <div class="icon-location gray font-30"></div>
-            <div class="font-26 site">收货地址: {{order.receiver_address}}</div>
+            <div class="icon-location gray font-30"></div><div class="font-26 site">收货地址: {{order.receiver_address}}</div>
         </div>
     </div>
     <div class="separator"></div>
@@ -186,8 +182,7 @@
         </div>
         <div class="comment border-bottom" v-if="isNote">
             <div>
-                <span class="icon-comment gray"></span>
-                <span>买家留言</span>
+                <span class="icon-comment gray"></span><span>买家留言</span>
             </div>
             <div class="note font-26">{{order.buyer_note}}</div>
         </div>
@@ -229,10 +224,10 @@ const states = {
         btn: ['price']
     }],
     ws: [{
-        txt: '已付款,等待商家发货',
+        txt: '已付款，等待商家发货',
         btn: ['refund']
     }, {
-        txt: '买家已付款,请尽快安排发货',
+        txt: '买家已付款，请尽快安排发货',
         btn: ['send']
     }],
     rf_rq: [{
@@ -240,7 +235,7 @@ const states = {
         tip: '',
         btn: ['service']
     }, {
-        txt: '买家申请退款,请处理',
+        txt: '买家申请退款，请处理',
         tip: '',
         btn: ['doRefund', 'service']
     }],
@@ -281,7 +276,7 @@ const states = {
         btn: ['service']
     }],
     wg: [{
-        txt: '已发货,请等待收货',
+        txt: '已发货，请等待收货',
         tip: '',
         btn: ['trace', 'receive']
     }, {
@@ -295,7 +290,7 @@ const states = {
         txt: '订单交易成功'
     }],
     rt_rq: [{
-        txt: '已申请退货,等待商家处理',
+        txt: '已申请退货，等待商家处理',
         btn: ['service', 'trace']
     }, {
         txt: '买家已申请退货',
@@ -366,10 +361,10 @@ const states = {
     }],
     up_to: [{
         txt: '订单已取消',
-        tip: '订单超时未付款,自动取消'
+        tip: '订单超时未付款，自动取消'
     }, {
         txt: '订单已取消',
-        tip: '订单超时未付款,自动取消'
+        tip: '订单超时未付款，自动取消'
     }],
     cg: [{
         txt: '已确认收货',
