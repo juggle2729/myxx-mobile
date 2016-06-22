@@ -66,17 +66,14 @@
         top: 0;
         > div {
             width: 33.3%;
-
-            position: relative;
             & > div {
                 line-height: 54px;
                 text-align: center;
                 margin: 0 auto;
             }
             .dash {
-                position: absolute;
-                bottom: -18px;
-                left: 14%;
+                position: relative;
+                bottom: -16px;
                 display: block;
                 width: 180px;
                 height: 4px;
@@ -162,9 +159,9 @@
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
                 <p class="red font-44 flex-1">{{jade.price | price}}</p>
-                <template v-if="isSelf">
+                <!-- <template v-if="isSelf">
                     <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
-                </template>
+                </template> -->
             </div>
         </div>
         <div class="footer flex font-26 light border-top">
