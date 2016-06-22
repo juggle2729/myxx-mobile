@@ -71,7 +71,7 @@ export default {
 
                     break;
                 case 'jade':
-                    data.title = `【限量】${entry.detail}`;
+                    data.title = `【限量】${entry.title}`;
                     data.desc = '玉友的新品上线啦！';
                     data.icon = entry.pictures[0];
                     data.text = '查看更多新品';
