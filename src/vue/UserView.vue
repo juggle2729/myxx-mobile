@@ -26,6 +26,7 @@
                 right: 0;
                 .button {
                     border-radius: 6px 0 0 6px;
+                    padding-right: 14px;
                     span{
                         height: 56px;
                         border-width: 0;
@@ -252,7 +253,7 @@
             <div class="flex-1 margin-left font-30">{{profile.website_interview_title}}</div>
             <div class="icon-enter"></div>
         </div>
-        <div class="tabs bg-white flex font-26" :class="{'default': isDefaultView}">
+        <div class="tabs bg-white flex font-26 border-bottom" :class="{'default': isDefaultView}">
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'jade'}, replace: true}" v-if="profile.shop_status">
                 <div class="line">
                     <p align="center">{{profile.product_count}}</p>
@@ -275,7 +276,7 @@
                 <div class="dash"></div>
             </div>
         </div>
-        <div class="content border-top">
+        <div class="content">
             <!-- TODO use keep-alive -->
             <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
         </div>

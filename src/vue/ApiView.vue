@@ -65,7 +65,7 @@ export default {
                     title: '右上角动作-action',
                     label: 'action',
                     params: {
-                        label: 'right'
+                        icon: ''
                     }
                 }, {
                     title: '在新webview里打开页面-open',
