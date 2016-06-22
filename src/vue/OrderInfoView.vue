@@ -464,10 +464,9 @@ export default {
                     this.states = _.mapValues(states, state => state[_.toNumber(this.isSeller)]);
                     this.order.price = order.trans_amount;
                     this.isNote = order.buyer_note;
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
-                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
-                    this.states.wg.tip = '自动确认收货: ' + this.timer(10);
+
+                    this.states.rf_rq.tip = '自动退款: ' + this.timer(2, 'rf_rq');
+                    this.states.wg.tip = '自动确认收货: ' + this.timer(10, 'wg');
                 });
         }
     },
@@ -535,9 +534,10 @@ export default {
         rejectInfo() {
             this.applyReject && (this.order.status === 'rf_rj' ? this.action('result', {id: this.order.order_no, type: 'money'}) : this.action('result', {id: this.order.order_no, type: 'product'}));
         },
-        timer(day) {
-            const currentTime = new Date();
-            const remainHours = (this.order.create_at + 86400000*day - currentTime.getTime())/(1000*60*60);
+        timer(day, status) {
+            console.debug(status, _.find(this.order.status_history, {status}));
+            const start = _.get(_.find(this.order.status_history, {status}), 'create_at', Date.now());
+            const remainHours = (start + 86400000*day - Date.now())/(1000*60*60);
             const days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
             const hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
             const minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
