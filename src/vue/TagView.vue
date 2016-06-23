@@ -188,123 +188,29 @@
 }
 </style>
 <template>
-<div class="tag-list bg-default">
+<div class="tag-list">
     <div v-for="item in items">
-        <template v-if="item.type === 6">
-            <div class="item bg-white" v-link="{name: 'story', params: {id: item.entry.post_id}}">
-                <div class="header flex">
-                    <div class="user flex-1 flex">
-                        <avatar :user="item.entry.user" :size="50"></avatar>
-                        <div class="name margin-left font-26">{{item.entry.user.name}}</div>
-                    </div>
-                    <div class="follow-cnt font-26" @click.stop="follow(item)">
-                        <span class="cnt-text">
-                            <span class="icon icon-plus font-22" v-if="!item.entry.user.is_followed"></span>
-                            {{item.entry.user.is_followed ? '已关注' : '关注'}}
-                        </span>
-                    </div>
-                </div>
-                <div class="content">
-                    <template v-if="item.entry.cover_type === 'picture'">
-                        <div class="cover" v-bg="item.entry.cover"></div>
-                    </template>
-                    <template v-if="item.entry.cover_type === 'video'">
-                        <div class="cover" v-bg.video="item.entry.cover"></div>
-                    </template>
-                    <div class="title font-30"><span class="user-input">{{item.entry.content}}</span></div>
-                </div>
-                <div class="social font-30 clearfix border-top">
-                    <div class="border-right">
-                        <i class="icon-comment-solid"></i>
-                        <span>{{item.entry.comment}}x</span>
-                    </div>
-                    <like :active="item.entry.liked" :count="item.entry.like" :target="item.entry.post_id" type="30"></like>
-                    <div class="font-30">
-                        <i class="icon-share-social"></i>
-                        <span>分享</span>
-                    </div>
-                </div>
-            </div>
-            <div class="separator-20"></div>
-        </template>
-        <template v-if="item.type === 8">
-            <div class="item product bg-white" v-link="{name: 'jade', params: {id: item.entry.id}}">
-                <div class="header flex">
-                    <div class="user flex-1 flex">
-                        <avatar :user="item.entry.user" :size="50"></avatar>
-                        <div class="name margin-left font-26">{{item.entry.user.name}}</div>
-                    </div>
-                </div>
-                <div class="content">
-                    <div v-if="item.entry.video" class="cover tag" v-bg.video="item.entry.video"></div>
-                    <div class="title font-30"><span class="user-input">{{item.entry.title}}</span></div>
-                </div>
-                <div class="social font-30 clearfix border-top">
-                    <div class="border-right">
-                        <i class="icon-comment-solid"></i>
-                        <span>{{item.entry.comment}}</span>
-                    </div>
-                    <div class="font-30">
-                        <i class="icon-share-social"></i>
-                        <span>分享</span>
-                    </div>
-                </div>
-            </div>
-            <div class="separator-20"></div>
-        </template>
-        <template v-if="item.type === 3">
-            <div class="item evaluation bg-white" v-link="{name: 'evaluation', params: {id: item.entry.post_id}}">
-                <div class="header flex">
-                    <div class="user flex-1 flex">
-                        <avatar :user="item.entry.user" :size="50"></avatar>
-                        <div class="name margin-left font-26">{{item.entry.user.name}}</div>
-                    </div>
-                    <div class="follow-cnt font-26" @click.stop="follow(item)">
-                        <span class="cnt-text">
-                            <span class="icon icon-plus font-22" v-if="!item.entry.user.is_followed"></span>
-                            {{item.entry.user.is_followed ? '已关注' : '关注'}}
-                        </span>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="cover" v-bg="item.entry.picture" data-genuine="{{genuine(item.entry)}}"></div>
-                </div>
-                <div v-if="item.entry.results.length">
-                    <div class="masters flex bg-white">
-                        <div class="left" @click.stop.stop="goToProfile(item.entry.results[0].identifier)" v-bg.sm="item.entry.results[0].identifier.portrait"></div>
-                        <div class="middle flex-1">
-                            <div class="l font-26">
-                                <div>{{item.entry.results[0].identifier.name}}</div>
-                                <div class="light margin-top">{{item.entry.results[0].identifier.title}}</div>
-                            </div>
-                            <div class="hr border-bottom"></div>
-                            <div v-if="item.entry.results[1]" class="r font-26">
-                                <div>{{item.entry.results[1].identifier.name}}</div>
-                                <div class="light margin-top">{{item.entry.results[1].identifier.title}}</div>
-                            </div>
-                        </div>
-                        <div v-if="item.entry.results[1]" class="right" @click.stop.stop="goToProfile(item.entry.results[1].identifier)" v-bg.sm="item.entry.results[1].identifier.portrait"></div>
-                        <div v-else class="right">
-                            <img :class="size" :src="'invite-master.png' | qn">
-                        </div>
-                    </div>
-                </div>
-                <div v-else class="results-empty white font-30 center">
-                    <div class="center-vertical">- 邀请鉴定师 -</div>
-                </div>
-            </div>
-            <div class="separator-20"></div>
-        </template>
+        <div class="separator"></div>
+        <story-item v-if="item.type===6" :item="item.entry"></story-item>
+        <evaluation-item v-if="item.type===3" :item="item.entry"></evaluation-item>
+        <jade-item v-if="item.type===8" :item="item.entry"></evaluation-item>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <partial v-if="items.isEmpty" name="empty-page"></partial>
 </div>
 </template>
 <script>
 import paging from 'paging';
+import StoryItem from 'component/StoryItem.vue';
+import EvaluationItem from 'component/EvaluationItem.vue';
+import JadeItem from 'component/JadeItem.vue';
 export default {
     name: 'TagView',
     mixins: [paging],
+    components: {
+        StoryItem,
+        EvaluationItem,
+        JadeItem
+    },
     computed: {
         paging() {
             return {

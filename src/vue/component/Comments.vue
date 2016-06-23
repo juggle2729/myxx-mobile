@@ -1,11 +1,17 @@
 <style lang="sass">
 .comments-component {
-    padding: 0 32px;
+    padding-left: 32px;
     label {
         margin-top: 50px;
+        height: 80px;
+        line-height: 80px;
+        width: 686px;
+        border-radius: 10px;
+        border: 0;
+        cursor: pointer;
+        display: block;
     }
     .comment-header {
-        padding: 0 32px;
         display: -webkit-box;
         -webkit-box-align: center;
         -webkit-box-pack: justify;
@@ -13,12 +19,14 @@
     }
     li {
         -webkit-box-align: start;
-        padding: 0 32px 20px;
         .avatar-68 {
             margin: 20px 20px 0 0;
         }
+        > .flex-1 {
+            padding: 28px 32px 28px 0;
+        }
         .author {
-            padding: 20px 0;
+            padding-bottom: 20px;
             .icon-like + span {
                 vertical-align: initial; //重置对齐
             }
@@ -49,17 +57,9 @@
         padding: 0 5px;
         border-radius: 5px;
     }
-    .comment-btn {
-        height: 80px;
-        line-height: 80px;
-        width: 100%;
-        border-radius: 10px;
-        border: 0;
-        cursor: pointer;
-        display: block;
-    }
     .fake-input {
         position: fixed;
+        left: 0;
         bottom: 0;
         width: 100%;
         background-color: #f9f9f9;
@@ -100,10 +100,10 @@
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>
     <ul>
-        <li class="border-bottom flex" v-for="c in items" @click="clicked(c, $index)"
+        <li class="flex" v-for="c in items" @click="clicked(c, $index)"
             :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
-            <div class="flex-1">
+            <div class="flex-1 border-bottom ">
                 <div class="author flex">
                     <div class="font-26 gray flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
                     <div class="font-22 light margin-top">{{c.create_at | moment}}</div>

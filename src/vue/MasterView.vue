@@ -212,7 +212,7 @@
                 <div class="detail">{{base.brief | truncate 76}}</div>
             </div>
             <div class="interview-video" v-if="interview.video">
-                <div class="play" @click.stop="play(interview.video)"
+                <div class="video" @click.stop="play(interview.video)"
                      v-bg="interview.video" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/460/interlace/1"></div>
             </div>
             <div class="content" v-html="interview.content"></div>

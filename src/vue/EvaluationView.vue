@@ -110,7 +110,7 @@
         <li class="img" v-for="picture in evaluation.pictures" @click="coverflow(evaluation.pictures, $index)">
             <img :src="config.img+picture+'?imageView2/2/h/450'" />
         </li>
-        <li v-if="evaluation.video" class="play" @click="play(evaluation.video)">
+        <li v-if="evaluation.video" class="video" @click="play(evaluation.video)">
             <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
         </li>
     </ul>

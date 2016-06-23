@@ -140,7 +140,7 @@
 </style>
 <template>
     <div class="auction-view">
-        <div class="auction-video play" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750"></div>
+        <div class="auction-video video" v-bg="info.video" @click="play(info.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750"></div>
         <div class="banner font-30 white flex" :class="info.status">
             <p class="icon-clock"></p>
             <template v-if="info.status === 'waiting'">

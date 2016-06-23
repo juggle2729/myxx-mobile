@@ -104,7 +104,7 @@
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
     <template v-if="cover_type === 'video'">
-        <div class="cover play cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
+        <div class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
     </template>
     <div class="story-header flex">
         <div class="user flex-1">

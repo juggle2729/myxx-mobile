@@ -165,6 +165,7 @@ export default {
     },
     route: {
         data({to}) {
+            console.debug('load');
             let requests = Q.all([this.$get(`mall/address/default`), this.$get(`mall/products/${to.params.product}`)])
             requests.done(([address, product]) => {
                         this.address = address;
@@ -178,6 +179,7 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
+            console.debug('restore');
             this.$get('mall/address/default?' + Date.now()) // 加时间戳，去缓存 ！！！
                 .then((address) => {
                     this.address = address;

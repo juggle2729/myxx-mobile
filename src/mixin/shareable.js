@@ -23,7 +23,7 @@ export default {
             switch(this.$route.name) {
                 case 'evaluation':
                     const result = _.get(entry, 'results[0]');
-                    if(this.$route.params.result !== 'none') {
+                    if(this.$route.params.result === 'none' || this.$route.params.result === ':result') {
                         data.title = result ? result.identifier.name + '的视频鉴宝' : '大师在线视频鉴宝';
                     } else if(result){
                         if(result.result === 'unsure') {
@@ -106,7 +106,6 @@ export default {
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.png';
                     data.url = this.config.download;
             }
-
             data.title = _.truncate(data.title, {
                 length: /[\uD800-\uDBFF]/.test(data.title.charAt(25)) ? 24 : 25
             });
