@@ -157,6 +157,11 @@ export default {
         Follow,
         Share
     },
+    ready() {
+        this.$on('restore', () => {
+            this.action('updateTitle', {text: `${this.story.topic_type.name}详情`});
+        });
+    },
     data() {
         return {
             story: {
@@ -205,7 +210,7 @@ export default {
                     this.setShareData(story, true);
                     this.action('updateTitle', {text: `${story.topic_type.name}详情`});
                     this.followed = story.user.is_followed;
-                    return {story};
+                    this.story = story;
                 });
         }
     }

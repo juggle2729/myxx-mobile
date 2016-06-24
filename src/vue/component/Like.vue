@@ -12,7 +12,8 @@
 </style>
 <template>
 <div class="like-component" :class="{active: active}" @click.stop="like">
-    <i class="icon-like"></i><span>{{count || 0}}</span>
+    <i class="icon-like"></i><span>{{count || (zero ? '' : 0)}}</span>
+</div>
 </div>
 </template>
 <script>
@@ -20,6 +21,7 @@ export default {
     name: 'Like',
     props: {
         active: Boolean,
+        zero: Boolean,
         count: [Number],
         target: [Number],
         type: [Number]

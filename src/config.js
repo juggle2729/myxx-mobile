@@ -60,6 +60,9 @@ export default {
             id: 60,
             name: '玉知识',
             route: 'lesson'
+        }, {
+            id: 70,
+            name: '评论'
         }
     ],
     tags: {

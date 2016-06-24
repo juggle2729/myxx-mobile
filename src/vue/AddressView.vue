@@ -114,7 +114,7 @@ export default {
                 .then((result) => {
                     return Q.promise((resolve) => {
                         if(result === '1') {
-                        this.$delete(`mall/address/${address.id}`).then(() => resolve());
+                            this.$delete(`mall/address/${address.id}`).then(() => resolve());
                         }
                     });
                 }).then(() => {

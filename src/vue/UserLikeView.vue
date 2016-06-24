@@ -15,7 +15,14 @@
             background-color: #efeff4;
             padding: 0 24px;
             .avatar-50 {
-                margin: 0 16px 20px 0;
+                margin-right: 16px;
+            }
+            .content {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                -webkit-line-clamp: 1;
+                text-overflow: ellipsis;
             }
             .preview {
                 height: 125px;
@@ -36,11 +43,11 @@
             <div class="card flex font-30" v-if="item.isEmpty">该内容已被删除</div>
             <div class="card flex" v-else v-link="{name: item.type.route, params: {id: item.id}}">
                 <div class="flex-1">
-                    <div class="user flex">
+                    <div class="user flex margin-bottom">
                         <avatar :user="item.user" :size="50"></avatar>
                         <p class="font-26 gray">{{item.user.name}}</p>
                     </div>
-                    <p class="font-30">{{{item.description}}}</p>
+                    <p class="content font-30 margin-right">{{{item.description}}}</p>
                 </div>
                 <template v-if="item.preview" class="preview">
                     <div v-if="item.preview.img" v-bg.sm="item.preview.img" class="preview"></div>
@@ -66,16 +73,19 @@ export default {
     computed: {
         paging() {
             return {
-                path: `users/${this.$route.params.id}/like_list|v2`,
+                path: `users/${this.$route.params.id}/like_list|v6`,
                 list: 'entries',
                 id: 'lastId',
+                params: {
+                    limit: 10
+                },
                 transform(items) {
                     return items.map(({entry, type, id}) => {
                         let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});
                         card.type = _.find(this.config.types, {'id': type});
                         if(!card.isEmpty) {
                             card.lastId = id;
-                            card.id = card.post_id || card.id;
+                            card.id = card.post_id || card.id || card.target.id;
                             switch(type) {
                                 case 10:
                                     card.preview = {img: entry.picture};
@@ -98,13 +108,18 @@ export default {
                                     card.description = entry.title;
                                     card.preview = {video: entry.video};
                                     break;
+                                case 70:
+                                    card.type.route = _.find(this.config.types, {id: entry.target.type}).route;
+                                    card.description = entry.content;
+                                    card.preview = {[entry.media.type === 'picture' ? 'img' : 'video']: entry.media.id};
+                                    break;
                             }
                         }
                         return card;
                     });
                 }
             }
-            }
+        }
     },
     route: {
         data() {

@@ -57,6 +57,12 @@
         padding: 0 5px;
         border-radius: 5px;
     }
+    .more {
+        padding: 56px 0;
+        .icon-down-slim {
+            transform: translate3d(10px, 1px, 0);
+        }
+    }
     .fake-input {
         position: fixed;
         left: 0;
@@ -103,10 +109,13 @@
         <li class="flex" v-for="c in items" @click="clicked(c, $index)"
             :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
-            <div class="flex-1 border-bottom ">
+            <div class="flex-1 border-bottom">
                 <div class="author flex">
-                    <div class="font-26 gray flex-1" :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
-                    <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
+                    <div class="font-26 gray flex-1">
+                        <div :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
+                        <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
+                    </div>
+                    <like :target="c.id" type="70" :count="c.like_count" :active="c.liked" :zero="true"></like>
                 </div>
                 <div class="font-30 content">
                     <template v-if="c.reply_to">
@@ -119,7 +128,8 @@
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
-    <partial name="load-more" v-if="items.hasMore"></partial>
+    <div class="font-26 red center more" v-if="items.hasMore" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
+    <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
     <div v-if="!env.isShare" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
@@ -130,9 +140,13 @@
 <script>
 import Q from 'q';
 import paging from 'paging';
+import Like from './Like.vue';
 export default {
     name: 'Comments',
     mixins: [paging],
+    components: {
+        Like
+    },
     props: {
         id: {
             type: Number,
@@ -146,11 +160,11 @@ export default {
     computed: {
         paging() {
             return {
-                path: `users/target/${this.id}/type/${this.type}/comments|v3`,
+                path: `users/target/${this.id}/type/${this.type}/comments|v6`, // v6调整之前是v3
                 list: 'comments',
                 id: 'id',
                 params: {
-                    limit: 10
+                    limit: 5
                 },
                 transform(items) {
                     return items.map(this.emojify);
@@ -180,6 +194,9 @@ export default {
         // }
     },
     methods: {
+        getMore() {
+            this.fetch();
+        },
         clicked(comment, index) {
             if(!this.self) {
                 this.action('login');

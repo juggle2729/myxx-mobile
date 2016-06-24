@@ -7,7 +7,7 @@ export default {
     },
     events: {
         scrollToBottom(e) {
-            this.fetch();
+            this.paging.list !== 'comments' && this.fetch();
         }
     },
     methods: {
@@ -19,15 +19,16 @@ export default {
                 this.items.loading = true;
                 let options = {};
 
-                if(this.paging.id) { // 采用last_id
+                if(this.paging.id) { // cursor即以前的last_id, 目前仅部分更新为cursor
                     if(!fresh && this.items.length) {
-                        options.last_id = _.get(this.items[this.items.length-1], this.paging.id);
+                        this.cursor ? (options.cursor = this.cursor) : (options.last_id = _.get(this.items[this.items.length-1], this.paging.id));
                     }
                 } else {
-                    options.limit = 10;
+                    options.limit = 5;
                     options.offset = fresh ? 0 : this.items.length;
                 }
                 return this.$get(this.paging.path, _.merge(options, this.paging.params)).then((data) => {
+                        this.cursor = data.cursor; // 采用last_id方式时需要的分页参数
                         let items = data[this.paging.list];
                         if(typeof this.paging.transform === 'function') {
                             items = this.paging.transform.call(this, items);

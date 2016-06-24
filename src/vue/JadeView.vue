@@ -305,7 +305,7 @@ export default {
                         this.action('login').then(resolve);
                     }
                 }).then(() => {
-                    this.action('chat', {id: this.jade.owner.id, product: this.jade.id});
+                    this.action('chat', {id: this.jade.owner.id, name: this.jade.owner.name, product: this.jade.id});
                 });
             } else if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'});

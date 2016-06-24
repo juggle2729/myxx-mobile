@@ -149,7 +149,7 @@ export default {
     },
     methods: {
         go(url) {
-            location.href = url;
+            this.action('open', {url});
         }
     }
 }

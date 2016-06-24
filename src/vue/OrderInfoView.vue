@@ -475,7 +475,7 @@ export default {
             this.action('confirm', {text: '您确认取消该订单?'}).then((result) => {
                 if(result === '1') {
                     this.$put(`mall/order/${this.order.order_no}/cancel_unpaid`).then(() => {
-                        location.reload(true);
+                        this.env.isIOS ? location.reload(true) : this.action('reloadUrl');
                     });
                 }
             })
@@ -514,16 +514,16 @@ export default {
             this.action('confirm', {text: '确认收到买家寄回的商品?'}).then((result) => {
                 if(result === '1') {
                     this.$put(`mall/order/${this.order.order_no}/receive_return`).then(() => {
-                        location.reload(true);
+                        this.env.isIOS ? location.reload(true) : this.action('reloadUrl');
                     });
                 }
             });
         },
         contactBuyer() {
-            this.action('chat', {id: this.order.buyer.id, order: this.order.order_no});
+            this.action('chat', {id: this.order.buyer.id, name: this.order.buyer.nickname, order: this.order.order_no});
         },
         contactSeller() {
-            this.action('chat', {id: this.order.seller.id, order: this.order.order_no});
+            this.action('chat', {id: this.order.seller.id, name: this.order.seller.nickname, order: this.order.order_no});
         },
         service() {
             this.action('kf', {order: this.order.order_no});

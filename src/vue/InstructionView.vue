@@ -98,10 +98,10 @@ export default {
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=1&sn=ec9d5b9617aa5b23c4598fcd8033474b&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                     }, {
                         title: '发货后一般几天可以收到商品?',
-                        url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=2&sn=6b98bf4f1ed8a2986f8b54b09cdc935e&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
+                        url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=3&sn=87cb987e7cd1c996ad6aa8bb1b035ffc&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                     }, {
                         title: '拍下商品后发现收货地址填错了，怎么办?',
-                        url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=3&sn=87cb987e7cd1c996ad6aa8bb1b035ffc&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
+                        url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=2&sn=6b98bf4f1ed8a2986f8b54b09cdc935e&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
                     }, {
                         title: '如何查看物流信息?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000005&idx=4&sn=36aa71349c46f25ba424d4a8d9c4963b&scene=0&previewkey=Cmkx9DKVnFqm4yg89gWpCcNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect'
@@ -181,7 +181,7 @@ export default {
     },
     methods: {
         go(url) {
-            location.href = url;
+            this.action('open', {url});
         }
     }
 }
