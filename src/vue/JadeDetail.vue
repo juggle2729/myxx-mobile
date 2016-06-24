@@ -10,8 +10,8 @@
 			width: 100%;
 		}
 	}
-	.tags {
-		background: none;
+	.tags-component {
+		padding: 32px;
 	}
 }
 </style>
@@ -22,13 +22,14 @@
       	<img :src="config.img + img + '?imageView2'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
     </div>
     <tags :tags="jade.tags"></tags>
-    <div class="separator-20"></div>
+    <product-recommend></product-recommend>
     <recommend></recommend>
 </div>
 </template>
 <script>
 import Tags from './component/Tags.vue';
 import Recommend from './component/Recommend.vue';
+import ProductRecommend from './component/ProductRecommend.vue';
 export default {
 	name: 'JadeDetail',
 	props: {
@@ -38,7 +39,8 @@ export default {
 	},
 	components: {
 		Tags,
-		Recommend
+		Recommend,
+		ProductRecommend
 	}
 }
 </script>

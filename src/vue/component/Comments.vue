@@ -130,7 +130,7 @@
     </ul>
     <div class="font-26 red center more" v-if="items.hasMore" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
     <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
-    <div v-if="!env.isShare" class="fake-input font-30 flex border-top" @click="comment()">
+    <div v-if="!env.isShare && displayInput" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
@@ -155,6 +155,12 @@ export default {
         type: {
             type: String,
             required: true
+        },
+        displayInput: {
+            type: Boolean,
+            default: function() {
+                return true;
+            }
         }
     },
     computed: {

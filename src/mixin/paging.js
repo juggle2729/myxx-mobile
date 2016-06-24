@@ -42,8 +42,8 @@ export default {
 
                         _.merge(this.items, {
                             total: data.total,
-                            hasMore: this.items.length < data.total,
-                            isEmpty: data.total === 0
+                            hasMore: items.length === (this.paging.limit || options.limit),
+                            isEmpty: items.length === 0
                         });
                 });
             }

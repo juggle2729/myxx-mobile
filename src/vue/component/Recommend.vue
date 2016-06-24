@@ -3,31 +3,24 @@
 .recommend-component {
     .title {
         color: #979797;
-        line-height: 78px;
+        line-height: 80px;
         text-align: left;
         margin-left: 32px;
     }
 
     .data-list {
-        padding:0 32px 32px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        display: -webkit-box;
+        padding:0 20px;
+        font-size: 0;
     }
 
     .data-item {
-        width: 300px;
-        -wekit-box-flex: 1;
-    }
+        width: 345px;
+        display: inline-block;
+        margin-bottom: 20px;
 
-    .data-item:not(:first-child) {
-        margin-left: 20px;
-    }
-
-    .data-item:last-child {
-        width: 1px;
+        &:nth-child(odd) {
+            margin-right: 20px;
+        }
     }
 
     .data-img {
@@ -36,35 +29,60 @@
         background-size: cover;
     }
 
-    .data-name {
-        padding: 17px 18px 20px;
-        line-height: 36px;
-        color: #393939;
-        white-space: normal;
+    .data-info {
+        position: relative;
+        width: 345px;
+        height: 100px;
         text-align: center;
-    }
-
-    .jb .data-name{
-        height: 115px;
-        text-align: left;
+        margin: 0 auto;
+        .data-name {
+            width: 320px;
+            word-break: break-all;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+        }
     }
 
     .data-title {
-        background: rgba(0, 0, 0, 0.4);
-        width: 100px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0 28px;
+        display: inline-block;
         line-height: 44px;
     }
 
-    .data-price {
-        padding-bottom: 22px;
+    .data-footer {
+        height: 48px;
+        padding-bottom: 20px;
+        >div {
+            -webkit-box-flex: 1;
+            &:first-child {
+                text-align: right;
+                margin-right: 24px;
+            }
+            &:last-child {
+                margin-left: 24px;
+                text-align: left;
+            }
+            &:first-child:nth-last-child(1) {
+                text-align: center;
+            }
+        }
     }
 }
 </style>
 <template>
-    <div class="recommend-component bg-white" v-if="items.length">
+    <div class="recommend-component bg-default" v-if="items.length">
         <div class="title font-22">相关推荐</div>
         <div class="data-list">
-            <div class="data-item border-default" @click="goTo(data)" v-for="data in items">
+            <div class="data-item bg-white border-default" @click="goTo(data)" v-for="data in items">
                 <div v-if="data.item.first_picture || data.item.picture || data.item.cover_type==='picture'" class="data-img" v-bg.md="data.item.first_picture || data.item.picture || data.item.cover">
                     <div class="data-title font-22 center white" v-text="recommendTitle(data)"></div>
                 </div>
@@ -73,17 +91,27 @@
                 </div>
                 <div class="data-info">
                     <div class="data-name font-26">{{(data.item.title || data.item.description || data.item.content) | truncate 20}}</div>
-                    <div v-if="data.biz_type === config.tags.product.id" class="data-price font-26 red center">{{data.item.price | price}}</div>
-                    <div v-if="data.item.author" class="data-user-name">{{data.item.author.name}}</div>
+                </div>
+                <div class="data-footer flex">
+                    <like :active="false" :count="data.item.like" mode="readonly" v-if="data.biz_type === 'tp'"></like>
+                    <comment :count="data.item.comment"></comment>
                 </div>
             </div>
-            <div class="data-item"></div>
+            <partial name="load-more" v-if="items.hasMore"></partial>
         </div>
     </div>
 </template>
 <script>
+import paging from 'paging';
+import Like from './Like.vue';
+import Comment from './Comment.vue';
 export default {
     name: 'Recommend',
+    mixins: [paging],
+    components: [
+        Like,
+        Comment
+    ],
     props: {
         id: {
             type: Number
@@ -94,29 +122,35 @@ export default {
             items: []
         }
     },
-    ready() {
-        // 潜在问题，this.id是动态获取的，ready的时候，id不一定获取到了
-        this.loadData(this.id || this.$route.params.id);
-    },
-    methods: {
-        loadData(id) {
-            let params = {
-                obj_id: id
-            };
-            // pd, jb, oc, tp
-            switch(this.$route.name) {
-                case 'story':
-                    params.biz_type = 'tp';
+    computed: {
+        biz_type() {
+            let type = '';
+            switch (this.$route.name) {
+                case 'jade':
+                    type = 'pd';
                     break;
-                default:
-                    params.biz_type = 'pd';
+                case 'story':
+                    type = 'tp';
                     break;
             }
-
-            return this.$get('dc/rd|v4', params).then((data) => {
-                this.items = data.recommend_data;
-            });
+            return type;
         },
+        paging() {
+            return {
+                path: 'dc/rd/list',
+                list: 'entries',
+                params: {
+                    obj_id: this.id || this.$route.params.id,
+                    biz_type: this.biz_type,
+                    limit: 8
+                }
+            }
+        }
+    },
+    ready() {
+        this.fetch();
+    },
+    methods: {
         recommendTitle(data) {
 
             if (data.biz_type === 'tp') {

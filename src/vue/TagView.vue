@@ -258,8 +258,7 @@ export default {
                 this.$delete(followApi).then(() => {
                     item.entry.user.is_followed = false;
                     this.action('toast', {
-                        text: '已取消关注',
-                        success: '0'
+                        text: '已取消关注'
                     });
                 });
             } else {

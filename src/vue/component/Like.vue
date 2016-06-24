@@ -20,11 +20,22 @@
 export default {
     name: 'Like',
     props: {
-        active: Boolean,
+        active: {
+            type: Boolean,
+            default: function() {
+                return false;
+            }
+        },
         zero: Boolean,
         count: [Number],
         target: [Number],
-        type: [Number]
+        type: [Number],
+        mode: {
+            type: String,
+            default: function() {
+                return ''; // readonly
+            }
+        }
     },
     computed: {
         api() {
@@ -38,6 +49,10 @@ export default {
     },
     methods: {
         like() {
+            if(this.mode === 'readonly') {
+                return;
+            }
+
             this[this.active ? '$delete' : '$post'](this.api)
                 .then(() => {
                     this.active = !this.active;

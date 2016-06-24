@@ -1,21 +1,20 @@
 <style lang="sass">
-.tags {
-    min-height: 108px;
+.tags-component {
     .tag-list {
-        padding: 0 32px 28px;
+        font-size: 0;
         .tag-item {
             display: inline-block;
-            margin-left: 24px;
             line-height: 60px;
             padding: 0 26px;
             border-radius: 26px;
             background-color: #ffecea;
+            margin: 0 30px 24px 0;
         }
     }
 }
 </style>
 <template>
-    <div class="tags border-bottom bg-white" v-if="tags && tags.length">
+    <div class="tags-component bg-white" v-if="tags && tags.length">
         <div class="tag-list flex">
             <div class="tag-item font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
         </div>

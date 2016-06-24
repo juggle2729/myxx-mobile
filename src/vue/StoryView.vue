@@ -1,6 +1,5 @@
 <style lang="sass">
 .story-view {
-    padding-bottom: 114px;
     .story-header {
         padding: 32px 32px;
     }
@@ -40,7 +39,10 @@
     }
 
     .story-detail {
-        padding: 0 32px 36px;
+        padding: 0 32px 40px;
+        .tags-component {
+            margin: 40px 0 0;
+        }
     }
     .description {
         margin: 0 40px 40px 32px;
@@ -92,7 +94,7 @@
     }
 
     .footer {
-        height: 80px;
+        height: 98px;
         > div {
             line-height: 60px;
             -webkit-box-flex: 1;
@@ -126,22 +128,28 @@
         <div class="medias">
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(this.picFlow, $index + 1)"></div>
         </div>
+        <tags :tags="story.tags"></tags>
     </div>
-    <div class="footer flex border-top">
+    <div class="separator-20"></div>
+    <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
+    <div class="separator-20"></div>
+    <product-recommend :id="story.post_id"></product-recommend>
+    <recommend :id="story.post_id"></recommend>
+    <div class="footer flex border-top font-30 gray">
         <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i>
+            <span>写评论</span>
+        </div>
         <share class="border-left"></share>
     </div>
-    <div class="separator-20"></div>
-    <tags :tags="story.tags"></tags>
-    <recommend :id="story.post_id"></recommend>
-    <div class="separator-20"></div>
-    <comments type="30" :id="story.post_id"></comment>
 </div>
 </template>
 <script>
 import Comments from './component/Comments.vue';
 import Tags from './component/Tags.vue';
 import Recommend from './component/Recommend.vue';
+import ProductRecommend from './component/ProductRecommend.vue';
 import Like from './component/Like.vue';
 import Follow from './component/Follow.vue';
 import Share from './component/Share.vue';
@@ -153,6 +161,7 @@ export default {
         Comments,
         Tags,
         Recommend,
+        ProductRecommend,
         Like,
         Follow,
         Share
@@ -174,25 +183,23 @@ export default {
     },
     computed: {
         pictures() {
-            let pic = [];
-            this.story.medias.forEach((media) => {
-                if (media.type === 'picture') {
-                    pic.push(media.id);
-                } else {
-                    this.cover_type = 'video';
-                    this.cover = media.id;
-                    return [];
-                }
-            });
-
-            if (!pic.length) {
+            const videoObj = _.find(this.story.medias, (media) => { return media.type === 'video'});
+            if (videoObj) {
                 this.cover_type = 'video';
+                this.cover = videoObj.id;
+                return [];
             } else {
+                let pic = _.map(
+                    _.filter(this.story.medias, (media) => {
+                        return media.type === 'picture';
+                    }), _.iteratee('id')
+                );
+                this.cover_type = 'picture';
                 this.cover = pic[0];
                 this.picFlow = pic;
+                return _.drop(pic);
             }
 
-            return _.drop(pic);
         },
         isSelf() {
             if (this.self) {
