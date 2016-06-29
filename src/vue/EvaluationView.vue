@@ -1,7 +1,6 @@
 <style lang="sass">
 @import '~style/partials/var';
 .evaluation-detail {
-    padding-bottom: 100px;
     .results {
         overflow-x: auto;
         overflow-y: hidden;
@@ -90,30 +89,18 @@
         margin-top: 48px;
         margin-bottom: 32px;
     }
+    .footer {
+        height: 98px;
+        > div {
+            line-height: 60px;
+            -webkit-box-flex: 1;
+            text-align: center;
+        }
+    }
 }
 </style>
 <template>
 <div class="evaluation-detail">
-    <div class="header">
-        <div class="user">
-            <avatar :user="evaluation.user"></avatar>
-            <div class="margin-left">
-                <div class="font-26">{{evaluation.user.name}}</div>
-                <div class="margin-top font-22 gray">
-                    <span>{{evaluation.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{evaluation.click}}人浏览</span>
-                </div>
-            </div>
-        </div>
-        <div class="desc font-30 user-input">{{evaluation.description}}</div>
-    </div>
-    <ul class="images scrollable">
-        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow(evaluation.pictures, $index)">
-            <img :src="config.img+picture+'?imageView2/2/h/450'" />
-        </li>
-        <li v-if="evaluation.video" class="video" @click="play(evaluation.video)">
-            <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
-        </li>
-    </ul>
     <div v-if="evaluation.results.length" class="results scrollable">
         <div v-for="result in evaluation.results">
             <div class="result-head flex">
@@ -136,24 +123,64 @@
             </a>
         </div>
     </div>
-    <comments type="10" :id="evaluation.post_id"></comments>
+    <div class="header">
+        <div class="user">
+            <avatar :user="evaluation.user"></avatar>
+            <div class="margin-left">
+                <div class="font-26">{{evaluation.user.name}}</div>
+                <div class="margin-top font-22 gray">
+                    <span>{{evaluation.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{evaluation.click}}人浏览</span>
+                </div>
+            </div>
+        </div>
+        <div class="desc font-30 user-input">{{evaluation.description}}</div>
+    </div>
+    <ul class="images scrollable">
+        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow(evaluation.pictures, $index)">
+            <img :src="config.img+picture+'?imageView2/2/h/450'" />
+        </li>
+        <li v-if="evaluation.video" class="video" @click="play(evaluation.video)">
+            <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
+        </li>
+    </ul>
+    <tags :tags="evaluation.tags"></tags>
+    <comments type="10" :id="evaluation.post_id" :display-input="false" v-ref:comment></comments>
+    <div class="separator-20"></div>
+    <product-recommend :id="evaluation.post_id"></product-recommend>
+    <recommend :id="evaluation.post_id"></recommend>
+    <div class="footer flex border-top font-30 gray">
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i>
+            <span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div>
 </div>
 </template>
 <script>
+import Tags from './component/Tags.vue';
+import Recommend from './component/Recommend.vue';
+import ProductRecommend from './component/ProductRecommend.vue';
 import Comments from 'component/Comments.vue';
+import Share from './component/Share.vue';
 import shareable from 'shareable';
 export default {
     name: 'EvaluationView',
     mixins: [shareable],
     components: {
-        Comments
+        Comments,
+        Recommend,
+        ProductRecommend,
+        Share,
+        Tags
     },
     data() {
         return {
             evaluation: {
                 post_id: 0,
                 results: [],
-                user: {}
+                user: {},
+                tags: []
             },
             comment: {
                 items: [],
