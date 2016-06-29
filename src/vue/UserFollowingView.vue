@@ -6,9 +6,9 @@
         <div v-bg.sm="user.photo" class="avatar-120" v-link="user | profile"></div>
         <div class="flex-1" v-link="user | profile">
             <p class="font-30">{{user.nickname}}</p>
-            <p class="font-26 light margin-top">{{user.role | role}}</p>
+            <p v-if="user.title" class="font-26 light margin-top">{{user.title}}</p>
         </div>
-        <follow v-if="self && self.id !=user.id" :follow="user.follow" :user="user.id"></follow>
+        <follow :follow="user.follow" :user="user.id"></follow>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
 </div>

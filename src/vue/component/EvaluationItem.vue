@@ -111,7 +111,7 @@
 </style>
 <template>
 <div class="evaluation-item">
-    <div v-link="{name: 'evaluation', params: {id: item.post_id}}" track-by="$index">
+    <div v-link="{name: 'evaluation', params: {id: item.post_id, result: 'none'}}" track-by="$index">
         <div class="head flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>
             <div class="font-26 margin-left">{{item.user.name}}</div>

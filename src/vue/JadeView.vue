@@ -293,7 +293,7 @@ export default {
                     this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
                 });
             } else if(this.env.version < 1.5) {
-                this.action('toast', {success: 0, text: '商城即将上线，敬请期待'}); // 请将应用更新至v1.5版
+                this.action('toast', {success: 0, text: '请更新至最新版'}); // 请将应用更新至v1.5版
             }
          },
         contact() {
@@ -310,7 +310,7 @@ export default {
             } else if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'});
             } else {
-                this.action('toast', {success: 0, text: '商城即将上线，敬请期待'});
+                this.action('toast', {success: 0, text: '请更新至最新版'});
             }
         },
         go(tab) {
