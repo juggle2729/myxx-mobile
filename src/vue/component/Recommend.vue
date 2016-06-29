@@ -132,6 +132,9 @@ export default {
                 case 'story':
                     type = 'tp';
                     break;
+                case 'evaluation':
+                    type = 'jb';
+                    break;
             }
             return type;
         },
