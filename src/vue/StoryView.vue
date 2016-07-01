@@ -14,6 +14,7 @@
         border-radius: 12px;
         background-color: #eeeeee;
         border: 1px solid #eeeeee;
+        line-height: inherit;
         i {
             display: none;
         }
