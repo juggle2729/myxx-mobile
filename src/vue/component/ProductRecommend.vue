@@ -31,6 +31,7 @@
             background-size: cover;
         }
         .item-title {
+            line-height: 1.2;
             width: 208px;
             overflow: hidden;
             text-overflow: ellipsis;
