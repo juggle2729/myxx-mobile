@@ -100,6 +100,11 @@ export default {
                     data.icon = entry.user.photo;
                     data.text = '查看更多和田玉知识';
                     break;
+                case 'works':
+                    data.title = `${entry.author.name}【${entry.title}】正在参加人气苏工作品评选，快为他投一票吧！`;
+                    data.desc = '美玉秀秀人气苏工玉雕作品评选，佳作云集，等你来投票';
+                    data.icon = entry.pictures[0];
+                    break;
                 default:
                     data.title = '美玉秀秀';
                     data.desc = '大师在线视频鉴宝';

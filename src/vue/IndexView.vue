@@ -102,6 +102,9 @@
         <li class="font-26 border-top padding center">
             <a href="/recommend/follower">推荐关注 - recommend/follower</a>
         </li>
+        <li class="font-26 border-top padding center">
+            <a href="/works/2">作品详情 - works/:id</a>
+        </li>
     </ul>
 </div>
 </template>
