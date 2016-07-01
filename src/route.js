@@ -408,6 +408,16 @@ export default {
         }
     },
 
+    // 活动-作品详情
+    '/works/sg/:id': {
+        name: 'works',
+        title: '作品详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WorksView.vue'));
+            }, 'works');
+        }
+    },
     '/feedback': {
         name: 'feedback',
         title: '意见反馈',

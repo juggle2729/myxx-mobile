@@ -219,6 +219,11 @@
     @extend .bg-default;
     height: 20px;
 }
+.separator-16 {
+    @extend .border-vertical;
+    @extend .bg-default;
+    height: 16px;
+}
 .separator-20 {
     @extend .border-vertical;
     @extend .bg-default;
