@@ -3,7 +3,7 @@
     font-size: 30px;
     color: #888888;
     i {
-        transform: scale(1.2);
+        transform: scale(1.5);
     }
 }
 </style>

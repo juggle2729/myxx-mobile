@@ -6,7 +6,8 @@ let [api, img, video, download] = ((env='dev') => {
         api: {
             dev: '//dev.api.meiyuxiuxiu.net',
             test: '//test.api.meiyuxiuxiu.net',
-            prod: '//api.meiyuxiuxiu.com'
+            prod: '//api.meiyuxiuxiu.com',
+            // docker: '//192.168.0.150:18006'
         },
         img: {
             dev: 'http://img.meiyuxiuxiu.net/',

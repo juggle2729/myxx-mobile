@@ -1,24 +1,15 @@
 <style lang="sass">
 .comments-component {
-    padding-left: 32px;
-    label {
-        margin-top: 50px;
-        height: 80px;
-        line-height: 80px;
-        width: 686px;
-        border-radius: 10px;
-        border: 0;
-        cursor: pointer;
-        display: block;
-    }
     .comment-header {
         display: -webkit-box;
+        padding-left: 32px;
         -webkit-box-align: center;
         -webkit-box-pack: justify;
         height: 80px;
     }
     li {
         -webkit-box-align: start;
+        padding-left: 32px;
         .avatar-68 {
             margin: 20px 20px 0 0;
         }
@@ -101,7 +92,6 @@
 </style>
 <template>
 <div class="comments-component bg-white">
-    <label v-if="env.isShare" for="comment-textarea" @click="comment()" class="comment-btn white font-30 bg-red center">我要评论</label>
     <div class="comment-header border-bottom font-22">
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>

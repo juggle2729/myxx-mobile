@@ -39,7 +39,6 @@ export default {
                             this.items.splice(this.items.length, 0, ...items);
                         }
                         this.items.loading = false;
-
                         _.merge(this.items, {
                             total: data.total,
                             hasMore: items.length === (this.paging.limit || options.limit),

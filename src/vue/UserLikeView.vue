@@ -21,6 +21,7 @@
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                line-height: 1.2;
                 -webkit-line-clamp: 1;
                 text-overflow: ellipsis;
             }

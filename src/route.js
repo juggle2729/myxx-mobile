@@ -39,6 +39,16 @@ export default {
         }
     },
 
+    // 活动标签信息流
+    '/activity/:id': { //该活动的id
+        name: 'activity',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ActivityView.vue'));
+            }, 'activity');
+        }
+    },
+
     '/lessons': {
         name: 'lessons',
         title: '美玉公开课',

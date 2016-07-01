@@ -3,7 +3,7 @@
     color: #888888;
     font-size: 30px;
     i {
-        transform: scale(1.2) translate3d(0, 2px, 0);
+        transform: scale(1.5) translate3d(0, 2px, 0);
     }
     &.active {
         color: #cc3f4f;

@@ -20,10 +20,9 @@
                 background-image: url('#{$qn}/placeholder/img.png');
             }
             .type {
-                color: white;
                 background-color: rgba(0, 0, 0, .8);
                 border-radius: 26px;
-                padding: .3em .5em;
+                padding: .5em .8em;
                 position: absolute;
                 left: 1em;
                 bottom: 1em;
@@ -63,6 +62,9 @@
             }
         }
     }
+    .placeholder {
+        height: 100px;
+    }
 }
 </style>
 <template>
@@ -79,7 +81,7 @@
             <div class="type font-26">{{item.topic_type.name}}</div>
         </div>
         <div v-else class="cover img" v-bg="item.cover">
-            <div class="type font-26">{{item.topic_type.name}}</div>
+            <div class="type font-26 white" v-if="item.topic_type.code !== 'hd'">{{item.topic_type.name}}</div>
         </div>
         <div class="title font-30"><div class="user-input">{{item.content}}</div></div>
     </div>
@@ -88,6 +90,7 @@
         <like :target="item.post_id" type="30" :active="item.liked" :count="item.like"></like>
         <share></share>
     </div>
+    <div class="placeholder" v-if="env.isShare"></div>
 </div>
 </template>
 <script>

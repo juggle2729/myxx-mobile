@@ -50,6 +50,7 @@
                 }
                 .site {
                     line-height: 38px;
+                    -webkit-box-flex: 1;
                 }
             }
         }
@@ -67,15 +68,18 @@
                 height: 110px;
                 width: 110px;
             }
-            .title {
-                margin-bottom: 12px;
-                width: 556px;
-                line-height: 38px;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
+            .info {
+                -webkit-box-flex: 1;
+                .title {
+                    margin-bottom: 12px;
+                    word-break: break-all;
+                    line-height: 38px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    text-overflow: ellipsis;
+                    -webkit-box-orient: vertical;
+                }
             }
         }
         .comment {
@@ -110,6 +114,7 @@
             margin-left: 18px;
             text-align: center;
             background-color: white;
+            background-clip: padding-box;
             width: 160px;
             height: 68px;
             line-height: 68px;
@@ -175,7 +180,7 @@
         </div>
         <div class="merchant flex border-vertical">
             <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
-            <div>
+            <div class="info">
                 <div class="title">{{order.product.title}}</div>
                 <div class="red font-26">{{order.trans_amount | price}}</div>
             </div>
@@ -478,7 +483,7 @@ export default {
                         this.env.isIOS ? location.reload(true) : this.action('reloadUrl');
                     });
                 }
-            })
+            });
         },
         pay() {
             this.action('pay', {id: this.order.order_no, price: this.order.price});
@@ -535,14 +540,13 @@ export default {
             this.applyReject && (this.order.status === 'rf_rj' ? this.action('result', {id: this.order.order_no, type: 'money'}) : this.action('result', {id: this.order.order_no, type: 'product'}));
         },
         timer(day, status) {
-            console.debug(status, _.find(this.order.status_history, {status}));
             const start = _.get(_.find(this.order.status_history, {status}), 'create_at', Date.now());
             const remainHours = (start + 86400000*day - Date.now())/(1000*60*60);
             const days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
             const hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
             const minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
 
-            return  this.xxx = days + '天' + hours + '小时' + minutes + '分';
+            return  (days + '天' + hours + '小时' + minutes + '分');
         }
     }
 }

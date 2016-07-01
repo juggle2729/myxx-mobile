@@ -21,7 +21,7 @@
             width: 110px;
         }
         .name {
-            width: 556px;
+            -webkit-box-flex: 1;
             line-height: 38px;
             overflow: hidden;
             display: -webkit-box;

@@ -1,27 +1,3 @@
-<template>
-    <div class="about-view">
-        <div class="imgs center">
-            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api'} : ''">
-            <p class="font-34 default">美玉秀秀</p>
-            <p class="font-22 gray">v{{env.version || '1.0'}}</p>
-        </div>
-        <div class="text">
-            <p class="font-30">美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。</p>
-            <p class="font-30">美玉秀秀移动端是为全国各地的和田玉爱好者、藏家、商
-                家、相关领域的大师以及权威人士提供专业和田玉鉴定、社交、交易的综合性平台。</p>
-        </div>
-    </div>
-</template>
-<script>
-export default {
-    name: 'AboutView',
-    computed: {
-        isProd() { // 在非生产环境才可以进入客户端接口测试页面
-           return _.includes(this.config.api, 'com');
-        }
-    }
-}
-</script>
 <style lang="sass">
 .about-view {
     .imgs {
@@ -47,3 +23,27 @@ export default {
     }
 }
 </style>
+<template>
+    <div class="about-view">
+        <div class="imgs center">
+            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api'} : ''">
+            <p class="font-34 default">美玉秀秀</p>
+            <p class="font-22 gray">v{{env.version || '1.0'}}</p>
+        </div>
+        <div class="text">
+            <p class="font-30">美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。</p>
+            <p class="font-30">美玉秀秀移动端是为全国各地的和田玉爱好者、藏家、商
+                家、相关领域的大师以及权威人士提供专业和田玉鉴定、社交、交易的综合性平台。</p>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    name: 'AboutView',
+    computed: {
+        isProd() { // 在非生产环境才可以进入客户端接口测试页面
+           return _.includes(this.config.api, 'com');
+        }
+    }
+}
+</script>

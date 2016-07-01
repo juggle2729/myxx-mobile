@@ -16,15 +16,11 @@
                 }
                 .user {
                     margin: 0 0 26px 44px;
-                    width: 600px;
-                    span:last-child {
-                        float: right;
-                    }
                     & + div {
-                        width: 618px;
                         -webkit-box-align: start;
                         .icon-location {
                             padding-top: 3px;
+                            -webkit-box-flex: 1;
                         }
 
                     }
@@ -55,15 +51,17 @@
                 height: 110px;
                 width: 110px;
             }
-            .title {
-                margin-bottom: 12px;
-                width: 556px;
-                line-height: 38px;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
+            .info {
+                -webkit-box-flex: 1;
+                .title {
+                    margin-bottom: 12px;
+                    line-height: 38px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    text-overflow: ellipsis;
+                    -webkit-box-orient: vertical;
+                }
             }
         }
         .comment {
@@ -110,10 +108,10 @@
                 <span class="icon-enter red"></span>
             </div>
             <div v-else class="flex" v-link="{name: 'address-list', query: {product: this.product.id}}">
-                <div>
-                    <div class="user">
-                        <span>收货人: {{address.receiver_name}}</span>
-                        <span>{{address.receiver_phone}}</span>
+                <div class="flex-1">
+                    <div class="user flex">
+                        <div class="flex-1">收货人: {{address.receiver_name}}</div>
+                        <div>{{address.receiver_phone}}</div>
                     </div>
                     <div class="flex">
                         <div class="icon-location gray font-30"></div>
@@ -130,7 +128,7 @@
             </div>
             <div class="merchant flex border-bottom">
                 <img class="img margin-right" :src="config.img + product.pictures[0] + '?imageView2/2/h/450'">
-                <div>
+                <div class="info">
                     <div class="title">{{product.title}}</div>
                     <div class="red font-26">{{product.price | price}}</div>
                 </div>
@@ -165,7 +163,6 @@ export default {
     },
     route: {
         data({to}) {
-            console.debug('load');
             let requests = Q.all([this.$get(`mall/address/default`), this.$get(`mall/products/${to.params.product}`)])
             requests.done(([address, product]) => {
                         this.address = address;
@@ -179,7 +176,6 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
-            console.debug('restore');
             this.$get('mall/address/default?' + Date.now()) // 加时间戳，去缓存 ！！！
                 .then((address) => {
                     this.address = address;

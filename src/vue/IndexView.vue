@@ -30,16 +30,9 @@
         <li>
             <a href="/lessons">公开课 - lessons</a>
         </li>
-        <li class="tab">标签</li>
-        <li>
-            <a href="/tag/242/certificate">标签 - tags</a>
-        </li>
         <li class="tab">商城</li>
         <li>
             <a href="/jade/188/none">商品详情 - /jade/:id/:tab</a>
-        </li>
-        <li>
-            <a href="/order/affirm/188/">确认订单 - order/affirm/:productId/:addressId</a>
         </li>
         <li>
             <a href="/order/160615152959035578">订单详情页-重复使用请手动在此修改订单号 --> order/:id</a>
@@ -58,6 +51,10 @@
         </li>
         <li>
             <a href="/instructions">帮助 - instructions</a>
+        </li>
+        <li class="tab">活动标签信息流</li>
+        <li>
+            <a href="/activity/1">标签信息流 - activity/1</a>
         </li>
         <li class="tab">我的</li>
         <li>

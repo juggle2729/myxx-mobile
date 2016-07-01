@@ -1,7 +1,7 @@
 import config from './config';
 
 const db = window.localStorage;
-const prefix = 'myxx-' + (config.api.match(/\/\/(\w+)?.?api/).pop() || 'prod') + '-';
+const prefix = 'myxx-' + (config.api.match(/^\/\/(\d)/) ? 'docker' : (config.api.match(/\/\/(\w+)?.?api/).pop() || 'prod')) + '-';
 
 /**
  * 对localStorage进行封装，更易用

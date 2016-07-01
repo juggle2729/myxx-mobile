@@ -14,8 +14,14 @@
         .txt {
             text-align: center;
             padding: 22px 0;
-            p + p {
-                margin-top: 16px;
+            .title {
+                margin-bottom: 16px;
+                line-height: 1.2;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
             }
         }
         &:nth-child(odd) {
@@ -38,7 +44,7 @@
     <div class="cell" v-for="item in items" v-link="{name: 'jade', params:{id: item.id}}" track-by="$index">
         <div class="img" v-bg.lg="item.first_picture"></div>
         <div class="txt font-30 bg-white">
-            <p>{{item.title}}</p>
+            <p class="title">{{item.title}}</p>
             <p class="red">{{item.price | price}}</p>
         </div>
     </div>

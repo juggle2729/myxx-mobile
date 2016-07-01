@@ -79,7 +79,7 @@
 }
 </style>
 <template>
-    <div class="recommend-component bg-default" v-if="items.length">
+    <div class="recommend-component bg-default border-bottom" v-if="items.length">
         <div class="title font-22">相关推荐</div>
         <div class="data-list">
             <div class="data-item bg-white border-default" @click="goTo(data)" v-for="data in items">

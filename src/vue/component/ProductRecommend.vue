@@ -40,7 +40,7 @@
 }
 </style>
 <template>
-    <div class="product-recommend-component bg-white" v-if="items.length">
+    <div class="product-recommend-component bg-white border-bottom" v-if="items.length">
         <div class="title font-26 gray">商品推荐</div>
         <div class="list">
             <div class="item font-26" v-for="data in items" v-link="{name: 'jade', params: {id: data.item.id, tab: 'detail'}}">
