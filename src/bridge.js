@@ -113,6 +113,7 @@ if(/myxx/i.test(navigator.userAgent)) {
             setTimeout(() => { document.documentElement.removeChild(WVJBIframe) }, 0);
         })((bridge) => {
             bridge.registerHandler('back', () => emitter.emit('back'));
+            bridge.registerHandler('checkShare', (response) => emitter.emit('checkShare', response));
             defer.resolve(bridge);
         });
     } else {
