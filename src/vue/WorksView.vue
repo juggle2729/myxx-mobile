@@ -23,7 +23,7 @@
                 .line {
                     display: inline-block;
                     margin-top: 14px;
-                    width: 270px;
+                    width: 268px;
                     height: 1px;
                     border: 0;
                     background: #d9d9d9;
@@ -116,9 +116,9 @@
   <div class="works-view">
       <div class="content">
           <p class="title font-36 font-center">《{{works.title}}》</p>
-          <p class="studio font-26 gray font-center">工作室：{{works.studio}}</p>
+          <p class="studio font-26 gray font-center">{{works.studio}}</p>
           <article class="description font-26 gray">
-            作品简介: {{works.desc}}
+            {{works.desc}}
           </article>
           <div class="sub-title">
               <span class="line"></span>
@@ -145,7 +145,7 @@
       <div class="separator-16"></div>
       <comments type="80" :id="works.id" :display-input="false" :enable-like="false" v-ref:comment></comments>
       <div class="float-box bg-white flex font-30">
-          <div class="comment gray flex" v-link="{name: 'comments', params: {id: works.id, type: '80'}}">
+          <div class="comment gray flex" @click="$refs.comment.comment()">
               <span class="icon-comment-solid font-44"></span>
               <span>评论</span>
           </div>
@@ -156,7 +156,7 @@
               <span>{{works.vote_count}}票</span>
           </div>
           <div class="all-works red flex">
-              <a href="http://activity.meiyuxiuxiu.com/works/sg">所有作品</a>
+              <a href="http://activity.meiyuxiuxiu.net/works/sg/">所有作品</a>
               <span class="icon-enter"></span>
           </div>
       </div>
@@ -166,6 +166,7 @@
 <script>
 import Comments from './component/Comments.vue';
 import shareable from 'shareable';
+import emitter from '../util/emitter';
 export default {
     name: 'WorksView',
     mixins: [shareable],
@@ -187,7 +188,7 @@ export default {
             if (this.works.id) {
                 this.$post(`activities/20160629/carvings/${this.works.id}/vote`).then(() => {
                     this.works.has_voted = true;
-                    this.action('open', {url: 'http://activity.meiyuxiuxiu.com/works/sg/rank'});
+                    this.action('toast', {success: 1, text: '投票成功'});
                 }).catch((e) => {
                     this.action('toast', {success: 0, text: e});
                 });
@@ -203,7 +204,18 @@ export default {
         if (this.$route.query.timestamp) {
             postData.extra = this.$route.query.timestamp;
         }
-        this.$post('log/activity/events', postData);
+        this.$http.post('log/activity/events', postData);
+
+        // 监听
+        emitter.on('checkShare', (response) => {
+            const timestamp = this.$root.shareData.timestamp;
+            this.$http.post('log/activity/events', {
+                code: 'popularWorks_sg',
+                event: 'share',
+                extra: timestamp
+            });
+        })
+
     },
     route: {
         data({to}) {

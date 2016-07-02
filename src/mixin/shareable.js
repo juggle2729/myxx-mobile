@@ -112,7 +112,7 @@ export default {
                     data.url = this.config.download;
             }
             data.title = _.truncate(data.title, {
-                length: /[\uD800-\uDBFF]/.test(data.title.charAt(25)) ? 24 : 25
+                length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40
             });
 
             // 截取描述文字前20字符,防止emoji表情被截断导致iOS平台无法识别
@@ -120,10 +120,13 @@ export default {
                 length: /[\uD800-\uDBFF]/.test(data.desc.charAt(25)) ? 24 : 25
             });
 
+            data.timestamp = Date.now();
+
             // 拼接分享落地页地址
             let query = _.merge({}, this.$route.query, {
                 user: _.get(this, 'self.id', -1),
-                time: Date.now()
+                time: Date.now(),
+                timestamp: data.timestamp
             });
             data.url = data.url + '?' + _.map(query, (v, k) => `${k}=${v}`).join('&');
 
