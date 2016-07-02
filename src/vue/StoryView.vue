@@ -39,10 +39,6 @@
         }
     }
 
-    .tags-component {
-        margin: 40px 32px 16px;
-    }
-
     .tag-activity {
         position: relative;
         width: 100%;

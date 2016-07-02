@@ -66,6 +66,23 @@ export default {
             items: []
         }
     },
+    computed: {
+        biz_type() {
+            let type = '';
+            switch (this.$route.name) {
+                case 'jade':
+                    type = 'pd';
+                    break;
+                case 'story':
+                    type = 'tp';
+                    break;
+                case 'evaluation':
+                    type = 'jb';
+                    break;
+            }
+            return type;
+        }
+    },
     ready() {
         this.loadData(this.id || this.$route.params.id);
     },
@@ -73,7 +90,7 @@ export default {
         loadData(id) {
             const params = {
                 obj_id: id,
-                biz_type: 'pd'
+                biz_type: this.biz_type
             };
             return this.$get('dc/rd|v4', params).then((data) => {
                 this.items = data.recommend_data;
