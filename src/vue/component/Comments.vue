@@ -221,9 +221,9 @@ export default {
         },
         comment(to) {
             // 鉴于客户端没有实现接口定义的细节， id, position 为废弃的参数
-            let [id, placeholder, position, reply_to] = [1, '', 0, ''];
+            let [id, placeholder, position, reply_to] = [this.uid, '', 0, ''];
             if(to) {
-                [placeholder, reply_to] = [`回复${to.name}`, to.id];
+                [id, placeholder, reply_to] = [this.uid + to.id, `回复${to.name}`, to.id];
             }
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
