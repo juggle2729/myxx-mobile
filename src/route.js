@@ -31,7 +31,7 @@ export default {
     '/story/:id': {
         name: 'story',
         title: ' ', // 标题为空，减缓数据加载后，标题变化的差体验
-        native: v => v == 1.3,
+        native: v => v >= 1.6,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('StoryView.vue'));
