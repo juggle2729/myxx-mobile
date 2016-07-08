@@ -23,11 +23,12 @@ export default {
             switch(this.$route.name) {
                 case 'evaluation':
                     const result = _.get(entry, 'results[0]');
+                    console.debug(result);
                     if(this.$route.params.result === 'none' || this.$route.params.result === ':result') {
-                        data.title = result ? result.identifier.name + '的视频鉴宝' : '大师在线视频鉴宝';
+                        data.title = '【求鉴定】此玉如何，看官给个说法呗？';
                     } else if(result){
                         if(result.result === 'unsure') {
-                            data.title = '这块玉我拿不准，你来看看';
+                            data.title = '【疑】这块玉让人拿不准，你来挑战下？';
                         } else if(result.identifier.id == this.$route.query.user) {
                             data.title = '我给出的鉴定结果为' + (result.result === 'fake' ? '假' : '真') + '，你看怎样';
                         } else {
