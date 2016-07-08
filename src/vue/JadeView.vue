@@ -51,17 +51,6 @@
             bottom: 4px;
             margin-right: 20px;
         }
-        .icon-enter {
-            position: relative;
-            bottom: -2px;
-            margin-left: 14px;
-            margin-right: -12px;
-        }
-        /*.icon-enter-slim {
-            position: relative;
-            top: 2px;
-            margin-left: 16px;
-        }*/
         .master-name {
             margin-bottom: 14px;
         }
