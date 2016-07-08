@@ -88,6 +88,7 @@ router.alias({
 router.map(routes);
 router.start(require('App.vue'), '#app');
 
+// 一些初始化工作
 (() => {
     let first = true;
     const adjustBase = () => {
@@ -101,4 +102,10 @@ router.start(require('App.vue'), '#app');
     };
     adjustBase();
     window.onresize = _.debounce(adjustBase, 150);
+
+    // 处理微信viewport异常
+    if(!/#refresh/.test(location.hash) && window.innerWidth < window.document.body.clientWidth) {
+        // 如果body宽度超过viewport，刷新页面，仅刷新一次!
+        location.href = location.href + '#refresh';
+    }
 })();
