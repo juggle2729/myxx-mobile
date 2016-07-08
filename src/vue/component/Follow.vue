@@ -6,9 +6,6 @@
     color: #9c9c9c;
     text-align: center;
     line-height: 48px;
-    i {
-        display: none;
-    }
     &.active {
         i {
             color: #cc3f4f;

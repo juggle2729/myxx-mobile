@@ -98,6 +98,9 @@
             text-align: center;
         }
     }
+    .placeholder {
+        height: 100px;
+    }
 }
 </style>
 <template>
@@ -145,17 +148,25 @@
         </li>
     </ul>
     <tags :tags="evaluation.tags"></tags>
-    <comments type="10" :id="evaluation.post_id" :display-input="false" v-ref:comment></comments>
-    <div class="separator-20"></div>
-    <product-recommend :id="evaluation.post_id"></product-recommend>
-    <recommend :id="evaluation.post_id"></recommend>
-    <div class="footer flex border-top font-30 gray">
+    <div class="footer flex border-top font-30 gray" v-if="env.isShare">
         <div class="comment border-left" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i>
             <span>写评论</span>
         </div>
         <share class="border-left"></share>
     </div>
+    <div class="separator-20"></div>
+    <comments type="10" :id="evaluation.post_id" :display-input="false" v-ref:comment></comments>
+    <product-recommend :id="evaluation.post_id"></product-recommend>
+    <recommend :id="evaluation.post_id"></recommend>
+    <div class="footer flex border-top font-30 gray" v-if="!env.isShare">
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i>
+            <span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div>
+    <div class="placeholder"></div>
 </div>
 </template>
 <script>
