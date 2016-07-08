@@ -96,7 +96,8 @@
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>
     <ul>
-        <li class="flex" v-for="c in items" @click="clicked(c, $index)">
+        <li class="flex" v-for="c in items" @click="clicked(c, $index)"
+            :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
             <div class="flex-1 border-bottom">
                 <div class="author flex">
