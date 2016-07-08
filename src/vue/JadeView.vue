@@ -51,11 +51,17 @@
             bottom: 4px;
             margin-right: 20px;
         }
-        .icon-enter-slim {
+        .icon-enter {
+            position: relative;
+            bottom: -2px;
+            margin-left: 14px;
+            margin-right: -12px;
+        }
+        /*.icon-enter-slim {
             position: relative;
             top: 2px;
             margin-left: 16px;
-        }
+        }*/
         .master-name {
             margin-bottom: 14px;
         }
@@ -180,7 +186,7 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
+    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id}}">
         <avatar :user="jade.owner" :size="90"></avatar>
         <div class="flex-1">
             <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
