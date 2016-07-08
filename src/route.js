@@ -87,52 +87,6 @@ export default {
         }
     },
 
-    '/auction/:id': {
-        name: 'auction',
-        title: '拍卖预览',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionView.vue'));
-            }, 'auction');
-        }
-    },
-    '/auction/add/:id': {
-        name: 'addAuction',
-        title: '添加拍卖信息',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AddAuctionView.vue'));
-            }, 'auction');
-        }
-    },
-    '/auction/:id/share': {
-        name: 'auctionShare',
-        title: '拍卖生成',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionShareView.vue'));
-            }, 'auction');
-        }
-    },
-    '/auction/:id/bidding': {
-        name: 'bidding',
-        title: '我要出价',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsBiddingView.vue'));
-            }, 'auction');
-        }
-    },
-    '/auction/:id/record': {
-        name: 'actionRecord',
-        title: '拍卖记录',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionRecordView.vue'));
-            }, 'auction');
-        }
-    },
-
     '/masters': {
         name: 'masters',
         title: '人物志',
@@ -209,15 +163,7 @@ export default {
             }, 'profile');
         }
     },
-    '/user/:id/auctions': {
-        name: 'auctions',
-        title: '全部拍卖',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsView.vue'));
-            }, 'profile');
-        }
-    },
+
     '/user/:id/:tab': { // 个人主页
         name: 'user',
         title: '个人主页',
@@ -418,16 +364,6 @@ export default {
         }
     },
 
-    // 活动-作品详情
-    '/works/sg/:id': {
-        name: 'works',
-        title: '人气玉雕作品评选',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('WorksView.vue'));
-            }, 'works');
-        }
-    },
     '/feedback': {
         name: 'feedback',
         title: '意见反馈',
