@@ -165,9 +165,6 @@
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
                 <p class="red font-44 flex-1">{{jade.price | price}}</p>
-                <!-- <template v-if="isSelf">
-                    <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
-                </template> -->
             </div>
         </div>
         <div class="footer flex font-26 light border-top">

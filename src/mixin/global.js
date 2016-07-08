@@ -105,7 +105,6 @@ const mixin = {
                         break;
                     case 'login':
                     case 'datetime':
-                    case 'affirmAuction':
                     case 'confirm':
                     case 'delete':
                     case 'version':
