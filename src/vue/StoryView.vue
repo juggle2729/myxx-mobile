@@ -41,7 +41,6 @@
 
     .tag-activity {
         position: relative;
-        width: 100%;
         margin: 40px 0 40px 32px;
         height: 68px;
         .item {
@@ -68,8 +67,10 @@
     }
     .medias {
         font-size: 0;
-        margin: 0 -5px;
-        padding: 0 32px;
+        padding: 0 28px;
+        &.padding-bottom {
+            padding-bottom: 28px;
+        }
     }
     .media {
         display: inline-block;
@@ -125,7 +126,7 @@
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
     <div v-if="cover_type === 'video'" class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
-    <div class="story-header flex">
+     <div class="story-header flex">
         <div class="user flex-1">
             <avatar :user="story.user"></avatar>
             <div class="name">
@@ -140,7 +141,7 @@
     <div class="description user-input font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
         <div class="cover img" v-bg="cover" @click="coverflow(this.picFlow, 0)"></div>
-        <div class="medias">
+        <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(this.picFlow, $index + 1)"></div>
         </div>
     </template>
@@ -164,7 +165,7 @@
         </div>
         <share class="border-left"></share>
     </div>
-    <div class="placeholder" v-if="env.isShare"></div>
+    <div class="placeholder" v-if="env.isShare"></div> 
 </div>
 </template>
 <script>

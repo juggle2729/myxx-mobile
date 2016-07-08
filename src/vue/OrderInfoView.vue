@@ -525,10 +525,10 @@ export default {
             });
         },
         contactBuyer() {
-            this.action('chat', {id: this.order.buyer.id, name: this.order.buyer.nickname, order: this.order.order_no});
+            this.action('chat', {id: this.order.buyer.id, name: this.order.buyer.nickname});
         },
         contactSeller() {
-            this.action('chat', {id: this.order.seller.id, name: this.order.seller.nickname, order: this.order.order_no});
+            this.action('chat', {id: this.order.seller.id, name: this.order.seller.nickname});
         },
         service() {
             this.action('kf', {order: this.order.order_no});
