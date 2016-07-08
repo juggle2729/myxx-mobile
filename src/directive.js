@@ -1,9 +1,9 @@
 import config from './config';
 let preset = {
-    lg: 'imageView2/1/w/750/h/750/interlace/1',
-    md: 'imageView2/3/w/300/h/300/interlace/1',
-    sm: 'imageView2/1/w/200/h/200/interlace/1',
-    video: 'vframe/jpg/offset/0/rotate/auto|imageView2/0/w/375'
+    lg: '_750',
+    md: '_320',
+    sm: '_240',
+    video: '?vframe/jpg/offset/0/rotate/auto|imageView2/0/w/375'
 };
 const bg = {
     params: ['query', 'holder'],
@@ -14,16 +14,19 @@ const bg = {
     update(id) {
         if(id) {
             let bgImgStr;
-            let host = config.video;
-            if(/^image/i.test(this.query)) {
-                host = config.img;
-                bgImgStr = `url(${host + id + '?' + this.query})`;
+            let host = config.img;
+            if(!/^[?|_]/.test(this.query)) {
+                this.query = '?' + this.query;
+            }
+            if(/^\?vframe/.test(this.query)) {
+                host = config.video;
+                bgImgStr = `url(${host + id + this.query})`;
+            } else {
+                bgImgStr = `url(${host + id + this.query})`;
                 if (this.holder) {
                     bgImgStr += `, url('//o0x80w5li.qnssl.com/placeholder/img.png')`;
                 }
-            } else {
-                bgImgStr = `url(${host + id + '?' + this.query})`;
-            }
+            } 
             this.el.style.backgroundImage = bgImgStr;
         }
     }
