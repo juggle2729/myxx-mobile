@@ -42,11 +42,9 @@ export default {
                         
                         _.merge(this.items, {
                             total: data.total,
-                            hasMore: ((items.length === (this.paging.limit || options.limit)) && (items.length !== this.items.total)),
+                            hasMore: ((items.length === (this.paging.limit || options.limit)) && (this.items.length < data.total)),
                             isEmpty: items.length === 0
                         });
-                        console.log((items.length === (this.paging.limit || options.limit)) && (items.length !== this.items.total));
-                        console.log(this.items.hasMore);
                 });
             }
         }

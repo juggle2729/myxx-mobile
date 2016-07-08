@@ -153,12 +153,19 @@
     <template v-else>
         <tags :tags="story.tags"></tags>
     </template>
+    <div v-if="env.isShare" class="footer flex font-30 gray border-top">
+        <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i><span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div>
     <div class="separator-20"></div>
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <div class="separator-20"></div>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :id="story.post_id"></recommend>
-    <div class="footer flex font-30 gray">
+    <div v-if="!env.isShare" class="footer flex font-30 gray">
         <like :active="story.liked" :count="story.like"></like>
         <div class="comment border-left" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
