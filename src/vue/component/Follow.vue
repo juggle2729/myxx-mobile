@@ -17,7 +17,7 @@
 </style>
 <template>
 <div v-if="!isSelf" class="follow-component flex" :class="{active: !follow}" @click.stop="toggle">
-    <i class="icon-plus"></i><span>{{follow ? '已关注' : '关注'}}</span>
+    <i class="icon-plus" v-if="!follow"></i><span>{{follow ? '已关注' : '关注'}}</span>
 </div>
 </template>
 <script>
