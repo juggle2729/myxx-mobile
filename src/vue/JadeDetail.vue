@@ -16,7 +16,7 @@
 <div class="jade-detail bg-white">
     <div class="desc font-30">{{jade.detail}}</div>
     <div class="img">
-        <img :src="config.img + img + '?imageView2'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
+        <img :src="config.img + img + '_750'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
     </div>
     <tags :tags="jade.tags"></tags>
     <div class="separator-20"></div>

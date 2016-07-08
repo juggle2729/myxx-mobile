@@ -1,4 +1,4 @@
-<style lang="sass">
+ <style lang="sass">
 .jade-attribute {
 	.params {
 		padding-left: 32px;
