@@ -56,6 +56,7 @@ export default {
             this[this.active ? '$delete' : '$post'](this.api)
                 .then(() => {
                     this.active = !this.active;
+                    (this.count === undefined) && (this.count = 0);
                     this.count += (this.active ? 1 : -1);
                 });
         }
