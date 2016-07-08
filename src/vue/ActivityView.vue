@@ -4,6 +4,7 @@
         width: 100%;
         height: 536px;
         background-position: center;
+        background-size: cover;
     }
     .placeholder {
         height: 100px;

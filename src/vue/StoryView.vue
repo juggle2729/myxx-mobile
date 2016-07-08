@@ -162,7 +162,6 @@
     </div>
     <div class="separator-20"></div>
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
-    <div class="separator-20"></div>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :id="story.post_id"></recommend>
     <div v-if="!env.isShare" class="footer flex font-30 gray">
