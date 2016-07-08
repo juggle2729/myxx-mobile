@@ -8,6 +8,9 @@
         line-height: 0;  /*暂时修复图片下面多出一部分空白的问题*/
         img {
             width: 100%;
+            &:not(:last-child) {
+                margin-bottom: 6px;
+            };
         }
     }
 }
