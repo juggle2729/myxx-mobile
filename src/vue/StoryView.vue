@@ -15,9 +15,6 @@
         background-color: #eeeeee;
         border: 1px solid #eeeeee;
         line-height: inherit;
-        i {
-            display: none;
-        }
         &.active {
             background-color: transparent;
             border: 1px solid #cc3f4f;

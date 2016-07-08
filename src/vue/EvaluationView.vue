@@ -96,6 +96,9 @@
             line-height: 60px;
             -webkit-box-flex: 1;
             text-align: center;
+            .icon-comment-solid {
+                transform: scale(1.5);
+            }
         }
     }
     .placeholder {
@@ -150,8 +153,7 @@
     <tags :tags="evaluation.tags"></tags>
     <div class="footer flex border-top font-30 gray" v-if="env.isShare">
         <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i>
-            <span>写评论</span>
+            <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
         <share class="border-left"></share>
     </div>
@@ -161,8 +163,7 @@
     <recommend :id="evaluation.post_id"></recommend>
     <div class="footer flex border-top font-30 gray" v-if="!env.isShare">
         <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i>
-            <span>写评论</span>
+            <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
         <share class="border-left"></share>
     </div>
