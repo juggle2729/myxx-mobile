@@ -1,11 +1,6 @@
 target
 logs
 
-# eclipse
-.classpath
-.project
-.settings
-
 # idea
 .idea
 *.iml
@@ -28,4 +23,4 @@ log
 **/dist/*
 **/node_modules/*
 .tmp
-app.js
+package.json
