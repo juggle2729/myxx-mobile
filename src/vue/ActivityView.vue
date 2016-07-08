@@ -5,6 +5,9 @@
         height: 536px;
         background-position: center;
     }
+    .placeholder {
+        height: 100px;
+    }
 }
 </style>
 <template>
@@ -14,11 +17,18 @@
             <div class="separator"></div>
             <story-item :item="item.entry"></story-item>
         </div>
+        <div class="placeholder"></div>
+        <div class="share-bottom flex bg-red white font-30">
+            <img :src="'share/left.png' | qn" alt="left">
+            <a class="flex-1 center bold" :href="config.download">下载美玉秀秀参与活动</a>
+            <img :src="'share/right.png' | qn" alt="right">
+        </div>
     </div>
 </template>
 <script>
 import paging from 'paging';
 import StoryItem from 'component/StoryItem.vue';
+
 export default {
     name: 'ActivityView',
     data() {
@@ -34,7 +44,11 @@ export default {
         paging() {
             return {
                 path: 'cms/activities/' + this.$route.params.id + '/contents',
-                list: 'entries'
+                list: 'entries',
+                id: 'id',
+                params: {
+                    limit: 10
+                }
             }
         }
     },

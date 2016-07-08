@@ -60,6 +60,9 @@ export default {
                     } else if (entry.topic_type.code === 'xt') {
                         data.desc = '和田玉友的趣事，我看这挺有意思';
                         data.text = '秀出我的趣事';
+                    } else if (entry.topic_type.code === 'hd') {
+                        data.desc = '美玉秀秀，最大的和田玉视频鉴赏交易平台';
+                        data.text = '下载美玉秀秀参与活动';
                     } else {
                         data.desc = '美玉秀秀，最大和田玉视频鉴赏交易社区';
                         data.text = '查看更多话题';
