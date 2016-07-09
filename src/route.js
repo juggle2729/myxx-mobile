@@ -382,15 +382,6 @@ export default {
             }, 'other');
         }
     },
-    'api': {
-        title: '客户端api测试',
-        name: 'api',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ApiView.vue'));
-            }, 'other');
-        }
-    },
     '/404': {
         title: '页面不存在',
         name: '404',
@@ -400,18 +391,28 @@ export default {
             }, 'other');
         }
     },
+    'api': {
+        title: '客户端api测试',
+        name: 'api',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ApiView.vue'));
+            }, 'other');
+        }
+    },
+    'hairline': {
+        title: '1px',
+        name: 'hairline',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HairlineView.vue'));
+            }, 'other');
+        }
+    },
     '/': {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('IndexView.vue'));
-            }, 'browser');
-        }
-    },
-    '/css': {
-        name: 'cssview',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CssView.vue'));
             }, 'browser');
         }
     },

@@ -22,6 +22,7 @@
         }
     }
 }
+
 .bold {font-weight: bold;}
 .italic {font-style: italic;}
 .center {text-align: center;}
@@ -175,23 +176,6 @@
         background-size: 2rem;
     }
 }
-// .play {
-//     position: relative;
-//     background-size: cover;
-//     background-position: center;
-//     background-color: #000000;
-//     &::after {
-//         content: '';
-//         position: absolute;
-//         left: 0;
-//         top: 0;
-//         right: 0;
-//         bottom: 0;
-//         // mix-blend-mode: overlay;
-//         background: transparent url('#{$qn}/icon/play.svg?v=1.4') no-repeat center;
-//         background-size: 1rem;
-//     }
-// }
 .img {
     background-size: cover;
     background-position: center;

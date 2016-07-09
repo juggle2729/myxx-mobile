@@ -90,21 +90,31 @@ router.start(require('App.vue'), '#app');
 
 // 一些初始化工作
 (() => {
+    const doc = window.document;
     let first = true;
     const adjustBase = () => {
-        let clientWidth = document.body.clientWidth;
+        let clientWidth = doc.body.clientWidth;
         if(first && !/mobile/i.test(navigator.userAgent)) {
             // 如果页面有纵向滚动条，会占去clientWidth的空间，极端情况下会导致页面布局混乱，故减去滚动条宽度 15
             clientWidth = clientWidth - 15;
             first = false;
         }
-        document.querySelector('html').style['font-size'] = Math.min(75, clientWidth / 10) + 'px';
+        doc.querySelector('html').style['font-size'] = Math.min(75, clientWidth / 10) + 'px';
     };
     adjustBase();
     window.onresize = _.debounce(adjustBase, 150);
-
+    // 1px检测
+    if (window.devicePixelRatio && devicePixelRatio >= 2) {
+        var testElem = doc.createElement('div');
+        testElem.style.border = '.5px solid transparent';
+        doc.body.appendChild(testElem);
+        if (testElem.offsetHeight == 1) {
+            doc.querySelector('html').classList.add('hairline');
+        }
+        doc.body.removeChild(testElem);
+    }
     // 处理微信viewport异常
-    if(!/#refresh/.test(location.hash) && window.innerWidth < window.document.body.clientWidth) {
+    if(!/#refresh/.test(location.hash) && window.innerWidth < doc.body.clientWidth) {
         // 如果body宽度超过viewport，刷新页面，仅刷新一次!
         location.href = location.href + '#refresh';
     }
