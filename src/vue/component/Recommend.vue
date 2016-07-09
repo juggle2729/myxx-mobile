@@ -8,6 +8,10 @@
         margin-left: 32px;
     }
 
+    .like-component, .comment-component {
+        color: #d8d8d8;
+    }
+
     .data-list {
         padding:0 20px;
         font-size: 0;
@@ -79,7 +83,7 @@
 }
 </style>
 <template>
-    <div class="recommend-component bg-default border-bottom" v-if="items.length">
+    <div class="recommend-component bg-default" v-if="items.length">
         <div class="title font-22">相关推荐</div>
         <div class="data-list">
             <div class="data-item bg-white border-default" @click="goTo(data)" v-for="data in items">

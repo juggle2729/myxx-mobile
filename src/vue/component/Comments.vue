@@ -41,8 +41,8 @@
         background-image: none;
     }
     .nocomment {
-        margin-top: 48px;
-        margin-bottom: 24px;
+        margin: 48px 0;
+        padding-left: 0;
     }
     .label .bg-yellow {
         padding: 0 5px;
@@ -92,7 +92,7 @@
 </style>
 <template>
 <div class="comments-component bg-white">
-    <div class="comment-header border-bottom font-22">
+    <div class="comment-header border-bottom font-26">
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>
     <ul>
@@ -118,7 +118,7 @@
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
-    <div class="font-26 red center more" v-if="items.hasMore" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
+    <div class="font-26 red center more" v-if="items.has" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
     <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
     <div v-if="!env.isShare && displayInput" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
