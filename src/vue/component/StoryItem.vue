@@ -62,9 +62,6 @@
             }
         }
     }
-    .placeholder {
-        height: 100px;
-    }
 }
 </style>
 <template>
@@ -90,7 +87,6 @@
         <like :target="item.post_id" type="30" :active="item.liked" :count="item.like"></like>
         <share></share>
     </div>
-    <div class="placeholder" v-if="env.isShare"></div>
 </div>
 </template>
 <script>

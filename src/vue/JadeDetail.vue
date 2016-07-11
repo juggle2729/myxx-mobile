@@ -5,9 +5,12 @@
         line-height: 1.5;
     }
     .img {
-        line-height: 1;
+        line-height: 0;  /*暂时修复图片下面多出一部分空白的问题*/
         img {
             width: 100%;
+            &:not(:last-child) {
+                margin-bottom: 6px;
+            };
         }
     }
 }
@@ -16,10 +19,9 @@
 <div class="jade-detail bg-white">
     <div class="desc font-30">{{jade.detail}}</div>
     <div class="img">
-        <img :src="config.img + img + '?imageView2'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
+        <img :src="config.img + img + '_750'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
     </div>
     <tags :tags="jade.tags"></tags>
-    <div class="separator-20"></div>
     <product-recommend></product-recommend>
 </div>
 </template>

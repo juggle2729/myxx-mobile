@@ -15,9 +15,6 @@
         background-color: #eeeeee;
         border: 1px solid #eeeeee;
         line-height: inherit;
-        i {
-            display: none;
-        }
         &.active {
             background-color: transparent;
             border: 1px solid #cc3f4f;
@@ -41,7 +38,6 @@
 
     .tag-activity {
         position: relative;
-        width: 100%;
         margin: 40px 0 40px 32px;
         height: 68px;
         .item {
@@ -68,8 +64,10 @@
     }
     .medias {
         font-size: 0;
-        margin: 0 -5px;
-        padding: 0 32px;
+        padding: 0 28px;
+        &.padding-bottom {
+            padding-bottom: 28px;
+        }
     }
     .media {
         display: inline-block;
@@ -106,7 +104,13 @@
     }
 
     .footer {
-        height: 98px;
+        &.fixed {
+            position: fixed;
+            bottom: 0;
+            z-index: 990;
+        }
+        height: 100px;
+        width: 100%;
         > div {
             line-height: 60px;
             -webkit-box-flex: 1;
@@ -125,7 +129,7 @@
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
     <div v-if="cover_type === 'video'" class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
-    <div class="story-header flex">
+     <div class="story-header flex">
         <div class="user flex-1">
             <avatar :user="story.user"></avatar>
             <div class="name">
@@ -140,7 +144,7 @@
     <div class="description user-input font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
         <div class="cover img" v-bg="cover" @click="coverflow(this.picFlow, 0)"></div>
-        <div class="medias">
+        <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
             <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(this.picFlow, $index + 1)"></div>
         </div>
     </template>
@@ -152,19 +156,25 @@
     <template v-else>
         <tags :tags="story.tags"></tags>
     </template>
-    <div class="separator-20"></div>
-    <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
-    <div class="separator-20"></div>
-    <product-recommend :id="story.post_id"></product-recommend>
-    <recommend :id="story.post_id"></recommend>
-    <div class="footer flex font-30 gray">
+    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
         <like :active="story.liked" :count="story.like"></like>
         <div class="comment border-left" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
         <share class="border-left"></share>
     </div>
-    <div class="placeholder" v-if="env.isShare"></div>
+    <div class="separator-20"></div>
+    <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
+    <product-recommend :id="story.post_id"></product-recommend>
+    <recommend :id="story.post_id"></recommend>
+    <!-- <div v-if="!env.isShare" class="footer flex font-30 gray bg-white border-top">
+        <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i><span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div> -->
+    <div class="placeholder"></div> 
 </div>
 </template>
 <script>

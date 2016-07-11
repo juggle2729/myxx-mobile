@@ -6,9 +6,6 @@
     color: #9c9c9c;
     text-align: center;
     line-height: 48px;
-    i {
-        display: none;
-    }
     &.active {
         i {
             color: #cc3f4f;
@@ -20,7 +17,7 @@
 </style>
 <template>
 <div v-if="!isSelf" class="follow-component flex" :class="{active: !follow}" @click.stop="toggle">
-    <i class="icon-plus"></i><span>{{follow ? '已关注' : '关注'}}</span>
+    <i class="icon-plus" v-if="!follow"></i><span>{{follow ? '已关注' : '关注'}}</span>
 </div>
 </template>
 <script>

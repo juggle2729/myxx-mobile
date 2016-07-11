@@ -1,6 +1,6 @@
 <style lang="sass">
 .tags-component {
-    margin: 32px;
+    margin: 40px 32px 16px;
     .tag-list {
         font-size: 0;
         .tag-item {

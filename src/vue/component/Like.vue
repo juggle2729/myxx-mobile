@@ -1,7 +1,5 @@
 <style lang="sass">
 .like-component {
-    color: #888888;
-    font-size: 30px;
     i {
         transform: scale(1.5) translate3d(0, 2px, 0);
     }
@@ -11,7 +9,7 @@
 }
 </style>
 <template>
-<div class="like-component" :class="{active: active}" @click.stop="like">
+<div class="like-component font-30 gray" :class="{active: active}" @click.stop="like">
     <i class="icon-like"></i><span>{{count || (zero ? '' : 0)}}</span>
 </div>
 </div>
@@ -56,6 +54,7 @@ export default {
             this[this.active ? '$delete' : '$post'](this.api)
                 .then(() => {
                     this.active = !this.active;
+                    (this.count === undefined) && (this.count = 0);
                     this.count += (this.active ? 1 : -1);
                 });
         }

@@ -105,7 +105,6 @@ const mixin = {
                         break;
                     case 'login':
                     case 'datetime':
-                    case 'affirmAuction':
                     case 'confirm':
                     case 'delete':
                     case 'version':
@@ -167,11 +166,11 @@ const mixin = {
         $get(url, data) {
             return this.$req(url, 'get', data);
         },
-        $post(url, data) {
-            return this.$req(url, 'post', data);
-        },
         $put(url, data) {
             return this.$req(url, 'put', data);
+        },
+        $post(url, data) {
+            return this.$req(url, 'post', data);
         },
         $delete(url, data) {
             return this.$req(url, 'delete', data);

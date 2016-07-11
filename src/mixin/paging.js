@@ -41,7 +41,7 @@ export default {
                         this.items.loading = false;
                         _.merge(this.items, {
                             total: data.total,
-                            hasMore: items.length === (this.paging.limit || options.limit),
+                            hasMore: ((items.length === (this.paging.limit || options.limit)) && (this.items.length < data.total)),
                             isEmpty: items.length === 0
                         });
                 });

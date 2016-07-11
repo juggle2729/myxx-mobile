@@ -41,8 +41,8 @@
         background-image: none;
     }
     .nocomment {
-        margin-top: 48px;
-        margin-bottom: 24px;
+        margin: 48px 0;
+        padding-left: 0;
     }
     .label .bg-yellow {
         padding: 0 5px;
@@ -92,11 +92,12 @@
 </style>
 <template>
 <div class="comments-component bg-white">
-    <div class="comment-header border-bottom font-22">
+    <div class="comment-header border-bottom font-26">
         <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
     </div>
     <ul>
-        <li class="flex" v-for="c in items" @click="clicked(c, $index)">
+        <li class="flex" v-for="c in items" @click="clicked(c, $index)"
+            :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
             <div class="flex-1 border-bottom">
                 <div class="author flex">
@@ -104,11 +105,11 @@
                         <div :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
                         <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                     </div>
-                    <like v-if="enableLike" :target="c.id" :type="type" :count="c.like_count" :active="c.liked" :zero="true"></like>
+                    <like v-if="enableLike" :target="c.id" :type="70" :count="c.like_count" :active="c.liked" :zero="true"></like>
                 </div>
                 <div class="font-30 content">
                     <template v-if="c.reply_to">
-                        <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)" >对{{c.reply_to.name}}说</span></span>
+                        <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)">对{{c.reply_to.name}}说</span></span>
                         <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
                     </template>
                     <span>{{{c.content}}}</span>
@@ -117,7 +118,7 @@
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
-    <div class="font-26 red center more" v-if="items.hasMore" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
+    <div class="font-26 red center more" v-if="items.has" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
     <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
     <div v-if="!env.isShare && displayInput" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">

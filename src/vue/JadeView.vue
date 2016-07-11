@@ -51,11 +51,6 @@
             bottom: 4px;
             margin-right: 20px;
         }
-        .icon-enter-slim {
-            position: relative;
-            top: 2px;
-            margin-left: 16px;
-        }
         .master-name {
             margin-bottom: 14px;
         }
@@ -159,9 +154,6 @@
             <div class="title font-32">{{jade.title}}</div>
             <div class="flex">
                 <p class="red font-44 flex-1">{{jade.price | price}}</p>
-                <!-- <template v-if="isSelf">
-                    <div v-link="{name: 'addAuction'}" class="button bg-red flex font-32 white"><div class="center-horizontal">微信拍卖</div></div>
-                </template> -->
             </div>
         </div>
         <div class="footer flex font-26 light border-top">
@@ -180,7 +172,7 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id, tab: 'story'}}">
+    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id}}">
         <avatar :user="jade.owner" :size="90"></avatar>
         <div class="flex-1">
             <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>

@@ -79,7 +79,6 @@ const adapter = {
                 break;
             case 'play':
             case 'keyboard':
-            case 'affirmAuction':
             case 'datetime':
             case 'share':
             case 'toast':
