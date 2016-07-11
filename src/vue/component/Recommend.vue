@@ -87,14 +87,14 @@
         <div class="title font-22">相关推荐</div>
         <div class="data-list">
             <div class="data-item bg-white border-default" @click="goTo(data)" v-for="data in items">
-                <div v-if="data.item.first_picture || data.item.picture || data.item.cover_type==='picture'" class="data-img" v-bg.md="data.item.first_picture || data.item.picture || data.item.cover">
+                <div v-if="data.item.picture || data.item.cover_type==='picture'" class="data-img" v-bg.md="data.item.picture|| data.item.cover">
                     <div class="data-title font-22 center white" v-text="recommendTitle(data)"></div>
                 </div>
                 <div v-else class="data-img" v-bg.video="data.item.video || data.item.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/300/h/300">
                     <div class="data-title font-22 center white" v-text="recommendTitle(data)"></div>
                 </div>
                 <div class="data-info">
-                    <div class="data-name font-26">{{(data.item.title || data.item.description || data.item.content) | truncate 20}}</div>
+                    <div class="data-name font-26">{{(data.item.description || data.item.content) | truncate 20}}</div>
                 </div>
                 <div class="data-footer flex">
                     <like :active="false" :count="data.item.like" mode="readonly" v-if="data.biz_type === 'tp'"></like>
@@ -130,9 +130,6 @@ export default {
         biz_type() {
             let type = '';
             switch (this.$route.name) {
-                case 'jade':
-                    type = 'pd';
-                    break;
                 case 'story':
                     type = 'tp';
                     break;
@@ -162,27 +159,22 @@ export default {
 
             if (data.biz_type === 'tp') {
                 return data.item.topic_type.name;
+            } else if (data.biz_type === 'jb') {
+                return '求鉴宝';
             }
 
-            const key = _.findKey(this.config.tags, (tag)=> {
-                return tag.id === data.biz_type;
-            });
-
-            return this.config.tags[key].name;
+            return '';
         },
         goTo(data) {
             const type = data.biz_type;
             let pathName = '';
-            const params = {id: data.item.id};
-            if (type === this.config.tags.lesson.id) {
-                pathName = 'lesson';
-            } else if (type === this.config.tags.product.id) {
-                pathName = 'jade';
-            } else if (type === this.config.tags.evaluation.id) {
-                pathName = 'evaluation';
-            } else if (type === this.config.tags.topic.id) {
+            const params = {};
+            if (type === 'tp') {
                 pathName = 'story';
                 params.id = data.item.post_id;
+            } else if (type === 'jb') {
+                params.id = data.item.id;
+                pathName = 'evaluation';
             }
 
             this.$route.router.go({name: pathName, params: params});

@@ -167,6 +167,13 @@
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :id="story.post_id"></recommend>
+    <!-- <div v-if="!env.isShare" class="footer flex font-30 gray bg-white border-top">
+        <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i><span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div> -->
     <div class="placeholder"></div>
 </div>
 </template>
