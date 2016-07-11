@@ -174,7 +174,7 @@
         </div>
         <share class="border-left"></share>
     </div> -->
-    <div class="placeholder"></div> 
+    <div class="placeholder"></div>
 </div>
 </template>
 <script>
