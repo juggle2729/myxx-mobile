@@ -23,7 +23,6 @@ export default {
             switch(this.$route.name) {
                 case 'evaluation':
                     const result = _.get(entry, 'results[0]');
-                    console.debug(result);
                     if(this.$route.params.result === 'none' || this.$route.params.result === ':result') {
                         data.title = '【求鉴定】此玉如何，看官给个说法呗？';
                     } else if(result){
