@@ -98,19 +98,7 @@ export default {
                             this.$store.set('user', user);
                             this.$root.user = user;
                             this.params.cb(user);
-                            // 处理保存的请求
-                            // if(this.$store.get(this.uid)) {
-                            //     const {url, method, data} = this.$store.get(this.uid);
-                            //     console.debug(url, method, this.$req);
-                            //     this.$req(url, method, data)
-                            //         .finally(() => {
-                            //             debugger;
-                            //             this.$store.remove(this.uid);
-                            //             this.action('toast', {success: 1, text: '操作成功'});
-                            //         });
-                            // } else {
-                                this.close();
-                            // }
+                            this.close();
                         } else {
                             this.msg = data.message
                         }
@@ -156,7 +144,7 @@ export default {
 
         getCode() {
             const url = this.config.api + '/common/sms';
-            if(/\/api.meiyuxiuxiu.com/.test(url)) {
+            if(!this.env.isTest) {
                 this.msg = '看手机';
             } else {
                 // 自动获取验证码

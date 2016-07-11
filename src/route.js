@@ -400,15 +400,6 @@ export default {
             }, 'other');
         }
     },
-    'hairline': {
-        title: '1px',
-        name: 'hairline',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('HairlineView.vue'));
-            }, 'other');
-        }
-    },
     '/': {
         component(resolve) {
             require.ensure([], (require) => {

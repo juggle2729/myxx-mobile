@@ -114,8 +114,8 @@ router.start(require('App.vue'), '#app');
         doc.body.removeChild(testElem);
     }
     // 处理微信viewport异常
-    if(!/#refresh/.test(location.hash) && window.innerWidth < doc.body.clientWidth) {
-        // 如果body宽度超过viewport，刷新页面，仅刷新一次!
-        location.href = location.href + '#refresh';
+    if(window.innerWidth < doc.body.clientWidth) {
+        const viewport = document.getElementsByName('viewport')[0];
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1');
     }
 })();

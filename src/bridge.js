@@ -10,8 +10,10 @@ const adapter = {
                 this.$store.remove('user'); // 清除本地用户缓存
                 if(this.env.isWechat) {
                     location.href = 'http://activity.meiyuxiuxiu.com/?wechat_auth=true&redirect_uri='+encodeURIComponent(location.href);
-                } else if(this.env.isBrowser) {
+                } else if(this.env.isBrowser && this.env.isTest) {
                     this.$root.popup = _.merge({}, params, {handler, cb});
+                } else {
+                    location.href = this.config.download;
                 }
                 break;
             case 'user': {

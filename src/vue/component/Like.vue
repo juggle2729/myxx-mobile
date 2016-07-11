@@ -1,7 +1,7 @@
 <style lang="sass">
 .like-component {
     i {
-        transform: scale(1.5) translate3d(0, 2px, 0);
+        transform: scale(1.5) translateY(.5pX); // translate3d will cause blurry
     }
     &.active {
         color: #cc3f4f;

@@ -1,7 +1,7 @@
 <style lang="sass">
 .comment-component {
     i {
-        transform: scale(1.5) translate3d(0, 2px, 0);
+        transform: scale(1.5);
     }
 }
 </style>

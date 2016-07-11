@@ -7,4 +7,4 @@ import toast from './Toast.vue';
 import choice from './Delete.vue';
 import confirm from './Confirm.vue';
 
-export default {coverflow, keyboard, play, share, login, toast, 'delete': choice, datetime, confirm};
+export default {coverflow, keyboard, play, share, login, toast, 'delete': choice, confirm};

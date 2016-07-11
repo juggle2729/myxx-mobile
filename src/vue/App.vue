@@ -61,7 +61,7 @@
         <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
         <img :src="'share/right.png' | qn" alt="right">
     </div>
-    <div id="user" v-if="env.isBrowser">
+    <div id="user" v-if="env.isBrowser && env.isTest">
         <img v-if="self" @click="logout" :src="config.img + self.photo" :alt="self.nickname" />
         <div v-else @click="login" class="font-34">👤</div>
     </div>
@@ -93,7 +93,8 @@ export default {
                 isWechat: /micromessenger/i.test(ua),
                 isQQ: /qq\//i.test(ua),
                 isWeibo: /weibo/i.test(ua),
-                isDingTalk: /dingtalk/i.test(ua)
+                isDingTalk: /dingtalk/i.test(ua),
+                isTest: !/^app/.test(location.hostname)
             };
             env.version = env.isApp ?  ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop() : undefined;
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk);
