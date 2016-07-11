@@ -8,3 +8,4 @@ import choice from './Delete.vue';
 import confirm from './Confirm.vue';
 
 export default {coverflow, keyboard, play, share, login, toast, 'delete': choice, confirm};
+

@@ -167,7 +167,7 @@
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :id="story.post_id"></recommend>
-    <div class="placeholder"></div> 
+    <div class="placeholder"></div>
 </div>
 </template>
 <script>
