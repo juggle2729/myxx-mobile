@@ -104,7 +104,6 @@ const mixin = {
                         }
                         break;
                     case 'login':
-                    case 'datetime':
                     case 'confirm':
                     case 'delete':
                     case 'version':

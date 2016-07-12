@@ -8,7 +8,7 @@
             <p class="font-30">{{user.nickname}}</p>
             <p v-if="user.title" class="font-26 light margin-top">{{user.title}}</p>
         </div>
-        <follow :follow="user.follow" :user="user.id"></follow>
+        <follow :follow="user.follow" :user="user.id" has-border=true></follow>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
 </div>

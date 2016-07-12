@@ -203,7 +203,7 @@
                 <div class="name font-26">{{course.user.name}}</div>
                 <div class="title font-26">{{course.user.title}}</div>
             </div>
-            <like :liked="course.liked" :count="course.like"></like>
+            <like :active="course.liked" :count="course.like"></like>
         </div>
         <div class="tags" v-if="course.tags && course.tags.length">
             <div class="tag-list">

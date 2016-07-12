@@ -97,7 +97,7 @@
                     <div class="data-name font-26">{{(data.item.description || data.item.content) | truncate 20}}</div>
                 </div>
                 <div class="data-footer flex">
-                    <like :active="false" :count="data.item.like" mode="readonly" v-if="data.biz_type === 'tp'"></like>
+                    <like :active="false" :count="data.item.like" readonly=true v-if="data.biz_type === 'tp'"></like>
                     <comment :count="data.item.comment"></comment>
                 </div>
             </div>

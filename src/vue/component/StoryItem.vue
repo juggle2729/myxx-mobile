@@ -1,6 +1,5 @@
 <style lang="sass">
 @import '~style/partials/var';
-@import '~style/partials/mixin';
 .story-item {
     .header {
         padding: 20px 16px;
@@ -57,9 +56,6 @@
         > div {
             -webkit-box-flex: 1;
             text-align: center;
-            &:not(:first-of-type) {
-                @include border(left);
-            }
         }
     }
 }
@@ -83,8 +79,8 @@
         <div class="title font-30"><div class="user-input">{{item.content}}</div></div>
     </div>
     <div class="footer font-26 flex border-vertical">
-        <comment :count="item.comment"></comment>
-        <like :target="item.post_id" type="30" :active="item.liked" :count="item.like"></like>
+        <comment :count="item.comment" class="border-right"></comment>
+        <like :target="item.post_id" type="30" :active="item.liked" :count="item.like" class="border-right"></like>
         <share></share>
     </div>
 </div>

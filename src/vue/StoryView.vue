@@ -10,19 +10,6 @@
             margin-left: 20px;
         }
     }
-    .follow-component {
-        border-radius: 12px;
-        background-color: #eeeeee;
-        border: 1px solid #eeeeee;
-        line-height: inherit;
-        &.active {
-            background-color: transparent;
-            border: 1px solid #cc3f4f;
-            i {
-                color: #cc3f4f;
-            }
-        }
-    }
     .cover {
         width: 686px;
         height: 686px;
@@ -139,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <follow :user="story.user.id" :follow="story.user.is_followed"></follow>
+        <follow :user="story.user.id" :follow="story.user.is_followed" has-border=true></follow>
     </div>
     <div class="description user-input font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
@@ -167,13 +154,6 @@
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :id="story.post_id"></recommend>
-    <!-- <div v-if="!env.isShare" class="footer flex font-30 gray bg-white border-top">
-        <like :active="story.liked" :count="story.like"></like>
-        <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="border-left"></share>
-    </div> -->
     <div class="placeholder"></div>
 </div>
 </template>

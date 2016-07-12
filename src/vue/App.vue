@@ -12,7 +12,6 @@
         .download-btn {
             display: block;
             padding: 10px 20px;
-            border-width: 1px;
             border-radius: 5px;
         }
     }
