@@ -1,35 +1,27 @@
 <style lang="sass">
 .activity-view {
+    padding-bottom: 100px;
     .cover {
         width: 100%;
         height: 536px;
         background-position: center;
         background-size: cover;
     }
-    .placeholder {
-        height: 100px;
-    }
 }
 </style>
 <template>
-    <div class="activity-view">
-        <div class="cover" v-bg='activity.cover'></div>
-        <div v-for="item in items">
-            <div class="separator"></div>
-            <story-item :item="item.entry"></story-item>
-        </div>
-        <div class="placeholder"></div>
-        <div class="share-bottom flex bg-red white font-30">
-            <img :src="'share/left.png' | qn" alt="left">
-            <a class="flex-1 center bold" :href="config.download">下载美玉秀秀参与活动</a>
-            <img :src="'share/right.png' | qn" alt="right">
-        </div>
-    </div>
+<div class="activity-view">
+    <div class="cover" v-bg='activity.cover'></div>
+    <template v-for="item in items">
+        <div class="separator"></div>
+        <story-item :item="item.entry"></story-item>
+    </template>
+</div>
 </template>
 <script>
+import shareable from 'shareable';
 import paging from 'paging';
 import StoryItem from 'component/StoryItem.vue';
-
 export default {
     name: 'ActivityView',
     data() {
@@ -37,7 +29,7 @@ export default {
             activity: {}
         }
     },
-    mixins: [paging],
+    mixins: [paging, shareable],
     components: {
         StoryItem
     },
@@ -57,6 +49,14 @@ export default {
         data() {
             return this.$get(`cms/activities/${this.$route.params.id}`).then((activity) => {
                 this.activity = activity;
+                this.action('updateTitle', {text: activity.share_title});
+                this.setShareData({
+                    title: activity.share_title,
+                    desc: activity.share_desc,
+                    icon: activity.share_icon,
+                    text: '下载美玉秀秀参与活动',
+                    hasDownloadLink: false
+                });
                 this.fetch();
             });
         }

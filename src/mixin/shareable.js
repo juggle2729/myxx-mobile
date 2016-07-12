@@ -109,10 +109,12 @@ export default {
                     data.icon = entry.pictures[0];
                     break;
                 default:
-                    data.title = '美玉秀秀';
-                    data.desc = '大师在线视频鉴宝';
-                    data.icon = 'http://o0x80w5li.qnssl.com/logo.png';
-                    data.url = this.config.download;
+                    data = Object.assign(data, {
+                                title: '美玉秀秀',
+                                desc: '大师在线视频鉴宝',
+                                icon: 'http://o0x80w5li.qnssl.com/logo.png',
+                                url: this.config.download
+                            }, entry);
             }
             data.title = _.truncate(data.title, {
                 length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40
@@ -147,7 +149,7 @@ export default {
             }
 
             // 注册微信分享接口
-            if(this.env.isWechat && /^app/.test(location.hostname)) {
+            if(this.env.isWechat && !this.env.isTest) {
                 const shareData = {
                     title: data.title,
                     desc: data.desc,
