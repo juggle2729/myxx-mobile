@@ -105,7 +105,7 @@
                         <div :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
                         <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
                     </div>
-                    <like :target="c.id" type="70" :count="c.like_count || ''" :active="c.liked"></like>
+                    <like :target="c.id" type="70" :count="c.like_count" :active="c.liked" zero=''></like>
                 </div>
                 <div class="font-30 content">
                     <template v-if="c.reply_to">

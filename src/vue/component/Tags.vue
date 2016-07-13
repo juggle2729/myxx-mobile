@@ -1,38 +1,31 @@
 <style lang="sass">
 .tags-component {
-    margin: 40px 32px 16px;
-    .tag-list {
-        font-size: 0;
-        .tag-item {
-            display: inline-flex;
-            align-items: center;
-            height: 53px;
-            line-height: 54px;
-            padding: 0 28px;
-            border-radius: 18px;
-            background-color: #ffecea;
-            margin: 0 28px 24px 0;
+    margin: 40px 32px 24px;
+    font-size: 0;
+    .tag {
+        display: inline-block;
+        height: 54px;
+        line-height: 54px;
+        padding: 0 1em;
+        border-radius: 18px;
+        background-color: #ffecea;
+        margin-bottom: 16px;
+        &:not(:last-child) {
+            margin-right: 1em;
         }
     }
 }
 </style>
 <template>
-    <div class="tags-component bg-white" v-if="tags && tags.length">
-        <div class="tag-list">
-            <div class="tag-item font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
-        </div>
-    </div>
+<div class="tags-component bg-white" v-if="tags && tags.length">
+    <div class="tag font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: tag}">{{tag.name}}</div>
+</div>
 </template>
 <script>
-    export default {
-        name: 'Tags',
-        props: {
-            tags: {
-                type: Array,
-                default: function() {
-                    return [];
-                }
-            }
-        }
+export default {
+    name: 'Tags',
+    props: {
+        tags: [Array]
     }
+}
 </script>

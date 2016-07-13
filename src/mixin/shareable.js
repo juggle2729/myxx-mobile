@@ -109,7 +109,7 @@ export default {
                     data.icon = entry.pictures[0];
                     break;
                 default:
-                    data = Object.assign(data, {
+                    data = _.merge(data, {
                                 title: '美玉秀秀',
                                 desc: '大师在线视频鉴宝',
                                 icon: 'http://o0x80w5li.qnssl.com/logo.png',

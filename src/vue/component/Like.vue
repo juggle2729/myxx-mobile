@@ -9,8 +9,8 @@
 }
 </style>
 <template>
-<div class="like-component font-30 gray" :class="{active: active}" @click.stop="like">
-    <i class="icon-like"></i><span>{{count}}</span>
+<div class="like-component font-30 gray" :class="{active: active}" @click="like">
+    <i class="icon-like"></i><span>{{count || zero}}</span>
 </div>
 </template>
 <script>
@@ -18,10 +18,14 @@ export default {
     name: 'Like',
     props: {
         active: [Boolean],
-        count: [Number, String],
+        count: [Number],
         target: [Number],
         type: [Number],
-        readonly: [Boolean]
+        readonly: [Boolean],
+        zero: {
+            type: String,
+            default: () => 0
+        }
     },
     computed: {
         api() {
@@ -34,8 +38,9 @@ export default {
         }
     },
     methods: {
-        like() {
+        like(e) {
             if(!this.readonly) {
+                e.stopPropagation();
                 this[this.active ? '$delete' : '$post'](this.api)
                     .then(() => {
                         this.active = !this.active;
