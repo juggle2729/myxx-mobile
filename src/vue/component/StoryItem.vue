@@ -71,7 +71,7 @@
     </div>
     <div class="content bg-white">
         <div v-if="item.cover_type==='video'" class="cover video" v-bg.video="item.cover">
-            <div class="type font-26">{{item.topic_type.name}}</div>
+            <div class="type font-26 white">{{item.topic_type.name}}</div>
         </div>
         <div v-else class="cover img" v-bg="item.cover">
             <div class="type font-26 white" v-if="item.topic_type.code !== 'hd'">{{item.topic_type.name}}</div>

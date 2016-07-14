@@ -32,6 +32,7 @@ export default {
                 list: 'topics',
                 id: 'entry.post_id',
                 params: {
+                    limit: 10,
                     user_id: this.$route.params.id
                 }
             }

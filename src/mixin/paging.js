@@ -17,14 +17,15 @@ export default {
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
                 this.items.loading = true;
-                let options = {};
+                let options = {
+                    limit: 5
+                };
 
                 if(this.paging.id) { // cursor即以前的last_id, 目前仅部分更新为cursor
                     if(!fresh && this.items.length) {
                         this.cursor ? (options.cursor = this.cursor) : (options.last_id = _.get(this.items[this.items.length-1], this.paging.id));
                     }
                 } else {
-                    options.limit = 5;
                     options.offset = fresh ? 0 : this.items.length;
                 }
                 return this.$get(this.paging.path, _.merge(options, this.paging.params)).then((data) => {

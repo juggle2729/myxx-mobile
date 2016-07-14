@@ -30,7 +30,7 @@ export default {
     },
     '/story/:id': {
         name: 'story',
-        title: ' ', // 标题为空，减缓数据加载后，标题变化的差体验
+        title: '帖子详情', // 标题为空，减缓数据加载后，标题变化的差体验
         native: v => v >= 1.6,
         component(resolve) {
             require.ensure([], (require) => {

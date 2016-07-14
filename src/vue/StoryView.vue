@@ -179,9 +179,9 @@ export default {
         Share
     },
     ready() {
-        this.$on('restore', () => {
-            this.action('updateTitle', {text: `${this.story.topic_type.name}详情`});
-        });
+        // this.$on('restore', () => {
+        //     this.action('updateTitle', {text: `${this.story.topic_type.name}详情`});
+        // });
     },
     data() {
         return {
@@ -227,7 +227,7 @@ export default {
             return this.$get(`sns/topics/${storyId}|v4`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    this.action('updateTitle', {text: `${story.topic_type.name}详情`});
+                    // this.action('updateTitle', {text: `${story.topic_type.name}详情`});
                     this.followed = story.user.is_followed;
                     this.story = story;
                 });

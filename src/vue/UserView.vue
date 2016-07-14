@@ -264,7 +264,7 @@
             <div v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">
                 <div class="line">
                     <p align="center">{{profile.topic_count}}</p>
-                    <p align="center">视频</p>
+                    <p align="center">帖子</p>
                 </div>
                 <div class="dash"></div>
             </div>
