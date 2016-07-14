@@ -29,7 +29,7 @@ let [api, img, video, download] = ((env='dev') => {
         }
     };
     return _.map(hosts, env);
-})('prod');
+})('test');
 
 export default {
     api,
@@ -66,7 +66,8 @@ export default {
             route: 'lesson'
         }, {
             id: 70,
-            name: '评论'
+            name: '评论',
+            route: ''
         }
     ],
     tags: {

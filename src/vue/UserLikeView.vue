@@ -83,7 +83,7 @@ export default {
                 transform(items) {
                     return items.map(({entry, type, id}) => {
                         let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});
-                        card.type = _.find(this.config.types, {'id': type});
+                        card.type = _.clone(_.find(this.config.types, {'id': type}));
                         if(!card.isEmpty) {
                             card.lastId = id;
                             card.id = card.post_id || card.id || card.target.id;
