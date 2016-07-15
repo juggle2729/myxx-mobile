@@ -28,7 +28,7 @@
         <div class="imgs center">
             <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api'} : ''">
             <p class="font-34 default">美玉秀秀</p>
-            <p class="font-22 gray">v{{env.version || '1.0'}}</p>
+            <p class="font-22 gray">v{{version}}</p>
         </div>
         <div class="text">
             <p class="font-30">美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。</p>
@@ -40,10 +40,19 @@
 <script>
 export default {
     name: 'AboutView',
+    data() {
+        return {
+            version: 1.0
+        };
+    },
     computed: {
         isProd() { // 在非生产环境才可以进入客户端接口测试页面
            return _.includes(this.config.api, 'com');
         }
+    },
+    ready() {
+        this.action('version')
+            .then(v => this.version = v);
     }
 }
 </script>

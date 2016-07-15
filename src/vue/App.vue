@@ -95,9 +95,13 @@ export default {
                 isDingTalk: /dingtalk/i.test(ua),
                 isTest: !/^app/.test(location.hostname)
             };
-            env.version = env.isApp ?  ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop() : undefined;
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk);
             env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
+            if(env.isApp) {
+                const digits = ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop().split('.');
+                digits.splice(1, 0, '.');
+                env.version = +digits.join('');
+            }
             return env;
         }
     },
