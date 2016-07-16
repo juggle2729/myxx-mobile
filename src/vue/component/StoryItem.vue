@@ -41,12 +41,6 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                line-height: 1.5;
             }
         }
     }
@@ -76,7 +70,7 @@
         <div v-else class="cover img" v-bg="item.cover">
             <div class="type font-26 white" v-if="item.topic_type.code !== 'hd'">{{item.topic_type.name}}</div>
         </div>
-        <div class="title font-30"><div class="user-input">{{item.content}}</div></div>
+        <div class="title font-30"><div class="user-input omit-2">{{item.content}}</div></div>
     </div>
     <div class="footer font-26 flex border-vertical">
         <comment :count="item.comment" class="border-right"></comment>

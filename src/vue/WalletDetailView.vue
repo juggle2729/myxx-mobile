@@ -13,6 +13,9 @@
         > div {
             line-height: 86px;
             text-align: center;
+            &.v-link-active {
+                color: #cc3f4f;
+            }
         }
     }
     .item {
@@ -30,10 +33,10 @@
 <template>
 <div class="wallet-detail" v-if="!$loadingRouteData">
     <div class="tabs flex font-30 border-bottom">
-        <div class="flex-1" :class="{'red': expect}" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
+        <div class="flex-1" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
             待结算金额
         </div>
-        <div class="flex-1" :class="{'red': !expect}" v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
+        <div class="flex-1" v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
             可提现金额
         </div>
     </div>
@@ -55,7 +58,6 @@ export default {
     name: 'WalletDetailView',
     data() {
         return {
-            expect: true,
             isEmpty: false,
             items: {}
         }
@@ -63,7 +65,6 @@ export default {
     route: {
         data({to}) {
             const tab = to.params.tab;
-            this.expect = (tab === 'expects');
             return this.$get(`balance/${tab}`).then((data) => {
                 this.items = data.entries;
                 this.isEmpty = (data.total === 0);

@@ -134,7 +134,6 @@ const mixin = {
                                 ['X-Auth-Token', _.get(user, 'token')],
                                 ['X-Api-Version', version]
                             ].filter(header => header[1]));
-
                         this.$http[method](path, data, {headers})
                             .then(({data: resp}) => {
                                 if(resp.status === 200) {

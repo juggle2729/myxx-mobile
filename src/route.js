@@ -18,6 +18,16 @@ export default {
             }, 'evaluation');
         }
     },
+    '/ranking/:tab': {
+        name: 'ranking',
+        title: '鉴宝师排行',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('RankingView.vue'));
+            }, 'evaluation');
+        }
+    },
+
 // 精选
     '/featured': {
         name: 'featured',
@@ -166,11 +176,38 @@ export default {
 
     '/user/:id/:tab': { // 个人主页
         name: 'user',
-        title: '个人主页',
+        title: '',
         native: v => v >= 1.3 && {name: 'profile'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('UserView.vue'));
+            }, 'profile');
+        }
+    },
+    '/shop/:id': { // 工作室主页
+        name: 'shop',
+        title: '',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopView.vue'));
+            }, 'profile');
+        }
+    },
+    '/:id/works': {
+        name: 'works',
+        title: '作品展示',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WorksView.vue'));
+            }, 'profile');
+        }
+    },
+    '/work/:id': {
+        name: 'work',
+        title: '作品详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WorkView.vue'));
             }, 'profile');
         }
     },
@@ -234,6 +271,7 @@ export default {
     'order/:id/sent': {
         name: 'sent',
         title: '发货确认',
+        native: v => v >= 1.7 && {name: 'logistics'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderSentView.vue'));

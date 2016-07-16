@@ -3,9 +3,7 @@
 .follow-component {
     padding: 1px .5em 0;
     height: 52px;
-    font-size: 26px;
     color: #9c9c9c;
-    text-align: center;
     border-radius: 12px;
     background-color: transparent;
     &.border-light {
@@ -22,7 +20,7 @@
 }
 </style>
 <template>
-<div v-if="!isSelf" class="follow-component flex" @click.stop="toggle"
+<div v-if="!isSelf" class="follow-component font-26 center" @click.stop="toggle"
     :class="{active: !follow, 'border-light': hasBorder&&follow, 'border-red': hasBorder&&!follow}">
     <i class="icon-plus" v-if="!follow"></i><span>{{follow ? '已关注' : '关注'}}</span>
 </div>

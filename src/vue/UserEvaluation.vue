@@ -1,37 +1,28 @@
-<style lang="sass">
-.user-evaluation {
-}
-</style>
 <template>
 <div class="user-evaluation bg-white">
-    <div v-for="item in items">
-        <div class="separator"></div>
-        <evaluation-item :item="item"></evaluation-item>
-    </div>
-    <partial name="load-more" v-if="items.hasMore"></partial>
-    <empty v-if="items.isEmpty"></empty>
+    <recommend :data="items"></recommend>
 </div>
 </template>
 <script>
 import paging from 'paging';
-import EvaluationItem from './component/EvaluationItem.vue';
+import recommend from 'component/Recommend.vue';
 export default {
     name: 'UserEvaluation',
     mixins: [paging],
     components: {
-        EvaluationItem
+        recommend
     },
-    activate(done) {
-        this.fetch().then(done);
+    ready() {
+        this.fetch();
     },
     computed: {
         paging() {
             return {
-                path: 'sns/jianbao|v4',
-                list: 'jianbaos',
-                id: 'post_id',
+                path: 'dc/sns/search|v7',
+                list: 'entries',
                 params: {
-                    user_id: this.$route.params.id
+                    owner_id: this.$route.params.id,
+                    doc_type: 'jb'
                 }
             }
         }

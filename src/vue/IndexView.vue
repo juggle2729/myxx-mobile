@@ -23,6 +23,9 @@
         <li>
             <a href="/evaluations">鉴宝列表 - evaluations</a>
         </li>
+        <li>
+            <a href="/ranking">鉴宝师排行 - ranking/:tab</a>
+        </li>
         <li class="tab">发现</li>
         <li>
             <a href="/masters">官网秀 - masters</a>

@@ -91,10 +91,9 @@ export default {
                     data.hasDownloadLink = false;
                     break;
                 case 'user':
-                    data.title = entry.isMaster ? `${entry.name}的官方主页` : `${entry.name}的个人主页`;
-                    data.desc = '我在美玉秀秀晒了不少宝贝，你也来看看吧！';
+                    data.title = `${entry.name}的主页`;
+                    data.desc = '我在美玉秀秀晒了不少美玉，邀请您来看一看';
                     data.icon = entry.photo;
-                    data.text = '下载应用,查看更多详情';
                     break;
                 case 'lesson':
                     data.title = '大师讲知识：' + entry.title;
@@ -102,18 +101,34 @@ export default {
                     data.icon = entry.user.photo;
                     data.text = '查看更多和田玉知识';
                     break;
+                case 'ranking':
+                    data.title = '【专业】鉴宝大神排行榜，你看服不服？';
+                    data.icon = 'https://o0x80w5li.qnssl.com/ranking_share.jpg';
+                    data.desc = '和田玉界琅琊榜不慎泄露';
+                    data.text = '我也来施展鉴宝';
+                    break;
+                case 'shop':
+                    data.title = entry.name;
+                    data.desc = '刚刚在美玉秀秀看到一个不错的店铺，好东西要一起分享，快来看看~';
+                    data.icon = entry.logo;
+                    break;
                 case 'works':
-                    data.title = `${entry.author.name}【${entry.title}】正在参加人气苏工作品评选，快为他投一票吧！`;
-                    data.desc = '美玉秀秀人气苏工玉雕作品评选，佳作云集，等你来投票';
-                    data.icon = entry.pictures[0];
+                    data.title = `${entry.name}的作品展`;
+                    data.desc = `${entry.name}的作品正在展出，邀您来共赏`;
+                    data.icon = entry.photo;
+                    break;
+                case 'work':
+                    data.title = `${entry.name} ${entry.title}`;
+                    data.desc = `${entry.name}的作品正在展出，邀您来共赏`;
+                    data.icon = entry.logo;
                     break;
                 default:
                     data = _.merge(data, {
-                                title: '美玉秀秀',
-                                desc: '大师在线视频鉴宝',
-                                icon: 'http://o0x80w5li.qnssl.com/logo.png',
-                                url: this.config.download
-                            }, entry);
+                        title: '美玉秀秀',
+                        desc: '大师在线视频鉴宝',
+                        icon: 'http://o0x80w5li.qnssl.com/logo.png',
+                        url: this.config.download
+                    }, entry);
             }
             data.title = _.truncate(data.title, {
                 length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40

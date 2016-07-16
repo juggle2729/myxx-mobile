@@ -23,11 +23,6 @@
         .name {
             -webkit-box-flex: 1;
             line-height: 38px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
         }
     }
     .price {
@@ -70,7 +65,7 @@
     <div class="title font-26 gray">商品信息</div>
     <div class="merchant flex border-bottom font-30 bg-white border-vertical">
         <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
-        <div class="name">{{order.product.title}}</div>
+        <div class="name omit-2">{{order.product.title}}</div>
     </div>
     <div class="price bg-white border-bottom font-30 flex">
         <div class="center">

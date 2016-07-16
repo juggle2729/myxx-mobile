@@ -43,53 +43,48 @@
             }
         }
     }
-    .master {
+    
+    .shop {
         height: 144px;
-        padding: 32px;
-        .avatar-90 {
-            position: relative;
-            bottom: 4px;
+        padding: 0 32px;
+        .img {
+            height: 100px;
+            width: 100px;
+            border-radius: 6px;
             margin-right: 20px;
         }
-        .master-name {
-            margin-bottom: 14px;
+        .icon-enter {
+            position: relative;
+            bottom: 8px;
+        }
+        .name {
+            width: 500px;
+            &.auth {
+                width: 400px;
+            }
+        }
+        img {
+            width: 110px;
+            height: 36px;
+            margin: 0 16px;
         }
     }
+
     .tabs {
         width: 100%;
         height: 90px;
         top: 0;
         > div {
             width: 33.3%;
-            & > div {
-                line-height: 54px;
-                text-align: center;
-                margin: 0 auto;
-            }
-            .dash {
-                position: relative;
-                bottom: -16px;
-                display: block;
-                width: 180px;
-                height: 4px;
-            }
+            line-height: 54px;
             &.active {
                 line-height: 54px; // FIXME: 临时方案
                 color: #cc3f4f;
-                .dash {
-                    background-color: #cc3f4f;
-                }
             }
         }
         &.default {
             > div:first-child {
                 color: #cc3f4f;
-                .dash {
-                    display: block;
-                    width: 180px;
-                    height: 4px;
-                    background-color: #cc3f4f;
-                }
             };
         }
     }
@@ -133,19 +128,10 @@
 </style>
 <template>
 <div class="jade-view bg-default">
-    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white gray" :class="{'default': isDefaultView}">
-        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
-            <div class="desc border-right">详情</div>
-            <div class="dash"></div>
-        </div>
-         <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}">
-            <div class="desc border-right">属性</div>
-            <div class="dash"></div>
-        </div>
-        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">
-            <div class="desc">常见问题</div>
-            <div class="dash"></div>
-        </div>
+    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
+        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
+         <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
+        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">常见问题</div>
     </div>
     <div class="jade-video video" v-bg="jade.video" @click="play(jade.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
     </div>
@@ -172,28 +158,21 @@
         </div>
     </div>
     <div class="separator-20"></div>
-    <div class="master flex bg-white" v-link="{name: 'user', params: {id: jade.owner.id}}">
-        <avatar :user="jade.owner" :size="90"></avatar>
+    <div class="shop bg-white flex detail" v-link="{name: 'shop', params: {id: jade.shop.id}}">
+        <div class="img" v-bg="jade.shop.logo"></div>
         <div class="flex-1">
-            <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
-            <p class="font-26 gray">{{jade.owner.title}}</p>
+            <div class="font-30 flex margin-bottom name" :class="{'auth': jade.shop.auth_flag}">
+                <div class="omit">{{jade.shop.shop_name}}</div><img :src="label() | qn" v-if="jade.shop.auth_flag"/>
+            </div>
+            <div class="font-26 gray"><span class="icon-location"></span><span>{{jade.shop.locale_name}}</span></div>
         </div>
-        <div class="font-26 icon-enter gray"></div>
+        <div class="icon-enter font-30 gray"></div>
     </div>
     <div class="separator-20"></div>
-    <div class="tabs tabs-static border-bottom flex font-26 bg-white gray" :class="{'default': isDefaultView}">
-        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}">
-            <div class="desc border-right">详情</div>
-            <div class="dash"></div>
-        </div>
-        <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}">
-            <div class="desc border-right">属性</div>
-            <div class="dash"></div>
-        </div>
-        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">
-            <div class="desc">常见问题</div>
-            <div class="dash"></div>
-        </div>
+    <div class="tabs tabs-static border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
+        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
+        <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
+        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">常见问题</div>
     </div>
     <div class="bg-default tab-content">
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
@@ -233,7 +212,8 @@ export default {
     data() {
         return {
             jade: {
-                owner: {}
+                owner: {},
+                shop: {}
             },
             isSelf: false,
             isDefaultView: false,
@@ -248,7 +228,7 @@ export default {
         this.fixedTabs = this.$el.querySelector('.tabs-fixed');
         const tabContent = this.$el.querySelector('.tab-content');
         // FIXME: 采用css解决方案
-        // tab内容最小高度为window高度 - tabs高度 - $el的底部padding
+        // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`;
     },
     route: {
@@ -326,6 +306,9 @@ export default {
         },
         go(tab) { // FIXME 采用v-link替代
             (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`);
+        },
+        label() {
+            return `user/${this.jade.shop.shop_type}.png`;
         }
     },
     events: {

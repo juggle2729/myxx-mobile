@@ -160,14 +160,13 @@
     <div class="separator-20"></div>
     <comments type="10" :id="evaluation.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="evaluation.post_id"></product-recommend>
-    <recommend :id="evaluation.post_id"></recommend>
+    <recommend :data="items" name="相关推荐"></recommend>
     <div class="footer flex border-top font-30 gray" v-if="!env.isShare">
         <div class="comment border-left" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
         <share class="border-left"></share>
     </div>
-    <div class="placeholder"></div>
 </div>
 </template>
 <script>
@@ -216,6 +215,17 @@ export default {
                     return '';
                 }
             });
+        },
+        paging() {
+            return {
+                path: 'dc/rd/list|v7',
+                list: 'entries',
+                params: {
+                    obj_id: this.evaluation.id,
+                    biz_type: 'jb',
+                    limit: 10
+                }
+            }
         }
     },
     route: {
@@ -226,7 +236,7 @@ export default {
                             evaluation.results = [].concat(_.find(evaluation.results, {id: +to.params.result}) || evaluation.results);
                         }
                         this.setShareData(evaluation, true);
-                        return {evaluation};
+                        this.evaluation = evaluation;
                     });
         }
     }

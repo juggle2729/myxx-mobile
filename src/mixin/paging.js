@@ -28,6 +28,7 @@ export default {
                 } else {
                     options.offset = fresh ? 0 : this.items.length;
                 }
+
                 return this.$get(this.paging.path, _.merge(options, this.paging.params)).then((data) => {
                         this.cursor = data.cursor; // 采用last_id方式时需要的分页参数
                         let items = data[this.paging.list];

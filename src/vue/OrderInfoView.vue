@@ -72,13 +72,7 @@
                 -webkit-box-flex: 1;
                 .title {
                     margin-bottom: 12px;
-                    word-break: break-all;
                     line-height: 38px;
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    text-overflow: ellipsis;
-                    -webkit-box-orient: vertical;
                 }
             }
         }
@@ -181,7 +175,7 @@
         <div class="merchant flex border-vertical">
             <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
             <div class="info">
-                <div class="title">{{order.product.title}}</div>
+                <div class="title omit-2">{{order.product.title}}</div>
                 <div class="red font-26">{{order.trans_amount | price}}</div>
             </div>
         </div>

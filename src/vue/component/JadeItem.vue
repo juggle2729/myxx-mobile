@@ -36,12 +36,6 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                line-height: 1.5;
             }
         }
     }
@@ -68,7 +62,7 @@
         <div class="cover video" v-bg.video="item.video">
             <div class="type font-30">商品</div>
         </div>
-        <div class="title font-30"><div class="user-input">{{item.title}}</div></div>
+        <div class="title font-30"><div class="user-input omit-2">{{item.title}}</div></div>
     </div>
     <div class="footer flex border-vertical">
         <comment :count="item.comment"></comment>

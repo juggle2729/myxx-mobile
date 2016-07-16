@@ -56,11 +56,6 @@
                 .title {
                     margin-bottom: 12px;
                     line-height: 38px;
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    text-overflow: ellipsis;
-                    -webkit-box-orient: vertical;
                 }
             }
         }
@@ -129,7 +124,7 @@
             <div class="merchant flex border-bottom">
                 <img class="img margin-right" :src="config.img + product.pictures[0] + '?imageView2/2/h/450'">
                 <div class="info">
-                    <div class="title">{{product.title}}</div>
+                    <div class="title omit-2">{{product.title}}</div>
                     <div class="red font-26">{{product.price | price}}</div>
                 </div>
             </div>

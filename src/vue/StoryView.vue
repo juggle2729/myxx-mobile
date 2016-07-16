@@ -40,14 +40,6 @@
 
     .description {
         margin: 0 40px 40px 32px;
-        &.user-input {
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-            line-height: 1.5;
-        }
     }
     .medias {
         font-size: 0;
@@ -128,7 +120,7 @@
         </div>
         <follow :user="story.user.id" :follow="story.user.is_followed" has-border=true></follow>
     </div>
-    <div class="description user-input font-30">{{story.content}}</div>
+    <div class="description omit-2 font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
         <div class="cover img" v-bg="cover" @click="coverflow(this.picFlow, 0)"></div>
         <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
@@ -153,11 +145,12 @@
     <div class="separator-20"></div>
     <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
-    <recommend :id="story.post_id"></recommend>
+    <recommend :data="items" name="相关推荐"></recommend>
     <div class="placeholder"></div>
 </div>
 </template>
 <script>
+import paging from 'paging';
 import Comments from './component/Comments.vue';
 import Tags from './component/Tags.vue';
 import Recommend from './component/Recommend.vue';
@@ -168,7 +161,7 @@ import Share from './component/Share.vue';
 import shareable from 'shareable';
 export default {
     name: 'StoryView',
-    mixins: [shareable],
+    mixins: [shareable, paging],
     components: {
         Comments,
         Tags,
@@ -218,6 +211,17 @@ export default {
                 return this.self.id === this.story.user.id;
             } else {
                 return false;
+            }
+        },
+        paging() {
+            return {
+                path: 'dc/rd/list|v7',
+                list: 'entries',
+                params: {
+                    obj_id: this.story.post_id,
+                    biz_type: 'tp',
+                    limit: 10
+                }
             }
         }
     },

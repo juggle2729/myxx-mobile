@@ -1,41 +1,86 @@
 <style lang="sass">
 @import '~style/partials/var';
 .user-story {
+    .topic-type {
+        height: 100px;
+        padding: 0 40px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        > div {
+            line-height: 56px;
+            padding: 0 18px;
+            border-radius: 28px;
+            margin: 0 20px;
+            &.active {
+                color: white;
+                background-color: #cc3f4f;
+            };
+        }
+    }
 }
 </style>
 <template>
 <div class="user-story">
-    <div v-for="item in items" track-by="$index" v-link="{name: 'story', params: {id: item.entry.post_id}}" class="item">
-        <div class="separator"></div>
-        <story-item :item="item.entry"></story-item>
+    <div class="topic-type flex bg-white">
+        <div class="font-26 gray border-all center" @click="classify()" :class="{'active': !selected}">全部 {{types.topic_count}}</div>
+        <div v-for="tab in types.topic_types" class="font-26 gray border-all center"
+        @click="classify(tab.code)" :class="{'active': selected === tab.code}">{{tab.name}} {{tab.count}}</div>
     </div>
-    <partial name="load-more" v-if="items.hasMore"></partial>
-    <empty v-if="items.isEmpty"></empty>
+    <recommend :data="items"></recommend>
 </div>
 </template>
 <script>
 import paging from 'paging';
-import StoryItem from 'component/StoryItem.vue';
+import recommend from 'component/Recommend.vue';
 export default {
     name: 'UserStory',
     mixins: [paging],
     components: {
-        StoryItem
+        recommend
+    },
+    ready() {
+        this.classify();
+    },
+    data() {
+        return {
+            types: {},
+            selected: ''
+        }
     },
     activate(done) {
-        this.fetch().then(done);
+        return this.$get('sns/topics/base|v7', {
+            user_id: this.$route.params.id
+        }).then((data) => {
+            this.types = data;
+        }).then(done);
     },
     computed: {
         paging() {
             return {
-                path: 'sns/topics|v4',
-                list: 'topics',
-                id: 'entry.post_id',
+                path: 'dc/sns/search|v7',
+                list: 'entries',
                 params: {
-                    limit: 10,
-                    user_id: this.$route.params.id
+                    owner_id: this.$route.params.id,
+                    doc_type: 'tp',
+                    topic_type: this.selected,
+                    limit: 10
                 }
             }
+        }
+    },    
+    methods: {
+        classify(type) {
+            this.selected = type;
+            this.$get('dc/sns/search|v7', {
+                owner_id: this.$route.params.id,
+                doc_type: 'tp',
+                topic_type: type,
+                limit: 10
+            }).then((data) => {
+                this.items = data.entries;
+            });
         }
     }
 }

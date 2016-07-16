@@ -35,20 +35,9 @@
         background-image: url('#{$qn}/placeholder/avatar.svg');
         background-size: cover;
     }
-    .vip-#{$size} {
-        width: #{$size}px;
-        height: #{$size}px;
-        background-image: url('#{$qn}/vip.svg');
-        background-position: right bottom;
-        background-size: 30%;
-    }
 }
 .avatar {
     @extend .avatar-68;
-}
-
-.vip {
-    @extend .vip-68;
 }
 
 @each $direction in (all, top, right, bottom, left, vertical, horizontal) {
@@ -136,6 +125,25 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.omit {
+    overflow: hidden;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+.omit-2 {
+    overflow: hidden;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+}
+
 /****************************
 *           常用组件          *
 * **************************/
@@ -210,6 +218,10 @@
 }
 .separator-20 {
     @extend .border-vertical;
+    @extend .bg-default;
+    height: 20px;
+}
+.separator-20-no { //没有border
     @extend .bg-default;
     height: 20px;
 }
