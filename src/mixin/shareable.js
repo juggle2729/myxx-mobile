@@ -77,7 +77,6 @@ export default {
                     data.title = `【限量】${entry.title}`;
                     data.desc = '玉友的新品上线啦！';
                     data.icon = entry.pictures[0];
-                    data.text = '查看更多新品';
                     break;
                 case 'auction':
                     data.title = `${entry.title}正在拍卖`;

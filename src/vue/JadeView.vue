@@ -199,13 +199,13 @@
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
     <div class="bg-white placeholder"></div>
-    <div v-if="!env.isShare" class="float-box flex fixed font-30 bg-white">
+    <div class="float-box flex fixed font-30 bg-white">
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
                 <div class="icon-contact font-44"></div>
                 <div>私信</div>
             </div>
-            <div class="font-22 flex flex-1 gray comment-btn" v-link="{name: 'comments', params: {id: jade.id, type: '40'}}">
+            <div class="font-22 flex flex-1 gray comment-btn" @click="gotoComments">
                 <div class="icon-comment-solid font-44"></div>
                 <div>评论</div>
             </div>
@@ -273,39 +273,58 @@ export default {
     },
     methods: {
         buy() {
-            if(this.env.isBrowser || this.env.version >= 1.5 && this.jade.sell_status === 'selling') {
-                // 先确保用户登录，然后再跳转至订单页面
-                Q.promise((resolve) => {
-                    if(this.self && !this.isSelf) {
-                        resolve();
-                    } else if(!this.self){
-                        this.action('login').then(resolve);
-                    }
-                }).then(() => {
-                    this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
-                });
-            } else if(this.env.version < 1.5) {
-                this.action('toast', {success: 0, text: '请更新至最新版'});
+            if(this.env.isApp) {
+                if(this.env.version >= 1.5 && this.jade.sell_status === 'selling') {
+                    // 先确保用户登录，然后再跳转至订单页面
+                    Q.promise(resolve => {
+                        if(this.self) {
+                            if(this.isSelf) {
+                                this.action('toast', {success: 0, text: '您不能购买自己的商品'});
+                            } else {
+                                resolve();
+                            }
+                        } else {
+                            this.action('login').then(resolve);
+                        }
+                    }).then(() => {
+                        this.$router.go({name: 'order-confirm', params: {product: this.jade.id}});
+                    });
+                } else if(this.env.version < 1.5) {
+                    this.action('toast', {success: 0, text: '请更新至最新版'});
+                }
+            } else {
+                window.location.href = this.config.download;
             }
          },
         contact() {
-            if(this.env.isBrowser || this.env.version >= 1.5 && !this.isSelf) {
-                Q.promise((resolve) => {
-                    if(this.self) {
-                        resolve();
-                    } else if(!this.self){
-                        this.action('login').then(resolve);
-                    }
-                }).then(() => {
-                    this.action('chat', {id: this.jade.owner.id, name: this.jade.owner.name, product: this.jade.id});
-                });
-            } else if(this.isSelf) {
-                this.action('toast', {success: 0, text: '您不能和自己聊天'});
+            if(this.env.isApp) {
+                if(this.env.version >= 1.5 && !this.isSelf) {
+                    Q.promise((resolve) => {
+                        if(this.self) {
+                            resolve();
+                        } else if(!this.self){
+                            this.action('login').then(resolve);
+                        }
+                    }).then(() => {
+                        this.action('chat', {id: this.jade.owner.id, name: this.jade.owner.name, product: this.jade.id});
+                    });
+                } else if(this.isSelf) {
+                    this.action('toast', {success: 0, text: '您不能和自己聊天'});
+                } else {
+                    this.action('toast', {success: 0, text: '请更新至最新版'});
+                }
             } else {
-                this.action('toast', {success: 0, text: '请更新至最新版'});
+                window.location.href = this.config.download;
             }
         },
-        go(tab) {
+        gotoComments() {
+            if(this.env.isApp) {
+                this.$router.go({name: 'comments', params: {id: this.jade.id, type: '40'}});
+            } else {
+                window.location.href = this.config.download;
+            }
+        },
+        go(tab) { // FIXME 采用v-link替代
             (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`);
         }
     },
