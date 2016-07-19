@@ -61,7 +61,7 @@
 }
 </style>
 <template>
-<div class="studio-view bg-white">
+<div class="studio-view bg-white" v-if="!$loadingRouteData">
     <div class="banner img" v-bg="shop.image_bg"></div>
     <div class="shop flex">
         <div class="img" v-bg="shop.logo"></div>

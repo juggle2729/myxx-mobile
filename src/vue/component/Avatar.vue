@@ -14,10 +14,10 @@
 </style>
 <template>
 <div class="avatar-component">
-    <div v-if="isSelf" class="avatar-{{size}}"  @click="$root.coverflow([user.photo])" v-bg.sm="user.photo">
+    <div v-if="isSelf" class="avatar-{{size}}"  @click.stop="$root.coverflow([user.photo])" v-bg.sm="user.photo">
         <img :src="vip() | qn" class="vip" v-if="user.vip_flag" />
     </div>
-    <div v-else class="avatar-{{size}}" @click.stop v-link="{name: 'user', params: {id: user.id}}" v-bg.sm="user.photo">
+    <div v-else class="avatar-{{size}}" @click.stop="go()" v-bg.sm="user.photo">
         <img :src="vip() | qn" class="vip" v-if="user.vip_flag" />
     </div>
 </div>
@@ -41,6 +41,9 @@ export default {
         }
     },
     methods: {
+        go() {
+            this.$route.name === 'user' ? this.$root.coverflow([this.user.photo]) : this.$route.go({name: 'user', params: {id: this.user.id}});
+        },
         vip() {
             return `vip/${this.user.role}.svg`;
         }

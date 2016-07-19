@@ -1,7 +1,7 @@
 <style lang="sass">
 @import '~style/partials/mixin';
 .follow-component {
-    padding: 1px .5em 0;
+    padding: 10px .5em 0;
     height: 52px;
     color: #9c9c9c;
     border-radius: 12px;

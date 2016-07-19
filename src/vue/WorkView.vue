@@ -5,9 +5,6 @@
         height: 160px;
         line-height: 160px;
         padding: 0 36px 0 50px;
-        .follow-component {
-            padding-top: 10px;
-        }
     }
     .line {
         &:before, &:after {

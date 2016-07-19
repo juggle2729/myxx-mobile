@@ -34,7 +34,7 @@
             height: 100px;
             > div {
                 line-height: 40px;
-                &.v-link-active {
+                &.active {
                     color: #cc3f4f;
                 }
             }
@@ -81,9 +81,9 @@
 <template>
     <div class="user-view bg-default">
         <div class="tabs tabs-fixed flex font-30 border-bottom bg-white" :class="{'default': isDefaultView}">
-            <div class="flex-1 center border-right" v-if="user.has_homepage" v-link="{name: 'user', params: {id: $route.params.id, tab: 'home'}, replace: true}">主页</div>
-            <div class="flex-1 center border-right" v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">帖子</div>
-            <div class="flex-1 center" v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">鉴宝</div>
+            <div class="flex-1 center border-right" v-if="user.has_homepage" :class="{'active': $route.params.tab === 'home'}"@click="go('home')">主页</div>
+            <div class="flex-1 center border-right" :class="{'active': $route.params.tab === 'story'}" @click="go('story')">帖子</div>
+            <div class="flex-1 center" :class="{'active': $route.params.tab === 'evaluation'}" @click="go('evaluation')">鉴宝</div>
         </div>
         <div class="banner img center">
             <img :src="'user/left.png' | qn" class="left" alt="left">
@@ -96,9 +96,9 @@
             <p class="gray font-26 margin-top" v-if="user.title">美玉认证: {{user.title}}</p>
         </div>
         <div class="tabs tabs-static flex font-30 border-bottom bg-white" :class="{'default': isDefaultView}">
-            <div class="flex-1 center border-right" v-if="user.has_homepage" v-link="{name: 'user', params: {id: $route.params.id, tab: 'home'}, replace: true}">主页</div>
-            <div class="flex-1 center border-right" v-link="{name: 'user', params: {id: $route.params.id, tab: 'story'}, replace: true}">帖子</div>
-            <div class="flex-1 center" v-link="{name: 'user', params: {id: $route.params.id, tab: 'evaluation'}, replace: true}">鉴宝</div>
+            <div class="flex-1 center border-right" v-if="user.has_homepage" :class="{'active': $route.params.tab === 'home'}"@click="go('home')">主页</div>
+            <div class="flex-1 center border-right" :class="{'active': $route.params.tab === 'story'}" @click="go('story')">帖子</div>
+            <div class="flex-1 center" :class="{'active': $route.params.tab === 'evaluation'}" @click="go('evaluation')">鉴宝</div>
         </div>
         <div class="tab-content">
             <component :is="view" keep-alive transition-mode="out-in" transition="fade"></component>
@@ -167,6 +167,11 @@ export default {
                 this.view = to.params.tab;
                 next();
             }
+        }
+    },
+    methods: {
+        go(tab) {
+            (this.$route.params.tab !== tab) && this.$router.replace(`/user/${this.user.id}/${tab}`);
         }
     },
     events: {

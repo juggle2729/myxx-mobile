@@ -88,6 +88,7 @@
                 };
                 &:last-child {
                     background-image: none;
+                    border-bottom: 0;
                     padding-bottom: 0;
                 };
             }

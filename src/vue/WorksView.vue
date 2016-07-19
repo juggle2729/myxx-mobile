@@ -12,6 +12,9 @@
             .comment-component, .like-component {
                 color: #d8d8d8;
                 margin-left: 50px;
+                &.active {
+                    color: #cc3f4f;
+                }
             }
         }
         &:not(:first-child) {

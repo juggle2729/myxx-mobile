@@ -23,7 +23,7 @@
 </style>
 <template>
 <div class="user-story">
-    <div class="topic-type flex bg-white">
+    <div class="topic-type flex bg-white" v-if="items && items.length > 0">
         <div class="font-26 gray border-all center" @click="classify()" :class="{'active': !selected}">全部 {{types.topic_count}}</div>
         <div v-for="tab in types.topic_types" class="font-26 gray border-all center"
         @click="classify(tab.code)" :class="{'active': selected === tab.code}">{{tab.name}} {{tab.count}}</div>
