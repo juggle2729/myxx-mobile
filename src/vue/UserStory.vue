@@ -50,7 +50,7 @@ export default {
         }
     },
     activate(done) {
-        return this.$get('sns/topics/base|v7', {
+        return this.$get('sns/topics/base', {
             user_id: this.$route.params.id
         }).then((data) => {
             this.types = data;
@@ -59,7 +59,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'dc/sns/search|v7',
+                path: 'dc/sns/search',
                 list: 'entries',
                 params: {
                     owner_id: this.$route.params.id,
@@ -69,11 +69,11 @@ export default {
                 }
             }
         }
-    },    
+    },
     methods: {
         classify(type) {
             this.selected = type;
-            this.$get('dc/sns/search|v7', {
+            this.$get('dc/sns/search', {
                 owner_id: this.$route.params.id,
                 doc_type: 'tp',
                 topic_type: type,

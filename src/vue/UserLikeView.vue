@@ -74,7 +74,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: `users/${this.$route.params.id}/like_list|v6`,
+                path: `users/${this.$route.params.id}/like_list`,
                 list: 'entries',
                 id: 'lastId',
                 params: {

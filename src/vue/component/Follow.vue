@@ -29,20 +29,14 @@
 export default {
     name: 'Follow',
     props: {
-        follow: [Boolean],
-        user: {
-            type: Number,
-            required: true
-        },
-        oneway: [Boolean],
-        hasBorder: [Boolean] // 是否需要边框和背景色
+        follow: Boolean,
+        user: Number,
+        oneway: Boolean,
+        hasBorder: Boolean // 是否需要边框和背景色
     },
     computed: {
         api() {
-            if(!this.user) {
-                throw Error('缺少参数');
-            }
-            return `users/follow/${this.user}`;
+            return `users/follow/${this.user||this.route.params.id}`;
         },
         isSelf() {
             return _.get(this, 'self.id') == this.user;

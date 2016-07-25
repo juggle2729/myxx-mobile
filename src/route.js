@@ -1,13 +1,4 @@
 export default {
-    '/evaluations': {
-        name: 'evaluations',
-        title: '鉴宝列表',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('EvaluationsView.vue'));
-            }, 'evaluation');
-        }
-    },
     '/evaluation/:id/:result': {
         name: 'evaluation',
         title: '鉴宝详情',
@@ -28,16 +19,6 @@ export default {
         }
     },
 
-// 精选
-    '/featured': {
-        name: 'featured',
-        title: '精选',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('FeaturedView.vue'));
-            }, 'story');
-        }
-    },
     '/story/:id': {
         name: 'story',
         title: '帖子详情', // 标题为空，减缓数据加载后，标题变化的差体验
@@ -59,34 +40,6 @@ export default {
         }
     },
 
-    '/lessons': {
-        name: 'lessons',
-        title: '美玉公开课',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('LessonsView.vue'));
-            }, 'lesson');
-        }
-    },
-    '/lesson/:id': {
-        name: 'lesson',
-        title: '课堂详情',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('LessonView.vue'));
-            }, 'lesson');
-        }
-    },
-    '/lecturer/:id': {
-        name: 'lecturer',
-        title: '大师课堂',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('LecturerView.vue'));
-            }, 'lesson');
-        }
-    },
-
     '/jade/:id/:tab': {
         name: 'jade',
         title: '商品详情',
@@ -97,15 +50,6 @@ export default {
         }
     },
 
-    '/masters': {
-        name: 'masters',
-        title: '人物志',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('MastersView.vue'));
-            }, 'master');
-        }
-    },
     '/master/:id': {
         name: 'master',
         title: '人物志',
@@ -417,6 +361,14 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AboutView.vue'));
+            }, 'other');
+        }
+    },
+    '/update': {
+        name: 'update',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('UpdateView.vue'));
             }, 'other');
         }
     },

@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         go() {
-            this.$route.name === 'user' ? this.$root.coverflow([this.user.photo]) : this.$route.go({name: 'user', params: {id: this.user.id}});
+            this.$route.name === 'user' ? this.$root.coverflow([this.user.photo]) : this.$router.go({name: 'user', params: {id: this.user.id}});
         },
         vip() {
             return `vip/${this.user.role}.svg`;

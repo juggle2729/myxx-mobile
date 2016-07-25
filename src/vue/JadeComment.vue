@@ -94,7 +94,7 @@ export default {
     },
     computed: {
         api() {
-            return `users/target/${this.id}/type/40/comments?limit=1|v3`;
+            return `users/target/${this.id}/type/40/comments?limit=1`;
         }
     },
     created() {
@@ -119,7 +119,7 @@ export default {
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
                     if(content) {
-                        this.$post(`users/target/${this.id}/type/40/comments|v3`, {content})
+                        this.$post(`users/target/${this.id}/type/40/comments`, {content})
                             .then((result) => {
                                 this.c = this.emojify(result);
                                 this.total += 1;

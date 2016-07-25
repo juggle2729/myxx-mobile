@@ -215,7 +215,7 @@ export default {
         },
         paging() {
             return {
-                path: 'dc/rd/list|v7',
+                path: 'dc/rd/list',
                 list: 'entries',
                 params: {
                     obj_id: this.story.post_id,
@@ -228,7 +228,7 @@ export default {
     route: {
         data({to}) {
             const storyId = to.params.id;
-            return this.$get(`sns/topics/${storyId}|v4`)
+            return this.$get(`sns/topics/${storyId}`)
                 .then((story) => {
                     this.setShareData(story, true);
                     // this.action('updateTitle', {text: `${story.topic_type.name}详情`});
