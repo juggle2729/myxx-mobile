@@ -1,10 +1,11 @@
 <style lang="sass">
 .recommend-follwer-view {
     width: 100%;
+    padding-top: 40px;
     .tips {
         width: 100%;
         text-align: center;
-        margin: 40px auto 60px;
+        margin: 0 auto 60px;
         height: 100px;
         line-height: 100px;
         > span {
@@ -35,8 +36,7 @@
 }
 </style>
 <template>
-<div class="recommend-follwer-view">
-    <div class="separator"></div>
+<div class="recommend-follwer-view bg-default">
     <div class="tips font-30 red bg-default" v-if="!self" @click="action('login')">
         <span>登录查看更多关注人的内容</span>
     </div>
