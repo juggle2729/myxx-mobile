@@ -1,5 +1,5 @@
 <style lang="sass">
-.product-recommend-component {
+.product-recommend {
     .title {
         margin-left: 32px;
         line-height: 80px;
@@ -41,7 +41,7 @@
 }
 </style>
 <template>
-    <div class="product-recommend-component bg-white border-bottom" v-if="items.length">
+    <div class="product-recommend bg-white border-bottom" v-if="items.length">
         <div class="separator-20"></div>
         <div class="title font-26 gray">商品推荐</div>
         <div class="list">
@@ -93,7 +93,7 @@ export default {
                 obj_id: id,
                 biz_type: this.biz_type
             };
-            return this.$get('dc/rd|v4', params).then((data) => {
+            return this.$get('dc/rd', params).then((data) => {
                 this.items = data.recommend_data;
             });
         }

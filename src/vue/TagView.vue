@@ -25,7 +25,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'cms/promotes|v4',
+                path: 'cms/promotes',
                 list: 'entries',
                 params: {
                     tag_id: this.tagId,

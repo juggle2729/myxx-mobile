@@ -18,7 +18,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'dc/sns/search|v7',
+                path: 'dc/sns/search',
                 list: 'entries',
                 params: {
                     owner_id: this.$route.params.id,

@@ -156,7 +156,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: `users/target/${this.id}/type/${this.type}/comments|v6`, // v6调整之前是v3
+                path: `users/target/${this.id}/type/${this.type}/comments`, // v6调整之前是v3
                 list: 'comments',
                 id: 'id',
                 params: {
@@ -201,7 +201,7 @@ export default {
                     .then((confirm) => {
                         return Q.Promise((resolve, reject) => {
                             if(confirm === '1') {
-                                this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}|v3`)
+                                this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
                                     .then(() => resolve());
                             } else {
                                 reject();
@@ -228,7 +228,7 @@ export default {
                         if(content) {
                             let comment = {content};
                             to && _.merge(comment, {reply_to: to.id});
-                            this.$post(`users/target/${this.id}/type/${this.type}/comments|v3`, comment)
+                            this.$post(`users/target/${this.id}/type/${this.type}/comments`, comment)
                                 .then((resp) => {
                                     resolve(_.merge(resp, {
                                         content,

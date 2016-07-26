@@ -140,7 +140,7 @@
             <img class="portrait" @click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="price font-30 white center">
                 <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
-                <span v-if="result.result==='genuine'">&nbsp;估价为{{prices[$index]}}</span>
+                <span v-if="result.result==='genuine'">&nbsp;估价为{{price[result.value]}}</span>
             </div>
             <a v-if="result.ad_product_id" class="action white bg-blue font-30" v-link="{name: 'jade', params: {id: result.ad_product_id}}">
                 <i class="icon-new-product"></i><span>进入新品发布</span>
@@ -176,6 +176,9 @@ import ProductRecommend from './component/ProductRecommend.vue';
 import Comments from 'component/Comments.vue';
 import Share from './component/Share.vue';
 import shareable from 'shareable';
+const Price = {
+    sfour: '小四', mfour: '中四', lfour: '大四', sfive: '小五', mfive: '中五', lfive: '大五', ssix: '小六', msix: '中六', lsix: '大六'
+};
 export default {
     name: 'EvaluationView',
     mixins: [shareable],
@@ -197,28 +200,14 @@ export default {
             comment: {
                 items: [],
                 total: 0
-            }
+            },
+            price: Price
         };
     },
     computed: {
-        prices() {
-            return this.evaluation.results.map((result) => {
-                if(result.result === 'genuine') {
-                    if(result.value_min && result.value_max) {
-                        return `${Math.round(result.value_min/10000)}-${Math.round(result.value_max/10000)}万`;
-                    } else if(result.value_min) {
-                        return `${Math.round(result.value_min/10000)}万以上`;
-                    } else if(result.value_max) {
-                        return `${Math.round(result.value_max/10000)}万以下`;
-                    }
-                } else {
-                    return '';
-                }
-            });
-        },
         paging() {
             return {
-                path: 'dc/rd/list|v7',
+                path: 'dc/rd/list',
                 list: 'entries',
                 params: {
                     obj_id: this.evaluation.id,
@@ -230,7 +219,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`sns/jianbao/${to.params.id}|v3`)
+            return this.$get(`sns/jianbao/${to.params.id}`)
                     .then(evaluation => {
                         if(to.params.result !== 'none' && evaluation.results.length) {
                             evaluation.results = [].concat(_.find(evaluation.results, {id: +to.params.result}) || evaluation.results);

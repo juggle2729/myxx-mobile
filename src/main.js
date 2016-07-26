@@ -75,12 +75,13 @@ router.beforeEach(({from, to, next}) => {
 });
 
 router.alias({
+    '/evaluations/:tab': '/update',
+    '/stories/:tab': '/update',
+    '/masters': '/update',
+    '/lessons': '/update',
     '/user/:id': '/user/:id/none',
-    '/evaluations/:tab': '/evaluations',
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',
-    '/stories': '/featured',
-    '/stories/:tab': '/featured',
     '/auctions/:id': 'user/:id/auctions',
     '/jade/:id': '/jade/:id/none',
     '/tag/:type/:id/:name': '/tag/:id/:name'
