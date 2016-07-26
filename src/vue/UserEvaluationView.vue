@@ -27,11 +27,6 @@ export default {
                 list: 'jianbaos'
             }
         }
-    },
-    route: {
-        data() {
-            return this.fetch();
-        }
     }
 }
 </script>

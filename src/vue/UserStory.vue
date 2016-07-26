@@ -1,6 +1,9 @@
 <style lang="sass">
 @import '~style/partials/var';
 .user-story {
+    .list {
+        padding: 30px 0 0 15px;
+    }
     .topic-type {
         height: 100px;
         padding: 0 40px;
@@ -28,18 +31,18 @@
         <div v-for="tab in types.topic_types" class="font-26 gray border-all center"
         @click="classify(tab.code)" :class="{'active': selected === tab.code}">{{tab.name}} {{tab.count}}</div>
     </div>
-    <recommend :data="items"></recommend>
+    <div class="list bg-default">
+        <card v-for="item in items" :entry="item.entry" :type="item.type"></card>
+    </div>
 </div>
 </template>
 <script>
 import paging from 'paging';
-import recommend from 'component/Recommend.vue';
+import Card from 'component/Card.vue';
 export default {
     name: 'UserStory',
     mixins: [paging],
-    components: {
-        recommend
-    },
+    components: [Card],
     ready() {
         this.classify();
     },
@@ -64,8 +67,7 @@ export default {
                 params: {
                     owner_id: this.$route.params.id,
                     doc_type: 'tp',
-                    topic_type: this.selected,
-                    limit: 10
+                    topic_type: this.selected
                 }
             }
         }

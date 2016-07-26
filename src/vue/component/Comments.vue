@@ -130,7 +130,7 @@
 <script>
 import Q from 'q';
 import paging from 'paging';
-import Like from './Like.vue';
+import Like from 'component/Like.vue';
 export default {
     name: 'Comments',
     mixins: [paging],
@@ -138,12 +138,9 @@ export default {
         Like
     },
     props: {
-        id: {
-            type: Number,
-            required: true
-        },
+        id: [Number, String],
         type: {
-            type: String,
+            type: Number,
             required: true
         },
         displayInput: {
@@ -156,9 +153,8 @@ export default {
     computed: {
         paging() {
             return {
-                path: `users/target/${this.id}/type/${this.type}/comments`, // v6调整之前是v3
+                path: `users/target/${this.id||this.$route.params.id}/type/${this.type}/comments`,
                 list: 'comments',
-                id: 'id',
                 params: {
                     limit: 5
                 },
@@ -180,15 +176,10 @@ export default {
                 })
             }
         }).then(() => {
-            this.fetch();
+            // this.fetch();
         });
     },
-    ready() {
-        // 定位到评论区，太突兀
-        // if(location.hash === '#comment') {
-        //     _.delay(() => this.$el.scrollIntoView(), 500);
-        // }
-    },
+
     methods: {
         getMore() {
             this.fetch();

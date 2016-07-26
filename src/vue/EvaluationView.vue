@@ -1,6 +1,7 @@
 <style lang="sass">
 @import '~style/partials/var';
 .evaluation-detail {
+    padding-bottom: 100px;
     .results {
         overflow-x: auto;
         overflow-y: hidden;
@@ -101,9 +102,6 @@
             }
         }
     }
-    .placeholder {
-        height: 100px;
-    }
 }
 </style>
 <template>
@@ -139,8 +137,8 @@
             </div>
             <img class="portrait" @click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
             <div class="price font-30 white center">
-                <span>鉴定结果为{{result.result == 'genuine' ? '真' : (result.result == 'fake' ? '假' : '疑')}}</span>
-                <span v-if="result.result==='genuine'">&nbsp;估价为{{price[result.value]}}</span>
+                <span>鉴定结果为{{opts.result[result.result]}}</span>
+                <span v-if="result.value">&nbsp;估价为{{opts.price[result.value]}}</span>
             </div>
             <a v-if="result.ad_product_id" class="action white bg-blue font-30" v-link="{name: 'jade', params: {id: result.ad_product_id}}">
                 <i class="icon-new-product"></i><span>进入新品发布</span>
@@ -158,7 +156,7 @@
         <share class="border-left"></share>
     </div>
     <div class="separator-20"></div>
-    <comments type="10" :id="evaluation.post_id" :display-input="false" v-ref:comment></comments>
+    <comments :type="10" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="evaluation.post_id"></product-recommend>
     <recommend :data="items" name="相关推荐"></recommend>
     <div class="footer flex border-top font-30 gray" v-if="!env.isShare">
@@ -176,9 +174,10 @@ import ProductRecommend from './component/ProductRecommend.vue';
 import Comments from 'component/Comments.vue';
 import Share from './component/Share.vue';
 import shareable from 'shareable';
-const Price = {
-    sfour: '小四', mfour: '中四', lfour: '大四', sfive: '小五', mfive: '中五', lfive: '大五', ssix: '小六', msix: '中六', lsix: '大六'
-};
+const Opts = {
+    result: {genuine: '真', fake: '假', unsure: '疑'},
+    price: { sfour: '小四', mfour: '中四', lfour: '大四', sfive: '小五', mfive: '中五', lfive: '大五', ssix: '小六', msix: '中六', lsix: '大六'}
+}
 export default {
     name: 'EvaluationView',
     mixins: [shareable],
@@ -192,7 +191,6 @@ export default {
     data() {
         return {
             evaluation: {
-                post_id: 0,
                 results: [],
                 user: {},
                 tags: []
@@ -201,18 +199,16 @@ export default {
                 items: [],
                 total: 0
             },
-            price: Price
+            opts: Opts
         };
     },
     computed: {
         paging() {
             return {
                 path: 'dc/rd/list',
-                list: 'entries',
                 params: {
-                    obj_id: this.evaluation.id,
-                    biz_type: 'jb',
-                    limit: 10
+                    obj_id: this.$route.params.id,
+                    biz_type: 'jb'
                 }
             }
         }

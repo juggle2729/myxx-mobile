@@ -79,13 +79,13 @@
     }
 </style>
 <template>
-    <div class="user-view bg-default">
+    <div class="user-view">
         <div class="tabs tabs-fixed flex font-30 border-bottom bg-white" :class="{'default': isDefaultView}">
             <div class="flex-1 center border-right" v-if="user.has_homepage" :class="{'active': $route.params.tab === 'home'}"@click="go('home')">主页</div>
             <div class="flex-1 center border-right" :class="{'active': $route.params.tab === 'story'}" @click="go('story')">帖子</div>
             <div class="flex-1 center" :class="{'active': $route.params.tab === 'evaluation'}" @click="go('evaluation')">鉴宝</div>
         </div>
-        <div class="banner img center">
+        <div class="banner img center bg-default">
             <img :src="'user/left.png' | qn" class="left" alt="left">
             <img :src="'user/right.png' | qn" class="right" alt="right">
             <avatar :user="user" :size="120"></avatar>

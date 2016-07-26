@@ -65,7 +65,6 @@ export default {
         data({to}) {
             return this.$get(`users/${to.params.id}/profile`).then((user) => {
                 this.setShareData({name: user.nickname, photo: user.photo}, true);
-                this.fetch();
             });
         }
     }

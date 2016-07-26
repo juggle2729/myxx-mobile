@@ -1,5 +1,6 @@
 <style lang="sass">
 .story-view {
+    padding-bottom: 100px;
     .story-header {
         padding: 32px 32px;
     }
@@ -118,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <follow :user="story.user.id" :follow="story.user.is_followed" has-border=true></follow>
+        <follow :user="story.user.id" :follow="story.user.is_followed" :has-border='true'></follow>
     </div>
     <div class="description omit-2 font-30">{{story.content}}</div>
     <template v-if="cover_type === 'picture'">
@@ -143,10 +144,9 @@
         <share class="border-left"></share>
     </div>
     <div class="separator-20"></div>
-    <comments type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
+    <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :data="items" name="相关推荐"></recommend>
-    <div class="placeholder"></div>
 </div>
 </template>
 <script>
@@ -170,11 +170,6 @@ export default {
         Like,
         Follow,
         Share
-    },
-    ready() {
-        // this.$on('restore', () => {
-        //     this.action('updateTitle', {text: `${this.story.topic_type.name}详情`});
-        // });
     },
     data() {
         return {
@@ -227,11 +222,9 @@ export default {
     },
     route: {
         data({to}) {
-            const storyId = to.params.id;
-            return this.$get(`sns/topics/${storyId}`)
+            return this.$get(`sns/topics/${to.params.id}`)
                 .then((story) => {
                     this.setShareData(story, true);
-                    // this.action('updateTitle', {text: `${story.topic_type.name}详情`});
                     this.followed = story.user.is_followed;
                     this.story = story;
                 });

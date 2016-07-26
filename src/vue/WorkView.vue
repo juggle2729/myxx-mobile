@@ -126,7 +126,7 @@
         <share class="border-left"></share>
     </div>
     <div class="separator-20-no"></div>
-    <comments type="90" :id="work.id" :display-input="false" v-ref:comment></comments>
+    <comments :type="90" :id="work.id" :display-input="false" v-ref:comment></comments>
 </div>
 </template>
 <script>

@@ -5,6 +5,9 @@ export default {
             items: []
         };
     },
+    ready() {
+        this.fetch();
+    },
     events: {
         scrollToBottom(e) {
             this.paging.list !== 'comments' && this.fetch();
@@ -17,23 +20,18 @@ export default {
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
                 this.items.loading = true;
-                let options = {
-                    limit: 5
+                const opts = {
+                    limit: 10,
+                    offset: fresh ? 0 : this.items.length,
+                    cursor: this.items.cursor,
+                    ...this.paging.params
                 };
 
-                if(this.paging.id) { // cursor即以前的last_id, 目前仅部分更新为cursor
-                    if(!fresh && this.items.length) {
-                        this.cursor ? (options.cursor = this.cursor) : (options.last_id = _.get(this.items[this.items.length-1], this.paging.id));
-                    }
-                } else {
-                    options.offset = fresh ? 0 : this.items.length;
-                }
-
-                return this.$get(this.paging.path, _.merge(options, this.paging.params)).then((data) => {
-                        this.cursor = data.cursor; // 采用last_id方式时需要的分页参数
-                        let items = data[this.paging.list];
-                        if(typeof this.paging.transform === 'function') {
-                            items = this.paging.transform.call(this, items);
+                return this.$get(this.paging.path, opts)
+                    .then(data => {
+                        let items = data[this.paging.list || 'entries'];
+                        if(_.isFunction(this.paging.transform)) {
+                            items = this.paging.transform.bind(this)(items);
                         }
                         if(fresh) {
                             this.items.splice(0, this.items.length, ...items);
@@ -43,8 +41,9 @@ export default {
                         this.items.loading = false;
                         _.merge(this.items, {
                             total: data.total,
-                            hasMore: ((items.length === (this.paging.limit || options.limit)) && (this.items.length < data.total)),
-                            isEmpty: items.length === 0
+                            cursor: data.cursor,
+                            hasMore: items.length === opts.limit,
+                            isEmpty: this.items.length === 0,
                         });
                 });
             }

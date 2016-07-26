@@ -70,7 +70,6 @@ export default {
         paging() {
             return {
                 path: 'users/suggest_follows',
-                list: 'entries',
                 params: {
                     limit: 20
                 },
@@ -78,11 +77,6 @@ export default {
                     return _.map(items, item => _.merge(item, {is_followed: false}));
                 }
             }
-        }
-    },
-    route: {
-        data() {
-            return this.fetch();
         }
     }
 }
