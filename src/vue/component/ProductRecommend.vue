@@ -45,10 +45,10 @@
         <div class="separator-20"></div>
         <div class="title font-26 gray">商品推荐</div>
         <div class="list">
-            <div class="item font-26" v-for="data in items" v-link="{name: 'jade', params: {id: data.item.id, tab: 'detail'}}">
-                <div class="item-img" v-bg.sm="data.item.first_picture"></div>
-                <div class="item-title">{{data.item.title}}</div>
-                <div class="price red">{{data.item.price | price}}</div>
+            <div class="item font-26" v-for="data in items" v-link="{name: 'jade', params: {id: data.entry.id, tab: 'detail'}}">
+                <div class="item-img" v-bg.sm="data.entry.first_picture"></div>
+                <div class="item-title">{{data.entry.title}}</div>
+                <div class="price red">{{data.entry.price | price}}</div>
             </div>
             <div class="item"></div>
         </div>
@@ -58,9 +58,7 @@
 export default {
     name: 'ProductRecommend',
     props: {
-        id: {
-            type: Number
-        }
+        id: Number
     },
     data() {
         return {
@@ -69,6 +67,7 @@ export default {
     },
     computed: {
         biz_type() {
+            // IMPROVE 修改config，集成biz type信息
             let type = '';
             switch (this.$route.name) {
                 case 'jade':
@@ -94,7 +93,7 @@ export default {
                 biz_type: this.biz_type
             };
             return this.$get('dc/rd', params).then((data) => {
-                this.items = data.recommend_data;
+                this.items = data.entries;
             });
         }
     }

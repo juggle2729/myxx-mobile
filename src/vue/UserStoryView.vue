@@ -28,11 +28,6 @@ export default {
     },
     components: {
         StoryItem
-    },
-    route: {
-        data() {
-            return this.fetch();
-        }
     }
 }
 </script>

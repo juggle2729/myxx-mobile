@@ -37,11 +37,6 @@ export default {
                 }
             }
         }
-    },
-    route: {
-        data() {
-            return this.fetch();
-        }
     }
 }
 </script>

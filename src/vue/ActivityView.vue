@@ -36,12 +36,7 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'cms/activities/' + this.$route.params.id + '/contents',
-                list: 'entries',
-                id: 'id',
-                params: {
-                    limit: 10
-                }
+                path: 'cms/activities/' + this.$route.params.id + '/contents'
             }
         }
     },
@@ -57,7 +52,6 @@ export default {
                     text: '下载美玉秀秀参与活动',
                     hasDownloadLink: false
                 });
-                this.fetch();
             });
         }
     }

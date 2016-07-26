@@ -119,8 +119,7 @@ export default {
                 list: 'products',
                 params: {
                     shop_id: this.shop.id,
-                    order_by: 'new',
-                    limit: 10
+                    order_by: 'new'
                 }
             }
         }
@@ -131,7 +130,6 @@ export default {
                 this.shop = data;
                 this.action('updateTitle', {text: this.shop.shop_name});
                 this.setShareData({name: this.shop.shop_name, logo: this.shop.logo}, true);
-                this.fetch();
             });
         }
     },

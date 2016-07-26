@@ -174,10 +174,8 @@ export default {
         paging() {
             return {
                 path: 'dc/sns/search',
-                list: 'entries',
                 params: {
-                    owner_id: this.$route.params.id,
-                    limit: 10
+                    owner_id: this.$route.params.id
                 }
             }
         }
@@ -189,7 +187,6 @@ export default {
             this.interview = data.interview;
             this.website = data.website;
             this.engravers = data.engravers;
-            this.fetch();
         }).then(done);
     },
     methods: {

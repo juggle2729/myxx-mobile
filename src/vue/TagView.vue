@@ -26,10 +26,8 @@ export default {
         paging() {
             return {
                 path: 'cms/promotes',
-                list: 'entries',
                 params: {
-                    tag_id: this.tagId,
-                    limit: 10
+                    tag_id: this.tagId
                 }
             }
         }
@@ -38,7 +36,6 @@ export default {
         data({to}) {
             this.action('updateTitle', {text: decodeURIComponent(to.params.name)});
             this.tagId = to.params.id;
-            return this.fetch();
         }
     }
 }

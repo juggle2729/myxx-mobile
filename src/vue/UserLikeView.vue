@@ -40,9 +40,9 @@
     <div v-for="item in items">
         <div class="separator-20"></div>
         <div class="item bg-white">
-            <div class="title font-30 gray">赞了一个{{item.type.name}}</div>
+            <div class="title font-30 gray">赞了一个{{item.type.name}}{{item.type.route}}</div>
             <div class="card flex font-30" v-if="item.isEmpty">该内容已被删除</div>
-            <div class="card flex" v-else v-link="{name: item.type.route, params: {id: item.id}}">
+            <div class="card flex" v-else v-link="{name: item.type.route, params: item.params}">
                 <div class="flex-1">
                     <div class="user flex margin-bottom">
                         <avatar :user="item.user" :size="50"></avatar>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
-    <empty v-if="items.isEmpty"></empty>
+    <empty v-if="items.isEmpty" title="你还没有赞"></empty>
 </div>
 </template>
 <script>
@@ -66,32 +66,26 @@ import paging from 'paging';
 export default {
     name: 'UserLikeView',
     mixins: [paging],
-    data() {
-        return {
-            emptyTitle: '你还没有赞'
-        }
-    },
     computed: {
         paging() {
             return {
                 path: `users/${this.$route.params.id}/like_list`,
-                list: 'entries',
-                id: 'lastId',
-                params: {
-                    limit: 10
-                },
                 transform(items) {
-                    return items.map(({entry, type, id}) => {
-                        let card = _.merge({}, entry, {isEmpty: _.isEmpty(entry)});
-                        card.type = _.clone(_.find(this.config.types, {'id': type}));
+                    return items.map(({entry, type}) => {
+                        let card = {
+                                ...entry,
+                                isEmpty: _.isEmpty(entry),
+                                type: _.clone(_.find(this.config.types, {'id': type}))
+                            };
                         if(!card.isEmpty) {
-                            card.lastId = id;
-                            card.id = card.post_id || card.id || card.target.id;
+                            card.params = {id: card.post_id || card.id || card.target.id};
                             switch(type) {
                                 case 10:
+                                    card.params.result = 'none';
                                     card.preview = {img: entry.picture};
                                     break;
                                 case 20:
+                                    card.params.result = card.id;
                                     card.type.route = 'evaluation'; //鉴定结果，跳转到鉴宝页面
                                     card.preview = {video: entry.video};
                                     card.user = entry.identifier;
@@ -120,11 +114,6 @@ export default {
                     });
                 }
             }
-        }
-    },
-    route: {
-        data() {
-            return this.fetch();
         }
     }
 }
