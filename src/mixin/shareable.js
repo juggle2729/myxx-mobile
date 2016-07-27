@@ -77,6 +77,7 @@ export default {
                     data.title = `【限量】${entry.title}`;
                     data.desc = '玉友的新品上线啦！';
                     data.icon = entry.pictures[0];
+                    data.hasDownloadLink = false;
                     break;
                 case 'auction':
                     data.title = `${entry.title}正在拍卖`;
@@ -92,8 +93,9 @@ export default {
                     break;
                 case 'user':
                     data.title = `${entry.name}的主页`;
-                    data.desc = '我在美玉秀秀晒了不少美玉，邀请您来看一看';
+                    data.desc = entry.title || `我在美玉秀秀中认识了${entry.name}，推荐大家关注。`;
                     data.icon = entry.photo;
+                    data.hasDownloadLink = false;
                     break;
                 case 'lesson':
                     data.title = '大师讲知识：' + entry.title;
@@ -109,8 +111,9 @@ export default {
                     break;
                 case 'shop':
                     data.title = entry.name;
-                    data.desc = '刚刚在美玉秀秀看到一个不错的店铺，好东西要一起分享，快来看看~';
+                    data.desc = `刚刚在美玉秀秀看到一个不错的${entry.type}，快来看看吧！`;
                     data.icon = entry.logo;
+                    data.hasDownloadLink = false;
                     break;
                 case 'works':
                     data.title = `${entry.name}的作品展`;

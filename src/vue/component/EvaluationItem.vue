@@ -110,7 +110,7 @@
 }
 </style>
 <template>
-<div class="evaluation-item">
+<div class="evaluation-item bg-white">
     <div v-link="{name: 'evaluation', params: {id: item.post_id, result: 'none'}}" track-by="$index">
         <div class="head flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>

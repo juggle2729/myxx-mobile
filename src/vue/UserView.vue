@@ -65,6 +65,7 @@
                 font-size: 30px;
                 color: #888888;
                 height: 60px;
+                padding-top: 0;
             }
             .button {
                 border-radius: 6px;
@@ -79,7 +80,7 @@
     }
 </style>
 <template>
-    <div class="user-view">
+    <div class="user-view bg-default">
         <div class="tabs tabs-fixed flex font-30 border-bottom bg-white" :class="{'default': isDefaultView}">
             <div class="flex-1 center border-right" v-if="user.has_homepage" :class="{'active': $route.params.tab === 'home'}"@click="go('home')">主页</div>
             <div class="flex-1 center border-right" :class="{'active': $route.params.tab === 'story'}" @click="go('story')">帖子</div>
@@ -91,7 +92,7 @@
             <avatar :user="user" :size="120"></avatar>
             <p class="font-30">{{user.nickname}}</p>
             <div class="font-26 gray record margin-top">
-                <span class="follow border-right">关注: {{user.follow_count}}</span><span>粉丝数: {{user.fans_count}}</span>
+                <span class="follow border-right">关注 {{user.follow_count}}</span><span>粉丝数 {{user.fans_count}}</span>
             </div>
             <p class="gray font-26 margin-top" v-if="user.title">美玉认证: {{user.title}}</p>
         </div>
@@ -106,7 +107,8 @@
         <div class="footer flex border-top bg-white" v-if="!isSelf">
             <follow :user="user.id" :follow="user.is_followed" :has-border="false"></follow>
             <share class="border-left"></share>
-            <div v-if="user.has_homepage" class="button bg-red white font-30" v-link="{name: 'shop', params: {id: user.shop_id}}">进入{{config.shop[user.shop_type]}}<span class="icon-enter"></span></div>
+            <div v-if="user.shop_id" class="button bg-red white font-30" v-link="{name: 'shop', params: {id: user.shop_id}}">
+            进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}<span class="icon-enter"></span></div>
         </div>
     </div>
 </template>
@@ -161,7 +163,7 @@ export default {
                         this.isDefaultView = ['home', 'story', 'evaluation'].indexOf(to.params.tab) === -1;
                         this.view = this.isDefaultView ? (this.user.has_homepage ? 'home': 'story') : to.params.tab;
                         this.action('updateTitle', {text: `${user.nickname}的个人主页`});
-                        this.setShareData({id: user.id, name: user.nickname, photo: user.photo} , true);
+                        this.setShareData({id: user.id, name: user.nickname, photo: user.photo, title: user.title} , true);
                         next();
                     });
             } else { // 个人主页内部跳转

@@ -18,7 +18,7 @@ export default {
     data(){
         return {
             id: +this.$route.params.id,
-            type: this.$route.params.type
+            type: +this.$route.params.type
         };
     }
 }

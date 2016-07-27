@@ -59,7 +59,7 @@
 <div class="keyboard">
     <div class="container bg-default">
         <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>max}">{{content.length}}/{{max}}</span></div>
-        <textarea v-model="content"></textarea>
+        <textarea v-model="content" maxlength="150"></textarea>
         <div class="btns border-top"><div @click="close">取消</div><div @click="submit" class="border-left" :class="{'green': content.length>0 && content.length<max}">发表</div></div>
     </div>
 </div>

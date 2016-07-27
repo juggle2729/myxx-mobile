@@ -1,31 +1,29 @@
 <style lang="sass">
 @import '~style/myxx';
 #app {
-    .share-top {
-        height: 100px;
-        padding: 0px 32px;
-        .logo {
-            height: 68px;
-            width: 68px;
-            margin: 5px 20px 0 0;
-        }
-        .download-btn {
-            display: block;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-    }
     .share-bottom {
         z-index: 990;
         position: fixed;
         bottom: 0;
-        height: 100px;
+        height: 112px;
         width: 100%;
-        img {
-            height: 100%;
+        padding: 0 24px;
+        background-color: rgba(0, 0, 0, 0.9);
+        .logo {
+            line-height: 0;
+            img {
+                height: 72px;
+                width: 72px;
+            }
         }
-        a {
-            display: block;
+        .dot {
+            margin: 0 10px;
+        }
+        .download-btn {
+            height: 60px;
+            line-height: 60px;
+            padding: 0 28px;
+            border-radius: 5px;
         }
     }
     #user {
@@ -46,19 +44,18 @@
 </style>
 <template>
 <div>
-    <div v-if="env.isShare && shareData.hasDownloadLink" class="share-top flex bg-default border-bottom">
-        <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
-        <div class="flex-1 flex">
-            <div class="name font-30 bold">美玉秀秀</div>
-            <div class="slogan font-26 gray margin-left">大师在线视频鉴宝</div>
-        </div>
-        <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
-    </div>
     <router-view></router-view>
-    <div v-if="env.isShare && shareData.text" class="share-bottom flex bg-red white font-30">
-        <img :src="'share/left.png' | qn" alt="left">
-        <a class="flex-1 center bold" :href="config.download">{{shareData.text}}</a>
-        <img :src="'share/right.png' | qn" alt="right">
+    <div v-if="env.isShare && shareData.hasDownloadLink" class="share-bottom flex" @click="download()">
+        <div class="logo margin-right"><img :src="'logo.png' | qn" alt="美玉秀秀"></div>
+        <div class="flex-1 white">
+            <div class="flex">
+                <div class="name font-30 bold">美玉秀秀</div>
+                <div class="font-22 dot">•</div>
+                <div class="slogan font-22">大师在线视频鉴宝</div>
+            </div>
+            <div class="font-22 red margin-top">10万玉友的选择</div>
+        </div>
+        <div class="download-btn font-30 white bg-red">免费下载</div>
     </div>
     <div id="user" v-if="env.isBrowser && env.isTest">
         <img v-if="self" @click="logout" :src="config.img + self.photo" :alt="self.nickname" />
@@ -115,12 +112,14 @@ export default {
             this.$store.remove('user');
             location.href = location.href;
         },
-
         login() {
             this.action('login')
                 .then((user) => {
                     this.user = user;
                 });
+        },
+        download() {
+            window.location.href = this.config.download;
         }
     }
 }

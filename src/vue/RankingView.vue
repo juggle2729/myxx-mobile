@@ -24,7 +24,7 @@
                 height: 100%;
                 line-height: 100px;
                 margin: 0 59px;
-                &.v-link-active {
+                &.active {
                     color: #cc3f4f;
                     border-bottom: 5px solid #cc3f4f;
                 }
@@ -62,8 +62,8 @@
             <div class="date font-26 white">最近更新：{{date}}</div>
         </div>
         <div class="tabs flex font-30 border-bottom" :class="{'default': isDefaultView}">
-            <div class="flex-1 center" v-link="{name: 'ranking', params: {tab: 'weekly'}, replace: true}">周榜</div>
-            <div class="flex-1 center" v-link="{name: 'ranking', params: {tab: 'all'}, replace: true}">总榜</div>
+            <div class="flex-1 center" @click="go('weekly')" :class="{'active': $route.params.tab === 'weekly'}">周榜</div>
+            <div class="flex-1 center" @click="go('all')" :class="{'active': $route.params.tab === 'all'}">总榜</div>
         </div>
         <div class="items">
             <div v-for="item in items" class="flex font-30 border-bottom" v-link="{name: 'user', params: {id: item.id}}">
@@ -81,30 +81,34 @@
     </div>
 </template>
 <script>
-import paging from 'paging';
 import shareable from 'shareable';
 export default {
     name: 'RankingView',
-    mixins: [paging, shareable],
+    mixins: [shareable],
+    data() {
+        return {
+            items: {}
+        }
+    },
     computed: {
-        paging() {
-            return {
-                path: 'sns/jianbao/popular_masters',
-                list: 'masters',
-                params: {
-                    type: this.$route.params.tab,
-                    limit: 20
-                }
-            }
-        },
         date() {
             return new Date(Date.now()).toLocaleDateString();
         }
     },
     route: {
-        data() {
-            this.setShareData(this.items, true);
-            return this.fetch(true);
+        data({to}) {
+            return this.$get('sns/jianbao/popular_masters', {
+                type: to.params.tab,
+                limit: 50
+            }).then((data) => {
+                this.items = data.masters;
+                this.setShareData(this.items, true);
+            });
+        }
+    },
+    methods: {
+        go(tab) { // FIXME 采用v-link替代
+            (this.$route.params.tab !== tab) && this.$router.replace(`/ranking/${tab}`);
         }
     }
 }

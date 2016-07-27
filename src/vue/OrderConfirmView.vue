@@ -39,10 +39,20 @@
     }
     .product {
         margin-top: 20px;
-        .seller {
+        .shop {
             height: 86px;
             line-height: 86px;
             padding: 0 32px;
+            .img {
+                width: 50px;
+                height: 50px;
+                border-radius: 4px;
+            }
+            img {
+                width: 110px;
+                height: 36px;
+                margin: 0 16px;
+            }
         }
         .merchant {
             height: 160px;
@@ -110,16 +120,17 @@
                     </div>
                     <div class="flex">
                         <div class="icon-location gray font-30"></div>
-                        <div class="font-26 site">收货地址: {{address.receiver_address_flat}}</div>
+                        <div class="font-26 site omit-2 flex-1 gray">收货地址: {{address.receiver_address_flat}}</div>
                     </div>
                 </div>
                 <div class="icon-enter font-30 red"></div>
             </div>
         </div>
         <div class="product bg-white border-vertical">
-            <div class="seller flex border-bottom" v-link="{name: 'user', params: {id: product.owner.id}}">
-                <avatar :user="product.owner" :size="50"></avatar>
-                <span class="margin-left">{{product.owner.name}}</span>
+            <div class="shop flex border-bottom" v-if="!isSeller" v-link="{name: 'shop', params: {id: product.shop.id}}">
+                <div class="img margin-right" v-bg="product.shop.logo"></div>
+                <div>{{product.shop.shop_name}}</div>
+                <div><img :src="'user/' + product.shop.shop_type + '.png' | qn" v-if="product.shop.auth_flag" /></div>
             </div>
             <div class="merchant flex border-bottom">
                 <img class="img margin-right" :src="config.img + product.pictures[0] + '?imageView2/2/h/450'">
@@ -133,7 +144,7 @@
                     <span class="icon-comment gray"></span>
                     <span>买家留言</span>
                 </div>
-                <textarea class="font-26" maxlength="140" placeholder="文字控制在140字以内" v-model="note"></textarea>
+                <textarea class="font-26 gray" maxlength="140" placeholder="文字控制在140字以内" v-model="note"></textarea>
             </div>
         </div>
         <div class="operation bg-white flex">
@@ -150,7 +161,7 @@ export default {
         return {
             note: '',
             product: {
-                owner: {},
+                shop: {},
                 pictures: []
             },
             address: {}

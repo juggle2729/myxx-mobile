@@ -44,7 +44,7 @@
                 <div class="flex-1">{{address.receiver_name}}</div>
                 <div class="phone">{{address.receiver_phone}}</div>
             </div>
-            <div class="site">{{address.receiver_address_flat}}</div>
+            <div class="site omit-2">{{address.receiver_address_flat}}</div>
         </div>
         <div class="operate flex gray border-top">
             <div class="flex-1" @click="defaultAddress(address)">

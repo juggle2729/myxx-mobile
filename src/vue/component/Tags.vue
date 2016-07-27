@@ -18,7 +18,7 @@
 </style>
 <template>
 <div class="tags-component bg-white" v-if="tags && tags.length">
-    <div class="tag font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: tag}">{{tag.name}}</div>
+    <div class="tag font-26 center" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
 </div>
 </template>
 <script>

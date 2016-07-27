@@ -69,12 +69,14 @@
         }
     }
     .website {
-        padding: 0 32px 30px;
+        .header {
+            padding: 0 32px;
+        }
         .cover {
-            height: 200px;
+            height: 330px;
         }
         .title {
-            margin-top: 30px;
+            padding: 30px 32px;
         }
     }
     .engraver {
@@ -97,15 +99,15 @@
 }
 </style>
 <template>
-<div class="user-home bg-light">
+<div class="user-home bg-default">
     <div class="shop bg-white" v-if="shop" v-link="{name: 'shop', params: {id: shop.id}}">
-        <div class="header font-26 gray"><span>{{config.shop[shop.shop_type]}}</span></div>
+        <div class="header font-26 gray"><span>{{shop.shop_type === 'studio' ? '工作室' : '店铺'}}</span></div>
         <div class="flex detail">
             <div class="img" v-bg="shop.logo"></div>
             <div class="flex-1">
                 <div class="font-30 flex margin-bottom name" :class="{'auth': shop.auth_flag}">
                     <div class="omit">{{shop.shop_name}}</div>
-                    <img :src="label() | qn" v-if="shop.auth_flag" />
+                    <img :src="'user/' + shop.shop_type + '.png' | qn" v-if="shop.auth_flag" />
                 </div>
                 <div class="font-26 gray"><span class="icon-location"></span><span>{{shop.locale_name}}</span></div>
             </div>
@@ -137,7 +139,7 @@
     </div>
     <div class="separator-20-no" v-if="engravers && engravers.length > 0"></div>
     <div class="engraver bg-white" v-if="engravers && engravers.length > 0">
-        <div class="header font-26 gray"><span>玉雕师</span></div>
+        <div class="header font-26 gray"><span>人物</span></div>
         <div class="master">
             <div class="flex border-bottom" v-for="master in engravers" v-link="{name: 'user', params: {id: master.id}}">
                 <avatar :user="master" :size="108"></avatar>
@@ -163,10 +165,10 @@ export default {
     data() {
         return {
             type: '',
-            shop: {},
-            works: {},
-            interview: {},
-            website: {},
+            shop: '',
+            works: '',
+            interview: '',
+            website: '',
             engravers: []
         }
     },
@@ -188,11 +190,6 @@ export default {
             this.website = data.website;
             this.engravers = data.engravers;
         }).then(done);
-    },
-    methods: {
-        label() {
-            return `user/${this.shop.shop_type}.png`;
-        }
     }
 }
 </script>

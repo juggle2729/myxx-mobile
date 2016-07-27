@@ -366,27 +366,31 @@ export default {
             }
 
             this.following = true;
-            if (this.base.follow) {
-                this.$delete(`users/follow/${this.base.id}`, {}).then((data) => {
-                    this.following = false;
-                    this.base.follow = false;
-                    this.action('toast', {success: 1, text: '已取消关注'});
-                }).catch(() => {
-                    this.following = false;
-                });
-            } else {
-                this.$post(`users/follow/${this.base.id}`, {}).then((data) => {
-                    this.following = false;
-                    this.base.follow = true;
-                    this.action('toast', {success: 1, text: '已关注'});
-                }).catch(() => {
-                    this.following = false;
-                });
-            }
+            if(this.env.isApp) {
+                if (this.base.follow) {
+                    this.$delete(`users/follow/${this.base.id}`, {}).then((data) => {
+                        this.following = false;
+                        this.base.follow = false;
+                        this.action('toast', {success: 1, text: '已取消关注'});
+                    }).catch(() => {
+                        this.following = false;
+                    });
+                } else {
+                    this.$post(`users/follow/${this.base.id}`, {}).then((data) => {
+                        this.following = false;
+                        this.base.follow = true;
+                        this.action('toast', {success: 1, text: '已关注'});
+                    }).catch(() => {
+                        this.following = false;
+                    });
+                }
 
-            setTimeout(() => {
-                this.following = false;
-            }, 200);
+                setTimeout(() => {
+                    this.following = false;
+                }, 200);
+            } else {
+                window.location.href = this.config.download;
+            }
         }
     }
 }

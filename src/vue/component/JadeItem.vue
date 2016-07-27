@@ -50,7 +50,7 @@
 }
 </style>
 <template>
-<div class="jade-item" v-link="{name: 'jade', params: {id: item.id}}">
+<div class="jade-item bg-white" v-link="{name: 'jade', params: {id: item.id}}">
     <div class="header flex">
         <div class="flex-1 flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>

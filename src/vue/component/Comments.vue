@@ -219,7 +219,7 @@ export default {
                         if(content) {
                             let comment = {content};
                             to && _.merge(comment, {reply_to: to.id});
-                            this.$post(`users/target/${this.id}/type/${this.type}/comments`, comment)
+                            this.$post(`users/target/${this.id||this.$route.params.id}/type/${this.type}/comments`, comment)
                                 .then((resp) => {
                                     resolve(_.merge(resp, {
                                         content,

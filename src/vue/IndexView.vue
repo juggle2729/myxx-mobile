@@ -17,7 +17,7 @@
 <div class="index-view bg-default">
     <ul>
         <li>
-            <a href="/ranking">鉴宝师排行 - ranking/:tab</a>
+            <a href="/ranking/weekly">鉴宝师排行 - ranking/:tab</a>
         </li>
         <li class="tab">商城</li>
         <li>

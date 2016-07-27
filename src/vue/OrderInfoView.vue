@@ -56,10 +56,20 @@
         }
     }
     .product {
-        .seller {
+        .shop {
             height: 86px;
             line-height: 86px;
             padding: 0 32px;
+            .img {
+                width: 50px;
+                height: 50px;
+                border-radius: 4px;
+            }
+            img {
+                width: 110px;
+                height: 36px;
+                margin: 0 16px;
+            }
         }
         .merchant {
             height: 160px;
@@ -71,9 +81,14 @@
             .info {
                 -webkit-box-flex: 1;
                 .title {
-                    margin-bottom: 12px;
+                    margin: 0 40px 12px 0;
                     line-height: 38px;
                 }
+            }
+            .icon-enter {
+                width: 0;
+                position: relative;
+                right: 24px;
             }
         }
         .comment {
@@ -91,7 +106,7 @@
     }
     .order {
         height: 146px;
-        padding: 32px 32px 30px;
+        padding: 32px 32px 30px 82px;
         div:first-child {
             margin-bottom: 20px;
         }
@@ -128,7 +143,7 @@
 </style>
 <template>
 <div class="order-view bg-default" v-if="!$loadingRouteData">
-    <div class="status bg-white border-vertical font-30 red padding-top" :class="{'detail': states[order.status].tip}" v-if="!isSeller">
+    <div class="status bg-white border-top font-30 red padding-top" :class="{'detail': states[order.status].tip}" v-if="!isSeller">
         <span class="icon-clock"></span><span>{{states[order.status].txt}}</span>
         <div class="font-26 tip flex" v-if="states[order.status].tip" @click="rejectInfo">
             <div class="flex-1">{{states[order.status].tip}}</div>
@@ -138,7 +153,7 @@
             </div>
         </div>
     </div>
-    <div class="status bg-white border-vertical font-30 red" :class="{'detail': states[order.status].tip}" v-else @click="refundInfo">
+    <div class="status bg-white border-top font-30 red" :class="{'detail': states[order.status].tip}" v-else @click="refundInfo">
         <div class="flex withdraw">
             <div class="flex-1">
                 <span class="icon-clock"></span><span>{{states[order.status].txt}}</span>
@@ -156,37 +171,39 @@
             </div>
         </div>
     </div>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <div class="address bg-white font-30">
         <div class="user flex">
             <div class="flex-1">收货人: {{order.receiver_name}}</div>
             <div>{{order.receiver_phone}}</div>
         </div>
-        <div class="flex">
-            <div class="icon-location gray font-30"></div><div class="font-26 site">收货地址: {{order.receiver_address}}</div>
+        <div class="flex gray">
+            <div class="icon-location gray font-30"></div><div class="font-26 site omit-2">收货地址: {{order.receiver_address}}</div>
         </div>
     </div>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <div class="product bg-white font-30">
-        <div class="seller flex" v-if="!isSeller">
-            <avatar :user="order.seller" :size="50"></avatar>
-            <span class="margin-left">{{order.seller.nickname}}</span>
+        <div class="shop flex border-bottom" v-if="!isSeller" v-link="{name: 'shop', params: {id: order.shop.id}}">
+            <div class="img margin-right" v-bg="order.shop.logo"></div>
+            <div>{{order.shop.shop_name}}</div>
+            <div><img :src="'user/' + order.shop.shop_type + '.png' | qn" v-if="order.shop.auth_flag" /></div>
         </div>
-        <div class="merchant flex border-vertical">
+        <div class="merchant flex" v-link="{name: 'jade', params: {id: order.product.id}}">
             <img class="img margin-right" :src="config.img + order.product.first_picture + '?imageView2/2/h/450'">
             <div class="info">
                 <div class="title omit-2">{{order.product.title}}</div>
                 <div class="red font-26">{{order.trans_amount | price}}</div>
             </div>
+            <div class="icon-enter red"></div>
         </div>
-        <div class="comment border-bottom" v-if="isNote">
+        <div class="comment border-top" v-if="isNote">
             <div>
                 <span class="icon-comment gray"></span><span>买家留言</span>
             </div>
-            <div class="note font-26">{{order.buyer_note}}</div>
+            <div class="note font-26 gray">{{order.buyer_note}}</div>
         </div>
     </div>
-    <div class="separator"></div>
+    <div class="separator-20"></div>
     <div class="order bg-white font-30 border-bottom">
         <div>订单编号: {{order.order_no}}</div>
         <div>订单创建时间: {{order.create_at | date}}</div>
@@ -242,8 +259,8 @@ const states = {
         txt: '退款中',
         tip: '退款将在1到2个工作日内完成'
     }, {
-        btn: ['service'],
-        txt: '订单已退款'
+        txt: '订单已退款',
+        btn: ['service']
     }],
     rf_ap: [{
         txt: '退款中',
@@ -295,6 +312,13 @@ const states = {
         txt: '买家已申请退货',
         btn: ['service', 'doWithdraw']
     }],
+    rt_ac: [{
+        txt: '商家已同意退货',
+        btn: ['send']
+    }, {
+        txt: '等待买家退回商品',
+        btn: ['service']
+    }],
     rt_rj: [{
         txt: '商家拒绝了退货申请',
         tip: '请联系客服处理',
@@ -305,23 +329,27 @@ const states = {
         btn: ['service']
     }],
     rt_gd: [{
-        txt: '商家已同意退货',
-        tip: '请尽快将商品寄回给商家'
+        txt: '已发货，等待商家确认收货',
+        btn: ['service', 'updateTrace']
     }, {
-        txt: '等待买家退回商品',
-        btn: ['service', 'receiveBack']
+        txt: '买家已发货，请等待收货',
+        btn: ['trace', 'receiveBack']
     }],
     rt_to: [{
-        txt: '商家已同意退货',
-        tip: '请尽快将商品寄回给商家'
+        txt: '商家确认收货超时',
+        tip: '请联系客服',
+        btn: ['service']
     }, {
-        txt: '等待买家退回商品',
-        btn: ['service', 'receiveBack']
+        txt: '确认收货超时',
+        tip: '请联系客服',
+        btn: ['service']
     }],
     rt_fa: [{
-        txt: '订单交易成功'
+        txt: '退货失败，请联系客服',
+        btn: ['service']
     }, {
-        txt: '订单交易成功'
+        txt: '退货失败，请联系客服',
+        btn: ['service']
     }],
     rt_rc: [{
         txt: '商家已收到商品',
@@ -459,7 +487,7 @@ export default {
             return this.$get(`mall/order/${to.params.id}`)
                 .then((order) => {
                     this.order = order;
-                    this.isSeller = _.get(this, 'self.id') == order.seller.id;
+                    this.isSeller = order.is_seller;
                     this.states = _.mapValues(states, state => state[_.toNumber(this.isSeller)]);
                     this.order.price = order.trans_amount;
                     this.isNote = order.buyer_note;
@@ -522,7 +550,7 @@ export default {
             this.action('chat', {id: this.order.buyer.id, name: this.order.buyer.nickname});
         },
         contactSeller() {
-            this.action('chat', {id: this.order.seller.id, name: this.order.seller.nickname});
+            this.action('chat', {id: this.order.default_admin.id, name: this.order.default_admin.nickname});
         },
         service() {
             this.action('kf', {order: this.order.order_no});

@@ -1,8 +1,9 @@
 <style lang="sass">
 @import '~style/partials/var';
 .user-story {
+    min-height: inherit;
     .list {
-        padding: 30px 0 0 15px;
+        padding: 10px 0 0 15px;
     }
     .topic-type {
         height: 100px;
@@ -25,15 +26,16 @@
 }
 </style>
 <template>
-<div class="user-story">
+<div class="user-story" :class="{'bg-white': items.isEmpty}">
     <div class="topic-type flex bg-white" v-if="items && items.length > 0">
         <div class="font-26 gray border-all center" @click="classify()" :class="{'active': !selected}">全部 {{types.topic_count}}</div>
         <div v-for="tab in types.topic_types" class="font-26 gray border-all center"
         @click="classify(tab.code)" :class="{'active': selected === tab.code}">{{tab.name}} {{tab.count}}</div>
     </div>
-    <div class="list bg-default">
+    <div class="list">
         <card v-for="item in items" :entry="item.entry" :type="item.type"></card>
     </div>
+    <empty v-if="items.isEmpty" title="暂无帖子"></empty>
 </div>
 </template>
 <script>
@@ -43,9 +45,6 @@ export default {
     name: 'UserStory',
     mixins: [paging],
     components: [Card],
-    ready() {
-        this.classify();
-    },
     data() {
         return {
             types: {},

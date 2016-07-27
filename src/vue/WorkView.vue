@@ -75,9 +75,9 @@
         }
     }
     .desc {
-        margin: 90px 32px;
+        margin: 60px 42px;
         .prize {
-            margin-top: 32px;
+            margin-top: 30px;
             line-height: 40px;
         }
     }
@@ -112,7 +112,7 @@
     <div class="line font-26 flex margin-top">作品展示</div>
     <div class="cover img" v-bg="cover" @click="coverflow(work.pictures, 0)"></div>
     <div class="medias">
-        <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index + 1)"></div>
+        <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(pictures, $index)"></div>
     </div>
     <div class="desc">
         <div class="font-36">{{work.title}}</div>
@@ -164,7 +164,6 @@ export default {
         data({to}) {
             return this.$get(`sns/works/${to.params.id}`).then((work) => {
                 this.work = work;
-                this.work.pictures = ['7db50e20-98af-4f04-8700-12343754bb8d', '0399ef20-568f-48f1-b3b8-a3f3df991aca', '5801641c-6fd8-4be2-bea6-c5912b7fb133', '0f142e37-63be-44ec-bebb-71971ee8f0fa'];
                 this.setShareData({name: this.work.user.nickname, title: this.work.title, logo: this.cover}, true);
             });
         }

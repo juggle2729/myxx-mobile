@@ -59,10 +59,10 @@
             <p style="margin-top:8px">我们会在两个工作日内联系你。</p>
         </div>
         <div class="input">
-            <input class="font-30 border-default" type="text" placeholder="手机号" v-model="contact" maxlength="20">
+            <input class="font-30 border-default" type="tel" placeholder="手机号" v-model="contact" maxlength="20">
             <input class="font-30 border-default"  type="text" placeholder="姓名" v-model="name" maxlength="20">
             <textarea class="font-30 border-default" placeholder="申请说明，50字以内(选填)" maxlength="50" v-model="content"></textarea>
-            <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">
+            <button @click="submit" class="white font-30 bg-gray" :class="{ 'bg-red': complete}">
                 <span>提交</span>
             </button>
         </div>
@@ -77,38 +77,19 @@ export default {
             title: '【人人皆可拥有】',
             requestShow: false,
             type: 'website',
-            contact: 0,
-            photo: 0,
+            contact: '',
             name: '',
-            content: '',
-            checked: false
+            content: ''
         };
     },
-    created() {
-        this.$watch('result', (data) => {
-            if(data.phone !== 0){
-                this.checked = true;
-            } else {
-                this.checked = false;
-            }
-        });
-    },
-    route: {
-        data() {
-            return this.$get(`users/${this.$route.params.id}/basic`)
-               .then((data) => {
-                   this.contact = data.phone;
-               });
-        }
-    },
     computed: {
+        complete() {
+            return this.contact && this.name;
+        },
+        isValid() {
+            return this.contact.length === 11;
+        },
         result(){
-            let phoneReg = /^[1]\d{10}$/i;
-            if(phoneReg.test(this.contact)){
-                this.phone = this.contact;
-            } else {
-                this.phone = 0;
-            }
             return {
                 type: this.type,
                 phone: this.phone,
@@ -119,11 +100,18 @@ export default {
     },
     methods: {
         submit() {
-            this.$post('users/feedbacks', this.result)
-                .then(() => {
-                    this.action('modal');
-                });
-            this.toggleShow();
+            if(this.complete && this.isValid) {
+                this.$post('users/feedbacks', this.result)
+                    .then(() => {
+                        this.action('toast', {text: '工作人员两日内联系您！', success: 1});
+                        setTimeout(() => {
+                            this.action('back', {step: 1, refresh: true});
+                        }, 1500);
+                     });
+                this.toggleShow();
+            } else if(this.complete && !this.isValid) {
+                this.action('toast', {success: 0, text: '请填写正确的手机号'});
+            }
         },
         toggleShow() {
             this.requestShow = !this.requestShow;

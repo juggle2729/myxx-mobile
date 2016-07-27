@@ -130,6 +130,7 @@ export default {
     },
     '/shop/:id': { // 工作室主页
         name: 'shop',
+        native: v => v >= 1.7 && {name: 'shop'},
         title: '',
         component(resolve) {
             require.ensure([], (require) => {

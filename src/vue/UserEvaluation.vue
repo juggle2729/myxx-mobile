@@ -1,12 +1,13 @@
 <style lang="sass">
 .user-evaluation {
+    min-height: inherit;
     .list {
-        padding: 30px 0 0 15px;
+        padding: 10px 0 0 15px;
     }
 }
 </style>
 <template>
-<div class="user-evaluation bg-default">
+<div class="user-evaluation" :class="{'bg-white': items.isEmpty}">
     <div class="list">
         <card v-for="item in items" :entry="item.entry" :type="item.type"></card>
     </div>

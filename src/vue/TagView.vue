@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="bg-default">
     <div v-for="item in items">
-        <div class="separator"></div>
+        <div class="separator-20"></div>
         <story-item v-if="item.type === 6" :item="item.entry"></story-item>
         <evaluation-item v-if="item.type === 3" :item="item.entry"></evaluation-item>
         <jade-item v-if="item.type === 8" :item="item.entry"></jade-item>
@@ -33,9 +33,10 @@ export default {
         }
     },
     route: {
-        data({to}) {
+        data({to, next}) {
             this.action('updateTitle', {text: decodeURIComponent(to.params.name)});
             this.tagId = to.params.id;
+            next();
         }
     }
 }

@@ -62,6 +62,9 @@
             &.auth {
                 width: 400px;
             }
+            .omit {
+                line-height: 1.2
+            }
         }
         img {
             width: 110px;
@@ -162,7 +165,7 @@
         <div class="img" v-bg="jade.shop.logo"></div>
         <div class="flex-1">
             <div class="font-30 flex margin-bottom name" :class="{'auth': jade.shop.auth_flag}">
-                <div class="omit">{{jade.shop.shop_name}}</div><img :src="label() | qn" v-if="jade.shop.auth_flag"/>
+                <div class="omit">{{jade.shop.shop_name}}</div><img :src="'user/' + jade.shop.shop_type +'.png' | qn" v-if="jade.shop.auth_flag"/>
             </div>
             <div class="font-26 gray"><span class="icon-location"></span><span>{{jade.shop.locale_name}}</span></div>
         </div>
@@ -240,7 +243,7 @@ export default {
                 return this.$get('mall/products/'+ this.$route.params.id)
                     .then((jade) => {
                         this.setShareData(jade, true);
-                        this.isSelf = (_.get(this, 'self.id') == jade.owner.id);
+                        this.isSelf = (_.get(this, 'self.id') == (jade.owner.id || jade.default_admin.id));
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1;
                         this.view = this.isDefaultView ? 'detail' : to.params.tab;
                         this.jade = jade;
@@ -286,7 +289,7 @@ export default {
                             this.action('login').then(resolve);
                         }
                     }).then(() => {
-                        this.action('chat', {id: this.jade.owner.id, name: this.jade.owner.name, product: this.jade.id});
+                        this.action('chat', {id: this.jade.default_admin.id, name: this.jade.default_admin.nickname, product: this.jade.id});
                     });
                 } else if(this.isSelf) {
                     this.action('toast', {success: 0, text: '您不能和自己聊天'});
@@ -306,9 +309,6 @@ export default {
         },
         go(tab) { // FIXME 采用v-link替代
             (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`);
-        },
-        label() {
-            return `user/${this.jade.shop.shop_type}.png`;
         }
     },
     events: {

@@ -83,8 +83,7 @@ router.alias({
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',
     '/auctions/:id': 'user/:id/auctions',
-    '/jade/:id': '/jade/:id/none',
-    '/tag/:type/:id/:name': '/tag/:id/:name'
+    '/jade/:id': '/jade/:id/none'
 });
 router.map(routes);
 router.start(require('App.vue'), '#app');

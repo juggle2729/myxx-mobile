@@ -2,6 +2,14 @@
 @import '~style/partials/var';
 .user-like-view {
     height: 100%;
+    position: relative;
+    .empty-component {
+        position: absolute;
+        width: 100%;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
     .item {
         padding-left: 32px;
         padding-right: 32px;
@@ -36,11 +44,11 @@
 }
 </style>
 <template>
-<div class="user-like-view bg-default">
+<div class="user-like-view bg-default" :class="{'bg-white': items.isEmpty}">
     <div v-for="item in items">
         <div class="separator-20"></div>
         <div class="item bg-white">
-            <div class="title font-30 gray">赞了一个{{item.type.name}}{{item.type.route}}</div>
+            <div class="title font-30 gray">赞了一个{{item.type.name}}</div>
             <div class="card flex font-30" v-if="item.isEmpty">该内容已被删除</div>
             <div class="card flex" v-else v-link="{name: item.type.route, params: item.params}">
                 <div class="flex-1">
@@ -107,6 +115,10 @@ export default {
                                     card.type.route = _.find(this.config.types, {id: entry.target.type}).route;
                                     card.description = entry.content;
                                     card.preview = {[entry.media.type === 'picture' ? 'img' : 'video']: entry.media.id};
+                                    break;
+                                case 90:
+                                    card.description = entry.title;
+                                    card.preview = {img: entry.picture};
                                     break;
                             }
                         }

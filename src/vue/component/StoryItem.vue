@@ -55,7 +55,7 @@
 }
 </style>
 <template>
-<div class="story-item" v-link="{name: 'story', params: {id: item.post_id}}">
+<div class="story-item bg-white" v-link="{name: 'story', params: {id: item.post_id}}">
     <div class="header flex">
         <div class="flex-1 flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>
@@ -94,9 +94,6 @@ export default {
     },
     props: {
         item: [Object]
-    },
-    methods: {
-
     }
 }
 </script>
