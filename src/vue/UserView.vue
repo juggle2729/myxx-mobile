@@ -129,7 +129,9 @@ export default {
     },
     data() {
         return {
-            user: {},
+            user: {
+                id: 0
+            },
             isDefaultView: false,
             view: undefined
         }

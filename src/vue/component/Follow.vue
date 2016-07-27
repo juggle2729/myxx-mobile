@@ -29,8 +29,11 @@
 export default {
     name: 'Follow',
     props: {
+        user: {
+            type: Number,
+            required: true
+        },
         follow: Boolean,
-        user: Number,
         oneway: Boolean,
         hasBorder: Boolean // 是否需要边框和背景色
     },
