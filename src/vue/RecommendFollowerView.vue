@@ -37,7 +37,7 @@
 </style>
 <template>
 <div class="recommend-follwer-view bg-default">
-    <div class="tips font-30 red bg-default" v-if="!self" @click="action('login')">
+    <div class="tips font-30 red bg-default" v-if="!isLogin" @click="action('login')">
         <span>登录查看更多关注人的内容</span>
     </div>
     <div class="item flex border-bottom bg-white" v-for="item in items">
@@ -51,7 +51,7 @@
                 {{item.desc}}
             </div>
         </div>
-        <follow :user="item.id" :follow="item.is_followed" oneway=true has-border=true></follow>
+        <follow :user="item.id" :follow="item.is_followed" :oneway=true :has-border=true></follow>
     </div>
     <partial name="load-more" v-if="items.hasMore"></partial>
     <empty v-if="items.isEmpty"></empty>
@@ -66,6 +66,11 @@ export default {
     components: {
         Follow
     },
+    data() {
+        return {
+            isLogin: true
+        }
+    },
     computed: {
         paging() {
             return {
@@ -78,6 +83,10 @@ export default {
                 }
             }
         }
+    },
+    ready() {
+        this.action('user')
+            .then(user => this.isLogin = _.isObject(user));
     }
 }
 </script>
