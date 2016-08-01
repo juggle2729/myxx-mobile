@@ -84,7 +84,7 @@ export default {
         },
         evaluation: {
             id: 'jb',
-            name: '求鉴宝'
+            name: '鉴宝'
         },
         topic: {
             id: 'tp',

@@ -60,7 +60,7 @@
 <template>
 <div class="card-component bg-white">
     <div v-if="type === 'jb'" v-link="{name: 'evaluation', params: {id: entry.id, result: 'none'}}">
-        <div class="data-label font-22 center white">求鉴宝</div>
+        <div class="data-label font-22 center white">鉴宝</div>
         <div class="media img" v-bg.md="entry.picture"></div>
         <div class="data-info font-26"><div class="data-name omit-2">{{entry.description}}</div></div>
     </div>
