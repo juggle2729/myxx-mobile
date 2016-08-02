@@ -177,7 +177,8 @@ export default {
             return {
                 path: 'dc/sns/search',
                 params: {
-                    owner_id: this.$route.params.id
+                    owner_id: this.$route.params.id,
+                    order_by: '-click_count'
                 }
             }
         }

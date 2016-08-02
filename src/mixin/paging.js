@@ -42,7 +42,7 @@ export default {
                         _.merge(this.items, {
                             total: data.total,
                             cursor: data.cursor,
-                            hasMore: items.length === opts.limit && this.items.length < data.total,
+                            hasMore: items.length === opts.limit,
                             isEmpty: this.items.length === 0,
                         });
                 });
