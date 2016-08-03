@@ -43,7 +43,7 @@
             }
         }
     }
-    
+
     .shop {
         height: 144px;
         padding: 0 32px;

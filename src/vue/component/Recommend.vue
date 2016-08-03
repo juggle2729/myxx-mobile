@@ -12,7 +12,7 @@
 }
 </style>
 <template>
-<div v-if="data && data.length > 0" class="recommend-component" :class="{'padding-top': !name}">
+<div v-if="data && data.length > 0" class="recommend-component bg-light" :class="{'padding-top': !name}">
     <div class="recommend-title font-26 gray">{{name}}</div>
     <div class="data-list">
         <card v-for="item in data" :entry="item.entry" :type="item.type"></card>

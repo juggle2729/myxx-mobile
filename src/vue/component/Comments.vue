@@ -223,6 +223,7 @@ export default {
                                 .then((resp) => {
                                     resolve(_.merge(resp, {
                                         content,
+                                        like_count: 0,
                                         reply_to: to,
                                         create_at: Date.now(),
                                         reply_from: {

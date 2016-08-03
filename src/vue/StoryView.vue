@@ -48,38 +48,38 @@
         &.padding-bottom {
             padding-bottom: 28px;
         }
-    }
-    .media {
-        display: inline-block;
-        border: 5px solid white;
-        background-size: cover;
-    }
-    .media:first-child:nth-last-child(1) {
-        width: 100%;
-        padding-top: 100%;
-    }
-    .media:first-child:nth-last-child(2),
-    .media:first-child:nth-last-child(2) ~ .media,
-    .media:first-child:nth-last-child(4),
-    .media:first-child:nth-last-child(4) ~ .media {
-        width: 50%;
-        padding-top: 50%;
-    }
-    .media:first-child:nth-last-child(3),
-    .media:first-child:nth-last-child(3) ~ .media,
-    .media:first-child:nth-last-child(5),
-    .media:first-child:nth-last-child(5) ~ .media,
-    .media:first-child:nth-last-child(6),
-    .media:first-child:nth-last-child(6) ~ .media {
-        width: 33.3333%;
-        padding-top: 33.3333%;
-    }
-
-    .media:first-child:nth-last-child(5),
-    .media:first-child:nth-last-child(5) ~ .media {
-        &:first-child, &:nth-child(2) {
+        .media {
+            display: inline-block;
+            border: 5px solid white;
+            background-size: cover;
+        }
+        .media:first-child:nth-last-child(1) {
+            width: 100%;
+            padding-top: 100%;
+        }
+        .media:first-child:nth-last-child(2),
+        .media:first-child:nth-last-child(2) ~ .media,
+        .media:first-child:nth-last-child(4),
+        .media:first-child:nth-last-child(4) ~ .media {
             width: 50%;
             padding-top: 50%;
+        }
+        .media:first-child:nth-last-child(3),
+        .media:first-child:nth-last-child(3) ~ .media,
+        .media:first-child:nth-last-child(5),
+        .media:first-child:nth-last-child(5) ~ .media,
+        .media:first-child:nth-last-child(6),
+        .media:first-child:nth-last-child(6) ~ .media {
+            width: 33.3333%;
+            padding-top: 33.3333%;
+        }
+
+        .media:first-child:nth-last-child(5),
+        .media:first-child:nth-last-child(5) ~ .media {
+            &:first-child, &:nth-child(2) {
+                width: 50%;
+                padding-top: 50%;
+            }
         }
     }
 
