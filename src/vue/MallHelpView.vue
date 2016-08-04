@@ -1,7 +1,7 @@
 <style lang="sass">
-@import '~style/partials/_mixin.scss';
 @import '~style/partials/_var.scss';
-.instructions-view {
+@import '~style/partials/_mixin.scss';
+.mall-help-view {
     min-height: 100%;
     padding-bottom: 22px;
     .title {
@@ -45,7 +45,7 @@
 }
 </style>
 <template>
-    <div class="instructions-view bg-default">
+    <div class="mall-help-view bg-default">
         <div class="bg-white border-bottom margin-bottom">
             <div class="title flex font-30 red border-bottom">
                 <div class="line bg-red"></div>
@@ -62,7 +62,7 @@
                 <div>问题分类</div>
             </div>
             <div class="font-26 container">
-                <div class="category center bg-white" v-for="item in classification" v-link="{name: 'instruction', params: {id: item.id}}">
+                <div class="category center bg-white" v-for="item in classification" v-link="{name: 'mall-help-category', params: {category: item.id}}">
                     <div class="{{item.icon}} gray"></div><div>{{item.title}}</div>
                 </div>
             </div>

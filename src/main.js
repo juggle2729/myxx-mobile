@@ -77,13 +77,14 @@ router.beforeEach(({from, to, next}) => {
 router.alias({
     '/evaluations/:tab': '/update',
     '/stories/:tab': '/update',
-    '/masters': '/update',
     '/lessons': '/update',
     '/user/:id': '/user/:id/none',
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',
     '/auctions/:id': 'user/:id/auctions',
-    '/jade/:id': '/jade/:id/none'
+    '/jade/:id': '/jade/:id/none',
+    '/instructions': '/help/mall',
+    '/instruction/:category': '/help/mall/:category'
 });
 router.map(routes);
 router.start(require('App.vue'), '#app');

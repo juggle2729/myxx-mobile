@@ -1,5 +1,5 @@
 <style lang="sass">
-.instruction-view {
+.mall-help-category-view {
     .item {
         height: 86px;
         line-height: 86px;
@@ -12,9 +12,9 @@
 }
 </style>
 <template>
-    <div class="instruction-view border-bottom bg-default">
+    <div class="mall-help-category-view border-bottom bg-default">
         <div class="bg-white">
-            <div class="item flex font-26 border-bottom" v-for="item in problems[this.$route.params.id]" @click="go(item.url)">
+            <div class="item flex font-26 border-bottom" v-for="item in problems[this.$route.params.category]" @click="go(item.url)">
                 <div class="flex-1">{{item.title}}</div>
                 <div class="icon-enter gray"></div>
             </div>
@@ -23,11 +23,9 @@
 </template>
 <script>
 export default {
-    name: 'InstructionView',
+    name: 'MallHelpCategoryView',
     ready() {
-        _.delay(() => {
-            this.action('updateTitle', {text: this.titles[this.$route.params.id]});
-        }, 50);
+        this.action('updateTitle', {text: this.titles[this.$route.params.category]});
     },
     data() {
         return {

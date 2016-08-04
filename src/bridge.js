@@ -37,18 +37,6 @@ const adapter = {
                 }
                 break;
             }
-            case 'playCourses': {
-                let medias = [{id: params.courseVideoId, type: 'video'}];
-                if(params.portraitId && params.productVideoId) {
-                    medias = medias.concat({id: params.portraitId, type: 'img'}, {id: params.productVideoId, type: 'video'});
-                }
-                this.$root.popup = {
-                        handler: 'play',
-                        medias,
-                        cb: fn => fn()
-                    };
-                break;
-            }
             case 'coverflow':
                 if(window.WeixinJSBridge) {
                     let urls = params.ids.split(',').map((id) => {return this.config.img + id;});
@@ -75,6 +63,9 @@ const adapter = {
                     };
                     document.body.appendChild(iframe);
                 }
+                break;
+            case 'open':
+                window.open(params.url);
                 break;
             case 'back':
                 window.history.go(-params.step);

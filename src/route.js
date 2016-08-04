@@ -49,6 +49,15 @@ export default {
             }, 'mall');
         }
     },
+    '/masters': {
+        name: 'masters',
+        title: '人物志',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MastersView.vue'));
+            }, 'master');
+        }
+    },
 
     '/master/:id': {
         name: 'master',
@@ -298,21 +307,30 @@ export default {
         }
     },
 
-    '/instructions': {
-        name: 'instructions',
+    '/help/mall': {
+        name: 'mall-help',
         title: '帮助',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('InstructionsView.vue'));
-            }, 'other');
+                resolve(require('MallHelpView.vue'));
+            }, 'help');
         }
     },
-    '/instruction/:id': {
-        name: 'instruction',
+    '/help/mall/terms': {
+        name: 'mall-terms',
+        title: '美玉商城入驻协议',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('InstructionView.vue'));
-            }, 'other');
+                resolve(require('MallHelpTermsView.vue'));
+            }, 'help');
+        }
+    },
+    '/help/mall/:category': {
+        name: 'mall-help-category',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MallHelpCategoryView.vue'));
+            }, 'help');
         }
     },
 
