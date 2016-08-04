@@ -108,7 +108,7 @@
 </style>
 <template>
 <div class="story-view bg-white" v-if="!$loadingRouteData">
-    <div v-if="cover_type === 'video'" class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
+    <div v-if="type === 'video'" class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
      <div class="story-header flex">
         <div class="user flex-1">
             <avatar :user="story.user"></avatar>
@@ -122,10 +122,10 @@
         <follow :user="story.user.id" :follow="story.user.is_followed" :has-border='true'></follow>
     </div>
     <div class="description omit-2 font-30">{{story.content}}</div>
-    <template v-if="cover_type === 'picture'">
-        <div class="cover img" v-bg="cover" @click="coverflow(this.picFlow, 0)"></div>
+    <template v-if="type === 'picture'">
+        <div class="cover img" v-bg="cover" @click="coverflow(this.pictures, 0)"></div>
         <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
-            <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(this.picFlow, $index + 1)"></div>
+            <div v-for="pic in pictures" v-bg="pic" v-if="$index" class="media" @click="coverflow(this.pictures, $index)"></div>
         </div>
     </template>
     <template v-if="story.topic_type.code === 'hd'">
@@ -175,31 +175,18 @@ export default {
         return {
             story: {
                 medias: []
-            },
-            cover_type: 'picture',
-            cover: '',
-            picFlow: []
+            }
         }
     },
     computed: {
+        xxx() {
+            return '' + this.cover + new Date().getTime();
+        },
         pictures() {
-            const videoObj = _.find(this.story.medias, (media) => { return media.type === 'video'});
-            if (videoObj) {
-                this.cover_type = 'video';
-                this.cover = videoObj.id;
-                return [];
-            } else {
-                let pic = _.map(
-                    _.filter(this.story.medias, (media) => {
-                        return media.type === 'picture';
-                    }), _.iteratee('id')
-                );
-                this.cover_type = 'picture';
-                this.cover = pic[0];
-                this.picFlow = pic;
-                return _.drop(pic);
-            }
-
+            return _.chain(this.story.medias)
+                        .filter(media => media.type === 'picture')
+                        .map(media => media.id)
+                        .value();
         },
         isSelf() {
             if (this.self) {
@@ -211,11 +198,9 @@ export default {
         paging() {
             return {
                 path: 'dc/rd/list',
-                list: 'entries',
                 params: {
                     obj_id: this.story.post_id,
-                    biz_type: 'tp',
-                    limit: 10
+                    biz_type: 'tp'
                 }
             }
         }
@@ -223,10 +208,13 @@ export default {
     route: {
         data({to}) {
             return this.$get(`sns/topics/${to.params.id}`)
-                .then((story) => {
+                .then(story => {
                     this.setShareData(story, true);
                     this.followed = story.user.is_followed;
                     this.story = story;
+
+                    const video = _.find(story.medias, {type: 'video'});
+                    _.merge(this, video ? {type: 'video', cover: video.id} : {type: 'picture', cover: story.medias[0].id});
                 });
         }
     }
