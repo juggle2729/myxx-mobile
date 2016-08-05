@@ -129,8 +129,7 @@ export default {
                     data = _.merge(data, {
                         title: '美玉秀秀',
                         desc: '大师在线视频鉴宝',
-                        icon: 'http://o0x80w5li.qnssl.com/logo.png',
-                        url: this.config.download
+                        icon: 'http://o0x80w5li.qnssl.com/logo.png'
                     }, entry);
             }
             data.title = _.truncate(data.title, {

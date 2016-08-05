@@ -93,7 +93,7 @@ export default {
                 isTest: !/^app/.test(location.hostname)
             };
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk);
-            env.isShare = !!(!env.isApp && _.get(this.$route, 'query.user'));
+            env.isShare = !!(!env.isApp && (_.has(this.$route, 'query.user') || _.has(this.$route, 'query.channel')));
             if(env.isApp) {
                 const digits = ua.match(/^MYXX\/\w+\/([\d|\.]+);/).pop().split('.');
                 digits.splice(1, 0, '.');
