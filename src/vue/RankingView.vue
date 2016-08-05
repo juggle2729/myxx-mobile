@@ -23,7 +23,8 @@
             > div {
                 height: 100%;
                 line-height: 100px;
-                margin: 0 59px;
+                margin: 0 50px;
+                white-space: nowrap;
                 &.active {
                     color: #cc3f4f;
                     border-bottom: 5px solid #cc3f4f;
@@ -87,7 +88,9 @@ export default {
     mixins: [shareable],
     data() {
         return {
-            items: {}
+            items: {},
+            week: 0,
+            all: 0
         }
     },
     computed: {
@@ -96,14 +99,29 @@ export default {
         }
     },
     route: {
-        data({to}) {
-            return this.$get('sns/jianbao/popular_masters', {
-                type: to.params.tab,
-                limit: 50
-            }).then((data) => {
-                this.items = data.masters;
-                this.setShareData(this.items, true);
-            });
+        data({to, next}) {
+            if(to.params.tab === 'all' && !this.all) {
+                // 获取总榜数据
+                this.$get('sns/jianbao/popular_masters', {
+                    type: 'all',
+                    limit: 50
+                }).then((data) => {
+                    this.all = data.masters;
+                    this.items = this.all;
+                });
+            } else if(!this.week) {
+                // 获取周榜
+                this.$get('sns/jianbao/popular_masters', {
+                    type: 'weekly',
+                    limit: 50
+                }).then((data) => {
+                    this.week = data.masters;
+                    this.items = this.week;
+                });
+            }
+            this.items = (to.params.tab === 'all') ? this.all : this.week;
+            this.setShareData(this.items, true);
+            next();
         }
     },
     methods: {

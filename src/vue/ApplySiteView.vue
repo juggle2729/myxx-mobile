@@ -56,7 +56,7 @@
     <div class="request" :class="{'hide': !requestShow}">
         <div class="text font-30">
             <p>您正在申请开通官网，请填写以下信息。</p>
-            <p style="margin-top:8px">我们会在两个工作日内联系你。</p>
+            <p style="margin-top:8px">我们会在两个工作日内联系您。</p>
         </div>
         <div class="input">
             <input class="font-30 border-default" type="tel" placeholder="手机号" v-model="contact" maxlength="20">

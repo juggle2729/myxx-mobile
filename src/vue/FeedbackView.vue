@@ -1,7 +1,7 @@
 <template>
     <div class="feedback-view bg-default">
         <div class="info">
-            <textarea class="font-30 border-default" placeholder="写下你对美玉秀秀的建议吧" v-model="content" maxlength="200"></textarea>
+            <textarea class="font-30 border-default" placeholder="写下您对美玉秀秀的建议吧" v-model="content" maxlength="200"></textarea>
             <p class="font-30">联系方式</p>
             <input class="font-30 border-default" type="text" placeholder="留下您的邮箱或电话号码" v-model="contact" maxlength="60">
             <button @click="submit" class="white font-30" :class="{ 'bg-red': checked, 'bg-gray': !checked}" :disabled="!checked">

@@ -112,7 +112,7 @@
     <div class="line font-26 flex margin-top">作品展示</div>
     <div class="cover img" v-bg="cover" @click="coverflow(work.pictures, 0)"></div>
     <div class="medias">
-        <div v-for="pic in work.pictures" v-bg="pic" class="media" @click="coverflow(work.pictures, $index)"></div>
+        <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(work.pictures, $index+1)"></div>
     </div>
     <div class="desc">
         <div class="font-36">{{work.title}}</div>

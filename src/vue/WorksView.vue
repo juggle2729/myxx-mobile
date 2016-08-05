@@ -1,5 +1,6 @@
 <style lang="sass">
 .works-view {
+    padding-bottom: 112px;
     .works {
         padding: 20px 20px 0;
         .media {

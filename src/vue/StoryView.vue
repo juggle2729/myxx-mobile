@@ -179,9 +179,6 @@ export default {
         }
     },
     computed: {
-        xxx() {
-            return '' + this.cover + new Date().getTime();
-        },
         pictures() {
             return _.chain(this.story.medias)
                         .filter(media => media.type === 'picture')
