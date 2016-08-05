@@ -49,6 +49,27 @@ export default {
             }, 'mall');
         }
     },
+
+    '/purchases': {
+        name: 'purchases',
+        title: '求购竞标',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchasesView.vue'));
+            }, 'purchase');
+        }
+    },
+
+    '/purchase/:id': {
+        name: 'purchase',
+        title: '求购详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchaseView.vue'));
+            }, 'purchase');
+        }
+    },
+
     '/masters': {
         name: 'masters',
         title: '人物志',
@@ -126,6 +147,17 @@ export default {
             }, 'profile');
         }
     },
+
+    '/user/:id/purchase': {
+        name: 'user-purchase',
+        title: '我的求购竞标',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchasesView.vue'));
+            }, 'profile');
+        }
+    },
+
 
     '/user/:id/:tab': { // 个人主页
         name: 'user',
