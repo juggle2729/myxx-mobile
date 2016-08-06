@@ -282,6 +282,15 @@ export default {
             }, 'mall');
         }
     },
+    '/pay-offline': {
+        name: 'pay-offline',
+        title: '大额支付',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PayOfflineView.vue'));
+            }, 'mall');
+        }
+    },
 
     '/address/list': { // 商品id，可选
         name: 'address-list',

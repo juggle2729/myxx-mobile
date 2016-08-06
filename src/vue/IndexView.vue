@@ -21,6 +21,9 @@
         </li>
         <li class="tab">商城</li>
         <li>
+            <a href="/pay-offline">大额支付 - /pay-offline</a>
+        </li>
+        <li>
             <a href="/jade/188/none">商品详情 - /jade/:id/:tab</a>
         </li>
         <li>

@@ -58,7 +58,7 @@
                     3）如果双方就退货以及退货导致的运费和保价费未能达成一致，由平台协商仲裁解决。
                 </div>
         </div>
-        <div class="help red font-30 center" v-link="{name: 'instructions'}"><span>查看帮助</span><span class="icon-enter red"></span></div>
+        <div class="help red font-30 center" v-link="{name: 'mall-help'}"><span>查看帮助</span><span class="icon-enter red"></span></div>
    </div>
 </div>
 </template>

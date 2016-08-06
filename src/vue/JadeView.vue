@@ -32,18 +32,26 @@
             text-align: center;
             line-height: 56px;
         }
-        .footer {
-            height: 80px;
-            padding: 3px 60px 0;
-            -webkit-box-pack: justify;
-            [class^='icon-'], [class*=' icon-'] {
-                position: relative;
-                right: -4px;
-                top: 3px;
+        .guarantee {
+            line-height: 0;
+            img {
+                height: 72px;
+                width: 100%;
             }
         }
     }
-
+    .master {
+        height: 144px;
+        padding: 32px;
+        .avatar-90 {
+            position: relative;
+            bottom: 4px;
+            margin-right: 20px;
+        }
+        .master-name {
+            margin-bottom: 14px;
+        }
+    }
     .shop {
         height: 144px;
         padding: 0 32px;
@@ -141,26 +149,11 @@
     <div class="titles bg-white">
         <div class="header">
             <div class="title font-32">{{jade.title}}</div>
-            <div class="flex">
-                <p class="red font-44 flex-1">{{jade.price | price}}</p>
-            </div>
+            <div class="flex"><p class="red font-44 flex-1">{{jade.price | price}}</p></div>
         </div>
-        <div class="footer flex font-26 light border-top">
-            <div class="flex">
-                <span class="icon-guarantee font-30"></span>
-                <span>付款担保</span>
-            </div>
-            <div class="flex">
-                <span class="icon-five font-30"></span>
-                <span>五天退货</span>
-            </div>
-            <div class="flex">
-                <span class="icon-sf font-30"></span>
-                <span>顺丰包邮</span>
-            </div>
-        </div>
+        <div class="guarantee border-top"><img :src="'jade/guarantee.png' | qn" alt=""></div>
     </div>
-    <div class="separator-20"></div>
+    <div class="separator-20-no"></div>
     <div class="shop bg-white flex detail" v-link="{name: 'shop', params: {id: jade.shop.id}}">
         <div class="img" v-bg="jade.shop.logo"></div>
         <div class="flex-1">
@@ -171,7 +164,15 @@
         </div>
         <div class="icon-enter font-30 gray"></div>
     </div>
-    <div class="separator-20"></div>
+    <div class="master flex bg-white border-top" v-link="{name: 'user', params: {id: jade.owner.id}}">
+        <avatar :user="jade.owner" :size="90"></avatar>
+        <div class="flex-1">
+            <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
+            <p class="font-26 gray">{{jade.owner.title}}</p>
+        </div>
+        <div class="font-26 icon-enter gray"></div>
+    </div>
+    <div class="separator-20-no"></div>
     <div class="tabs tabs-static border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
         <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
         <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
