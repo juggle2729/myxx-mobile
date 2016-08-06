@@ -123,6 +123,12 @@
 }
 .scrollable {
     -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0;
+    & > * {
+        display: inline-block;
+    }
 }
 
 .omit {

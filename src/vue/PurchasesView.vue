@@ -9,14 +9,26 @@
 </style>
 <template>
 <div class="purchases-view">
-    <div v-for="i in 'aaaaaaa'" v-link="{name: 'purchase', params: {id: $index}}">
-        <div class="xxx">求购#{{$index}}</div>
+    <template v-for="item in items">
+        <purchase-item :item="item"></purchase-item>
         <div class="separator"></div>
-    </div>
+    </template>
 </div>
 </template>
 <script>
+import paging from 'paging';
+import PurchaseItem from 'component/PurchaseItem.vue';
 export default {
-    name: 'PurchasesView'
+    name: 'PurchasesView',
+    mixins: [paging],
+    components: [PurchaseItem],
+    computed: {
+        paging() {
+            return {
+                path: 'sns/users/1020/topics',
+                list: 'topics'
+            };
+        }
+    }
 }
 </script>

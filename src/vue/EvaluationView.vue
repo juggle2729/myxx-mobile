@@ -3,9 +3,6 @@
 .evaluation-detail {
     padding-bottom: 100px;
     .results {
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
         height: 926px;
         padding: 52px 78px;
         background: #202020 url('#{$qn}/evaluation/result-bg.png') no-repeat;
@@ -18,7 +15,6 @@
             background-color: black;
         }
         > div {
-            display: inline-block;
             position: relative;
             &:not(:last-of-type) {
                 margin-right: 39px;
@@ -74,12 +70,8 @@
         }
     }
     .images {
-        font-size: 0;
         margin: 32px;
-        overflow-x: auto;
-        white-space: nowrap;
         > li {
-            display: inline-block;
             margin-right: 6px;
             img {
                 height: 450px;
