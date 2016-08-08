@@ -54,7 +54,7 @@ export default {
     ready() {
         this.$on('restore', () => {
             this.action('action', {label: '常见问题'}).then(() => {
-                this.$router.go({name: 'instruction', params:{id: 'payment'}});
+                this.$router.go({name: 'mall-help-category', params:{category: 'payment'}});
             });
         });
     },
@@ -63,7 +63,7 @@ export default {
             return this.$get(`balance/withdraw/${to.params.id}`).then((data) => {
                 this.info = data;
                 this.action('action', {label: '常见问题'}).then(() => {
-                    this.$router.go({name: 'instruction', params:{id: 'payment'}});
+                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}});
                 });
             });
         }

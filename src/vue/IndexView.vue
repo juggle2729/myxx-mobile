@@ -42,7 +42,7 @@
             <a href="/wallet-detail/expects">明细 - wallet-detail/expects</a>
         </li>
         <li>
-            <a href="/instructions">帮助 - instructions</a>
+            <a href="/mall-help">帮助 - mall-help</a>
         </li>
         <li class="tab">活动标签信息流</li>
         <li>

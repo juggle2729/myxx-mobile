@@ -72,7 +72,7 @@ export default {
     ready() {
         this.$on('restore', () => {
             this.action('action', {label: '常见问题'}).then(() => {
-                this.$router.go({name: 'instruction', params: {id: 'payment'}});
+                this.$router.go({name: 'mall-help-category', params: {category: 'payment'}});
             });
         });
     },
@@ -86,7 +86,7 @@ export default {
             return this.$get('balance/latest').then((data) => {
                 this.balance = data.current_amount;
                 this.action('action', {label: '常见问题'}).then(() => {
-                    this.$router.go({name: 'instruction', params:{id: 'payment'}});
+                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}});
                 });
             });
         }

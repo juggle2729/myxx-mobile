@@ -37,8 +37,10 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'sites',
-                list: 'sites'
+                path: 'cms/promotes',
+                params: {
+                    section: 'website'
+                }
             }
         }
     }
