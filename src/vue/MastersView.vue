@@ -20,10 +20,10 @@
 <template>
 <div class="masters-view">
     <div v-for="master in items" v-link="{name: 'master', params: {id: master.id}}">
-        <div class="photo" v-bg="master.photo"></div>
+        <div class="photo" v-bg="master.entry.logo"></div>
         <footer class="font-30">
-            <div class="title gray">{{master.title}}</div>
-            <div>{{master.name}}</div>
+            <div class="title gray">{{master.entry.title}}</div>
+            <div>{{master.entry.sub_title}}</div>
         </footer>
         <div class="separator"></div>
     </div>

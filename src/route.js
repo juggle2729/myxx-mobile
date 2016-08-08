@@ -153,7 +153,7 @@ export default {
         title: '我的求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'));
+                resolve(require('UserPurchaseView.vue'));
             }, 'profile');
         }
     },

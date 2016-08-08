@@ -36,6 +36,7 @@
             background-color: #f5f5f5;
             border-radius: 12px;
             padding: 8px 12px;
+            margin-right: 8px;
         }
     }
     footer {
@@ -49,25 +50,26 @@
 <template>
 <div class="purchase-item" v-link="{name: 'purchase', params: {id: item.id}}">
     <header class="flex font-26">
-        <avatar :user="item.user" :size="50"></avatar>
-        <div class="name gray">{{item.user.name}}</div>
+        <avatar :user="item.owner" :size="50"></avatar>
+        <div class="name gray">{{item.owner.nickname}}</div>
         <div class="guarantee">￥</div>
     </header>
-    <div class="desc font-30"><span class="red">预算￥{{item.id}}左右</span>{{item.content}}</div>
+    <div class="desc font-30"><span class="red">预算￥{{Math.round(item.price_max/100)}}左右</span>{{item.description}}</div>
     <ul class="medias scrollable">
-        <li v-for="media in item.medias">
+        <li v-for="pic in item.pictures">
+            <img :src="config.img+pic+'?imageView2/2/h/450'" />
+        </li>
+        <!-- <li v-for="media in item.medias">
             <img v-if="media.type==='picture'" :src="config.img+media.id+'?imageView2/2/h/450'" />
             <img v-else :src="config.video+media.id+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
-        </li>
+        </li> -->
     </ul>
     <ul class="tags font-22">
-        <li>籽料</li>
-        <li>项链</li>
-        <li>新疆和田</li>
+        <li v-for="attr in item.attributes">{{attr}}</li>
     </ul>
     <footer class="font-26 flex light">
-        <div><span class="red">3</span>个竞标</div>
-        <div class="flex-1"><span class="red">1</span>个中标</div>
+        <div><span class="red">{{item.bid_count}}</span>个竞标</div>
+        <div class="flex-1"><span class="red">{{item.win_count}}</span>个中标</div>
     </footer>
 </div>
 </template>

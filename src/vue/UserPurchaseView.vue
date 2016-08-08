@@ -1,37 +1,25 @@
 <style lang="sass">
-.purchases-view {
-    padding-bottom: 98px;
-    .purchase-btn {
-        position: fixed;
-        bottom: 0;
-        height: 98px;
-        width: 100%;
-        line-height: 98px;
-        text-align: center;
-        font-weight: bold;
-    }
-}
+.user-purchase-view {}
 </style>
 <template>
-<div class="purchases-view">
+<div class="user-purchase-view">
     <template v-for="item in items">
         <purchase-item :item="item"></purchase-item>
         <div class="separator"></div>
     </template>
-    <div @click="action('purchase')" class="purchase-btn bg-red white font-34">我要求购</div>
 </div>
 </template>
 <script>
 import paging from 'paging';
 import PurchaseItem from 'component/PurchaseItem.vue';
 export default {
-    name: 'PurchasesView',
+    name: 'UserPurchaseView',
     mixins: [paging],
     components: [PurchaseItem],
     computed: {
         paging() {
             return {
-                path: 'mall/all_purchases'
+                path: 'mall/purchases'
             };
         }
     }
