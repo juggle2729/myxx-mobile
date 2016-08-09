@@ -1,6 +1,5 @@
 import config from './config';
 
-const db = window.localStorage;
 const prefix = 'myxx-' + (config.api.match(/^\/\/(\d)/) ? 'docker' : (config.api.match(/\/\/(\w+)?.?api/).pop() || 'prod')) + '-';
 
 /**
@@ -9,17 +8,23 @@ const prefix = 'myxx-' + (config.api.match(/^\/\/(\d)/) ? 'docker' : (config.api
  */
 const store = {
 
-    set(k, v='') {
-        db.setItem(prefix + k, _.isObjectLike(v) ? JSON.stringify(v) : v);
+    set(k, v='', exp=100*24*60*60*1000) {
+        document.cookie = [
+                `${prefix + k}=${JSON.stringify(v)}`,
+                `expires=${new Date(Date.now()+exp).toUTCString()}`,
+                'path=/'
+            ].join('; ');
     },
 
     get(k, v=null) {
-        const item = db.getItem(prefix + k);
-        return item !== null ? JSON.parse(item) : v;
+        // const item = db.getItem(prefix + k);
+        // return item !== null ? JSON.parse(item) : v;
+        const cookie = document.cookie ? _.chain(document.cookie).split('; ').map(c => [c.substr(0, c.indexOf('=')), c.substr(c.indexOf('=')+1)]).fromPairs().value() : {};
+        return JSON.parse(_.get(cookie, prefix + k, null));
     },
 
     remove(k) {
-        db.removeItem(prefix + k);
+        this.set(k, undefined, -1);
     }
 };
 
