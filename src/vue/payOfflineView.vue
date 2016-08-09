@@ -44,35 +44,57 @@
     }
 }
 </style>
-<template>
-    <div class="pay-offline-view">
-        <div class="instruction center">
-            <div class="tip font-32">大额支付支持银行转账交易<br>请联系客服</div>
-            <div class="contact flex">
-                <div class="flex-1 border-right font-26 gray">
-                    <img :src="'service/online.svg' | qn" alt="online-service" class="margin-bottom"><p>在线客服</p>
-                </div>
-                <div class="flex-1 font-26 gray">
-                    <img :src="'service/tel.svg' | qn" alt="tel-service" class="margin-bottom"><p>电话客服</p>
-                </div>
-            </div>
-        </div>
-        <div class="separator-20-no"></div>
-        <div class="order font-30">
-            <div class="item border-bottom">订单金额<span class="red font-36 margin-left">￥5000</span></div>
-            <div class="item border-bottom">订单编号<span class="gray margin-left">123212121</span></div>
-            <div class="customer">
-                <p>胡锡涛</p><p class="tel">15071352286</p>
-                <div class="address omit-2 font-26 gray">湖北省武汉市江夏区 当代国际花园 国际九区 比弗利 10-1</div>
-            </div>
-        </div>
-        <div class="separator-20-no"></div>
-        <div class="operation font-30">
-            <p>转账时请备注您的联系电话，我们收到货款后会第一时间与您确认后续事宜。</p>
-            <div class="flex">
-                <div class="margin-right button flex-1 border-gray center">订单详情</div>
-                <div class="button flex-1 border-gray center">回首页</div>
-            </div>
-        </div>
-    </div>
+<template lang="jade">
+    .pay-offline-view
+        .instruction.center
+            .tip.font-22 大额支付支持银行转账交易<br>请联系客服
+            .contact.flex
+                .flex-1.border-right.font-26.gray(@click="kf()")
+                    img.margin-bottom(:src="'service/online.svg' | qn", alt="online-service")
+                    p 在线客服
+                .flex-1.font-26.gray
+                    a(href="tel:4000587266")
+                        img.margin-bottom(:src="'service/tel.svg' | qn", alt="tel-service")
+                        p 电话客服
+        .separator-20-no
+        .order.font-30
+            .item.border-bottom 订单金额
+                span.red.font-36.margin-left {{order.trans_amount | price}}
+            .item.border-bottom 订单编号
+                span.gray.margin-left {{order.order_no}}
+            .customer
+                p {{order.receiver_name}}
+                p.tel {{order.receiver_phone}}
+                div.address.omit-2.font-26.gray {{order.receiver_address}}
+        .separator-20-no
+        .operation.font-30
+            p 转账时请备注您的联系电话，我们收到货款后会第一时间与您确认后续事宜。
+            .flex
+                .margin-right.button.flex-1.border-gray.center(v-link="{name: 'order', params: {id: order.order_no}}") 订单详情
+                .button.flex-1.border-gray.center(@click="home()") 回首页
 </template>
+<script>
+    export default {
+        name: 'PayOfflineView',
+        data() {
+            return {
+                order: {}
+            }
+        },
+        route: {
+            data({to}) {
+                return this.$get(`mall/order/${to.params.id}`).then((order) => {
+                    this.order = order;
+                });
+            }
+        },
+        methods: {
+            home() {
+                this.action('mall');
+            },
+            kf() {
+                this.action('chat', {id: this.order.default_admin.id, name: this.order.default_admin.nickname});
+            }
+        }
+    }
+</script>

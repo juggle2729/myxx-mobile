@@ -282,7 +282,7 @@ export default {
             }, 'mall');
         }
     },
-    '/pay-offline': {
+    '/pay-offline/:id': {
         name: 'pay-offline',
         title: '大额支付',
         component(resolve) {

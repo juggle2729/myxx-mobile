@@ -1,127 +1,131 @@
 @font-face {
-    font-family: 'icomoon';
-    src: url('#{$qn}/icomoon.ttf?v=1.6') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'icomoon';
+  src: url('#{$qn}/icomoon.ttf?v=2.0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-activity:before {
-    content: "\e905";
+  content: "\e905";
+}
+.icon-live:before {
+  content: "\e906";
 }
 .icon-location:before {
-    content: "\e902";
+  content: "\e902";
 }
 .icon-comment:before {
-    content: "\e903";
+  content: "\e903";
 }
 .icon-comment-solid:before {
-    content: "\e901";
+  content: "\e901";
 }
 .icon-like:before {
-    content: "\e90b";
+  content: "\e90b";
 }
 .icon-share:before {
-    content: "\e90c";
+  content: "\e90c";
 }
 .icon-contact:before {
-    content: "\e90e";
+  content: "\e90e";
 }
 .icon-five:before {
-    content: "\e900";
+  content: "\e900";
 }
 .icon-check-on:before {
-    content: "\e939";
+  content: "\e939";
 }
 .icon-help-list:before {
-    content: "\e92f";
+  content: "\e92f";
 }
 .icon-payment:before {
-    content: "\e930";
+  content: "\e930";
 }
 .icon-guarantee:before {
-    content: "\e932";
+  content: "\e932";
 }
 .icon-delete:before {
-    content: "\e935";
+  content: "\e935";
 }
 .icon-help-service:before {
-    content: "\e936";
+  content: "\e936";
 }
 .icon-help-verify:before {
-    content: "\e937";
+  content: "\e937";
 }
 .icon-logistics:before {
-    content: "\e938";
+  content: "\e938";
 }
 .icon-check-off:before {
-    content: "\e93d";
+  content: "\e93d";
 }
 .icon-guide:before {
-    content: "\e93e";
+  content: "\e93e";
 }
 .icon-help-return:before {
-    content: "\e93f";
+  content: "\e93f";
 }
 .icon-sf:before {
-    content: "\e940";
+  content: "\e940";
 }
 .icon-add:before {
-    content: "\e92a";
+  content: "\e92a";
 }
 .icon-subtract:before {
-    content: "\e92b";
+  content: "\e92b";
 }
 .icon-record:before {
-    content: "\e92c";
+  content: "\e92c";
 }
 .icon-clock:before {
-    content: "\e92d";
+  content: "\e92d";
 }
 .icon-wechat:before {
-    content: "\e931";
+  content: "\e931";
 }
 .icon-down-slim:before {
-    content: "\e934";
+  content: "\e934";
 }
 .icon-success:before {
-    content: "\e928";
+  content: "\e928";
 }
 .icon-warn:before {
-    content: "\e929";
+  content: "\e929";
 }
 .icon-new-product:before {
-    content: "\e920";
+  content: "\e920";
 }
 .icon-auction:before {
-    content: "\e921";
+  content: "\e921";
 }
 .icon-user:before {
-    content: "\e927";
+  content: "\e927";
 }
 .icon-down:before {
-    content: "\e91c";
+  content: "\e91c";
 }
 .icon-plus:before {
-    content: "\e904";
+  content: "\e904";
 }
 .icon-enter:before {
-    content: "\e907";
+  content: "\e907";
 }
 .icon-edit:before {
-    content: "\e908";
+  content: "\e908";
 }
+

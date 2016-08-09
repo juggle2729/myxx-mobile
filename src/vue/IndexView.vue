@@ -50,7 +50,7 @@ export default {
                     href: '/ranking/weekly'
                 }, {
                     label: '大额支付',
-                    href: '/pay-offline'
+                    href: '/pay-offline/160808170534035573'
                 }, {
                     label: '商品详情',
                     href: '/jade/188/none'

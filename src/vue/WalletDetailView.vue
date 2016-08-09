@@ -12,7 +12,6 @@
     }
     .tabs {
         height: 100px;
-        padding: 0 100px;
         > div {
             line-height: 40px;
             text-align: center;

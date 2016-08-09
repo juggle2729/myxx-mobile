@@ -125,6 +125,11 @@ export default {
                     data.desc = `${entry.name}的作品正在展出，邀您来共赏`;
                     data.icon = entry.logo;
                     break;
+                case 'purchase':
+                    data.title = `${entry.title}`;
+                    data.desc = '你发需求，商家竞标，上手对比，买得放心！';
+                    data.icon = 'http://o0x80w5li.qnssl.com/logo.png';
+                    break;
                 default:
                     data = _.merge(data, {
                         title: '美玉秀秀',

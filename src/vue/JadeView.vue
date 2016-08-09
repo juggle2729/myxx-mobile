@@ -41,16 +41,9 @@
         }
     }
     .master {
-        height: 144px;
-        padding: 32px;
-        .avatar-90 {
-            position: relative;
-            bottom: 4px;
-            margin-right: 20px;
-        }
-        .master-name {
-            margin-bottom: 14px;
-        }
+        height: 72px;
+        line-height: 72px;
+        padding: 0 32px;
     }
     .shop {
         height: 144px;
@@ -165,12 +158,8 @@
         <div class="icon-enter font-30 gray"></div>
     </div>
     <div class="master flex bg-white border-top" v-link="{name: 'user', params: {id: jade.owner.id}}">
-        <avatar :user="jade.owner" :size="90"></avatar>
-        <div class="flex-1">
-            <p class="font-32" :class="{'master-name': jade.owner.title}">{{jade.owner.name}}</p>
-            <p class="font-26 gray">{{jade.owner.title}}</p>
-        </div>
-        <div class="font-26 icon-enter gray"></div>
+        <avatar :user="jade.owner" :size="50"></avatar>
+        <div class="font-26 gray margin-left">{{jade.owner.name}}</div>
     </div>
     <div class="separator-20-no"></div>
     <div class="tabs tabs-static border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
@@ -190,7 +179,7 @@
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" @click="gotoComments">
                 <div class="icon-comment-solid font-44"></div>
-                <div>评论</div>
+                <div>评论  {{jade.comment_count}}</div>
             </div>
         </div>
         <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >{{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}</div>

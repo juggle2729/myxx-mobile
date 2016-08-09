@@ -19,20 +19,15 @@
         }
         .tabs {
             height: 100px;
-            padding: 0 180px;
             > div {
-                height: 100%;
-                line-height: 100px;
-                margin: 0 50px;
+                line-height: 40px;
                 white-space: nowrap;
                 &.active {
                     color: #cc3f4f;
-                    border-bottom: 5px solid #cc3f4f;
                 }
             }
             &.default > div:first-child {
                 color: #cc3f4f;
-                border-bottom: 5px solid #cc3f4f;
             }
         }
         .items {
@@ -63,7 +58,7 @@
             <div class="date font-26 white">最近更新：{{date}}</div>
         </div>
         <div class="tabs flex font-30 border-bottom" :class="{'default': isDefaultView}">
-            <div class="flex-1 center" @click="go('weekly')" :class="{'active': $route.params.tab === 'weekly'}">周榜</div>
+            <div class="flex-1 center border-right" @click="go('weekly')" :class="{'active': $route.params.tab === 'weekly'}">周榜</div>
             <div class="flex-1 center" @click="go('all')" :class="{'active': $route.params.tab === 'all'}">总榜</div>
         </div>
         <div class="items">
