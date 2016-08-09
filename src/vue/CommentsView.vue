@@ -5,7 +5,7 @@
 </style>
 <template>
     <div class="comments-view">
-        <comments :type="type" :id="id"></comments>
+        <comments :type="type" :id="id" :limit="10" :auto="true"></comments>
     </div>
 </template>
 <script>

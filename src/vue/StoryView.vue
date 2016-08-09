@@ -134,7 +134,10 @@
         </div>
     </template>
     <template v-else>
-        <tags :tags="story.tags"></tags>
+        <div v-if="story.tags.length">
+            <div class="separator-20"></div>
+            <tags :tags="story.tags"></tags>
+        </div>
     </template>
     <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
         <like :active="story.liked" :count="story.like"></like>

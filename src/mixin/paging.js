@@ -10,7 +10,10 @@ export default {
     },
     events: {
         scrollToBottom(e) {
-            this.paging.list !== 'comments' && this.fetch();
+            // auto 可以为 undefined 或者 true
+            if (this.paging.auto !== false) {
+                this.fetch();
+            }
         }
     },
     methods: {

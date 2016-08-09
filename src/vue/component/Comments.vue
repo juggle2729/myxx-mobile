@@ -118,9 +118,9 @@
         </li>
         <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
     </ul>
-    <div class="font-26 red center more" v-if="items.hasMore" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
+    <div class="font-26 red center more" v-if="items.hasMore && !auto" @click="getMore()">查看更多评论<span class="icon-down-slim red"></span></div>
     <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
-    <div v-if="!env.isShare && displayInput" class="fake-input font-30 flex border-top" @click="comment()">
+    <div v-if="!env.isShare" class="fake-input font-30 flex border-top" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
@@ -138,16 +138,22 @@ export default {
         Like
     },
     props: {
+        // 评论id
         id: [Number, String],
+        // 评论类型
         type: {
-            type: Number,
+            type: [Number, String],
             required: true
         },
-        displayInput: {
+        // 每次获取评论条数
+        limit: {
+            type: Number,
+            default: 5
+        },
+        // 触底自动加载, 默认是false
+        auto: {
             type: Boolean,
-            default: function() {
-                return true;
-            }
+            default: false
         }
     },
     computed: {
@@ -156,10 +162,11 @@ export default {
                 path: `users/target/${this.id||this.$route.params.id}/type/${this.type}/comments`,
                 list: 'comments',
                 params: {
-                    limit: 5
+                    limit: this.limit
                 },
+                auto: this.auto,
                 transform(items) {
-                    return items.map(this.emojify);
+                    return items.map(this.transform);
                 }
             }
         }
@@ -182,7 +189,7 @@ export default {
 
     methods: {
         getMore() {
-            this.fetch();
+            this.$router.go({name: 'comments', params: {id: this.id, type: this.type}});
         },
         clicked(comment, index) {
             if(!this.self) {
@@ -238,7 +245,7 @@ export default {
                         }
                     });
                 }).then((comment) => {
-                    this.items.splice(0, 0, this.emojify(comment));
+                    this.items.splice(0, 0, this.transform(comment));
                     this.items.total += 1;
                     this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'});
                 });
@@ -249,7 +256,11 @@ export default {
             this.$route.router.go({name: 'user', params: {id, tab}});
         },
 
-        emojify(comment) {
+        transform(comment) {
+            // escape HTML
+            comment.content = comment.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // emojify
             if(/\[.{1,3}?\]/.test(comment.content)) {
                 comment.content = comment.content.replace(/\[(.{1,3}?)\]/g, (alt) => {
                     const index = this.config.emoji.indexOf(alt.replace(/\[|\]/g, ''));
