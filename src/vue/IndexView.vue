@@ -31,21 +31,21 @@
     to {color: white; text-shadow: 0 0 5px white; }
 }
 </style>
-<template>
-<ul class="index-view bg-default font-34">
-    <li v-for="link in links">
-        <a :href="link.href">{{link.label}}</a>
-    </li>
-</ul>
+<template lang="jade">
+ul.index-view.bg-default.font-34
+    li(v-for="link in links")
+        a(:href="link.href") {{link.label}}
 </template>
 <script>
-import Q from 'q';
 export default {
     name: 'Index',
     data() {
         return {
             links: [
                 {
+                    label: '求购竞标列表',
+                    href: '/purchases'
+                }, {
                     label: '鉴宝师排行',
                     href: '/ranking/weekly'
                 }, {

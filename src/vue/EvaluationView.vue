@@ -96,68 +96,55 @@
     }
 }
 </style>
-<template>
-<div class="evaluation-detail">
-    <div class="header">
-        <div class="user">
-            <avatar :user="evaluation.user"></avatar>
-            <div class="margin-left">
-                <div class="font-26">{{evaluation.user.name}}</div>
-                <div class="margin-top font-22 gray">
-                    <span>{{evaluation.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{evaluation.click}}人浏览</span>
-                </div>
-            </div>
-        </div>
-        <div class="desc font-30 user-input">{{evaluation.description}}</div>
-    </div>
-    <ul class="images scrollable">
-        <li class="img" v-for="picture in evaluation.pictures" @click="coverflow(evaluation.pictures, $index)">
-            <img :src="config.img+picture+'?imageView2/2/h/450'" />
-        </li>
-        <li v-if="evaluation.video" class="video" @click="play(evaluation.video)">
-            <img :src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
-        </li>
-    </ul>
-    <div v-if="evaluation.results.length" class="results scrollable">
-        <div v-for="result in evaluation.results">
-            <div class="result-head flex">
-                <avatar :user="result.identifier"></avatar>
-                <div class="flex-1 margin-left">
-                    <div class="font-30 white">{{result.identifier.name}}</div>
-                    <div class="title font-26 white margin-top">{{result.identifier.title}}</div>
-                </div>
-            </div>
-            <img class="portrait" @click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})" :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'" alt="{{result.identifier.name}}">
-            <div class="price font-30 white center">
-                <span>鉴定结果为{{opts.result[result.result]}}</span>
-                <span v-if="result.value">&nbsp;估价为{{opts.price[result.value]}}</span>
-            </div>
-            <a v-if="result.ad_product_id" class="action white bg-blue font-30" v-link="{name: 'jade', params: {id: result.ad_product_id}}">
-                <i class="icon-new-product"></i><span>进入新品发布</span>
-            </a>
-            <a v-else class="action white bg-green font-30" v-link="result.identifier | profile">
-                <i class="icon-user"></i><span>进入个人主页</span>
-            </a>
-        </div>
-    </div>
-    <tags :tags="evaluation.tags"></tags>
-    <div class="footer flex border-top font-30 gray" v-if="env.isShare">
-        <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="border-left"></share>
-    </div>
-    <div class="separator-20"></div>
-    <comments :type="10" :display-input="false" v-ref:comment></comments>
-    <product-recommend :id="evaluation.post_id"></product-recommend>
-    <recommend :data="items" name="相关推荐"></recommend>
-    <div class="footer flex border-top font-30 gray" v-if="!env.isShare">
-        <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="border-left"></share>
-    </div>
-</div>
+<template lang="jade">
+.evaluation-detail
+    .header
+        .user
+            avatar(:user="evaluation.user")
+            .margin-left
+                .font-26 {{evaluation.user.name}}
+                .margin-top.font-22.gray
+                    span {{evaluation.create_at | moment}}
+                    span.padding-horizontal |
+                    span {{evaluation.click}}人浏览
+        .desc.font-30.user-input {{evaluation.description}}
+    ul.images.scrollable
+        li.img(v-for="picture in evaluation.pictures", @click="coverflow(evaluation.pictures, $index)")
+            img(:src="config.img+picture+'?imageView2/2/h/450'")
+        li.video(v-if="evaluation.video", @click="play(evaluation.video)")
+            img(:src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'")
+    .results.scrollable(v-if="evaluation.results.length")
+        div(v-for="result in evaluation.results")
+            .result-head.flex
+                avatar(:user="result.identifier")
+                .flex-1.margin-left
+                    .font-30.white {{result.identifier.name}}
+                    .title.font-26.white.margin-top {{result.identifier.title}}
+            img.portrait(@click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})", :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'", alt="{{result.identifier.name}}")
+            .price.font-30.white.center
+                span 鉴定结果为{{opts.result[result.result]}}
+                span(v-if="result.value") &nbsp;估价为{{opts.price[result.value]}}
+            a.action.white.bg-blue.font-30(v-if="result.ad_product_id", v-link="{name: 'jade', params: {id: result.ad_product_id}}")
+                i.icon-new-product
+                span 进入新品发布
+            a.action.white.bg-green.font-30(v-else, v-link="result.identifier | profile")
+                i.icon-user
+                span 进入个人主页
+    tags(:tags="evaluation.tags")
+    .footer.flex.border-top.font-30.gray(v-if="env.isShare")
+        .comment.border-left(@click="$refs.comment.comment()")
+            i.icon-comment-solid
+            span 写评论
+        share.border-left
+    .separator-20
+    comments(:type="10", :display-input="false", v-ref:comment)
+    product-recommend(:id="evaluation.post_id")
+    recommend(:data="items", name="相关推荐")
+    .footer.flex.border-top.font-30.gray(v-if="!env.isShare")
+        .comment.border-left(@click="$refs.comment.comment()")
+            i.icon-comment-solid
+            span 写评论
+        share.border-left
 </template>
 <script>
 import Tags from './component/Tags.vue';
