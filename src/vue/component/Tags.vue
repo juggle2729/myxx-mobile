@@ -37,7 +37,6 @@
     <div class="tags" :class="nowrap ? 'nowrap' : ''">
         <div class="tag font-26 center bg-default" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
     </div>
-    
 </div>
 </template>
 <script>
