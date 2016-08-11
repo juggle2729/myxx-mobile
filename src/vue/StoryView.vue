@@ -128,6 +128,13 @@
             <div v-for="pic in pictures" v-bg="pic" v-if="$index" class="media" @click="coverflow(this.pictures, $index)"></div>
         </div>
     </template>
+    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
+        <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i><span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div>
     <template v-if="story.topic_type.code === 'hd'">
         <div class="tag-activity red font-30" v-link="{name: 'activity', params: {id: story.activity.id}}">
             <div class="item"><span class="icon-activity"></span><span>{{story.activity.name}}</span></div>
@@ -139,13 +146,6 @@
             <tags :tags="story.tags"></tags>
         </div>
     </template>
-    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
-        <like :active="story.liked" :count="story.like"></like>
-        <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="border-left"></share>
-    </div>
     <div class="separator-20"></div>
     <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
@@ -180,6 +180,11 @@ export default {
                 medias: []
             }
         }
+    },
+    ready() {
+        this.$on('restore', () => {
+            this.setShareData(this.story, true);
+        });
     },
     computed: {
         pictures() {
