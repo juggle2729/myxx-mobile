@@ -18,7 +18,11 @@
         }
         border: 1px solid #c6c6c6;
     }
-    .nowrap {
+}
+.nowrap {
+    padding-left: 0;
+    padding-right: 0;
+    .tags {
         white-space: nowrap;
         overflow-x: scroll;
         overflow-y: hidden;
@@ -26,15 +30,21 @@
         .tag {
             margin-top: 40px;
         }
+        .tag:first-child {
+            margin-left: 32px;
+        }
+        .tag:last-child {
+            margin-right: 32px;
+        }
     }
 }
 </style>
 <template>
-<div class="tags-component bg-white" v-if="tags && tags.length">
+<div class="tags-component bg-white" :class="nowrap ? 'nowrap' : ''" v-if="tags && tags.length">
     <div class="tag-title font-26 gray" v-if="showTitle">
         标签
     </div>
-    <div class="tags" :class="nowrap ? 'nowrap' : ''">
+    <div class="tags">
         <div class="tag font-26 center bg-default" v-for="tag in tags" v-link="{name: 'tag', params: {id: tag.id, name: tag.name}}">{{tag.name}}</div>
     </div>
 </div>
