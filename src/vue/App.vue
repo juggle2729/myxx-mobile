@@ -42,27 +42,23 @@
     }
 }
 </style>
-<template>
-<div>
-    <router-view></router-view>
-    <div v-if="env.isShare && shareData.hasDownloadLink" class="share-bottom flex" @click="download()">
-        <div class="logo margin-right"><img :src="'logo.png' | qn" alt="美玉秀秀"></div>
-        <div class="flex-1 white">
-            <div class="flex">
-                <div class="name font-30 bold">美玉秀秀</div>
-                <div class="font-22 dot">•</div>
-                <div class="slogan font-22">大师在线视频鉴宝</div>
-            </div>
-            <div class="font-22 red margin-top">10万玉友的选择</div>
-        </div>
-        <div class="download-btn font-30 white bg-red">免费下载</div>
-    </div>
-    <div id="user" v-if="env.isBrowser && env.isTest">
-        <img v-if="self" @click="logout" :src="config.img + self.photo" :alt="self.nickname" />
-        <div v-else @click="login" class="font-34">👤</div>
-    </div>
-    <component :is="popup.handler" :params.sync="popup" transition="pop"></component>
-</div>
+<template lang="jade">
+div
+    router-view
+    .share-bottom.flex(v-if="env.isShare && shareData.hasDownloadLink", @click="download()")
+        .logo.margin-right
+            img(:src="'logo.png' | qn", alt="美玉秀秀")
+        .flex-1.white
+            .flex
+                .name.font-30.bold 美玉秀秀
+                .font-22.dot •
+                .slogan.font-22 大师在线视频鉴宝
+            .font-22.red.margin-top 10万玉友的选择
+        .download-btn.font-30.white.bg-red 免费下载
+    #user(v-if="env.isBrowser && env.isTest")
+        img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
+        .font-34(v-else, @click="login") 👤
+    component(:is="popup.handler", :params.sync="popup", transition="pop")
 </template>
 <script>
 import emitter from '../util/emitter';
@@ -72,7 +68,6 @@ export default {
     components,
     data() {
         return {
-            id: 160607153549035517,
             user: this.$store.get('user'),
             shareData: {},
             popup: {}

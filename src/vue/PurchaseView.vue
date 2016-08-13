@@ -118,12 +118,12 @@
                 span.symbol.white ￥
                 span 保证金已付
         .desc.font-30
-            span.red 预算{{purchase.price_max | price}}左右 
-                {{purchase.description}}
-        ul.medias.scrollable 
+            span.red 预算{{purchase.price_max | price}}左右
+            |   {{purchase.description}}
+        ul.medias.scrollable
             li(v-for="pic in purchase.pictures", track-by="$index")
                 img(:src="config.img + pic + '?imageView2/2/h/450'")
-        ul.tags.font-22 
+        ul.tags.font-22
             li(v-for="att in purchase.attributes", track-by="$index") {{att}}
         .deadline.font-26.light(v-if="hasBidAuth")
             span.gray 距离竞标结束
@@ -131,8 +131,7 @@
             span.red {{hours}} 小时
             span.red {{minutes}} 分
             span.red {{second}} 秒
-        .join.bg-gray.white.center.font-30(:class="{'bg-red': hasBidAuth}", @click="joinBid()")
-            {{purchase.status === 'fn' ? '竞标期已结束' : (purchase.open_seat ? '我要竞拍' : '竞拍名额已满')}}
+        .join.bg-gray.white.center.font-30(:class="{'bg-red': hasBidAuth}", @click="joinBid()") {{purchase.status === 'fn' ? '竞标期已结束' : (purchase.open_seat ? '我要竞拍' : '竞拍名额已满')}}
     .win.center
         header.font-26.gray 中标作品   {{purchase.win_count}}
         .items.bg-white.border-red(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")
@@ -152,12 +151,12 @@
                 .name.font-26.gray {{bid.shop.shop_name}}
                 .img.jade(v-bg="bid.product.first_picture")
                     span.font-26.white {{win.product.price | price}}
-                .desc.font-30.omit-2 
+                .desc.font-30.omit-2
                     span.red 竞标底价{{bid.ceil_price | price}}
-                    {{bid.description}}
+                    | {{bid.description}}
             .social.border-top.flex.font-30
                 .flex-1.border-right.live
-                    span.icon-live(@click="live()") 
+                    span.icon-live(@click="live()")
                     span 直播看货
                 .flex-1
                     like(:count="bid.like_count", :target="bid.id", :type="110", :active="bid.liked")
@@ -229,7 +228,7 @@ export default {
             this.minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
             this.second = (remainHours*60*60) % 60 < 1 ? '00' : Math.floor((remainHours*60*60) % 60);
             // improve 待验证
-            // let d = 1471940270000 - Date.now(); 
+            // let d = 1471940270000 - Date.now();
             // console.log(d);
             // const arr = [['天', 24*60*60], ['小时', 60*60], ['分钟', 60], ['秒', 1]];
             // const diff = arr

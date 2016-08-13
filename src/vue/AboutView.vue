@@ -23,26 +23,24 @@
     }
 }
 </style>
-<template>
-    <div class="about-view">
-        <div class="imgs center">
-            <img :src="'profile/about.png' | qn" v-link="!isProd ? {name: 'api'} : ''">
-            <p class="font-34 default">美玉秀秀</p>
-            <p class="font-22 gray">v{{version}}</p>
-        </div>
-        <div class="text">
-            <p class="font-30">美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。</p>
-            <p class="font-30">美玉秀秀移动端是为全国各地的和田玉爱好者、藏家、商家、相关领域的大师以及权威人士提供专业和田玉鉴定、社交、交易的综合性平台。</p>
-            <p class="font-30">客服电话：<a href="tel:4000587266" class="red">400-0587-266</a></p>
-        </div>
-    </div>
+<template lang="jade">
+.about-view
+    .imgs.center
+        img(:src="'profile/about.png' | qn", v-link="!isProd ? {name: 'api'} : ''")
+        p.font-34.default 美玉秀秀
+        p.font-22.gray v{{version}}
+        .text
+            p.font-30 美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。
+            p.font-30 美玉秀秀移动端是为全国各地的和田玉爱好者、藏家、商家、相关领域的大师以及权威人士提供专业和田玉鉴定、社交、交易的综合性平台。
+            p.font-30 客服电话：
+                a.red(href="tel:4000587266") 400-0587-266
 </template>
 <script>
 export default {
     name: 'AboutView',
     data() {
         return {
-            version: 1.0
+            version: '1.0'
         };
     },
     computed: {

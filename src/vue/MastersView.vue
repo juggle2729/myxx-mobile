@@ -19,7 +19,7 @@
 </style>
 <template>
 <div class="masters-view">
-    <div v-for="master in items" v-link="{name: 'master', params: {id: master.id}}">
+    <div v-for="master in items" v-link="{name: 'master', params: {id: master.entry.user_id}}">
         <div class="photo" v-bg="master.entry.logo"></div>
         <footer class="font-30">
             <div class="title gray">{{master.entry.title}}</div>

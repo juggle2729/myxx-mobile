@@ -65,7 +65,7 @@ export default {
     name: 'Login',
     data() {
         return {
-            phone: '15927607971',
+            phone: this.$store.get('phone') || 1,
             code: '',
             msg: '',
             label: '获取验证码'
@@ -91,16 +91,17 @@ export default {
         this.$watch('formData', data => {
             if(/^1\w{10}$/.test(data.phone) && /^\w{4}$/.test(data.verify_code)) {
                 this.$http.post('users/login', data)
-                    .then(({data}) => {
-                        if(data.status === 200) {
+                    .then(({data: resp}) => {
+                        if(resp.status === 200) {
                             this.msg = '登录成功';
-                            const user = data.data;
+                            const user = resp.data;
+                            this.$store.set('phone', data.phone);
                             this.$store.set('user', user);
                             this.$root.user = user;
                             this.params.cb(user);
                             this.close();
                         } else {
-                            this.msg = data.message
+                            this.msg = resp.message
                         }
                     });
             } else {
