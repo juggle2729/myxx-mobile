@@ -90,7 +90,10 @@ export default {
         document.querySelector("[name='phone']").focus();
         this.$watch('formData', data => {
             if(/^1\w{10}$/.test(data.phone) && /^\w{4}$/.test(data.verify_code)) {
-                this.$http.post('users/login', data)
+                const headers = {
+                    'X-Api-Version': 'v7'
+                };
+                this.$http.post('users/login', data, {headers})
                     .then(({data: resp}) => {
                         if(resp.status === 200) {
                             this.msg = '登录成功';

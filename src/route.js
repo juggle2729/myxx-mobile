@@ -191,6 +191,7 @@ export default {
     '/work/:id': {
         name: 'work',
         title: '作品详情',
+        native: v => v >= 2.0 && {name: 'work'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WorkView.vue'));
@@ -229,7 +230,7 @@ export default {
     '/order/confirm/:product': { // product id
         name: 'order-confirm',
         title: '订单详情',
-        raw: true,
+        native: v => v > 1.7 && {name: 'orderConfirm'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderConfirmView.vue'));

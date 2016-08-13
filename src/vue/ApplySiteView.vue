@@ -91,9 +91,9 @@ export default {
         },
         result(){
             return {
-                type: this.type,
-                phone: this.phone,
-                name: this.name,
+                permission: this.type,
+                owner_phone: this.contact,
+                owner_name: this.name,
                 content: this.content
             };
         }
@@ -101,7 +101,7 @@ export default {
     methods: {
         submit() {
             if(this.complete && this.isValid) {
-                this.$post('users/feedbacks', this.result)
+                this.$post('users/perm_requests', this.result)
                     .then(() => {
                         this.action('toast', {text: '工作人员两日内联系您！', success: 1});
                         setTimeout(() => {

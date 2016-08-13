@@ -41,7 +41,7 @@
         name: 'ApplyMaster',
         data() {
             return {
-                type: 'jianbao',
+                type: 'identify_jianbao',
                 contact: '',
                 name: '',
                 content: '',
@@ -57,9 +57,9 @@
             },
             result(){
                 return {
-                    type: this.type,
-                    phone: this.contact,
-                    name: this.name,
+                    permission: this.type,
+                    owner_phone: this.contact,
+                    owner_name: this.name,
                     content: this.content
                 };
             }
@@ -67,7 +67,7 @@
         methods: {
             submit() {
                 if(this.complete && this.isValid) {
-                    this.$post('users/feedbacks', this.result)
+                    this.$post('users/perm_requests', this.result)
                         .then(() => {
                             this.action('toast', {text: '工作人员两日内联系您！', success: 1})
                             setTimeout(() => {

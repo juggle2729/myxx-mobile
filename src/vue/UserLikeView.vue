@@ -120,10 +120,6 @@ export default {
                                     card.description = entry.title;
                                     card.preview = {img: entry.picture};
                                     break;
-                                case 110:
-                                    card.description = entry.title;
-                                    card.preview = {img: entry.picture};
-                                    break;
                             }
                         }
                         return card;

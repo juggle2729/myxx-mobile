@@ -78,6 +78,7 @@ router.alias({
     '/evaluations/:tab': '/update',
     '/stories/:tab': '/update',
     '/lessons': '/update',
+    '/:id/apply/shop': '/update',
     '/user/:id': '/user/:id/none',
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',

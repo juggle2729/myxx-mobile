@@ -41,6 +41,13 @@
                 margin-right: 16px;
             }
         }
+        .operation {
+            height: 90px;
+            line-height: 90px;
+            border-radius: 8px;
+            text-align: center;
+            width: 48%;
+        }
         .deadline .red {
             margin: 0 5px;
         }
@@ -91,20 +98,16 @@
                     z-index: 999;
                 }
             }
-            .desc {
-                padding: 44px 0 40px;
+            .price {
+                margin-top: 20px;
             }
-            .social {
-                height: 100px;
-                line-height: 48px;
-                .live {
-                    color: #389d00;
-                    .icon-live {
-                        transform: scale(1.5);
-                    }
-                }
+            .desc {
+                padding: 28px 0 40px;
             }
         }
+    }
+    .empty-component {
+        background-color: #efefef;
     }
 }
 </style>
@@ -114,25 +117,34 @@
         header.flex
             avatar(:user="purchase.owner")
             .margin-left.font-30.gray.flex-1 {{purchase.owner.nickname}}
-            .guarantee.font-22.gray.border-all
+            .guarantee.font-22.gray.border-all(v-if="purchase.status !== 'np'")
                 span.symbol.white ￥
                 span 保证金已付
         .desc.font-30
             span.red 预算{{purchase.price_max | price}}左右
             |   {{purchase.description}}
         ul.medias.scrollable
-            li(v-for="pic in purchase.pictures", track-by="$index")
+            li(v-for="pic in purchase.pictures", track-by="$index", @click="coverflow(purchase.pictures, $index)")
                 img(:src="config.img + pic + '?imageView2/2/h/450'")
         ul.tags.font-22
             li(v-for="att in purchase.attributes", track-by="$index") {{att}}
-        .deadline.font-26.light(v-if="hasBidAuth")
-            span.gray 距离竞标结束
-            span.red {{days}} 天
-            span.red {{hours}} 小时
-            span.red {{minutes}} 分
-            span.red {{second}} 秒
-        .join.bg-gray.white.center.font-30(:class="{'bg-red': hasBidAuth}", @click="joinBid()") {{purchase.status === 'fn' ? '竞标期已结束' : (purchase.open_seat ? '我要竞拍' : '竞拍名额已满')}}
-    .win.center
+        div(v-if="purchase.status === 'np'")
+            .flex.font-30
+                .operation.margin-right.border-all(@click="delete(purchase.id)") 删除此求购
+                .operation.white.bg-red(@click="action('pay', {id: purchase.id, price: deposit, type: 'purchase'})") 立即支付保证金
+        div(v-else)
+            .deadline.font-26.light(v-if="hasBidAuth")
+                span.gray 距离竞标结束
+                span.red {{days}}
+                span.light 天
+                span.red {{hours}}
+                span.light 小时
+                span.red {{minutes}}
+                span.light 分
+                span.red {{second}}
+                span.light 秒
+            .join.bg-gray.white.center.font-30(v-if="!isSelf", :class="{'bg-red': hasBidAuth}", @click="joinBid()") {{purchase.status === 'fn' ? '竞标期已结束' : (purchase.open_seat ? '我要竞拍' : '竞拍名额已满')}}
+    .win.center(v-if="purchase.wins && purchase.wins.length > 0")
         header.font-26.gray 中标作品   {{purchase.win_count}}
         .items.bg-white.border-red(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")
             .img.avatar(v-bg="win.shop.logo")
@@ -142,7 +154,7 @@
                 img(:src="'purchase/bid.png' | qn", alt="bid")
                 span.font-26.white {{win.product.price | price}}
             .desc.font-30.omit-2 {{win.description}}
-    .auction.center
+    .auction.center(v-if="purchase.bids && purchase.bids.length > 0")
         header.font-26.gray 竞标作品   {{purchase.bid_count}}
         .items.bg-white(v-for="bid in purchase.bids")
             div(v-link="{name: 'jade', params: {id: bid.product.id}}")
@@ -151,18 +163,12 @@
                 .name.font-26.gray {{bid.shop.shop_name}}
                 .img.jade(v-bg="bid.product.first_picture")
                     span.font-26.white {{win.product.price | price}}
-                .desc.font-30.omit-2
-                    span.red 竞标底价{{bid.ceil_price | price}}
-                    | {{bid.description}}
-            .social.border-top.flex.font-30
-                .flex-1.border-right.live
-                    span.icon-live(@click="live()")
-                    span 直播看货
-                .flex-1
-                    like(:count="bid.like_count", :target="bid.id", :type="110", :active="bid.liked")
+                .price.red.font-30 竞标底价{{bid.ceil_price | price}}
+                .desc.font-30.omit-2 {{bid.description}}
     empty(v-if="!purchase.bid_count", title="暂无竞标作品")
 </template>
 <script>
+import Q from 'q';
 import like from 'component/Like.vue';
 import shareable from 'shareable';
 export default {
@@ -174,6 +180,12 @@ export default {
     computed: {
         hasBidAuth() {
             return this.purchase.open_seat && this.purchase.status !== 'fn';
+        },
+        deposit() {
+            return Math.ceil(this.purchase.price_max/100)*0.03;
+        },
+        isSelf() {
+            return _.get(this, 'self.id') == this.purchase.owner.id;
         }
     },
     data() {
@@ -199,7 +211,8 @@ export default {
         data({to}) {
             return this.$get(`mall/purchase/${to.params.id}`).then((data) => {
                 this.purchase = data;
-                this.timer(data.paid_at, data.closed_at);
+                this.timer(data.closed_at)();
+                setInterval(this.timer(data.closed_at), 1000);
                 this.setShareData({title: data.description}, true);
             });
         }
@@ -208,11 +221,33 @@ export default {
         joinBid() {
             if(this.hasBidAuth) {
                 if(!this.env.isShare) {
-                    this.action('toast', {text: '等待native接口中~~'});
+                    Q.promise(resolve => {
+                        if(this.self) {
+                            resolve();
+                        } else {
+                            this.action('login').then(resolve);
+                        }
+                    }).then(() => {
+                        const userInfo = this.purchase.conf.user_conf;
+                        if(!userInfo.add_product || userInfo.shop_audit_status === 'unaudited') {
+                            this.action('toast', {text: '认证工作室或认证商家才可竞标，您可以联系客服认证'});
+                        } else if(!userInfo.shop_remain_bids) {
+                            this.action('toast', {text: '您今天参与的竞标数已达上限，明天再试吧'});
+                        } else if (!userInfo.shop_remain_products) {
+                            this.action('toast', {text: '您目前没有可以发布竞标的商品，可以发商品后再参与竞标'});
+                        } else {
+                            this.action('newBid', {id: this.purchase.id});
+                        }
+                    });
                 } else {
                     window.location.href = this.config.download;
                 }
             }
+        },
+        delete(id) { //删除求购
+            this.$delete(`mall/purchase/${id}`).then(() => {
+                this.action('toast', {text: '删除求购~~'+id});
+            });
         },
         live() { // params目前没有确定
             if(_.get(this, 'self.id') == this.purchase.owner.id) {
@@ -221,12 +256,14 @@ export default {
                 this.action('toast', {text: '只有求购者才能直播看货'});
             }
         },
-        timer(begin, end) {
-            const remainHours = (1471940270000 - Date.now())/(1000*60*60);
-            this.days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
-            this.hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
-            this.minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
-            this.second = (remainHours*60*60) % 60 < 1 ? '00' : Math.floor((remainHours*60*60) % 60);
+        timer(end) {
+            return () => {
+                const remainHours = (end - Date.now())/(1000*60*60);
+                this.days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
+                this.hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
+                this.minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
+                this.second = (remainHours*60*60) % 60 < 1 ? '00' : Math.floor((remainHours*60*60) % 60);
+            }
             // improve 待验证
             // let d = 1471940270000 - Date.now();
             // console.log(d);

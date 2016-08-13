@@ -18,10 +18,11 @@
         <purchase-item :item="item"></purchase-item>
         <div class="separator"></div>
     </template>
-    <div @click="action('purchase')" class="purchase-btn bg-red white font-34">我要求购</div>
+    <div @click="purchase()" class="purchase-btn bg-red white font-34">我要求购</div>
 </div>
 </template>
 <script>
+import Q from 'q';
 import paging from 'paging';
 import PurchaseItem from 'component/PurchaseItem.vue';
 export default {
@@ -33,6 +34,19 @@ export default {
             return {
                 path: 'mall/all_purchases'
             };
+        }
+    },
+    methods: {
+        purchase() {
+            Q.promise(resolve => {
+                if(this.self) {
+                    resolve();
+                } else {
+                    this.action('login').then(resolve);
+                }
+            }).then(() => {
+                this.action('newPurchase');
+            });
         }
     }
 }

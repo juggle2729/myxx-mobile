@@ -68,8 +68,8 @@
                 <div class="info">
                     <div>{{item.name}}</div>
                     <div class="flex font-26 light margin-top">
-                        <div class="jade">鉴宝数: {{item.jianbao_count}}</div>
-                        <div>获赞数: {{item.like_count}}</div>
+                        <div class="jade">获赞数: {{item.like_count}}</div>
+                        <div>单个鉴定获赞数: {{item.like_count_per_jianbao}}</div>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@ export default {
                 // 获取周榜
                 this.$get('sns/jianbao/popular_masters', {
                     type: 'weekly',
-                    limit: 50
+                    limit: 10
                 }).then((data) => {
                     this.week = data.masters;
                     this.items = this.week;

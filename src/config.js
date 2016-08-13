@@ -71,10 +71,6 @@ export default {
             id: 90,
             name: '作品',
             route: 'work'
-        }, {
-            id: 110,
-            name: '竞标',
-            route: 'purchase'
         }
     ],
     tags: {
