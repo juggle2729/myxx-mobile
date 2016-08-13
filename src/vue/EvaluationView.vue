@@ -137,7 +137,7 @@
             span 写评论
         share.border-left
     .separator-20
-    comments(:type="10", :display-input="false", v-ref:comment)
+    comments(:type="10", :id="evaluation.post_id", :display-input="false", v-ref:comment)
     product-recommend(:id="evaluation.post_id")
     recommend(:data="items", name="相关推荐")
     .footer.flex.border-top.font-30.gray(v-if="!env.isShare")
