@@ -13,7 +13,7 @@
             .symbol {
                 height: 30px;
                 width: 24px;
-                border-radius: 30% 30% 100% 100%;
+                border-radius: 100% / 30% 30% 100% 100%;
                 background-color: #7ec3fd;
                 margin-right: 5px;
             }
@@ -135,14 +135,14 @@
         div(v-else)
             .deadline.font-26.light(v-if="hasBidAuth")
                 span.gray 距离竞标结束
-                span.red {{days}}
-                span.light 天
-                span.red {{hours}}
-                span.light 小时
-                span.red {{minutes}}
-                span.light 分
-                span.red {{second}}
-                span.light 秒
+                span.red(v-if="days") {{days}}
+                span.light(v-if="days") 天
+                span.red(v-if="hours || days") {{hours}}
+                span.light(v-if="hours || days") 小时
+                span.red(v-if="minutes || hours") {{minutes}}
+                span.light(v-if="minutes || hours") 分
+                span.red(v-if="second || minutes") {{second}}
+                span.light(v-if="second || minutes") 秒
             .join.bg-gray.white.center.font-30(v-if="!isSelf", :class="{'bg-red': hasBidAuth}", @click="joinBid()") {{purchase.status === 'fn' ? '竞标期已结束' : (purchase.open_seat ? '我要竞拍' : '竞拍名额已满')}}
     .win.center(v-if="purchase.wins && purchase.wins.length > 0")
         header.font-26.gray 中标作品   {{purchase.win_count}}
@@ -246,7 +246,7 @@ export default {
         },
         delete(id) { //删除求购
             this.$delete(`mall/purchase/${id}`).then(() => {
-                this.action('toast', {text: '删除求购~~'+id});
+                this.action('back', {refresh: true});
             });
         },
         live() { // params目前没有确定
@@ -259,10 +259,10 @@ export default {
         timer(end) {
             return () => {
                 const remainHours = (end - Date.now())/(1000*60*60);
-                this.days = remainHours/24 < 1 ? '00' : Math.floor(remainHours/24);
-                this.hours = remainHours%24 < 1 ? '00' : Math.floor(remainHours%24);
-                this.minutes = (remainHours*60) % 60 < 1 ? '00' : Math.floor((remainHours*60) % 60);
-                this.second = (remainHours*60*60) % 60 < 1 ? '00' : Math.floor((remainHours*60*60) % 60);
+                this.days = Math.floor(remainHours/24);
+                this.hours = Math.floor(remainHours%24);
+                this.minutes = Math.floor((remainHours*60) % 60);
+                this.second = Math.floor((remainHours*60*60) % 60);
             }
             // improve 待验证
             // let d = 1471940270000 - Date.now();

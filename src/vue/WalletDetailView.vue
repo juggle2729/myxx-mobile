@@ -49,11 +49,14 @@
     </div>
     <div class="item font-30 border-bottom" v-for="item in items">
         <div class="flex font-22 gray">
-            <div class="flex-1">{{item.trans_desc}}</div><div>{{item.create_at | date 'yyyy-m-dd'}}</div>
+            <div class="flex-1">{{item.trans_desc}}</div><div>结算时间 {{item.create_at | date 'yyyy-m-dd'}}</div>
         </div>
         <div class="flex detail">
             <div class="flex-1 omit-2">{{item.remark}}</div>
-            <div class="red font-40 flex-1 right" :class="{'light-blue': (item.trans_amount < 0 && item.trans_type === 'sr_out_pt_in_pd_fe'), 'light-green': item.trans_amount < 0}">
+            <div v-if="$route.params.tab === 'expects'" class="red font-40 flex-1 right">
+                {{item.trans_amount | price}}
+            </div>
+            <div v-else class="red font-40 flex-1 right" :class="{'light-blue': (item.trans_amount < 0 && item.trans_type === 'sr_out_pt_in_pd_fe'), 'light-green': item.trans_amount < 0}">
                 <span v-if="item.trans_amount > 0">+</span>{{item.trans_amount/100}}
             </div>
         </div>

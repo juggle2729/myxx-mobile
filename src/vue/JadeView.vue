@@ -43,7 +43,7 @@
     .master {
         height: 72px;
         line-height: 72px;
-        padding: 0 32px;
+        margin-left: 32px;
     }
     .shop {
         height: 144px;
@@ -131,7 +131,7 @@
 }
 </style>
 <template>
-<div class="jade-view bg-default">
+<div class="jade-view">
     <div class="tabs tabs-fixed border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
         <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
          <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
