@@ -2,11 +2,12 @@
 .user-purchase-view {}
 </style>
 <template>
-<div class="user-purchase-view">
+<div class="user-purchase-view" :class="{'bg-default': !items.isEmpty}">
     <template v-for="item in items">
-        <purchase-item :item="item"></purchase-item>
         <div class="separator"></div>
+        <purchase-item :item="item"></purchase-item>
     </template>
+    <empty v-if="items.isEmpty" title="暂无求购竞标"></empty>
 </div>
 </template>
 <script>

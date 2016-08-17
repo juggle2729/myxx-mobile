@@ -18,6 +18,7 @@
         <purchase-item :item="item"></purchase-item>
         <div class="separator"></div>
     </template>
+    <empty v-if="items.isEmpty" title="暂无求购"></empty>
     <div @click="purchase()" class="purchase-btn bg-red white font-34">我要求购</div>
 </div>
 </template>

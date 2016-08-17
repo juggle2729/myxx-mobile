@@ -1,7 +1,11 @@
 <style lang="sass">
 @import '~style/partials/var';
 .purchase-item {
-    padding: 24px 32px 32px;
+    padding: 24px 0 32px;
+    header, .desc, ul, footer {
+        margin-left: 32px;
+        margin-right: 32px;
+    }
     header {
         .name {
             margin: 0 14px 0 20px;
@@ -16,9 +20,13 @@
             font-weight: bolder;
             border-radius: 100% / 30% 30% 100% 100%;
         }
+        .red {
+            text-align: right;
+        }
     }
     .desc {
-        margin: 24px 0;
+        margin-top: 24px;
+        margin-bottom: 24px;
     }
     .medias {
         li {
@@ -29,7 +37,8 @@
         }
     }
     .tags {
-        margin: 24px 0 32px 0;
+        margin-top: 24px;
+        margin-bottom: 32px;
         li {
             display: inline-block;
             color: #c6c6c6;
@@ -45,32 +54,47 @@
             margin: 0 14px;
         }
     }
+    .btns {
+        margin-top: 32px;
+        margin-bottom: -12px;
+        padding: 20px 32px 0;
+        text-align: right;
+        .operation {
+            display: inline-block;
+            padding: 0 1em;
+            height: 90px;
+            line-height: 90px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    }
 }
 </style>
-<template>
-<div class="purchase-item" v-link="{name: 'purchase', params: {id: item.id}}">
-    <header class="flex font-26">
-        <avatar :user="item.owner" :size="50"></avatar>
-        <div class="name gray">{{item.owner.nickname}}</div>
-        <div class="guarantee">￥</div>
-    </header>
-    <div class="desc font-30"><span class="red">预算￥{{Math.round(item.price_max/100)}}左右</span>{{item.description}}</div>
-    <ul class="medias scrollable">
-        <li v-for="pic in item.pictures">
-            <img :src="config.img+pic+'?imageView2/2/h/450'" />
-        </li>
-        <!-- <li v-for="media in item.medias">
-            <img v-if="media.type==='picture'" :src="config.img+media.id+'?imageView2/2/h/450'" />
-            <img v-else :src="config.video+media.id+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'" />
-        </li> -->
-    </ul>
-    <ul class="tags font-22">
-        <li v-for="attr in item.attributes">{{attr}}</li>
-    </ul>
-    <footer class="font-26 flex light">
-        <div><span class="red">{{item.bid_count}}</span>个竞标</div>
-        <div class="flex-1"><span class="red">{{item.win_count}}</span>个中标</div>
-    </footer>
+<template lang="jade">
+.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
+    header.flex.font-26
+        avatar(:user='item.owner', :size='50')
+        .name.gray {{item.owner.nickname}}
+        .guarantee(v-if="paid") ￥
+        .red.flex-1(v-else) 未支付保证金
+    .desc.font-30
+        span.red 预算￥{{price}}左右
+        | {{item.description}}
+    ul.medias.scrollable
+        li(v-for='pic in item.pictures')
+            img(:src="config.img+pic+'?imageView2/2/h/450'")
+    ul.tags.font-22
+        li(v-for='attr in item.attributes') {{attr}}
+    footer.font-26.flex.light
+        div
+            span.red {{item.bid_count}}
+            | 个竞标
+        .flex-1(v-if='item.bid_count')
+            span.red {{item.win_count}}
+            | 个中标
+    .btns.border-top.font-30(v-if="!paid")
+        .operation.margin-right.border-all(@click.stop="delete(item.id)") 删除此求购
+        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: price, type: 'purchase'})") 立即支付保证金
 </div>
 </template>
 <script>
@@ -78,6 +102,22 @@ export default {
     name: 'PurchaseItem',
     props: {
         item: Object
+    },
+    computed: {
+        price() {
+            return Math.round(this.item.price_max/100);
+        },
+        paid() {
+            return this.item.status !=='np';
+        }
+    },
+    methods: {
+        delete(id) { //删除求购
+            this.$delete(`mall/purchase/${id}`).then(() => {
+                // TODO 集成客户端confirm, 删除后更新页面
+                this.action('toast', {text: '删除求购~~'+id});
+            });
+        }
     }
 }
 </script>
