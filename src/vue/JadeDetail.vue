@@ -1,5 +1,6 @@
 <style lang="sass">
 .jade-detail {
+    padding-top: 6px;
     .desc {
         padding: 32px;
         line-height: 1.5;
@@ -17,11 +18,10 @@
 </style>
 <template>
 <div class="jade-detail bg-white">
-    <div class="desc font-30">{{jade.detail}}</div>
+    <div class="desc font-30" v-if="jade.detail">{{jade.detail}}</div>
     <div class="img">
         <img :src="config.img + img + '_750'" v-for="img in jade.pictures" @click="coverflow(jade.pictures, $index)"/>
     </div>
-    <div class="separator-20"></div>
     <tags :tags="jade.tags"></tags>
     <product-recommend></product-recommend>
 </div>

@@ -126,7 +126,7 @@
         z-index: 999;
     }
     .placeholder {
-        height: 98px;
+        height: 148px;
     }
 }
 </style>
@@ -170,7 +170,7 @@
     <div class="bg-default tab-content">
         <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
     </div>
-    <div class="bg-white placeholder"></div>
+    <div class="bg-default placeholder"></div>
     <div class="float-box flex fixed font-30 bg-white">
         <div class="border-top flex-1 flex">
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">

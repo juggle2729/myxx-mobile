@@ -49,7 +49,7 @@
         .instruction.center
             .tip.font-22 大额支付支持银行转账交易<br>请联系客服
             .contact.flex
-                .flex-1.border-right.font-26.gray(@click="kf()")
+                .flex-1.border-right.font-26.gray(@click.stop="action('kf', {order: order.order_no})")
                     img.margin-bottom(:src="'service/online.svg' | qn", alt="online-service")
                     p 在线客服
                 .flex-1.font-26.gray
@@ -71,7 +71,7 @@
             p 转账时请备注您的联系电话，我们收到货款后会第一时间与您确认后续事宜。
             .flex
                 .margin-right.button.flex-1.border-gray.center(v-link="{name: 'order', params: {id: order.order_no}}") 订单详情
-                .button.flex-1.border-gray.center(@click="home()") 回首页
+                .button.flex-1.border-gray.center(@click.stop="action('mall')") 回首页
 </template>
 <script>
     export default {
@@ -86,14 +86,6 @@
                 return this.$get(`mall/order/${to.params.id}`).then((order) => {
                     this.order = order;
                 });
-            }
-        },
-        methods: {
-            home() {
-                this.action('mall');
-            },
-            kf() {
-                this.action('chat', {id: this.order.default_admin.id, name: this.order.default_admin.nickname});
             }
         }
     }

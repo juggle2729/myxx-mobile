@@ -240,6 +240,7 @@ export default {
     '/order/:id': {
         name: 'order',
         title: '订单详情',
+        native: v => v > 1.7 && {name: 'orderDetail'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderInfoView.vue'));
@@ -296,6 +297,7 @@ export default {
     '/address/list': { // 商品id，可选
         name: 'address-list',
         title: '收货地址管理',
+        native: v => v > 1.7 && {name: 'addressList'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AddressView.vue'));

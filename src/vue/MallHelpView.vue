@@ -10,7 +10,7 @@
         padding: 0 32px;
         .line {
             width: 6px;
-            height: 30px;
+            height: 24px;
             margin-right: 14px;
         }
         .more{
@@ -46,8 +46,8 @@
 </style>
 <template>
     <div class="mall-help-view bg-default">
-        <div class="bg-white border-bottom margin-bottom">
-            <div class="title flex font-30 red border-bottom">
+        <div class="bg-white margin-bottom">
+            <div class="title flex font-30 gray border-bottom">
                 <div class="line bg-red"></div>
                 <div>常见问题</div>
             </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="margin-bottom">
-            <div class="title flex font-30 red border-vertical bg-white">
+            <div class="title flex font-30 gray border-bottom bg-white">
                 <div class="line bg-red"></div>
                 <div>问题分类</div>
             </div>
@@ -67,8 +67,8 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white border-bottom">
-            <div class="title flex font-30 red border-vertical">
+        <div class="bg-white">
+            <div class="title flex font-30 border-bottom gray">
                 <div class="line bg-red"></div>
                 <div>条款和协议</div>
             </div>

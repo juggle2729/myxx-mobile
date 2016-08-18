@@ -173,20 +173,28 @@
         50% { margin-top: 5px; }
     }
 
-    .download-dock {
-        width: 100%;
-        height: 100px;
+    .share-bottom {
+        z-index: 990;
+        position: fixed;
         bottom: 0;
-        padding: 0px 32px;
+        height: 112px;
+        width: 100%;
+        padding: 0 24px;
+        background-color: rgba(0, 0, 0, 0.9);
         .logo {
-            height: 68px;
-            width: 68px;
-            margin: 5px 20px 0 0;
+            line-height: 0;
+            img {
+                height: 72px;
+                width: 72px;
+            }
+        }
+        .dot {
+            margin: 0 10px;
         }
         .download-btn {
-            display: block;
-            padding: 10px 20px;
-            border-width: 1px;
+            height: 60px;
+            line-height: 60px;
+            padding: 0 28px;
             border-radius: 5px;
         }
     }
@@ -228,13 +236,19 @@
                 </ul>
             </div>
         </div>
-        <div v-if="showDock" class="download-dock flex bg-default border-bottom fixed">
-            <img class="logo" :src="'logo.png' | qn" alt="美玉秀秀">
-            <div class="flex-1 flex">
-                <div class="name font-30 bold">美玉秀秀</div>
-                <div class="slogan font-26 gray margin-left">大师在线视频鉴宝</div>
+        <div v-if="showDock" class="share-bottom flex" @click="download()">
+            <div class="logo margin-right">
+                <img :src="'logo.png' | qn" alt="美玉秀秀">
             </div>
-            <a :href="config.download" class="download-btn font-30 red border-red">下载</a>
+            <div class="flex-1 white">
+                <div class="flex">
+                    <div class="name font-30 bold">美玉秀秀</div>
+                    <div class="font-22 dot">•</div>
+                    <div class="slogan font-22">大师在线视频鉴宝</div>
+                </div>
+                <div class="font-22 red margin-top">10万玉友的选择</div>
+            </div>
+            <div class="download-btn font-30 white bg-red">免费下载</div>
         </div>
     </div>
 </template>
@@ -282,6 +296,9 @@ export default {
         container.querySelector('.cover .bg').style.height = window.innerHeight + 'px';
     },
     methods: {
+        download() {
+            window.location.href = this.config.download;
+        },
         enableRefresh(enable) {
             this.action('toggleTopRefresh', {
                 enable: enable

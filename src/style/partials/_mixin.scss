@@ -36,6 +36,15 @@
             border-right: 0.5px solid $color;
             @extend .border-reset;
         }
+    } @else if($direction==right-bottom) {
+        background-image: linear-gradient(0deg, $color 51%, transparent 51%), linear-gradient(270deg, $color 51%, transparent 51%);
+        background-position: center bottom, right center;
+        background-size: 100% 1px, 1px 100%;
+        .hairline & {
+            border-right: 0.5px solid $color;
+            border-bottom: 0.5px solid $color;
+            @extend .border-reset;
+        }
     } @else if ($direction==vertical) {
         background-image: linear-gradient(180deg, $color 51%, transparent 51%), linear-gradient(0deg, $color 51%, transparent 51%);
         background-position: center top, center bottom;

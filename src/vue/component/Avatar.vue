@@ -6,8 +6,10 @@
             position: absolute;
             right: 0;
             bottom: 0;
-            width: 30%;
-            height: 30%;
+            width: 35%;
+            height: 35%;
+            max-height: 40px;
+            max-width: 40px;
         }
     }
 }

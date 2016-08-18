@@ -26,14 +26,16 @@
     }
     .desc {
         margin-top: 24px;
+        line-height: 1.3;
         margin-bottom: 24px;
     }
     .medias {
         li {
-            margin-right: 10px;
-        }
-        img {
-            height: 4rem;
+            height: 222px;
+            width: 222px;
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
         }
     }
     .tags {
@@ -41,7 +43,6 @@
         margin-bottom: 32px;
         li {
             display: inline-block;
-            color: #c6c6c6;
             background-color: #f5f5f5;
             border-radius: 12px;
             padding: 8px 12px;
@@ -62,8 +63,8 @@
         .operation {
             display: inline-block;
             padding: 0 1em;
-            height: 90px;
-            line-height: 90px;
+            height: 68px;
+            line-height: 68px;
             border-radius: 8px;
             text-align: center;
         }
@@ -79,21 +80,20 @@
         .red.flex-1(v-else) 未支付保证金
     .desc.font-30
         span.red 预算￥{{price}}左右
-        | {{item.description}}
-    ul.medias.scrollable
-        li(v-for='pic in item.pictures')
-            img(:src="config.img+pic+'?imageView2/2/h/450'")
-    ul.tags.font-22
+        |   {{item.description}}
+    ul.medias.flex
+        li.img(v-for="pic in item.pictures", track-by="$index", v-bg="pic")
+    ul.tags.font-22.gray
         li(v-for='attr in item.attributes') {{attr}}
     footer.font-26.flex.light
         div
             span.red {{item.bid_count}}
-            | 个竞标
+            span.gray  个竞标
         .flex-1(v-if='item.bid_count')
             span.red {{item.win_count}}
-            | 个中标
+            span.gray  个中标
     .btns.border-top.font-30(v-if="!paid")
-        .operation.margin-right.border-all(@click.stop="delete(item.id)") 删除此求购
+        .operation.margin-right.border-gray(@click.stop="delete(item.id)") 删除此求购
         .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: price, type: 'purchase'})") 立即支付保证金
 </div>
 </template>
@@ -105,7 +105,7 @@ export default {
     },
     computed: {
         price() {
-            return Math.round(this.item.price_max/100);
+            return Math.round(this.item.price_max);
         },
         paid() {
             return this.item.status !=='np';

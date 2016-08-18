@@ -71,16 +71,26 @@ export default {
     data() {
         return {
             isEmpty: false,
-            items: {}
+            items: {},
+            expects: 0,
+            bills: 0
         }
     },
     route: {
-        data({to}) {
-            const tab = to.params.tab;
-            return this.$get(`balance/${tab}`).then((data) => {
-                this.items = data.entries;
-                this.isEmpty = (data.total === 0);
-            });
+        data({to, next}) {
+            if(to.params.tab === 'expects' && !this.expects) {
+                this.$get('balance/expects').then((data) => {
+                    this.expects = data.entries;
+                    this.items = this.expects;
+                });
+            } else if(!this.bills) {
+                this.$get('balance/bills').then((data) => {
+                    this.bills = data.entries;
+                    this.items = this.bills;
+                });
+            }
+            this.items = (to.params.tab === 'expects') ? this.expects : this.bills;
+            next();
         }
     }
 }

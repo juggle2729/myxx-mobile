@@ -76,7 +76,9 @@
             height: 330px;
         }
         .title {
-            padding: 30px 32px;
+            border-width: 30px 32px 30px 32px;
+            border-color: white;
+            border-style: solid;
         }
     }
     .engraver {
