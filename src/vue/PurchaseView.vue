@@ -1,8 +1,9 @@
 <style lang="sass">
 .purchase-view {
     &.share {
-        padding-bottom: 112px;
+        padding-bottom: 142px;
     }
+    padding-bottom: 32px;
     .purchase {
         padding: 36px 32px;
         .guarantee {
@@ -37,7 +38,7 @@
             li {
                 display: inline-block;
                 background-color: #f5f5f5;
-                border-radius: 12px;
+                border-radius: 6px;
                 padding: 8px 12px;
                 margin-right: 16px;
             }
@@ -89,7 +90,7 @@
                     position: absolute;
                     right: 20px;
                     bottom: 20px;
-                    text-shadow: 0 0 2px white;
+                    text-shadow: 0 2px 10px black;
                 }
                 img {
                     height: 144px;
@@ -148,7 +149,7 @@
                 span.light(v-if="minutes || hours") 分
                 span.red(v-if="second || minutes") {{second}}
                 span.light(v-if="second || minutes") 秒
-            .join.bg-gray.white.center.font-30(v-if="!isSelf || !purchase.user_conf.shop_in_bid", :class="{'bg-red': hasBidAuth && over}", @click="joinBid()") {{(purchase.status === 'fn' || !over) ? '竞标期已结束' : (purchase.open_seat ? '我要竞标' : '竞标名额已满')}}
+            .join.bg-gray.white.center.font-30(v-if="!isSelf && !purchase.user_conf.shop_in_bid", :class="{'bg-red': hasBidAuth && over}", @click="joinBid()") {{(purchase.status === 'fn' || !over) ? '竞标期已结束' : (purchase.open_seat ? '我要竞标' : '竞标名额已满')}}
     .win.center(v-if="purchase.wins && purchase.wins.length > 0")
         header.font-26.gray 中标作品   {{purchase.win_count}}
         .items.bg-white(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")

@@ -3,7 +3,7 @@
     .instruction {
         .tip {
             margin: 50px 0;
-            line-height: 40px;
+            line-height: 1.4;
         }
         .contact {
             margin-bottom: 40px;
@@ -47,7 +47,7 @@
 <template lang="jade">
     .pay-offline-view
         .instruction.center
-            .tip.font-22 大额支付支持银行转账交易<br>请联系客服
+            .tip.font-32 大额支付支持银行转账交易<br>请联系客服
             .contact.flex
                 .flex-1.border-right.font-26.gray(@click.stop="action('kf', {order: order.order_no})")
                     img.margin-bottom(:src="'service/online.svg' | qn", alt="online-service")

@@ -6,6 +6,8 @@
             position: absolute;
             right: 0;
             bottom: 0;
+            min-height: 24px;
+            min-width: 24px;
             width: 35%;
             height: 35%;
             max-height: 40px;

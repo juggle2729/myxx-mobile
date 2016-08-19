@@ -44,7 +44,7 @@
         li {
             display: inline-block;
             background-color: #f5f5f5;
-            border-radius: 12px;
+            border-radius: 6px;
             padding: 8px 12px;
             margin-right: 8px;
         }
