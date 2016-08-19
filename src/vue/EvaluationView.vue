@@ -152,6 +152,7 @@ import Recommend from './component/Recommend.vue';
 import ProductRecommend from './component/ProductRecommend.vue';
 import Comments from 'component/Comments.vue';
 import Share from './component/Share.vue';
+import paging from 'paging';
 import shareable from 'shareable';
 const Opts = {
     result: {genuine: '真', fake: '假', unsure: '疑'},
@@ -159,7 +160,7 @@ const Opts = {
 }
 export default {
     name: 'EvaluationView',
-    mixins: [shareable],
+    mixins: [shareable, paging],
     components: {
         Comments,
         Recommend,

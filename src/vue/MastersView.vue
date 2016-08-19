@@ -9,7 +9,7 @@
         height: 112px;
         padding: 22px 0 18px 30px;
         .title {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
     }
     & > div:last-child .separator {

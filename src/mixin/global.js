@@ -133,7 +133,7 @@ const mixin = {
                         const [path, version] = url.split('|');
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v7']
+                                ['X-Api-Version', version || 'v8']
                             ].filter(header => header[1]));
                         this.$http[method](path, data, {headers})
                             .then(({data: resp}) => {

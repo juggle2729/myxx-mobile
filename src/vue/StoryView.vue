@@ -121,7 +121,7 @@
         </div>
         <follow :user="story.user.id" :follow="story.user.is_followed" :has-border='true'></follow>
     </div>
-    <div class="description omit-2 font-30">{{story.content}}</div>
+    <div class="description font-30 user-input">{{story.content}}</div>
     <template v-if="type === 'picture'">
         <div class="cover img" v-bg="cover" @click="coverflow(this.pictures, 0)"></div>
         <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">

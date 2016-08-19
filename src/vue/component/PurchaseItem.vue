@@ -78,7 +78,7 @@
         .name.gray {{item.owner.nickname}}
         .guarantee(v-if="paid") ￥
         .red.flex-1(v-else) 未支付保证金
-    .desc.font-30
+    .desc.font-30.omit-2
         span.red 预算￥{{price}}左右
         |   {{item.description}}
     ul.medias.flex
@@ -87,10 +87,10 @@
         li(v-for='attr in item.attributes') {{attr}}
     footer.font-26.flex.light
         div
-            span.red {{item.bid_count}}
+            span(:class="{'red': item.bid_count, 'gray': !item.bid_count}") {{item.bid_count}}
             span.gray  个竞标
         .flex-1(v-if='item.bid_count')
-            span.red {{item.win_count}}
+            span(:class="{'red': item.win_count, 'gray': !item.win_count}") {{item.win_count}}
             span.gray  个中标
     .btns.border-top.font-30(v-if="!paid")
         .operation.margin-right.border-gray(@click.stop="delete(item.id)") 删除此求购
@@ -112,10 +112,18 @@ export default {
         }
     },
     methods: {
-        delete(id) { //删除求购
-            this.$delete(`mall/purchase/${id}`).then(() => {
-                // TODO 集成客户端confirm, 删除后更新页面
-                this.action('toast', {text: '删除求购~~'+id});
+        delete(id) {
+            this.action('confirm', {
+                text: '确定删除此求购？',
+                labels: ['取消', '删除']
+            }).then((data) => {
+                if(data === '1') {
+                    this.$delete(`mall/purchase/${id}`)
+                        .then(() => {
+                            this.action('toast', {text: '删除成功'});
+                            this.env.isIOS ? location.reload(true) : this.action('reloadUrl');
+                        });
+                }
             });
         }
     }

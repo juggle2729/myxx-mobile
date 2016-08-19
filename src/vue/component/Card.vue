@@ -9,7 +9,7 @@
     }
     .media {
         width: 100%;
-        height: 300px;
+        height: 350px;
     }
     .data-label {
         position: absolute;
@@ -66,7 +66,8 @@
     </div>
     <div v-else v-link="{name: 'story', params: {id: entry.post_id}}">
         <div class="data-label font-22 center white">{{entry.topic_type.name}}</div>
-        <div class="media img" v-bg.md="entry.cover"></div>
+        <div v-if="entry.cover_type==='picture'" class="media img" v-bg.md="entry.cover"></div>
+        <div v-else class="media img" v-bg="entry.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320"></div>
         <div class="data-info font-26"><div class="data-name omit-2">{{entry.content}}</div></div>
     </div>
     <div class="data-footer flex">
