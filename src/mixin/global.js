@@ -108,6 +108,7 @@ const mixin = {
                     case 'delete':
                     case 'version':
                     case 'region':
+                    case 'upload':
                     case 'action':
                         callback = resp => defer.resolve(resp);
                         break;

@@ -1,4 +1,5 @@
 <style lang="sass">
+@import '~style/partials/mixin';
 .tags-component {
     padding: 0px 32px 24px;
     font-size: 0;
@@ -9,14 +10,14 @@
     .tag {
         display: inline-block;
         height: 60px;
-        line-height: 54px;
-        padding: 0 38px;
+        line-height: 60px;
+        padding: 0 28px;
         margin-bottom: 16px;
         border-radius: 30px;
         &:not(:last-child) {
             margin-right: 20px;
         }
-        border: 1px solid #c6c6c6;
+        @include border(all, #c6c6c6);
     }
 }
 .nowrap {

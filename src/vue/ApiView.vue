@@ -135,6 +135,20 @@ export default {
                         success: 0, // 0-fail, 1-success
                         text: 'toast在此~~'
                     }
+                }, {
+                    title: '文件上传-图片',
+                    label: 'upload',
+                    params: {
+                        type: 'img',
+                        limit: '10'
+                    }
+                }, {
+                    title: '文件上传-视频',
+                    label: 'upload',
+                    params: {
+                        type: 'video',
+                        limit: '1'
+                    }
                 }
             ]
         }
