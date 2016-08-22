@@ -11,7 +11,7 @@
         -webkit-box-align: start;
         padding-left: 32px;
         .avatar-68 {
-            margin: 20px 20px 0 0;
+            margin: 26px 20px 0 0;
         }
         > .flex-1 {
             padding: 28px 32px 28px 0;

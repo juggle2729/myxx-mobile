@@ -378,6 +378,16 @@ export default {
         }
     },
 
+    '/help/purchase': {
+        name: 'purchase-help',
+        title: '什么是求购竞标',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchaseHelpView.vue'));
+            }, 'help');
+        }
+    },
+
     '/comments/:id/:type': {
         name: 'comments',
         title: '全部评论',
