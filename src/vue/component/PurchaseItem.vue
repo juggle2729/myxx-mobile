@@ -10,15 +10,10 @@
         .name {
             margin: 0 14px 0 20px;
         }
-        .guarantee {
-            color: white;
-            background-color: #7ec3fd;
+        img {
             width: 24px;
             height: 30px;
-            font-size: 24px;
-            line-height: 30px;
-            font-weight: bolder;
-            border-radius: 100% / 30% 30% 100% 100%;
+            vertical-align: bottom;
         }
         .red {
             text-align: right;
@@ -76,10 +71,10 @@
     header.flex.font-26
         avatar(:user='item.owner', :size='50')
         .name.gray {{item.owner.nickname}}
-        .guarantee(v-if="paid") ￥
+        img(:src="'icon/guarantee.png' | qn")
         .red.flex-1(v-else) 未支付保证金
     .desc.font-30.omit-2
-        span.red 预算￥{{price}}左右
+        span.red 预算￥{{Math.round(this.item.price_max/100)}}左右
         |   {{item.description}}
     ul.medias.flex
         li.img(v-for="pic in item.pictures", track-by="$index", v-bg="pic")
@@ -87,14 +82,14 @@
         li(v-for='attr in item.attributes') {{attr}}
     footer.font-26.flex.light
         div
-            span(:class="{'red': item.bid_count, 'gray': !item.bid_count}") {{item.bid_count}}
+            span(:class="{'red': item.total_count, 'gray': !item.total_count}") {{item.total_count}}
             span.gray  个竞标
-        .flex-1(v-if='item.bid_count')
+        .flex-1(v-if='item.total_count')
             span(:class="{'red': item.win_count, 'gray': !item.win_count}") {{item.win_count}}
             span.gray  个中标
     .btns.border-top.font-30(v-if="!paid")
         .operation.margin-right.border-gray(@click.stop="delete(item.id)") 删除此求购
-        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: price, type: 'purchase'})") 立即支付保证金
+        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: this.item.price_max, type: 'purchase'})") 立即支付保证金
 </div>
 </template>
 <script>
@@ -104,9 +99,6 @@ export default {
         item: Object
     },
     computed: {
-        price() {
-            return Math.round(this.item.price_max);
-        },
         paid() {
             return this.item.status !=='np';
         }
@@ -120,7 +112,7 @@ export default {
                 if(data === '1') {
                     this.$delete(`mall/purchase/${id}`)
                         .then(() => {
-                            this.action('toast', {text: '删除成功'});
+                            this.action('toast', {success: 1, text: '删除成功'});
                             this.env.isIOS ? location.reload(true) : this.action('reloadUrl');
                         });
                 }

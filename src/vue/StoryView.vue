@@ -26,7 +26,7 @@
 
     .tag-activity {
         position: relative;
-        margin: 40px 0 40px 32px;
+        margin: 0 0 24px 32px;
         height: 68px;
         .item {
             position: absolute;
@@ -44,7 +44,7 @@
     }
     .medias {
         font-size: 0;
-        padding: 0 28px;
+        padding: 0 28px 28px;
         &.padding-bottom {
             padding-bottom: 28px;
         }
@@ -128,15 +128,8 @@
             <div v-for="pic in pictures" v-bg="pic" v-if="$index" class="media" @click="coverflow(this.pictures, $index)"></div>
         </div>
     </template>
-    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
-        <like :active="story.liked" :count="story.like"></like>
-        <div class="comment border-left" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="border-left"></share>
-    </div>
     <template v-if="story.topic_type.code === 'hd'">
-        <div class="tag-activity red font-30" v-link="{name: 'activity', params: {id: story.activity.id}}">
+        <div class="tag-activity red font-26" v-link="{name: 'activity', params: {id: story.activity.id}}">
             <div class="item"><span class="icon-activity"></span><span>{{story.activity.name}}</span></div>
         </div>
     </template>
@@ -146,6 +139,13 @@
             <tags :tags="story.tags"></tags>
         </div>
     </template>
+    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
+        <like :active="story.liked" :count="story.like"></like>
+        <div class="comment border-left" @click="$refs.comment.comment()">
+            <i class="icon-comment-solid"></i><span>写评论</span>
+        </div>
+        <share class="border-left"></share>
+    </div>
     <div class="separator-20"></div>
     <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>

@@ -4,7 +4,7 @@
 <template>
 <div class="user-purchase-view" :class="{'bg-default': !items.isEmpty}">
     <template v-for="item in items">
-        <div class="separator"></div>
+        <div class="separator-20-no"></div>
         <purchase-item :item="item"></purchase-item>
     </template>
     <empty v-if="items.isEmpty" title="暂无求购竞标"></empty>

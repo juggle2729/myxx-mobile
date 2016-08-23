@@ -11,12 +11,11 @@
             line-height: 48px;
             border-radius: 6px;
             padding: 0 12px;
-            .symbol {
-                height: 30px;
-                width: 24px;
-                border-radius: 100% / 30% 30% 100% 100%;
-                background-color: #7ec3fd;
+            img {
+                height: 24px;
+                width: 18px;
                 margin-right: 5px;
+                vertical-align: text-bottom;
             }
         }
         .desc {
@@ -66,7 +65,7 @@
             margin: 74px 24px 0;
             border-radius: 12px;
             position: relative;
-            padding-top: 48px;
+            padding-top: 10px;
             .avatar {
                 height: 68px;
                 width: 68px;
@@ -109,9 +108,10 @@
                 border-width: 28px 64px 40px 64px;
                 border-style: solid;
                 border-color: white;
+                border-radius: 12px;
             }
         }
-        
+
     }
     .empty-component {
         background-color: #efefef;
@@ -125,7 +125,7 @@
             avatar(:user="purchase.owner")
             .margin-left.font-30.gray.flex-1 {{purchase.owner.nickname}}
             .guarantee.font-22.gray.border-all(v-if="purchase.status !== 'np'")
-                span.symbol.white ￥
+                img(:src="'icon/guarantee.png' | qn")
                 span 保证金已付
         .desc.font-30
             span.red 预算{{purchase.price_max | price}}左右
@@ -149,7 +149,7 @@
                 span.light(v-if="minutes || hours") 分
                 span.red(v-if="second || minutes") {{second}}
                 span.light(v-if="second || minutes") 秒
-            .join.bg-gray.white.center.font-30(v-if="!isSelf && !purchase.user_conf.shop_in_bid", :class="{'bg-red': hasBidAuth && over}", @click="joinBid()") {{(purchase.status === 'fn' || !over) ? '竞标期已结束' : (purchase.open_seat ? '我要竞标' : '竞标名额已满')}}
+            .join.bg-gray.white.center.font-30(v-if="eligible", :class="{'bg-red': hasBidAuth && over}", @click="joinBid()") {{(purchase.status === 'fn' || !over) ? '竞标期已结束' : (purchase.open_seat ? '我要竞标' : '竞标名额已满')}}
     .win.center(v-if="purchase.wins && purchase.wins.length > 0")
         header.font-26.gray 中标作品   {{purchase.win_count}}
         .items.bg-white(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")
@@ -161,7 +161,7 @@
                 span.font-26.white {{win.product.price | price}}
             .desc.font-30.omit-2 {{win.description}}
     .auction.center(v-if="purchase.bids && purchase.bids.length > 0")
-        header.font-26.gray 竞标作品   {{purchase.bid_count}}
+        header.font-26.gray 竞标作品   {{purchase.total_count}}
         .items.bg-white(v-for="bid in purchase.bids")
             div(v-link="{name: 'jade', params: {id: bid.product.id}}")
                 .img.avatar(v-bg="bid.shop.logo")
@@ -171,7 +171,7 @@
                     span.font-26.white {{bid.product.price | price}}
                 .price.red.font-26(v-if="bid.ceil_price") 竞标底价{{bid.ceil_price | price}}
                 .desc.font-30.omit-2 {{bid.description}}
-    empty(v-if="!purchase.bid_count && !purchase.win_count", :title="emptyTip")
+    empty(v-if="!purchase.total_count && !purchase.win_count", :title="emptyTip")
 </template>
 <script>
 import Q from 'q';
@@ -190,11 +190,11 @@ export default {
         over() { // 倒计时是否结束
             return this.days || this.hours || this.minutes || this.second;
         },
-        isSelf() {
-            return _.get(this, 'self.id') == this.purchase.owner.id;
+        eligible() {
+            return _.get(this, 'self.id') != this.purchase.owner.id && !_.get(this.purchase, 'user_conf.shop_in_bid')
         },
         emptyTip() { // 竞拍为空时提示
-            return (!this.purchase.bid_count && !this.purchase.win_count && this.purchase.status === 'fn') ? 
+            return (!this.purchase.total_count && !this.purchase.win_count && this.purchase.status === 'fn') ?
                 '无作品参与竞标' : '暂无竞标作品';
         }
     },

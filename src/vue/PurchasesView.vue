@@ -36,6 +36,20 @@ export default {
             };
         }
     },
+
+    ready() {
+        this.action('action', {icon: 'question-2x.png'})
+            .then(() => {
+                this.$router.go({name: 'purchase-help'});
+            })
+        this.$on('restore', () => {
+            this.action('action', {icon: 'question-2x.png'})
+                .then(() => {
+                    this.$router.go({name: 'purchase-help'});
+                })
+        });
+    },
+
     methods: {
         purchase() {
             Q.promise(resolve => {
