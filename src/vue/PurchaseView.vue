@@ -139,7 +139,7 @@
                 .operation.margin-right.border-gray(@click="delete(purchase.id)") 删除此求购
                 .operation.white.bg-red(@click="action('pay', {id: purchase.id, price: purchase.pledge, type: 'purchase'})") 立即支付保证金
         div(v-else)
-            .deadline.font-26.light(v-if="hasBidAuth && over")
+            .deadline.font-26.light(v-if="availiable && !expired")
                 span.gray 距离竞标结束
                 span.red(v-if="days") {{days}}
                 span.light(v-if="days") 天
@@ -149,7 +149,7 @@
                 span.light(v-if="minutes || hours") 分
                 span.red(v-if="second || minutes") {{second}}
                 span.light(v-if="second || minutes") 秒
-            .join.bg-gray.white.center.font-30(v-if="eligible", :class="{'bg-red': hasBidAuth && over}", @click="joinBid()") {{(purchase.status === 'fn' || !over) ? '竞标期已结束' : (purchase.open_seat ? '我要竞标' : '竞标名额已满')}}
+            .join.bg-gray.white.center.font-30(v-if="eligible", :class="{'bg-red': availiable}", @click="joinBid()") {{btnTxt}}
     .win.center(v-if="purchase.wins && purchase.wins.length > 0")
         header.font-26.gray 中标作品   {{purchase.win_count}}
         .items.bg-white(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")
@@ -184,14 +184,18 @@ export default {
         like
     },
     computed: {
-        hasBidAuth() { // 是否具备竞标的客观条件
-            return this.purchase.open_seat && this.purchase.status !== 'fn';
+        availiable() { // 是否具备竞标的客观条件
+            return this.purchase.open_seat > this.purchase.total_count && this.purchase.status !== 'fn';
         },
-        over() { // 倒计时是否结束
-            return this.days || this.hours || this.minutes || this.second;
+        // 不用考虑动态更新是否结束的状态
+        expired() { // 倒计时是否结束
+            return !(this.days || this.hours || this.minutes || this.second);
         },
-        eligible() {
+        eligible() { // 当前用户能否参入竞标
             return _.get(this, 'self.id') != this.purchase.owner.id && !_.get(this.purchase, 'user_conf.shop_in_bid')
+        },
+        btnTxt() {
+            return this.purchase.status === 'fn' ? '竞标期已结束' : (this.purchase.open_seat > this.purchase.total_count ? '我要竞标' : '竞标名额已满');
         },
         emptyTip() { // 竞拍为空时提示
             return (!this.purchase.total_count && !this.purchase.win_count && this.purchase.status === 'fn') ?
@@ -229,7 +233,7 @@ export default {
     },
     methods: {
         joinBid() {
-            if(this.hasBidAuth) {
+            if(this.availiable) {
                 if(!this.env.isShare) {
                     Q.promise(resolve => {
                         if(this.self) {
@@ -239,9 +243,9 @@ export default {
                         }
                     }).then(() => {
                         const userInfo = this.purchase.conf.user_conf;
-                        if(!userInfo.add_product || userInfo.shop_audit_status === 'unaudited') {
+                        if(!userInfo.add_product) {
                             this.action('confirm', {
-                                text: '认证工作室或认证商家才可竞标，您可以联系客服认证',
+                                text: '工作室或商家才可竞标，您可以联系客服',
                                 labels: ['取消', '联系客服']
                             }).then((data) => {
                                 if(data === '1') {

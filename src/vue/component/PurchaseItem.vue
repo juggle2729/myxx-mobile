@@ -71,7 +71,7 @@
     header.flex.font-26
         avatar(:user='item.owner', :size='50')
         .name.gray {{item.owner.nickname}}
-        img(:src="'icon/guarantee.png' | qn")
+        img(v-if="paid", :src="'icon/guarantee.png' | qn")
         .red.flex-1(v-else) 未支付保证金
     .desc.font-30.omit-2
         span.red 预算￥{{Math.round(this.item.price_max/100)}}左右
@@ -89,7 +89,7 @@
             span.gray  个中标
     .btns.border-top.font-30(v-if="!paid")
         .operation.margin-right.border-gray(@click.stop="delete(item.id)") 删除此求购
-        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: this.item.price_max, type: 'purchase'})") 立即支付保证金
+        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: this.item.pledge, type: 'purchase'})") 立即支付保证金
 </div>
 </template>
 <script>
