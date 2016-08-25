@@ -52,7 +52,7 @@ const filters = {
 
     price(cents, zero='面议') {
         if (_.isNumber(cents) && cents >= 0) {
-            return '￥' + Math.ceil(cents/100);
+            return '￥' + Math.floor(cents/100);
         } else {
             return '￥' + zero;
         }

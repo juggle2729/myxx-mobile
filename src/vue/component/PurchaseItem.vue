@@ -23,6 +23,7 @@
         margin-top: 24px;
         line-height: 1.3;
         margin-bottom: 24px;
+        word-break: break-all;
     }
     .medias {
         li {
@@ -73,7 +74,7 @@
         .name.gray {{item.owner.nickname}}
         img(v-if="paid", :src="'icon/guarantee.png' | qn")
         .red.flex-1(v-else) 未支付保证金
-    .desc.font-30.omit-2
+    .desc.font-30
         span.red 预算￥{{Math.round(this.item.price_max/100)}}左右
         |   {{item.description}}
     ul.medias.flex
