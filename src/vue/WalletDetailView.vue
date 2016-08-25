@@ -32,7 +32,7 @@
             }
         }
     }
-    .empty-page {
+    .empty-component {
         margin-top: 50%;
     }
 }
@@ -82,11 +82,13 @@ export default {
                 this.$get('balance/expects').then((data) => {
                     this.expects = data.entries;
                     this.items = this.expects;
+                    this.isEmpty = !this.items.length;
                 });
             } else if(!this.bills) {
                 this.$get('balance/bills').then((data) => {
                     this.bills = data.entries;
                     this.items = this.bills;
+                    this.isEmpty = !this.items.length;
                 });
             }
             this.items = (to.params.tab === 'expects') ? this.expects : this.bills;
