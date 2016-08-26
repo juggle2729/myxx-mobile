@@ -192,7 +192,7 @@ export default {
             return !(this.days || this.hours || this.minutes || this.second);
         },
         eligible() { // 当前用户能否参入竞标
-            return _.get(this, 'self.id') != this.purchase.owner.id && !_.get(this.purchase, 'user_conf.shop_in_bid')
+            return _.get(this, 'self.id') != this.purchase.owner.id && !_.get(this.purchase, 'conf.user_conf.shop_in_bid')
         },
         btnTxt() {
             return this.purchase.status === 'fn' ? '竞标期已结束' : (this.purchase.open_seat > this.purchase.total_count ? '我要竞标' : '竞标名额已满');
@@ -227,7 +227,7 @@ export default {
                 this.purchase = data;
                 this.timer(data.closed_at)();
                 setInterval(this.timer(data.closed_at), 1000);
-                this.setShareData({title: data.description}, true);
+                this.setShareData({title: data.description, icon: data.pictures[0]}, true);
             });
         }
     },

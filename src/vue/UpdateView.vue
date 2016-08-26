@@ -16,7 +16,7 @@
 </style>
 <template>
 <div class="update-view bg-default">
-    <a class="center-vertical" :href="config.download">
+    <a class="center-vertical" :href="tel:13505152966">
         <img :src="config.www+'update.png'" alt="请更新至最新版本">
     </a>
 </div>

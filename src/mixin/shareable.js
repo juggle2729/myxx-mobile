@@ -126,15 +126,15 @@ export default {
                     data.icon = entry.logo;
                     break;
                 case 'purchase':
-                    data.title = `${entry.title}`;
+                    data.title = entry.title;
                     data.desc = '你发需求，商家竞标，上手对比，买得放心！';
-                    data.icon = 'http://o0x80w5li.qnssl.com/logo.png';
+                    data.icon = entry.icon || 'http://o0x80w5li.qnssl.com/logo.jpg';
                     break;
                 default:
                     data = _.merge(data, {
                         title: '美玉秀秀',
                         desc: '大师在线视频鉴宝',
-                        icon: 'http://o0x80w5li.qnssl.com/logo.png'
+                        icon: 'http://o0x80w5li.qnssl.com/logo.jpg'
                     }, entry);
             }
             data.title = _.truncate(data.title, {
