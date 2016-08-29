@@ -44,6 +44,10 @@
         height: 72px;
         line-height: 72px;
         margin-left: 32px;
+        .name {
+            height: 72px;
+            line-height: 75px;
+        }
     }
     .shop {
         height: 144px;
@@ -98,16 +102,20 @@
         height: 98px;
         width: 100%;
         &>div {
-            width: 50%;
             height: 100%;
         }
-        .contact-btn,.comment-btn {
+        &>div:first-child {
+            width: 450px;
+        }
+        .buy-btn {
+            width: 300px;
+        }
+        .contact-btn,.collect-btn,.comment-btn {
             -webkit-box-orient: vertical;
             -webkit-box-pack: center;
             width: 50%;
             height: 100%;
             [class^='icon-'], [class*=' icon-'] {
-                color: #c6c6c6;
                 margin-bottom: 4px;
                 padding: 0;
             }
@@ -159,7 +167,7 @@
     </div>
     <div class="master flex bg-white border-top" v-link="{name: 'user', params: {id: jade.owner.id}}">
         <avatar :user="jade.owner" :size="50"></avatar>
-        <div class="font-26 gray margin-left">{{jade.owner.name}}</div>
+        <div class="name font-26 gray margin-left">{{jade.owner.name}}</div>
     </div>
     <div class="separator-20-no"></div>
     <div class="tabs tabs-static border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
@@ -176,6 +184,10 @@
             <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
                 <div class="icon-contact font-44"></div>
                 <div>私信</div>
+            </div>
+            <div class="font-22 flex flex-1 gray collect-btn border-right" :class="{'red': jade.is_faved}" @click="collect()">
+                <div class="icon-contact font-44"></div>
+                <div>{{jade.is_faved ? '已收藏' : '收藏'}}</div>
             </div>
             <div class="font-22 flex flex-1 gray comment-btn" @click="gotoComments">
                 <div class="icon-comment-solid font-44"></div>
@@ -206,7 +218,8 @@ export default {
         return {
             jade: {
                 owner: {},
-                shop: {}
+                shop: {},
+                is_faved: false
             },
             isSelf: false,
             isDefaultView: false,
@@ -299,6 +312,22 @@ export default {
         },
         go(tab) { // FIXME 采用v-link替代
             (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`);
+        },
+        collect(tab) {
+            // TODO api
+            const api = 'users/favs';
+            const data = {
+                doc_type: 'pd',
+                doc_id: this.jade.id
+            };
+            this[this.jade.is_faved ? '$delete' : '$post'](api, data)
+            .then(() => {
+                this.jade.is_faved = !this.jade.is_faved;
+                this.action('toast', {
+                    success: 1,
+                    text: this.jade.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
+                });
+            });
         }
     },
     events: {

@@ -29,7 +29,7 @@ let [api, img, video, download] = ((env='dev') => {
         }
     };
     return _.map(hosts, env);
-})('test');
+})('docker');
 
 export default {
     api,
