@@ -8,7 +8,7 @@
         }
     }
     .button {
-        width: 686px;
+        width: 648px;
         height: 80px;
         line-height: 80px;
         border-radius: 8px;
