@@ -1,5 +1,9 @@
 <style lang="sass">
-.user-purchase-view {}
+.user-purchase-view {
+    .purchase-item.won {
+        background-image: none;
+    }
+}
 </style>
 <template>
 <div class="user-purchase-view" :class="{'bg-default': !items.isEmpty}">

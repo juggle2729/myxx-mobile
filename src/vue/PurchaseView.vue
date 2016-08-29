@@ -192,7 +192,10 @@ export default {
             return !(this.days || this.hours || this.minutes || this.second);
         },
         eligible() { // 当前用户能否参入竞标
-            return _.get(this, 'self.id') != this.purchase.owner.id && !_.get(this.purchase, 'conf.user_conf.shop_in_bid')
+            return _.get(this, 'self.id')
+                && _.get(this, 'self.id') != this.purchase.owner.id
+                && _.get(this.purchase, 'conf.user_conf.add_product')
+                && !_.get(this.purchase, 'conf.user_conf.shop_in_bid')
         },
         btnTxt() {
             return this.purchase.status === 'fn' ? '竞标期已结束' : (this.purchase.open_seat > this.purchase.total_count ? '我要竞标' : '竞标名额已满');
@@ -220,6 +223,11 @@ export default {
                 product: {}
             }
         }
+    },
+    ready() {
+        this.$on('restore', () => {
+            this.setShareData({title: this.purchase.description, icon: this.purchase.pictures[0]}, true);
+        });
     },
     route: {
         data({to}) {

@@ -2,6 +2,11 @@
 @import '~style/partials/var';
 .purchase-item {
     padding: 24px 0 32px;
+    &.won {
+        background-image: url('#{$qn}/purchase/winned.png');
+        background-position: top right;
+        background-size: 184px 144px;
+    }
     header, .desc, ul, footer {
         margin-left: 32px;
         margin-right: 32px;
@@ -68,7 +73,7 @@
 }
 </style>
 <template lang="jade">
-.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
+.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}", :class="{won:item.win_count}")
     header.flex.font-26
         avatar(:user='item.owner', :size='50')
         .name.gray {{item.owner.nickname}}
