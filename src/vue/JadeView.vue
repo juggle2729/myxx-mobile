@@ -320,7 +320,7 @@ export default {
                 doc_type: 'pd',
                 doc_id: this.jade.id
             };
-            this[this.jade.is_faved ? '$delete' : '$post'](api, data)
+            this[this.jade.is_faved ? '$put' : '$post'](api, data)
             .then(() => {
                 this.jade.is_faved = !this.jade.is_faved;
                 this.action('toast', {
