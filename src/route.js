@@ -158,6 +158,16 @@ export default {
         }
     },
 
+    '/user/:id/comment': {
+        name: 'user-comment',
+        title: '评价管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('UserCommentView.vue'));
+            }, 'profile');
+        }
+    },
+
 
     '/user/:id/:tab': { // 个人主页
         name: 'user',
@@ -384,6 +394,26 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PurchaseHelpView.vue'));
+            }, 'help');
+        }
+    },
+
+    '/help/level/:id': {
+        name: 'level-help',
+        title: '等级说明',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('LevelHelpView.vue'));
+            }, 'help');
+        }
+    },
+
+    '/help/comment': {
+        name: 'level-comment',
+        title: '商品评价说明',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CommentHelpView.vue'));
             }, 'help');
         }
     },
