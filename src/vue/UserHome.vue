@@ -25,15 +25,12 @@
         }
         .detail {
             .name {
-                width: 500px;
-                &.auth {
-                    width: 400px;
-                }
+                width: 380px;
             }
+        }
+        .level-comp {
             img {
-                width: 110px;
-                height: 36px;
-                margin: 0 16px;
+                width: 42px;
             }
         }
     }
@@ -100,69 +97,65 @@
     }
 }
 </style>
-<template>
-<div class="user-home bg-default">
-    <div class="shop bg-white" v-if="shop" v-link="{name: 'shop', params: {id: shop.id}}">
-        <div class="header font-26 gray"><span>{{shop.shop_type === 'studio' ? '工作室' : '店铺'}}</span></div>
-        <div class="flex detail">
-            <div class="img" v-bg="shop.logo"></div>
-            <div class="flex-1">
-                <div class="font-30 flex margin-bottom name" :class="{'auth': shop.auth_flag}">
-                    <div class="omit">{{shop.shop_name}}</div>
-                    <img :src="'user/' + shop.shop_type + '.png' | qn" v-if="shop.auth_flag" />
-                </div>
-                <div class="font-26 gray"><span class="icon-location"></span><span>{{shop.locale_name}}</span></div>
-            </div>
-            <div class="icon-enter font-30 gray"></div>
-        </div>
-    </div>
-    <div class="separator-20-no" v-if="works"></div>
-    <div class="works bg-white" v-if="works">
-        <div class="header font-26 gray"><span>作品展示</span></div>
-        <div class="flex medias">
-            <div class="media img" v-for="entry in works.entries" v-bg="entry.picture" v-if="$index < 4"
-                v-link="{name: 'work', params: {id: entry.id}}"></div>
-            <div class="media more font-30 center white" v-if="works.total > 4" v-link="{name: 'works', params: {id: $route.params.id}}">更多<span class="icon-enter"></span></div>
-        </div>
-    </div>
-    <div class="separator-20-no" v-if="interview"></div>
-    <div class="interview bg-white" v-if="interview" v-link="{name: 'story', params: {id: interview.iv_post_id}}">
-        <div class="header font-26 gray"><span>专访</span></div>
-        <div class="flex">
-            <div class="img" v-bg="interview.iv_img"></div>
-            <div class="font-30 flex-1 title omit-2">{{interview.iv_title}}</div>
-        </div>
-    </div>
-    <div class="separator-20-no" v-if="website"></div>
-    <div class="website bg-white" v-if="website" v-link="{name: 'master', params:{id: website.user_id}}">
-        <div class="header font-26 gray"><span>人物志</span></div>
-        <div class="cover img" v-bg="website.logo"></div>
-        <div class="title font-30 flex-1 omit-2">{{website.title}}</div>
-    </div>
-    <div class="separator-20-no" v-if="engravers && engravers.length > 0"></div>
-    <div class="engraver bg-white" v-if="engravers && engravers.length > 0">
-        <div class="header font-26 gray"><span>人物</span></div>
-        <div class="master">
-            <div class="flex border-bottom" v-for="master in engravers" v-link="{name: 'user', params: {id: master.id}}">
-                <avatar :user="master" :size="108"></avatar>
-                <div class="font-30 margin-left">
-                    <p>{{master.nickname}}</p>
-                    <p class="gray margin-top">{{master.title}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <recommend :data="items" name="热门帖子"></recommend>
-</div>
+<template lang="jade">
+.user-home.bg-default
+    .shop.bg-white(v-if='shop', v-link="{name: 'shop', params: {id: shop.id}}")
+        .header.font-26.gray
+            span {{shop.shop_type === 'studio' ? '工作室' : '店铺'}}
+        .flex.detail
+            .img(v-bg='shop.logo')
+            .flex-1
+                .font-30.flex.margin-bottom.name(:class="{'auth': shop.auth_flag}")
+                    .omit.margin-right {{shop.shop_name}}
+                    lv(:lv="shop.level")
+                .font-26.gray
+                    span.icon-location
+                    span {{shop.locale_name}}
+            .icon-enter.font-30.gray
+    .separator-20-no(v-if='works')
+    .works.bg-white(v-if='works')
+        .header.font-26.gray
+            span 作品展示
+        .flex.medias
+            .media.img(v-for='entry in works.entries', v-bg='entry.picture', v-if='$index < 4', v-link="{name: 'work', params: {id: entry.id}}")
+            .media.more.font-30.center.white(v-if='works.total > 4', v-link="{name: 'works', params: {id: $route.params.id}}")
+                | 更多
+                span.icon-enter
+    .separator-20-no(v-if='interview')
+    .interview.bg-white(v-if='interview', v-link="{name: 'story', params: {id: interview.iv_post_id}}")
+        .header.font-26.gray
+            span 专访
+        .flex
+            .img(v-bg='interview.iv_img')
+            .font-30.flex-1.title.omit-2 {{interview.iv_title}}
+    .separator-20-no(v-if='website')
+    .website.bg-white(v-if='website', v-link="{name: 'master', params:{id: website.user_id}}")
+        .header.font-26.gray
+            span 人物志
+        .cover.img(v-bg='website.logo')
+        .title.font-30.flex-1.omit-2 {{website.title}}
+    .separator-20-no(v-if='engravers && engravers.length > 0')
+    .engraver.bg-white(v-if='engravers && engravers.length > 0')
+        .header.font-26.gray
+            span 人物
+        .master
+            .flex.border-bottom(v-for='master in engravers', v-link="{name: 'user', params: {id: master.id}}")
+                avatar(:user='master', :size='108')
+                .font-30.margin-left
+                    p {{master.nickname}}
+                    p.gray.margin-top {{master.title}}
+    recommend(:data='items', name='热门帖子')
 </template>
 <script>
 import paging from 'paging';
+import lv from 'component/Lv.vue';
 import recommend from 'component/Recommend.vue';
 export default {
     name: 'UserHome',
     mixins: [paging],
     components: {
-        recommend
+        recommend,
+        lv
     },
     data() {
         return {

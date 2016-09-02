@@ -1,6 +1,9 @@
 <style lang="sass">
 .level-comp {
     display: inline-block;
+    img + img {
+        margin-left: 5px;
+    }
 }
 </style>
 <template lang="jade">
@@ -13,7 +16,10 @@ export default {
     name: 'LevelComponent',
 
     props: {
-        lv: Number
+        lv: {
+            type: Number,
+            default: 1
+        }
     },
 
     computed: {

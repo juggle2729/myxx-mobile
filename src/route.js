@@ -52,6 +52,76 @@ export default {
 
     '/purchases': {
         name: 'purchases',
+        title: '求购比价',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchasesView.vue'));
+            }, 'purchase');
+        }
+    },
+
+    '/purchase/:id': {
+        name: 'purchase',
+        title: '求购详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchaseView.vue'));
+            }, 'purchase');
+        }
+    },
+
+    '/bzone': {
+        name: 'bzone',
+        title: '商户专区',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BZoneView.vue'));
+            }, 'bzone');
+        }
+    },
+
+    '/masters': {
+        name: 'masters',
+        title: '人物志',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MastersView.vue'));
+            }, 'master');
+        }
+    },
+
+    '/purchases': {
+        name: 'purchases',
+        title: '求购竞标',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchasesView.vue'));
+            }, 'purchase');
+        }
+    },
+
+    '/purchase/:id': {
+        name: 'purchase',
+        title: '求购详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PurchaseView.vue'));
+            }, 'purchase');
+        }
+    },
+
+    '/masters': {
+        name: 'masters',
+        title: '人物志',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MastersView.vue'));
+            }, 'master');
+        }
+    },
+
+    '/purchases': {
+        name: 'purchases',
         title: '求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
@@ -158,17 +228,6 @@ export default {
         }
     },
 
-    '/user/:id/comment': {
-        name: 'user-comment',
-        title: '评价管理',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('UserCommentView.vue'));
-            }, 'profile');
-        }
-    },
-
-
     '/user/:id/:tab': { // 个人主页
         name: 'user',
         title: '',
@@ -179,6 +238,7 @@ export default {
             }, 'profile');
         }
     },
+
     '/shop/:id': { // 工作室主页
         name: 'shop',
         native: v => v >= 1.7 && {name: 'shop'},
@@ -186,9 +246,20 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ShopView.vue'));
-            }, 'profile');
+            }, 'shop');
         }
     },
+
+    '/shop/:id/comment': {
+        name: 'user-comment',
+        title: '评价管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopCommentView.vue'));
+            }, 'shop');
+        }
+    },
+
     '/:id/works': {
         name: 'works',
         title: '作品展示',
@@ -394,6 +465,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PurchaseHelpView.vue'));
+            }, 'help');
+        }
+    },
+
+    '/help/bzone': {
+        name: 'bzone-help',
+        title: '什么是商户专区',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BZoneHelpView.vue'));
             }, 'help');
         }
     },

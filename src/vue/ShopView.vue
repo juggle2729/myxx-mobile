@@ -1,28 +1,39 @@
 <style lang="sass">
 .studio-view {
     padding-bottom: 98px;
-    .banner {
-        height: 330px;
-    }
-    .shop {
-        height: 168px;
-        padding: 0 32px;
-        .name {
-            width: 500px;
-            &.auth {
-                width: 400px;
+    > header {
+        height: 460px;
+        background-size: cover;
+        background-position: center;
+        .shop {
+            position: relative;
+            top: 320px;
+            background-color: rgba(0, 0, 0, .6);
+            height: 140px;
+            padding: 0 32px;
+            .name {
+                width: 500px;
+                &.auth {
+                    width: 400px;
+                }
+            }
+            .img {
+                height: 100px;
+                width: 100px;
+                border-radius: 6px;
+                margin-right: 20px;
             }
         }
-        .img {
-            height: 100px;
-            width: 100px;
-            border-radius: 6px;
-            margin-right: 20px;
-        }
-        img {
-            width: 110px;
-            height: 36px;
-            margin-left: 16px;
+    }
+    .level {
+        height: 100px;
+        line-height: 100px;
+        padding: 0 32px;
+        .level-comp {
+            display: block;
+            img {
+                width: 42px;
+            }
         }
     }
     .master {
@@ -33,13 +44,21 @@
             bottom: 10px;
         }
     }
-    .header {
-        padding: 0 32px;
-        height: 84px;
-        line-height: 84px;
-        span {
-            border-left: 6px solid #cc3f4f;
-            padding-left: 12px;
+    section {
+        header {
+            padding: 0 32px;
+            height: 84px;
+            line-height: 84px;
+            span {
+                border-left: 6px solid #cc3f4f;
+                padding-left: 12px;
+            }
+        }
+        main {
+            padding-top: 20px;
+            & > div {
+                margin: 0 0 20px 20px;
+            }
         }
     }
     .medias {
@@ -70,50 +89,58 @@
     }
 }
 </style>
-<template>
-<div class="studio-view bg-white" v-if="!$loadingRouteData">
-    <div class="banner img" v-bg="shop.image_bg"></div>
-    <div class="shop flex">
-        <div class="img" v-bg="shop.logo"></div>
-        <div class="flex-1">
-            <div class="font-30 flex margin-bottom name" :class="{'auth': shop.auth_flag}">
-                <div class="omit">{{shop.shop_name}}</div><img :src="'user/' + shop.shop_type + '.png' | qn" v-if="shop.auth_flag"/>
-            </div>
-            <div class="font-26 gray"><span class="icon-location"></span><span>{{shop.locale_name}}</span></div>
-        </div>
-    </div>
-    <div class="master border-top flex" v-link="{name: 'user', params: {id: shop.owner.id}}">
-        <avatar :user="shop.owner"></avatar>
-        <div class="font-26 margin-left flex-1">
-            <p>{{shop.owner.nickname}}</p><p class="margin-top gray">{{shop.owner.title}}</p>
-        </div>
-        <div class="icon-enter font-30 gray"></div>
-    </div>
-    <div class="separator-20-no" v-if="items && items.length > 0"></div>
-    <div class="header font-26 gray bg-white" v-if="items && items.length > 0"><span>新品发布</span></div>
-    <div class="medias" v-for="item in items" v-link="{name: 'jade', params: {id: item.id}}">
-        <div class="media img" v-bg="item.first_picture"></div>
-        <div class="detail font-30">
-            <p class="omit desc">{{item.title}}</p><p class="font-26 red">{{item.price | price}}</p>
-        </div>
-    </div>
-    <div class="footer flex border-top font-30 bg-white gray">
-        <chat class="flex-1 center border-right" :id="shop.owner.id" :name="shop.owner.nickname"></chat>
-        <share class="flex-1 center"></share>
-    </div>
-</div>
+<template lang="jade">
+.studio-view.bg-white(v-if='!$loadingRouteData')
+    header(v-bg='shop.image_bg')
+        .shop.flex.white
+            .img(v-bg='shop.logo')
+            .flex-1
+                .font-30.flex.margin-bottom.name(:class="{'auth': shop.auth_flag}")
+                    .omit {{shop.shop_name}}
+                .font-26
+                    span.icon-location
+                    span {{shop.locale_name}}
+    .level.font-30.flex(v-link="{name: 'level-help', params: {id: 'none'}}")
+        .margin-right 信誉评价等级
+        lv.flex-1(:lv="shop.level")
+        .icon-enter.font-30.gray
+    .separator-20-no
+    .master.flex(v-link="{name: 'user', params: {id: shop.owner.id}}")
+        avatar(:user='shop.owner')
+        .font-26.margin-left.flex-1
+            p {{shop.owner.nickname}}
+            p.margin-top.gray {{shop.owner.title}}
+        .icon-enter.font-30.gray
+    .separator-20-no(v-if='items && items.length > 0')
+    section(v-if='items.length > 0')
+        header.font-26.gray.bg-white
+            span 新品发布
+        main.bg-default
+            product-card(v-for='item in items', :entry="item" , v-link="{name: 'jade', params: {id: item.id}}")
+    //- .medias(v-for='item in items', v-link="{name: 'jade', params: {id: item.id}}")
+    //-     .media.img(v-bg='item.first_picture')
+    //-     .detail.font-30
+    //-         p.omit.desc {{item.title}}
+    //-         p.font-26.red {{item.price | price}}
+    .footer.flex.border-top.font-30.bg-white.gray
+        chat.flex-1.center.border-right(:id='shop.owner.id', :name='shop.owner.nickname')
+        share.flex-1.center
 </template>
 <script>
 import paging from 'paging';
 import share from 'component/Share.vue';
 import chat from 'component/Chat.vue';
+import lv from 'component/Lv.vue';
+import ProductCard from 'component/ProductCard.vue';
 import shareable from 'shareable';
 export default {
     name: 'ShopView',
     mixins: [paging, shareable],
     components: {
         share,
-        chat
+        chat,
+        lv,
+        ProductCard
     },
     data() {
         return {

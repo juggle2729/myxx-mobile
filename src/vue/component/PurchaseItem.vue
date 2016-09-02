@@ -2,10 +2,13 @@
 @import '~style/partials/var';
 .purchase-item {
     padding: 24px 0 32px;
-    &.won {
-        background-image: url('#{$qn}/purchase/winned.png');
-        background-position: top right;
-        background-size: 184px 144px;
+    position: relative;
+    .mark {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 184px;
+        height: 144px;
     }
     header, .desc, ul, footer {
         margin-left: 32px;
@@ -15,10 +18,16 @@
         .name {
             margin: 0 14px 0 20px;
         }
-        img {
-            width: 24px;
-            height: 30px;
-            vertical-align: bottom;
+        .guarantee {
+            height: 48px;
+            line-height: 48px;
+            border-radius: 6px;
+            padding: 0 12px;
+            img {
+                height: 24px;
+                margin-right: 5px;
+                vertical-align: text-bottom;
+            }
         }
         .red {
             text-align: right;
@@ -73,11 +82,14 @@
 }
 </style>
 <template lang="jade">
-.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}", :class="{won:item.win_count}")
+.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
+    img.mark(v-if="item.win_count", :src="'purchase/winned.png' | qn")
     header.flex.font-26
         avatar(:user='item.owner', :size='50')
-        .name.gray {{item.owner.nickname}}
-        img(v-if="paid", :src="'icon/guarantee.png' | qn")
+        .name.gray.flex-1 {{item.owner.nickname}}
+        .guarantee.font-22.gray.border-all(v-if="paid", v-link="{name: 'purchase-help', query: {subject: 'guarantee'}}")
+            img(:src="'icon/guarantee.png' | qn")
+            span 保证金已付
         .red.flex-1(v-else) 未支付保证金
     .desc.font-30
         span.red 预算￥{{Math.round(this.item.price_max/100)}}左右
@@ -90,12 +102,9 @@
         div
             span(:class="{'red': item.total_count, 'gray': !item.total_count}") {{item.total_count}}
             span.gray  个竞标
-        .flex-1(v-if='item.total_count')
-            span(:class="{'red': item.win_count, 'gray': !item.win_count}") {{item.win_count}}
-            span.gray  个中标
     .btns.border-top.font-30(v-if="!paid")
-        .operation.margin-right.border-gray(@click.stop="delete(item.id)") 删除此求购
-        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: this.item.pledge, type: 'purchase'})") 立即支付保证金
+        .operation.margin-right.border-gray(@click.stop="del(item.id)") 删除此求购
+        .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: item.pledge, type: item.is_tob ? 'sale' : 'purchase'})") 立即支付保证金
 </div>
 </template>
 <script>
@@ -110,7 +119,7 @@ export default {
         }
     },
     methods: {
-        delete(id) {
+        del(id) {
             this.action('confirm', {
                 text: '确定删除此求购？',
                 labels: ['取消', '删除']

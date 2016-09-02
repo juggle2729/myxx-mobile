@@ -35,7 +35,6 @@
     }
     li::before {
         padding-right: .2em;
-        // font-weight: bold;
     }
 }
 </style>

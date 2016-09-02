@@ -78,10 +78,8 @@
 <template lang="jade">
 .level-help-view.bg-default
     .user.center.font-30.bg-white(v-if="isUserView")
-        lv(:lv="5")
-        .lv-label
-            span.gray.margin-right 当前等级
-            span {{lv}}级
+        lv(:lv="lv")
+        .lv-label.gray 信誉评价等级
         .bar-label.flex
             .hr.flex-1
             span 店铺积分
@@ -139,10 +137,13 @@ export default {
     },
 
     route: {
-        data({next}) {
+        data({next, to}) {
             if(this.isUserView) {
-                this.lv = 6
-                this.point = 5000
+                this.$get(`mall/shop/${to.params.id}/profile`)
+                    .then(shop => {
+                        this.lv = shop.level
+                        this.point = shop.point
+                    })
             }
             next()
         }

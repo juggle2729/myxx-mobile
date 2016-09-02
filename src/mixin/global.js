@@ -110,7 +110,21 @@ const mixin = {
                     case 'region':
                     case 'upload':
                     case 'action':
+                    case 'cache':
                         callback = resp => defer.resolve(resp);
+                        break;
+                    case 'newPurchase':
+                    case 'newJade':
+                    case 'newBid':
+                        if(this.env.version < 2.0) {
+                            this.action('toast', {success: 0, text: '请更新至最新版'})
+                        }
+                        break;
+                    case 'newSale':
+                    case 'newDemand':
+                        if(this.env.version < 2.1) {
+                            this.action('toast', {success: 0, text: '请更新至最新版'})
+                        }
                         break;
                 }
                 bridge.callHandler.apply(this, [handler, params, callback].filter(arg => arg !== undefined));
@@ -133,7 +147,7 @@ const mixin = {
                         const [path, version] = url.split('|');
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v8']
+                                ['X-Api-Version', version || 'v9']
                             ].filter(header => header[1]));
                         this.$http[method](path, data, {headers})
                             .then(({data: resp}) => {
@@ -162,6 +176,7 @@ const mixin = {
                 });
             return defer.promise;
         },
+        // 覆盖了默认的$get，待改进
         $get(url, data) {
             return this.$req(url, 'get', data);
         },

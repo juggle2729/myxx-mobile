@@ -1,5 +1,30 @@
 <style lang="sass">
+@import '~style/partials/var';
 .jade-view {
+    .notice {
+        position: fixed;
+        z-index: 9;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90px;
+        line-height: 90px;
+        padding: 0 30px;
+        background-color: #fcf1e0;
+        .txt {
+            color: #eaa123;
+        }
+        .close {
+            height: 90px;
+            width: 60px;
+            background-image: url('#{$qn}/bzone/close-yellow.png');
+            background-position: right center;
+            background-size: 28px 28px;
+        }
+    }
+    .notice-placeholder {
+        height: 90px;
+    }
     .jade-video {
         height: 577px;
         background-size: contain;
@@ -63,18 +88,13 @@
             bottom: 8px;
         }
         .name {
-            width: 500px;
-            &.auth {
-                width: 400px;
-            }
+            width: 380px;
             .omit {
                 line-height: 1.2
             }
-        }
-        img {
-            width: 110px;
-            height: 36px;
-            margin: 0 16px;
+            img {
+                width: 42px;
+            }
         }
     }
 
@@ -138,69 +158,63 @@
     }
 }
 </style>
-<template>
-<div class="jade-view">
-    <div class="tabs tabs-fixed border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
-        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
-         <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
-        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">常见问题</div>
-    </div>
-    <div class="jade-video video" v-bg="jade.video" @click="play(jade.video)" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750">
-    </div>
-    <div class="titles bg-white">
-        <div class="header">
-            <div class="title font-32">{{jade.title}}</div>
-            <div class="flex"><p class="red font-44 flex-1">{{jade.price | price}}</p></div>
-        </div>
-        <div class="guarantee border-top"><img :src="'jade/guarantee.png' | qn" alt=""></div>
-    </div>
-    <div class="separator-20-no"></div>
-    <div class="shop bg-white flex detail" v-link="{name: 'shop', params: {id: jade.shop.id}}">
-        <div class="img" v-bg="jade.shop.logo"></div>
-        <div class="flex-1">
-            <div class="font-30 flex margin-bottom name" :class="{'auth': jade.shop.auth_flag}">
-                <div class="omit">{{jade.shop.shop_name}}</div><img :src="'user/' + jade.shop.shop_type +'.png' | qn" v-if="jade.shop.auth_flag"/>
-            </div>
-            <div class="font-26 gray"><span class="icon-location"></span><span>{{jade.shop.locale_name}}</span></div>
-        </div>
-        <div class="icon-enter font-30 gray"></div>
-    </div>
-    <div class="master flex bg-white border-top" v-link="{name: 'user', params: {id: jade.owner.id}}">
-        <avatar :user="jade.owner" :size="50"></avatar>
-        <div class="name font-26 gray margin-left">{{jade.owner.name}}</div>
-    </div>
-    <div class="separator-20-no"></div>
-    <div class="tabs tabs-static border-bottom flex font-26 bg-white center" :class="{'default': isDefaultView}">
-        <div @click="go('detail')" :class="{'active': $route.params.tab === 'detail'}" class="border-right">详情</div>
-        <div @click="go('attribute')" :class="{'active': $route.params.tab === 'attribute'}" class="border-right">属性</div>
-        <div @click="go('problem')" :class="{'active': $route.params.tab === 'problem'}">常见问题</div>
-    </div>
-    <div class="bg-default tab-content">
-        <component :is="view" keep-alive transition-mode="out-in" :jade="jade"></component>
-    </div>
-    <div class="bg-default placeholder"></div>
-    <div class="float-box flex fixed font-30 bg-white">
-        <div class="border-top flex-1 flex">
-            <div class="font-22 flex flex-1 gray contact-btn border-right" @click="contact">
-                <div class="icon-contact font-44"></div>
-                <div>私信</div>
-            </div>
-            <div class="font-22 flex flex-1 gray collect-btn border-right" :class="{'red': jade.is_faved}" @click="collect()">
-                <div class="icon-contact font-44"></div>
-                <div>{{jade.is_faved ? '已收藏' : '收藏'}}</div>
-            </div>
-            <div class="font-22 flex flex-1 gray comment-btn" @click="gotoComments">
-                <div class="icon-comment-solid font-44"></div>
-                <div>评论  {{jade.comment_count}}</div>
-            </div>
-        </div>
-        <div class="font-30 flex-2 buy-btn bg-gray white" :class="{'bg-red': !isSelf && jade.sell_status === 'selling'}" @click="buy()" >{{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}</div>
-    </div>
-</div>
+<template lang="jade">
+.jade-view
+    .notice-placeholder(v-if="firstVisit")
+    .notice.flex(v-if="firstVisit")
+        .txt.font-26.flex-1 尾货只有商家能看到，了解更多请前往商户专区
+        .close(@click="closeNotice")
+    .tabs.tabs-fixed.border-bottom.flex.font-26.bg-white.center(:class="{'default': isDefaultView}")
+        .border-right(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
+        .border-right(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
+        div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
+    .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
+    .titles.bg-white
+        .header
+            .title.font-32 {{jade.title}}
+            .flex
+                p.red.font-44.flex-1 {{jade.price | price}}
+        .guarantee.border-top
+            img(:src="'jade/guarantee.png' | qn")
+    .separator-20-no
+    .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
+        .img(v-bg='jade.shop.logo')
+        .flex-1
+            .font-30.flex.margin-bottom.name
+                .omit.margin-right {{jade.shop.shop_name}}
+                lv(:lv='jade.shop.level')
+            .font-26.gray
+                span.icon-location
+                span {{jade.shop.locale_name}}
+        .icon-enter.font-30.gray
+    .master.flex.bg-white.border-top(v-link="{name: 'user', params: {id: jade.owner.id}}")
+        avatar(:user='jade.owner', :size='50')
+        .name.font-26.gray.margin-left {{jade.owner.name}}
+    .separator-20-no
+    .tabs.tabs-static.border-bottom.flex.font-26.bg-white.center(:class="{'default': isDefaultView}")
+        .border-right(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
+        .border-right(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
+        div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
+    .bg-default.tab-content
+        component(:is='view', keep-alive='', transition-mode='out-in', :jade='jade')
+    .bg-default.placeholder
+    .float-box.flex.fixed.font-30.bg-white
+        .border-top.flex-1.flex
+            .font-22.flex.flex-1.gray.contact-btn.border-right(@click='contact')
+                .icon-contact.font-44
+                div 私信
+            .font-22.flex.flex-1.gray.collect-btn.border-right(:class="{'red': jade.is_faved}", @click='collect()')
+                .icon-contact.font-44
+                div {{jade.is_faved ? '已收藏' : '收藏'}}
+            .font-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
+                .icon-comment-solid.font-44
+                div 评论  {{jade.comment_count}}
+        .font-30.flex-2.buy-btn.bg-gray.white(:class="{'bg-red': !isSelf && jade.sell_status === 'selling'}", @click='buy()') {{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}
 </template>
 <script>
 import Q from 'q';
 import shareable from 'shareable';
+import lv from 'component/Lv.vue';
 import Comment from './JadeComment.vue';
 import detail from './JadeDetail.vue';
 import attribute from './JadeAttribute.vue';
@@ -209,6 +223,7 @@ export default {
     name: 'JadeView',
     mixins: [shareable],
     components: {
+        lv,
         Comment,
         detail,
         attribute,
@@ -216,6 +231,7 @@ export default {
     },
     data() {
         return {
+            firstVisit: false,
             jade: {
                 owner: {},
                 shop: {},
@@ -236,6 +252,13 @@ export default {
         // FIXME: 采用css解决方案
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`;
+
+        this.action('cache', {k: 'jade-visited'})
+            .then(v => {
+                if(!v) {
+                    this.firstVisit = true
+                }
+            })
     },
     route: {
         canReuse({from, to}) {
@@ -328,6 +351,11 @@ export default {
                     text: this.jade.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
                 });
             });
+        },
+
+        closeNotice() {
+            this.firstVisit = false
+            this.action('cache', {k: 'jade-visited', v: 1})
         }
     },
     events: {

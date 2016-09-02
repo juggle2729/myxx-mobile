@@ -83,6 +83,19 @@ const adapter = {
             case 'toggleTopRefresh':
             case 'version':
                 break;
+            case 'newPurchase':
+            case 'newJade':
+            case 'newBid':
+                if(this.env.version < 2.0) {
+                    location.href = this.config.download
+                }
+                break;
+            case 'newSale':
+            case 'newDemand':
+                if(this.env.version < 2.1) {
+                    location.href = this.config.download
+                }
+                break;
             default:
                 console.debug(handler);
         }

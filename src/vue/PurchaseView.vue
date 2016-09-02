@@ -1,9 +1,10 @@
 <style lang="sass">
+@import '~style/partials/var';
 .purchase-view {
+    padding-bottom: 32px;
     &.share {
         padding-bottom: 142px;
     }
-    padding-bottom: 32px;
     .purchase {
         padding: 36px 32px;
         .guarantee {
@@ -13,18 +14,17 @@
             padding: 0 12px;
             img {
                 height: 24px;
-                width: 18px;
+                width: 19.2px;
                 margin-right: 5px;
                 vertical-align: text-bottom;
             }
         }
         .desc {
-            margin: 36px 0;
-            line-height: 1.3;
-            word-wrap: break-word;
+            margin-top: 36px;
         }
         .medias {
             li {
+                margin-top: 30px;
                 height: 222px;
                 width: 222px;
                 &:not(:last-child) {
@@ -33,24 +33,30 @@
             }
         }
         .tags {
-            margin: 24px 0 32px 0;
             li {
                 display: inline-block;
                 background-color: #f5f5f5;
                 border-radius: 6px;
                 padding: 8px 12px;
-                margin-right: 16px;
+                margin: 24px 16px 0 0;
             }
         }
-        .operation {
-            height: 90px;
-            line-height: 90px;
-            border-radius: 8px;
-            text-align: center;
-            width: 48%;
+        .operations {
+            margin-top: 36px;
+            .operation {
+                height: 90px;
+                line-height: 90px;
+                border-radius: 8px;
+                text-align: center;
+                width: 48%;
+            }
         }
-        .deadline .red {
-            margin: 0 5px;
+        .deadline {
+            margin-top: 24px;
+            b {
+                color: #c6c6c6;
+                margin: 0 5px;
+            }
         }
         .join {
             height: 90px;
@@ -59,61 +65,79 @@
             margin-top: 36px;
         }
     }
-    .auction, .win {
-        padding-top: 60px;
-        .items {
-            margin: 74px 24px 0;
-            border-radius: 12px;
+    .bids {
+        padding: 0 16px;
+        > header {
+            padding: 60px 0;
+            .win-count::before {
+                content: '\2022';
+                margin: 0 12px;
+            }
+        }
+        .item {
+            margin-bottom: 40px;
             position: relative;
-            padding-top: 10px;
-            .avatar {
-                height: 68px;
-                width: 68px;
-                border-radius: 6px;
+            .mark {
                 position: absolute;
-                top: -34px;
-                left: 45%;
-                box-shadow: 0 0 0 6px white;
-                margin-bottom: 14px;
+                top: 0;
+                right: 0;
+                width: 184px;
+                height: 144px;
             }
-            .win-count {
-                text-align: right;
-                padding: 24px 24px 0 0;
+            &:last-child {
+                margin-bottom: 0;
             }
-            .jade {
-                height: 280px;
-                width: 280px;
-                margin: 30px auto 0;
-                position: relative;
-                span {
-                    position: absolute;
-                    right: 20px;
-                    bottom: 20px;
-                    text-shadow: 0 2px 10px black;
+            header {
+                padding: 0 24px;
+                height: 98px;
+            }
+            .logo {
+                height: 50px;
+                width: 50px;
+                border-radius: 4px;
+                margin-right: 20px;
+                background-size: cover;
+            }
+            main {
+                padding: 0 24px;
+                .img {
+                    height: 670px;
+                    width: 670px;
+                    position: relative;
+                    .sale-mark {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        display: inline-block;
+                        height: 64px;
+                        line-height: 64px;
+                        padding: 0 40px;
+                        background-color: rgba(159, 42, 240, .8);
+                    }
                 }
-                img {
-                    height: 144px;
-                    width: 144px;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: -52px;
-                    right: -52px;
-                    z-index: 999;
+                .desc {
+                    padding: 24px 0;
                 }
             }
-            .price {
-                margin-top: 20px;
-            }
-            .desc {
-                border-width: 28px 64px 40px 64px;
-                border-style: solid;
-                border-color: white;
-                border-radius: 12px;
+            footer {
+                height: 88px;
+                padding: 0 24px;
+                .btn {
+                    border-radius: 6px;
+                    width: 120px;
+                    height: 60px;
+                    line-height: 60px;
+                    text-align: center;
+                    + .btn {
+                        margin-left: 20px;
+                    }
+                }
             }
         }
 
     }
     .empty-component {
+        margin-top: 100px;
         background-color: #efefef;
     }
 }
@@ -124,106 +148,106 @@
         header.flex
             avatar(:user="purchase.owner")
             .margin-left.font-30.gray.flex-1 {{purchase.owner.nickname}}
-            .guarantee.font-22.gray.border-all(v-if="purchase.status !== 'np'")
+            .guarantee.font-22.gray.border-all(v-if="paid", v-link="{name: 'purchase-help', query: {subject: 'guarantee'}}")
                 img(:src="'icon/guarantee.png' | qn")
                 span 保证金已付
-        .desc.font-30
+        .desc.font-30.user-input
             span.red 预算{{purchase.price_max | price}}左右
             |   {{purchase.description}}
         ul.medias.flex
             li.img(v-for="pic in purchase.pictures", track-by="$index", @click="coverflow(purchase.pictures, $index)", v-bg="pic")
         ul.tags.font-22.gray
-            li(v-for="att in purchase.attributes", track-by="$index") {{att}}
-        div(v-if="purchase.status === 'np'")
-            .flex.font-30
-                .operation.margin-right.border-gray(@click="delete(purchase.id)") 删除此求购
-                .operation.white.bg-red(@click="action('pay', {id: purchase.id, price: purchase.pledge, type: 'purchase'})") 立即支付保证金
-        div(v-else)
-            .deadline.font-26.light(v-if="availiable && !expired")
-                span.gray 距离竞标结束
-                span.red(v-if="days") {{days}}
-                span.light(v-if="days") 天
-                span.red(v-if="hours || days") {{hours}}
-                span.light(v-if="hours || days") 小时
-                span.red(v-if="minutes || hours") {{minutes}}
-                span.light(v-if="minutes || hours") 分
-                span.red(v-if="second || minutes") {{second}}
-                span.light(v-if="second || minutes") 秒
-            .join.bg-gray.white.center.font-30(v-if="eligible", :class="{'bg-red': availiable}", @click="joinBid()") {{btnTxt}}
-    .win.center(v-if="purchase.wins && purchase.wins.length > 0")
-        header.font-26.gray 中标作品   {{purchase.win_count}}
-        .items.bg-white(v-for="win in purchase.wins", v-link="{name: 'jade', params: {id: win.product.id}}")
-            .img.avatar(v-bg="win.shop.logo")
-            .win-count.font-22.light 近期中标{{win.shop.recent_win_count || 0}}笔
-            .font-26.gray {{win.shop.shop_name}}
-            .img.jade(v-bg="win.product.first_picture")
-                img(:src="'purchase/bid.png' | qn", alt="bid")
-                span.font-26.white {{win.product.price | price}}
-            .desc.font-30.omit-2 {{win.description}}
-    .auction.center(v-if="purchase.bids && purchase.bids.length > 0")
-        header.font-26.gray 竞标作品   {{purchase.total_count}}
-        .items.bg-white(v-for="bid in purchase.bids")
-            div(v-link="{name: 'jade', params: {id: bid.product.id}}")
-                .img.avatar(v-bg="bid.shop.logo")
-                .win-count.font-22.light 近期中标{{bid.shop.recent_win_count || 0}}笔
-                .font-26.gray {{bid.shop.shop_name}}
-                .img.jade(v-bg="bid.product.first_picture")
-                    span.font-26.white {{bid.product.price | price}}
-                .price.red.font-26(v-if="bid.ceil_price") 竞标底价{{bid.ceil_price | price}}
-                .desc.font-30.omit-2 {{bid.description}}
-    empty(v-if="!purchase.total_count && !purchase.win_count", :title="emptyTip")
+            li(v-for="attr in purchase.attributes", track-by="$index") {{attr}}
+        .operations.flex.font-30(v-if="isSelf && !paid")
+            .operation.margin-right.border-gray(@click="remove(purchase.id)") 删除此求购
+            .operation.white.bg-red(@click="action('pay', {id: purchase.id, price: purchase.pledge, type: purchase.is_tob ? 'sale' : 'purchase'})") 立即支付保证金
+        .deadline.font-26(v-if="isOpen")
+            span.gray.margin-right 距离竞标结束
+            countdown.red(:msecs="purchase.closed_at")
+        .join.bg-gray.white.center.font-30(v-if="btnLabel", :class="{'bg-red': isOpen}", @click="joinBid()") {{btnLabel}}
+    .bids(v-if="purchase.total_count > 0")
+        header.center.font-26.gray
+            span 竞标作品 {{purchase.total_count}}
+            span.win-count(v-if="purchase.win_count") 中标作品 {{purchase.win_count}}
+        .item.bg-white(v-for="bid in purchase.wins.concat(purchase.bids)", v-link="{name: 'jade', params: {id: bid.product.id}}")
+            img.mark(v-if="bid.status==='win'", :src="'purchase/winned.png' | qn")
+            header.flex
+                .logo(v-bg="bid.shop.logo")
+                .flex-1.font-26.gray {{bid.shop.shop_name}}
+                .win-count.font-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
+            main
+                .img(v-bg="bid.product.first_picture")
+                    .sale-mark.font-30.white(v-if="bid.product.is_tob") 尾货
+                .desc.font-30.user-input
+                    span.gray.margin-right 原价{{bid.product.price | price}}
+                    span {{bid.description}}
+            footer.border-top.flex
+                .flex.red.flex-1
+                    .font-30 一口价
+                    .font-36 {{bid.ceil_price || bid.product.price | price}}
+                template(v-if="isSelf && !bid.neglect_flag")
+                    .btn.font-26.border-gray(@click.stop="chat(bid)") 私聊
+                    .btn.font-26.border-gray(v-if="isOpen && bid.status!=='win'", @click.stop="dismiss(bid)") 淘汰
+                .font-26.red(v-if="bid.neglect_flag && bid.status!=='win'") 已淘汰
+    empty(v-if="paid && !purchase.total_count", :title="emptyTip")
 </template>
 <script>
 import Q from 'q';
 import like from 'component/Like.vue';
+import countdown from 'component/Countdown.vue';
 import shareable from 'shareable';
 export default {
     name: 'PurchaseView',
     mixins: [shareable],
     components: {
-        like
+        like,
+        countdown
     },
-    computed: {
-        availiable() { // 是否具备竞标的客观条件
-            return this.purchase.open_seat > this.purchase.total_count && this.purchase.status !== 'fn';
-        },
-        // 不用考虑动态更新是否结束的状态
-        expired() { // 倒计时是否结束
-            return !(this.days || this.hours || this.minutes || this.second);
-        },
-        eligible() { // 当前用户能否参入竞标
-            return _.get(this, 'self.id')
-                && _.get(this, 'self.id') != this.purchase.owner.id
-                && _.get(this.purchase, 'conf.user_conf.add_product')
-                && !_.get(this.purchase, 'conf.user_conf.shop_in_bid')
-        },
-        btnTxt() {
-            return this.purchase.status === 'fn' ? '竞标期已结束' : (this.purchase.open_seat > this.purchase.total_count ? '我要竞标' : '竞标名额已满');
-        },
-        emptyTip() { // 竞拍为空时提示
-            return (!this.purchase.total_count && !this.purchase.win_count && this.purchase.status === 'fn') ?
-                '无作品参与竞标' : '暂无竞标作品';
-        }
-    },
+
     data() {
         return {
-            days: '',
-            hours: '',
-            minutes: '',
-            second: '',
             purchase: {
                 owner: {}
-            },
-            win: {
-                shop: {},
-                product: {}
-            },
-            bid: {
-                shop: {},
-                product: {}
             }
         }
     },
+
+    computed: {
+        isSelf() {
+            return _.get(this, 'self.id') == this.purchase.owner.id
+        },
+
+        paid() {
+            return this.purchase.status !== 'np'
+        },
+
+        hasSeat() {
+            return this.purchase.open_seat > this.purchase.total_count
+        },
+
+        isOpen() {
+            return this.purchase.status !== 'fn' && this.paid
+        },
+
+        btnLabel() {
+            let label = ''
+            if(this.purchase.status === 'fn') {
+                label = '竞标已结束'
+            } else if(this.hasSeat) {
+                if(!this.isSelf && !_.get(this, 'purchase.conf.user_conf.shop_in_bid')) {
+                    label = '我要竞标'
+                }
+            } else {
+                label = '竞标名额已满'
+            }
+            return label
+        },
+
+        emptyTip() { // 竞拍为空时提示
+            return this.isOpen ? '暂无竞标作品' : '无作品参与竞标'
+        }
+    },
+
     ready() {
         this.$on('restore', () => {
             this.setShareData({title: this.purchase.description, icon: this.purchase.pictures[0]}, true);
@@ -233,15 +257,32 @@ export default {
         data({to}) {
             return this.$get(`mall/purchase/${to.params.id}`).then((data) => {
                 this.purchase = data;
-                this.timer(data.closed_at)();
-                setInterval(this.timer(data.closed_at), 1000);
                 this.setShareData({title: data.description, icon: data.pictures[0]}, true);
             });
         }
     },
     methods: {
+        chat(bid) {
+            if(this.env.isApp) {
+                this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
+            } else {
+                window.location.href = this.config.download
+            }
+        },
+
+        dismiss(bid) {
+            this.action('keyboard', {id: 0, placeholder: '淘汰理由(32字内)', position: 0})
+                .then(rejection => {
+                    this.$put(`mall/bid/${bid.id}/neglect_bid`, {rejection})
+                        .then(() => {
+                            bid.neglect_flag = true
+                            this.action('toast', {success: '1', text: '发送成功'})
+                        })
+                })
+        },
+
         joinBid() {
-            if(this.availiable) {
+            if(this.isOpen) {
                 if(!this.env.isShare) {
                     Q.promise(resolve => {
                         if(this.self) {
@@ -275,7 +316,7 @@ export default {
                                 }
                             });
                         } else {
-                            this.action('newBid', {id: this.purchase.id});
+                            this.action('newBid', {id: this.purchase.id, type: this.purchase.is_tob ? 'sale' : 'product'});
                         }
                     });
                 } else {
@@ -283,7 +324,7 @@ export default {
                 }
             }
         },
-        delete(id) { //删除求购
+        remove(id) { //删除求购
             this.action('confirm', {
                 text: '确定删除此求购？',
                 labels: ['取消', '删除']
@@ -294,33 +335,11 @@ export default {
                     });
                 }
             });
-        },
-        live() { // params目前没有确定
-            if(_.get(this, 'self.id') == this.purchase.owner.id) {
-                this.action('toast', {text: '等待native接口中~~'});
-            } else {
-                this.action('toast', {text: '只有求购者才能直播看货'});
-            }
-        },
-        timer(end) {
-            return () => {
-                if((end - Date.now()) > 0) {
-                    const remainHours = (end - Date.now())/(1000*60*60);
-                    this.days = Math.floor(remainHours/24);
-                    this.hours = Math.floor(remainHours%24);
-                    this.minutes = Math.floor((remainHours*60) % 60);
-                    this.second = Math.floor((remainHours*60*60) % 60);
-                }
-            }
-            // improve 待验证
-            // let d = 1471940270000 - Date.now();
-            // console.log(d);
-            // const arr = [['天', 24*60*60], ['小时', 60*60], ['分钟', 60], ['秒', 1]];
-            // const diff = arr
-            //     .filter(([,v]) => v <= d)
-            //     .map(([k, v], i, arr) => Math.floor((i ? d%arr[i-1][1] : d)/v) + k)
-            //     .join(',');
-            // console.log(diff);
+        }
+    },
+    events: {
+        timeup() {
+            this.purchase.status = 'fn'
         }
     }
 }
