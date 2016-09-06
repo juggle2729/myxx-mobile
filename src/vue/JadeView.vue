@@ -139,6 +139,12 @@
                 margin-bottom: 4px;
                 padding: 0;
             }
+            .icon-collect {
+                width: 44px;
+                height: 44px;
+                line-height: 44px;
+                text-align: center;
+            }
         }
         .buy-btn {
             text-align: center;
@@ -204,7 +210,7 @@
                 .icon-contact.font-44
                 div 私信
             .font-22.flex.flex-1.gray.collect-btn.border-right(:class="{'red': jade.is_faved}", @click='collect()')
-                .icon-contact.font-44
+                .icon-collect.font-30
                 div {{jade.is_faved ? '已收藏' : '收藏'}}
             .font-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
                 .icon-comment-solid.font-44
