@@ -37,6 +37,7 @@
     }
     .list {
         padding-top: 20px;
+        min-height: calc(100vh - 280px);
         > div {
             margin: 0 0 20px 20px;
         }
@@ -46,8 +47,13 @@
         bottom: 0;
         height: 98px;
         width: 100%;
-        line-height: 98px;
         text-align: center;
+        .font-30 {
+            padding: 24px 0 6px;
+        }
+        .font-22 {
+            color: #ffb3bc;
+        }
     }
 }
 </style>
@@ -61,10 +67,12 @@
             .filter.flex-1(@click="changeFilter('price')", :class="{'red': filter.display==='price' || filter.price.value}") {{filter.price.value ? filter.price.label : '价格'}}
         .filter-opts.bg-white(v-show="filter.display")
             .opt.font-26.border-top(v-for="opt in opts", @click="applyFilter(opt)", :class="{'red': opt===filter[filter.display]}") {{opt.label}}
-    .list.bg-default
+    empty(v-if="items.isEmpty", title="暂无清仓")
+    .list.bg-default(v-else)
         product-card(v-for="item in items", :entry="item", v-link="{name: 'jade', params: {id: item.id}}")
-    empty(v-if="items.isEmpty", title="暂无尾货")
-    .product-btn.bg-red.white.font-34(@click="purchase()") 我要甩货
+    .product-btn.bg-red(@click="purchase()")
+        .white.font-30 我要清仓
+        .font-22 (只展示在商户专区)
 </template>
 <script>
 import Q from 'q'
@@ -83,8 +91,8 @@ export default {
         return {
             filter: {
                 display: '',
-                category: '',
-                price: ''
+                category: {},
+                price: {}
             },
             category: [],
             price: [
@@ -113,7 +121,7 @@ export default {
     computed: {
         paging() {
             let params = {
-                tob: true,
+                is_tob: true,
                 order_by: 'new'
             }
             if(this.filter.category.value) {

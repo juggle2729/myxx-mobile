@@ -168,7 +168,7 @@
 .jade-view
     .notice-placeholder(v-if="firstVisit")
     .notice.flex(v-if="firstVisit")
-        .txt.font-26.flex-1 尾货只有商家能看到，了解更多请前往商户专区
+        .txt.font-26.flex-1 清仓只有商家能看到，了解更多请前往商户专区
         .close(@click="closeNotice")
     .tabs.tabs-fixed.border-bottom.flex.font-26.bg-white.center(:class="{'default': isDefaultView}")
         .border-right(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情

@@ -32,7 +32,10 @@ export default {
     computed: {
         paging() {
             return {
-                path: 'mall/all_purchases'
+                path: 'mall/all_purchases',
+                params: {
+                    is_tob: false
+                }
             };
         }
     },

@@ -177,7 +177,7 @@
                 .win-count.font-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
             main
                 .img(v-bg="bid.product.first_picture")
-                    .sale-mark.font-30.white(v-if="bid.product.is_tob") 尾货
+                    .sale-mark.font-30.white(v-if="bid.product.is_tob") 清仓
                 .desc.font-30.user-input
                     span.gray.margin-right 原价{{bid.product.price | price}}
                     span {{bid.description}}
@@ -271,7 +271,7 @@ export default {
         },
 
         dismiss(bid) {
-            this.action('keyboard', {id: 0, placeholder: '淘汰理由(32字内)', position: 0})
+            this.action('keyboard', {placeholder: '淘汰理由(32字内)', limit: 32})
                 .then(rejection => {
                     this.$put(`mall/bid/${bid.id}/neglect_bid`, {rejection})
                         .then(() => {

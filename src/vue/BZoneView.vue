@@ -36,6 +36,9 @@
             }
         }
     }
+    .empty-component {
+        margin-top: 200px;
+    }
 }
 </style>
 <template lang="jade">
@@ -63,13 +66,14 @@ export default {
         return {
             firstVisit: false,
             tab: 'purchases',
-            tabs: {purchases: '调货', products: '尾货'}
+            tabs: {purchases: '调货', products: '清仓'}
         }
     },
 
     ready() {
         this.$watch('tab', tab => {
-            this.$router.replace(_.merge({query: {tab}}, _.pick(this.$route, 'name', 'params')))
+            const query = _.merge({}, this.$route.query, {tab})
+            this.$router.replace(_.merge({query}, _.pick(this.$route, 'name', 'params')))
         })
 
         this.action('cache', {k: 'bzone-visited'})

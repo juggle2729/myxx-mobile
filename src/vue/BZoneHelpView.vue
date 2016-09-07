@@ -8,7 +8,7 @@
 </style>
 <template lang="jade">
 .b-zone-help
-    img(:src="'bzone/bzone-help.png' | qn")
+    img(:src="'bzone/help.png' | qn")
 </template>
 <script>
 export default {

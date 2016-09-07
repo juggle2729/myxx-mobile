@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: './src/main.js',
@@ -33,7 +34,7 @@ module.exports = {
     },
     vue: {
         loaders: {
-            sass: 'style!css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass?outputStyle=expanded'
+            sass: 'style!css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass'
         }
     },
     babel: { // consider tree-shaking ?
@@ -42,6 +43,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+    module.exports.vue.loaders.sass = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass')
     module.exports.plugins = [
         new webpack.DefinePlugin({
             'process.env': {
@@ -63,7 +65,8 @@ if (process.env.NODE_ENV === 'production') {
             template: './index.html',
             minify: {collapseWhitespace: true, minifyCSS: true},
             hash: true
-        })
+        }),
+        new ExtractTextPlugin("style.css")
     ]
 } else {
     module.exports.plugins = [

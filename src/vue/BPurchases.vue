@@ -27,7 +27,7 @@
     template(v-for="item in items")
         purchase-item(:item="item")
         .separator-20-no
-    empty(v-if="items.isEmpty", title="暂无调货")
+    empty(v-if="!items.isEmpty", title="暂无调货")
     .purchase-btn.bg-red.white.font-34(@click="purchase()") 我要调货
 </div>
 </template>
