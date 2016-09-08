@@ -1,8 +1,8 @@
-<style lang="sass">
+<style lang="stylus">
 .countdown-component {
-    display: inline-block;
+    display: inline-block
     b {
-        font-weight: normal;
+        fz-weight: normal
     }
 }
 </style>

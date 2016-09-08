@@ -1,9 +1,9 @@
-<style lang="sass">
+<style lang="stylus">
 .chat-component {
-    font-size: 30px;
-    color: #888888;
+    font-size: 30px
+    color: #888888
     i {
-        transform: scale(1.5);
+        transform: scale(1.5)
     }
 }
 </style>
@@ -13,7 +13,7 @@
 </div>
 </template>
 <script>
-import Q from 'q';
+import Q from 'q'
 export default {
     name: 'Share',
     props: {
@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         isSelf() {
-            return _.get(this, 'self.id') == this.id;
+            return _.get(this, 'self.id') == this.id
         }
     },
     methods: {
@@ -32,20 +32,20 @@ export default {
                 if(this.env.version >= 1.5 && !this.isSelf) {
                     Q.promise((resolve) => {
                         if(this.self) {
-                            resolve();
+                            resolve()
                         } else if(!this.self){
-                            this.action('login').then(resolve);
+                            this.action('login').then(resolve)
                         }
                     }).then(() => {
-                        this.action('chat', {id: id, name: name, product: jade});
-                    });
+                        this.action('chat', {id: id, name: name, product: jade})
+                    })
                 } else if(this.isSelf) {
-                    this.action('toast', {success: 0, text: '您不能和自己聊天'});
+                    this.action('toast', {success: 0, text: '您不能和自己聊天'})
                 } else {
-                    this.action('toast', {success: 0, text: '请更新至最新版'});
+                    this.action('toast', {success: 0, text: '请更新至最新版'})
                 }
             } else {
-                window.location.href = this.config.download;
+                window.location.href = this.config.download
             }
         }
     }

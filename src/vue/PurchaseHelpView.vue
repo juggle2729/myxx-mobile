@@ -1,8 +1,8 @@
-<style lang="sass">
+<style lang="stylus">
 .purchase-view {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4
     img {
-        width: 100%;
+        width: 100%
     }
 }
 </style>

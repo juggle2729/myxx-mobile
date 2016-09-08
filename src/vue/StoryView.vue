@@ -1,68 +1,68 @@
-<style lang="sass">
+<style lang="stylus">
 .story-view {
-    padding-bottom: 100px;
+    padding-bottom: 100px
     .story-header {
-        padding: 32px 32px;
+        padding: 32px 32px
     }
     .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
+        display: -webkit-box
+        -webkit-box-align: center
         .name {
-            margin-left: 20px;
+            margin-left: 20px
         }
     }
     .cover {
-        width: 686px;
-        height: 686px;
-        margin: 0 32px 5px;
+        width: 686px
+        height: 686px
+        margin: 0 32px 5px
         &.cover-video {
-            width: 100%;
-            height: 0;
-            padding-bottom: 100%;
-            margin: 0 auto;
-            background-size: contain;
+            width: 100%
+            height: 0
+            padding-bottom: 100%
+            margin: 0 auto
+            background-size: contain
         }
     }
 
     .tag-activity {
-        position: relative;
-        margin: 0 0 24px 32px;
-        height: 68px;
+        position: relative
+        margin: 0 0 24px 32px
+        height: 68px
         .item {
-            position: absolute;
-            padding: .5em .8em;
-            border-radius: 26px;
-            background-color: #ffecea;
+            position: absolute
+            padding: .5em .8em
+            border-radius: 26px
+            background-color: #ffecea
             .icon-activity {
-                transform: scale(1.2);
+                transform: scale(1.2)
             }
         }
     }
 
     .description {
-        margin: 0 40px 40px 32px;
+        margin: 0 40px 40px 32px
     }
     .medias {
-        font-size: 0;
-        padding: 0 28px 28px;
+        font-size: 0
+        padding: 0 28px 28px
         &.padding-bottom {
-            padding-bottom: 28px;
+            padding-bottom: 28px
         }
         .media {
-            display: inline-block;
-            border: 5px solid white;
-            background-size: cover;
+            display: inline-block
+            border: 5px solid white
+            background-size: cover
         }
         .media:first-child:nth-last-child(1) {
-            width: 100%;
-            padding-top: 100%;
+            width: 100%
+            padding-top: 100%
         }
         .media:first-child:nth-last-child(2),
         .media:first-child:nth-last-child(2) ~ .media,
         .media:first-child:nth-last-child(4),
         .media:first-child:nth-last-child(4) ~ .media {
-            width: 50%;
-            padding-top: 50%;
+            width: 50%
+            padding-top: 50%
         }
         .media:first-child:nth-last-child(3),
         .media:first-child:nth-last-child(3) ~ .media,
@@ -70,39 +70,39 @@
         .media:first-child:nth-last-child(5) ~ .media,
         .media:first-child:nth-last-child(6),
         .media:first-child:nth-last-child(6) ~ .media {
-            width: 33.3333%;
-            padding-top: 33.3333%;
+            width: 33.3333%
+            padding-top: 33.3333%
         }
 
         .media:first-child:nth-last-child(5),
         .media:first-child:nth-last-child(5) ~ .media {
             &:first-child, &:nth-child(2) {
-                width: 50%;
-                padding-top: 50%;
+                width: 50%
+                padding-top: 50%
             }
         }
     }
 
     .footer {
         &.fixed {
-            position: fixed;
-            bottom: 0;
-            z-index: 990;
+            position: fixed
+            bottom: 0
+            z-index: 990
         }
-        height: 100px;
-        width: 100%;
+        height: 100px
+        width: 100%
         > div {
-            line-height: 60px;
-            -webkit-box-flex: 1;
-            text-align: center;
+            line-height: 60px
+            -webkit-box-flex: 1
+            text-align: center
         }
         .icon-comment-solid {
-            transform: scale(1.5);
+            transform: scale(1.5)
         }
     }
 
     .placeholder {
-        height: 100px;
+        height: 100px
     }
 }
 </style>
@@ -113,15 +113,15 @@
         <div class="user flex-1">
             <avatar :user="story.user"></avatar>
             <div class="name">
-                <p class="font-30">{{story.user.name}}</p>
-                <div class="margin-top font-22 light">
+                <p class="fz-30">{{story.user.name}}</p>
+                <div class="margin-top fz-22 light">
                     <span>{{story.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{story.click}}人浏览</span>
                 </div>
             </div>
         </div>
         <follow :user="story.user.id" :follow="story.user.is_followed" :has-border='true'></follow>
     </div>
-    <div class="description font-30 user-input">{{story.content}}</div>
+    <div class="description fz-30 user-txt">{{story.content}}</div>
     <template v-if="type === 'picture'">
         <div class="cover img" v-bg="cover" @click="coverflow(this.pictures, 0)"></div>
         <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
@@ -129,39 +129,39 @@
         </div>
     </template>
     <template v-if="story.topic_type.code === 'hd'">
-        <div class="tag-activity red font-26" v-link="{name: 'activity', params: {id: story.activity.id}}">
+        <div class="tag-activity red fz-26" v-link="{name: 'activity', params: {id: story.activity.id}}">
             <div class="item"><span class="icon-activity"></span><span>{{story.activity.name}}</span></div>
         </div>
     </template>
     <template v-else>
         <div v-if="story.tags.length">
-            <div class="separator-20"></div>
+            <div class="hr-20"></div>
             <tags :tags="story.tags"></tags>
         </div>
     </template>
-    <div class="footer flex font-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
+    <div class="footer flex fz-30 gray bdt bg-white" :class="{'fixed': !env.isShare}">
         <like :active="story.liked" :count="story.like"></like>
-        <div class="comment border-left" @click="$refs.comment.comment()">
+        <div class="comment bdl" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
-        <share class="border-left"></share>
+        <share class="bdl"></share>
     </div>
-    <div class="separator-20"></div>
+    <div class="hr-20"></div>
     <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :data="items" name="相关推荐"></recommend>
 </div>
 </template>
 <script>
-import paging from 'paging';
-import Comments from './component/Comments.vue';
-import Tags from './component/Tags.vue';
-import Recommend from './component/Recommend.vue';
-import ProductRecommend from './component/ProductRecommend.vue';
-import Like from './component/Like.vue';
-import Follow from './component/Follow.vue';
-import Share from './component/Share.vue';
-import shareable from 'shareable';
+import paging from 'paging'
+import Comments from './component/Comments.vue'
+import Tags from './component/Tags.vue'
+import Recommend from './component/Recommend.vue'
+import ProductRecommend from './component/ProductRecommend.vue'
+import Like from './component/Like.vue'
+import Follow from './component/Follow.vue'
+import Share from './component/Share.vue'
+import shareable from 'shareable'
 export default {
     name: 'StoryView',
     mixins: [shareable, paging],
@@ -183,21 +183,21 @@ export default {
     },
     ready() {
         this.$on('restore', () => {
-            this.setShareData(this.story, true);
-        });
+            this.setShareData(this.story, true)
+        })
     },
     computed: {
         pictures() {
             return _.chain(this.story.medias)
                         .filter(media => media.type === 'picture')
                         .map(media => media.id)
-                        .value();
+                        .value()
         },
         isSelf() {
             if (this.self) {
-                return this.self.id === this.story.user.id;
+                return this.self.id === this.story.user.id
             } else {
-                return false;
+                return false
             }
         },
         paging() {
@@ -214,13 +214,13 @@ export default {
         data({to}) {
             return this.$get(`sns/topics/${to.params.id}`)
                 .then(story => {
-                    this.setShareData(story, true);
-                    this.followed = story.user.is_followed;
-                    this.story = story;
+                    this.setShareData(story, true)
+                    this.followed = story.user.is_followed
+                    this.story = story
 
-                    const video = _.find(story.medias, {type: 'video'});
-                    _.merge(this, video ? {type: 'video', cover: video.id} : {type: 'picture', cover: story.medias[0].id});
-                });
+                    const video = _.find(story.medias, {type: 'video'})
+                    _.merge(this, video ? {type: 'video', cover: video.id} : {type: 'picture', cover: story.medias[0].id})
+                })
         }
     }
 }

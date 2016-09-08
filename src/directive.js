@@ -26,7 +26,14 @@ const bg = {
                 if (this.holder) {
                     bgImgStr += `, url('//o0x80w5li.qnssl.com/placeholder/img.png')`;
                 }
-            } 
+            }
+            // FIXME 默认背景位置和尺寸需根据情况调整
+            if(/^\?vframe/.test(this.query) || /lg/.test(this.query)) {
+                // this.el.style.backgroundSize = 'contain';
+            } else {
+                this.el.style.backgroundSize = 'cover';
+            }
+            this.el.style.backgroundPosition = 'center';
             this.el.style.backgroundImage = bgImgStr;
         }
     }

@@ -1,78 +1,68 @@
-<style lang="sass">
-.bzone-products {
-    padding-bottom: 98px;
-    padding-top: 80px;
-    .fixed-header {
-        position: fixed;
-        width: 100%;
-        top: 100px;
-        z-index: 9;
-        .filters {
-            height: 80px;
-            .filter {
-                text-align: center;
-                &::after {
-                    content: '';
-                    display: inline-block;
-                    margin-left: 10px;
-                    width: 0;
-                    height: 0;
-                    border-left: 10px solid transparent;
-                    border-right: 10px solid transparent;
-                    border-top: 15px solid gray;
-                }
-                &.red::after {
-                    border-left: 10px solid transparent;
-                    border-right: 10px solid transparent;
-                    border-bottom: 15px solid #cc3f4f;
-                    border-top: none;
-                }
-            }
-        }
-        .opt {
-            height: 100px;
-            line-height: 100px;
-            padding-left: 72px;
-        }
-    }
-    .list {
-        padding-top: 20px;
-        min-height: calc(100vh - 280px);
-        > div {
-            margin: 0 0 20px 20px;
-        }
-    }
-    .product-btn {
-        position: fixed;
-        bottom: 0;
-        height: 98px;
-        width: 100%;
-        text-align: center;
-        .font-30 {
-            padding: 24px 0 6px;
-        }
-        .font-22 {
-            color: #ffb3bc;
-        }
-    }
-}
+<style lang="stylus">
+.bzone-products
+    padding-bottom: 98px
+    padding-top: 80px
+    .fixed-header
+        position: fixed
+        width: 100%
+        top: 100px
+        z-index: 9
+        .filters
+            height: 80px
+            .filter
+                text-align: center
+                &::after
+                    content: ''
+                    display: inline-block
+                    margin-left: 10px
+                    width: 0
+                    height: 0
+                    border-left: 10px solid transparent
+                    border-right: 10px solid transparent
+                    border-top: 15px solid gray
+                &.red::after
+                    border-left: 10px solid transparent
+                    border-right: 10px solid transparent
+                    border-bottom: 15px solid #cc3f4f
+                    border-top: none
+        .filter-opts
+            box-shadow: 0 2px 10px 0 #d9d9d9
+        .opt
+            height: 100px
+            line-height: 100px
+            padding-left: 72px
+    .list
+        padding-top: 20px
+        min-height: calc(100vh - 280px)
+        > div
+            margin: 0 0 20px 20px
+    .product-btn
+        position: fixed
+        bottom: 0
+        height: 98px
+        width: 100%
+        text-align: center
+        .fz-30
+            padding: 24px 0 6px
+        .fz-22
+            color: #ffb3bc
 </style>
 <template lang="jade">
 .bzone-products
     .placeholder-notice(v-if="$parent.firstVisit")
     .fixed-header
         .placeholder-notice(v-if="$parent.firstVisit")
-        .filters.border-vertical.flex.font-26.bg-white
+        .filters.bdv.flex.fz-26.bg-white
             .filter.flex-1(@click="changeFilter('category')", :class="{'red': filter.display==='category' || filter.category.value}") {{filter.category.value ? filter.category.label : '分类'}}
             .filter.flex-1(@click="changeFilter('price')", :class="{'red': filter.display==='price' || filter.price.value}") {{filter.price.value ? filter.price.label : '价格'}}
         .filter-opts.bg-white(v-show="filter.display")
-            .opt.font-26.border-top(v-for="opt in opts", @click="applyFilter(opt)", :class="{'red': opt===filter[filter.display]}") {{opt.label}}
-    empty(v-if="items.isEmpty", title="暂无清仓")
-    .list.bg-default(v-else)
+            .opt.fz-26.bdt(v-for="opt in opts", @click="applyFilter(opt)", :class="{'red': opt===filter[filter.display]}") {{opt.label}}
+    empty(v-if="items.isEmpty")
+    .list.bg(v-else)
         product-card(v-for="item in items", :entry="item", v-link="{name: 'jade', params: {id: item.id}}")
     .product-btn.bg-red(@click="purchase()")
-        .white.font-30 我要清仓
-        .font-22 (只展示在商户专区)
+        .white.fz-30 我要清仓
+        .fz-22 (只展示在商户专区)
 </template>
 <script>
 import Q from 'q'
@@ -164,13 +154,13 @@ export default {
         purchase() {
             Q.promise(resolve => {
                 if(this.self) {
-                    resolve();
+                    resolve()
                 } else {
-                    this.action('login').then(resolve);
+                    this.action('login').then(resolve)
                 }
             }).then(() => {
-                this.action('newSale');
-            });
+                this.action('newSale')
+            })
         }
     }
 }

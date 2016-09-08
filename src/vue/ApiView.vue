@@ -1,47 +1,18 @@
-<style lang="sass">
-.api-view {
-    padding-top: 25px;
-    .container {
-        padding: 5px 32px;
-        height: 98px;
-        line-height: 98px;
-        &:nth-child(odd) {
-             margin-left: 250px;
-         }
-        .item {
-            position: relative;
-            padding: 15px 0;
-            background-color: #673AB7;
-            width: 420px;
-            animation: skew 3s infinite;
-            transform: skew(20deg);
-            animation-direction: alternate;
-            opacity: .7;
-
-        }
-
-        @keyframes skew {
-            0% {
-                transform: skewX(20deg);
-            }
-            100% {
-                transform: skewX(-20deg);
-            }
-        }
-    }
-}
+<style lang="stylus">
+.api-view
+    .item
+        line-height: 98px
+        padding: 0 10px
 </style>
-<template>
-<div class="api-view font-30">
-    <div class="container" v-for="item in native">
-        <div class="item white center" @click="api(item.label, item.params)">{{item.title}}</div>
-    </div>
-</div>
+<template lang="jade">
+.api-view.fz-30
+    template(v-for="item in native")
+        .item.center(@click="api(item.label, item.params)") {{item.title}}
+        .hr
 </template>
 <script>
-import Q from 'q';
 export default {
-    name: 'ApiView',
+    name: 'api-view',
     data() {
         return {
             native: [
@@ -156,18 +127,18 @@ export default {
     methods: {
         api(label, params) {
             const action = () => {
-                return this.action(label, params);
-            };
+                return this.action(label, params)
+            }
             const cb = (data) => {
                 if(typeof data !== 'string') {
-                    data = JSON.stringify(data);
+                    data = JSON.stringify(data)
                 }
-                this.action('toast', {success: 1, text: data});
+                this.action('toast', {success: 1, text: data})
                 if(label === 'action') {
-                    action().then(cb);
+                    action().then(cb)
                 }
-            };
-            action().then(cb);
+            }
+            action().then(cb)
         }
     }
 }

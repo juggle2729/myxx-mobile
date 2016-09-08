@@ -1,49 +1,49 @@
-<style lang="sass">
+<style lang="stylus">
 .user-comment-view {
-    padding-top: 100px;
+    padding-top: 100px
     .tabs {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 100px;
+        position: fixed
+        top: 0
+        width: 100%
+        height: 100px
         .tab {
-            text-align: center;
-            line-height: 50px;
+            text-align: center
+            line-height: 50px
         }
     }
     .item {
-        padding: 32px;
+        padding: 32px
         header {
             .btn {
-                width: 140px;
-                height: 70px;
-                line-height: 70px;
-                text-align: center;
-                border-radius: 6px;
+                width: 140px
+                height: 70px
+                line-height: 70px
+                text-align: center
+                border-radius: 6px
             }
         }
         main {
-            padding: 24px 0 32px 100px;
+            padding: 24px 0 32px 100px
             .box {
-                width: 72px;
-                height: 38px;
-                line-height: 38px;
-                text-align: center;
-                border-radius: 6px;
-                background-color: #ff3c3c;
+                width: 72px
+                height: 38px
+                line-height: 38px
+                text-align: center
+                border-radius: 6px
+                background-color: #ff3c3c
                 &[type='中评'] {
-                    background-color: #ffcc00;
+                    background-color: #ffcc00
                 }
                 &[type='差评'] {
-                    background-color: #888888;
+                    background-color: #888888
                 }
             }
             .product {
-                color: #f0a401;
+                color: #f0a401
             }
             .content {
-                margin-top: 24px;
-                line-height: 1.2;
+                margin-top: 24px
+                line-height: 1.2
             }
         }
     }
@@ -51,19 +51,19 @@
 </style>
 <template lang="jade">
 .user-comment-view
-    .tabs.flex.border-bottom.font-30
-        .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'border-horizontal': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
-    .item.border-bottom.font-30(v-for="item in tab.items")
+    .tabs.flex.bdb.fz-30
+        .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
+    .item.bdb.fz-30(v-for="item in tab.items")
         header.flex.margin-bottom
             avatar(:user="item.user", :size="80")
-            .flex-1.margin-left
-                .font-30.gray {{item.user.nickname}}
-                .font-26.light.margin-top {{item.create_at | moment}}
-            .btn.border-all.font-26 联系买家
+            .flex-1.mgl
+                .fz-30.gray {{item.user.nickname}}
+                .fz-26.light.mgt {{item.create_at | moment}}
+            .btn.bd.fz-26 联系买家
         main
             .flex
-                .box.white.font-22(:type="tab.label") {{tab.label}}
-                .product.font-26.margin-left 商品名称：{{item.product.name}}
+                .box.white.fz-22(:type="tab.label") {{tab.label}}
+                .product.fz-26.mgl 商品名称：{{item.product.name}}
             .content {{item.content}}
 
 </template>

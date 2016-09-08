@@ -1,110 +1,110 @@
-<style lang="sass">
-@import '~style/partials/var';
+<style lang="stylus">
+@import '~style/partials/var'
 .evaluation-item {
     .head {
-        padding: 20px;
+        padding: 20px
         .icon-plus {
-            font-size: 20px;
-            padding: 3px 8px 0 0;
+            font-size: 20px
+            padding: 3px 8px 0 0
         }
         .name {
-            color: #666666;
+            color: #666666
         }
     }
     .cover {
-        width: 100%;
-        padding-top: percentage(1/1.15);
-        background-size: cover;
-        position: relative;
+        width: 100%
+        padding-top: percentage(1/1.15)
+        background-size: cover
+        position: relative
         &[data-genuine='genuine'] {
             &::after {
-                content: '';
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                height: 144px;
-                width: 144px;
-                background: transparent url('#{$qn}/result-true.png') center;
-                background-size: contain;
+                content: ''
+                position: absolute
+                right: 0
+                bottom: 0
+                height: 144px
+                width: 144px
+                background: transparent url($qn + 'result-true.png') center
+                background-size: contain
             }
         }
         &[data-genuine='fake'] {
             &::after {
-                content: '';
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                height: 144px;
-                width: 144px;
-                background: transparent url('#{$qn}/result-false.png') center;
-                background-size: contain;
+                content: ''
+                position: absolute
+                right: 0
+                bottom: 0
+                height: 144px
+                width: 144px
+                background: transparent url($qn + 'result-false.png') center
+                background-size: contain
             }
         }
         &[data-genuine='unsure'] {
             &::after {
-                content: '';
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                height: 144px;
-                width: 144px;
-                background: transparent url('#{$qn}/result-unknow.png') center;
-                background-size: contain;
+                content: ''
+                position: absolute
+                right: 0
+                bottom: 0
+                height: 144px
+                width: 144px
+                background: transparent url($qn + 'result-unknow.png') center
+                background-size: contain
             }
         }
     }
     .masters {
-        padding: 10px 10px 24px;
+        padding: 10px 10px 24px
         .left, .right {
-            width: 204px;
-            height: 204px;
-            background-size: cover;
-            background-image: url('#{$qn}/placeholder/portrait.png');
+            width: 204px
+            height: 204px
+            background-size: cover
+            background-image: url($qn + 'placeholder/portrait.png')
             img {
-                width: 100%;
-                height: 100%;
+                width: 100%
+                height: 100%
             }
         }
         .middle {
-            height: 204px;
-            margin: 0 24px;
+            height: 204px
+            margin: 0 24px
             > div {
-                height: 76px;
+                height: 76px
             }
             .hr {
-                height: 1px;
-                margin: 26px 0;
+                height: 1px
+                margin: 26px 0
             }
             .l {
-                padding-top: 12px;
-                .margin-top {
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    width: 100%;
-                    overflow: hidden;
+                padding-top: 12px
+                .mgt  {
+                    white-space: nowrap
+                    text-overflow: ellipsis
+                    width: 100%
+                    overflow: hidden
                 }
             }
             .r {
-                text-align: right;
-                .margin-top {
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    width: 100%;
-                    overflow: hidden;
+                text-align: right
+                .mgt  {
+                    white-space: nowrap
+                    text-overflow: ellipsis
+                    width: 100%
+                    overflow: hidden
                 }
             }
         }
     }
 
     .results-empty {
-        height: 102px;
+        height: 102px
         > div {
-            display: inline-block;
-            height: 66px;
-            width: 306px;
-            background-color: #a6a6a6;
-            border-radius: 50px;
-            line-height: 66px;
+            display: inline-block
+            height: 66px
+            width: 306px
+            background-color: #a6a6a6
+            border-radius: 50px
+            line-height: 66px
         }
     }
 }
@@ -114,8 +114,8 @@
     <div v-link="{name: 'evaluation', params: {id: item.post_id, result: 'none'}}" track-by="$index">
         <div class="head flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>
-            <div class="font-26 margin-left">{{item.user.name}}</div>
-            <div class="flex-1 font-22 light margin-left">{{item.create_at | moment}}</div>
+            <div class="fz-26 margin-left">{{item.user.name}}</div>
+            <div class="flex-1 fz-22 light margin-left">{{item.create_at | moment}}</div>
             <comment :count="item.comment"></comment>
         </div>
         <div class="cover" v-bg="item.picture" data-genuine="{{genuine(item)}}"></div>
@@ -124,12 +124,12 @@
         <div class="masters flex bg-white">
             <div class="left" @click.stop="goToProfile(item.results[0].identifier)" v-bg.sm="item.results[0].identifier.portrait"></div>
             <div class="middle flex-1">
-                <div class="l font-26">
+                <div class="l fz-26">
                     <div>{{item.results[0].identifier.name}}</div>
                     <div class="light margin-top">{{item.results[0].identifier.title}}</div>
                 </div>
-                <div class="hr border-bottom"></div>
-                <div v-if="item.results[1]" class="r font-26">
+                <div class="hr bdb"></div>
+                <div v-if="item.results[1]" class="r fz-26">
                     <div>{{item.results[1].identifier.name}}</div>
                     <div class="light margin-top">{{item.results[1].identifier.title}}</div>
                 </div>
@@ -140,13 +140,13 @@
             </div>
         </div>
     </div>
-    <div v-else class="results-empty white font-30 center"  @click="invite(item)">
+    <div v-else class="results-empty white fz-30 center"  @click="invite(item)">
         <div class="center-vertical">- 邀请鉴定师 -</div>
     </div>
 </div>
 </template>
 <script>
-import Comment from 'component/Comment.vue';
+import Comment from 'component/Comment.vue'
 export default {
     name: 'EvaluationItem',
     components: {
@@ -157,33 +157,33 @@ export default {
     },
     methods: {
         genuine(item) {
-            let result = '';
+            let result = ''
             if(item.results.length === 1) {
-                result = item.results[0].result;
+                result = item.results[0].result
             } else if(item.results.length > 1) {
-                let results = item.results.map((result) => result.result).join('');
+                let results = item.results.map((result) => result.result).join('')
                 if(results.replace(/genuine/g, '').length === 0) {
-                    result = 'genuine';
+                    result = 'genuine'
                 } else if(results.replace(/fake/g, '').length === 0) {
-                    result = 'fake';
+                    result = 'fake'
                 } else {
-                    result = 'unsure';
+                    result = 'unsure'
                 }
             }
-            return result;
+            return result
         },
         goToProfile(user) {
-            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
-            this.$router.go({name: 'user', params: {id, tab}});
+            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story']
+            this.$router.go({name: 'user', params: {id, tab}})
         },
         invite(evaluation) {
             this.action('user').then((user) => {
                 if(user) {
-                    this.action('inviteMaster', {id: evaluation.post_id});
+                    this.action('inviteMaster', {id: evaluation.post_id})
                 } else {
-                    this.action('login');
+                    this.action('login')
                 }
-            });
+            })
         }
     }
 }

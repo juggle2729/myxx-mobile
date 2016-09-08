@@ -1,18 +1,16 @@
-<style lang="sass">
-.comment-component {
-    i {
-        transform: scale(1.5);
-    }
-}
+<style lang="stylus">
+.comment-component
+    i
+        transform: scale(1.5)
 </style>
-<template>
-<div class="comment-component font-30 gray">
-    <i class="icon-comment-solid"></i><span>{{count}}</span>
-</div>
+<template lang="jade">
+.comment-component.fz-30.gray
+    i.icon-comment-solid
+    span {{count}}
 </template>
 <script>
 export default {
-    name: 'Comment',
+    name: 'comment',
     props: {
         count: [Number]
     }

@@ -1,36 +1,28 @@
-<style lang="sass">
-.masters-view {
-    .photo {
-        height: 330px;
-        background-size: cover;
-        background-position: center;
-    }
-    footer {
-        height: 112px;
-        padding: 22px 0 18px 30px;
-        .title {
-            margin-bottom: 12px;
-        }
-    }
-    & > div:last-child .separator {
-        display: none;
-    }
-}
+<style lang="stylus">
+.masters-view
+    .photo
+        height: 330px
+        background-size: cover
+        background-position: center
+    footer
+        height: 112px
+        padding: 22px 0 18px 30px
+        .title
+            margin-bottom: 12px
+    & > div:last-child .hr
+        display: none
 </style>
 <template>
-<div class="masters-view">
-    <div v-for="master in items" v-link="{name: 'master', params: {id: master.entry.user_id}}">
-        <div class="photo" v-bg="master.entry.logo"></div>
-        <footer class="font-30">
-            <div class="title gray">{{master.entry.title}}</div>
-            <div>{{master.entry.sub_title}}</div>
-        </footer>
-        <div class="separator"></div>
-    </div>
-</div>
+.masters-view
+    div(v-for='master in items', v-link="{name: 'master', params: {id: master.entry.user_id}}")
+        .photo(v-bg='master.entry.logo')
+        footer.fz-30
+            .title.gray {{master.entry.title}}
+            div {{master.entry.sub_title}}
+        .hr
 </template>
 <script>
-import paging from 'paging';
+import paging from 'paging'
 export default {
     name: 'MastersView',
     mixins: [paging],

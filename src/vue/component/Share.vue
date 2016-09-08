@@ -1,9 +1,9 @@
-<style lang="sass">
+<style lang="stylus">
 .share-component {
-    font-size: 30px;
-    color: #888888;
+    font-size: 30px
+    color: #888888
     i {
-        transform: scale(1.5);
+        transform: scale(1.5)
     }
 }
 </style>
@@ -17,8 +17,8 @@ export default {
     name: 'Share',
     methods: {
         share() {
-            let {title, desc, icon, url, targets} = this.$root.shareData;
-            this.action('share', {title, desc, icon, url, targets});
+            let {title, desc, icon, url, targets} = this.$root.shareData
+            this.action('share', {title, desc, icon, url, targets})
         }
     }
 }

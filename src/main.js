@@ -76,10 +76,15 @@ router.beforeEach(({from, to, next}) => {
 });
 
 router.alias({
+    '/order/confirm/:product': '/update',
+    '/order/:id': '/update',
+    '/order/:id/received': '/update',
+    '/order/:id/sent': '/update',
     '/evaluations/:tab': '/update',
     '/stories/:tab': '/update',
     '/lessons': '/update',
     '/:id/apply/shop': '/update',
+    '/:id/apply/site': '/update',
     '/user/:id': '/user/:id/none',
     '/evaluation/:id': '/evaluation/:id/none',
     '/result/:id/:result': '/evaluation/:id/:result',

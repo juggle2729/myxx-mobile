@@ -1,28 +1,23 @@
-<style lang="sass">
-@import '~style/partials/var';
-.empty-component {
-    background-image: url('#{$qn}/placeholder/empty.png');
-    background-size: 160px 160px;
-    background-position: center 60px;
-    min-height: 300px;
-    padding-top: 260px;
-    .title {
-        text-align: center;
-    }
-}
+<style lang="stylus">
+@import '~style/partials/var'
+.empty-component
+    background-image: url($qn + 'placeholder/empty.png')
+    background-size: 160px 160px
+    background-position: center top
+    margin-top: 100px
+    padding-top: 180px
 </style>
-<template>
-<div class="empty-component font-30 gray bg-white">
-    <slot><div class="title">{{title || '暂无数据'}}</div></slot>
-</div>
+<template lang="jade">
+.empty-component.fz-30.gray
+    slot
+        .title.center(v-if="title") {{title}}
 </template>
 <script>
 export default {
-    name: 'Empty',
+    name: 'empty',
+
     props: {
-        title: {
-            type: String
-        }
+        title: String
     }
 }
 </script>

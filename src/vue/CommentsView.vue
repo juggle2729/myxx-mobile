@@ -1,15 +1,13 @@
-<style lang="sass">
-.comments-view {
-    padding-bottom: 80px;
-}
+<style lang="stylus">
+.comments-view
+    padding-bottom: 80px
 </style>
-<template>
-    <div class="comments-view">
-        <comments :type="type" :id="id" :limit="10" :auto="true"></comments>
-    </div>
+<template lang="jade">
+    .comments-view
+        comments(:type="type", :id="id", :limit="10", :auto="true")
 </template>
 <script>
-import Comments from './component/Comments.vue';
+import Comments from './component/Comments.vue'
 export default {
     name: 'CommentsView',
     components: {
@@ -19,7 +17,7 @@ export default {
         return {
             id: +this.$route.params.id,
             type: +this.$route.params.type
-        };
+        }
     }
 }
 </script>

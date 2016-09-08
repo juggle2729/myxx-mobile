@@ -1,32 +1,28 @@
-<style lang="sass">
-.mall-help-category-view {
-    .item {
-        height: 86px;
-        line-height: 86px;
-        margin-left: 32px;
-        padding-right: 32px;
-        &:last-child {
-            background: none;
-         }
-    }
-}
+<style lang="stylus">
+.mall-help-category-view
+    .item
+        height: 86px
+        line-height: 86px
+        margin-left: 32px
+        padding-right: 32px
+        &:last-child
+            background: none
 </style>
-<template>
-    <div class="mall-help-category-view border-bottom bg-default">
-        <div class="bg-white">
-            <div class="item flex font-26 border-bottom" v-for="item in problems[this.$route.params.category]" @click="go(item.url)">
-                <div class="flex-1">{{item.title}}</div>
-                <div class="icon-enter gray"></div>
-            </div>
-        </div>
-    </div>
+<template lang="jade">
+.mall-help-category-view.bdb.bg
+    .bg-white
+        .item.flex.fz-26.bdb(v-for="item in problems[this.$route.params.category]", @click="action('open', {url: item.url})")
+            .flex-1 {{item.title}}
+            .icon-enter.gray
 </template>
 <script>
 export default {
     name: 'MallHelpCategoryView',
+
     ready() {
-        this.action('updateTitle', {text: this.titles[this.$route.params.category]});
+        this.action('updateTitle', {text: this.titles[this.$route.params.category]})
     },
+
     data() {
         return {
             problems: {
@@ -181,11 +177,6 @@ export default {
                 'goods-return': '退货售后',
                 'argue': '争议处理'
             }
-        }
-    },
-    methods: {
-        go(url) {
-            this.action('open', {url});
         }
     }
 }

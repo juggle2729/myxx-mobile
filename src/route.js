@@ -280,24 +280,6 @@ export default {
         }
     },
 
-    '/:id/apply/shop': {
-        name: 'apply-shop',
-        title: '申请店铺',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ApplyShopView.vue'));
-            }, 'apply');
-        }
-    },
-    '/:id/apply/site': {
-        name: 'apply-site',
-        title: '申请官网',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ApplySiteView.vue'));
-            }, 'apply');
-        }
-    },
     '/:id/apply/master': {
         name: 'apply-master',
         title: '申请鉴定师权限',
@@ -308,45 +290,6 @@ export default {
         }
     },
 
-    '/order/confirm/:product': { // product id
-        name: 'order-confirm',
-        title: '订单详情',
-        native: v => v > 1.7 && {name: 'orderConfirm'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderConfirmView.vue'));
-            }, 'mall');
-        }
-    },
-    '/order/:id': {
-        name: 'order',
-        title: '订单详情',
-        native: v => v > 1.7 && {name: 'orderDetail'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderInfoView.vue'));
-            }, 'mall');
-        }
-    },
-    '/order/:id/received': {
-        name: 'received',
-        title: '确认收货成功',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderReceiveView.vue'));
-            }, 'mall');
-        }
-    },
-    'order/:id/sent': {
-        name: 'sent',
-        title: '发货确认',
-        native: v => v >= 1.7 && {name: 'logistics'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderSentView.vue'));
-            }, 'mall');
-        }
-    },
     'order/:id/trace': {
         name: 'trace',
         title: '物流追踪',
@@ -356,6 +299,7 @@ export default {
             }, 'mall');
         }
     },
+
     '/order/:id/price': {
         name: 'order-price',
         title: '修改订单价格',
@@ -365,6 +309,7 @@ export default {
             }, 'mall');
         }
     },
+
     '/pay-offline/:id': {
         name: 'pay-offline',
         title: '大额支付',
@@ -372,26 +317,6 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('PayOfflineView.vue'));
             }, 'mall');
-        }
-    },
-
-    '/address/list': { // 商品id，可选
-        name: 'address-list',
-        title: '收货地址管理',
-        native: v => v > 1.7 && {name: 'addressList'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AddressView.vue'));
-            }, 'address');
-        }
-    },
-    '/address/:id/update': {
-        name: 'address-update',
-        title: '收货地址管理',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AddressUpdateView.vue'));
-            }, 'address');
         }
     },
 
@@ -461,7 +386,7 @@ export default {
 
     '/help/purchase': {
         name: 'purchase-help',
-        title: '什么是求购竞标',
+        title: '求购比价',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PurchaseHelpView.vue'));
@@ -530,15 +455,6 @@ export default {
         }
     },
 
-    '/feedback': {
-        name: 'feedback',
-        title: '意见反馈',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('FeedbackView.vue'));
-            }, 'other');
-        }
-    },
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',

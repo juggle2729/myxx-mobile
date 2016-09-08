@@ -1,52 +1,43 @@
-<style lang="sass">
-.avatar-component {
-    > div {
-        position: relative;
-        .vip {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            min-height: 24px;
-            min-width: 24px;
-            width: 35%;
-            height: 35%;
-            max-height: 40px;
-            max-width: 40px;
-        }
-    }
-}
+<style lang="stylus">
+for $size in 240 222 180 120 108 90 80 68 50 36
+    .avatar[size={"'"+$size+"'"}]
+        width: $size px
+        height: @width
+$min-width =  24px
+$width = 35%
+$max-width = 40px
+.avatar
+    position: relative
+    .vip
+        position: absolute
+        right: 0
+        bottom: 0
+        min-height: $min-width
+        min-width: $min-width
+        width: $width
+        height: $width
+        max-height: $max-width
+        max-width: $max-width
 </style>
-<template>
-<div class="avatar-component">
-    <div v-if="isSelf" class="avatar-{{size}}"  @click.stop="$root.coverflow([user.photo])" v-bg.sm="user.photo">
-        <img :src="'vip/' + user.role + '.svg' | qn" class="vip" v-if="user.vip_flag" />
-    </div>
-    <div v-else class="avatar-{{size}}" @click.stop="go()" v-bg.sm="user.photo">
-        <img :src="'vip/' + user.role + '.svg' | qn" class="vip" v-if="user.vip_flag" />
-    </div>
-</div>
+<template lang="jade">
+.avatar.round(:size="size", v-bg.sm="user.photo || 'app/avatar.png'", @click.stop="viewProfile")
+    img.vip(:src="'vip/' + user.role + '.svg' | qn", v-if="user.vip_flag")
 </template>
 <script>
 export default {
-    name: 'Avatar',
+    name: 'avatar',
+
     props: {
-        user: {
-            type: Object,
-            default: function() {
-                return {}
-            }
-        },
-        isSelf: {
-            type: Boolean
-        },
+        user: Object,
         size: {
             type: Number,
             default: 68
         }
     },
+
     methods: {
-        go() {
-            this.$route.name === 'user' ? this.$root.coverflow([this.user.photo]) : this.$router.go({name: 'user', params: {id: this.user.id}});
+        viewProfile() {
+            this.$route.name === 'user' ? this.$root.coverflow([this.user.photo]) : this.$router.go({name: 'user', params: {id: this.user.id}})
         }
     }
 }

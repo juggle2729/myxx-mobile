@@ -1,8 +1,8 @@
-<style lang="sass">
+<style lang="stylus">
 .user-evaluation {
-    min-height: inherit;
+    min-height: inherit
     .list {
-        padding: 10px 0 0 15px;
+        padding: 10px 0 0 15px
     }
 }
 </style>
@@ -15,8 +15,8 @@
 </div>
 </template>
 <script>
-import paging from 'paging';
-import Card from 'component/Card.vue';
+import paging from 'paging'
+import Card from 'component/Card.vue'
 export default {
     name: 'UserEvaluation',
     mixins: [paging],

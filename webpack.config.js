@@ -34,7 +34,7 @@ module.exports = {
     },
     vue: {
         loaders: {
-            sass: 'style!css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass'
+            stylus: 'style!css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus'
         }
     },
     babel: { // consider tree-shaking ?
@@ -43,7 +43,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.vue.loaders.sass = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!sass')
+    module.exports.vue.loaders.sass = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus')
     module.exports.plugins = [
         new webpack.DefinePlugin({
             'process.env': {

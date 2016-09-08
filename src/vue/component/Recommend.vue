@@ -1,27 +1,21 @@
-<style lang="sass">
-@import '~style/partials/var';
-.recommend-component {
-    .recommend-title {
-        line-height: 84px;
-        margin-left: 32px;
-    }
-    .data-list {
-        padding: 0 15px;
-        font-size: 0;
-    }
-}
+<style lang="stylus">
+.recommend-component
+    .title
+        line-height: 84px
+        margin-left: 32px
+    .list
+        padding: 0 15px
+        font-size: 0
 </style>
-<template>
-<div v-if="data && data.length > 0" class="recommend-component bg-default" :class="{'padding-top': !name}">
-    <div class="recommend-title font-26 gray">{{name}}</div>
-    <div class="data-list">
-        <card v-for="item in data" :entry="item.entry" :type="item.type"></card>
-        <partial name="load-more" v-if="data.hasMore"></partial>
-    </div>
-</div>
+<template lang="jade">
+.recommend-component.bg(v-if="data.length > 0", :class="{'padding-top': !name}")
+    .title.fz-26.gray {{name}}
+    .list
+        card(v-for="item in data", :entry="item.entry", :type="item.type")
+        partial(name="load-more", v-if="data.hasMore")
 </template>
 <script>
-import Card from 'component/Card.vue';
+import Card from 'component/Card.vue'
 export default {
     name: 'Recommend',
     components: [
@@ -32,7 +26,7 @@ export default {
         data: {
             type: Array,
             default: function() {
-                return [];
+                return []
             }
         }
     }

@@ -1,113 +1,113 @@
-<style lang="sass">
+<style lang="stylus">
 .comments-component {
     .comment-header {
-        display: -webkit-box;
-        padding-left: 32px;
-        -webkit-box-align: center;
-        -webkit-box-pack: justify;
-        height: 80px;
+        display: -webkit-box
+        padding-left: 32px
+        -webkit-box-align: center
+        -webkit-box-pack: justify
+        height: 80px
     }
     li {
-        -webkit-box-align: start;
-        padding-left: 32px;
-        .avatar-68 {
-            margin: 26px 20px 0 0;
+        -webkit-box-align: start
+        padding-left: 32px
+        .avatar {
+            margin: 26px 20px 0 0
         }
         > .flex-1 {
-            padding: 28px 32px 28px 0;
+            padding: 28px 32px 28px 0
         }
         .author {
-            padding-bottom: 20px;
+            padding-bottom: 20px
             .icon-like + span {
-                vertical-align: initial; //重置对齐
+                vertical-align: initial //重置对齐
             }
         }
         span {
-            line-height: 46px;
+            line-height: 46px
         }
         .content {
-            word-break: break-all;
-            line-height: 1.5;
+            word-break: break-all
+            line-height: 1.5
             img {
-                height: 44px;
-                vertical-align: bottom;
+                height: 44px
+                vertical-align: bottom
             }
         }
         &.highlight {
-            background-color: #ebf9f9;
+            background-color: #ebf9f9
         }
     }
     li:nth-last-child(2) {
-        background-image: none;
+        background-image: none
     }
     .nocomment {
-        margin: 48px 0;
-        padding-left: 0;
+        margin: 48px 0
+        padding-left: 0
     }
     .label .bg-yellow {
-        padding: 0 5px;
-        border-radius: 5px;
+        padding: 0 5px
+        border-radius: 5px
     }
     .more {
-        padding: 56px 0;
+        padding: 56px 0
         .icon-down-slim {
-            transform: translate3d(10px, 1px, 0);
+            transform: translate3d(10px, 1px, 0)
         }
     }
     .fake-input {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #f9f9f9;
-        color: red;
-        height: 90px;
-        padding: 12px;
+        position: fixed
+        left: 0
+        bottom: 0
+        width: 100%
+        background-color: #f9f9f9
+        color: red
+        height: 90px
+        padding: 12px
         .emoji {
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px #999999;
-            margin-top: 4px;
-            width: 60px;
-            height: 60px;
+            border-radius: 50%
+            box-shadow: 0 0 0 1px #999999
+            margin-top: 4px
+            width: 60px
+            height: 60px
         }
         .input {
-            background-color: white;
-            color: #c6c6c6;
-            padding: 0 20px;
-            height: 68px;
-            line-height: 68px;
-            border-radius: 8px;
-            margin:0 16px 0 20px;
+            background-color: white
+            color: #c6c6c6
+            padding: 0 20px
+            height: 68px
+            line-height: 68px
+            border-radius: 8px
+            margin:0 16px 0 20px
         }
         .submit {
-            line-height: 68px;
-            width: 140px;
-            height: 68px;
-            color: white;
-            background-color: #b2b2b2;
-            border-radius: 8px;
+            line-height: 68px
+            width: 140px
+            height: 68px
+            color: white
+            background-color: #b2b2b2
+            border-radius: 8px
         }
     }
 }
 </style>
 <template>
 <div class="comments-component bg-white">
-    <div class="comment-header border-bottom font-26">
-        <div class="gray">评论&nbsp;&nbsp;{{items.total}}</div>
+    <div class="comment-header bdb fz-26">
+        <div class="gray">评论&nbsp&nbsp{{items.total}}</div>
     </div>
     <ul>
         <li class="flex" v-for="c in items" @click="clicked(c, $index)"
             :class="{highlight: c.reply_to && self && c.reply_to.id == self.id}">
             <avatar :user="c.reply_from"></avatar>
-            <div class="flex-1 border-bottom">
+            <div class="flex-1 bdb">
                 <div class="author flex">
-                    <div class="font-26 gray flex-1">
+                    <div class="fz-26 gray flex-1">
                         <div :class="{'yellow': c.reply_from.is_identifier}">{{c.reply_from.name}}</div>
-                        <div class="font-22 light margin-top">{{c.create_at | moment}}</div>
+                        <div class="fz-22 light mgt-12">{{c.create_at | moment}}</div>
                     </div>
                     <like :target="c.id" type="70" :count="c.like_count" :active="c.liked" zero=''></like>
                 </div>
-                <div class="font-30 content">
+                <div class="fz-30 content">
                     <template v-if="c.reply_to">
                         <span v-if="c.reply_to.is_identifier" class="label"><span class="white bg-yellow" @click.stop="gotoProfile(c.reply_to)">对{{c.reply_to.name}}说</span></span>
                         <span v-else class="label">回复<span class="gray" @click.stop="gotoProfile(c.reply_to)" >{{c.reply_to.name}}说</span>：</span>
@@ -116,11 +116,10 @@
                 </div>
             </div>
         </li>
-        <li v-show="!items.length" class="center light font-26 nocomment">还没有人评论</li>
+        <li v-show="!items.length" class="center light fz-26 nocomment">还没有人评论</li>
     </ul>
-    <div class="font-26 red center more" v-if="items.hasMore && !auto" @click="getMore()">查看全部评论<span class="icon-down-slim red"></span></div>
-    <!-- <partial name="load-more" v-if="loading"></partial> 获取更多评论时的加载动画目前没有添加-->
-    <div v-if="!env.isShare && displayInput" class="fake-input font-30 flex border-top" @click="comment()">
+    <div class="fz-26 red center more" v-if="items.hasMore && !auto" @click="getMore()">查看全部评论<span class="icon-down-slim red"></span></div>
+    <div v-if="!env.isShare && displayInput" class="fake-input fz-30 flex bdt" @click="comment()">
         <img class="emoji" :src="'emoji.svg' | qn" alt="表情">
         <div class="input flex-1">点击此处发表评论...</div>
         <div class="submit center">发送</div>
@@ -128,9 +127,9 @@
 </div>
 </template>
 <script>
-import Q from 'q';
-import paging from 'paging';
-import Like from 'component/Like.vue';
+import Q from 'q'
+import paging from 'paging'
+import Like from 'component/Like.vue'
 export default {
     name: 'Comments',
     mixins: [paging],
@@ -170,7 +169,7 @@ export default {
                 },
                 auto: this.auto,
                 transform(items) {
-                    return items.map(this.transform);
+                    return items.map(this.transform)
                 }
             }
         }
@@ -178,58 +177,58 @@ export default {
     created() {
         Q.Promise((resolve) => {
             if(this.id) {
-                resolve(this.id);
+                resolve(this.id)
             } else {
                 this.$watch('id', (id) => {
                     if(id) {
-                        resolve(this.id);
+                        resolve(this.id)
                     }
                 })
             }
         }).then(() => {
-            // this.fetch();
-        });
+            // this.fetch()
+        })
     },
 
     methods: {
         getMore() {
-            this.$router.go({name: 'comments', params: {id: this.id, type: this.type}});
+            this.$router.go({name: 'comments', params: {id: this.id, type: this.type}})
         },
         clicked(comment, index) {
             if(!this.self) {
-                this.action('login');
+                this.action('login')
             } else if(this.self.id == comment.reply_from.id) {
                 this.action('delete')
                     .then((confirm) => {
                         return Q.Promise((resolve, reject) => {
                             if(confirm === '1') {
                                 this.$delete(`users/target/${this.id}/type/${this.type}/comments/${comment.id}`)
-                                    .then(() => resolve());
+                                    .then(() => resolve())
                             } else {
-                                reject();
+                                reject()
                             }
-                        });
+                        })
                     }).then(() => {
-                        this.action('toast', {success: 1, text: '删除成功'});
-                        this.items.splice(index, 1);
-                        this.items.total -= 1;
-                    });
+                        this.action('toast', {success: 1, text: '删除成功'})
+                        this.items.splice(index, 1)
+                        this.items.total -= 1
+                    })
             } else {
-                this.comment(comment.reply_from);
+                this.comment(comment.reply_from)
             }
         },
         comment(to) {
             // 鉴于客户端没有实现接口定义的细节， id, position 为废弃的参数
-            let [id, placeholder, position, reply_to] = [this.uid, '', 0, ''];
+            let [id, placeholder, position, reply_to] = [this.uid, '', 0, '']
             if(to) {
-                [id, placeholder, reply_to] = [this.uid + to.id, `回复${to.name}`, to.id];
+                [id, placeholder, reply_to] = [this.uid + to.id, `回复${to.name}`, to.id]
             }
             this.action('keyboard', {id, placeholder, position})
                 .then((content) => {
                     return Q.Promise((resolve, reject) => {
                         if(content) {
-                            let comment = {content};
-                            to && _.merge(comment, {reply_to: to.id});
+                            let comment = {content}
+                            to && _.merge(comment, {reply_to: to.id})
                             this.$post(`users/target/${this.id||this.$route.params.id}/type/${this.type}/comments`, comment)
                                 .then((resp) => {
                                     resolve(_.merge(resp, {
@@ -242,40 +241,40 @@ export default {
                                             photo: this.self.photo || this.self.avatarId,
                                             name: this.self.nickname
                                         }
-                                    }));
-                                });
+                                    }))
+                                })
                         } else {
-                            reject();
+                            reject()
                         }
-                    });
+                    })
                 }).then((comment) => {
-                    this.items.splice(0, 0, this.transform(comment));
-                    this.items.total += 1;
-                    this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'});
-                });
+                    this.items.splice(0, 0, this.transform(comment))
+                    this.items.total += 1
+                    this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'})
+                })
         },
 
         gotoProfile(user) {
-            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story'];
-            this.$route.router.go({name: 'user', params: {id, tab}});
+            const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story']
+            this.$route.router.go({name: 'user', params: {id, tab}})
         },
 
         transform(comment) {
             // escape HTML
-            comment.content = comment.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            comment.content = comment.content.replace(/</g, '&lt').replace(/>/g, '&gt')
 
             // emojify
             if(/\[.{1,3}?\]/.test(comment.content)) {
                 comment.content = comment.content.replace(/\[(.{1,3}?)\]/g, (alt) => {
-                    const index = this.config.emoji.indexOf(alt.replace(/\[|\]/g, ''));
+                    const index = this.config.emoji.indexOf(alt.replace(/\[|\]/g, ''))
                     if(index === -1) {
-                        return alt;
+                        return alt
                     } else {
-                        return `<img src="${this.config.www}/emoji/${index}.png" alt="${alt}" />`;
+                        return `<img src="${this.config.www}/emoji/${index}.png" alt="${alt}" />`
                     }
-                });
+                })
             }
-            return comment;
+            return comment
         }
     }
 }

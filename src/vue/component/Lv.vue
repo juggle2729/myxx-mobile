@@ -1,10 +1,8 @@
-<style lang="sass">
-.level-comp {
-    display: inline-block;
-    img + img {
-        margin-left: 5px;
-    }
-}
+<style lang="stylus">
+.level-comp
+    display: inline-block
+    img + img
+        margin-left: 5px
 </style>
 <template lang="jade">
 .level-comp
@@ -18,7 +16,7 @@ export default {
     props: {
         lv: {
             type: Number,
-            default: 1
+            default: 0
         }
     },
 
@@ -28,7 +26,7 @@ export default {
         },
 
         count() {
-            return this.lv % 3 || 3
+            return this.lv ? this.lv % 3 || 3 : 0
         }
     }
 }

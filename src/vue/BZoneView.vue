@@ -1,54 +1,43 @@
-<style lang="sass">
-@import '~style/partials/var';
-.b-zone {
-    padding-top: 100px;
-    .placeholder-notice {
-        height: 90px;
-    }
-    > header {
-        z-index: 99;
-        position: fixed;
-        top: 0;
-        display: block;
-        width: 100%;
-        .notice {
-            height: 90px;
-            line-height: 90px;
-            padding: 0 30px;
-            background-color: #fcf1e0;
-            .txt {
-                color: #eaa123;
-            }
-            .close {
-                height: 90px;
-                width: 60px;
-                background-image: url('#{$qn}/bzone/close-yellow.png');
-                background-position: right center;
-                background-size: 28px 28px;
-            }
-        }
-        .tabs {
-            height: 100px;
-            .tab {
-                z-index: 999;
-                text-align: center;
-                line-height: 50px;
-            }
-        }
-    }
-    .empty-component {
-        margin-top: 200px;
-    }
-}
+<style lang="stylus">
+@import '~style/partials/var'
+.b-zone
+    padding-top: 100px
+    .placeholder-notice
+        height: 90px
+    > header
+        z-index: 99
+        position: fixed
+        top: 0
+        display: block
+        width: 100%
+        .notice
+            height: 90px
+            line-height: 90px
+            padding: 0 30px
+            background-color: #fcf1e0
+            .txt
+                color: #eaa123
+            .close
+                height: 90px
+                width: 60px
+                background-image: url($qn + "bzone/close-yellow.png")
+                background-position: right center
+                background-size: 28px 28px
+        .tabs
+            height: 100px
+            .tab
+                z-index: 999
+                text-align: center
+                line-height: 50px
 </style>
 <template lang="jade">
 .b-zone
     header.bg-white
         .notice.flex(v-if="firstVisit")
-            .txt.font-26.flex-1 商户专区仅对入住商户/工作室开放，普通用户不可见
+            .txt.fz-26.flex-1 商户专区仅对入驻商户/工作室开放，普通用户不可见
             .close(@click="closeNotice")
-        .tabs.flex.font-30
-            .tab.flex-1(v-for="(k, v) in tabs", @click="tab=k", :class="{'border-left': $index, 'red': tab===k}") {{v}}
+        .tabs.flex.fz-30.bdb
+            .tab.flex-1(v-for="(k, v) in tabs", @click="tab=k", :class="{'bdl': $index, 'red': tab===k}") {{v}}
     component(:is="tab", keep-alive)
 </template>
 <script>
@@ -105,7 +94,7 @@ export default {
         setHelp() {
             this.action('action', {icon: 'question-2x.png'})
                 .then(() => {
-                    this.$router.go({name: 'bzone-help'});
+                    this.$router.go({name: 'bzone-help'})
                 })
         }
     }

@@ -1,83 +1,59 @@
-<style lang="sass">
-@import '~style/partials/_var.scss';
-@import '~style/partials/_mixin.scss';
-.mall-help-view {
-    min-height: 100%;
-    padding-bottom: 22px;
-    .title {
-        height: 86px;
-        line-height: 86px;
-        padding: 0 32px;
-        .line {
-            width: 6px;
-            height: 24px;
-            margin-right: 14px;
-        }
-        .more{
-            margin-left: 12px;
-        }
-    }
-    .item {
-        height: 86px;
-        line-height: 86px;
-        margin-left: 32px;
-        padding-right: 32px;
-        &:not(:last-child) {
-            @include border(bottom);
-        }
-    }
-    .container {
-        display: inline-block;
-        width: 100%;
-    }
-    .category {
-        @include border(right-bottom);
-        display: inline-block;
-        height: 200px;
-        width: 25%;
-        padding-top: 51px;
-        [class^='icon-'] {
-            padding-right: 0;
-            font-size: 50px;
-            margin-bottom: 22px;
-        }
-    }
-}
+<style lang="stylus">
+.mall-help-view
+    min-height: 100%
+    padding-bottom: 22px
+    .title
+        height: 86px
+        line-height: 86px
+        padding: 0 32px
+        .line
+            width: 6px
+            height: 24px
+            margin-right: 14px
+        .more
+            margin-left: 12px
+    .item
+        height: 86px
+        line-height: 86px
+        margin-left: 32px
+        padding-right: 32px
+    .container
+        display: inline-block
+        width: 100%
+    .category
+        display: inline-block
+        height: 200px
+        width: 25%
+        padding-top: 51px
+        [class^='icon-']
+            padding-right: 0
+            font-size: 50px
+            margin-bottom: 22px
 </style>
-<template>
-    <div class="mall-help-view bg-default">
-        <div class="bg-white margin-bottom">
-            <div class="title flex font-30 gray border-bottom">
-                <div class="line bg-red"></div>
-                <div>常见问题</div>
-            </div>
-            <div class="item flex font-26" v-for="item in problems" @click="go(item.url)">
-                <div class="flex-1">{{item.title}}</div>
-                <div class="icon-enter gray"></div>
-            </div>
-        </div>
-        <div class="margin-bottom">
-            <div class="title flex font-30 gray border-bottom bg-white">
-                <div class="line bg-red"></div>
-                <div>问题分类</div>
-            </div>
-            <div class="font-26 container">
-                <div class="category center bg-white" v-for="item in classification" v-link="{name: 'mall-help-category', params: {category: item.id}}">
-                    <div class="{{item.icon}} gray"></div><div>{{item.title}}</div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white">
-            <div class="title flex font-30 border-bottom gray">
-                <div class="line bg-red"></div>
-                <div>条款和协议</div>
-            </div>
-            <div class="item flex font-26" v-for="item in clause" @click="go(item.url)">
-                <div class="flex-1">{{item.title}}</div>
-                <div class="icon-enter gray"></div>
-            </div>
-        </div>
-    </div>
+<template lang="jade">
+.mall-help-view.bg
+    .bg-white.mgb
+        .title.flex.fz-30.gray.bdb
+            .line.bg-red
+            div 常见问题
+        .item.flex.fz-26(v-for='item in problems', @click='go(item.url)')
+            .flex-1 {{item.title}}
+            .icon-enter.gray
+    .mgb
+        .title.flex.fz-30.gray.bdb.bg-white
+            .line.bg-red
+            div 问题分类
+        .fz-26.container
+            .category.center.bg-white(v-for='item in classification', v-link="{name: 'mall-help-category', params: {category: item.id}}")
+                .gray(class='{{item.icon}}')
+                div {{item.title}}
+    .bg-white
+        .title.flex.fz-30.bdb.gray
+            .line.bg-red
+            div 条款和协议
+        .item.flex.fz-26(v-for='item in clause', @click="action('open', {url: item.url})")
+            .flex-1 {{item.title}}
+            .icon-enter.gray
 </template>
 <script>
 export default {
@@ -145,11 +121,6 @@ export default {
                     url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000010&idx=1&sn=27483ddec48986a215296c67ec8d879a'
                 }
             ]
-        }
-    },
-    methods: {
-        go(url) {
-            this.action('open', {url});
         }
     }
 }

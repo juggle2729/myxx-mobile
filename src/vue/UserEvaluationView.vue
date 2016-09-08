@@ -1,5 +1,5 @@
 <template>
-<div class="user-evaluation bg-default">
+<div class="user-evaluation bg">
     <div v-for="item in items"></div>
     <evaluation-item :item="item"></evaluation-item>
     <partial name="load-more" v-if="items.hasMore"></partial>
@@ -7,8 +7,8 @@
 </div>
 </template>
 <script>
-import EvaluationItem from 'component/EvaluationItem.vue';
-import paging from 'paging';
+import EvaluationItem from 'component/EvaluationItem.vue'
+import paging from 'paging'
 export default {
     name: 'UserEvaluationView',
     mixins: [paging],
@@ -30,73 +30,73 @@ export default {
     }
 }
 </script>
-<style lang="sass">
-@import '~style/partials/var';
+<style lang="stylus">
+@import '~style/partials/var'
 .user-evaluation {
     .tabs {
-        display: -webkit-box;
-        height: 80px;
+        display: -webkit-box
+        height: 80px
         > div {
-            -webkit-box-flex: 1;
-            margin: 24px 0;
+            -webkit-box-flex: 1
+            margin: 24px 0
         }
         label {
-            width: 100%;
-            display: inline-block;
+            width: 100%
+            display: inline-block
         }
         input {
-            display: none;
+            display: none
         }
     }
     .item {
-        padding: 24px 0;
+        padding: 24px 0
     }
     .user {
-        display: -webkit-box;
-        -webkit-box-align: center;
+        display: -webkit-box
+        -webkit-box-align: center
         .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
+            height: 68px
+            width: 68px
+            border-radius: 50%
+            background-size: cover
+            vertical-align: middle
         }
         .name {
-            margin-left: 20px;
+            margin-left: 20px
             .moment {
-                margin-top: 12px;
+                margin-top: 12px
             }
         }
     }
     .desc {
-        margin: 30px 0 24px;
+        margin: 30px 0 24px
     }
     .video {
-        height: 500px;
+        height: 500px
     }
     .result {
-        height: 116px;
-        display: -webkit-box;
-        -webkit-box-align: center;
+        height: 116px
+        display: -webkit-box
+        -webkit-box-align: center
         .avatar {
-            height: 68px;
-            width: 68px;
-            border-radius: 50%;
-            background-size: cover;
-            vertical-align: middle;
+            height: 68px
+            width: 68px
+            border-radius: 50%
+            background-size: cover
+            vertical-align: middle
         }
         .master {
-            -webkit-box-flex: 1;
-            padding-left: 20px;
+            -webkit-box-flex: 1
+            padding-left: 20px
             .title {
-                margin-top: 12px;
+                margin-top: 12px
             }
         }
         .mark {
-            padding: 5px 0 5px 35px;
-            background-image: url('#{$qn}/ico_identify.png');
-            background-position: left center;
-            background-size: 26px;
+            padding: 5px 0 5px 35px
+            background-image: url($qn + 'ico_identify.png')
+            background-position: left center
+            background-size: 26px
         }
     }
 }
