@@ -1,25 +1,21 @@
 <style lang="stylus">
-.purchases-view {
+.purchases-view
     padding-bottom: 98px
-    .purchase-btn {
+    .purchase-btn
         position: fixed
         bottom: 0
         height: 98px
         width: 100%
         line-height: 98px
         text-align: center
-    }
-}
 </style>
-<template>
-<div class="purchases-view">
-    <template v-for="item in items">
-        <div class="hr"></div>
-        <purchase-item :item="item"></purchase-item>
-    </template>
-    <empty v-if="items.isEmpty" title="暂无求购"></empty>
-    <div @click="purchase()" class="purchase-btn bg-red white fz-34">我要求购</div>
-</div>
+<template lang="jade">
+.purchases-view
+    template(v-for="item in items")
+        .hr
+        purchase-item(:item="item")
+    empty(v-if="items.isEmpty" title="暂无求购")
+    .purchase-btn.bg-red.white.fz-34(@click="purchase()") 我要求购
 </template>
 <script>
 import Q from 'q'

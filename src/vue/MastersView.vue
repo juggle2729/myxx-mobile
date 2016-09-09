@@ -12,7 +12,7 @@
     & > div:last-child .hr
         display: none
 </style>
-<template>
+<template lang="jade">
 .masters-view
     div(v-for='master in items', v-link="{name: 'master', params: {id: master.entry.user_id}}")
         .photo(v-bg='master.entry.logo')

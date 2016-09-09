@@ -1,93 +1,71 @@
 <style lang="stylus">
-.studio-view {
+.studio-view
     padding-bottom: 98px
-    > header {
+    > header
         height: 460px
         background-size: cover
         background-position: center
-        .shop {
+        .shop
             position: relative
             top: 320px
             background-color: rgba(0, 0, 0, .6)
             height: 140px
             padding: 0 32px
-            .name {
+            .name
                 width: 500px
-                &.auth {
+                &.auth
                     width: 400px
-                }
-            }
-            .img {
+            .img
                 height: 100px
                 width: 100px
                 border-radius: 6px
                 margin-right: 20px
-            }
-        }
-    }
-    .level {
+    .level
         height: 100px
         line-height: 100px
         padding: 0 32px
-        .level-comp {
+        .level-comp
             display: block
-            img {
+            img
                 width: 42px
-            }
-        }
-    }
-    .master {
+    .master
         padding: 0 32px
         height: 114px
-        .icon-enter {
+        .icon-enter
             position: relative
             bottom: 10px
-        }
-    }
-    section {
-        header {
+    section
+        header
             padding: 0 32px
             height: 84px
             line-height: 84px
-            span {
+            span
                 border-left: 6px solid #cc3f4f
                 padding-left: 12px
-            }
-        }
-        main {
+        main
             padding-top: 20px
-            & > div {
+            & > div
                 margin: 0 0 20px 20px
-            }
-        }
-    }
-    .medias {
+    .medias
         display: inline-block
-        &:nth-child(odd) {
+        &:nth-child(odd)
             margin-left: 4px
-        }
-        .media {
+        .media
             height: 373px
             width: 373px
-        }
-        .detail {
+        .detail
             height: 110px
             width: 373px
             padding: 16px 24px
-            .desc {
+            .desc
                 line-height: 1.2
                 margin-bottom: 16px
-            }
-        }
-    }
-    .footer {
+    .footer
         height: 98px
         line-height: 48px
         width: 100%
         position: fixed
         bottom: 0
-    }
-}
 </style>
 <template lang="jade">
 .studio-view.bg-white(v-if='!$loadingRouteData')

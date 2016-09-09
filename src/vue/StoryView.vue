@@ -1,151 +1,121 @@
 <style lang="stylus">
-.story-view {
+.story-view
     padding-bottom: 100px
-    .story-header {
+    .story-header
         padding: 32px 32px
-    }
-    .user {
+    .user
         display: -webkit-box
         -webkit-box-align: center
-        .name {
+        .name
             margin-left: 20px
-        }
-    }
-    .cover {
+    .cover
         width: 686px
         height: 686px
         margin: 0 32px 5px
-        &.cover-video {
+        &.cover-video
             width: 100%
             height: 0
             padding-bottom: 100%
             margin: 0 auto
             background-size: contain
-        }
-    }
 
-    .tag-activity {
+    .tag-activity
         position: relative
         margin: 0 0 24px 32px
         height: 68px
-        .item {
+        .item
             position: absolute
             padding: .5em .8em
             border-radius: 26px
             background-color: #ffecea
-            .icon-activity {
+            .icon-activity
                 transform: scale(1.2)
-            }
-        }
-    }
 
-    .description {
+    .description
         margin: 0 40px 40px 32px
-    }
-    .medias {
+    .medias
         font-size: 0
         padding: 0 28px 28px
-        &.padding-bottom {
+        &.padding-bottom
             padding-bottom: 28px
-        }
-        .media {
+        .media
             display: inline-block
             border: 5px solid white
             background-size: cover
-        }
-        .media:first-child:nth-last-child(1) {
+        .media:first-child:nth-last-child(1)
             width: 100%
             padding-top: 100%
-        }
         .media:first-child:nth-last-child(2),
         .media:first-child:nth-last-child(2) ~ .media,
         .media:first-child:nth-last-child(4),
-        .media:first-child:nth-last-child(4) ~ .media {
+        .media:first-child:nth-last-child(4) ~ .media
             width: 50%
             padding-top: 50%
-        }
         .media:first-child:nth-last-child(3),
         .media:first-child:nth-last-child(3) ~ .media,
         .media:first-child:nth-last-child(5),
         .media:first-child:nth-last-child(5) ~ .media,
         .media:first-child:nth-last-child(6),
-        .media:first-child:nth-last-child(6) ~ .media {
+        .media:first-child:nth-last-child(6) ~ .media
             width: 33.3333%
             padding-top: 33.3333%
-        }
 
         .media:first-child:nth-last-child(5),
-        .media:first-child:nth-last-child(5) ~ .media {
-            &:first-child, &:nth-child(2) {
+        .media:first-child:nth-last-child(5) ~ .media
+            &:first-child, &:nth-child(2)
                 width: 50%
                 padding-top: 50%
-            }
-        }
-    }
 
-    .footer {
+    .footer
         height: 100px
         width: 100%
-        > div {
+        > div
             line-height: 60px
             -webkit-box-flex: 1
             text-align: center
-        }
-        .icon-comment-solid {
+        .icon-comment-solid
             transform: scale(1.5)
-        }
-    }
 
-    .placeholder {
+    .placeholder
         height: 100px
-    }
-}
 </style>
-<template>
-<div class="story-view bg-white" v-if="!$loadingRouteData">
-    <div v-if="type === 'video'" class="cover video cover-video" @click.stop="play(cover)" v-bg="cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1"></div>
-     <div class="story-header flex">
-        <div class="user flex-1">
-            <avatar :user="story.user"></avatar>
-            <div class="name">
-                <p class="fz-30">{{story.user.name}}</p>
-                <div class="mgt-12 fz-22 light">
-                    <span>{{story.create_at | moment}}</span><span class="pdh-10">|</span><span>{{story.click}}人浏览</span>
-                </div>
-            </div>
-        </div>
-        <follow :user="story.user.id" :follow="story.user.is_followed" :has-border='true'></follow>
-    </div>
-    <div class="description fz-30 user-txt">{{story.content}}</div>
-    <template v-if="type === 'picture'">
-        <div class="cover img" v-bg="cover" @click="coverflow(this.pictures, 0)"></div>
-        <div class="medias" :class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}">
-            <div v-for="pic in pictures" v-bg="pic" v-if="$index" class="media" @click="coverflow(this.pictures, $index)"></div>
-        </div>
-    </template>
-    <template v-if="story.topic_type.code === 'hd'">
-        <div class="tag-activity red fz-26" v-link="{name: 'activity', params: {id: story.activity.id}}">
-            <div class="item"><span class="icon-activity"></span><span>{{story.activity.name}}</span></div>
-        </div>
-    </template>
-    <template v-else>
-        <div v-if="story.tags.length">
-            <div class="hr-20"></div>
-            <tags :tags="story.tags"></tags>
-        </div>
-    </template>
-    <div class="footer flex fz-30 gray bdt bg-white">
-        <like :active="story.liked" :count="story.like"></like>
-        <div class="comment bdl" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="bdl"></share>
-    </div>
-    <div class="hr"></div>
-    <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
-    <product-recommend :id="story.post_id"></product-recommend>
-    <recommend :data="items" name="相关推荐"></recommend>
-</div>
+<template lang="jade">
+.story-view.bg-white(v-if='!$loadingRouteData')
+    .cover.video.cover-video(v-if="type === 'video'", @click.stop='play(cover)', v-bg='cover', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+    .story-header.flex
+        .user.flex-1
+            avatar(:user='story.user')
+            .name
+                p.fz-30 {{story.user.name}}
+                .mgt-12.fz-22.light
+                    span {{story.create_at | moment}}
+                    span.pdh-10 |
+                    span {{story.click}}人浏览
+        follow(:user='story.user.id', :follow='story.user.is_followed', :has-border='true')
+    .description.fz-30.user-txt {{story.content}}
+    template(v-if="type === 'picture'")
+        .cover.img(v-bg='cover', @click='coverflow(this.pictures, 0)')
+        .medias(:class="{'padding-bottom': story.tags.length === 0 && story.topic_type.code !== 'hd'}")
+            .media(v-for='pic in pictures', v-bg='pic', v-if='$index', @click='coverflow(this.pictures, $index)')
+    template(v-if="story.topic_type.code === 'hd'")
+        .tag-activity.red.fz-26(v-link="{name: 'activity', params: {id: story.activity.id}}")
+            .item
+                span.icon-activity
+                span {{story.activity.name}}
+    template(v-else='')
+        div(v-if='story.tags.length')
+            .hr-20
+            tags(:tags='story.tags')
+    .footer.flex.fz-30.gray.bdt.bg-white
+        like(:active='story.liked', :count='story.like')
+        .comment.bdl(@click='$refs.comment.comment()')
+            i.icon-comment-solid
+            span 写评论
+        share.bdl
+    .hr
+    comments(:type='30', :id='story.post_id', :display-input='false', v-ref:comment='')
+    product-recommend(:id='story.post_id')
+    recommend(:data='items', name='相关推荐')
 </template>
 <script>
 import paging from 'paging'

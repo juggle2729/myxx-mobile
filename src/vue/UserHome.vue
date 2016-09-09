@@ -1,101 +1,73 @@
 <style lang="stylus">
-.user-home {
-    .header {
+.user-home
+    .header
         height: 84px
         line-height: 84px
-        span {
+        span
             border-left: 6px solid #cc3f4f
             padding-left: 12px
-        }
-    }
-    .title {
+    .title
         line-height: 40px
-    }
-    .shop {
+    .shop
         padding: 0 32px 30px
-        .img {
+        .img
             height: 100px
             width: 100px
             border-radius: 6px
             margin-right: 20px
-        }
-        .icon-enter {
+        .icon-enter
             position: relative
             bottom: 8px
-        }
-        .detail {
-            .name {
+        .detail
+            .name
                 width: 380px
-            }
-        }
-        .level-comp {
-            img {
+        .level-comp
+            img
                 width: 42px
-            }
-        }
-    }
-    .works {
+    .works
         padding: 0 32px 30px
-        .medias {
+        .medias
             position: relative
-            .media {
+            .media
                 height: 170px
                 width: 170px
-                &:not(:last-child) {
+                &:not(:last-child)
                     margin-right: 2px
-                }
-            }
-            .more {
+            .more
                 position: absolute
                 right: 0
                 padding-top: 70px
                 background-color: rgba(0, 0, 0, 0.5)
-                .icon-enter {
+                .icon-enter
                     position: relative
                     top: 3px
-                }
-            }
-        }
-    }
-    .interview {
+    .interview
         padding: 0 32px 30px
-        .img {
+        .img
             height: 100px
             width: 100px
             margin-right: 20px
-        }
-    }
-    .website {
-        .header {
+    .website
+        .header
             padding: 0 32px
-        }
-        .cover {
+        .cover
             height: 330px
-        }
-        .title {
+        .title
             border-width: 30px 32px 30px 32px
             border-color: white
             border-style: solid
-        }
-    }
-    .engraver {
+    .engraver
         padding-left: 32px
-        .master {
+        .master
             padding: 10px 0 40px 0
-            > div {
+            > div
                 padding: 28px 0
-                &:first-child {
+                &:first-child
                     padding-top: 0
-                }
-                &:last-child {
+                &:last-child
                     background-image: none
                     border-bottom: 0
                     padding-bottom: 0
-                }
-            }
-        }
-    }
-}
 </style>
 <template lang="jade">
 .user-home.bg

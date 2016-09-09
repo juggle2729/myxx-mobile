@@ -1,16 +1,29 @@
-<template>
-<div class="user-following-view bg" :class="{'bg-white': items.isEmpty}">
-    <div class="user bdb bg-white flex" v-for="user in items">
-        <avatar :user="user" :size="120"></avatar>
-        <div class="flex-1" v-link="user | profile">
-            <p class="fz-30">{{user.nickname}}</p>
-            <p v-if="user.title" class="fz-26 light margin-top">{{user.title}}</p>
-        </div>
-        <follow :follow="user.follow" :user="user.id" :has-border=true></follow>
-    </div>
-    <partial name="load-more" v-if="items.hasMore"></partial>
-    <empty v-if="items.isEmpty" title="暂无关注"></empty>
-</div>
+<style lang="stylus">
+.user-following-view
+    padding-top: 20px
+    position: relative
+    .empty-component
+        position: absolute
+        width: 100%
+        top: 45%
+        left: 50%
+        transform: translate(-50%, -50%)
+    .user
+        height: 180px
+        padding: 0 32px
+        .avatar-120
+            margin-right: 64px
+</style>
+<template lang="jade">
+.user-following-view.bg(:class="{'bg-white': items.isEmpty}")
+    .user.bdb.bg-white.flex(v-for='user in items')
+        avatar(:user='user', :size='120')
+        .flex-1.mgl(v-link='user | profile')
+            p.fz-30 {{user.nickname}}
+            p.fz-26.light.mgt(v-if='user.title') {{user.title}}
+        follow(:follow='user.follow', :user='user.id', :has-border='true')
+    partial(name='load-more', v-if='items.hasMore')
+    empty(v-if='items.isEmpty', title='暂无关注')
 </template>
 <script>
 import paging from 'paging'
@@ -44,23 +57,3 @@ export default {
     }
 }
 </script>
-<style lang="stylus">
-.user-following-view {
-    padding-top: 20px
-    position: relative
-    .empty-component {
-        position: absolute
-        width: 100%
-        top: 45%
-        left: 50%
-        transform: translate(-50%, -50%)
-    }
-    .user {
-        height: 180px
-        padding: 0 32px
-        .avatar-120 {
-            margin-right: 64px
-        }
-    }
-}
-</style>

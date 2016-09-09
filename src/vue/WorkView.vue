@@ -1,133 +1,106 @@
 <style lang="stylus">
-.work-view {
+.work-view
     padding-bottom: 100px
-    .header {
+    .header
         height: 160px
         line-height: 160px
         padding: 0 36px 0 50px
-    }
-    .line {
-        &:before, &:after {
+    .line
+        &:before, &:after
             content: ''
             background-color: #d9d9d9
             height: 1px
             width: 122px
             display: block
             flex: 1
-        }
-        &:before {
+        &:before
             margin: 0 26px 0 36px
-        }
-        &:after {
+        &:after
             margin: 0 36px 0 26px
-        }
-    }
-    .cover {
+    .cover
         width: 686px
         height: 686px
         margin: 36px 32px 5px
-        &.cover-video {
+        &.cover-video
             width: 100%
             height: 0
             padding-bottom: 100%
             margin: 0 auto
             background-size: contain
-        }
-    }
-    .medias {
+    .medias
         font-size: 0
         padding: 0 28px
-        &.padding-bottom {
+        &.padding-bottom
             padding-bottom: 28px
-        }
-    }
-    .media {
+    .media
         display: inline-block
         border: 5px solid white
         background-size: cover
-    }
-    .media:first-child:nth-last-child(1) {
+    .media:first-child:nth-last-child(1)
         width: 100%
         padding-top: 100%
-    }
     .media:first-child:nth-last-child(2),
     .media:first-child:nth-last-child(2) ~ .media,
     .media:first-child:nth-last-child(4),
-    .media:first-child:nth-last-child(4) ~ .media {
+    .media:first-child:nth-last-child(4) ~ .media
         width: 50%
         padding-top: 50%
-    }
     .media:first-child:nth-last-child(3),
     .media:first-child:nth-last-child(3) ~ .media,
     .media:first-child:nth-last-child(5),
     .media:first-child:nth-last-child(5) ~ .media,
     .media:first-child:nth-last-child(6),
-    .media:first-child:nth-last-child(6) ~ .media {
+    .media:first-child:nth-last-child(6) ~ .media
         width: 33.3333%
         padding-top: 33.3333%
-    }
 
     .media:first-child:nth-last-child(5),
-    .media:first-child:nth-last-child(5) ~ .media {
-        &:first-child, &:nth-child(2) {
+    .media:first-child:nth-last-child(5) ~ .media
+        &:first-child, &:nth-child(2)
             width: 50%
             padding-top: 50%
-        }
-    }
-    .desc {
+    .desc
         margin: 60px 42px
-        .prize {
+        .prize
             margin-top: 30px
             line-height: 40px
-        }
-    }
-    .footer {
-        &.fixed {
+    .footer
+        &.fixed
             position: fixed
             bottom: 0
             z-index: 990
-        }
         height: 100px
         width: 100%
-        > div {
+        > div
             line-height: 60px
             -webkit-box-flex: 1
             text-align: center
-        }
-        .icon-comment-solid {
+        .icon-comment-solid
             transform: scale(1.5)
-        }
-    }
-}
 </style>
-<template>
-<div class="work-view" v-if="!$loadingRouteData">
-    <div class="header flex">
-        <avatar :user="work.user" :size="90"></avatar>
-        <div class="fz-30 margin-left flex-1">
-            <p>{{work.user.nickname}}</p><p class="gray margin-top">{{work.user.title}}</p>
-        </div>
-        <follow :user="work.user.id" :follow="work.user.is_followed" :has-border="true"></follow>
-    </div>
-    <div class="line fz-26 flex margin-top">作品展示</div>
-    <div class="cover img" v-bg="cover" @click="coverflow(work.pictures, 0)"></div>
-    <div class="medias">
-        <div v-for="pic in pictures" v-bg="pic" class="media" @click="coverflow(work.pictures, $index+1)"></div>
-    </div>
-    <div class="desc">
-        <div class="fz-36">{{work.title}}</div>
-        <div class="fz-30 gray prize">{{work.prize}}</div>
-    </div>
-    <div class="footer flex fz-30 gray bdt bg-white" :class="{'fixed': !env.isShare}">
-        <like :target="work.id" :type="90" :active="work.is_liked" :count="work.like_count"></like>
-        <div class="comment bdl" @click="$refs.comment.comment()">
-            <i class="icon-comment-solid"></i><span>写评论</span>
-        </div>
-        <share class="bdl"></share>
-    </div>
-    <div class="hr"></div>
-    <comments :type="90" :id="work.id" :display-input="false" v-ref:comment></comments>
-</div>
+<template lang="jade">
+.work-view(v-if='!$loadingRouteData')
+    .header.flex
+        avatar(:user='work.user', :size='90')
+        .fz-30.mgl.flex-1
+            p {{work.user.nickname}}
+            p.gray.mgt {{work.user.title}}
+        follow(:user='work.user.id', :follow='work.user.is_followed', :has-border='true')
+    .line.fz-26.flex.mgt 作品展示
+    .cover.img(v-bg='cover', @click='coverflow(work.pictures, 0)')
+    .medias
+        .media(v-for='pic in pictures', v-bg='pic', @click='coverflow(work.pictures, $index+1)')
+    .desc
+        .fz-36 {{work.title}}
+        .fz-30.gray.prize {{work.prize}}
+    .footer.flex.fz-30.gray.bdt.bg-white(:class="{'fixed': !env.isShare}")
+        like(:target='work.id', :type='90', :active='work.is_liked', :count='work.like_count')
+        .comment.bdl(@click='$refs.comment.comment()')
+            i.icon-comment-solid
+            span 写评论
+        share.bdl
+    .hr
+    comments(:type='90', :id='work.id', :display-input='false', v-ref:comment='')
 </template>
 <script>
 import follow from 'component/Follow.vue'

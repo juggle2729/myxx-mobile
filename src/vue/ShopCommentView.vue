@@ -1,54 +1,43 @@
 <style lang="stylus">
-.user-comment-view {
+.user-comment-view
     padding-top: 100px
-    .tabs {
+    .tabs
         position: fixed
         top: 0
         width: 100%
         height: 100px
-        .tab {
+        z-index: 9
+        .tab
             text-align: center
             line-height: 50px
-        }
-    }
-    .item {
+    .item
         padding: 32px
-        header {
-            .btn {
+        header
+            .btn
                 width: 140px
                 height: 70px
                 line-height: 70px
                 text-align: center
                 border-radius: 6px
-            }
-        }
-        main {
+        main
             padding: 24px 32px 32px 100px
-            .box {
+            .box
                 width: 72px
                 height: 38px
                 line-height: 38px
                 text-align: center
                 border-radius: 6px
                 background-color: #ff3c3c
-                &[type='中评'] {
+                &[type='中评']
                     background-color: #ffcc00
-                }
-                &[type='差评'] {
+                &[type='差评']
                     background-color: #888888
-                }
-            }
-            .product {
+            .product
                 color: #f0a401
                 padding: 0 30px 0 20px
-            }
-            .content {
+            .content
                 margin-top: 24px
                 line-height: 1.2
-            }
-        }
-    }
-}
 </style>
 <template lang="jade">
 .user-comment-view.bg

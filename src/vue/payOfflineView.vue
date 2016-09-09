@@ -1,48 +1,35 @@
 <style lang="stylus">
-.pay-offline-view {
-    .instruction {
-        .tip {
+.pay-offline-view
+    .instruction
+        .tip
             margin: 50px 0
             line-height: 1.4
-        }
-        .contact {
+        .contact
             margin-bottom: 40px
-            img {
+            img
                 width: 80px
                 height: 80px
-            }
-        }
-    }
-    .order {
+    .order
         padding-left: 50px
-        .item {
+        .item
             height: 112px
             line-height: 112px
-        }
-        .customer {
+        .customer
             padding: 36px 0
-            .tel {
+            .tel
                 margin: 28px 0
-            }
-            .address {
+            .address
                 margin-right: 50px
                 line-height: 1.2
-            }
-        }
-    }
-    .operation {
+    .operation
         padding: 50px
-        p {
+        p
             line-height: 1.3
             margin-bottom: 50px
-        }
-        .button {
+        .button
             border-radius: 6px
             height: 72px
             line-height: 72px
-        }
-    }
-}
 </style>
 <template lang="jade">
     .pay-offline-view

@@ -1,42 +1,33 @@
 <style lang="stylus">
 @import '~style/partials/var'
-.user-story {
+.user-story
     min-height: inherit
-    .list {
+    .list
         padding: 10px 0 0 15px
-    }
-    .topic-type {
+    .topic-type
         height: 100px
         padding: 0 40px
         overflow-x: auto
         overflow-y: hidden
         white-space: nowrap
         -webkit-overflow-scrolling: touch
-        > div {
+        > div
             line-height: 56px
             padding: 0 18px
             border-radius: 28px
             margin: 0 20px
-            &.active {
+            &.active
                 color: white
                 background-color: #cc3f4f
-            }
-        }
-    }
-}
 </style>
-<template>
-<div class="user-story" :class="{'bg-white': items.isEmpty}">
-    <div class="topic-type flex bg-white" v-if="items && items.length > 0">
-        <div class="fz-26 gray bd center" @click="classify()" :class="{'active': !selected}">全部 {{types.topic_count}}</div>
-        <div v-for="tab in types.topic_types" class="fz-26 gray bd center"
-        @click="classify(tab.code)" :class="{'active': selected === tab.code}">{{tab.name}} {{tab.count}}</div>
-    </div>
-    <div class="list">
-        <card v-for="item in items" :entry="item.entry" :type="item.type"></card>
-    </div>
-    <empty v-if="items.isEmpty" title="暂无帖子"></empty>
-</div>
+<template lang="jade">
+.user-story(:class="{'bg-white': items.isEmpty}")
+    .topic-type.flex.bg-white(v-if='items && items.length > 0')
+        .fz-26.gray.bd.center(@click='classify()', :class="{'active': !selected}") 全部 {{types.topic_count}}
+        .fz-26.gray.bd.center(v-for='tab in types.topic_types', @click='classify(tab.code)', :class="{'active': selected === tab.code}") {{tab.name}} {{tab.count}}
+    .list
+        card(v-for='item in items', :entry='item.entry', :type='item.type')
+    empty(v-if='items.isEmpty', title='暂无帖子')
 </template>
 <script>
 import paging from 'paging'

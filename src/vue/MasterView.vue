@@ -35,6 +35,7 @@
         width: 284px
         margin: 72px auto
         background-image: url($qn + 'artist/special-title.png')
+        background-size: cover
     .brief
         color: #b7b7b7
         font-size: 30px
@@ -69,7 +70,7 @@
         .title
             margin-top: 22px
             font-size: 24px
-        .avatar-222
+        .avatar[size='222']
             margin: 0 auto
             border: 1px solid #737373
     .operation

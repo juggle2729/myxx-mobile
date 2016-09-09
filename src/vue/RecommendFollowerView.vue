@@ -1,61 +1,46 @@
 <style lang="stylus">
-.recommend-follwer-view {
+.recommend-follwer-view
     width: 100%
     padding-top: 40px
-    .tips {
+    .tips
         width: 100%
         text-align: center
         margin: 0 auto 60px
         height: 100px
         line-height: 100px
-        > span {
+        > span
             border-radius: 50px
             border: 1px solid #cc3f4f
             padding: 30px 50px
-        }
-    }
-    .item {
+    .item
         padding: 32px
-        &:last-child {
+        &:last-child
             background-size: 0
-        }
-        .flex-1 {
+        .flex-1
             margin-left: 20px
-        }
-        .name {
+        .name
             margin: 2px 0 12px
-        }
-        .content {
+        .content
             margin-top: 20px
             line-height: 36px
-        }
-    }
-    .empty-component {
+    .empty-component
         color: #888888
-    }
-}
 </style>
-<template>
-<div class="recommend-follwer-view bg">
-    <div class="tips fz-30 red bg" v-if="!isLogin" @click="action('login')">
-        <span>登录查看更多关注人的内容</span>
-    </div>
-    <div class="item flex bdb bg-white" v-for="item in items">
-        <avatar :user="item" :size="108"></avatar>
-        <div class="flex-1">
-            <div>
-                <div class="name fz-30">{{item.name}}</div>
-                <div class="fz-26 light">粉丝数&nbsp&nbsp{{item.fans_count}}</div>
-            </div>
-            <div class="content fz-26 gray">
-                {{item.desc}}
-            </div>
-        </div>
-        <follow :user="item.id" :follow="item.is_followed" :oneway=true :has-border=true></follow>
-    </div>
-    <partial name="load-more" v-if="items.hasMore"></partial>
-    <empty v-if="items.isEmpty"></empty>
-</div>
+<template lang="jade">
+.recommend-follwer-view.bg
+    .tips.fz-30.red.bg(v-if='!isLogin', @click="action('login')")
+        span 登录查看更多关注人的内容
+    .item.flex.bdb.bg-white(v-for='item in items')
+        avatar(:user='item', :size='108')
+        .flex-1
+            div
+                .name.fz-30 {{item.name}}
+                .fz-26.light 粉丝数&nbsp&nbsp{{item.fans_count}}
+            .content.fz-26.gray
+                | {{item.desc}}
+        follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
+    partial(name='load-more', v-if='items.hasMore')
+    empty(v-if='items.isEmpty')
 </template>
 <script>
 import paging from 'paging'

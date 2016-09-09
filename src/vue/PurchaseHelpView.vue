@@ -1,10 +1,8 @@
 <style lang="stylus">
-.purchase-view {
+.purchase-view
     background-color: #f4f4f4
-    img {
+    img
         width: 100%
-    }
-}
 </style>
 <template lang="jade">
 .purchase-view

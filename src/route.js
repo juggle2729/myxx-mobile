@@ -160,36 +160,6 @@ export default {
         }
     },
 
-    '/profile': {   // 个人中心
-        name: 'profile',
-        title: '我的',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ProfileView.vue'));
-            }, 'profile');
-        }
-    },
-    '/profile/:id/evaluation': {
-        name: 'user-evaluation',
-        title: '鉴宝',
-        native: v => v >= 1.1 && {name: 'myEvaluations'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('UserEvaluationView.vue'));
-            }, 'profile');
-        }
-    },
-    '/profile/:id/story': {
-        name: 'user-story',
-        title: '晒宝',
-        native: v => v >= 1.1 && {name: 'myStories'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('UserStoryView.vue'));
-            }, 'profile');
-        }
-    },
-
     '/user/:id/like': {
         name: 'user-like',
         title: '赞',

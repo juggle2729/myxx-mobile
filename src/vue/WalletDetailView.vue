@@ -1,65 +1,48 @@
 <style lang="stylus">
-.wallet-detail {
+.wallet-detail
     min-height: 100%
-    .light-green {
+    .light-green
         color: #09bb07
-    }
-    .light-blue {
+    .light-blue
         color: #5b99ee
-    }
-    .right {
+    .right
         text-align: right
-    }
-    .tabs {
+    .tabs
         height: 100px
-        > div {
+        > div
             line-height: 40px
             text-align: center
-            &.v-link-active {
+            &.v-link-active
                 color: #cc3f4f
-            }
-        }
-    }
-    .item {
+    .item
         height: 166px
         padding: 30px 32px
-        .detail {
+        .detail
             margin-top: 20px
             height: 64px
-            .line-clamp-2 {
+            .line-clamp-2
                 width: 0%
                 line-height: 1.2
-            }
-        }
-    }
-}
 </style>
-<template>
-<div class="wallet-detail" v-if="!$loadingRouteData">
-    <div class="tabs flex fz-30 bdb">
-        <div class="flex-1 bdr" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
-            待结算金额
-        </div>
-        <div class="flex-1" v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">
-            可提现金额
-        </div>
-    </div>
-    <div class="item fz-30 bdb" v-for="item in items">
-        <div class="flex fz-22 gray">
-            <div class="flex-1">{{item.trans_desc}}</div><div>结算时间 {{item.create_at | date 'yyyy-m-dd'}}</div>
-        </div>
-        <div class="flex detail">
-            <div class="flex-1 line-clamp-2">{{item.remark}}</div>
-            <div v-if="$route.params.tab === 'expects'" class="red fz-40 flex-1 right">
-                {{item.trans_amount | price}}
-            </div>
-            <div v-else class="red fz-40 flex-1 right" :class="{'light-blue': (item.trans_amount < 0 && item.trans_type === 'sr_out_pt_in_pd_fe'), 'light-green': item.trans_amount < 0}">
-                <span v-if="item.trans_amount > 0">+</span>{{item.trans_amount/100}}
-            </div>
-        </div>
-    </div>
-    <empty v-if="isEmpty" :title="$route.params.tab === 'expects' ? '没有待结算的金额' : '没有可提现的金额'"></empty>
-</div>
+<template lang="jade">
+.wallet-detail(v-if='!$loadingRouteData')
+    .tabs.flex.fz-30.bdb
+        .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}")
+            | 待结算金额
+        .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
+            | 可提现金额
+    .item.fz-30.bdb(v-for='item in items')
+        .flex.fz-22.gray
+            .flex-1 {{item.trans_desc}}
+            div 结算时间 {{item.create_at | date 'yyyy-m-dd'}}
+        .flex.detail
+            .flex-1.line-clamp-2 {{item.remark}}
+            .red.fz-40.flex-1.right(v-if="$route.params.tab === 'expects'")
+                | {{item.trans_amount | price}}
+            .red.fz-40.flex-1.right(v-else='', :class="{'light-blue': (item.trans_amount < 0 && item.trans_type === 'sr_out_pt_in_pd_fe'), 'light-green': item.trans_amount < 0}")
+                span(v-if='item.trans_amount > 0') +
+                | {{item.trans_amount/100}}
+    empty(v-if='isEmpty', :title="$route.params.tab === 'expects' ? '没有待结算的金额' : '没有可提现的金额'")
 </template>
 <script>
 import Q from 'q'

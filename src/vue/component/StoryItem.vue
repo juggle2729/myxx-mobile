@@ -59,7 +59,7 @@
     <div class="header flex">
         <div class="flex-1 flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>
-            <div class="name margin-left fz-26">{{item.user.name}}</div>
+            <div class="name mgl fz-26">{{item.user.name}}</div>
         </div>
         <follow v-if="!item.user.is_followed" :user="item.user.id" :follow="item.user.is_followed"></follow>
     </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="title fz-30"><div class="user-txt line-clamp-2">{{item.content}}</div></div>
     </div>
-    <div class="footer fz-26 flex bdl">
+    <div class="footer fz-26 flex bdv">
         <comment :count="item.comment" class="bdr"></comment>
         <like :target="item.post_id" type="30" :active="item.liked" :count="item.like" class="bdr"></like>
         <share></share>

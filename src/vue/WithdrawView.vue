@@ -1,62 +1,55 @@
 <style lang="stylus">
-.cash {
-    .item {
+.cash
+    .item
         height: 86px
         line-height: 86px
         padding: 0 32px
-        input {
+        input
             border: 0
             padding-left: 44px
             width: 555px
             font-size: 30px
             line-height: 1
-        }
-    }
-    .button {
+    .button
         width: 686px
         height: 80px
         line-height: 80px
         border-radius: 8px
         margin: 50px auto 0
-    }
-    .tip {
+    .tip
         margin: 38px 0 24px
-    }
-    .instruction {
+    .instruction
         width: 648px
         margin: 0 auto
-        p {
+        p
             line-height: 42px
-        }
-    }
-    ::-webkit-input-placeholder {
+    ::-webkit-input-placeholder
         color: #c6c6c6
         padding-top: 5px
-    }
-}
 </style>
-<template>
-<div class="cash bg fz-30">
-    <div class="item fz-30 bdb bg-white flex">
-        <div>提现账户</div>
-        <div><input type="text" placeholder="请输入您本人姓名" v-model="name"></div>
-    </div>
-    <div class="item fz-30 bdb bg-white flex">
-        <div>银行卡号</div>
-        <div><input type="number" placeholder="请输入您本人的银行卡号" v-model="account"></div>
-    </div>
-    <div class="item fz-30 bdb bg-white flex">
-        <div>提现金额</div>
-        <div><input type="number" placeholder="本次可提现{{balance | price '0'}}元" v-model="amount"></div>
-    </div>
-    <div class="button bg-gray white fz-30 center" :class="{'bg-red': complete}" @click="withdraw">提交</div>
-    <div class="tip gray center"><span class="gray">-</span>&nbsp提现说明&nbsp<span class="gray">-</span></div>
-    <article class="instruction gray">
-        <p>1. 提现平均到账日期1-2个工作日, 节假日顺延</p>
-        <p>2. 每日只能提现1次</p>
-        <p>3. 提现时会收取部分手续费, 目前此费用由美玉秀秀承担</p>
-    </article>
-</div>
+<template lang="jade">
+.cash.bg.fz-30
+    .item.fz-30.bdb.bg-white.flex
+        div 提现账户
+        div
+            input(type='text', placeholder='请输入您本人姓名', v-model='name')
+    .item.fz-30.bdb.bg-white.flex
+        div 银行卡号
+        div
+            input(type='number', placeholder='请输入您本人的银行卡号', v-model='account')
+    .item.fz-30.bdb.bg-white.flex
+        div 提现金额
+        div
+            input(type='number', placeholder="本次可提现{{balance | price '0'}}元", v-model='amount')
+    .button.bg-gray.white.fz-30.center(:class="{'bg-red': complete}", @click='withdraw') 提交
+    .tip.gray.center
+        span.gray -
+        | &nbsp提现说明&nbsp
+        span.gray -
+    article.instruction.gray
+        p 1. 提现平均到账日期1-2个工作日, 节假日顺延
+        p 2. 每日只能提现1次
+        p 3. 提现时会收取部分手续费, 目前此费用由美玉秀秀承担
 </template>
 <script>
 export default {
