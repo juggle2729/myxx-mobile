@@ -10,6 +10,7 @@
         .filters
             height: 80px
             .filter
+                line-height: 80px
                 text-align: center
                 &::after
                     content: ''
@@ -27,6 +28,10 @@
                     border-top: none
         .filter-opts
             box-shadow: 0 2px 10px 0 #d9d9d9
+            max-height: calc(1350px - 270px)
+            max-height: calc(100vh - 270px)
+            -webkit-overflow-scrolling: touch
+            overflow-y: scroll
         .opt
             height: 100px
             line-height: 100px
@@ -52,9 +57,9 @@
     .placeholder-notice(v-if="$parent.firstVisit")
     .fixed-header
         .placeholder-notice(v-if="$parent.firstVisit")
-        .filters.bdv.flex.fz-26.bg-white
-            .filter.flex-1(@click="changeFilter('category')", :class="{'red': filter.display==='category' || filter.category.value}") {{filter.category.value ? filter.category.label : '分类'}}
-            .filter.flex-1(@click="changeFilter('price')", :class="{'red': filter.display==='price' || filter.price.value}") {{filter.price.value ? filter.price.label : '价格'}}
+        .filters.bdb.flex.fz-26.bg-white
+            .filter.flex-1(@click="changeFilter('category')", :class="{'red': filter.display==='category'}") {{filter.category.value ? filter.category.label : '分类'}}
+            .filter.flex-1(@click="changeFilter('price')", :class="{'red': filter.display==='price'}") {{filter.price.value ? filter.price.label : '价格'}}
         .filter-opts.bg-white(v-show="filter.display")
             .opt.fz-26.bdt(v-for="opt in opts", @click="applyFilter(opt)", :class="{'red': opt===filter[filter.display]}") {{opt.label}}
     empty(v-if="items.isEmpty")

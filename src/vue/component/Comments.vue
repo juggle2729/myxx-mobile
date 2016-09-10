@@ -219,18 +219,18 @@ export default {
         },
         comment(to) {
             // 鉴于客户端没有实现接口定义的细节， id, position 为废弃的参数
-            let [id, placeholder, position, reply_to] = [this.uid, '', 0, '']
+            let [placeholder, reply_to] = ['', '']
             if(to) {
-                [id, placeholder, reply_to] = [this.uid + to.id, `回复${to.name}`, to.id]
+                [placeholder, reply_to] = [ `回复${to.name}`, to.id]
             }
-            this.action('keyboard', {id, placeholder, position})
-                .then((content) => {
+            this.action('keyboard', {placeholder})
+                .then(content => {
                     return Q.Promise((resolve, reject) => {
                         if(content) {
                             let comment = {content}
                             to && _.merge(comment, {reply_to: to.id})
                             this.$post(`users/target/${this.id||this.$route.params.id}/type/${this.type}/comments`, comment)
-                                .then((resp) => {
+                                .then(resp => {
                                     resolve(_.merge(resp, {
                                         content,
                                         like_count: 0,

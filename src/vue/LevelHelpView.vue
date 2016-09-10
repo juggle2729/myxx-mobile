@@ -14,7 +14,7 @@
             .hr
                 height: 1px
                 height: .5px
-                background-color: gray
+                background-color: #d9d9d9
         .lv-bar
             width: 512px
             height: 50px
@@ -37,8 +37,9 @@
                 img
                     width: 42px
     .usage
-        padding: 0 50px
+        padding: 0 50px 100px
         h3
+            font-size: 30px
             padding: 42px 0 32px
             &::before
                 content: '•'
@@ -63,8 +64,8 @@
         .bar-label.flex
             .hr.flex-1
             span 店铺积分
-            .hr.flex-1
-        .lv-bar.fz-22.white(:style="barStyle") {{point}}/{{point+gap}}
+            .hr.flex-1.
+        .lv-bar.fz-24.white(:style="barStyle") {{point}}/{{point+gap}}
         .red 还差{{gap}}点积分升级到{{lv+1}}级
     .hr(v-if="isUserView")
     .lvs.bg-white
@@ -94,7 +95,7 @@
             label 差评
             span -10分
         .flex
-            label 参入求购竞标
+            label 参与求购竞标
             span +1分
         .flex
             label 商品审核通过

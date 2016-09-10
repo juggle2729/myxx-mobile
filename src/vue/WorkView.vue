@@ -118,12 +118,12 @@
         <div class="fz-36">{{work.title}}</div>
         <div class="fz-30 gray prize">{{work.prize}}</div>
     </div>
-    <div class="footer flex fz-30 gray border-top bg-white" :class="{'fixed': !env.isShare}">
+    <div class="footer flex fz-30 gray bdt bg-white" :class="{'fixed': !env.isShare}">
         <like :target="work.id" :type="90" :active="work.is_liked" :count="work.like_count"></like>
-        <div class="comment border-left" @click="$refs.comment.comment()">
+        <div class="comment bdl" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
-        <share class="border-left"></share>
+        <share class="bdl"></share>
     </div>
     <div class="hr"></div>
     <comments :type="90" :id="work.id" :display-input="false" v-ref:comment></comments>

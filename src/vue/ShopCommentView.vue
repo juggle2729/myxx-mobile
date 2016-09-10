@@ -61,7 +61,7 @@
                 .fz-30.gray {{item.order.buyer.nickname}}
                 .fz-26.light.mgt {{item.create_at | moment}}
             .btn.bd.fz-26(@click="action('chat', {id: item.buyer_id, name: item.order.buyer.nickname, product: item.product_id})") 联系买家
-        main(v-link="{name: 'order', params: {id: item.order_no}}")
+        main(@click="action('orderDetail', {id: item.order_no})")
             .flex
                 .box.white.fz-22(:type="tab.label") {{tab.label}}
                 .product.fz-26.line-clamp 商品名称：{{item.order.product.title}}

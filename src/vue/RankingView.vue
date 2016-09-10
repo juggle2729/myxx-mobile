@@ -67,7 +67,7 @@
                 <avatar :user="item" :size="90"></avatar>
                 <div class="info">
                     <div>{{item.name}}</div>
-                    <div class="flex fz-26 light margin-top">
+                    <div class="flex fz-26 light mgt-12">
                         <div class="jade">获赞数: {{item.like_count}}</div>
                         <div>单个鉴定获赞数: {{item.like_count_per_jianbao}}</div>
                     </div>

@@ -44,16 +44,15 @@
             text-align: center
             padding: 1em 0
 </style>
-<template lang="jade">
-.keyboard
-    .container.bg
-        .title
-            | {{params.placeholder || '发表评论'}}
-            span.count.gray(:class="{'red': content.length>max}") {{content.length}}/{{max}}
-        textarea(v-model='content', maxlength='150')
-        .btns.border-top
-            div(@click='close') 取消
-            .border-left(@click='submit', :class="{'green': content.length>0 && content.length<max}") 发表
+<template>
+<!-- 转换成jade有问题！！ -->
+<div class="keyboard">
+    <div class="container bg">
+        <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>max}">{{content.length}}/{{max}}</span></div>
+        <textarea v-model="content" :maxlength="max"></textarea>
+        <div class="btns bdt"><div @click="close">取消</div><div @click="submit" class="bdl" :class="{'green': content.length>0 && content.length<max}">发表</div></div>
+    </div>
+</div>
 </template>
 <script>
 export default {
@@ -68,21 +67,19 @@ export default {
         return {
             max: 150,
             content: ''
-        }
+        };
     },
-    ready() {
-        //IMPROVE 输入框autofocus
-    },
+
     methods: {
         submit() {
-            const content = this.content.trim()
+            const content = this.content.trim();
             if(content.length > 0 && this.content.length <= this.max) {
-                this.params.cb(content)
-                this.close()
+                this.params.cb(content);
+                this.close();
             }
         },
         close() {
-            this.params.handler = undefined
+            this.params.handler = undefined;
         }
     }
 }

@@ -84,11 +84,6 @@
     }
 
     .footer {
-        &.fixed {
-            position: fixed
-            bottom: 0
-            z-index: 990
-        }
         height: 100px
         width: 100%
         > div {
@@ -114,8 +109,8 @@
             <avatar :user="story.user"></avatar>
             <div class="name">
                 <p class="fz-30">{{story.user.name}}</p>
-                <div class="margin-top fz-22 light">
-                    <span>{{story.create_at | moment}}</span><span class="padding-horizontal">|</span><span>{{story.click}}人浏览</span>
+                <div class="mgt-12 fz-22 light">
+                    <span>{{story.create_at | moment}}</span><span class="pdh-10">|</span><span>{{story.click}}人浏览</span>
                 </div>
             </div>
         </div>
@@ -139,14 +134,14 @@
             <tags :tags="story.tags"></tags>
         </div>
     </template>
-    <div class="footer flex fz-30 gray bdt bg-white" :class="{'fixed': !env.isShare}">
+    <div class="footer flex fz-30 gray bdt bg-white">
         <like :active="story.liked" :count="story.like"></like>
         <div class="comment bdl" @click="$refs.comment.comment()">
             <i class="icon-comment-solid"></i><span>写评论</span>
         </div>
         <share class="bdl"></share>
     </div>
-    <div class="hr-20"></div>
+    <div class="hr"></div>
     <comments :type="30" :id="story.post_id" :display-input="false" v-ref:comment></comments>
     <product-recommend :id="story.post_id"></product-recommend>
     <recommend :data="items" name="相关推荐"></recommend>

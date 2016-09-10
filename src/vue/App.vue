@@ -35,7 +35,7 @@
             box-shadow: 0 0 10px 5px #4CAF50
 </style>
 <template lang="jade">
-div
+div(:class="{'loading': loading}")
     router-view
     .share-bottom.flex(v-if="env.isShare && shareData.hasDownloadLink", @click="download()")
         .logo.mgr
@@ -60,6 +60,7 @@ export default {
     components,
     data() {
         return {
+            loading: true,
             user: this.$store.get('user'),
             shareData: {},
             popup: {}

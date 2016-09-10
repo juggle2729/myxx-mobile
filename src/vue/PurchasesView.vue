@@ -62,7 +62,11 @@ export default {
                     this.action('login').then(resolve)
                 }
             }).then(() => {
-                this.action('newPurchase')
+                if(this.self.goodsPublishPermission) {
+                    this.action('toast', {success: '0', text: '请前往"商户专区"发布需求'})
+                } else {
+                    this.action('newPurchase')
+                }
             })
         }
     }

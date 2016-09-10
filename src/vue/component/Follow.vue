@@ -6,7 +6,7 @@
     color: #9c9c9c
     border-radius: 12px
     background-color: transparent
-    &.border-light {
+    &.bd-light {
         background-color: #eeeeee
     }
 
@@ -21,7 +21,7 @@
 </style>
 <template>
 <div v-if="!isSelf" class="follow-component fz-26 center" @click.stop="toggle"
-    :class="{active: !follow, 'border-light': hasBorder&&follow, 'border-red': hasBorder&&!follow}">
+    :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}">
     <i class="icon-plus" v-if="!follow"></i><span>{{follow ? '已关注' : '关注'}}</span>
 </div>
 </template>

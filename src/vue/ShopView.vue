@@ -116,12 +116,7 @@
         header.fz-26.gray.bg-white
             span 新品发布
         main.bg
-            product-card(v-for='item in items', :entry="item" , v-link="{name: 'jade', params: {id: item.id}}")
-    //- .medias(v-for='item in items', v-link="{name: 'jade', params: {id: item.id}}")
-    //-     .media.img(v-bg='item.first_picture')
-    //-     .detail.fz-30
-    //-         p.line-clamp.desc {{item.title}}
-    //-         p.fz-26.red {{item.price | price}}
+            product-card(v-for='item in items', :entry="item")
     .footer.flex.bdt.fz-30.bg-white.gray
         chat.flex-1.center.bdr(:id='shop.owner.id', :name='shop.owner.nickname')
         share.flex-1.center

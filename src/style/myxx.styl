@@ -8,7 +8,7 @@ $directions = {t: top, r: right, b: bottom, l: left, v: top bottom, h: left righ
 /****************************
 *        字体大小            *
 * **************************/
-for size in 50 44 40 36 34 32 30 26 22
+for size in 50 44 40 36 34 32 30 26 24 22
     .fz-{size}
         font-size: size px
 
@@ -50,9 +50,9 @@ gap($size)
             for $dir in $dirs
                 padding-{$dir}: $size px
 
-for $size in 0 10 12 30 40
+for $size in range(10, 40, 2)
     gap($size)
-
+gap(0)
 /****************************
 *           position        *
 * **************************/

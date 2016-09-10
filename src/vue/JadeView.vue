@@ -171,7 +171,7 @@
                 .icon-contact.fz-44
                 div 私信
             .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                .icon-collect.fz-30
+                .icon-collect.fz-32
                 div {{jade.is_faved ? '已收藏' : '收藏'}}
             .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
                 .icon-comment-solid.fz-44
@@ -266,7 +266,7 @@ export default {
                             this.action('login').then(resolve)
                         }
                     }).then(() => {
-                        this.$router.go({name: 'order-confirm', params: {product: this.jade.id}})
+                        this.action('orderConfirm', {product: this.jade.id})
                     })
                 } else if(this.env.version < 1.5) {
                     this.action('toast', {success: 0, text: '请更新至最新版'})

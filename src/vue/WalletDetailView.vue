@@ -37,7 +37,7 @@
 <template>
 <div class="wallet-detail" v-if="!$loadingRouteData">
     <div class="tabs flex fz-30 bdb">
-        <div class="flex-1 border-right" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
+        <div class="flex-1 bdr" v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}">
             待结算金额
         </div>
         <div class="flex-1" v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}">

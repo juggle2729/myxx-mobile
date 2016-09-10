@@ -103,7 +103,7 @@
             span(:class="{'red': item.total_count, 'gray': !item.total_count}") {{item.total_count}}
             span.gray  个竞标
     .btns.bdt.fz-30(v-if="!paid")
-        .operation.mgr.border-gray(@click.stop="del(item.id)") 删除此求购
+        .operation.mgr.bd-gray(@click.stop="del(item.id)") 删除此求购
         .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: item.pledge, type: item.is_tob ? 'sale' : 'purchase'})") 立即支付保证金
 </div>
 </template>

@@ -32,7 +32,7 @@
         <p>您的提现申请已受理</p>
         <p class="fz-26 light">预计会在1-2个工作日内到账</p>
     </div>
-    <div class="item flex border-vertical bg-white">
+    <div class="item flex bdt bg-white">
         <div class="flex-1 gray">提现到银行卡</div>
         <div>{{info.bank_account}}</div>
     </div>
