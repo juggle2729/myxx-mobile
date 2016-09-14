@@ -107,10 +107,8 @@ export default {
     },
     methods: {
         comment(e) {
-            const id = this.uid
             const placeholder = ''
-            const position = 0
-            this.action('keyboard', {id, placeholder, position})
+            this.action('keyboard', {placeholder})
                 .then((content) => {
                     if(content) {
                         this.$post(`users/target/${this.id}/type/40/comments`, {content})

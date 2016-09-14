@@ -12,7 +12,7 @@
 export default {
     name: 'comment',
     props: {
-        count: [Number]
+        count: Number
     }
 }
 </script>

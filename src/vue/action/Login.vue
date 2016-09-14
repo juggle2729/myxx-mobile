@@ -132,7 +132,6 @@ export default {
             }
         },
         close() {
-            this.$store.remove(this.uid)
             this.params.handler = undefined
         },
 

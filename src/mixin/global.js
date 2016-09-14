@@ -3,14 +3,14 @@ import bridge from '../bridge'
 import config from '../config'
 import Avatar from 'component/Avatar.vue'
 import Empty from 'component/Empty.vue'
+import PriceTag from 'component/PriceTag.vue'
 
 const mixin = {
-    components: [Avatar, Empty],
+    components: [Avatar, Empty, PriceTag],
 
     data() {
         return {
-            config,
-            uid: _.concat(this.$route.name, _.values(this.$route.params)).join('_')
+            config
         }
     },
 
@@ -43,27 +43,6 @@ const mixin = {
         }
     },
 
-    ready() {
-        const snapshot = this.$store.get(this.uid)
-        if(snapshot) {
-            this.action('user')
-                .then(user => {
-                    if(user) {
-                        const {url, method, data} = snapshot
-                        this.$store.remove(this.uid) //立刻去掉缓存数据，防止重复提交
-                        this.$req(url, method, data)
-                            .then(() => {
-                                // 首次微信登录，操作成功后，刷新页面，同步页面数据，去掉code参数
-                                location.href = location.href.replace(/code=\w+&?/, '')
-                            })
-                    } else {
-                        // 如果用户信息不存在，丢弃暂存请求，避免无需循环
-                        this.$store.remove(this.uid)
-                    }
-                })
-        }
-    },
-
     methods: {
         /**
          * 调用接口，返回 promise
@@ -84,8 +63,8 @@ const mixin = {
                     case 'user':
                         callback = resp => {
                                 if(resp) {
-                                    const user = _.isObject(resp) ? resp : JSON.parse(resp)
-                                    this.$root.user = user // 更新this.self
+                                    const user = _.update(_.isObject(resp) ? resp : JSON.parse(resp), 'id', id => +id)
+                                    this.$root.user = user
                                     defer.resolve(user)
                                 } else {
                                     defer.resolve()
@@ -93,10 +72,10 @@ const mixin = {
                             }
                         break
                     case 'keyboard':
-                        if(this.env.isApp && !this.self) {// 在客户端，要确保用户已经登录
-                            return this.action('login')
-                        } else {
+                        if(this.self) {
                             callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject()
+                        } else {
+                            return this.action('login')
                         }
                         break
                     case 'login':
@@ -151,7 +130,7 @@ const mixin = {
                                     defer.resolve(resp.data)
                                 } else {    // 业务异常处理
                                     if([605, 608].indexOf(resp.status) !== -1) {
-                                        this.snapshot({url, method, data}, defer)
+                                        this.action('login')
                                     } else {
                                         defer.reject(resp.message)
                                         if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
@@ -167,7 +146,7 @@ const mixin = {
                                 }
                             })
                     } else { // token缺失，无法进行数据请求
-                        this.snapshot({url, method, data}, defer)
+                        this.action('login')
                     }
                 })
             return defer.promise
@@ -184,24 +163,6 @@ const mixin = {
         },
         $delete(url, data) {
             return this.$req(url, 'delete', data)
-        },
-
-        snapshot(request, defer) {
-            if(this.env.isWechat) {
-                this.$store.set(this.uid, request)
-            }
-            this.action('login')
-                .then(() => {
-                    if(!this.env.isWechat && this.self) {//确保self已经有值，防止无限循环
-                        console.debug('deal with request', request)
-                        const {url, method, data} = request
-                        this.$req(url, method, data)
-                            .then((resp) => {
-                                this.$store.remove(this.uid)
-                                defer.resolve(resp)
-                            })
-                    }
-                })
         },
 
         play(video) {

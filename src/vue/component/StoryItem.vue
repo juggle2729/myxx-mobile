@@ -72,7 +72,7 @@
         </div>
         <div class="title fz-30"><div class="user-txt line-clamp-2">{{item.content}}</div></div>
     </div>
-    <div class="footer fz-26 flex bdv">
+    <div class="footer fz-26 flex bdl">
         <comment :count="item.comment" class="bdr"></comment>
         <like :target="item.post_id" type="30" :active="item.liked" :count="item.like" class="bdr"></like>
         <share></share>

@@ -96,13 +96,15 @@
         main.bg
             product-card(v-for='item in items', :entry="item")
     .footer.flex.bdt.fz-30.bg-white.gray
-        chat.flex-1.center.bdr(:id='shop.owner.id', :name='shop.owner.nickname')
+        chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
+        favor.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
         share.flex-1.center
 </template>
 <script>
 import paging from 'paging'
 import share from 'component/Share.vue'
 import chat from 'component/Chat.vue'
+import favor from 'component/Favor.vue'
 import lv from 'component/Lv.vue'
 import ProductCard from 'component/ProductCard.vue'
 import shareable from 'shareable'
@@ -112,6 +114,7 @@ export default {
     components: {
         share,
         chat,
+        favor,
         lv,
         ProductCard
     },

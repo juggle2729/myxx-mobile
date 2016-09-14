@@ -83,9 +83,8 @@ export default {
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk)
             env.isShare = !!(!env.isApp && (_.has(this.$route, 'query.user') || _.has(this.$route, 'query.channel')))
             if(env.isApp) {
-                const digits = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().split('.')
-                digits.splice(1, 0, '.')
-                env.version = +digits.join('')
+                env.version = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.')
+                console.log('version', env.version)
             }
             return env
         }

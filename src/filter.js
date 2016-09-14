@@ -58,10 +58,6 @@ const filters = {
         }
     },
 
-    role(id) {
-        return config.roles[id];
-    },
-
     qn(path) {
         return config.www + path;
     },

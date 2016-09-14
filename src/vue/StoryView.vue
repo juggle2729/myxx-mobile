@@ -65,7 +65,6 @@
             &:first-child, &:nth-child(2)
                 width: 50%
                 padding-top: 50%
-
     .footer
         height: 100px
         width: 100%

@@ -1,5 +1,5 @@
 <style lang="stylus">
-.keyboard
+.set-price
     &.pop-transition
         opacity: 1
         transition: opacity .3s ease
@@ -27,15 +27,23 @@
         margin: 0 40px
         .count
             float: right
-    textarea
+    input
         border-radius: 8px
         font-size: 30px
         width: 540px
-        height: 200px
+        height: 80px
         border: none
         resize: none
         padding: 1em
-        margin: 1em 40px
+        margin: 1em 40px 0
+    .warn
+        padding: 14px 0 14px 2.5em
+        line-height: 30px
+        .icon
+            border-radius: 50%
+            font-weight: bold
+            &::before
+                padding-left: 1px
     .btns
         > div
             cursor: pointer
@@ -45,18 +53,18 @@
             padding: 1em 0
 </style>
 <template>
-<!-- 转换成jade有问题！！ -->
-<div class="keyboard">
+<div class="set-price">
     <div class="container bg">
-        <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>limit}">{{content.length}}/{{limit}}</span></div>
-        <textarea v-model="content" :maxlength="limit"></textarea>
-        <div class="btns bdt"><div @click="close">取消</div><div @click="submit" class="bdl" :class="{'green': content.length>0 && content.length<limit}">发送</div></div>
+        <div class="title center">当前竞标价{{params.bid.ceil_price | price}}</div>
+        <input class="red" type="number" v-model="price" placeholder="请输入修改后的价格" />
+        <div class="warn red fz-24"><i v-show="warn" class="icon icon-warn white bg-red mgr-10"></i><span>{{warn}}</span></div>
+        <div class="btns bdt"><div @click="close">取消</div><div @click="submit" class="bdl red">确认</div></div>
     </div>
 </div>
 </template>
 <script>
 export default {
-    name: 'Keyboard',
+    name: 'set-price',
     props: {
         params: {
             type: Object,
@@ -65,17 +73,21 @@ export default {
     },
     data() {
         return {
-            limit: this.params.limit || 140,
-            content: ''
+            warn: '',
+            price: ''
         }
     },
 
     methods: {
         submit() {
-            const content = this.content.trim();
-            if(content.length > 0 && this.content.length <= this.limit) {
-                this.params.cb(content);
-                this.close();
+            const [newPrice, oldPrice] = [this.price*100, this.params.bid.ceil_price]
+            if(!/^\d+$/.test(this.price)) {
+                this.warn = '请输入数字'
+            } else if(oldPrice && newPrice >= oldPrice) {
+                this.warn = '请输入低于当前的竞标价'
+            } else {
+                this.params.cb(this.params.bid, newPrice)
+                this.close()
             }
         },
         close() {

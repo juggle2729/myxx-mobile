@@ -1,11 +1,9 @@
 <style lang="stylus">
-.chat-component {
+.chat-component
     font-size: 30px
     color: #888888
-    i {
+    i
         transform: scale(1.5)
-    }
-}
 </style>
 <template>
 <div class="share-component" @click.stop="chat(id, name, jade)">

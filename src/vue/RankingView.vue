@@ -1,41 +1,41 @@
 <style lang="stylus">
-    .ranking-view
-        &.placeholder
-            padding-bottom: 100px
-        .banner
-            position: relative
-            line-height: 0
-            img
-                width: 100%
-                height: 250px
-            .date
-                position: absolute
-                bottom: 36px
-                left: 50%
-                transform: translateX(-50%)
-        .tabs
-            height: 100px
-            > div
-                line-height: 40px
-                white-space: nowrap
-                &.active
-                    color: #cc3f4f
-            &.default > div:first-child
+.ranking-view
+    &.placeholder
+        padding-bottom: 100px
+    .banner
+        position: relative
+        line-height: 0
+        img
+            width: 100%
+            height: 250px
+        .date
+            position: absolute
+            bottom: 36px
+            left: 50%
+            transform: translateX(-50%)
+    .tabs
+        height: 100px
+        > div
+            line-height: 40px
+            white-space: nowrap
+            &.active
                 color: #cc3f4f
-        .items
-            > div
-                height: 150px
-                .order
-                    height: 46px
-                    line-height: 46px
-                    width: 46px
-                    border-radius: 6px
-                    margin: 0 32px
-                    padding-top: 2px
-                .info
-                    margin-left: 32px
-                    .jade
-                        margin-right: 36px
+        &.default > div:first-child
+            color: #cc3f4f
+    .items
+        > div
+            height: 150px
+            .order
+                height: 46px
+                line-height: 46px
+                width: 46px
+                border-radius: 6px
+                margin: 0 32px
+                padding-top: 2px
+            .info
+                margin-left: 32px
+                .jade
+                    margin-right: 36px
 </style>
 <template lang="jade">
 .ranking-view(:class="{'placeholder': env.isShare}")
