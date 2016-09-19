@@ -1,32 +1,32 @@
 export default {
-    '/evaluation/:id/:result': {
+    '/evaluation/:id': {
         name: 'evaluation',
         title: '鉴宝详情',
         native: v => v >= 1.1,
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('EvaluationView.vue'));
-            }, 'evaluation');
+                resolve(require('EvaluationView.vue'))
+            }, 'evaluation')
         }
     },
-    '/ranking/:tab': {
-        name: 'ranking',
+    '/top-master': {
+        name: 'top-master',
         title: '鉴宝师排行',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('RankingView.vue'));
-            }, 'evaluation');
+                resolve(require('TopMasterView.vue'))
+            })
         }
     },
 
     '/story/:id': {
         name: 'story',
-        title: '帖子详情', // 标题为空，减缓数据加载后，标题变化的差体验
+        title: '帖子详情',
         native: v => v >= 1.6,
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('StoryView.vue'));
-            }, 'story');
+                resolve(require('StoryView.vue'))
+            }, 'story')
         }
     },
 
@@ -35,8 +35,8 @@ export default {
         name: 'activity',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ActivityView.vue'));
-            }, 'activity');
+                resolve(require('ActivityView.vue'))
+            }, 'activity')
         }
     },
 
@@ -45,18 +45,18 @@ export default {
         title: '商品详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('JadeView.vue'));
-            }, 'mall');
+                resolve(require('JadeView.vue'))
+            }, 'mall')
         }
     },
 
     '/purchases': {
         name: 'purchases',
-        title: '求购比价',
+        title: '求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'));
-            }, 'purchase');
+                resolve(require('PurchasesView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -65,8 +65,8 @@ export default {
         title: '求购详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchaseView.vue'));
-            }, 'purchase');
+                resolve(require('PurchaseView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -75,8 +75,8 @@ export default {
         title: '商户专区',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('BZoneView.vue'));
-            }, 'bzone');
+                resolve(require('BZoneView.vue'))
+            }, 'bzone')
         }
     },
 
@@ -85,8 +85,8 @@ export default {
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MastersView.vue'));
-            }, 'master');
+                resolve(require('MastersView.vue'))
+            }, 'master')
         }
     },
 
@@ -95,8 +95,8 @@ export default {
         title: '求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'));
-            }, 'purchase');
+                resolve(require('PurchasesView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -105,8 +105,8 @@ export default {
         title: '求购详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchaseView.vue'));
-            }, 'purchase');
+                resolve(require('PurchaseView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -115,8 +115,8 @@ export default {
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MastersView.vue'));
-            }, 'master');
+                resolve(require('MastersView.vue'))
+            }, 'master')
         }
     },
 
@@ -125,8 +125,8 @@ export default {
         title: '求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'));
-            }, 'purchase');
+                resolve(require('PurchasesView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -135,8 +135,8 @@ export default {
         title: '求购详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchaseView.vue'));
-            }, 'purchase');
+                resolve(require('PurchaseView.vue'))
+            }, 'purchase')
         }
     },
 
@@ -145,8 +145,8 @@ export default {
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MastersView.vue'));
-            }, 'master');
+                resolve(require('MastersView.vue'))
+            }, 'master')
         }
     },
 
@@ -155,8 +155,8 @@ export default {
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MasterView.vue'));
-            }, 'master');
+                resolve(require('MasterView.vue'))
+            }, 'master')
         }
     },
 
@@ -165,8 +165,8 @@ export default {
         title: '赞',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UserLikeView.vue'));
-            }, 'profile');
+                resolve(require('UserLikeView.vue'))
+            }, 'profile')
         }
     },
     '/user/:id/following': {
@@ -174,8 +174,8 @@ export default {
         title: '关注的人',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UserFollowingView.vue'));
-            }, 'profile');
+                resolve(require('UserFollowingView.vue'))
+            }, 'profile')
         }
     },
     '/user/:id/follower': {
@@ -183,8 +183,8 @@ export default {
         title: '粉丝',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UserFollowerView.vue'));
-            }, 'profile');
+                resolve(require('UserFollowerView.vue'))
+            }, 'profile')
         }
     },
 
@@ -193,8 +193,8 @@ export default {
         title: '我的求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UserPurchaseView.vue'));
-            }, 'profile');
+                resolve(require('UserPurchaseView.vue'))
+            }, 'profile')
         }
     },
 
@@ -204,8 +204,8 @@ export default {
         native: v => v >= 1.3 && {name: 'profile'},
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UserView.vue'));
-            }, 'profile');
+                resolve(require('UserView.vue'))
+            }, 'profile')
         }
     },
 
@@ -215,8 +215,8 @@ export default {
         title: '',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ShopView.vue'));
-            }, 'shop');
+                resolve(require('ShopView.vue'))
+            }, 'shop')
         }
     },
 
@@ -225,18 +225,18 @@ export default {
         title: '评价管理',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ShopCommentView.vue'));
-            }, 'shop');
+                resolve(require('ShopCommentView.vue'))
+            }, 'shop')
         }
     },
 
-    '/:id/works': {
+    '/:id/works': { // 仅分享
         name: 'works',
         title: '作品展示',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WorksView.vue'));
-            }, 'profile');
+                resolve(require('WorksView.vue'))
+            }, 'profile')
         }
     },
     '/work/:id': {
@@ -245,8 +245,8 @@ export default {
         native: v => v >= 2.0 && {name: 'work'},
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WorkView.vue'));
-            }, 'profile');
+                resolve(require('WorkView.vue'))
+            }, 'profile')
         }
     },
 
@@ -255,8 +255,8 @@ export default {
         title: '申请鉴定师权限',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ApplyMasterView.vue'));
-            }, 'apply');
+                resolve(require('ApplyMasterView.vue'))
+            }, 'apply')
         }
     },
 
@@ -265,8 +265,8 @@ export default {
         title: '物流追踪',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderTraceView.vue'));
-            }, 'mall');
+                resolve(require('OrderTraceView.vue'))
+            }, 'mall')
         }
     },
 
@@ -275,8 +275,8 @@ export default {
         title: '修改订单价格',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('OrderPriceView.vue'));
-            }, 'mall');
+                resolve(require('OrderPriceView.vue'))
+            }, 'mall')
         }
     },
 
@@ -285,8 +285,8 @@ export default {
         title: '大额支付',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PayOfflineView.vue'));
-            }, 'mall');
+                resolve(require('PayOfflineView.vue'))
+            }, 'mall')
         }
     },
 
@@ -295,8 +295,8 @@ export default {
         title: '我的钱包',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WalletView.vue'));
-            }, 'wallet');
+                resolve(require('WalletView.vue'))
+            }, 'wallet')
         }
     },
     '/wallet/withdraw': {
@@ -304,8 +304,8 @@ export default {
         title: '提现',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WithdrawView.vue'));
-            }, 'wallet');
+                resolve(require('WithdrawView.vue'))
+            }, 'wallet')
         }
     },
     '/wallet/:id/withdraw/result': {
@@ -313,8 +313,8 @@ export default {
         title: '提现',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WithdrawResultView.vue'));
-            }, 'wallet');
+                resolve(require('WithdrawResultView.vue'))
+            }, 'wallet')
         }
     },
     '/wallet/:tab': {
@@ -322,8 +322,8 @@ export default {
         title: '明细',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WalletDetailView.vue'));
-            }, 'wallet');
+                resolve(require('WalletDetailView.vue'))
+            }, 'wallet')
         }
     },
 
@@ -332,8 +332,8 @@ export default {
         title: '帮助',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpView.vue'));
-            }, 'help');
+                resolve(require('MallHelpView.vue'))
+            }, 'help')
         }
     },
     '/help/mall/terms': {
@@ -341,26 +341,26 @@ export default {
         title: '美玉商城入驻协议',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpTermsView.vue'));
-            }, 'help');
+                resolve(require('MallHelpTermsView.vue'))
+            }, 'help')
         }
     },
     '/help/mall/:category': {
         name: 'mall-help-category',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpCategoryView.vue'));
-            }, 'help');
+                resolve(require('MallHelpCategoryView.vue'))
+            }, 'help')
         }
     },
 
     '/help/purchase': {
         name: 'purchase-help',
-        title: '求购比价',
+        title: '求购竞标',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('PurchaseHelpView.vue'));
-            }, 'help');
+                resolve(require('PurchaseHelpView.vue'))
+            }, 'help')
         }
     },
 
@@ -369,8 +369,8 @@ export default {
         title: '什么是商户专区',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('BZoneHelpView.vue'));
-            }, 'help');
+                resolve(require('BZoneHelpView.vue'))
+            }, 'help')
         }
     },
 
@@ -379,8 +379,8 @@ export default {
         title: '等级说明',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('LevelHelpView.vue'));
-            }, 'help');
+                resolve(require('LevelHelpView.vue'))
+            }, 'help')
         }
     },
 
@@ -389,8 +389,8 @@ export default {
         title: '商品评价说明',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('CommentHelpView.vue'));
-            }, 'help');
+                resolve(require('CommentHelpView.vue'))
+            }, 'help')
         }
     },
 
@@ -399,29 +399,17 @@ export default {
         title: '全部评论',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('CommentsView.vue'));
-            }, 'comments');
+                resolve(require('CommentsView.vue'))
+            }, 'comments')
         }
     },
 
-    '/tag/:id/:name': {
-        name: 'tag',
-        native: v => v >= 1.4 && {name: 'tag'},
-        title: '标签信息流',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('TagView.vue'));
-            }, 'tag');
-        }
-    },
-
-    '/recommend/follower': {
-        name: 'recommend-follower',
+    '/follow-suggestion': {
         title: '推荐关注',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('RecommendFollowerView.vue'));
-            }, 'recommend');
+                resolve(require('FollowSuggestionView.vue'))
+            }, 'recommend')
         }
     },
 
@@ -430,16 +418,16 @@ export default {
         title: '关于美玉秀秀',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('AboutView.vue'));
-            }, 'other');
+                resolve(require('AboutView.vue'))
+            }, 'other')
         }
     },
     '/update': {
         name: 'update',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('UpdateView.vue'));
-            }, 'other');
+                resolve(require('UpdateView.vue'))
+            }, 'other')
         }
     },
     '/404': {
@@ -447,8 +435,8 @@ export default {
         name: '404',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('NotFoundView.vue'));
-            }, 'other');
+                resolve(require('NotFoundView.vue'))
+            }, 'other')
         }
     },
     'api': {
@@ -456,23 +444,23 @@ export default {
         name: 'api',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ApiView.vue'));
-            }, 'other');
+                resolve(require('ApiView.vue'))
+            }, 'other')
         }
     },
     '/': {
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('IndexView.vue'));
-            }, 'browser');
+                resolve(require('IndexView.vue'))
+            }, 'browser')
         }
     },
     '*': {
         title: '找不到北',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('NotFoundView.vue'));
-            }, 'other');
+                resolve(require('NotFoundView.vue'))
+            }, 'other')
         }
     }
-};
+}

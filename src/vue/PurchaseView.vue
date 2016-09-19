@@ -57,81 +57,6 @@
             .win-count::before
                 content: '\2022'
                 margin: 0 12px
-        .item
-            margin-bottom: 40px
-            padding-bottom: 28px
-            position: relative
-            .mark
-                position: absolute
-                top: 0
-                right: 0
-                width: 184px
-                height: 144px
-                z-index: 9
-            &:last-child
-                margin-bottom: 0
-            header
-                padding: 0 24px
-                height: 98px
-                .level-comp
-                    display: block
-                    img
-                        height: 40px
-            .logo
-                height: 50px
-                width: 50px
-                border-radius: 4px
-                margin-right: 20px
-                background-size: cover
-            main
-                padding: 0 24px
-                .img
-                    height: 670px
-                    width: 670px
-                    position: relative
-                    .sale-mark
-                        position: absolute
-                        left: 0
-                        top: 0
-                        display: inline-block
-                        height: 64px
-                        line-height: 64px
-                        padding: 0 40px
-                        background-color: rgba(159, 42, 240, .8)
-                    .price-mark
-                        position: absolute
-                        bottom: 0
-                        right: 0
-                        height: 56px
-                        background-color: rgba(0, 0, 0, .6)
-                        z-index: 9
-                .desc
-                    padding: 24px 0
-            footer
-                height: 88px
-                padding: 0 24px
-                .btn-change
-                    line-height: 44px
-                    border-radius: 6px
-                .price-tag.gray
-                    text-decoration: line-through
-                    font-size: 30px
-                    margin-right: 20px
-            .operations
-                padding: 28px 24px
-                .btn
-                    border-radius: 6px
-                    width: 140px
-                    line-height: 60px
-                    text-align: center
-                    &:first-child
-                        width: 120px
-                    + .btn
-                        margin-left: 20px
-            .reason
-                margin: 0 24px
-                padding: 20px 24px
-                border-radius: 6px
 </style>
 <template lang="jade">
 .purchase-view.bg(:class="{'share': env.isShare}")
@@ -160,47 +85,14 @@
         header.center.fz-26.gray
             span 竞标作品 {{purchase.total_count}}
             span.win-count(v-if="purchase.win_count") 中标作品 {{purchase.win_count}}
-        .item.bg-white(v-for="bid in items", v-link="{name: 'jade', params: {id: bid.product.id}}")
-            img.mark(v-if="bid.status==='win'", :src="'purchase/winned.png' | qn")
-            header.flex
-                .logo(v-bg="bid.shop.logo")
-                .fz-26.gray {{bid.shop.shop_name}}
-                lv.flex-1.pdl-10.pdb-10(:lv=5)
-                .win-count.fz-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
-            main
-                .img(v-bg="bid.product.first_picture")
-                    .sale-mark.fz-30.white(v-if="bid.product.is_tob") 清仓
-                    price-tag.price-mark.fz-26.white.pdh-14(label="原价", :cents="bid.product.price")
-                .desc.fz-30.user-txt
-                    span {{bid.description}}
-            footer.flex
-                template(v-if="self && self.id===bid.bidder_id")
-                    price-tag.fz-36.red(label="竞标价", :cents="bid.ceil_price")
-                    .btn-change.fz-26.bg-red.white.mgl-20.pdh-24(@click.stop="setPrice(bid)") 改价
-                template(v-else)
-                    price-tag.fz-36(label="竞标价", :cents="bid.origin_ceil_price", :class="{'red': !bid.ceil_price, 'gray': bid.ceil_price}")
-                    price-tag.fz-36.red(v-if="bid.ceil_price", label="新竞标价", :cents="bid.ceil_price")
-                .status.fz-30.flex-1.txt-right(v-if="!isSelf && bid_status[bid.like_status]", :class="{'red': bid.like_status==='reject', 'yellow': bid.like_status==='like'}") 已{{bid_status[bid.like_status]}}
-            .operations.bdt.flex(v-if="isSelf")
-                .btn.fz-26.bd-gray(@click.stop="chat(bid)") 私聊
-                template(v-if="isOpen && isSelf && bid.status!=='win'")
-                    .flex-1 &nbsp;
-                    template(v-if="bid.like_status==='normal'")
-                        .btn.fz-26.bd-gray(@click.stop="setReason(bid, 'like')")
-                            i.icon-success.yellow
-                            span 备选
-                        .btn.fz-26.bd-gray(@click.stop="setReason(bid, 'reject')")
-                            span.red ✕
-                            span.inline-block.pdl-10 淘汰
-                    .btn.fz-26.bd.gray(v-else) 已{{bid_status[bid.like_status]}}
-            .reason.fz-26.bg.gray.user-txt(v-if="bid.status!=='win' && bid.reason") {{bid_status[bid.like_status]}}原因：{{bid.reason}}
+        bid-item(:bid="item", :status="purchase.status", :is-self="isSelf", v-for="item in items")
     empty(v-if="paid && !purchase.total_count", :title="emptyTip")
 </template>
 <script>
 import Q from 'q'
 import like from 'component/Like.vue'
-import lv from 'component/Lv.vue'
 import countdown from 'component/Countdown.vue'
+import BidItem from 'component/BidItem.vue'
 import paging from 'paging'
 import shareable from 'shareable'
 export default {
@@ -208,19 +100,14 @@ export default {
     mixins: [paging, shareable],
     components: {
         like,
-        lv,
-        countdown
+        countdown,
+        BidItem
     },
 
     data() {
         return {
             purchase: {
                 owner: {}
-            },
-            bid_status: {
-                'like': '备选',
-                'reject': '淘汰',
-                'normal': ''
             }
         }
     },
@@ -274,51 +161,6 @@ export default {
         }
     },
     methods: {
-        setPrice(bid) {
-            this.$root.popup = {
-                bid,
-                handler: 'setPrice',
-                cb: this._changePrice
-            }
-        },
-
-        _changePrice(bid, ceil_price) {
-            console.log('cb for changePrice', ceil_price, this)
-            this.$put('mall/bid/' + bid.id, {ceil_price})
-                .then(resp => {
-                    bid.ceil_price = ceil_price
-                    this.action('toast', {success: '1', text: '改价成功!'})
-                })
-        },
-
-        setReason(bid, status) {
-            this.$root.popup = {
-                handler: 'keyboard',
-                placeholder: status==='like' ? '请输入备选理由' : '请输入淘汰理由',
-                limit: 32,
-                cb: reason => {
-                    this._changeLikeStatus(bid, status, reason)
-                }
-            }
-        },
-
-        _changeLikeStatus(bid, like_status, reason) {
-            this.$put(`mall/bid/${bid.id}/like_status`, {like_status, reason})
-                .then(() => {
-                    bid.like_status = like_status
-                    bid.reason = reason
-                    this.action('toast', {success: '1', text: '发送成功'})
-                })
-        },
-
-        chat(bid) {
-            if(this.env.isApp) {
-                this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
-            } else {
-                window.location.href = this.config.download
-            }
-        },
-
         addBid() {
             if(this.env.isShare) {
                 window.location.href = this.config.download
@@ -333,7 +175,7 @@ export default {
                     const userInfo = this.purchase.conf.user_conf
                     if(!userInfo.add_product) {
                         this.action('confirm', {
-                            text: '申请开通店铺才能参入竞标，添加官网微信客服申请：jmyb66',
+                            text: '申请开通店铺才能参与竞标，添加官方微信客服申请：jmyb66',
                             labels: ['我知道了']
                         })
                     } else if(!userInfo.shop_remain_bids) {

@@ -31,10 +31,10 @@
         border-radius: 8px
         font-size: 30px
         width: 540px
-        height: 80px
+        line-height: 80px
         border: none
         resize: none
-        padding: 1em
+        padding: 0 30px
         margin: 1em 40px 0
     .warn
         padding: 14px 0 14px 2.5em

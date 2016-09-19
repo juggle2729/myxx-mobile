@@ -1,5 +1,5 @@
 <style lang="stylus">
-.recommend-follwer-view
+.follow-suggestion-view
     width: 100%
     padding-top: 40px
     .tips
@@ -27,7 +27,7 @@
         color: #888888
 </style>
 <template lang="jade">
-.recommend-follwer-view.bg
+.follow-suggestion-view.bg
     .tips.fz-30.red.bg(v-if='!isLogin', @click="action('login')")
         span 登录查看更多关注人的内容
     .item.flex.bdb.bg-white(v-for='item in items')
@@ -46,7 +46,7 @@
 import paging from 'paging'
 import Follow from './component/Follow.vue'
 export default {
-    name: 'RecommendFollowerView',
+    name: 'follow-suggestion-view',
     mixins: [paging],
     components: {
         Follow

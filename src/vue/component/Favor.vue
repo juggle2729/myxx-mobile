@@ -22,11 +22,6 @@ export default {
 
     methods: {
         fav() {
-            const api = 'users/favs'
-            const data = {
-                doc_type: 'pd',
-                doc_id: this.id
-            }
             this[this.active ? '$put' : '$post']('users/favs', {doc_type: this.type, doc_id: this.id})
                 .then(() => {
                     this.active = !this.active

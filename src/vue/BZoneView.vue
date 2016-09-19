@@ -54,8 +54,8 @@ export default {
     data() {
         return {
             firstVisit: false,
-            tab: 'purchases',
-            tabs: {purchases: '调货', products: '清仓'}
+            tab: 'products',
+            tabs: {products: '清仓', purchases: '调货'}
         }
     },
 

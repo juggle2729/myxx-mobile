@@ -97,13 +97,7 @@ export default {
                     data.icon = entry.photo;
                     data.hasDownloadLink = false;
                     break;
-                case 'lesson':
-                    data.title = '大师讲知识：' + entry.title;
-                    data.desc = '我在美玉秀秀讲了这堂课，听听你的想法!';
-                    data.icon = entry.user.photo;
-                    data.text = '查看更多和田玉知识';
-                    break;
-                case 'ranking':
+                case 'top-master':
                     data.title = '【专业】鉴宝大神排行榜，你看服不服？';
                     data.icon = 'https://o0x80w5li.qnssl.com/ranking_share.jpg';
                     data.desc = '和田玉界琅琊榜不慎泄露';

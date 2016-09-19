@@ -1,7 +1,7 @@
 <style lang="stylus">
 .works-view
     padding-bottom: 112px
-    .works
+    .work
         padding: 20px 20px 0
         .media
             height: 468px
@@ -19,7 +19,7 @@
 </style>
 <template lang="jade">
 .works-view.bg
-    .works.bg-white(v-for='item in items', v-link="{name: 'work', params: {id: item.id}}")
+    .work.bg-white(v-for='item in items', v-link="{name: 'work', params: {id: item.id}}")
         .media.img(v-bg='item.picture')
         .desc.flex
             .fz-26.gray.flex-1.line-clamp {{item.title}}
@@ -27,6 +27,7 @@
                 like(:target='item.id', :type='90', :active='item.is_liked', :count='item.like_count')
                 comment(:count='item.comment_count')
     .hr
+    empty(v-if="items.isEmpty" title="暂无作品")
 </template>
 <script>
 import paging from 'paging'

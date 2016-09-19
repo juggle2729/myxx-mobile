@@ -86,12 +86,13 @@ router.alias({
     '/:id/apply/shop': '/update',
     '/:id/apply/site': '/update',
     '/user/:id': '/user/:id/none',
-    '/evaluation/:id': '/evaluation/:id/none',
-    '/result/:id/:result': '/evaluation/:id/:result',
+    '/result/:id/:result': '/evaluation/:id',
     '/auctions/:id': 'user/:id/auctions',
     '/jade/:id': '/jade/:id/none',
     '/instructions': '/help/mall',
-    '/instruction/:category': '/help/mall/:category'
+    '/instruction/:category': '/help/mall/:category',
+    '/recommend/follower': 'follow-suggestion',
+    '/ranking/weekly': '/top-master'
 });
 router.map(routes);
 router.start(require('App.vue'), '#app');

@@ -20,7 +20,7 @@ export default {
 
     ready() {
         this.action('updateTitle', {
-            text: this.$route.query.subject==='guarantee' ? '什么是保证金' : '求购比价'
+            text: this.$route.query.subject==='guarantee' ? '什么是保证金' : '求购竞标'
         })
     }
 }

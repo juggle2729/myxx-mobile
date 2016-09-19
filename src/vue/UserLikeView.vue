@@ -39,9 +39,9 @@
     div(v-for='item in items')
         .hr-20
         .item.bg-white
-            .title.fz-30.gray 赞了一个{{item.type.name}}
+            .title.fz-30.gray 赞了一个{{item.type && item.type.name || '内容'}}
             .card.flex.fz-30(v-if='item.isEmpty') 该内容已被删除
-            .card.flex(v-else='', v-link='{name: item.type.route, params: item.params}')
+            .card.flex(v-else, v-link='{name: item.type.route, params: item.params}')
                 .flex-1
                     .user.flex.mgb
                         avatar(:user='item.user', :size='50')
@@ -69,6 +69,7 @@ export default {
                                 isEmpty: _.isEmpty(entry),
                                 type: _.clone(_.find(this.config.types, {'id': type}))
                             }
+                        card.isEmpty = !card.type || card.isEmpty
                         if(!card.isEmpty) {
                             card.params = {id: card.post_id || card.id || card.target.id}
                             switch(type) {
@@ -90,10 +91,6 @@ export default {
                                 case 40:
                                     card.description = entry.name + ' ' + _.get(entry, 'moral.name', '')
                                     card.preview = {img: entry.imgs[0]}
-                                    break
-                                case 60:
-                                    card.description = entry.title
-                                    card.preview = {video: entry.video}
                                     break
                                 case 70:
                                     card.type.route = _.find(this.config.types, {id: entry.target.type}).route

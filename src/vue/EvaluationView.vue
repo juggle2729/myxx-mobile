@@ -175,9 +175,8 @@ export default {
         data({to}) {
             return this.$get(`sns/jianbao/${to.params.id}`)
                     .then(evaluation => {
-                        if(to.params.result !== 'none' && evaluation.results.length) {
-                            evaluation.results = [].concat(_.find(evaluation.results, {id: +to.params.result}) || evaluation.results)
-                        }
+                        const result = _.has(to, 'query.result') && _.find(evaluation.results, {id: +to.query.result})
+                        result && (evaluation.results = [result])
                         this.setShareData(evaluation, true)
                         this.evaluation = evaluation
                     })

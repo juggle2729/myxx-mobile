@@ -1,7 +1,5 @@
 <style lang="stylus">
 .price-tag
-    .label
-        font-size: .9em
     .price::before
         content: '￥'
 </style>

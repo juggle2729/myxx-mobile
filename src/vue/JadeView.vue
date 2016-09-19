@@ -163,7 +163,7 @@
         .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
         div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
     .bg.tab-content
-        component(:is='view', keep-alive='', transition-mode='out-in', :jade='jade')
+        component(:is='view', keep-alive, :jade='jade')
     .bg.placeholder
     .float-box.flex.fixed.fz-30.bg-white
         .bdt.flex-1.flex
@@ -231,7 +231,7 @@ export default {
         canReuse({from, to}) {
             return from.name === to.name && from.params.id === to.params.id
         },
-        data({from, to}) {
+        data({from, to, next}) {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$get('mall/products/'+ this.$route.params.id)
                     .then(jade => {
@@ -247,6 +247,7 @@ export default {
             } else {
                 this.isDefaultView = false
                 this.view = to.params.tab
+                next()
             }
         }
     },

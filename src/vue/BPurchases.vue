@@ -29,7 +29,6 @@
     .purchase-btn.bg-red(@click="purchase()")
         .white.fz-30 我要调货
         .fz-22 (只展示在商户专区)
-</div>
 </template>
 <script>
 import Q from 'q'
