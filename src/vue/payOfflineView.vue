@@ -70,7 +70,7 @@
         },
         route: {
             data({to}) {
-                return this.$get(`mall/order/${to.params.id}`).then((order) => {
+                return this.$fetch(`mall/order/${to.params.id}`).then((order) => {
                     this.order = order
                 })
             }

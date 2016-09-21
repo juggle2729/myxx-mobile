@@ -76,7 +76,7 @@ export default {
         data({from, to, next}) {
             this.tab = this.tabs[to.query.tab] || this.tabs.pro
             if(from.name !== to.name) {
-                return this.$get('mall/orders/comments')
+                return this.$fetch('mall/orders/comments')
                     .then(({comments}) => {
                         comments.forEach(c => {
                             if(c.choice === 'good') {

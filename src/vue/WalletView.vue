@@ -61,7 +61,7 @@ export default {
     },
     route: {
         data() {
-            return this.$get('balance/latest').then((balance) => {
+            return this.$fetch('balance/latest').then((balance) => {
                 this.action('action', {label: '明细'}).then(() => {
                     this.$router.go({name: 'detail', params: {tab: 'expects'}})
                 })

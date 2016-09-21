@@ -100,13 +100,13 @@
             span 写评论
         share.bdl
     .hr
-    comments(:type='90', :id='work.id', :display-input='false', v-ref:comment='')
+    comment-list(:type='90', :id='work.id', v-ref:comment='')
 </template>
 <script>
 import follow from 'component/Follow.vue'
 import like from 'component/Like.vue'
 import share from 'component/Share.vue'
-import comments from 'component/Comments.vue'
+import CommentList from 'component/CommentList.vue'
 import shareable from 'shareable'
 export default {
     name: 'WorkView',
@@ -115,7 +115,7 @@ export default {
         follow,
         like,
         share,
-        comments
+        CommentList
     },
     computed: {
         cover() {
@@ -132,7 +132,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`sns/works/${to.params.id}`).then((work) => {
+            return this.$fetch(`sns/works/${to.params.id}`).then((work) => {
                 this.work = work
                 this.setShareData({name: this.work.user.nickname, title: this.work.title, logo: this.cover}, true)
             })

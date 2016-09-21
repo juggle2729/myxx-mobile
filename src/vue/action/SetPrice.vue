@@ -55,7 +55,7 @@
 <template>
 <div class="set-price">
     <div class="container bg">
-        <div class="title center">当前竞标价{{params.bid.ceil_price | price}}</div>
+        <div class="title center">当前竞标价{{params.bid.ceil_price || params.bid.origin_ceil_price | price}}</div>
         <input class="red" type="number" v-model="price" placeholder="请输入修改后的价格" />
         <div class="warn red fz-24"><i v-show="warn" class="icon icon-warn white bg-red mgr-10"></i><span>{{warn}}</span></div>
         <div class="btns bdt"><div @click="close">取消</div><div @click="submit" class="bdl red">确认</div></div>
@@ -80,7 +80,7 @@ export default {
 
     methods: {
         submit() {
-            const [newPrice, oldPrice] = [this.price*100, this.params.bid.ceil_price]
+            const [newPrice, oldPrice] = [this.price*100, this.params.bid.ceil_price || this.params.bid.origin_ceil_price]
             if(!/^\d+$/.test(this.price)) {
                 this.warn = '请输入数字'
             } else if(oldPrice && newPrice >= oldPrice) {

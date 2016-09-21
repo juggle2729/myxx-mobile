@@ -76,7 +76,7 @@ export default {
     },
     route: {
         data() {
-            return this.$get('balance/latest').then((data) => {
+            return this.$fetch('balance/latest').then((data) => {
                 this.balance = data.current_amount
                 this.action('action', {label: '常见问题'}).then(() => {
                     this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})

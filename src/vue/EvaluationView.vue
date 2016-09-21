@@ -115,9 +115,9 @@
             span 写评论
         share.bdl
     .hr-20
-    comments(:type="10", :id="evaluation.post_id", :display-input="false", v-ref:comment)
-    product-recommend(:id="evaluation.post_id")
-    recommend(:data="items", name="相关推荐")
+    comment-list(:type="10", :id="evaluation.post_id", v-ref:comment)
+    product-suggestion(:id="evaluation.post_id")
+    general-suggestion
     .footer.flex.bdt.fz-30.gray(v-if="!env.isShare")
         .comment.bdl(@click="$refs.comment.comment()")
             i.icon-comment-solid
@@ -125,11 +125,11 @@
         share.bdl
 </template>
 <script>
-import Tags from './component/Tags.vue'
-import Recommend from './component/Recommend.vue'
-import ProductRecommend from './component/ProductRecommend.vue'
-import Comments from 'component/Comments.vue'
-import Share from './component/Share.vue'
+import Tags from 'component/Tags.vue'
+import GeneralSuggestion from 'component/GeneralSuggestion.vue'
+import ProductSuggestion from 'component/ProductSuggestion.vue'
+import CommentList from 'component/CommentList.vue'
+import Share from 'component/Share.vue'
 import paging from 'paging'
 import shareable from 'shareable'
 const Opts = {
@@ -138,11 +138,11 @@ const Opts = {
 }
 export default {
     name: 'EvaluationView',
-    mixins: [shareable, paging],
+    mixins: [shareable],
     components: {
-        Comments,
-        Recommend,
-        ProductRecommend,
+        CommentList,
+        GeneralSuggestion,
+        ProductSuggestion,
         Share,
         Tags
     },
@@ -160,20 +160,10 @@ export default {
             opts: Opts
         }
     },
-    computed: {
-        paging() {
-            return {
-                path: 'dc/rd/list',
-                params: {
-                    obj_id: this.$route.params.id,
-                    biz_type: 'jb'
-                }
-            }
-        }
-    },
+
     route: {
         data({to}) {
-            return this.$get(`sns/jianbao/${to.params.id}`)
+            return this.$fetch(`sns/jianbao/${to.params.id}`)
                     .then(evaluation => {
                         const result = _.has(to, 'query.result') && _.find(evaluation.results, {id: +to.query.result})
                         result && (evaluation.results = [result])

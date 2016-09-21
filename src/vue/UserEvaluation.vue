@@ -16,7 +16,7 @@
 </template>
 <script>
 import paging from 'paging'
-import Card from 'component/Card.vue'
+import Card from 'component/item/Card.vue'
 export default {
     name: 'UserEvaluation',
     mixins: [paging],

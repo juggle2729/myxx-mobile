@@ -1,6 +1,8 @@
 <style lang="stylus">
 @import '~style/myxx'
 #app
+    .share-bottom-placeholder
+        height: 112px
     .share-bottom
         z-index: 990
         position: fixed
@@ -37,16 +39,18 @@
 <template lang="jade">
 div(:class="{'loading': loading}")
     router-view
-    .share-bottom.flex(v-if="env.isShare && shareData.hasDownloadLink", @click="download()")
-        .logo.mgr
-            img(:src="'logo.png' | qn", alt="美玉秀秀")
-        .flex-1.white
-            .flex
-                .name.fz-30.bold 美玉秀秀
-                .fz-22.dot •
-                .slogan.fz-22 大师在线视频鉴宝
-            .fz-22.red.mgt 10万玉友的选择
-        .download-btn.fz-30.white.bg-red 免费下载
+    template(v-if="env.isShare && shareData.hasDownloadLink")
+        .share-bottom.flex(@click="download()")
+            .logo.mgr
+                img(:src="'logo.png' | qn", alt="美玉秀秀")
+            .flex-1.white
+                .flex
+                    .name.fz-30.bold 美玉秀秀
+                    .fz-22.dot •
+                    .slogan.fz-22 大师在线视频鉴宝
+                .fz-22.red.mgt 10万玉友的选择
+            .download-btn.fz-30.white.bg-red 免费下载
+        .share-bottom-placeholder
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
         .fz-34(v-else, @click="login") 👤

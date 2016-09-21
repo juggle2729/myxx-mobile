@@ -30,6 +30,16 @@ export default {
         }
     },
 
+    '/post/:id': {
+        name: 'post',
+        title: '图文详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PostView.vue'))
+            }, 'Post')
+        }
+    },
+
     // 活动标签信息流
     '/activity/:id': { //该活动的id
         name: 'activity',

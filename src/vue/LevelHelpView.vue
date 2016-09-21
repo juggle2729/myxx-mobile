@@ -120,7 +120,7 @@ export default {
     route: {
         data({next, to}) {
             if(this.isUserView) {
-                this.$get(`mall/shop/${to.params.id}/profile`)
+                this.$fetch(`mall/shop/${to.params.id}/profile`)
                     .then(shop => {
                         this.lv = shop.level
                         this.point = shop.point

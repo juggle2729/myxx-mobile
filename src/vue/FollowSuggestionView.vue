@@ -1,77 +1,26 @@
 <style lang="stylus">
 .follow-suggestion-view
-    width: 100%
     padding-top: 40px
     .tips
-        width: 100%
-        text-align: center
         margin: 0 auto 60px
-        height: 100px
         line-height: 100px
         > span
             border-radius: 50px
-            border: 1px solid #cc3f4f
             padding: 30px 50px
-    .item
-        padding: 32px
-        &:last-child
-            background-size: 0
-        .flex-1
-            margin-left: 20px
-        .name
-            margin: 2px 0 12px
-        .content
-            margin-top: 20px
-            line-height: 36px
-    .empty-component
-        color: #888888
 </style>
 <template lang="jade">
 .follow-suggestion-view.bg
-    .tips.fz-30.red.bg(v-if='!isLogin', @click="action('login')")
-        span 登录查看更多关注人的内容
-    .item.flex.bdb.bg-white(v-for='item in items')
-        avatar(:user='item', :size='108')
-        .flex-1
-            div
-                .name.fz-30 {{item.name}}
-                .fz-26.light 粉丝数&nbsp&nbsp{{item.fans_count}}
-            .content.fz-26.gray
-                | {{item.desc}}
-        follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
-    partial(name='load-more', v-if='items.hasMore')
-    empty(v-if='items.isEmpty')
+    .tips.fz-30.red.bg.center(v-if='!self', @click="action('login')")
+        span.bd-red 登录查看更多关注人的内容
+    list
 </template>
 <script>
-import paging from 'paging'
-import Follow from './component/Follow.vue'
+import List from 'component/List.vue'
 export default {
     name: 'follow-suggestion-view',
-    mixins: [paging],
+
     components: {
-        Follow
-    },
-    data() {
-        return {
-            isLogin: true
-        }
-    },
-    computed: {
-        paging() {
-            return {
-                path: 'users/suggest_follows',
-                params: {
-                    limit: 20
-                },
-                transform(items) {
-                    return _.map(items, item => _.merge(item, {is_followed: false}))
-                }
-            }
-        }
-    },
-    ready() {
-        this.action('user')
-            .then(user => this.isLogin = _.isObject(user))
+        list: new List('FollowSuggestion', {path: 'users/suggest_follows'})
     }
 }
 </script>

@@ -59,13 +59,13 @@ export default {
     route: {
         data({to, next}) {
             if(to.params.tab === 'expects' && !this.expects) {
-                this.$get('balance/expects').then((data) => {
+                this.$fetch('balance/expects').then((data) => {
                     this.expects = data.entries
                     this.items = this.expects
                     this.isEmpty = !this.items.length
                 })
             } else if(!this.bills) {
-                this.$get('balance/bills').then((data) => {
+                this.$fetch('balance/bills').then((data) => {
                     this.bills = data.entries
                     this.items = this.bills
                     this.isEmpty = !this.items.length

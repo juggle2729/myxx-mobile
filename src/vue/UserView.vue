@@ -120,7 +120,7 @@ export default {
         },
         data({from, to, next}) {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入个人主页
-                this.$get(`users/${to.params.id}/profile`)
+                this.$fetch(`users/${to.params.id}/profile`)
                     .then((user) => {
                         this.user = user
                         this.isDefaultView = ['home', 'story', 'evaluation'].indexOf(to.params.tab) === -1

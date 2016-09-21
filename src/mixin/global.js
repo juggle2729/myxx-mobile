@@ -152,7 +152,7 @@ const mixin = {
             return defer.promise
         },
         // 覆盖了默认的$get，待改进
-        $get(url, data) {
+        $fetch(url, data) {
             return this.$req(url, 'get', data)
         },
         $put(url, data) {

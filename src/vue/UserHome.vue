@@ -68,6 +68,8 @@
                     background-image: none
                     border-bottom: 0
                     padding-bottom: 0
+    .topic .list
+        padding: 0 15px
 </style>
 <template lang="jade">
 .user-home.bg
@@ -116,18 +118,21 @@
                 .fz-30.mgl
                     p {{master.nickname}}
                     p.gray.mgt {{master.title}}
-    recommend(:data='items', name='热门帖子')
+    .hr
+    .topic.bg
+        .header.fz-26.gray.pdh-32
+            span 热门帖子
+        hot-list(path="dc/sns/search", :params="{owner_id: $route.params.id, order_by: '-click_count'}")
 </template>
 <script>
-import paging from 'paging'
-import lv from 'component/Lv.vue'
-import recommend from 'component/Recommend.vue'
+import Lv from 'component/Lv.vue'
+import List from 'component/List.vue'
 export default {
-    name: 'UserHome',
-    mixins: [paging],
+    name: 'user-home',
+
     components: {
-        recommend,
-        lv
+        Lv,
+        HotList: new List('Card')
     },
     data() {
         return {
@@ -139,19 +144,9 @@ export default {
             engravers: []
         }
     },
-    computed: {
-        paging() {
-            return {
-                path: 'dc/sns/search',
-                params: {
-                    owner_id: this.$route.params.id,
-                    order_by: '-click_count'
-                }
-            }
-        }
-    },
+
     activate(done) {
-        return this.$get(`users/${this.$route.params.id}/homepage`).then((data) => {
+        return this.$fetch(`users/${this.$route.params.id}/homepage`).then((data) => {
             this.shop = data.shop
             this.works = data.works
             this.interview = data.interview

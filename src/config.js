@@ -7,7 +7,7 @@ let [api, img, video, download] = ((env='dev') => {
             dev: '//dev.api.meiyuxiuxiu.net',
             test: '//test.api.meiyuxiuxiu.net',
             prod: '//api.meiyuxiuxiu.com',
-            docker: '//192.168.0.150:18004' // docker环境的图片等其他配置同测试环境
+            docker: '//192.168.0.150:18006'
         },
         img: {
             dev: 'http://img.meiyuxiuxiu.net/',
@@ -29,7 +29,7 @@ let [api, img, video, download] = ((env='dev') => {
         }
     };
     return _.map(hosts, env);
-})('test')
+})('docker')
 
 export default {
     api,
@@ -67,16 +67,16 @@ export default {
             id: 90,
             name: '作品',
             route: 'work'
+        }, {
+            id: 100,
+            name: '长图文',
+            route: 'post'
         }
     ],
     tags: {
         product: {
             id: 'pd',
             name: '商品'
-        },
-        lesson: {
-            id: 'oc',
-            name: '公开课'
         },
         evaluation: {
             id: 'jb',

@@ -62,7 +62,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`mall/express`, {
+            return this.$fetch(`mall/express`, {
                 order_no: to.params.id
             }).then((trace) => {
                     return {trace}

@@ -1,7 +1,6 @@
 <style lang='stylus'>
 .index-view
     color: #2196F3
-    counter-reset: link-counter
     li
         padding: .5em 1em
         white-space: nowrap

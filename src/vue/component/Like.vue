@@ -9,7 +9,7 @@
 }
 </style>
 <template>
-<div class="like-component fz-30 gray" :class="{active: active}" @click="like">
+<div class="like-component fz-30 light" :class="{active: active}" @click="like">
     <i class="icon-like"></i><span>{{count || zero}}</span>
 </div>
 </template>

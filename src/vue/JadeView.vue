@@ -233,7 +233,7 @@ export default {
         },
         data({from, to, next}) {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
-                return this.$get('mall/products/'+ this.$route.params.id)
+                return this.$fetch('mall/products/'+ this.$route.params.id)
                     .then(jade => {
                         this.setShareData(jade, true)
                         this.isSelf = (_.get(this, 'self.id') == (jade.owner.id || jade.default_admin.id))

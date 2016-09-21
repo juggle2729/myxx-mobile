@@ -1,14 +1,13 @@
 <style lang="stylus">
 .share-component {
     font-size: 30px
-    color: #888888
     i {
         transform: scale(1.5)
     }
 }
 </style>
 <template>
-<div class="share-component" @click.stop="share">
+<div class="share-component light" @click.stop="share">
     <i class="icon-share"></i><span>分享</span>
 </div>
 </template>
