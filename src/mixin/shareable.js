@@ -76,6 +76,12 @@ export default {
                     data.icon = entry.pictures[0]
                     data.hasDownloadLink = false
                     break
+                case 'auction':
+                    data.title = `美玉秀秀拍卖：${entry.title}`;
+                    data.desc = `${entry.name}向您推荐美玉秀秀拍品！`;
+                    data.icon = entry.pictures[0];
+                    data.targets = '0,1';
+                    break;
                 case 'master':
                     data.title = entry.interview.title
                     data.desc = entry.baseData.name + ' ' + _.get(entry, '.baseData.titles.0.name', '')

@@ -70,26 +70,6 @@ export default {
         }
     },
 
-    '/purchases': {
-        name: 'purchases',
-        title: '求购竞标',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'))
-            }, 'purchase')
-        }
-    },
-
-    '/purchase/:id': {
-        name: 'purchase',
-        title: '求购详情',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchaseView.vue'))
-            }, 'purchase')
-        }
-    },
-
     '/bzone': {
         name: 'bzone',
         title: '商户专区',
@@ -100,43 +80,13 @@ export default {
         }
     },
 
-    '/masters': {
-        name: 'masters',
-        title: '人物志',
+    '/purchase/add': {
+        name: 'purchase-add',
+        title: '发布求购',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MastersView.vue'))
-            }, 'master')
-        }
-    },
-
-    '/purchases': {
-        name: 'purchases',
-        title: '求购竞标',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchasesView.vue'))
+                resolve(require('PurchaseAddView.vue'))
             }, 'purchase')
-        }
-    },
-
-    '/purchase/:id': {
-        name: 'purchase',
-        title: '求购详情',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchaseView.vue'))
-            }, 'purchase')
-        }
-    },
-
-    '/masters': {
-        name: 'masters',
-        title: '人物志',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('MastersView.vue'))
-            }, 'master')
         }
     },
 
@@ -228,7 +178,25 @@ export default {
             }, 'profile')
         }
     },
-
+    '/user/:id/auction': {
+        name: 'user-auction',
+        title: '我的拍卖',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionsView.vue'))
+            }, 'profile')
+        }
+    },
+    '/user/:id/:tab': { // 个人主页
+        name: 'user',
+        title: '',
+        native: v => v >= 1.3 && {name: 'profile'},
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('UserView.vue'))
+            }, 'profile')
+        }
+    },
     '/shop/:id': { // 工作室主页
         name: 'shop',
         native: v => v >= 1.7 && {name: 'shop'},
@@ -280,7 +248,7 @@ export default {
         }
     },
 
-    'order/:id/trace': {
+    '/order/:id/trace': {
         name: 'trace',
         title: '物流追踪',
         component(resolve) {
@@ -413,7 +381,33 @@ export default {
             }, 'help')
         }
     },
-
+    '/help/auction': {
+        name: 'auction-help',
+        title: '拍卖指南',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionHelpView.vue'));
+            }, 'help')
+        }
+    },
+    '/auctions': {
+        name: 'auctions',
+        title: '拍卖专区',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionsView.vue'));
+            }, 'auction')
+        }
+    },
+    '/auction/:id/:prdId': {
+        name: 'auction',
+        title: '拍卖详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionView.vue'));
+            }, 'auction')
+        }
+    },
     '/comments/:id/:type': {
         name: 'comments',
         title: '全部评论',
