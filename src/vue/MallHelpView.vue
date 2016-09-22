@@ -36,7 +36,7 @@
         .title.flex.fz-30.gray.bdb
             .line.bg-red
             div 常见问题
-        .item.flex.fz-26(v-for='item in problems', @click='go(item.url)')
+        .item.flex.fz-26.bdb(v-for='item in problems', @click="action('open', {url: item.url})")
             .flex-1 {{item.title}}
             .icon-enter.gray
     .mgb
@@ -44,14 +44,14 @@
             .line.bg-red
             div 问题分类
         .fz-26.container
-            .category.center.bg-white(v-for='item in classification', v-link="{name: 'mall-help-category', params: {category: item.id}}")
-                .gray(class='{{item.icon}}')
+            .category.center.bg-white.bd(v-for='item in classification', v-link="{name: 'mall-help-category', params: {category: item.id}}")
+                .gray.mgb(class='{{item.icon}}')
                 div {{item.title}}
     .bg-white
         .title.flex.fz-30.bdb.gray
             .line.bg-red
             div 条款和协议
-        .item.flex.fz-26(v-for='item in clause', @click="action('open', {url: item.url})")
+        .item.flex.fz-26.bdb(v-for='item in clause', @click="action('open', {url: item.url})")
             .flex-1 {{item.title}}
             .icon-enter.gray
 </template>
