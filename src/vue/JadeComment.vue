@@ -93,7 +93,7 @@ export default {
     },
     created() {
         this.$watch('id', () => {
-            this.$get(`${this.api}`).then((data) => {
+            this.$fetch(`${this.api}`).then((data) => {
                 if (data) {
                     this.total = data.total
                     this.c = this.emojify(data.comments[0])

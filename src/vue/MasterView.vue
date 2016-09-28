@@ -203,10 +203,10 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`sites/${to.params.id}/base`)
+            return this.$fetch(`sites/${to.params.id}/base`)
                 .then(base => {
                     this.base = base
-                    return this.$get(`sites/${base.id}/articles/${base.interview_id}`)
+                    return this.$fetch(`sites/${base.id}/articles/${base.interview_id}`)
                 }).then((data) => {
                     this.interview = data
                     this.setShareData({baseData: this.base, interview: this.interview}, true)

@@ -54,7 +54,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`users/${to.params.id}/profile`).then((user) => {
+            return this.$fetch(`users/${to.params.id}/profile`).then((user) => {
                 this.setShareData({name: user.nickname, photo: user.photo}, true)
             })
         }

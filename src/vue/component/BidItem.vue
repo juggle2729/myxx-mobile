@@ -92,7 +92,7 @@
         template(v-else)
             template(v-if="self && self.id===bid.bidder_id")
                 price-tag.fz-30.red(label="竞标价", :cents="price")
-                .btn-change.fz-26.bg-red.white.mgl-20.pdh-24(@click.stop="setPrice(bid)") 改价
+                .btn-change.fz-26.bg-red.white.mgl-20.pdh-24(v-if="isOpen", @click.stop="setPrice(bid)") 改价
             template(v-else)
                 price-tag.fz-30(label="竞标价", :cents="bid.origin_ceil_price", :class="{'red': !bid.ceil_price, 'gray': bid.ceil_price}")
                 price-tag.fz-30.red(v-if="bid.ceil_price", label="新竞标价", :cents="price")
@@ -138,7 +138,7 @@ export default {
         },
 
         price() {
-            return this.won ? this.bid.order_price : this.bid.ceil_price
+            return this.won ? (this.bid.order_price || this.bid.ceil_price) : (this.bid.ceil_price || this.bid.origin_ceil_price)
         },
 
         isOpen() {

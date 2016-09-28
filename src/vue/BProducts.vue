@@ -136,7 +136,7 @@ export default {
     },
 
     ready() {
-        this.$get('mall/product_attrs')
+        this.$fetch('mall/product_attrs')
             .then(attrs => {
                 this.category = [{label: '不限'}].concat(attrs.category.children.map(c => ({label: c.name, value: c.id})))
             })

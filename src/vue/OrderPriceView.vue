@@ -76,7 +76,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`mall/order/${to.params.id}`).then((order) => {
+            return this.$fetch(`mall/order/${to.params.id}`).then((order) => {
                    this.order = order
                    this.order.price = order.trans_amount
                 })

@@ -110,9 +110,9 @@ for $dis in block inline-block none
 $line-clamp
     overflow: hidden
     word-break: break-all
-    display: -webkit-box
+    // display: -webkit-box
     text-overflow: ellipsis
-    -webkit-box-orient: vertical
+    // -webkit-box-orient: vertical
     line-height: 1.1
 .line-clamp, .line-clamp-1
     @extends $line-clamp
@@ -131,6 +131,8 @@ $line-clamp
 
 .round
     border-radius: 50%
+.bold
+    font-weight: bold
 
 [class^=icon-], [class^=icon-] + span
     display: inline-block

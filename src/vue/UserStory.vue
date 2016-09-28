@@ -31,7 +31,7 @@
 </template>
 <script>
 import paging from 'paging'
-import Card from 'component/Card.vue'
+import Card from 'component/item/Card.vue'
 export default {
     name: 'UserStory',
     mixins: [paging],
@@ -43,7 +43,7 @@ export default {
         }
     },
     activate(done) {
-        return this.$get('sns/topics/base', {
+        return this.$fetch('sns/topics/base', {
             user_id: this.$route.params.id
         }).then((data) => {
             this.types = data
@@ -65,7 +65,7 @@ export default {
     methods: {
         classify(type) {
             this.selected = type
-            this.$get('dc/sns/search', {
+            this.$fetch('dc/sns/search', {
                 owner_id: this.$route.params.id,
                 doc_type: 'tp',
                 topic_type: type,

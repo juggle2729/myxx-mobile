@@ -4,7 +4,7 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
-                this.$get('log/content_readings',
+                this.$fetch('log/content_readings',
                     _.merge(
                             {},
                             {id: this.$route.params.id, type: this.config.shareables[this.$route.name] || this.$route.name},
@@ -23,7 +23,7 @@ export default {
             switch(this.$route.name) {
                 case 'evaluation':
                     const result = _.get(entry, 'results[0]');
-                    if(this.$route.params.result === 'none' || this.$route.params.result === ':result') {
+                    if(!this.$route.query.result) {
                         data.title = '【求鉴定】此玉如何，看官给个说法呗？';
                     } else if(result){
                         if(result.result === 'unsure') {
@@ -78,12 +78,6 @@ export default {
                     data.desc = '玉友的新品上线啦！';
                     data.icon = entry.pictures[0];
                     data.hasDownloadLink = false;
-                    break;
-                case 'auction':
-                    data.title = `${entry.title}正在拍卖`;
-                    data.desc = `${entry.title}正在拍卖`;
-                    data.icon = entry.pictures[0];
-                    data.targets = '0,1';
                     break;
                 case 'master':
                     data.title = entry.interview.title;

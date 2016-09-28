@@ -47,11 +47,13 @@ export default {
     },
     methods: {
         toggle() {
-            if(this.env.isApp && (!this.oneway || !this.follow)) {
-                this[this.follow ? '$delete' : '$post'](this.api)
-                    .then(() => {
-                        this.follow = !this.follow
-                    })
+            if(this.env.isApp) {
+                if(!(this.oneway && this.follow)) {
+                    this[this.follow ? '$delete' : '$post'](this.api)
+                        .then(() => {
+                            this.follow = !this.follow
+                        })
+                }
             } else {
                 window.location.href = this.config.download
             }

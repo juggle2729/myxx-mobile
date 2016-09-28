@@ -30,7 +30,7 @@ export default {
                     ...this.paging.params
                 };
 
-                return this.$get(this.paging.path, opts)
+                return this.$fetch(this.paging.path, opts)
                     .then(data => {
                         let items = data[this.paging.list || 'entries'];
                         if(_.isFunction(this.paging.transform)) {

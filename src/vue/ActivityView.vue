@@ -38,7 +38,7 @@ export default {
     },
     route: {
         data() {
-            return this.$get(`cms/activities/${this.$route.params.id}`)
+            return this.$fetch(`cms/activities/${this.$route.params.id}`)
                 .then(activity => {
                     this.activity = activity
                     this.action('updateTitle', {text: activity.share_title})

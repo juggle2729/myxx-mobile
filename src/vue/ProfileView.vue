@@ -64,7 +64,7 @@ export default {
         data() {
             const id = _.get(this, 'self.id')
             if(id) {
-                return this.$get(`users/${id}/profile`)
+                return this.$fetch(`users/${id}/profile`)
                     .then(profile => {
                         this.profile = profile
                     })

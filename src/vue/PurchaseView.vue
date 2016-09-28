@@ -154,7 +154,7 @@ export default {
     },
     route: {
         data({to}) {
-            return this.$get(`mall/purchase/${to.params.id}`).then((data) => {
+            return this.$fetch(`mall/purchase/${to.params.id}`).then((data) => {
                 this.purchase = data
                 this.setShareData({title: data.description, icon: data.pictures[0]}, true)
             })
