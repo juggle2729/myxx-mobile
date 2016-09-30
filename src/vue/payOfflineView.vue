@@ -31,7 +31,7 @@
             height: 72px
             line-height: 72px
 </style>
-<template lang="jade">
+<template lang="pug">
     .pay-offline-view
         .instruction.center
             .tip.fz-32 大额支付支持银行转账交易<br>请联系客服

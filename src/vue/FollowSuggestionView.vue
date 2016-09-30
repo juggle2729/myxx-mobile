@@ -8,7 +8,7 @@
             border-radius: 50px
             padding: 30px 50px
 </style>
-<template lang="jade">
+<template lang="pug">
 .follow-suggestion-view.bg
     .tips.fz-30.red.bg.center(v-if='!self', @click="action('login')")
         span.bd-red 登录查看更多关注人的内容

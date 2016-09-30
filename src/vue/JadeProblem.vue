@@ -16,7 +16,7 @@
             margin: 0 auto
             margin-bottom: 50px
 </style>
-<template lang="jade">
+<template lang="pug">
 .jade-problem.bg
     .bg-white.problem
         .flex

@@ -25,7 +25,7 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="jade">
+<template lang="pug">
 .post-view.bg-white(v-if='!$loadingRouteData')
     header.flex
         avatar(:user='post.user')

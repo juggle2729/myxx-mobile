@@ -30,7 +30,7 @@
             font-size: 50px
             margin-bottom: 22px
 </style>
-<template lang="jade">
+<template lang="pug">
 .mall-help-view.bg
     .bg-white.mgb
         .title.flex.fz-30.gray.bdb

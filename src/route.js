@@ -112,6 +112,7 @@ export default {
 
     '/masters': {
         name: 'masters',
+<<<<<<< d29dec60130867405c7800a6689a408afeaefd72
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {
@@ -122,6 +123,8 @@ export default {
 
     '/master/:id': {
         name: 'master',
+=======
+>>>>>>> 发布求购、升级jade到pug
         title: '人物志',
         component(resolve) {
             require.ensure([], (require) => {

@@ -17,7 +17,7 @@
         &:not(:first-child)
             margin-top: 12px
 </style>
-<template lang="jade">
+<template lang="pug">
 .works-view.bg
     .work.bg-white(v-for='item in items', v-link="{name: 'work', params: {id: item.id}}")
         .media.img(v-bg='item.picture')

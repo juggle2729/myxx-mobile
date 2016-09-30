@@ -51,33 +51,33 @@
     .bottom
         margin-top: 56px
 </style>
-<template lang="jade">
+<template lang="pug">
 .apply-master
     .text.fz-30 申请和田玉鉴定权限————需要您是玉石行业的匠师、雕刻师、资深藏家。
         br
         | 如果您有意向请填写以下信息，美玉秀秀客服人员会在两个工作日内联系您！
-      .input
-          input.fz-30.bd(type="tel", placeholder="手机号", v-model="contact", maxlength="20")
-          input.fz-30.bd(type="text", placeholder="姓名", v-model="name", maxlength="20")
-          textarea.fz-30.bd(placeholder="申请说明，50字以内(选填)", maxlength="50", v-model="content")
-          button.white.fz-30.bg-gray(@click="submit", :class="{'bg-red': complete}")
-              span 提交
-      .title.fz-30.bdb
-          p 大师特权
-        .imgs.fz-26
-          .tr
-              .tb.flex
-                  img(:src="'open/om1.png' | qn")
-                  span.flex.bold 大师官网
-                  img(:src="'open/om2.png' | qn")
-                  span.flex.bold 鉴宝权限
-          .tr
-              .tb.flex
-                  img(:src="'open/om3.png' | qn")
-                  span.flex.bold 专属店铺
-                  img(:src="'open/om4.png' | qn")
-                  span.flex.bold 精准推广
-      .bottom.fz-26.gray.center 美玉秀秀客服：400-058-7266
+        .input
+            input.fz-30.bd(type="tel", placeholder="手机号", v-model="contact", maxlength="20")
+            input.fz-30.bd(type="text", placeholder="姓名", v-model="name", maxlength="20")
+            textarea.fz-30.bd(placeholder="申请说明，50字以内(选填)", maxlength="50", v-model="content")
+            button.white.fz-30.bg-gray(@click="submit", :class="{'bg-red': complete}")
+                span 提交
+        .title.fz-30.bdb
+            p 大师特权
+            .imgs.fz-26
+                .tr
+                    .tb.flex
+                        img(:src="'open/om1.png' | qn")
+                        span.flex.bold 大师官网
+                        img(:src="'open/om2.png' | qn")
+                        span.flex.bold 鉴宝权限
+                .tr
+                    .tb.flex
+                        img(:src="'open/om3.png' | qn")
+                        span.flex.bold 专属店铺
+                        img(:src="'open/om4.png' | qn")
+                        span.flex.bold 精准推广
+        .bottom.fz-26.gray.center 美玉秀秀客服：400-058-7266
 </template>
 <script>
     export default {

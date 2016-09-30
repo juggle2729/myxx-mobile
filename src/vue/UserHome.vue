@@ -71,7 +71,7 @@
     .topic .list
         padding: 0 15px
 </style>
-<template lang="jade">
+<template lang="pug">
 .user-home.bg
     .shop.bg-white(v-if='shop', v-link="{name: 'shop', params: {id: shop.id}}")
         .header.fz-26.gray

@@ -36,7 +36,7 @@
             height: 60px
             box-shadow: 0 0 10px 5px #4CAF50
 </style>
-<template lang="jade">
+<template lang="pug">
 div(:class="{'loading': loading}")
     router-view
     template(v-if="env.isShare && shareData.hasDownloadLink")

@@ -19,7 +19,7 @@
         border-radius: 8px
         margin: 50px auto 0
 </style>
-<template lang="jade">
+<template lang="pug">
 .cash-result.bg.fz-30
     .result.center
         .icon-check-on

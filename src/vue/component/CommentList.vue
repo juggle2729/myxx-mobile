@@ -17,7 +17,7 @@
     .comment-item:last-child
         padding-bottom: 0
 </style>
-<template lang="jade">
+<template lang="pug">
 .comment-list
     header.bdb.fz-26.pdl-32.gray 评论&nbsp;&nbsp;{{$refs.list.total}}
     .no-comment.fz-26.light.center(v-if="$refs.list && $refs.list.total === 0") 还没有人评论

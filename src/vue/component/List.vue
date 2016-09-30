@@ -13,7 +13,7 @@
         font-size: 24px
         color: $colors.light
 </style>
-<template lang="jade">
+<template lang="pug">
 .list(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
     component(:is="comp", :item="item", v-for="item in items")
 </template>

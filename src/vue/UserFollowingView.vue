@@ -14,7 +14,7 @@
         .avatar-120
             margin-right: 64px
 </style>
-<template lang="jade">
+<template lang="pug">
 .user-following-view.bg(:class="{'bg-white': items.isEmpty}")
     .user.bdb.bg-white.flex(v-for='user in items')
         avatar(:user='user', :size='120')

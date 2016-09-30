@@ -39,7 +39,7 @@
         border-radius: 8px
         margin: 50px auto 0
 </style>
-<template lang="jade">
+<template lang="pug">
 .price-view.bg(v-if='!$loadingRouteData')
     .title.fz-26.gray 订单信息
     .order.bg-white.bdv.fz-30

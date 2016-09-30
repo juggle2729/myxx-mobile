@@ -24,7 +24,7 @@
             width: 140px
             border-radius: 8px
 </style>
-<template lang="jade">
+<template lang="pug">
 .comments-view
     comment-list(v-ref:comments)
     .fake-input-placeholder

@@ -125,7 +125,7 @@
     .placeholder
         height: 148px
 </style>
-<template lang="jade">
+<template lang="pug">
 .jade-view
     .notice-placeholder(v-if="firstVisit")
     .notice.flex(v-if="firstVisit")

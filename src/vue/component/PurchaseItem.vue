@@ -81,7 +81,7 @@
     }
 }
 </style>
-<template lang="jade">
+<template lang="pug">
 .purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
     img.mark(v-if="item.win_count", :src="'purchase/winned.png' | qn")
     header.flex.fz-26
@@ -105,7 +105,6 @@
     .btns.bdt.fz-30(v-if="!paid")
         .operation.mgr.bd-gray(@click.stop="del(item.id)") 删除此求购
         .operation.white.bg-red(@click.stop="action('pay', {id: item.id, price: item.pledge, type: item.is_tob ? 'sale' : 'purchase'})") 立即支付保证金
-</div>
 </template>
 <script>
 export default {

@@ -47,7 +47,7 @@
     }
 }
 </style>
-<template lang="jade">
+<template lang="pug">
 .jade-comment.bg-white
     .comment-header.flex.fz-22.bdb
         .gray 评论&nbsp&nbsp{{total}}

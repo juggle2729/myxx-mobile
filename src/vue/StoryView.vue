@@ -32,7 +32,7 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="jade">
+<template lang="pug">
 .story-view.bg-white(v-if='!$loadingRouteData')
     .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
     .flex.pd-32

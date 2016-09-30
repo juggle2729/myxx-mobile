@@ -7,7 +7,7 @@
         > div
             line-height: 50px
 </style>
-<template lang="jade">
+<template lang="pug">
 .auctions-view
     .tabs.flex.fz-30.bdb
         .flex-1.center(v-for="t in tabs", :class="{'bdl': $index, 'red': t.key===tab}", @click="load(t.key)") {{t.label}}

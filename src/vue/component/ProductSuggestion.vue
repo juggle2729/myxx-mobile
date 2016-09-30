@@ -10,7 +10,7 @@
     .title
         margin: 24px 0 18px
 </style>
-<template lang="jade">
+<template lang="pug">
 .product-suggestion.bg-white.mgb-28(v-if='items.length')
     .hr
     header.fz-26.gray.mgl-32 商品推荐

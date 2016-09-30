@@ -1,0 +1,176 @@
+<style lang="stylus">
+@import '~style/partials/var'
+.evaluation-detail
+    padding-bottom: 100px
+    .results
+        height: 926px
+        padding: 52px 78px
+        background: #202020 url($qn + 'evaluation/result-bg.png') no-repeat
+        background-size: cover
+        .portrait
+            width: 594px
+            height: 594px
+            margin-top: 22px
+            position: relative
+            background-color: black
+        > div
+            position: relative
+            &:not(:last-of-type)
+                margin-right: 39px
+            &::after
+                content: ''
+                position: absolute
+                left: 15px
+                bottom: 172px
+                width: 1rem
+                height: 1rem
+                background: transparent url($qn + 'icon/play.png') no-repeat center
+                background-size: 1rem
+                pointer-events: none
+        .title
+            white-space: nowrap
+            text-overflow: ellipsis
+            max-width: 435px
+            overflow: hidden
+        .price
+            height: 76px
+            line-height: 76px
+        .action
+            display: block
+            border-radius: 10px
+            margin: 0 auto
+            width: 464px
+            height: 72px
+            line-height: 72px
+            text-align: center
+            i
+                margin-right: 28px
+    .results-empty
+        margin: 0 32px
+        padding: 32px
+    .header
+        padding: 32px 32px 0 32px
+        .user
+            display: -webkit-box
+            -webkit-box-align: center
+        .desc
+            margin: 30px 0 0
+            line-height: 1.5em
+    .images
+        margin: 32px
+        > li
+            margin-right: 6px
+            img
+                height: 450px
+    .nocontent
+        margin-top: 48px
+        margin-bottom: 32px
+    .footer
+        height: 98px
+        > div
+            line-height: 60px
+            -webkit-box-flex: 1
+            text-align: center
+            .icon-comment-solid
+                transform: scale(1.5)
+</style>
+<template lang="pug">
+.evaluation-detail
+    .header
+        .user
+            avatar(:user="evaluation.user")
+            .mgl
+                .fz-26 {{evaluation.user.name}}
+                .mgt.fz-22.gray
+                    span {{evaluation.create_at | moment}}
+                    span.padding-horizontal |
+                    span {{evaluation.click}}人浏览
+        .desc.fz-30.user-txt {{evaluation.description}}
+    ul.images.scrollable
+        li.img(v-for="picture in evaluation.pictures", @click="coverflow(evaluation.pictures, $index)")
+            img(:src="config.img+picture+'?imageView2/2/h/450'")
+        li.video(v-if="evaluation.video", @click="play(evaluation.video)")
+            img(:src="config.video+evaluation.video+'?vframe/jpg/offset/0/rotate/auto|imageView2/2/h/450'")
+    .results.scrollable(v-if="evaluation.results.length")
+        div(v-for="result in evaluation.results")
+            .result-head.flex
+                avatar(:user="result.identifier")
+                .flex-1.mgl
+                    .fz-30.white {{result.identifier.name}}
+                    .title.fz-26.white.mgt {{result.identifier.title}}
+            img.portrait(@click="play({id: result.video, ads: [result.identifier.portrait, result.ad_video]})", :src="config.img+result.identifier.portrait+'?imageView2/1/w/600/h/600'", alt="{{result.identifier.name}}")
+            .price.fz-30.white.center
+                span 鉴定结果为{{opts.result[result.result]}}
+                span(v-if="result.value") &nbsp估价为{{opts.price[result.value]}}
+            a.action.white.bg-blue.fz-30(v-if="result.ad_product_id", v-link="{name: 'jade', params: {id: result.ad_product_id}}")
+                i.icon-new-product
+                span 进入新品发布
+            a.action.white.bg-green.fz-30(v-else, v-link="result.identifier | profile")
+                i.icon-user
+                span 进入个人主页
+    tags(:tags="evaluation.tags")
+    .footer.flex.bdt.fz-30.gray(v-if="env.isShare")
+        .comment.bdl(@click="$refs.comment.comment()")
+            i.icon-comment-solid
+            span 写评论
+        share.bdl
+    .hr-20
+    comment-list(:type="10", :id="evaluation.post_id", v-ref:comment)
+    product-suggestion(:id="evaluation.post_id")
+    general-suggestion
+    .footer.flex.bdt.fz-30.gray(v-if="!env.isShare")
+        .comment.bdl(@click="$refs.comment.comment()")
+            i.icon-comment-solid
+            span 写评论
+        share.bdl
+</template>
+<script>
+import Tags from 'component/Tags.vue'
+import GeneralSuggestion from 'component/GeneralSuggestion.vue'
+import ProductSuggestion from 'component/ProductSuggestion.vue'
+import CommentList from 'component/CommentList.vue'
+import Share from 'component/Share.vue'
+import paging from 'paging'
+import shareable from 'shareable'
+const Opts = {
+    result: {genuine: '真', fake: '假', unsure: '疑'},
+    price: { sfour: '小四', mfour: '中四', lfour: '大四', sfive: '小五', mfive: '中五', lfive: '大五', ssix: '小六', msix: '中六', lsix: '大六'}
+}
+export default {
+    name: 'EvaluationView',
+    mixins: [shareable],
+    components: {
+        CommentList,
+        GeneralSuggestion,
+        ProductSuggestion,
+        Share,
+        Tags
+    },
+    data() {
+        return {
+            evaluation: {
+                results: [],
+                user: {},
+                tags: []
+            },
+            comment: {
+                items: [],
+                total: 0
+            },
+            opts: Opts
+        }
+    },
+
+    route: {
+        data({to}) {
+            return this.$fetch(`sns/jianbao/${to.params.id}`)
+                    .then(evaluation => {
+                        const result = _.has(to, 'query.result') && _.find(evaluation.results, {id: +to.query.result})
+                        result && (evaluation.results = [result])
+                        this.setShareData(evaluation, true)
+                        this.evaluation = evaluation
+                    })
+        }
+    }
+}
+</script>

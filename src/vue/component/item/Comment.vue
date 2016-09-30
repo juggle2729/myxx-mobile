@@ -9,7 +9,7 @@
             height: 44px
             vertical-align: bottom
 </style>
-<template lang="jade">
+<template lang="pug">
 .comment-item.flex(@click="$dispatch((self && self.id==item.reply_from.id) ? 'delComment' : 'reply', item)")
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16

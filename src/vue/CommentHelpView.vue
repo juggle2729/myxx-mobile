@@ -11,7 +11,7 @@
             display: inline-block
             width: 30px
 </style>
-<template lang="jade">
+<template lang="pug">
 .comment-help-view.fz-30
     p 您的评价将直接影响商家的积分和等级。
     p 只能在订单确认收货后5天内作出评价。

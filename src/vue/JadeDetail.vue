@@ -10,7 +10,7 @@
     .recommends > div
         margin: 0 0 20px 20px
 </style>
-<template lang="jade">
+<template lang="pug">
 .jade-detail.bg-white
     .pd-32.user-txt.fz-30(v-if="jade.detail") {{jade.detail}}
     .img

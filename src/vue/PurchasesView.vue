@@ -30,7 +30,7 @@
         line-height: 98px
         text-align: center
 </style>
-<template lang="jade">
+<template lang="pug">
 .purchases-view
     .placeholder-notice(v-if="firstVisit")
     .notice(v-if="firstVisit")
@@ -94,7 +94,11 @@ export default {
     methods: {
         purchase() {
             if(this.env.isWechat) {
+<<<<<<< d29dec60130867405c7800a6689a408afeaefd72
                 this.gotoDownload()
+=======
+                this.$router.go({name: 'purchase-add'})
+>>>>>>> 发布求购、升级jade到pug
             } else {
                 Q.promise(resolve => {
                     if(this.self) {

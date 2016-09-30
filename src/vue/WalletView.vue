@@ -25,7 +25,7 @@
             position: relative
             top: 3px
 </style>
-<template lang="jade">
+<template lang="pug">
 .wallet-view.bg
     .item.fz-30.bg-white.bdb
         div 可提现金额

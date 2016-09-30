@@ -27,15 +27,13 @@
             text-align: center
             padding: 1em 0
 </style>
-<template lang="jade">
+<template lang="pug">
 .confirm-action
     .container.bg
         .center {{params.text}}
         .btns.bdt
             div(@click="close('0')") 取消
             .bdl.red(@click="close('1')") 确定
-    </div>
-</div>
 </template>
 <script>
 export default {

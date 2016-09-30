@@ -29,7 +29,7 @@
         line-height: 56px
         padding: 20px 0
 </style>
-<template lang="jade">
+<template lang="pug">
 .delete-action(@click="close")
     .container
         .delete.red(@click="delete") 删除

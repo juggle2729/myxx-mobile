@@ -2,9 +2,15 @@
 .star-icon
     display: block
 </style>
+<<<<<<< d29dec60130867405c7800a6689a408afeaefd72:src/vue/component/icon/Star.vue
 <template lang="jade">
 .star-icon(@click="star")
     .icon-star.fz-32(:class="{'red': active}")
+=======
+<template lang="pug">
+.favor-comp(@click="fav")
+    .icon-collect.fz-32(:class="{'red': active}")
+>>>>>>> 发布求购、升级jade到pug:src/vue/component/Favor.vue
     span {{active ? '已收藏' : '收藏'}}
 </template>
 <script>

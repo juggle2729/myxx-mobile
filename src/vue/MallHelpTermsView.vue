@@ -26,7 +26,7 @@
     li::before
         padding-right: .2em
 </style>
-<template lang="jade">
+<template lang="pug">
     .mall-help-terms.bdb.fz-30
         h3 美玉秀秀商城入驻协议
         p

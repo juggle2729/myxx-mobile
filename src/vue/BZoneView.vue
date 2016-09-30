@@ -30,7 +30,7 @@
                 text-align: center
                 line-height: 50px
 </style>
-<template lang="jade">
+<template lang="pug">
 .b-zone
     header.bg-white
         .notice.flex(v-if="firstVisit")

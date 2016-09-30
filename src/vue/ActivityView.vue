@@ -7,7 +7,7 @@
         background-position: center
         background-size: cover
 </style>
-<template lang="jade">
+<template lang="pug">
 .activity-view
     .cover(v-bg="activity.cover")
     template(v-for="item in items")

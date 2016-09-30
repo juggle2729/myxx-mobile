@@ -24,7 +24,7 @@
                 width: 0%
                 line-height: 1.2
 </style>
-<template lang="jade">
+<template lang="pug">
 .wallet-detail(v-if='!$loadingRouteData')
     .tabs.flex.fz-30.bdb
         .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}")

@@ -73,7 +73,7 @@
         border-radius: 6px
         border-bottom: 26px solid white
 </style>
-<template lang="jade">
+<template lang="pug">
 .bid-item.bg-white(v-link="{name: 'jade', params: {id: bid.product.id}}")
     img.mark(v-if="mark", :src="mark | qn")
     header.flex

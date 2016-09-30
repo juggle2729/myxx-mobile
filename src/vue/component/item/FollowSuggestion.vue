@@ -11,7 +11,7 @@
         margin-top: 20px
         line-height: 36px
 </style>
-<template lang="jade">
+<template lang="pug">
 .follow-suggestion.flex.bdb.bg-white
         avatar(:user='item', :size='108')
         .flex-1

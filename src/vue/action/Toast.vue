@@ -27,7 +27,7 @@
     .text
         font-size: 34px
 </style>
-<template lang="jade">
+<template lang="pug">
 .toast
     i(:class="{'icon-success': params.success==='1', 'icon-warn': params.success==='0'}")
     .text {{params.text}}

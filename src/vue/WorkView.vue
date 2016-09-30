@@ -76,7 +76,7 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="jade">
+<template lang="pug">
 .work-view(v-if='!$loadingRouteData')
     .header.flex
         avatar(:user='work.user', :size='90')

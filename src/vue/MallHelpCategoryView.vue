@@ -8,7 +8,7 @@
         &:last-child
             background: none
 </style>
-<template lang="jade">
+<template lang="pug">
 .mall-help-category-view.bdb.bg
     .bg-white
         .item.flex.fz-26.bdb(v-for="item in problems[this.$route.params.category]", @click="action('open', {url: item.url})")

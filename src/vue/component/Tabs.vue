@@ -4,7 +4,7 @@
     li
         line-height: 50px
 </style>
-<template lang="jade">
+<template lang="pug">
 ul.tabs.flex.fz-30.bdb
     li.flex-1.center(v-for="label in tabs", :class="{'bdl': $index, 'red': $key===current}", @click="current=$key") {{label}}
 </template>

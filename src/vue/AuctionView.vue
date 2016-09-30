@@ -138,7 +138,7 @@
             line-height: 98px
             background: #ea8f23
 </style>
-<template lang="jade">
+<template lang="pug">
 .auction-view(@click="closeOffer()")
     slider(:ids="auction.product.pictures", :height="slideHeight")
     .status.fz-30.white.center.relative(:class="itemClass(auction.status)")
