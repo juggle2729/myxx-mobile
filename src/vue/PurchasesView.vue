@@ -94,7 +94,7 @@ export default {
     methods: {
         purchase() {
             if(this.env.isWechat) {
-                this.gotoDownload()
+                this.$router.go({name: 'purchase-add'})
             } else {
                 Q.promise(resolve => {
                     if(this.self) {
