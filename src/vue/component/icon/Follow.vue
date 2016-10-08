@@ -1,6 +1,5 @@
 <style lang="stylus">
-@import '~style/partials/mixin'
-.follow-component {
+.follow-icon {
     padding: 10px .5em 0
     height: 52px
     color: #9c9c9c
@@ -13,21 +12,21 @@
     &.active {
         i {
             color: #cc3f4f
-            transform: scale(1.5)
             display: inline-block
         }
     }
 }
 </style>
-<template>
-<div v-if="!isSelf" class="follow-component fz-26 center" @click.stop="toggle"
-    :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}">
-    <i class="icon-plus" v-if="!follow"></i><span>{{follow ? '已关注' : '关注'}}</span>
+<template lang="jade">
+.follow-icon.fz-26.center(v-if="!isSelf", @click.stop="toggle", :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
+    i.icon-plus(v-if="!follow")
+    span {{follow ? '已关注' : '关注'}}
 </div>
 </template>
 <script>
 export default {
-    name: 'Follow',
+    name: 'follow-icon',
+
     props: {
         user: {
             type: Number,
@@ -37,6 +36,7 @@ export default {
         oneway: Boolean,
         hasBorder: Boolean // 是否需要边框和背景色
     },
+
     computed: {
         api() {
             return `users/follow/${this.user||this.route.params.id}`
@@ -45,6 +45,7 @@ export default {
             return _.get(this, 'self.id') == this.user
         }
     },
+
     methods: {
         toggle() {
             if(this.env.isApp) {
@@ -55,7 +56,7 @@ export default {
                         })
                 }
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         }
     }

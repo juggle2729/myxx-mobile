@@ -75,8 +75,6 @@
             line-height: 60px
             -webkit-box-flex: 1
             text-align: center
-        .icon-comment-solid
-            transform: scale(1.5)
 </style>
 <template lang="jade">
 .work-view(v-if='!$loadingRouteData')
@@ -95,26 +93,20 @@
         .fz-30.gray.prize {{work.prize}}
     .footer.flex.fz-30.gray.bdt.bg-white(:class="{'fixed': !env.isShare}")
         like(:target='work.id', :type='90', :active='work.is_liked', :count='work.like_count')
-        .comment.bdl(@click='$refs.comment.comment()')
-            i.icon-comment-solid
+        .comment.bdl(@click='$refs.comments.addComment()')
+            i.icon-comment
             span 写评论
         share.bdl
     .hr
-    comment-list(:type='90', :id='work.id', v-ref:comment='')
+    comment-list(:type='90', :id='work.id', v-ref:comments)
 </template>
 <script>
-import follow from 'component/Follow.vue'
-import like from 'component/Like.vue'
-import share from 'component/Share.vue'
 import CommentList from 'component/CommentList.vue'
 import shareable from 'shareable'
 export default {
     name: 'WorkView',
     mixins: [shareable],
     components: {
-        follow,
-        like,
-        share,
         CommentList
     },
     computed: {
@@ -134,7 +126,7 @@ export default {
         data({to}) {
             return this.$fetch(`sns/works/${to.params.id}`).then((work) => {
                 this.work = work
-                this.setShareData({name: this.work.user.nickname, title: this.work.title, logo: this.cover}, true)
+                this.setShareData({name: this.work.user.nickname, title: this.work.title, logo: this.cover})
             })
         }
     }

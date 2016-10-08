@@ -22,19 +22,19 @@
             font-size: .9em
 </style>
 <template lang="jade">
-.product-card.bg-white(v-link="{name: 'jade', params: {id: entry.id}}")
-    .media(v-bg='entry.first_picture')
-        .mark.fz-30.white(v-if="entry.is_tob") 清仓
+.product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}}")
+    .media(v-bg='item.first_picture')
+        .mark.fz-30.white(v-if="item.is_tob") 清仓
     .data-info
-        p.fz-26.line-clamp.desc {{entry.title}}
-        p.fz-30.red.price {{entry.price | price}}
+        p.fz-26.line-clamp.desc {{item.title}}
+        p.fz-30.red.price {{item.price | price}}
 </template>
 <script>
 export default {
     name: 'ProductCard',
 
     props: {
-        entry: Object
+        item: Object
     }
 }
 </script>

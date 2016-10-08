@@ -6,74 +6,47 @@
         padding: 10px 0 0 15px
     .topic-type
         height: 100px
-        padding: 0 40px
-        overflow-x: auto
-        overflow-y: hidden
-        white-space: nowrap
-        -webkit-overflow-scrolling: touch
         > div
             line-height: 56px
-            padding: 0 18px
             border-radius: 28px
-            margin: 0 20px
-            &.active
-                color: white
-                background-color: #cc3f4f
 </style>
 <template lang="jade">
-.user-story(:class="{'bg-white': items.isEmpty}")
-    .topic-type.flex.bg-white(v-if='items && items.length > 0')
-        .fz-26.gray.bd.center(@click='classify()', :class="{'active': !selected}") 全部 {{types.topic_count}}
-        .fz-26.gray.bd.center(v-for='tab in types.topic_types', @click='classify(tab.code)', :class="{'active': selected === tab.code}") {{tab.name}} {{tab.count}}
-    .list
-        card(v-for='item in items', :entry='item.entry', :type='item.type')
-    empty(v-if='items.isEmpty', title='暂无帖子')
+.user-story
+    .topic-type.flex.bg-white.pdh-40.scrollable
+        .fz-26.gray.bd.center.pdh-18.mgh-20(v-for="type in types", @click="selected=type.code", :class="{'white bg-red': selected === type.code}") {{type.name}} {{type.count}}
+    story-list(v-ref:list, path='dc/sns/search', :params="{limit: 100, owner_id: $route.params.id, doc_type: 'tp'}")
 </template>
 <script>
-import paging from 'paging'
-import Card from 'component/item/Card.vue'
+import List from 'component/List.vue'
 export default {
-    name: 'UserStory',
-    mixins: [paging],
-    components: [Card],
+    name: 'user-story',
+
+    components: {
+        StoryList: new List('Card')
+    },
+
     data() {
         return {
             types: {},
-            selected: ''
+            selected: '',
+            items: []
         }
     },
+
     activate(done) {
-        return this.$fetch('sns/topics/base', {
-            user_id: this.$route.params.id
-        }).then((data) => {
-            this.types = data
-        }).then(done)
+        return this.$fetch('sns/topics/base', {user_id: this.$route.params.id})
+            .then(resp => {
+                this.types = [{name: '全部', count: resp.topic_count, code: ''}].concat(resp.topic_types)
+            }).then(done)
     },
-    computed: {
-        paging() {
-            return {
-                path: 'dc/sns/search',
-                list: 'entries',
-                params: {
-                    owner_id: this.$route.params.id,
-                    doc_type: 'tp',
-                    topic_type: this.selected
-                }
+
+    ready() {
+        this.$watch('selected', type => {
+            if(!this.items.length) {
+                this.items = _.clone(this.$refs.list.items)
             }
-        }
-    },
-    methods: {
-        classify(type) {
-            this.selected = type
-            this.$fetch('dc/sns/search', {
-                owner_id: this.$route.params.id,
-                doc_type: 'tp',
-                topic_type: type,
-                limit: 10
-            }).then((data) => {
-                this.items = data.entries
-            })
-        }
+            this.$refs.list.items = this.items.filter(item => !type || item.entry.topic_type.code === type)
+        })
     }
 }
 </script>

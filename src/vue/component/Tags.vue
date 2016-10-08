@@ -36,7 +36,7 @@ export default {
             if(this.env.isApp) {
                 this.action('tag', tag)
             } else {
-                location.href = this.config.download
+                this.gotoDownload()
             }
         }
     }

@@ -1,13 +1,8 @@
 import Q from 'q'
 import bridge from '../bridge'
 import config from '../config'
-import Avatar from 'component/Avatar.vue'
-import Empty from 'component/Empty.vue'
-import PriceTag from 'component/PriceTag.vue'
 
 const mixin = {
-    components: [Avatar, Empty, PriceTag],
-
     data() {
         return {
             config
@@ -122,7 +117,7 @@ const mixin = {
                         const [path, version] = url.split('|')
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v9']
+                                ['X-Api-Version', version || 'v10']
                             ].filter(header => header[1]))
                         this.$http[method](path, data, {headers})
                             .then(({data: resp}) => {
@@ -137,7 +132,7 @@ const mixin = {
                                             if(this.env.isApp) {
                                                 this.$route.router.replace({'name': '404'})
                                             } else {
-                                                console.debug(404, this.$route.path)
+                                                console.debug(404, path)
                                             }
                                         } else {
                                             console.debug(`[${resp.status}]${path}\n${resp.message}`)
@@ -169,19 +164,13 @@ const mixin = {
             let args = {
                 id: video,
                 targetId: this.$route.params.id,
-                targetType: this.config.shareables[this.$route.name] || this.$route.name
+                targetType: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value() || this.$route.name
             }
-            if(_.isObject(video)) {
-                _.merge(args, video)
-            }
+
             if(this.env.isApp) {
                 this.action('play', args)
-            } else {    // 在非App环境，采用回调来触发视频自动播放！
-                let medias = [{id: args.id, type: 'video'}]
-                if(!_.isEmpty(args.ads) && _.every(args.ads, id => id)) {
-                    medias = medias.concat({id: args.ads[0], type: 'img'}, {id: args.ads[1], type: 'video'})
-                }
-                this.action('play', {medias} , fn => fn())
+            } else {
+                this.action('play', args , fn => fn())
             }
         },
 
@@ -189,6 +178,10 @@ const mixin = {
             if(!_.isEmpty(ids) && _.every(ids, id => id)) {
                 this.action('coverflow', {ids: ids.join(','), index})
             }
+        },
+
+        gotoDownload() {
+            window.location.href = config.download
         }
     }
 }

@@ -50,7 +50,7 @@ gap($size)
             for $dir in $dirs
                 padding-{$dir}: $size px
 
-for $size in range(10, 40, 2)
+for $size in range(6, 40, 2)
     gap($size)
 gap(0)
 /****************************
@@ -110,15 +110,17 @@ for $dis in block inline-block none
 $line-clamp
     overflow: hidden
     word-break: break-all
-    // display: -webkit-box
+
     text-overflow: ellipsis
-    // -webkit-box-orient: vertical
     line-height: 1.1
 .line-clamp, .line-clamp-1
     @extends $line-clamp
     -webkit-line-clamp: 1
+    white-space: nowrap
 .line-clamp-2
     @extends $line-clamp
+    display: -webkit-box
+    -webkit-box-orient: vertical
     -webkit-line-clamp: 2
 
 .user-txt
@@ -134,11 +136,6 @@ $line-clamp
 .bold
     font-weight: bold
 
-[class^=icon-], [class^=icon-] + span
-    display: inline-block
-[class^=icon-]+span
-    padding-left: 8px
-
 .video
     position: relative
     background-size: contain
@@ -152,3 +149,9 @@ $line-clamp
         bottom: 0
         background: transparent url($qn + 'icon/play.svg') no-repeat 50%
         background-size: 2rem
+
+[class^="icon-"]
+    display: inline-block
+    & + span
+        display: inline-block
+        padding-left: 8px

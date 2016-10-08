@@ -40,7 +40,7 @@
 div(:class="{'loading': loading}")
     router-view
     template(v-if="env.isShare && shareData.hasDownloadLink")
-        .share-bottom.flex(@click="download()")
+        .share-bottom.flex(@click="gotoDownload()")
             .logo.mgr
                 img(:src="'logo.png' | qn", alt="美玉秀秀")
             .flex-1.white
@@ -108,9 +108,6 @@ export default {
                 .then((user) => {
                     this.user = user
                 })
-        },
-        download() {
-            window.location.href = this.config.download
         }
     }
 }

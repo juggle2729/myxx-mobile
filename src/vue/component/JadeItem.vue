@@ -59,16 +59,9 @@
 </div>
 </template>
 <script>
-import Comment from 'component/Comment.vue'
-import Share from 'component/Share.vue'
-import Follow from 'component/Follow.vue'
 export default {
     name: 'JadeItem',
-    components: {
-        Comment,
-        Share,
-        Follow
-    },
+
     props: {
         item: [Object]
     }

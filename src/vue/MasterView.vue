@@ -167,7 +167,7 @@
                 li.attentioned(@click='followMaster()', v-if='base.follow && !isSelf') 已关注
                 li.share(@click='share') 分享
                 li.store(v-link="{name: 'user', params: {id: base.id}}") 店铺
-    .share-bottom.flex(v-if='showDock', @click='download()')
+    .share-bottom.flex(v-if='showDock', @click='gotoDownload()')
         .logo.mgr
             img(:src="'logo.png' | qn", alt='美玉秀秀')
         .flex-1.white
@@ -209,7 +209,7 @@ export default {
                     return this.$fetch(`sites/${base.id}/articles/${base.interview_id}`)
                 }).then((data) => {
                     this.interview = data
-                    this.setShareData({baseData: this.base, interview: this.interview}, true)
+                    this.setShareData({baseData: this.base, interview: this.interview})
                 })
         }
     },
@@ -222,9 +222,6 @@ export default {
         container.querySelector('.cover .bg').style.height = window.innerHeight + 'px'
     },
     methods: {
-        download() {
-            window.location.href = this.config.download
-        },
         enableRefresh(enable) {
             this.action('toggleTopRefresh', {
                 enable: enable
@@ -332,7 +329,7 @@ export default {
                     this.following = false
                 }, 200)
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         }
     }

@@ -67,7 +67,7 @@ if (process.env.NODE_ENV === 'production') {
             hash: true
         }),
         new ExtractTextPlugin("style.css")
-    ]
+    ];
 } else {
     module.exports.plugins = [
         new webpack.ProvidePlugin({_: "lodash"}),

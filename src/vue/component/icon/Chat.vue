@@ -1,19 +1,13 @@
-<style lang="stylus">
-.chat-component
-    font-size: 30px
-    color: #888888
-    i
-        transform: scale(1.5)
-</style>
-<template>
-<div class="share-component" @click.stop="chat(id, name, jade)">
-    <i class="icon-contact"></i><span>私信</span>
+<template lang="jade">
+.share-icon.fz-30.gray(@click.stop="chat(id, name, jade)")
+    i.icon-chat
+    span 私信
 </div>
 </template>
 <script>
 import Q from 'q'
 export default {
-    name: 'Share',
+    name: 'chat-icon',
     props: {
         id: [Number],
         name: [String],
@@ -43,7 +37,7 @@ export default {
                     this.action('toast', {success: 0, text: '请更新至最新版'})
                 }
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         }
     }

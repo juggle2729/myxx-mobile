@@ -45,16 +45,9 @@
             border-radius: 6px
             line-height: 72px
             margin-right: 14px
-            .icon-enter
-                position: relative
-                top: 3px
 </style>
 <template lang="jade">
-.user-view.bg
-    .tabs.tabs-fixed.flex.fz-30.bdb.bg-white(:class="{'default': isDefaultView}")
-        .flex-1.center.bdr(v-if='user.has_homepage', :class="{'active': $route.params.tab === 'home'}", @click="go('home')") 主页
-        .flex-1.center.bdr(:class="{'active': $route.params.tab === 'story'}", @click="go('story')") 帖子
-        .flex-1.center(:class="{'active': $route.params.tab === 'evaluation'}", @click="go('evaluation')") 鉴宝
+.user-view.bg(v-if="!$loadingRouteData")
     .banner.bg.center
         avatar(:user='user', :size='120')
         p.fz-30 {{user.nickname}}
@@ -62,89 +55,56 @@
             span.bdr.pdh-30 关注 {{user.follow_count}}
             span.pdh-30 粉丝数 {{user.fans_count}}
         p.gray.fz-26.mgt(v-if='user.title') 美玉认证: {{user.title}}
-    .tabs.tabs-static.flex.fz-30.bdb.bg-white(:class="{'default': isDefaultView}")
-        .flex-1.center.bdr(v-if='user.has_homepage', :class="{'active': $route.params.tab === 'home'}", @click="go('home')") 主页
-        .flex-1.center.bdr(:class="{'active': $route.params.tab === 'story'}", @click="go('story')") 帖子
-        .flex-1.center(:class="{'active': $route.params.tab === 'evaluation'}", @click="go('evaluation')") 鉴宝
-    .tab-content
-        component(:is='view', keep-alive='', transition-mode='out-in', transition='fade')
+    tabs(:tabs="{home: '主页', story: '帖子', evaluation: '鉴宝'}", :current.sync="view")
+    component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
         follow(:user='user.id', :follow='user.is_followed', :has-border='false')
         share.bdl
         .button.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
             | 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}
-            span.icon-enter
+            .icon-enter
 </template>
 <script>
+import tabs from 'component/Tabs.vue'
 import shareable from 'shareable'
-import home from './UserHome.vue'
-import story from './UserStory.vue'
-import evaluation from './UserEvaluation.vue'
-import follow from 'component/Follow.vue'
-import share from 'component/Share.vue'
+import home from 'UserHome.vue'
+import story from 'UserStory.vue'
+import evaluation from 'UserEvaluation.vue'
 export default {
-    name: 'UserView',
+    name: 'user-view',
+
     mixins: [shareable],
+
     components: {
+        tabs,
         home,
         story,
-        evaluation,
-        follow,
-        share
+        evaluation
     },
+
     data() {
         return {
-            user: {
-                id: 0
-            },
-            isDefaultView: false,
-            view: undefined
+            view: 'home'
         }
     },
-    ready() {
-        this.staticTabs = this.$el.querySelector('.tabs-static')
-        this.fixedTabs = this.$el.querySelector('.tabs-fixed')
-        const tabContent = this.$el.querySelector('.tab-content')
-        // FIXME: 采用css解决方案
-        // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
-        tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`
-    },
+
     computed: {
         isSelf() {
             return _.get(this, 'self.id') == this.user.id
         }
     },
+
     route: {
-        canReuse({from, to}) {
-            return from.name === to.name && from.params.id === to.params.id
-        },
         data({from, to, next}) {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入个人主页
-                this.$fetch(`users/${to.params.id}/profile`)
-                    .then((user) => {
+                return this.$fetch(`users/${to.params.id}/profile`)
+                    .then(user => {
                         this.user = user
-                        this.isDefaultView = ['home', 'story', 'evaluation'].indexOf(to.params.tab) === -1
-                        this.view = this.isDefaultView ? (this.user.has_homepage ? 'home': 'story') : to.params.tab
                         this.action('updateTitle', {text: `${user.nickname}的个人主页`})
-                        this.setShareData({id: user.id, name: user.nickname, photo: user.photo, title: user.title} , true)
-                        next()
+                        this.setShareData({id: user.id, name: user.nickname, photo: user.photo, title: user.title})
                     })
-            } else { // 个人主页内部跳转
-                this.isDefaultView = false
-                this.view = to.params.tab
+            } else {
                 next()
-            }
-        }
-    },
-    methods: {
-        go(tab) {
-            (this.$route.params.tab !== tab) && this.$router.replace(`/user/${this.user.id}/${tab}`)
-        }
-    },
-    events: {
-        scroll() {
-            if(!this.env.isWechat) {
-                this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
             }
         }
     }

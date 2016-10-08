@@ -27,15 +27,10 @@
 </template>
 <script>
 import paging from 'paging'
-import Avatar from 'component/Avatar.vue'
-import Follow from 'component/Follow.vue'
 export default {
     name: 'UserFollowingView',
     mixins: [paging],
-    components: {
-        Follow,
-        Avatar
-    },
+
     data() {
         return {
             emptyTitle: '你还没有粉丝'

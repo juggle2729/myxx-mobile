@@ -59,7 +59,7 @@
 </style>
 <template>
 <div class="card-component bg-white">
-    <div v-if="item.type === 'jb'" v-link="{name: 'evaluation', params: {id: item.entry.id, result: 'none'}}">
+    <div v-if="item.type === 'jb'" v-link="{name: 'question', params: {id: item.entry.id}}">
         <div class="data-label fz-22 center white">鉴宝</div>
         <div class="media img" v-bg.md="item.entry.picture"></div>
         <div class="data-info fz-26"><div class="data-name line-clamp-2">{{item.entry.description}}</div></div>
@@ -77,12 +77,8 @@
 </div>
 </template>
 <script>
-import Like from 'component/Like.vue'
-import Comment from 'component/Comment.vue'
 export default {
     name: 'card',
-
-    components: [Like, Comment],
 
     props: {
         item: Object

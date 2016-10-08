@@ -79,7 +79,7 @@ export default {
                                     break
                                 case 20:
                                     card.params.result = card.id
-                                    card.type.route = 'evaluation' //鉴定结果，跳转到鉴宝页面
+                                    card.type.route = 'question' //鉴定结果，跳转到鉴宝页面
                                     card.preview = {video: entry.video}
                                     card.user = entry.identifier
                                     card.description = '鉴定了 ' + _.get(entry, 'applier.name', '路人') + ' 的宝贝'

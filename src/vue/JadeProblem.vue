@@ -15,10 +15,6 @@
         .help
             margin: 0 auto
             margin-bottom: 50px
-            .icon-enter
-                position: relative
-                top: 3px
-                color: #cc3f4f
 </style>
 <template lang="jade">
 .jade-problem.bg
@@ -52,5 +48,4 @@
                 |                     3）如果双方就退货以及退货导致的运费和保价费未能达成一致，由平台协商仲裁解决。
         .help.red.fz-30.center(v-link="{name: 'mall-help'}")
             span 查看帮助
-            span.icon-enter.red
 </template>

@@ -32,15 +32,12 @@
 <script>
 import paging from 'paging'
 import shareable from 'shareable'
-import like from 'component/Like.vue'
-import comment from 'component/Comment.vue'
+
+
 export default {
     name: 'WorksView',
     mixins: [paging, shareable],
-    components: {
-        like,
-        comment
-    },
+
     computed: {
         paging() {
             return {
@@ -55,7 +52,7 @@ export default {
     route: {
         data({to}) {
             return this.$fetch(`users/${to.params.id}/profile`).then((user) => {
-                this.setShareData({name: user.nickname, photo: user.photo}, true)
+                this.setShareData({name: user.nickname, photo: user.photo})
             })
         }
     }

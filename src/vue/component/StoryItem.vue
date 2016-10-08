@@ -80,18 +80,10 @@
 </div>
 </template>
 <script>
-import Follow from 'component/Follow.vue'
-import Like from 'component/Like.vue'
-import Share from 'component/Share.vue'
-import Comment from 'component/Comment.vue'
+
 export default {
     name: 'StoryItem',
-    components: {
-        Follow,
-        Like,
-        Share,
-        Comment
-    },
+
     props: {
         item: [Object]
     }

@@ -1,15 +1,15 @@
 <style lang="stylus">
-.favor-comp
+.star-icon
     display: block
 </style>
 <template lang="jade">
-.favor-comp(@click="fav")
-    .icon-collect.fz-32(:class="{'red': active}")
+.star-icon(@click="star")
+    .icon-star.fz-32(:class="{'red': active}")
     span {{active ? '已收藏' : '收藏'}}
 </template>
 <script>
 export default {
-    name: 'favor-component',
+    name: 'star-icon',
 
     props: {
         active: Boolean,
@@ -21,7 +21,8 @@ export default {
     },
 
     methods: {
-        fav() {
+        star() {
+            console.log(this.active, this.$put)
             this[this.active ? '$put' : '$post']('users/favs', {doc_type: this.type, doc_id: this.id})
                 .then(() => {
                     this.active = !this.active

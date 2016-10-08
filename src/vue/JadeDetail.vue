@@ -19,11 +19,11 @@
     tags(:tags="jade.tags")
     .recommends.bg.pdt(v-if="related.length")
         .fz-26.gray 商品推荐
-        product-card(v-for="item in related", :entry="item")
+        product-card(v-for="item in related", :item="item")
 </template>
 <script>
 import Tags from 'component/Tags.vue'
-import ProductCard from 'component/ProductCard.vue'
+import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'JadeDetail',
 

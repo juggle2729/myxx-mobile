@@ -111,7 +111,7 @@
 </style>
 <template>
 <div class="evaluation-item bg-white">
-    <div v-link="{name: 'evaluation', params: {id: item.post_id, result: 'none'}}" track-by="$index">
+    <div v-link="{name: 'question', params: {id: item.post_id}}" track-by="$index">
         <div class="head flex">
             <avatar :user="item.user" :is-self="false" :size="50"></avatar>
             <div class="fz-26 margin-left">{{item.user.name}}</div>
@@ -146,12 +146,9 @@
 </div>
 </template>
 <script>
-import Comment from 'component/Comment.vue'
+
 export default {
     name: 'EvaluationItem',
-    components: {
-        Comment
-    },
     props: {
         item: [Object]
     },

@@ -22,11 +22,8 @@
         follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
 </template>
 <script>
-import Follow from 'component/Follow.vue'
 export default {
     name: 'follow-suggestion',
-
-    components: {Follow},
 
     props: {
         item: Object

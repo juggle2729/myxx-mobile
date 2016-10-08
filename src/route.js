@@ -1,14 +1,24 @@
 export default {
-    '/evaluation/:id': {
-        name: 'evaluation',
-        title: '鉴宝详情',
-        native: v => v >= 1.1,
+    '/question/:id': {
+        name: 'question',
+        title: '问答详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('EvaluationView.vue'))
-            }, 'evaluation')
+                resolve(require('QuestionView.vue'))
+            }, 'question')
         }
     },
+
+    '/answer/:id': {
+        name: 'answer',
+        title: '回答详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AnswerView.vue'))
+            }, 'question')
+        }
+    },
+
     '/top-master': {
         name: 'top-master',
         title: '鉴宝师排行',
@@ -170,6 +180,17 @@ export default {
         }
     },
 
+    '/user/:id': { // 个人主页
+        name: 'user',
+        title: '',
+        native: v => v >= 1.3 && {name: 'profile'},
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('UserView.vue'))
+            }, 'profile')
+        }
+    },
+
     '/user/:id/like': {
         name: 'user-like',
         title: '赞',
@@ -204,17 +225,6 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('UserPurchaseView.vue'))
-            }, 'profile')
-        }
-    },
-
-    '/user/:id/:tab': { // 个人主页
-        name: 'user',
-        title: '',
-        native: v => v >= 1.3 && {name: 'profile'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('UserView.vue'))
             }, 'profile')
         }
     },

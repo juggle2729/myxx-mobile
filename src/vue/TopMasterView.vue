@@ -43,7 +43,7 @@ export default {
     },
 
     ready() {
-        this.setShareData({}, true)
+        this.setShareData({})
     }
 }
 </script>

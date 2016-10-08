@@ -34,11 +34,17 @@ export default {
         return {
             links: [
                 {
+                    label: '图文详情',
+                    href: '/post/1'
+                },{
+                    label: '问答详情',
+                    href: '/question/211'
+                },{
                     label: '求购竞标列表',
                     href: '/purchases'
                 }, {
                     label: '鉴宝师排行',
-                    href: '/ranking/weekly'
+                    href: '/top-master'
                 }, {
                     label: '大额支付',
                     href: '/pay-offline/160808170534035573'

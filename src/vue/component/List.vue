@@ -59,10 +59,10 @@ const opts = {
                         } else {
                             items = resp.entries
                         }
-
+                        this.total = resp.total
                         this.items.splice(this.items.length, 0, ...items)
                         this.cursor = resp.cursor
-                        this.hasMore = items.length === data.limit && this.items.length < (resp.total || 999999)
+                        this.hasMore = items.length === data.limit && this.items.length < (this.total || 999999)
                         this.isFetching = false
                     })
             }
@@ -79,7 +79,7 @@ export default class List {
             components: {
                 [comp]: require('component/item/' + comp + '.vue')
             },
-            data: () => ({comp, req, items: [], isFetching: null, hasMore: null, cursor: null})
+            data: () => ({comp, req, items: [], total: null, isFetching: null, hasMore: null, cursor: null})
         }
     }
 }

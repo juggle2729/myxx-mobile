@@ -6,31 +6,17 @@
     }
 }
 </style>
-<template>
-<div class="user-evaluation" :class="{'bg-white': items.isEmpty}">
-    <div class="list">
-        <card v-for="item in items" :entry="item.entry" :type="item.type"></card>
-    </div>
-    <empty v-if="items.isEmpty" title="暂无鉴宝"></empty>
-</div>
+<template lang="jade">
+.user-evaluation
+    evaluation-list(path='dc/sns/search', :params="{owner_id: $route.params.id, doc_type: 'jb'}")
 </template>
 <script>
-import paging from 'paging'
-import Card from 'component/item/Card.vue'
+import List from 'component/List.vue'
 export default {
-    name: 'UserEvaluation',
-    mixins: [paging],
-    components: [Card],
-    computed: {
-        paging() {
-            return {
-                path: 'dc/sns/search',
-                params: {
-                    owner_id: this.$route.params.id,
-                    doc_type: 'jb'
-                }
-            }
-        }
+    name: 'user-evaluation',
+
+    components: {
+        EvaluationList: new List('Card')
     }
 }
 </script>

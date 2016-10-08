@@ -1,21 +1,16 @@
 <style lang="stylus">
-.like-component {
-    i {
-        transform: scale(1.5) translateY(.5pX) // translate3d will cause blurry
-    }
-    &.active {
+.like-icon
+    &.active
         color: #cc3f4f
-    }
-}
 </style>
-<template>
-<div class="like-component fz-30 light" :class="{active: active}" @click="like">
-    <i class="icon-like"></i><span>{{count || zero}}</span>
-</div>
+<template lang="jade">
+.like-icon.fz-30.light(:class="{active: active}", @click="like")
+    i.icon-like
+    span {{count || zero}}
 </template>
 <script>
 export default {
-    name: 'Like',
+    name: 'like-icon',
     props: {
         active: [Boolean],
         count: [Number],

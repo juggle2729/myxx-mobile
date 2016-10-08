@@ -64,7 +64,7 @@
             .opt.fz-26.bdt(v-for="opt in opts", @click="applyFilter(opt)", :class="{'red': opt===filter[filter.display]}") {{opt.label}}
     empty(v-if="items.isEmpty")
     .list.bg(v-else)
-        product-card(v-for="item in items", :entry="item", v-link="{name: 'jade', params: {id: item.id}}")
+        product-card(v-for="item in items", :item="item", v-link="{name: 'jade', params: {id: item.id}}")
     .product-btn.bg-red(@click="purchase()")
         .white.fz-30 我要清仓
         .fz-22 (只展示在商户专区)
@@ -72,7 +72,7 @@
 <script>
 import Q from 'q'
 import paging from 'paging'
-import ProductCard from 'component/ProductCard.vue'
+import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'BProducts',
 

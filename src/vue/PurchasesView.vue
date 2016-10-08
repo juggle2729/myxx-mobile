@@ -94,7 +94,7 @@ export default {
     methods: {
         purchase() {
             if(this.env.isWechat) {
-                location.href = this.config.download
+                this.gotoDownload()
             } else {
                 Q.promise(resolve => {
                     if(this.self) {

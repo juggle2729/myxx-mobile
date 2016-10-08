@@ -168,13 +168,13 @@
     .float-box.flex.fixed.fz-30.bg-white
         .bdt.flex-1.flex
             .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
-                .icon-contact.fz-44
+                .icon-chat.fz-30
                 div 私信
             .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                .icon-collect.fz-32
+                .icon-star.fz-30
                 div {{jade.is_faved ? '已收藏' : '收藏'}}
             .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
-                .icon-comment-solid.fz-44
+                .icon-comment.fz-30
                 div 评论  {{jade.comment_count}}
         .fz-30.flex-2.buy-btn.bg-gray.white(:class="{'bg-red': !isSelf && jade.sell_status === 'selling'}", @click='buy()') {{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}
 </template>
@@ -182,7 +182,7 @@
 import Q from 'q'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import Comment from './JadeComment.vue'
+import comment from './JadeComment.vue'
 import detail from './JadeDetail.vue'
 import attribute from './JadeAttribute.vue'
 import problem from './JadeProblem.vue'
@@ -191,7 +191,7 @@ export default {
     mixins: [shareable],
     components: {
         lv,
-        Comment,
+        comment,
         detail,
         attribute,
         problem
@@ -273,7 +273,7 @@ export default {
                     this.action('toast', {success: 0, text: '请更新至最新版'})
                 }
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
          },
         contact() {
@@ -294,14 +294,14 @@ export default {
                     this.action('toast', {success: 0, text: '请更新至最新版'})
                 }
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         },
         gotoComments() {
             if(this.env.isApp) {
                 this.$router.go({name: 'comments', params: {id: this.jade.id, type: '40'}})
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         },
         go(tab) { // FIXME 采用v-link替代

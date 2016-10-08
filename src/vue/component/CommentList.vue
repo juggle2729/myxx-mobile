@@ -1,11 +1,28 @@
-<style lang="stylus">
+<style lang="stylus" scoped>
 .comment-list
+    header
+        line-height: 80px
+    .no-comment
+        line-height: 140px
+    .list.empty
+        display: none
+    .more
+        padding: 32px 0
+        &::after
+            content: '\e904'
+            font-family: 'icomoon'
+            display: inline-block
+            padding-left: 8px
+            font-size: .8em
     .comment-item:last-child
         padding-bottom: 0
 </style>
 <template lang="jade">
 .comment-list
+    header.bdb.fz-26.pdl-32.gray 评论&nbsp;&nbsp;{{$refs.list.total}}
+    .no-comment.fz-26.light.center(v-if="$refs.list && $refs.list.total === 0") 还没有人评论
     comments(:path="path", :params="params", transform="comments", v-ref:list)
+    .fz-26.red.center.more(v-if="isPreview && $refs.list && $refs.list.total > 5", v-link="{name: 'comments', params: {id: id, type: type}}") 查看全部评论
 </template>
 <script>
 import List from 'component/List.vue'
@@ -28,8 +45,12 @@ export default {
             return `users/target/${id}/type/${type}/comments`
         },
 
+        isPreview() {
+            return this.$route.name !== 'comments'
+        },
+
         params() {
-            return this.$route.name === 'comments' ? {} : {limit: 5, freeze: true}
+            return this.isPreview ? {limit: 5, freeze: true} : {}
         },
 
         items() {
@@ -44,8 +65,7 @@ export default {
                 .then(content => {
                     let c = reply_to ? {content, reply_to} : {content}
                     return this.$post(this.path, c).then(resp => resp)
-                })
-                .then(comment => {
+                }).then(comment => {
                     this.items.splice(0, 0, comment)
                     this.action('toast', {success: 1, text: comment.reply_to ? '回复成功' : '评论成功'})
                 })

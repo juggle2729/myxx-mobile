@@ -24,8 +24,6 @@
         padding: 10px 20px
         border-radius: 26px
         background-color: #ffecea
-        .icon-activity
-            transform: scale(1.2)
     .footer
         height: 100px
         width: 100%
@@ -33,27 +31,10 @@
             line-height: 60px
             -webkit-box-flex: 1
             text-align: center
-        .icon-comment-solid
-            transform: scale(1.4)
-
-    .comments-preview
-        header
-            line-height: 80px
-        .comment-list .list.empty
-            display: none
-        .no-comment
-            line-height: 140px
-        .more
-            padding: 6px 0 32px
-            &::after
-                content: '\e934'
-                font-family: 'icomoon'
-                display: inline-block
-                transform: translate3d(10px, 2px, 0)
 </style>
 <template lang="jade">
 .story-view.bg-white(v-if='!$loadingRouteData')
-    .cover.video(v-if="cover.type=== 'video'", @click.stop='play(cover.id)', v-bg='cover.id', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+    .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
     .flex.pd-32
         .flex.flex-1
             avatar(:user='story.user')
@@ -63,17 +44,17 @@
         follow(:user='story.user.id', :follow='story.user.is_followed', :has-border='true')
     .fz-30.mgh-32.user-txt {{story.content}}
 
-    .pictures.pd-28(v-if="cover.type==='picture'")
+    .pictures.pd-28(v-if="cover.media_type==='picture'")
         .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
 
     .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
-        i.icon-activity
+        i.icon-fire
         span {{story.activity.name}}
 
     .footer.flex.fz-30.light.bdt.bg-white
         like(:active='story.liked', :count='story.like')
         .comment.bdl(@click='$refs.comments.comment()')
-            span.icon-comment-solid
+            span.icon-comment
             span {{story.comment || '写评论'}}
         share.bdl
 
@@ -82,11 +63,7 @@
         tags(:tags='story.tags')
 
     .hr
-    .comments-preview
-        header.bdb.fz-26.pdl-32.gray 评论&nbsp;&nbsp;{{story.comment}}
-        .no-comment.fz-26.light.center(v-if="story.comment == 0") 还没有人评论
-        comment-list(:type='30', :id='story.post_id', v-ref:comments)
-        .fz-26.red.center.more(v-if="story.comment > 5", v-link="{name: 'comments', params: {id: story.post_id, type: 30}}") 查看全部评论
+    comment-list(:type='30', :id='story.post_id', v-ref:comments)
     product-suggestion(:id='story.post_id')
     general-suggestion
 </template>
@@ -95,18 +72,15 @@ import CommentList from 'component/CommentList.vue'
 import Tags from 'component/Tags.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import ProductSuggestion from 'component/ProductSuggestion.vue'
-import Like from 'component/Like.vue'
-import Follow from 'component/Follow.vue'
-import Share from 'component/Share.vue'
+
+
+
 import shareable from 'shareable'
 export default {
     name: 'StoryView',
     mixins: [shareable],
     components: {
         Tags,
-        Like,
-        Follow,
-        Share,
         CommentList,
         GeneralSuggestion,
         ProductSuggestion
@@ -130,8 +104,8 @@ export default {
 
         pictures() {
             return _.chain(this.story.medias)
-                        .filter(media => media.type === 'picture')
-                        .map(media => media.id)
+                        .filter(item => item.media_type === 'picture')
+                        .map(item => item.media)
                         .value()
         },
 

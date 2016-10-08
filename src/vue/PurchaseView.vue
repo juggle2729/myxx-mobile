@@ -90,7 +90,7 @@
 </template>
 <script>
 import Q from 'q'
-import like from 'component/Like.vue'
+
 import countdown from 'component/Countdown.vue'
 import BidItem from 'component/BidItem.vue'
 import paging from 'paging'
@@ -99,7 +99,6 @@ export default {
     name: 'PurchaseView',
     mixins: [paging, shareable],
     components: {
-        like,
         countdown,
         BidItem
     },
@@ -149,21 +148,21 @@ export default {
 
     ready() {
         this.$on('restore', () => {
-            this.setShareData({title: this.purchase.description, icon: this.purchase.pictures[0]}, true)
+            this.setShareData({title: this.purchase.description, icon: this.purchase.pictures[0]})
         })
     },
     route: {
         data({to}) {
             return this.$fetch(`mall/purchase/${to.params.id}`).then((data) => {
                 this.purchase = data
-                this.setShareData({title: data.description, icon: data.pictures[0]}, true)
+                this.setShareData({title: data.description, icon: data.pictures[0]})
             })
         }
     },
     methods: {
         addBid() {
             if(this.env.isShare) {
-                window.location.href = this.config.download
+                this.gotoDownload()
             } else if(this.isOpen){
                 Q.promise(resolve => {
                     if(this.self) {

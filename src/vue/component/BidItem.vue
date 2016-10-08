@@ -193,7 +193,7 @@ export default {
             if(this.env.isApp) {
                 this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
             } else {
-                window.location.href = this.config.download
+                this.gotoDownload()
             }
         }
     }

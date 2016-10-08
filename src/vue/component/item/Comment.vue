@@ -21,11 +21,9 @@
         .fz-30.content.user-txt(:to="item.reply_to && item.reply_to.name") {{{content}}}
 </template>
 <script>
-import Like from 'component/Like.vue'
+
 export default {
     name: 'comment',
-
-    components: {Like},
 
     props: {
         item: Object,
