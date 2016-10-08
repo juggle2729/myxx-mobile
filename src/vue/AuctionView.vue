@@ -181,7 +181,7 @@
                         .date.fz-22.light.mgt-10 {{item.create_at | date 'm月dd日 H:MM'}}
                 .fz-40(:class="{'gray': $index}")
                     span.unit.fz-30 ￥
-                    span {{item.bid_price/1000}}
+                    span {{item.bid_price/100}}
                     span.leading-txt.white.fz-22.inline-block.center.mgl-22(v-if='!$index') 领先
         .no-data.fz-30.light.center(v-if="!items.length") {{auction.status === 'preview' ? '等待开拍': '暂无出价'}}
     .bottom

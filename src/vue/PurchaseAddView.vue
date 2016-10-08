@@ -95,7 +95,7 @@ export default {
 
             this.$post(`mall/purchases`, {
                 description: this.description,
-                price_max: this.budget * 1000
+                price_max: this.budget * 100
             }).then(data => {
                 return this.$put(`mall/purchase/${data.id}/pay_purchase`, {
                     channel_type: 'wx_pub'

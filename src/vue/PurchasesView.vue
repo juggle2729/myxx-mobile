@@ -85,23 +85,23 @@ export default {
 
     methods: {
         purchase() {
-            if(this.env.isWechat) {
-                this.$router.go({name: 'purchase-add'})
-            } else {
-                Q.promise(resolve => {
-                    if(this.self) {
-                        resolve()
-                    } else {
-                        this.action('login').then(resolve)
-                    }
-                }).then(() => {
+            Q.promise(resolve => {
+                if(this.self) {
+                    resolve()
+                } else {
+                    this.action('login').then(resolve)
+                }
+            }).then(() => {
+                if(this.env.isWechat) {
+                    this.$router.go({name: 'purchase-add'})
+                } else {
                     if(this.self.goodsPublishPermission) {
                         this.action('toast', {success: '0', text: '请前往"商户专区"发布需求'})
                     } else {
                         this.action('newPurchase')
                     }
-                })
-            }
+                }
+            })
         },
 
         closeNotice() {
