@@ -46,13 +46,8 @@
         position: fixed
         bottom: 0
 </style>
-<<<<<<< d29dec60130867405c7800a6689a408afeaefd72
-<template lang="jade">
-.shop-view.bg-white(v-if='!$loadingRouteData')
-=======
 <template lang="pug">
-.studio-view.bg-white(v-if='!$loadingRouteData')
->>>>>>> 发布求购、升级jade到pug
+.shop-view.bg-white(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
         .shop.flex.white
             .img(v-bg='shop.logo')

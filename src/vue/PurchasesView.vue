@@ -46,7 +46,7 @@
 <script>
 import Q from 'q'
 import paging from 'paging'
-import PurchaseItem from 'component/PurchaseItem.vue'
+import PurchaseItem from 'component/item/Purchase.vue'
 export default {
     name: 'PurchasesView',
 
@@ -94,11 +94,7 @@ export default {
     methods: {
         purchase() {
             if(this.env.isWechat) {
-<<<<<<< d29dec60130867405c7800a6689a408afeaefd72
                 this.gotoDownload()
-=======
-                this.$router.go({name: 'purchase-add'})
->>>>>>> 发布求购、升级jade到pug
             } else {
                 Q.promise(resolve => {
                     if(this.self) {

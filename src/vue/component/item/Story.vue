@@ -32,7 +32,6 @@
             color: #666666
             height: 114px
             position: relative
-            fz-family: 'song-simple'
             text-align: center
             margin: 0 auto
             .user-txt {
@@ -82,10 +81,10 @@
 <script>
 
 export default {
-    name: 'StoryItem',
+    name: 'story-item',
 
     props: {
-        item: [Object]
+        item: Object
     }
 }
 </script>

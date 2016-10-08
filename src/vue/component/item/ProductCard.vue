@@ -21,17 +21,10 @@
         .price::first-letter
             font-size: .9em
 </style>
-<<<<<<< d29dec60130867405c7800a6689a408afeaefd72:src/vue/component/item/ProductCard.vue
-<template lang="jade">
+<template lang="pug">
 .product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}}")
     .media(v-bg='item.first_picture')
         .mark.fz-30.white(v-if="item.is_tob") 清仓
-=======
-<template lang="pug">
-.product-card.bg-white(v-link="{name: 'jade', params: {id: entry.id}}")
-    .media(v-bg='entry.first_picture')
-        .mark.fz-30.white(v-if="entry.is_tob") 清仓
->>>>>>> 发布求购、升级jade到pug:src/vue/component/ProductCard.vue
     .data-info
         p.fz-26.line-clamp.desc {{item.title}}
         p.fz-30.red.price {{item.price | price}}

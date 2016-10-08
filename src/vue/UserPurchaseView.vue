@@ -12,7 +12,7 @@
 </template>
 <script>
 import paging from 'paging'
-import PurchaseItem from 'component/PurchaseItem.vue'
+import PurchaseItem from 'component/item/Purchase.vue'
 export default {
     name: 'UserPurchaseView',
     mixins: [paging],

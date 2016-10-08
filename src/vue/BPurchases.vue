@@ -33,7 +33,7 @@
 <script>
 import Q from 'q'
 import paging from 'paging'
-import PurchaseItem from 'component/PurchaseItem.vue'
+import PurchaseItem from 'component/item/Purchase.vue'
 export default {
     name: 'BPurchases',
     mixins: [paging],

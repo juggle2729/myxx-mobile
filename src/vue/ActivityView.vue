@@ -17,7 +17,7 @@
 <script>
 import shareable from 'shareable'
 import paging from 'paging'
-import StoryItem from 'component/StoryItem.vue'
+import StoryItem from 'component/item/Story.vue'
 export default {
     name: 'activity-view',
     mixins: [paging, shareable],

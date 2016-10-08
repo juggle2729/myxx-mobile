@@ -46,17 +46,8 @@
             line-height: 72px
             margin-right: 14px
 </style>
-<<<<<<< d29dec60130867405c7800a6689a408afeaefd72
-<template lang="jade">
-.user-view.bg(v-if="!$loadingRouteData")
-=======
 <template lang="pug">
-.user-view.bg
-    .tabs.tabs-fixed.flex.fz-30.bdb.bg-white(:class="{'default': isDefaultView}")
-        .flex-1.center.bdr(v-if='user.has_homepage', :class="{'active': $route.params.tab === 'home'}", @click="go('home')") 主页
-        .flex-1.center.bdr(:class="{'active': $route.params.tab === 'story'}", @click="go('story')") 帖子
-        .flex-1.center(:class="{'active': $route.params.tab === 'evaluation'}", @click="go('evaluation')") 鉴宝
->>>>>>> 发布求购、升级jade到pug
+.user-view.bg(v-if="!$loadingRouteData")
     .banner.bg.center
         avatar(:user='user', :size='120')
         p.fz-30 {{user.nickname}}

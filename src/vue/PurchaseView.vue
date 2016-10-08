@@ -92,7 +92,7 @@
 import Q from 'q'
 
 import countdown from 'component/Countdown.vue'
-import BidItem from 'component/BidItem.vue'
+import BidItem from 'component/item/Bid.vue'
 import paging from 'paging'
 import shareable from 'shareable'
 export default {
