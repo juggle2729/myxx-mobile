@@ -72,9 +72,6 @@ import CommentList from 'component/CommentList.vue'
 import Tags from 'component/Tags.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import ProductSuggestion from 'component/ProductSuggestion.vue'
-
-
-
 import shareable from 'shareable'
 export default {
     name: 'StoryView',
@@ -85,6 +82,7 @@ export default {
         GeneralSuggestion,
         ProductSuggestion
     },
+
     data() {
         return {
             story: {
@@ -92,11 +90,7 @@ export default {
             }
         }
     },
-    ready() {
-        this.$on('restore', () => {
-            this.setShareData(this.story, true)
-        })
-    },
+
     computed: {
         cover() {
             return this.story.medias[0] || {}
@@ -117,7 +111,7 @@ export default {
         data({to}) {
             return this.$fetch(`sns/topics/${to.params.id}`)
                 .then(story => {
-                    this.setShareData(story, true)
+                    this.setShareData(story)
                     this.story = story
                 })
         }

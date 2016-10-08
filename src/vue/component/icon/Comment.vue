@@ -1,7 +1,7 @@
 <template lang="jade">
 .comment-icon.fz-30.light
     i.icon-comment
-    span count
+    span {{count}}
 </template>
 <script>
 export default {

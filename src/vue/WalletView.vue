@@ -47,26 +47,33 @@
 <script>
 export default {
     name: 'wallet-view',
+
     data() {
         return {
             balance: {}
         }
     },
+
     ready() {
-        this.$on('restore', () => {
-            this.action('action', {label: '明细'}).then(() => {
-                this.$router.go({name: 'detail', params: {tab: 'expects'}})
-            })
-        })
+        this.$on('restore', this.showAction)
     },
+
     route: {
         data() {
-            return this.$fetch('balance/latest').then((balance) => {
-                this.action('action', {label: '明细'}).then(() => {
+            return this.$fetch('balance/latest')
+                .then(balance => {
+                    this.balance = balance
+                    this.showAction()
+                })
+        }
+    },
+
+    methods: {
+        showAction() {
+            this.action('action', {label: '明细'})
+                .then(() => {
                     this.$router.go({name: 'detail', params: {tab: 'expects'}})
                 })
-                this.balance = balance
-            })
         }
     }
 }

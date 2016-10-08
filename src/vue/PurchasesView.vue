@@ -72,16 +72,8 @@ export default {
     },
 
     ready() {
-        this.action('action', {icon: 'question-2x.png'})
-            .then(() => {
-                this.$router.go({name: 'purchase-help'})
-            })
-        this.$on('restore', () => {
-            this.action('action', {icon: 'question-2x.png'})
-                .then(() => {
-                    this.$router.go({name: 'purchase-help'})
-                })
-        })
+        this.showAction()
+        this.$on('restore', this.showAction)
 
         this.action('cache', {k: 'purchases-visited'})
             .then(v => {
@@ -116,6 +108,13 @@ export default {
             this.firstVisit = false
             this.action('cache', {k: 'purchases-visited', v: 1})
         },
+
+        showAction() {
+            this.action('action', {icon: 'question-2x.png'})
+                .then(() => {
+                    this.$router.go({name: 'purchase-help'})
+                })
+        }
     }
 }
 </script>

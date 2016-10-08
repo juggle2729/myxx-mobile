@@ -63,11 +63,7 @@ export default {
         }
     },
     ready() {
-        this.$on('restore', () => {
-            this.action('action', {label: '常见问题'}).then(() => {
-                this.$router.go({name: 'mall-help-category', params: {category: 'payment'}})
-            })
-        })
+        this.$on('restore', this.showAction)
     },
     computed: {
         complete() {
@@ -78,9 +74,7 @@ export default {
         data() {
             return this.$fetch('balance/latest').then((data) => {
                 this.balance = data.current_amount
-                this.action('action', {label: '常见问题'}).then(() => {
-                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})
-                })
+                this.showAction()
             })
         }
     },
@@ -97,6 +91,13 @@ export default {
             } else if(this.amount > (this.balance / 100)) {
                 this.action('toast', {text: '超过最大提现金额'})
             }
+        },
+
+        showAction() {
+            this.action('action', {label: '常见问题'})
+                .then(() => {
+                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})
+                })
         }
     }
 }

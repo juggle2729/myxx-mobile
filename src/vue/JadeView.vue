@@ -210,9 +210,6 @@ export default {
         }
     },
     ready() {
-        this.$on('restore', () => {
-            this.setShareData(this.jade, true)
-        })
         this.staticTabs = this.$el.querySelector('.tabs-static')
         this.fixedTabs = this.$el.querySelector('.tabs-fixed')
         const tabContent = this.$el.querySelector('.tab-content')
@@ -235,7 +232,7 @@ export default {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$fetch('mall/products/'+ this.$route.params.id)
                     .then(jade => {
-                        this.setShareData(jade, true)
+                        this.setShareData(jade)
                         this.isSelf = (_.get(this, 'self.id') == (jade.owner.id || jade.default_admin.id))
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1
                         this.view = this.isDefaultView ? 'detail' : to.params.tab

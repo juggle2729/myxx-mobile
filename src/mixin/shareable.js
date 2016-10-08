@@ -1,5 +1,3 @@
-//分享 type 和 route 的对应关系
-
 export default {
     ready() {
         if(this.env.isShare) {
@@ -10,6 +8,10 @@ export default {
                             type: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value() || this.$route.name
                         }).then(_.noop)
             }, 3000)
+        } else if(this.env.isApp && this.env.isIOS) {
+            this.$on('restore', () => {
+                this.action('shareable', this.$root.shareData)
+            })
         }
     },
     methods: {

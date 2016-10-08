@@ -1,6 +1,5 @@
 <style lang="stylus">
 .activity-view
-    padding-bottom: 112px
     .cover
         width: 100%
         height: 536px
@@ -10,32 +9,27 @@
 <template lang="pug">
 .activity-view
     .cover(v-bg="activity.cover")
-    template(v-for="item in items")
-        .hr
-        story-item(:item="item.entry")
+    activities(:path="'cms/activities/' + $route.params.id + '/contents'")
 </template>
 <script>
 import shareable from 'shareable'
-import paging from 'paging'
+import List from 'component/List.vue'
 import StoryItem from 'component/item/Story.vue'
 export default {
     name: 'activity-view',
-    mixins: [paging, shareable],
+
+    mixins: [shareable],
+
+    components: {
+        activities: new List('Story')
+    },
+
     data() {
         return {
             activity: {}
         }
     },
-    components: {
-        StoryItem
-    },
-    computed: {
-        paging() {
-            return {
-                path: 'cms/activities/' + this.$route.params.id + '/contents'
-            }
-        }
-    },
+
     route: {
         data() {
             return this.$fetch(`cms/activities/${this.$route.params.id}`)

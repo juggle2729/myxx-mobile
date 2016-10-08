@@ -17,7 +17,7 @@
 </template>
 <script>
 import paging from 'paging'
-import AuctionItem from 'component/AuctionItem.vue'
+import AuctionItem from 'component/item/Auction.vue'
 export default {
     name: 'auctions-view',
     mixins: [paging],
@@ -67,17 +67,8 @@ export default {
     },
 
     ready() {
-        this.action('action', {icon: 'question-2x.png'})
-            .then(() => {
-                this.$router.go({name: 'auction-help'})
-            })
-
-        this.$on('restore', () => {
-            this.action('action', {icon: 'question-2x.png'})
-                .then(() => {
-                    this.$router.go({name: 'auction-help'})
-                })
-        })
+        this.showAction()
+        this.$on('restore', this.showAction)
     },
 
     computed: {
@@ -116,6 +107,13 @@ export default {
             if(!this.items.length) {
                 this.fetch(true)
             }
+        },
+
+        showAction() {
+            this.action('action', {icon: 'question-2x.png'})
+                .then(() => {
+                    this.$router.go({name: 'auction-help'})
+                })
         }
     }
 }

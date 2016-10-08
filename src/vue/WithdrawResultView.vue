@@ -35,32 +35,38 @@
 </template>
 <script>
 export default {
-    name: 'CashResultView',
+    name: 'cash-result-view',
+
     data() {
         return {
             info: {}
         }
     },
+
     ready() {
-        this.$on('restore', () => {
-            this.action('action', {label: '常见问题'}).then(() => {
-                this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})
-            })
-        })
+        this.$on('restore', this.showAction)
     },
+
     route: {
         data({to}) {
-            return this.$fetch(`balance/withdraw/${to.params.id}`).then((data) => {
-                this.info = data
-                this.action('action', {label: '常见问题'}).then(() => {
-                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})
+            return this.$fetch(`balance/withdraw/${to.params.id}`)
+                .then(data => {
+                    this.info = data
+                    this.showAction()
                 })
-            })
         }
     },
+
     methods: {
         back() {
             this.action('back', {step: 2, refresh: true})
+        },
+
+        showAction() {
+            this.action('action', {label: '常见问题'})
+                .then(() => {
+                    this.$router.go({name: 'mall-help-category', params:{category: 'payment'}})
+                })
         }
     }
 }

@@ -146,11 +146,6 @@ export default {
         }
     },
 
-    ready() {
-        this.$on('restore', () => {
-            this.setShareData({title: this.purchase.description, icon: this.purchase.pictures[0]})
-        })
-    },
     route: {
         data({to}) {
             return this.$fetch(`mall/purchase/${to.params.id}`).then((data) => {

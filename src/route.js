@@ -178,6 +178,7 @@ export default {
             }, 'profile')
         }
     },
+
     '/user/:id/auction': {
         name: 'user-auction',
         title: '我的拍卖',
@@ -187,16 +188,7 @@ export default {
             }, 'profile')
         }
     },
-    '/user/:id/:tab': { // 个人主页
-        name: 'user',
-        title: '',
-        native: v => v >= 1.3 && {name: 'profile'},
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('UserView.vue'))
-            }, 'profile')
-        }
-    },
+
     '/shop/:id': { // 工作室主页
         name: 'shop',
         native: v => v >= 1.7 && {name: 'shop'},
