@@ -80,7 +80,7 @@ export default {
             } else if (val < 1) {
                 return 1
             } else {
-                return val.toFixed(1)
+                return val.toFixed(2)
             }
         },
         isValid() {
@@ -97,16 +97,7 @@ export default {
                 description: this.description,
                 price_max: this.budget * 100
             }).then(data => {
-                return this.$put(`mall/purchase/${data.id}/pay_purchase`, {
-                    channel_type: 'wx_pub'
-                })
-            }).then(data => {
-                pingpp.createPayment(data.charge, (result, err) => {
-                    if (result !== "success") {
-                        this.action('toast', {success: 0, text: result + " " + err.msg + " " + err.extra})
-                    }
-                    this.$router.go({name: 'purchases'})
-                })
+                this.$router.go({name: 'pay-channels', query: {id: data.id, type: 'bid'}, replace: true})
             })
         }
     }

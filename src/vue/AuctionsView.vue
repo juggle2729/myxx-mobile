@@ -1,6 +1,4 @@
 <style lang="stylus">
-@import '~style/partials/mixin'
-@import '~style/partials/var'
 .auctions-view
     .tabs
         height: 100px

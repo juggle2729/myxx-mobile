@@ -87,7 +87,12 @@ export default {
         purchase() {
             Q.promise(resolve => {
                 if(this.self) {
-                    resolve()
+                    if(this.env.isWechat) {
+                        // 需要调用此接口判断用户token是否过期，防止购买的时候再登录
+                        this.$fetch(`balance/latest`).then(resolve)
+                    } else {
+                        resolve()
+                    }
                 } else {
                     this.action('login').then(resolve)
                 }

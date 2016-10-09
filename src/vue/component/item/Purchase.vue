@@ -107,7 +107,6 @@
         .operation.white.bg-red(@click.stop="pay()") 立即支付保证金
 </template>
 <script>
-const pingpp = require('pingpp-js');
 export default {
     name: 'PurchaseItem',
     props: {
@@ -135,16 +134,7 @@ export default {
         },
         pay() {
             if(this.env.isWechat) {
-                this.$put(`mall/purchase/${this.item.id}/pay_purchase`, {
-                    channel_type: 'wx_pub'
-                }).then(data => {
-                    pingpp.createPayment(data.charge, (result, err) => {
-                        if (result !== "success") {
-                            this.action('toast', {success: 0, text: result + " " + err.msg + " " + err.extra})
-                        }
-                        this.$router.go({name: 'purchases'})
-                    })
-                })
+                this.$router.go({name: 'pay-channels', query: {id: this.item.id, type: 'bid'}})
             } else if(this.env.isApp) {
                 this.action('pay', {id: this.item.id, price: this.item.pledge, type: this.item.is_tob ? 'sale' : 'purchase'})
             } else {

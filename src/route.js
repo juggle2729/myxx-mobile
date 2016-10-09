@@ -46,7 +46,7 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PostView.vue'))
-            }, 'Post')
+            }, 'post')
         }
     },
 
@@ -407,6 +407,16 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('CommentsView.vue'))
             }, 'comments')
+        }
+    },
+
+    '/pay/channels': {
+        name: 'pay-channels',
+        title: '付款',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PayChannelsView.vue'))
+            }, 'pay')
         }
     },
 

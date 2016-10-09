@@ -62,7 +62,7 @@
 </template>
 <script>
     export default {
-        name: 'PayOfflineView',
+        name: 'pay-offline-view',
         data() {
             return {
                 order: {}
