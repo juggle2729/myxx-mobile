@@ -28,7 +28,7 @@ const bg = {
                 }
             }
             // FIXME 默认背景位置和尺寸需根据情况调整
-            if(/^\?vframe/.test(this.query) || /lg/.test(this.query)) {
+            if(/^\?vframe/.test(this.query) || /lg/.test(this.query) || /slide/.test(this.el.className)) {
                 // this.el.style.backgroundSize = 'contain';
             } else {
                 this.el.style.backgroundSize = 'cover';

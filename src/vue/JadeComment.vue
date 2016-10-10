@@ -1,51 +1,40 @@
 <style lang="stylus">
-.jade-comment {
+.jade-comment
     padding: 0 0 32px 32px
-    .comment-header {
+    .comment-header
         -webkit-box-align: center
         -webkit-box-pack: justify
         height: 80px
-    }
-    .comment {
+    .comment
         padding-bottom: 20px
-        .author {
+        .author
             display: -webkit-box
             display: -webkit-inline-box
             -webkit-box-align: center
             margin: 20px 0
-            .author-name {
+            .author-name
                 width: 480px
-            }
-        }
-        span {
+        span
             line-height: 46px
-        }
-        .content {
+        .content
             padding-right: 32px
             margin-left: 88px
             line-height: 1.5
-            img {
+            img
                 height: 46px
                 vertical-align: bottom
-            }
-        }
-        .more {
+        .more
             margin: 48px 0 16px 0
-            .button {
+            .button
                 width: 378px
                 height: 72px
                 text-align: center
                 line-height: 72px
                 border: 1px solid
                 border-radius: 8px
-            }
-        }
-    }
-    .nocomment {
+    .nocomment
         margin-top: 48px
         margin-bottom: 24px
-    }
-}
 </style>
 <template lang="pug">
 .jade-comment.bg-white

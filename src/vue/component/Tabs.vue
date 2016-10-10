@@ -16,7 +16,6 @@ export default {
         current: String,
         tabs: Object
     },
-
     ready() {
         this.current = this.$route.query.tab || this.current || _.keys(this.tabs)[0]
         this.$watch('current', view => {
