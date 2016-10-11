@@ -37,9 +37,8 @@
         .fz-34.bold {{post.title}}
         .fz-30.light.pdv-32.user-txt {{post.description}}
         template(v-for="item in post.medias")
-            img(v-if="item.media_type==='picture'", :src="config.img + item.media")
+            img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, $index/2)")
             p.fz-30.light.pdv-32(v-else) {{item.media}}
-
     .footer.flex.fz-30.light.bdt.bg-white
         like(:active='post.liked', :count='post.like')
         .comment.bdl(@click='$refs.comment.comment()')
@@ -69,12 +68,15 @@ export default {
         ProductSuggestion,
         GeneralSuggestion,
     },
-
     route: {
         data({to}) {
             return this.$fetch(`sns/rich_texts/${to.params.id}`)
                 .then(resp => {
                     this.post = resp
+                    this.medias = []
+                    _.forEach(this.post.medias, (item) => {
+                        (item.media_type === 'picture') && this.medias.push(item.media)
+                    })
                 })
         }
     }

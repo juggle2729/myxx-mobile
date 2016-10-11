@@ -49,9 +49,7 @@ import paging from 'paging'
 import PurchaseItem from 'component/item/Purchase.vue'
 export default {
     name: 'PurchasesView',
-
     mixins: [paging],
-
     components: [PurchaseItem],
 
     data() {

@@ -1,29 +1,25 @@
 <style lang="stylus">
-.card-component {
-    width: 350px
+.card-component
+    width: 100%
     position: relative
-    display: inline-block
     margin-bottom: 20px
-    &:nth-child(odd) {
+    &:nth-child(odd)
         margin-right: 20px
-    }
-    .media {
-        width: 100%
-        height: 350px
-    }
-    .data-label {
+    .media
+        width: 260px
+        height: 260px
+    .data-label
         position: absolute
         top: 0
         background: rgba(0, 0, 0, 0.5)
         padding: 0 28px
         line-height: 44px
-    }
-    .data-info {
+    .data-info
         position: relative
         width: 345px
         height: 100px
         text-align: center
-        .data-name {
+        .data-name
             width: 320px
             line-height: 1.5
             word-break: break-all
@@ -31,55 +27,39 @@
             top: 50%
             left: 50%
             transform: translate(-50%, -50%)
-        }
-    }
-
-    .data-footer {
-        height: 48px
-        padding-bottom: 20px
-        > div {
-            -webkit-box-flex: 1
-            &:first-child {
-                text-align: right
-                margin-right: 24px
-            }
-            &:last-child {
-                margin-left: 24px
-                text-align: left
-            }
-            &:first-child:nth-last-child(1) {
-                text-align: center
-            }
-        }
-    }
-    .like-component, .comment-component {
+    .data-detail
+        padding: 0 20px
+        -webkit-box-flex: 1
+        > div:first-child
+            margin-bottom: 20px
+    .like-icon, .comment-icon
         color: #d8d8d8
-    }
-}
+        margin-right: 36px
 </style>
-<template>
-<div class="card-component bg-white">
-    <div v-if="item.type === 'jb'" v-link="{name: 'question', params: {id: item.entry.id}}">
-        <div class="data-label fz-22 center white">鉴宝</div>
-        <div class="media img" v-bg.md="item.entry.picture"></div>
-        <div class="data-info fz-26"><div class="data-name line-clamp-2">{{item.entry.description}}</div></div>
-    </div>
-    <div v-else v-link="{name: 'story', params: {id: item.entry.post_id}}">
-        <div class="data-label fz-22 center white">{{item.entry.topic_type.name}}</div>
-        <div v-if="item.entry.cover_type==='picture'" class="media img" v-bg.md="item.entry.cover"></div>
-        <div v-else class="media img" v-bg="item.entry.cover" query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320"></div>
-        <div class="data-info fz-26"><div class="data-name line-clamp-2">{{item.entry.content}}</div></div>
-    </div>
-    <div class="data-footer flex">
-        <like :active="false" :count="item.entry.like_count" readonly=true v-if="item.type === 'tp'"></like>
-        <comment :count="item.entry.comment_count"></comment>
-    </div>
-</div>
+<template lang="pug">
+.card-component.bg-white.flex(v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
+    div(v-if="jb")
+        .data-label.fz-22.center.white 鉴宝
+        .media.img(v-bg.md="item.entry.picture")
+    div(v-else)
+        .data-label.fz-22.center.white {{item.entry.topic_type.name}}
+        .media.img(v-if="item.entry.cover_type==='picture'", v-bg.md="item.entry.cover")
+        .media.img(v-else, v-bg="item.entry.cover", query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320")
+    .data-detail
+        .fz-30.line-clamp-4 {{jb ? item.entry.description : item.entry.content}}
+        .flex(v-if="!jb")
+            like(:active="false", :count="item.entry.like_count", readonly=true, v-if="item.type === 'tp'")
+            comment(:count="item.entry.comment_count")
+        .fz-26.light(v-else) {{item.entry.comment_count}}个回答
 </template>
 <script>
 export default {
     name: 'card',
-
+    computed: {
+        jb() {
+            return this.item.type === 'jb'
+        }
+    },
     props: {
         item: Object
     }

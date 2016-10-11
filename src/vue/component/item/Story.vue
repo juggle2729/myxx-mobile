@@ -15,7 +15,7 @@
             &.img
                 background-size: cover
                 background-image: url($qn + 'placeholder/img.png')
-            .type
+            .type 
                 background-color: rgba(0, 0, 0, .8)
                 border-radius: 26px
                 padding: .5em .8em
@@ -41,36 +41,28 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template>
-<div class="story-item bg-white" v-link="{name: 'story', params: {id: item.entry.post_id}}">
-    <div class="hr"></div>
-    <div class="header flex">
-        <div class="flex-1 flex">
-            <avatar :user="item.entry.user" :is-self="false" :size="50"></avatar>
-            <div class="name mgl fz-26">{{item.entry.user.name}}</div>
-        </div>
-        <follow v-if="!item.entry.user.is_followed" :user="item.entry.user.id" :follow="item.entry.user.is_followed"></follow>
-    </div>
-    <div class="content bg-white">
-        <div v-if="item.entry.cover_type==='video'" class="cover video" v-bg.video="item.entry.cover">
-            <div class="type fz-26 white">{{item.entry.topic_type.name}}</div>
-        </div>
-        <div v-else class="cover img" v-bg="item.entry.cover">
-            <div class="type fz-26 white" v-if="item.entry.topic_type.code !== 'hd'">{{item.entry.topic_type.name}}</div>
-        </div>
-        <div class="title fz-30"><div class="user-txt line-clamp-2">{{item.entry.content}}</div></div>
-    </div>
-    <div class="footer fz-26 flex bdt">
-        <comment :count="item.entry.comment" class="bdr"></comment>
-        <like :target="item.entry.post_id" type="30" :active="item.entry.liked" :count="item.entry.like" class="bdr"></like>
-        <share></share>
-    </div>
-</div>
+<template lang="pug">
+.story-item.bg-white(v-link="{name: 'story', params: {id: item.post_id}}")
+    .header.flex
+        .flex-1.flex
+            avatar(:user="item.user", :is-self="false", :size="50")
+            .name.mgl.fz-26 {{item.user.name}}
+        follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
+    .content.bg-white
+        .cover.video(v-if="item.cover_type==='video'", v-bg.video="item.cover")
+            .type.fz-26.white {{item.topic_type.name}}
+        .cover.img(v-else, v-bg="item.cover")
+            .type.fz-26.white(v-if="item.topic_type.code !== 'hd'") {{item.topic_type.name}}
+        .title.fz-30
+            .user-txt.line-clamp-2 {{item.content}}
+    .footer.fz-26.flex.bdt
+        comment.bdr(:count="item.comment")
+        like.bdr(:target="item.post_id", type="30", :active="item.liked", :count="item.like")
+        share
 </template>
 <script>
 export default {
     name: 'story-item',
-
     props: {
         item: Object
     }

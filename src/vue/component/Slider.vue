@@ -1,57 +1,45 @@
 <style lang="stylus">
-.slider {
+.slider
     position: relative
     width: 100%
     overflow: hidden
-    .container {
+    .container 
         display: -webkit-box
         height: 100%
         min-height: 100%
-    }
-    .slide {
+    .slide
         background-size: cover
         background-position: center
         width: 100%
         min-height: 100%
         height: 100%
-    }
-    .paging {
+    .paging
         position: absolute
         bottom: 0
         display: block
         width: 100%
-        .dot {
+        .dot
             display: inline-block
             margin: 10px
             width: 20px
             height: 20px
             border-radius: 100%
             border: 3px solid #d9d9d9
-            &.active {
+            &.active
                 background-color: white
-            }
-        }
-    }
-    &.fullscreen {
-        .slide {
+    &.fullscreen 
+        .slide 
             transition: background-size .3s ease-in
             background-size: 100%
-            &.zoom {
+            &.zoom
                 background-size: 200%
-            }
-        }
-    }
-}
 </style>
-<template>
-<div class="slider" :style="{height: height}" :class="{'fullscreen': height=='100%'}">
-    <div class="container">
-        <div v-for="id in ids" class="slide" v-bg="id"></div>
-    </div>
-    <div class="paging center">
-        <div class="dot" :class="{'active': i === $index}" v-for="id in ids"></div>
-    </div>
-</div>
+<template lang="pug">
+.slider(:style="{height: height}", :class="{'fullscreen': height=='100%'}")
+    .container
+        .slide(v-for="id in ids", track-by="$index", v-bg="id")
+    .paging.center
+        .dot(:class="{'active': i === $index}", v-for="id in ids", track-by="$index")
 </template>
 <script>
 export default {
