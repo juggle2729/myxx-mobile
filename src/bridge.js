@@ -19,17 +19,14 @@ const adapter = {
                 if(user) {
                     cb(user)
                 } else if(this.$route.query.code) {
-                  this.$http
-                    .post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'})
-                    .then(resp => {
-                            console.debug('get user', resp)
-                            this.$router.replace(_.merge(_.pick(this.$route, 'name', 'params'), {query: _.omit(this.$route, 'code')}))
-                            user = resp.data.data
-                            this.$store.set('user', user)
-                            cb(user)
-                        }, () => {  // 获取用户失败
-                            cb()
-                        })
+                  this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'})
+                        .then(resp => {
+                                console.debug('get user', resp)
+                                this.$router.replace(_.merge(_.pick(this.$route, 'name', 'params'), {query: _.omit(this.$route.query, 'code')}))
+                                user = resp.data.data
+                                this.$store.set('user', user)
+                                cb(user)
+                            }, cb)
                 } else {
                     cb()
                 }

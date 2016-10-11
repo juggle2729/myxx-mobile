@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 
 module.exports = {
     entry: './src/main.js',
@@ -43,7 +44,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.vue.loaders.sass = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus')
+    module.exports.vue.loaders.stylus = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus')
     module.exports.plugins = [
         new webpack.DefinePlugin({
             'process.env': {
@@ -66,7 +67,11 @@ if (process.env.NODE_ENV === 'production') {
             minify: {collapseWhitespace: true, minifyCSS: true},
             hash: true
         }),
-        new ExtractTextPlugin("style.css")
+        new ExtractTextPlugin("style.css"),
+        new CommonsChunkPlugin({
+          children: true,
+          minChunks: 3
+        })
     ];
 } else {
     module.exports.plugins = [
