@@ -45,60 +45,73 @@ const mixin = {
          * @param  {String|Object} params   接口参数
          * @return {Promise}                Q的promise
          */
-        action(handler, params = '', callback) {
-            // 所有参数采用字符串形式传递
-            if(_.isObject(params)) {
-                Object.keys(params).forEach(k => params[k] = _.isObjectLike(params[k]) ? params[k] : _.toString(params[k]))
-            } else {
-                params = _.toString(params)
-            }
-            let defer = Q.defer()
-            bridge.then((bridge) => {
-                switch(handler) {
-                    case 'user':
-                        callback = resp => {
-                                if(resp) {
-                                    const user = _.update(_.isObject(resp) ? resp : JSON.parse(resp), 'id', id => +id)
-                                    this.$root.user = user
-                                    defer.resolve(user)
-                                } else {
-                                    defer.resolve()
-                                }
-                            }
-                        break
-                    case 'keyboard':
-                        if(this.self) {
-                            callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject()
-                        } else {
-                            return this.action('login')
-                        }
-                        break
-                    case 'login':
-                    case 'confirm':
-                    case 'delete':
-                    case 'version':
-                    case 'region':
-                    case 'upload':
-                    case 'action':
-                    case 'cache':
-                        callback = resp => defer.resolve(resp)
-                        break
-                    case 'newPurchase':
-                    case 'newJade':
-                    case 'newBid':
-                        if(this.env.version < 2.0) {
-                            this.action('toast', {success: 0, text: '请更新至最新版'})
-                        }
-                        break
-                    case 'newSale':
-                    case 'newDemand':
-                        if(this.env.version < 2.1) {
-                            this.action('toast', {success: 0, text: '请更新至最新版'})
-                        }
-                        break
+        action(handler, params = '') {
+            const guard = (needsLogin=true, appOnly, since) => {
+                let fb = undefined
+                if(appOnly && !this.env.isApp) {
+                    fb = this.gotoDownload
+                } else if(since && this.env.version < since) {
+                    fb = () => {this.action('toast', {success: 0, text: '请更新至最新版'})}
+                } else if(needsLogin && !this.self) {
+                    fb = () => {this.action('login')}
                 }
-                bridge.callHandler.apply(this, [handler, params, callback].filter(arg => arg !== undefined))
-            })
+                return fb
+            }
+            let [defer, callback, fallback] = [Q.defer(), undefined, undefined]
+            switch(handler) {
+                case 'user':
+                    callback = resp => {
+                            if(resp) {
+                                const user = _.update(_.isObject(resp) ? resp : JSON.parse(resp), 'id', id => +id)
+                                this.$root.user = user
+                                defer.resolve(user)
+                            } else {
+                                defer.resolve()
+                            }
+                        }
+                    break
+                case 'keyboard':
+                    callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject()
+                    fallback = guard()
+                    break
+                case 'login':
+                case 'confirm':
+                case 'delete':
+                case 'version':
+                case 'region':
+                case 'upload':
+                case 'action':
+                case 'cache':
+                    callback = resp => defer.resolve(resp)
+                    break
+                case 'chat':
+                case 'orderConfirm':
+                    fallback = guard(true, true, 1.5)
+                    break;
+                case 'newPurchase':
+                case 'newJade':
+                case 'newBid':
+                    fallback = guard(true, true, 2.0)
+                    break
+                case 'newSale':
+                case 'newDemand':
+                    fallback = guard(true, true, 2.1)
+                    break
+            }
+            if(fallback) {
+                fallback()
+            } else {
+                // 所有参数采用字符串形式传递
+                if(_.isObject(params)) {
+                    Object.keys(params).forEach(k => params[k] = _.isObjectLike(params[k]) ? params[k] : _.toString(params[k]))
+                } else {
+                    params = _.toString(params)
+                }
+                bridge.then((bridge) => {
+                    bridge.callHandler.apply(this, [handler, params, callback].filter(arg => arg !== undefined))
+                })
+            }
+
             return defer.promise
         },
 

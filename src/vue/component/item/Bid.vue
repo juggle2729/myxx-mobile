@@ -190,11 +190,7 @@ export default {
         },
 
         chat(bid) {
-            if(this.env.isApp) {
-                this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
-            } else {
-                this.gotoDownload()
-            }
+            this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
         }
     }
 }

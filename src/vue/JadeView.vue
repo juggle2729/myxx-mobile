@@ -176,7 +176,8 @@
             .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
                 .icon-comment.fz-30
                 div 评论  {{jade.comment_count}}
-        .fz-30.flex-2.buy-btn.bg-gray.white(:class="{'bg-red': !isSelf && jade.sell_status === 'selling'}", @click='buy()') {{jade.sell_status === 'selling' ? '立即购买' : '已售出'}}
+        .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
+        .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
 </template>
 <script>
 import Q from 'q'
@@ -250,48 +251,17 @@ export default {
     },
     methods: {
         buy() {
-            if(this.env.isApp) {
-                if(this.env.version >= 1.5 && this.jade.sell_status === 'selling') {
-                    // 先确保用户登录，然后再跳转至订单页面
-                    Q.promise(resolve => {
-                        if(this.self) {
-                            if(this.isSelf) {
-                                this.action('toast', {success: 0, text: '您不能购买自己的商品'})
-                            } else {
-                                resolve()
-                            }
-                        } else {
-                            this.action('login').then(resolve)
-                        }
-                    }).then(() => {
-                        this.action('orderConfirm', {product: this.jade.id})
-                    })
-                } else if(this.env.version < 1.5) {
-                    this.action('toast', {success: 0, text: '请更新至最新版'})
-                }
+            if(this.isSelf) {
+                this.action('toast', {success: 0, text: '您不能购买自己的商品'})
             } else {
-                this.gotoDownload()
+                this.action('orderConfirm', {product: this.jade.id})
             }
          },
         contact() {
-            if(this.env.isApp) {
-                if(this.env.version >= 1.5 && !this.isSelf) {
-                    Q.promise((resolve) => {
-                        if(this.self) {
-                            resolve()
-                        } else if(!this.self){
-                            this.action('login').then(resolve)
-                        }
-                    }).then(() => {
-                        this.action('chat', {id: this.jade.default_admin.id, name: this.jade.default_admin.nickname, product: this.jade.id})
-                    })
-                } else if(this.isSelf) {
-                    this.action('toast', {success: 0, text: '您不能和自己聊天'})
-                } else {
-                    this.action('toast', {success: 0, text: '请更新至最新版'})
-                }
+            if(this.isSelf) {
+                this.action('toast', {success: 0, text: '您不能和自己聊天'})
             } else {
-                this.gotoDownload()
+                this.action('chat', {id: this.jade.default_admin.id, name: this.jade.default_admin.nickname, product: this.jade.id})
             }
         },
         gotoComments() {

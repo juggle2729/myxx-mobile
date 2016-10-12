@@ -155,31 +155,21 @@ export default {
     },
     methods: {
         addBid() {
-            if(this.env.isShare) {
-                this.gotoDownload()
-            } else if(this.isOpen){
-                Q.promise(resolve => {
-                    if(this.self) {
-                        resolve()
-                    } else {
-                        this.action('login').then(resolve)
-                    }
-                }).then(() => {
-                    const userInfo = this.purchase.conf.user_conf
-                    if(!userInfo.add_product) {
-                        this.action('confirm', {
-                            text: '申请开通店铺才能参与竞标，添加官方微信客服申请：jmyb66',
-                            labels: ['我知道了']
-                        })
-                    } else if(!userInfo.shop_remain_bids) {
-                        this.action('confirm', {
-                            text: '您今天参与的竞标数已达上限（3次），明天再试吧',
-                            labels: ['我知道了']
-                        })
-                    } else {
-                        this.action('newBid', {id: this.purchase.id, type: this.purchase.is_tob ? 'sale' : 'product'})
-                    }
-                })
+            if(this.isOpen){
+                const userInfo = this.purchase.conf.user_conf
+                if(!userInfo.add_product) {
+                    this.action('confirm', {
+                        text: '申请开通店铺才能参与竞标，添加官方微信客服申请：jmyb66',
+                        labels: ['我知道了']
+                    })
+                } else if(!userInfo.shop_remain_bids) {
+                    this.action('confirm', {
+                        text: '您今天参与的竞标数已达上限（3次），明天再试吧',
+                        labels: ['我知道了']
+                    })
+                } else {
+                    this.action('newBid', {id: this.purchase.id, type: this.purchase.is_tob ? 'sale' : 'product'})
+                }
             }
         },
 

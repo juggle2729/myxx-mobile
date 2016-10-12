@@ -65,7 +65,7 @@
     empty(v-if="items.isEmpty")
     .list.bg(v-else)
         product-card(v-for="item in items", :item="item", v-link="{name: 'jade', params: {id: item.id}}")
-    .product-btn.bg-red(@click="purchase()")
+    .product-btn.bg-red(@click="action('newSale')")
         .white.fz-30 我要清仓
         .fz-22 (只展示在商户专区)
 </template>
@@ -154,18 +154,6 @@ export default {
         applyFilter(opt) {
             this.filter[this.filter.display] = opt
             this.filter.display = ''
-        },
-
-        purchase() {
-            Q.promise(resolve => {
-                if(this.self) {
-                    resolve()
-                } else {
-                    this.action('login').then(resolve)
-                }
-            }).then(() => {
-                this.action('newSale')
-            })
         }
     }
 }
