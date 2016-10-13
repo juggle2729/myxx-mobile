@@ -254,7 +254,7 @@ export default {
             if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能购买自己的商品'})
             } else {
-                this.action('orderConfirm', {product: this.jade.id})
+                this.action('orderConfirm', {product: this.jade.id, hasConfirm: true})
             }
          },
         contact() {

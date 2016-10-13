@@ -46,10 +46,23 @@ const mixin = {
          * @return {Promise}                Q的promise
          */
         action(handler, params = '') {
-            const guard = (needsLogin=true, appOnly, since) => {
+            const guard = (needsLogin=true, appOnly, since, hasConfirm=false) => {
                 let fb = undefined
                 if(appOnly && !this.env.isApp) {
-                    fb = this.gotoDownload
+                    if(hasConfirm) {
+                        fb = () => {
+                            this.action('confirm', {
+                                text: '与商家私聊、下单交易请下载美玉秀秀App——最大的和田玉交流平台',
+                                labels: ['稍后再说', '立即下载']
+                            }).then((data) => {
+                                if(data === '1') {
+                                    this.gotoDownload()
+                                }
+                            })
+                        }
+                    } else {
+                        fb = this.gotoDownload
+                    }
                 } else if(since && this.env.version < since) {
                     fb = () => {this.action('toast', {success: 0, text: '请更新至最新版'})}
                 } else if(needsLogin && !this.self) {
@@ -86,7 +99,7 @@ const mixin = {
                     break
                 case 'chat':
                 case 'orderConfirm':
-                    fallback = guard(true, true, 1.5)
+                    fallback = guard(true, true, 1.5, params.hasConfirm)
                     break;
                 case 'newPurchase':
                 case 'newJade':

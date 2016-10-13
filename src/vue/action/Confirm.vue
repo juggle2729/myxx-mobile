@@ -26,14 +26,16 @@
             display: inline-block
             text-align: center
             padding: 1em 0
+    .center
+        line-height: 48px
 </style>
 <template lang="pug">
 .confirm-action
     .container.bg
         .center {{params.text}}
         .btns.bdt
-            div(@click="close('0')") 取消
-            .bdl.red(@click="close('1')") 确定
+            div(@click="close('0')") {{params.labels ? params.labels[0] : '取消'}}
+            .bdl.red(@click="close('1')") {{params.labels ? params.labels[1] : '确定'}}
 </template>
 <script>
 export default {
