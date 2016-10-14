@@ -68,10 +68,7 @@ if (process.env.NODE_ENV === 'production') {
             hash: true
         }),
         new ExtractTextPlugin("style.css"),
-        new CommonsChunkPlugin({
-          children: true,
-          minChunks: 3
-        })
+        new CommonsChunkPlugin("commons.chunk.js")
     ];
 } else {
     module.exports.plugins = [

@@ -93,7 +93,8 @@ router.alias({
     '/instructions': '/help/mall',
     '/instruction/:category': '/help/mall/:category',
     '/recommend/follower': 'follow-suggestion',
-    '/ranking/weekly': '/top-master'
+    '/ranking/weekly': '/top-master',
+    '/evaluation/:id': '/question/:id'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');

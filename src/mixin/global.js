@@ -193,11 +193,7 @@ const mixin = {
                 targetType: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value() || this.$route.name
             }
 
-            if(this.env.isApp) {
-                this.action('play', args)
-            } else {
-                this.action('play', args , fn => fn())
-            }
+            this.action('play', args)
         },
 
         coverflow(ids, index=0) {

@@ -2,10 +2,11 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
+                const type = {'question': 'jianbao', 'answer':'jianbaoresult', 'story':'topic', 'jade':'product', 'master':'website'}
                 this.$fetch('log/content_readings', {
                             ...this.$route.query,
                             id: this.$route.params.id,
-                            type: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value() || this.$route.name
+                            type: _.get(type, this.$route.name, this.$route.name)
                         }).then(_.noop)
             }, 3000)
         } else if(this.env.isApp && this.env.isIOS) {

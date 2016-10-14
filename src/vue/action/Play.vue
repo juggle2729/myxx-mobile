@@ -33,7 +33,8 @@ export default {
     },
 
     ready() {
-        this.params.cb(this.start)
+        // this.params.cb(this.start)
+        this.start()
     },
 
     methods: {
