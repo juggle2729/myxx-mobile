@@ -2,6 +2,7 @@ import Q from 'q'
 import lodash from 'lodash'
 import bridge from '../bridge'
 import config from '../config'
+import _ from 'lodash'
 
 const mixin = {
     data() {

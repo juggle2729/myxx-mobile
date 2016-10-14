@@ -12,6 +12,8 @@
             padding-top: @width
             &:not(:first-child)
                 margin-left: 4px
+    .value
+        padding: 0 32px 32px 32px
     footer
         height: 100px
         > div

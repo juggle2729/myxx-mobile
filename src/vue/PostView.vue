@@ -6,6 +6,8 @@
         padding: 40px 32px
         img
             max-width: 100%
+        .video
+            padding-top: 100%
 
     .tag-activity
         position: relative
@@ -37,8 +39,9 @@
         .fz-34.bold {{post.title}}
         .fz-30.light.pdv-32.user-txt {{post.description}}
         template(v-for="item in post.medias")
-            img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, $index/2)")
-            p.fz-30.light.pdv-32(v-else) {{item.media}}
+            img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
+            .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
+            p.fz-30.light.pdv-32(v-if="item.media_type === 'text'") {{item.media}}
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')
@@ -73,9 +76,14 @@ export default {
                 .then(resp => {
                     this.post = resp
                     this.medias = []
-                    _.forEach(this.post.medias, (item) => {
-                        (item.media_type === 'picture') && this.medias.push(item.media)
+                    var flag = -1
+                    _.forEach(this.post.medias, (item, index) => {
+                        if(item.media_type === 'picture') {
+                            this.medias.push(item.media)
+                            item.flag = (flag += 1)
+                        }
                     })
+                    console.log(this.medias)
                 })
         }
     }

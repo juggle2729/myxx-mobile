@@ -85,7 +85,8 @@
         .header.fz-26.gray
             span 作品展示
         .flex.medias
-            .media.img(v-for='entry in works.entries', v-bg='entry.picture', v-if='$index < 4', v-link="{name: 'work', params: {id: entry.id}}")
+            template(v-for="entry in works.entries")
+                .media.img(v-if='$index < 4', v-bg='entry.picture', v-link="{name: 'work', params: {id: entry.id}}")
             .media.more.fz-30.center.white(v-if='works.total > 4', v-link="{name: 'works', params: {id: $route.params.id}}")
                 span 更多
                 icon(name="enter")
@@ -116,7 +117,7 @@
     .topic.bg
         .header.fz-26.gray.pdh-32
             span 热门帖子
-        hot-list(path="dc/sns/search", :params="{owner_id: $route.params.id, order_by: '-click_count'}")
+        hot-list(:path="'users/' + $route.params.id + '/sns'", :params="{limit: 10, user_id: $route.params.id, order_by: '-click_count'}")
 </template>
 <script>
 import Lv from 'component/Lv.vue'

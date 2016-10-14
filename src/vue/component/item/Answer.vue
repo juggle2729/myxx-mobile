@@ -48,7 +48,7 @@
     .question.bg-light
         .desc.fz-30 {{item.jianbao.user.nickname}}: {{item.jianbao.description}}
         .flex.medias.mgt-24(v-if="item.jianbao.pictures.length > 0")
-            .media.img(v-for='pic in item.jianbao.pictures', v-bg='pic', v-if='$index < 3')
+            .media.img(v-for="pic in item.jianbao.pictures.splice(0,3)", v-bg='pic')
     .interact.fz-26.flex.bdt
         icon-comment.bdr(:count="item.comment_count")
         icon-like.bdr(:target="item.id", type="20", :active="item.liked", :count="item.like_count")

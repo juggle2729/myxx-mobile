@@ -36,28 +36,26 @@
         color: #d8d8d8
         margin-right: 36px
 </style>
-<template lang="jade">
+<template lang="pug">
 .card-component.bg-white.flex(v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
     div(v-if="jb")
-        .data-label.fz-22.center.white 鉴宝
         .media.img(v-bg.md="item.entry.picture")
     div(v-else)
-        .data-label.fz-22.center.white {{item.entry.topic_type.name}}
-        .media.img(v-if="item.entry.cover_type==='picture'", v-bg.md="item.entry.cover")
-        .media.img(v-else, v-bg="item.entry.cover", query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320")
+        .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320")
+        .media.img(v-else, v-bg.md="item.entry.cover")
     .data-detail
-        .fz-30.line-clamp-4 {{jb ? item.entry.description : item.entry.content}}
+        .fz-30.line-clamp-4 {{jb ? item.entry.description : (item.entry.content || item.entry.title)}}
         .flex(v-if="!jb")
-            icon-like(:active="false", :count="item.entry.like_count", readonly=true, v-if="item.type === 'tp'")
-            icon-comment(:count="item.entry.comment_count")
-        .fz-26.light(v-else) {{item.entry.comment_count}}个回答
+            icon-like(:active="false", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
+            icon-comment(:count="item.entry.comment_count || item.entry.comment || 0")
+        .fz-26.light(v-else) {{item.entry.status}}个回答
 </template>
 <script>
 export default {
     name: 'card',
     computed: {
         jb() {
-            return this.item.type === 'jb'
+            return this.item.type == 3
         }
     },
     props: {

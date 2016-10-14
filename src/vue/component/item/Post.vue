@@ -50,7 +50,7 @@
             .fz-26.gray.line-clamp-2(:class="{'mgt-20': item.description}") {{item.description}}
     .interact.fz-26.flex.bdt
         icon-comment.bdr(:count="item.comment_count")
-        icon-like.bdr(:target="item.id", type="100", :active="item.liked", :count="item.like_count")
+        icon-like.bdr(:target="item.post_id", type="100", :active="item.liked", :count="item.like_count")
         icon-share
 </template>
 <script>

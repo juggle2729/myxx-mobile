@@ -6,8 +6,8 @@
         answer(:item = "item.entry")
 </template>
 <script>
-import question from 'component/Question.vue'
-import answer from 'component/Answer.vue'
+import question from 'component/item/Question.vue'
+import answer from 'component/item/Answer.vue'
 export default {
     name: 'evaluation-item',
     props: {

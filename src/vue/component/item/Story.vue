@@ -6,8 +6,8 @@
         post(:item="item.entry")
 </template>
 <script>
-import topic from 'component/Topic.vue'
-import post from 'component/Post.vue'
+import topic from 'component/item/Topic.vue'
+import post from 'component/item/Post.vue'
 export default {
     name: 'story-item',
     components: {

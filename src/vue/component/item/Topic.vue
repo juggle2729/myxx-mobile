@@ -69,8 +69,8 @@
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.medias.length}}
     .interact.fz-26.flex.bdt
-        icon-comment.bdr(:count="item.comment_count")
-        icon-like.bdr(:target="item.id", type="30", :active="item.liked", :count="item.like_count")
+        icon-comment.bdr(:count="item.comment_count || item.comment")
+        icon-like.bdr(:target="item.post_id", type="30", :active="item.liked", :count="item.like_count || item.like")
         icon-share
 </template>
 <script>
@@ -81,10 +81,9 @@ export default {
     },
     computed: {
         imgSrc() {
-            let src = ''
-            for (let item of this.item.medias) {
-                src += `url(${this.config.img + item.media}), `
-            }
+            let src = _.chain(this.item.medias).slice(0,3).reduce((pre, item) => {
+                return pre + `url(${this.config.img + item.media}), `
+            }, '').trimEnd(', ')
             return _.trimEnd(src, ', ')
         }
     }
