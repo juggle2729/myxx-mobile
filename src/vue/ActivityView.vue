@@ -14,7 +14,6 @@
 <script>
 import shareable from 'shareable'
 import List from 'component/List.vue'
-import StoryItem from 'component/item/Story.vue'
 export default {
     name: 'activity-view',
 
