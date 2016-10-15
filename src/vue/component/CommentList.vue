@@ -1,4 +1,4 @@
-<style lang="stylus" scoped>
+<style lang="stylus">
 .comment-list
     header
         line-height: 80px
@@ -16,6 +16,8 @@
             font-size: .8em
     .comment-item:last-child
         padding-bottom: 0
+        > .flex-1
+            background-image: none
 </style>
 <template lang="pug">
 .comment-list

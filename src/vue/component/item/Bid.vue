@@ -190,7 +190,7 @@ export default {
         },
 
         chat(bid) {
-            this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id, hasConfirm: true})
+            this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
         }
     }
 }

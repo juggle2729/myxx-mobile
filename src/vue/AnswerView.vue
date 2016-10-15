@@ -41,13 +41,14 @@
                     .mgt.fz-22.gray {{answer.identifier.title}}
                 follow(:user='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
         .video.bg(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
+        .fz-30.pdh-32.pdb-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
         footer.flex.fz-30.light.bdt
             .gray
                 span.icon-like
                 span {{answer.like_count}}
             .gray.bdl(@click="$refs.comments.addComment()")
                 span.icon-comment
-                span {{answer.comment_count || '写评论'}}
+                span {{answer.comment_count || '评论'}}
             .gray.bdl
                 span.icon-share
                 span 分享

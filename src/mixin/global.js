@@ -46,7 +46,7 @@ const mixin = {
          * @return {Promise}                Q的promise
          */
         action(handler, params = '') {
-            const guard = (needsLogin=true, appOnly, since, hasConfirm=false) => {
+            const guard = (needsLogin, appOnly, since, hasConfirm=false) => {
                 let fb = undefined
                 if(appOnly && !this.env.isApp) {
                     if(hasConfirm) {
@@ -85,7 +85,7 @@ const mixin = {
                     break
                 case 'keyboard':
                     callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject()
-                    fallback = guard()
+                    fallback = guard(true)
                     break
                 case 'login':
                 case 'confirm':
@@ -99,7 +99,7 @@ const mixin = {
                     break
                 case 'chat':
                 case 'orderConfirm':
-                    fallback = guard(true, true, 1.5, params.hasConfirm)
+                    fallback = guard(true, true, 1.5, true)
                     break;
                 case 'newPurchase':
                 case 'newJade':

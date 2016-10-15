@@ -43,7 +43,7 @@
         like(:active='post.liked', :count='post.like')
         .comment.bdl(@click='$refs.comment.comment()')
             i.icon-comment
-            span {{comment_count || '写评论'}}
+            span {{comment_count || '评论'}}
         share.bdl
     div(v-if='post.tags.length')
         .hr

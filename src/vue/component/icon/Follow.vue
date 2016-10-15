@@ -2,8 +2,7 @@
 .follow-icon {
     padding: 10px .5em 0
     height: 52px
-    color: #9c9c9c
-    border-radius: 12px
+    border-radius: 6px
     background-color: transparent
     &.bd-light {
         background-color: #eeeeee

@@ -32,11 +32,13 @@ const opts = {
     },
 
     ready() {
-        this.$el.style.minHeight = Math.max(window.innerHeight - this.$el.offsetTop, 50) + 'px'
         this.fetch()
         if(!_.get(this, 'ds.params.freeze')) {
             this.$on('scrollToBottom', this.fetch)
         }
+        _.delay(() => {
+            this.$el.style.minHeight = Math.max(window.innerHeight - this.$el.offsetTop, 50) + 'px'
+        }, 100)
     },
 
     methods: {

@@ -2,26 +2,6 @@
 @import '~style/partials/var'
 .purchases-view
     padding-bottom: 98px
-    .placeholder-notice
-        height: 90px
-    .notice
-        position: fixed
-        top: 0
-        width: 100%
-        padding: 0 30px
-        background-color: #fcf1e0
-        z-index: 9
-        .flex
-            height: 90px
-            line-height: 90px
-        .txt
-            color: #eaa123
-        .close
-            height: 90px
-            width: 60px
-            background-image: url($qn + "bzone/close-yellow.png")
-            background-position: right center
-            background-size: 28px 28px
     .purchase-btn
         position: fixed
         bottom: 0
@@ -32,11 +12,6 @@
 </style>
 <template lang="pug">
 .purchases-view
-    .placeholder-notice(v-if="firstVisit")
-    .notice(v-if="firstVisit")
-        .flex
-            .txt.fz-26.flex-1 即日起至9月30日,发布求购并成功交易返现3%！
-            .close(@click="closeNotice")
     template(v-for="item in items")
         .hr
         purchase-item(:item="item")
@@ -72,13 +47,6 @@ export default {
     ready() {
         this.showAction()
         this.$on('restore', this.showAction)
-
-        this.action('cache', {k: 'purchases-visited'})
-            .then(v => {
-                if(!v) {
-                    this.firstVisit = true
-                }
-            })
     },
 
     methods: {
@@ -105,11 +73,6 @@ export default {
                     }
                 }
             })
-        },
-
-        closeNotice() {
-            this.firstVisit = false
-            this.action('cache', {k: 'purchases-visited', v: 1})
         },
 
         showAction() {
