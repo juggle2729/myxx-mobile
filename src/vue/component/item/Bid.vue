@@ -72,8 +72,28 @@
         padding: 20px 24px
         border-radius: 6px
         border-bottom: 26px solid white
+    .support
+        > .flex
+            height: 100px
+        .btn
+            line-height: 60px
+            border-radius: 6px
+        .tag
+            display: inline-block
+            background-color: #f5f5f5
+            border-radius: 6px
+            padding: 8px 12px
+            margin: 24px 16px 0 0
+        .comment:last-of-type
+            padding-bottom: 40px
+        .more::after
+            font-family: 'icomoon'
+            content: '\e904'
+            display: inline-block
+            padding-left: 12px
+            font-size: 22px
 </style>
-<template lang="pug">
+<template lang="jade">
 .bid-item.bg-white(v-link="{name: 'jade', params: {id: bid.product.id}}")
     img.mark(v-if="mark", :src="mark | qn")
     header.flex
@@ -108,6 +128,16 @@
                     span.red ✕
                     span.inline-block.pdl-10 淘汰
     .reason.fz-26.bg.gray.user-txt(v-if="bid.status!=='win' && bid.reason") {{bid_status[bid.like_status]}}原因：{{bid.reason}}
+    .support.fz-26.pdh-24.bdt
+        .flex
+            .flex-1.gray {{bid.supports.count ? "玉友支持&nbsp;"+bid.supports.count : "暂无玉友支持"}}
+            .btn.bg-red.white.pdh-28(v-if="canSupport", @click="gotoSupport") 支持一下
+        .comments.bdt(v-if="bid.supports.count")
+            .tag.fz-26.gray.bg-light(v-for="tag in bid.supports.tags") {{tag.name}}({{tag.count}})
+            .comment.flex.pdt(v-for="comment in bid.supports.comments")
+                avatar(:user="comment.user", :size="50")
+                .fz-26.pdl-16.gray {{comment.user.nickname}}：{{comment.comment}}
+            .more.fz-26.red.center.pdb-36(v-if="bid.supports.count>1 && $route.name!=='bid'", v-link="{name: 'bid', params: {id: bid.id}}") 查看全部支持理由
 </template>
 <script>
 import lv from 'component/Lv.vue'
@@ -148,6 +178,10 @@ export default {
         mark() {
             const status = this.won ? 'win' : this.bid.like_status !=='normal' ? this.bid.like_status : ''
             return status && `purchase/bid/${status}.png`
+        },
+
+        canSupport() {
+            return !this.bid.supported && this.isOpen && !this.isSelf && !(this.self || this.self.id == this.bid.bidder_id)
         }
     },
 
@@ -191,6 +225,14 @@ export default {
 
         chat(bid) {
             this.action('chat', {id: bid.bidder_id, name: bid.shop.shop_name, product: bid.product_id})
+        },
+
+        gotoSupport() {
+            if(this.self) {
+                this.$router.go({name: 'support-bid', params: {id: this.bid.id}})
+            } else {
+                this.action('login')
+            }
         }
     }
 }

@@ -109,6 +109,25 @@ export default {
             }, 'purchase')
         }
     },
+    '/bid/:id': {
+        name: 'bid',
+        title: '竞标作品',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BidView.vue'))
+            }, 'purchase')
+        }
+    },
+
+    '/bid/:id/support': {
+        name: 'support-bid',
+        title: '输入支持理由',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('SupportBidView.vue'))
+            }, 'purchase')
+        }
+    },
 
     '/masters': {
         name: 'masters',
