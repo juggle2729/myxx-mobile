@@ -1,9 +1,9 @@
 <style lang="stylus">
 .post-view
     > header
-        padding: 32px 32px
+        padding: 32px 32px 40px
     main
-        padding: 40px 32px
+        padding: 0 32px 40px
         img
             max-width: 100%
         .video
@@ -36,12 +36,12 @@
             .mgt-12.fz-22.light {{post.create_at | moment}} &nbsp;&#124;&nbsp; {{post.click_count}}人浏览
         icon-follow(:user='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
-        .fz-34.bold {{post.title}}
+        .fz-34.bold.user-txt {{post.title}}
         .fz-30.light.pdv-32.user-txt {{post.description}}
         template(v-for="item in post.medias")
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
-            p.fz-30.light.pdv-32(v-if="item.media_type === 'text'") {{item.media}}
+            p.fz-30.light.pdv-32.user-txt(v-if="item.media_type === 'text'") {{item.media}}
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')
@@ -83,7 +83,7 @@ export default {
                             item.flag = (flag += 1)
                         }
                     })
-                    console.log(this.medias)
+                    this.setShareData({title: this.post.title, icon: this.medias[0]})
                 })
         }
     }

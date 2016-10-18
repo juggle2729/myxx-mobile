@@ -124,12 +124,27 @@ export default {
                     data.desc = '你发需求，商家竞标，上手对比，买得放心！'
                     data.icon = entry.icon
                     break
+                case 'post':
+                    data.title = entry.title
+                    data.desc = '分享自[美玉秀秀]'
+                    data.icon = entry.icon
+                    break
+                case 'answer':
+                    data.title = entry.title
+                    data.desc = `${entry.master}的观点，你觉得有道理吗？`
+                    data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/question.png'
+                    break
+                case 'question':
+                    data.title = entry.title
+                    data.desc = '玉友的这个问题，你有什么见解吗？'
+                    data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/question.png'
+                    break
             }
+            console.log(data.icon)
             data = {title: '美玉秀秀', desc: '大师在线视频鉴宝', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
             data.title = _.truncate(data.title, {
                 length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40
             })
-
             // 截取描述文字前20字符,防止emoji表情被截断导致iOS平台无法识别
             data.desc = _.truncate(data.desc, {
                 length: /[\uD800-\uDBFF]/.test(data.desc.charAt(25)) ? 24 : 25
@@ -138,7 +153,7 @@ export default {
             // 拼接分享落地页地址
             let query = {...this.$route.query, user: _.get(this, 'self.id', -1), time: Date.now()}
 
-            data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/\?|\&$/, '')
+            data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
             this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url')

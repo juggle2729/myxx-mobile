@@ -1,5 +1,5 @@
 <template lang="jade">
-.comment-icon.fz-30.gray
+.comment-icon.gray
     icon(name="comment")
     span {{count || '评论'}}
 </template>

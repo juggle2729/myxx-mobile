@@ -23,7 +23,7 @@
                 text-align: center
 </style>
 <template lang="jade">
-.answer-view(v-if="!$loadingRouteData")
+.answer-view.pdb-10(v-if="!$loadingRouteData")
     header.flex.pd-32
         .title.flex-1.fz-34.bold.bdr.pdr-32.user-txt {{answer.jianbao.description}}
         .blue.fz-26.pdl-32.pdv-10(v-link="{name: 'question', params: {id: answer.jianbao.post_id}}")
@@ -38,7 +38,7 @@
                 avatar(:user="answer.identifier")
                 .mgl.flex-1
                     .fz-26 {{answer.identifier.nickname}}
-                    .mgt.fz-22.gray {{answer.identifier.title}}
+                    .mgt-14.fz-22.gray {{answer.identifier.title}}
                 icon-follow(:user='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
         .video.bg(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
         .fz-30.pdh-32.pdb-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
@@ -78,8 +78,8 @@ export default {
         data({to}) {
             return this.$fetch(`sns/results/${to.params.id}`)
                     .then(answer => {
-                        this.setShareData(answer)
                         this.answer = answer
+                        this.setShareData({title: answer.jianbao.description, master: answer.identifier.nickname, icon: answer.jianbao.pictures[0]})
                     })
         }
     }

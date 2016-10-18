@@ -28,7 +28,7 @@
         padding: 0 24px
         .img
             height: 670px
-            width: 670px
+            width: 100%
             position: relative
             .sale-mark
                 position: absolute
@@ -83,7 +83,7 @@
             background-color: #f5f5f5
             border-radius: 6px
             padding: 8px 12px
-            margin: 24px 16px 0 0
+            margin: 16px 16px 0 0
         .comment:last-of-type
             padding-bottom: 40px
         .more::after
@@ -130,14 +130,15 @@
     .reason.fz-26.bg.gray.user-txt(v-if="bid.status!=='win' && bid.reason") {{bid_status[bid.like_status]}}原因：{{bid.reason}}
     .support.fz-26.pdh-24.bdt
         .flex
-            .flex-1.gray {{bid.supports.count ? "玉友支持&nbsp;"+bid.supports.count : "暂无玉友支持"}}
-            .btn.bg-red.white.pdh-28(v-if="canSupport", @click.stop="gotoSupport") 支持一下
+            .flex-1.gray {{bid.supports.count ? "有" + bid.supports.count + "位玉友支持" : "暂无玉友支持"}}
+            .btn.bg-red.white.pdh-28(v-if="canSupport", @click.stop="gotoSupport") 支持该作品
+            .fz-26.gray(v-if="bid.supports.supported") 已支持
         .comments.bdt(v-if="bid.supports.count")
             .tag.fz-26.gray.bg-light(v-for="tag in bid.supports.tags") {{tag.name}}({{tag.count}})
-            .comment.flex.pdt(v-for="comment in bid.supports.comments")
+            .comment.flex.pdt-28(v-for="comment in bid.supports.comments")
                 avatar(:user="comment.user", :size="50")
-                .fz-26.pdl-16.gray {{comment.user.nickname}}：{{comment.comment}}
-            .more.fz-26.red.center.pdb-36(v-if="bid.supports.count>1 && $route.name!=='bid'", v-link="{name: 'bid', params: {id: bid.id}}") 查看全部支持理由
+                .fz-26.pdl-16 {{comment.user.nickname}}：{{comment.comment}}
+            .more.fz-26.red.center.pdv-40(v-if="bid.supports.count>1 && $route.name!=='bid'", v-link="{name: 'bid', params: {id: bid.id}}") 查看全部支持理由
 </template>
 <script>
 import lv from 'component/Lv.vue'
@@ -181,7 +182,7 @@ export default {
         },
 
         canSupport() {
-            return !this.bid.supported && this.isOpen && !this.isSelf && !(this.self && this.self.id == this.bid.bidder_id)
+            return !this.bid.supports.supported && this.isOpen && !this.isSelf && !(this.self && this.self.id == this.bid.bidder_id)
         }
     },
 
