@@ -45,8 +45,8 @@
             div 问题分类
         .fz-26.container
             .category.center.bg-white.bd(v-for='item in classification', v-link="{name: 'mall-help-category', params: {category: item.id}}")
-                .gray.mgb(class='{{item.icon}}')
-                div {{item.title}}
+                icon(:name="item.icon")
+                .mgt {{item.title}}
     .bg-white
         .title.flex.fz-30.bdb.gray
             .line.bg-red
@@ -85,31 +85,31 @@ export default {
                 {
                     id: 'service',
                     title: '服务宝',
-                    icon: 'icon-help-service'
+                    icon: 'help-service'
                 }, {
                     id: 'guide',
                     title: '购买指南',
-                    icon: 'icon-guide'
+                    icon: 'guide'
                 }, {
                     id: 'payment',
                     title: '付款和提现',
-                    icon: 'icon-payment'
+                    icon: 'payment'
                 }, {
                     id: 'logistics',
                     title: '发货和物流',
-                    icon: 'icon-logistics'
+                    icon: 'logistics'
                 }, {
                     id: 'receiving',
                     title: '收货和验货',
-                    icon: 'icon-help-verify'
+                    icon: 'help-verify'
                 }, {
                     id: 'goods-return',
                     title: '退货售后',
-                    icon: 'icon-help-return'
+                    icon: 'help-return'
                 }, {
                     id: 'argue',
                     title: '争议处理',
-                    icon: 'icon-help-list'
+                    icon: 'help-list'
                 }
             ],
             clause: [
