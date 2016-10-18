@@ -14,7 +14,7 @@
     .container
         width: 620px
         margin: 0 auto
-        padding-top: 40px
+        padding: 40px 26px 0
         border-radius: 8px
         font-size: 30px
         transform: translate3d(0, 400px, 0)
@@ -22,8 +22,6 @@
         margin-top: 40px
         > div
             cursor: pointer
-            width: 50%
-            display: inline-block
             text-align: center
             padding: 1em 0
     .center
@@ -33,9 +31,9 @@
 .confirm-action
     .container.bg
         .center {{params.text}}
-        .btns.bdt
-            div(@click="close('0')") {{params.labels ? params.labels[0] : '取消'}}
-            .bdl.red(@click="close('1')") {{params.labels ? params.labels[1] : '确定'}}
+        .btns.bdt.flex
+            .flex-1(@click="close('0')") {{params.labels ? params.labels[0] : '取消'}}
+            .flex-1.bdl.red(v-if="params.labels[1]", @click="close('1')") {{params.labels[1]}}
 </template>
 <script>
 export default {

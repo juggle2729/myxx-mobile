@@ -53,7 +53,7 @@
 
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='story.liked', :count='story.like')
-        icon-comment.bdl(:count="story.comment", @click='$refs.comments.comment()')
+        icon-comment.bdl(:count="story.comment", @click='$refs.comments.addComment()')
         icon-share.bdl
 
     div(v-if='story.tags.length')

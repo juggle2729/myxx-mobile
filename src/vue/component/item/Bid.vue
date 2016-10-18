@@ -84,14 +84,11 @@
             border-radius: 6px
             padding: 8px 12px
             margin: 16px 16px 0 0
-        .comment:last-of-type
-            padding-bottom: 40px
-        .more::after
-            font-family: 'icomoon'
-            content: '\e904'
-            display: inline-block
-            padding-left: 12px
-            font-size: 22px
+        .comment
+            &.flex
+                -webkit-box-align: start
+            &:last-of-type
+                padding-bottom: 40px
 </style>
 <template lang="jade">
 .bid-item.bg-white(v-link="{name: 'jade', params: {id: bid.product.id}}")
@@ -134,11 +131,13 @@
             .btn.bg-red.white.pdh-28(v-if="canSupport", @click.stop="gotoSupport") 支持该作品
             .fz-26.gray(v-if="bid.supports.supported") 已支持
         .comments.bdt(v-if="bid.supports.count")
-            .tag.fz-26.gray.bg-light(v-for="tag in bid.supports.tags") {{tag.name}}({{tag.count}})
+            .tag.fz-22.gray.bg-light(v-for="tag in bid.supports.tags") {{tag.name}}({{tag.count}})
             .comment.flex.pdt-28(v-for="comment in bid.supports.comments")
                 avatar(:user="comment.user", :size="50")
-                .fz-26.pdl-16 {{comment.user.nickname}}：{{comment.comment}}
-            .more.fz-26.red.center.pdv-40(v-if="bid.supports.count>1 && $route.name!=='bid'", v-link="{name: 'bid', params: {id: bid.id}}") 查看全部支持理由
+                .fz-26.pdl-16.gray.user-txt.pdr-32.pdt-6 {{comment.user.nickname}}：{{comment.comment}}
+            .more.fz-26.red.center.pdv-40(v-if="bid.supports.count>1 && $route.name!=='bid'", v-link="{name: 'bid', params: {id: bid.id}}")
+                span 查看全部支持理由
+                icon.fz-22(name="enter")
 </template>
 <script>
 import lv from 'component/Lv.vue'

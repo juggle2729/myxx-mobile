@@ -37,11 +37,11 @@
         icon-follow(:user='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold.user-txt {{post.title}}
-        .fz-30.light.pdv-32.user-txt {{post.description}}
+        .fz-30.dark.pdv-32.user-txt {{post.description}}
         template(v-for="item in post.medias")
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
-            p.fz-30.light.pdv-32.user-txt(v-if="item.media_type === 'text'") {{item.media}}
+            p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{item.media}}
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')

@@ -87,14 +87,14 @@ router.alias({
     '/lessons': '/update',
     '/:id/apply/shop': '/update',
     '/:id/apply/site': '/update',
-    '/result/:id/:result': '/evaluation/:id',
     '/auctions/:id': 'user/:id/auctions',
     '/jade/:id': '/jade/:id/none',
     '/instructions': '/help/mall',
     '/instruction/:category': '/help/mall/:category',
     '/recommend/follower': 'follow-suggestion',
     '/ranking/weekly': '/top-master',
-    '/evaluation/:id': '/question/:id'
+    '/evaluation/:id': '/question/:id',
+    '/result/:id/:result': '/answer/:id'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');
