@@ -6,25 +6,21 @@
         line-height: 140px
     .list.empty
         display: none
-    .more
-        padding: 32px 0
-        &::after
-            content: '\e904'
-            font-family: 'icomoon'
-            display: inline-block
-            padding-left: 8px
-            font-size: .8em
     .comment-item:last-child
         padding-bottom: 0
         > .flex-1
             background-image: none
+    .enter
+        padding-bottom: 3px
 </style>
-<template lang="pug">
+<template lang="jade">
 .comment-list
     header.bdb.fz-26.pdl-32.gray 评论&nbsp;&nbsp;{{$refs.list.total}}
     .no-comment.fz-26.light.center(v-if="$refs.list && $refs.list.total === 0") 还没有人评论
     comments(:path="path", :params="params", transform="comments", v-ref:list)
-    .fz-26.red.center.more(v-if="isPreview && $refs.list && $refs.list.total > 5", v-link="{name: 'comments', params: {id: id, type: type}}") 查看全部评论
+    .fz-26.red.center.pdv-32(v-if="isPreview && $refs.list && $refs.list.total > 5", v-link="{name: 'comments', params: {id: id, type: type}}")
+        span 查看全部评论
+        icon.enter.fz-22(name="enter")
 </template>
 <script>
 import List from 'component/List.vue'

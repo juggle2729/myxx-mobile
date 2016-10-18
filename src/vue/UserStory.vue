@@ -8,7 +8,7 @@
             line-height: 56px
             border-radius: 28px
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-story.bg
     story-list(:path="'users/'+ $route.params.id + '/sns'", :params="{limit: 10, user_id: $route.params.id, doc_types: ['tp', 'rt']}")
 </template>

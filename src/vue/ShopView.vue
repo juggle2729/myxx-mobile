@@ -46,7 +46,7 @@
         position: fixed
         bottom: 0
 </style>
-<template lang="pug">
+<template lang="jade">
 .shop-view.bg-white(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
         .shop.flex.white
@@ -55,26 +55,26 @@
                 .fz-30.flex.margin-bottom.name(:class="{'auth': shop.auth_flag}")
                     .line-clamp {{shop.shop_name}}
                 .fz-26
-                    span.icon-location
+                    icon(name="location")
                     span {{shop.locale_name}}
     .level.fz-30.flex(v-link="{name: 'level-help', params: {id: 'none'}}")
         .mgr 信誉评价等级
         lv.flex-1(:lv="shop.level")
-        .icon-enter.fz-30.light
+        icon.fz-30.light(name="enter")
     .hr
     .master.flex(v-link="{name: 'user', params: {id: shop.owner.id}}")
         avatar(:user='shop.owner')
         .fz-26.mgl.flex-1
             p {{shop.owner.nickname}}
             p.mgt.gray {{shop.owner.title}}
-        .icon-enter.fz-30.light
+        icon.fz-30.light(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布
     product-list.bg(path="mall/homepage/searches", :params="{shop_id: $route.params.id, order_by: 'new'}", transform="products")
     .footer.flex.bdt.fz-30.bg-white.gray
-        chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
-        star.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
-        share.flex-1.center
+        icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
+        icon-star.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
+        icon-share.flex-1.center
 </template>
 <script>
 

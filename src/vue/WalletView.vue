@@ -21,11 +21,8 @@
         position: absolute
         left: 50%
         transform: translate(-50%)
-        .icon-enter
-            position: relative
-            top: 3px
 </style>
-<template lang="pug">
+<template lang="jade">
 .wallet-view.bg
     .item.fz-30.bg-white.bdb
         div 可提现金额
@@ -40,9 +37,8 @@
         br
         p 每笔成功交易的订单将会收取3%的服务费。
     .rule.fz-30(v-link="{name: 'mall-help-category', params: {category: 'payment'}}")
-        span
-            | 查看详细规则
-            span.icon-enter.gray.fz-30
+        span 查看详细规则
+        icon.gray.fz-24(name="enter")
 </template>
 <script>
 export default {

@@ -22,7 +22,7 @@
         text-shadow: 0 0 5px white
         color: white
 </style>
-<template lang="pug">
+<template lang="jade">
 ul.index-view.bg.fz-34
     li(v-for="link in links")
         a(:href="link.href") {{link.label}}

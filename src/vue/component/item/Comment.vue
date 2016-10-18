@@ -9,7 +9,7 @@
             height: 44px
             vertical-align: bottom
 </style>
-<template lang="pug">
+<template lang="jade">
 .comment-item.flex(@click="$dispatch((self && self.id==item.reply_from.id) ? 'delComment' : 'reply', item)")
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16
@@ -17,7 +17,7 @@
             .flex-1
                 .fz-26.gray {{item.reply_from.name}}
                 .fz-22.light.mgt-12 {{item.create_at | moment}}
-            like(:target='item.id', type='70', :count='item.like_count', :active='item.liked', zero='')
+            icon-like(:target='item.id', type='70', :count='item.like_count', :active='item.liked', zero='')
         .fz-30.content.user-txt(:to="item.reply_to && item.reply_to.name") {{{content}}}
 </template>
 <script>

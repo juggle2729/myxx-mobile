@@ -6,7 +6,7 @@
     }
 }
 </style>
-<template lang="pug">
+<template lang="jade">
 .countdown-component {{{txt}}}
 </template>
 <script>

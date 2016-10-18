@@ -21,7 +21,7 @@
         .price::first-letter
             font-size: .9em
 </style>
-<template lang="pug">
+<template lang="jade">
 .product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}}")
     .media(v-bg='item.first_picture')
         .mark.fz-30.white(v-if="item.is_tob") 清仓

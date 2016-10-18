@@ -28,7 +28,7 @@
         .title.flex-1.fz-34.bold.bdr.pdr-32.user-txt {{answer.jianbao.description}}
         .blue.fz-26.pdl-32.pdv-10(v-link="{name: 'question', params: {id: answer.jianbao.post_id}}")
             span.inline-block {{answer.jianbao.status}}个回答
-            i.icon-enter.fz-22.pdl-8
+            icon.fz-22.pdl-8(name="enter")
     .pictures.pdh-32.bg-white.scrollable
         .pic(v-for="pic in answer.jianbao.pictures", v-bg.sm="pic")
     .hr
@@ -39,19 +39,16 @@
                 .mgl.flex-1
                     .fz-26 {{answer.identifier.nickname}}
                     .mgt.fz-22.gray {{answer.identifier.title}}
-                follow(:user='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
+                icon-follow(:user='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
         .video.bg(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
         .fz-30.pdh-32.pdb-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
         footer.flex.fz-30.light.bdt
             .gray
-                span.icon-like
-                span {{answer.like_count}}
+                icon-like(:active="answer.liked", :count="answer.like_count", :target="answer.id", type="20")
             .gray.bdl(@click="$refs.comments.addComment()")
-                span.icon-comment
-                span {{answer.comment_count || '评论'}}
+                icon-comment(:count="answer.comment_count")
             .gray.bdl
-                span.icon-share
-                span 分享
+                icon-share
     .hr
     comment-list.bg-white(:type='20', :id='answer.id', v-ref:comments)
     .hr

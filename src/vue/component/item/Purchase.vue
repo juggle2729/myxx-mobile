@@ -81,7 +81,7 @@
     }
 }
 </style>
-<template lang="pug">
+<template lang="jade">
 .purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
     img.mark(v-if="item.win_count", :src="'purchase/winned.png' | qn")
     header.flex.fz-26

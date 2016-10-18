@@ -35,7 +35,7 @@
             width: 80px
             height: 80px
             border-radius: 6px
-        .icon-down-slim
+        .icon-enter
             transform: rotate(270deg)
     .detail
         padding: 44px 32px 36px
@@ -71,8 +71,6 @@
         line-height: 34px
         background: #389d00
         vertical-align: 8px
-    .icon-refresh
-        font-size: 28px
     .no-data
         line-height: 124px
     .level-comp
@@ -138,7 +136,7 @@
             line-height: 98px
             background: #ea8f23
 </style>
-<template lang="pug">
+<template lang="jade">
 .auction-view(@click="closeOffer()")
     slider(:ids="auction.product.pictures", :height="slideHeight")
     .status.fz-30.white.center.relative(:class="itemClass(auction.status)")
@@ -158,7 +156,7 @@
             .photo(v-bg='auction.shop.logo')
             .name.mgl-20.fz-30.gray {{auction.shop.shop_name}}
             lv.flex-1.mgl-20(:lv="auction.shop.level || 0")
-        .block.icon-down-slim.fz-30.light
+        icon.block.fz-30.light(name="enter")
     .hr
     .detail.fz-30
         .title {{auction.product.title}}
@@ -170,7 +168,7 @@
         .top.flex.bdb
             .fz-26.gray.flex-1 出价 {{items.length}}
             .oper.flex(@click="refresh()")
-                .icon-refresh.center-v
+                icon.center-v(name="refresh")
                 .fz-26.mgl-16 刷新
         .list(v-if="items.length")
             .list-item.flex(v-for="item in items", :class="{'leading': !$index}")
@@ -190,10 +188,10 @@
             div 加价幅度 {{auction.bid_increment | price}}
         .opers.bg-white.flex
             .flex-1.center(@click="chat()")
-                .icon-contact.fz-34.light
+                icon.fz-34.light(name="contact")
                 .fz-22.gray 私信
             .flex-1.bdl.center.alarm(@click="alarm()", :class="{'active': auction.has_remind}")
-                .icon-alarm.fz-34(:class="{'light': !auction.has_remind}")
+                icon.fz-34(name="alarm", :class="{'light': !auction.has_remind}")
                 .fz-22(:class="{'gray': !auction.has_remind}") 提醒
             .flex-2.fz-30.white.center(@click.stop="onOperation()", :class="operClass()")
                 template(v-if="auction.has_paid_margin && auction.status === 'auctioning'")
@@ -215,10 +213,10 @@
         .area.center.bg-white
             .center-v
                 span.minus(@click.stop="minus()")
-                    span.fz-30.light.icon-subtract
+                    icon.fz-30.light(name="subtract")
                 span.fz-40.latest.mgh-48 {{latestPrice | price}}
                 span.add(@click.stop="add()")
-                    span.fz-30.white.icon-add
+                    icon.fz-30.white(name="add")
         .offer.center.fz-30.white(@click.stop="confirm()") 确定出价
 </template>
 <script>

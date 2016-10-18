@@ -1,13 +1,12 @@
 <style lang="stylus">
 .follow-icon {
-    padding: 10px .5em 0
-    height: 52px
+    line-height: 48px
     border-radius: 6px
+    padding: 0 8px
     background-color: transparent
     &.bd-light {
         background-color: #eeeeee
     }
-
     &.active {
         i {
             color: #cc3f4f
@@ -17,14 +16,17 @@
 }
 </style>
 <template lang="jade">
-.follow-icon.fz-26.center(v-if="!isSelf", @click.stop="toggle", :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
-    i.icon-plus(v-if="!follow")
+.follow-icon.fz-26.gray.center(v-if="!isSelf", @click.stop="toggle", :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
+    icon(v-if="!follow", name="plus")
     span {{follow ? '已关注' : '关注'}}
 </div>
 </template>
 <script>
+import Icon from './Icon.vue'
 export default {
     name: 'follow-icon',
+
+    components: {Icon},
 
     props: {
         user: {

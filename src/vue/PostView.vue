@@ -25,14 +25,14 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="pug">
+<template lang="jade">
 .post-view.bg-white(v-if='!$loadingRouteData')
     header.flex
         avatar(:user='post.user')
         .flex-1.mgl
             .fz-30 {{post.user.nickname}}
             .mgt-12.fz-22.light {{post.create_at | moment}} &nbsp;&#124;&nbsp; {{post.click_count}}人浏览
-        follow(:user='post.user.id', :follow='post.user.is_followed', :has-border='true')
+        icon-follow(:user='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold {{post.title}}
         .fz-30.light.pdv-32.user-txt {{post.description}}
@@ -40,11 +40,10 @@
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, $index/2)")
             p.fz-30.light.pdv-32(v-else) {{item.media}}
     .footer.flex.fz-30.light.bdt.bg-white
-        like(:active='post.liked', :count='post.like')
+        icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')
-            i.icon-comment
-            span {{comment_count || '评论'}}
-        share.bdl
+            icon-comment(:count="comment_count")
+        icon-share.bdl
     div(v-if='post.tags.length')
         .hr
         tags(:tags='post.tags')

@@ -4,7 +4,7 @@
     img
         width: 100%
 </style>
-<template lang="pug">
+<template lang="jade">
 .b-zone-help
     img(:src="'bzone/help.png' | qn")
 </template>

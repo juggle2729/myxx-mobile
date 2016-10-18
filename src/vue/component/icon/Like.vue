@@ -4,13 +4,17 @@
         color: #cc3f4f
 </style>
 <template lang="jade">
-.like-icon.fz-30.light(:class="{active: active}", @click="like")
-    i.icon-like
+.like-icon.fz-30.gray(:class="{active: active}", @click="like")
+    icon(name="like")
     span {{count || zero}}
 </template>
 <script>
+import Icon from './Icon.vue'
 export default {
     name: 'like-icon',
+
+    components: {Icon},
+
     props: {
         active: [Boolean],
         count: [Number],

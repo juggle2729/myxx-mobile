@@ -14,7 +14,7 @@
     background-color: black
     color: white
 </style>
-<template lang="pug">
+<template lang="jade">
 .coverflow
     slider(:ids="ids", :i="params.index", :close="close")
 </template>

@@ -66,9 +66,6 @@
             width: 100px
             border-radius: 6px
             margin-right: 20px
-        .icon-enter
-            position: relative
-            bottom: 8px
         .name
             width: 380px
             .line-clamp
@@ -107,11 +104,6 @@
             [class^='icon-'], [class*=' icon-']
                 margin-bottom: 4px
                 padding: 0
-            .icon-collect
-                width: 44px
-                height: 44px
-                line-height: 44px
-                text-align: center
         .buy-btn
             text-align: center
             height: 98px
@@ -125,7 +117,7 @@
     .placeholder
         height: 148px
 </style>
-<template lang="pug">
+<template lang="jade">
 .jade-view
     .notice-placeholder(v-if="firstVisit")
     .notice.flex(v-if="firstVisit")
@@ -151,9 +143,9 @@
                 .line-clamp.mgr {{jade.shop.shop_name}}
                 lv(:lv='jade.shop.level')
             .fz-26.gray
-                span.icon-location
+                icon(name="location")
                 span {{jade.shop.locale_name}}
-        .icon-enter.fz-30.gray
+        icon.fz-30.gray(name="enter")
     .master.flex.bg-white.bdt(v-link="{name: 'user', params: {id: jade.owner.id}}")
         avatar(:user='jade.owner', :size='50')
         .name.fz-26.gray.mgl {{jade.owner.name}}
@@ -168,13 +160,13 @@
     .float-box.flex.fixed.fz-30.bg-white
         .bdt.flex-1.flex
             .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
-                .icon-chat.fz-30
+                icon.fz-30(name="chat")
                 div 私信
             .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                .icon-star.fz-30
+                icon.fz-30(name="star")
                 div {{jade.is_faved ? '已收藏' : '收藏'}}
             .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
-                .icon-comment.fz-30
+                icon.fz-24(name="comment")
                 div 评论  {{jade.comment_count}}
         .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
         .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出

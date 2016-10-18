@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang="jade">
 .evaluation-item.bg-white.pdt(v-link="{name: 'question', params: {id: item.entry.post_id || item.entry.jianbao.post_id}}")
     div(v-if="item.type == 3")
         question(:item = "item.entry")

@@ -30,7 +30,7 @@
         height: 100px
         border-radius: 6px
 </style>
-<template lang="pug">
+<template lang="jade">
 .pay-channels-view.bg
     .pdl-32.gray.fz-24.title 请选择付款方式
     .pay-list

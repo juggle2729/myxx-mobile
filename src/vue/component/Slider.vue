@@ -3,7 +3,7 @@
     position: relative
     width: 100%
     overflow: hidden
-    .container 
+    .container
         display: -webkit-box
         height: 100%
         min-height: 100%
@@ -27,14 +27,14 @@
             border: 3px solid #d9d9d9
             &.active
                 background-color: white
-    &.fullscreen 
-        .slide 
+    &.fullscreen
+        .slide
             transition: background-size .3s ease-in
             background-size: 100%
             &.zoom
                 background-size: 200%
 </style>
-<template lang="pug">
+<template lang="jade">
 .slider(:style="{height: height}", :class="{'fullscreen': height=='100%'}")
     .container
         .slide(v-for="id in ids", track-by="$index", v-bg="id")

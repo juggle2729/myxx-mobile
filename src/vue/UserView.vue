@@ -36,17 +36,14 @@
             -webkit-box-flex: 1
             text-align: center
             line-height: 60px
-        .follow-component
+        .follow-icon
             font-size: 30px
-            color: #888888
-            height: 60px
-            padding-top: 0
         .button
             border-radius: 6px
             line-height: 72px
             margin-right: 14px
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-view.bg(v-if="!$loadingRouteData")
     .banner.bg.center
         avatar(:user='user', :size='120')
@@ -58,11 +55,11 @@
     tabs(:tabs="{home: '主页', story: '帖子', evaluation: '鉴宝'}", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
-        follow(:user='user.id', :follow='user.is_followed', :has-border='false')
-        share.bdl
+        icon-follow(:user='user.id', :follow='user.is_followed', :has-border='false')
+        icon-share.bdl
         .button.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
-            | 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}
-            .icon-enter
+            span 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}
+            icon.fz-22(name="enter")
 </template>
 <script>
 import tabs from 'component/Tabs.vue'

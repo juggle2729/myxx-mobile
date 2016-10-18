@@ -38,7 +38,7 @@
         .first-line
             margin-top: 32px
 </style>
-<template lang="pug">
+<template lang="jade">
 .trace-view
     .basic.fz-30.bdb.flex
         .flex-1

@@ -17,15 +17,15 @@
         &:not(:first-child)
             margin-top: 12px
 </style>
-<template lang="pug">
+<template lang="jade">
 .works-view.bg
     .work.bg-white(v-for='item in items', v-link="{name: 'work', params: {id: item.id}}")
         .media.img(v-bg='item.picture')
         .desc.flex
             .fz-26.gray.flex-1.line-clamp {{item.title}}
             .flex
-                like(:target='item.id', :type='90', :active='item.is_liked', :count='item.like_count')
-                comment(:count='item.comment_count')
+                icon-like(:target='item.id', :type='90', :active='item.is_liked', :count='item.like_count')
+                icon-comment(:count='item.comment_count')
     .hr
     empty(v-if="items.isEmpty" title="暂无作品")
 </template>

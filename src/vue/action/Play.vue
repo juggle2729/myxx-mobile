@@ -18,7 +18,7 @@
         max-height: 100%
         opacity: 1
 </style>
-<template lang="pug">
+<template lang="jade">
 .play-action(@click="params.handler=undefined")
     video(:src="config.video + params.id", controls)
 </template>

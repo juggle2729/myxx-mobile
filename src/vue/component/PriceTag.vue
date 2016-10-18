@@ -3,7 +3,7 @@
     .price::before
         content: '￥'
 </style>
-<template lang="pug">
+<template lang="jade">
 .price-tag.flex
     .label {{label}}
     .price {{price}}

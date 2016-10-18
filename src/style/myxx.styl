@@ -1,14 +1,14 @@
 @import "partials/var"
 @import "partials/reset"
 @import "partials/mixin"
-@import "partials/iconmoon"
+// @import "partials/iconmoon"
 
 $directions = {t: top, r: right, b: bottom, l: left, v: top bottom, h: left right}
 
 /****************************
 *        字体大小            *
 * **************************/
-for size in 50 44 40 36 34 32 30 28 26 24 22 20
+for size in range(20, 50, 2)
     .fz-{size}
         font-size: size px
 
@@ -154,8 +154,8 @@ $line-clamp
         background: transparent url($qn + 'icon/play.svg') no-repeat 50%
         background-size: 2rem
 
-[class^="icon-"]
-    display: inline-block
-    & + span
-        display: inline-block
-        padding-left: 8px
+// [class^="icon-"]
+//     display: inline-block
+//     & + span
+//         display: inline-block
+//         padding-left: 8px

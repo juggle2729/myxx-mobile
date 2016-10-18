@@ -76,14 +76,14 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="pug">
+<template lang="jade">
 .work-view(v-if='!$loadingRouteData')
     .header.flex
         avatar(:user='work.user', :size='90')
         .fz-30.mgl.flex-1
             p {{work.user.nickname}}
             p.gray.mgt {{work.user.title}}
-        follow(:user='work.user.id', :follow='work.user.is_followed', :has-border='true')
+        icon-follow(:user='work.user.id', :follow='work.user.is_followed', :has-border='true')
     .line.fz-26.flex.mgt 作品展示
     .cover.img(v-bg='cover', @click='coverflow(work.pictures, 0)')
     .medias
@@ -92,11 +92,9 @@
         .fz-36 {{work.title}}
         .fz-30.gray.prize {{work.prize}}
     .footer.flex.fz-30.gray.bdt.bg-white(:class="{'fixed': !env.isShare}")
-        like(:target='work.id', :type='90', :active='work.is_liked', :count='work.like_count')
-        .comment.bdl(@click='$refs.comments.addComment()')
-            i.icon-comment
-            span 写评论
-        share.bdl
+        icon-like(:target='work.id', :type='90', :active='work.is_liked', :count='work.like_count')
+        icon-comment.bdl(:count="work.comment_count", @click='$refs.comments.addComment()')
+        icon-share.bdl
     .hr
     comment-list(:type='90', :id='work.id', v-ref:comments)
 </template>

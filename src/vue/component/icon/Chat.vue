@@ -1,13 +1,17 @@
 <template lang="jade">
 .share-icon.fz-30.gray(@click.stop="chat(id, name, jade)")
-    i.icon-chat
+    icon(name="chat")
     span 私信
 </div>
 </template>
 <script>
 import Q from 'q'
+import Icon from './Icon.vue'
 export default {
     name: 'chat-icon',
+
+    components: {Icon},
+
     props: {
         id: [Number],
         name: [String],

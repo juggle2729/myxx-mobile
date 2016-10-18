@@ -15,9 +15,6 @@
             width: 100px
             border-radius: 6px
             margin-right: 20px
-        .icon-enter
-            position: relative
-            bottom: 8px
         .detail
             .name
                 width: 380px
@@ -38,9 +35,6 @@
                 right: 0
                 padding-top: 70px
                 background-color: rgba(0, 0, 0, 0.5)
-                .icon-enter
-                    position: relative
-                    top: 3px
     .interview
         padding: 0 32px 30px
         .img
@@ -71,7 +65,7 @@
     .topic .list
         padding: 0 15px
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-home.bg
     .shop.bg-white(v-if='shop', v-link="{name: 'shop', params: {id: shop.id}}")
         .header.fz-26.gray
@@ -83,9 +77,9 @@
                     .line-clamp.mgr {{shop.shop_name}}
                     lv(:lv="shop.level")
                 .fz-26.gray
-                    span.icon-location
+                    icon(name="location")
                     span {{shop.locale_name}}
-            .icon-enter.fz-30.gray
+            icon.fz-30.gray(name="enter")
     .hr(v-if='works')
     .works.bg-white(v-if='works')
         .header.fz-26.gray
@@ -93,8 +87,8 @@
         .flex.medias
             .media.img(v-for='entry in works.entries', v-bg='entry.picture', v-if='$index < 4', v-link="{name: 'work', params: {id: entry.id}}")
             .media.more.fz-30.center.white(v-if='works.total > 4', v-link="{name: 'works', params: {id: $route.params.id}}")
-                | 更多
-                span.icon-enter
+                span 更多
+                icon(name="enter")
     .hr(v-if='interview')
     .interview.bg-white(v-if='interview', v-link="{name: 'story', params: {id: interview.iv_post_id}}")
         .header.fz-26.gray

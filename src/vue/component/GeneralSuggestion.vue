@@ -7,7 +7,7 @@
         padding: 0 15px
         font-size: 0
 </style>
-<template lang="pug">
+<template lang="jade">
 .general-suggestion.bg
     .title.fz-26.gray 相关推荐
     cards(path="dc/rd/list", :params="params")

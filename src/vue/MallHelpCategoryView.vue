@@ -8,12 +8,12 @@
         &:last-child
             background: none
 </style>
-<template lang="pug">
+<template lang="jade">
 .mall-help-category-view.bdb.bg
     .bg-white
         .item.flex.fz-26.bdb(v-for="item in problems[this.$route.params.category]", @click="action('open', {url: item.url})")
             .flex-1 {{item.title}}
-            .icon-enter.gray
+            icon.gray(name="enter")
 </template>
 <script>
 export default {

@@ -30,7 +30,7 @@
             font-size: 50px
             margin-bottom: 22px
 </style>
-<template lang="pug">
+<template lang="jade">
 .mall-help-view.bg
     .bg-white.mgb
         .title.flex.fz-30.gray.bdb
@@ -38,7 +38,7 @@
             div 常见问题
         .item.flex.fz-26.bdb(v-for='item in problems', @click="action('open', {url: item.url})")
             .flex-1 {{item.title}}
-            .icon-enter.gray
+            icon.gray(name="enter")
     .mgb
         .title.flex.fz-30.gray.bdb.bg-white
             .line.bg-red
@@ -53,7 +53,7 @@
             div 条款和协议
         .item.flex.fz-26.bdb(v-for='item in clause', @click="action('open', {url: item.url})")
             .flex-1 {{item.title}}
-            .icon-enter.gray
+            icon.gray(name="enter")
 </template>
 <script>
 export default {

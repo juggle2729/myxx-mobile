@@ -4,7 +4,7 @@
     img
         width: 100%
 </style>
-<template lang="pug">
+<template lang="jade">
 .purchase-view
     img(:src="src | qn")
 </template>

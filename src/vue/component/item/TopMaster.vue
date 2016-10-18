@@ -18,7 +18,7 @@
     &:nth-child(-n + 3)::before
         background-color: $colors.red
 </style>
-<template lang="pug">
+<template lang="jade">
 .top-master.flex.fz-30.bdb(v-link="{name: 'user', params: {id: item.id}}")
     avatar(:user='item', :size='90')
     .mgl-32

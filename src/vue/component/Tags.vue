@@ -17,7 +17,7 @@
         border(a, #c6c6c6)
 
 </style>
-<template lang="pug">
+<template lang="jade">
 .tags-component.bg-white(v-if="tags && tags.length")
     .tag-title.fz-26.gray 标签
     .tags

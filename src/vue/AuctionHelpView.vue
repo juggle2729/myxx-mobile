@@ -30,7 +30,7 @@
         margin-right: 20px
         transform: translate3d(0, -7px, 0)
 </style>
-<template lang="pug">
+<template lang="jade">
 .auction-help-view
     h5
         span 我要怎么参拍？

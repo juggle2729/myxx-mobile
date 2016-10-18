@@ -9,7 +9,7 @@
             line-height: 1.5
             width: 178px
 </style>
-<template lang="pug">
+<template lang="jade">
 .jade-attribute.bg
     .params.bg-white
         ul

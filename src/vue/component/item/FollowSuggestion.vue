@@ -11,7 +11,7 @@
         margin-top: 20px
         line-height: 36px
 </style>
-<template lang="pug">
+<template lang="jade">
 .follow-suggestion.flex.bdb.bg-white
         avatar(:user='item', :size='108')
         .flex-1
@@ -19,7 +19,7 @@
                 .name.fz-30 {{item.name}}
                 .fz-26.light 粉丝数&nbsp&nbsp{{item.fans_count}}
             .content.fz-26.gray {{item.desc}}
-        follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
+        icon-follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
 </template>
 <script>
 export default {

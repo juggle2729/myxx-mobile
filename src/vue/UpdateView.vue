@@ -11,7 +11,7 @@
             width: 100%
             height: 100%
 </style>
-<template lang="pug">
+<template lang="jade">
 .update-view.bg
     a.center-vertical(:href="config.download")
         img(:src="config.www+'update.png'" alt="请更新至最新版本")

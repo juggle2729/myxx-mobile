@@ -14,14 +14,14 @@
         .avatar-120
             margin-right: 64px
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-following-view.bg(:class="{'bg-white': items.isEmpty}")
     .user.bdb.bg-white.flex(v-for='user in items')
         avatar(:user='user', :size='120')
         .flex-1.mgl(v-link='user | profile')
             p.fz-30 {{user.nickname}}
             p.fz-26.light.mgt(v-if='user.title') {{user.title}}
-        follow(:follow='user.follow', :user='user.id', :has-border='true')
+        icon-follow(:follow='user.follow', :user='user.id', :has-border='true')
     partial(name='load-more', v-if='items.hasMore')
     empty(v-if='items.isEmpty', title='暂无关注')
 </template>

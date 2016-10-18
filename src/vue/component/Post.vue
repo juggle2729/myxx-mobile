@@ -20,11 +20,11 @@
         bottom: 0
         height: 40px
         background-color: rgba(136, 136, 136, 0.9)
-        img 
+        img
             height: 24px
             width: 24px
             display: block
-    .desc 
+    .desc
         padding: 28px 20px
     .interact
         height: 80px
@@ -33,25 +33,25 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="pug">
+<template lang="jade">
 .post-item
     .header.flex
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.user.nickname}}
-        follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
+        icon-follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
     .bg-light.mgv-20
         .pic(v-bg="item.cover")
-            .more.white.fz-30.flex.pdh-12(v-if="item.media_num > 1") 
+            .more.white.fz-30.flex.pdh-12(v-if="item.media_num > 1")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.media_num}}
         .desc
             p.fz-30.bold {{item.title}}
             .fz-26.gray.line-clamp-2(:class="{'mgt-20': item.description}") {{item.description}}
     .interact.fz-26.flex.bdt
-        comment.bdr(:count="item.comment_count")
-        like.bdr(:target="item.id", type="100", :active="item.liked", :count="item.like_count")
-        share
+        icon-comment.bdr(:count="item.comment_count")
+        icon-like.bdr(:target="item.id", type="100", :active="item.liked", :count="item.like_count")
+        icon-share
 </template>
 <script>
 export default {

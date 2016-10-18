@@ -32,7 +32,7 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="pug">
+<template lang="jade">
 .story-view.bg-white(v-if='!$loadingRouteData')
     .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
     .flex.pd-32
@@ -41,22 +41,20 @@
             .name.mgl
                 p.fz-30 {{story.user.name}}
                 .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
-        follow(:user='story.user.id', :follow='story.user.is_followed', :has-border='true')
+        icon-follow(:user='story.user.id', :follow='story.user.is_followed', :has-border='true')
     .fz-30.mgh-32.user-txt {{story.content}}
 
     .pictures.pd-28(v-if="cover.media_type==='picture'")
         .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
 
     .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
-        i.icon-fire
+        icon(name="fire")
         span {{story.activity.name}}
 
     .footer.flex.fz-30.light.bdt.bg-white
-        like(:active='story.liked', :count='story.like')
-        .comment.bdl(@click='$refs.comments.comment()')
-            span.icon-comment
-            span {{story.comment || '写评论'}}
-        share.bdl
+        icon-like(:active='story.liked', :count='story.like')
+        icon-comment.bdl(:count="story.comment", @click='$refs.comments.comment()')
+        icon-share.bdl
 
     div(v-if='story.tags.length')
         .hr

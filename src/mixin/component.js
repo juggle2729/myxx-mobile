@@ -1,14 +1,15 @@
+import Icon from 'component/icon/Icon.vue'
 import Avatar from 'component/Avatar.vue'
 import Empty from 'component/Empty.vue'
 import PriceTag from 'component/PriceTag.vue'
-import Chat from 'component/icon/Chat.vue'
-import Comment from 'component/icon/Comment.vue'
-import Follow from 'component/icon/Follow.vue'
-import Like from 'component/icon/Like.vue'
-import Share from 'component/icon/Share.vue'
-import Star from 'component/icon/Star.vue'
+import IconChat from 'component/icon/Chat.vue'
+import IconComment from 'component/icon/Comment.vue'
+import IconFollow from 'component/icon/Follow.vue'
+import IconLike from 'component/icon/Like.vue'
+import IconShare from 'component/icon/Share.vue'
+import IconStar from 'component/icon/Star.vue'
 
 // 公用组件全局引入
 export default {
-    components: {Avatar, Empty, PriceTag, Chat, Comment, Follow, Like, Share, Star}
+    components: {Icon, Avatar, Empty, PriceTag, IconChat, IconComment, IconFollow, IconLike, IconShare, IconStar}
 }

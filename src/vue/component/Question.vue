@@ -17,12 +17,12 @@
             bottom: 1px
             height: 40px
             background-color: rgba(136, 136, 136, 0.9)
-            img 
+            img
                 height: 24px
                 width: 24px
                 display: block
 </style>
-<template lang="pug">
+<template lang="jade">
 .question-item
     .header.flex.mgb-24.pdh-20
         .flex-1.flex
@@ -32,15 +32,15 @@
         .fz-30.line-clamp-2 {{item.description}}
         .flex.medias.mgt-24(v-if="item.pictures.length > 0")
             .media.img(v-for='pic in item.pictures', v-bg='pic', v-if='$index < 3')
-            .more.white.fz-30.flex.pdh-12(v-if="item.pictures.length > 3") 
+            .more.white.fz-30.flex.pdh-12(v-if="item.pictures.length > 3")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.pictures.length}}
         .flex.fz-26.mgt-24
-            .blue.mgr-28(v-if="item.status") 
+            .blue.mgr-28(v-if="item.status")
                 span {{item.results.length}}
                 span.gray 个回答
             .blue
-                span.icon-like
+                icon(name="invite")
                 span 邀请回答
 </template>
 <script>

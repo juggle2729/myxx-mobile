@@ -129,6 +129,16 @@ export default {
         }
     },
 
+    '/bid/support-help': {
+        name: 'bid-help-support',
+        title: '专业知识当参谋，帮玉友做选择',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BidHelpSupportView.vue'))
+            }, 'purchase')
+        }
+    },
+
     '/masters': {
         name: 'masters',
         title: '人物志',

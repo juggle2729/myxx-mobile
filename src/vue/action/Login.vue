@@ -40,7 +40,7 @@
             padding: 24px
             cursor: pointer
 </style>
-<template lang="pug">
+<template lang="jade">
 .login.center
     .close(@click="close") &times
     img(:src="'profile/about.png' | qn")

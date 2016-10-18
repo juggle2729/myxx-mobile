@@ -16,7 +16,7 @@
             margin: 0 auto
             margin-bottom: 50px
 </style>
-<template lang="pug">
+<template lang="jade">
 .jade-problem.bg
     .bg-white.problem
         .flex
@@ -48,4 +48,5 @@
                 |                     3）如果双方就退货以及退货导致的运费和保价费未能达成一致，由平台协商仲裁解决。
         .help.red.fz-30.center(v-link="{name: 'mall-help'}")
             span 查看帮助
+            icon.fz-24(name="enter")
 </template>

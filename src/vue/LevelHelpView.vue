@@ -56,7 +56,7 @@
         padding: 36px 50px 50px
         line-height: 1.5
 </style>
-<template lang="pug">
+<template lang="jade">
 .level-help-view.bg
     .user.center.fz-30.bg-white(v-if="isUserView")
         lv(:lv="lv")

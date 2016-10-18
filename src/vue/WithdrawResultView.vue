@@ -2,10 +2,6 @@
 .cash-result
     padding-top: 120px
     .result
-        .icon-check-on
-            font-size: 120px
-            color: #09bb07
-            margin-bottom: 40px
         .light
             margin: 24px 0 80px
     .item
@@ -19,10 +15,9 @@
         border-radius: 8px
         margin: 50px auto 0
 </style>
-<template lang="pug">
+<template lang="jade">
 .cash-result.bg.fz-30
     .result.center
-        .icon-check-on
         p 您的提现申请已受理
         p.fz-26.light 预计会在1-2个工作日内到账
     .item.flex.bdv.bg-white

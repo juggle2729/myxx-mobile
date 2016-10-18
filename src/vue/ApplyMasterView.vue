@@ -51,7 +51,7 @@
     .bottom
         margin-top: 56px
 </style>
-<template lang="pug">
+<template lang="jade">
 .apply-master
     .text.fz-30 申请和田玉鉴定权限————需要您是玉石行业的匠师、雕刻师、资深藏家。
         br

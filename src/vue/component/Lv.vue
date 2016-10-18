@@ -4,7 +4,7 @@
     img + img
         margin-left: 5px
 </style>
-<template lang="pug">
+<template lang="jade">
 .level-comp
     img(v-for="i in count", :src="icon | qn")
 </template>

@@ -17,7 +17,7 @@
         .fz-22
             color: #ffb3bc
 </style>
-<template lang="pug">
+<template lang="jade">
 .bzone-purchases
     .placeholder-notice(v-if="$parent.firstVisit")
     .fixed-header

@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang="jade">
 .story-item.bg-white(v-link="{name: post ? 'post' : 'story', params: {id: item.entry.post_id}}")
     div(v-if="!post")
         topic(:item="item.entry")

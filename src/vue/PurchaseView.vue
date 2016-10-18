@@ -58,7 +58,7 @@
                 content: '\2022'
                 margin: 0 12px
 </style>
-<template lang="pug">
+<template lang="jade">
 .purchase-view.bg(:class="{'share': env.isShare}")
     .purchase.bg-white
         header.flex

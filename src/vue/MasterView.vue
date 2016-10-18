@@ -113,6 +113,7 @@
             background-size: cover
             background-image: url($qn + 'artist/share.png')
     .arrow
+        transform: rotate(90deg)
         animation: show_animation 1.5s infinite 0.2s
     .share-bottom
         z-index: 990
@@ -140,7 +141,7 @@
     50%
         margin-top: 5px
 </style>
-<template lang="pug">
+<template lang="jade">
 .master-view
     .cover(@touchstart='coverTouchStart($event)', @touchmove='coverTouchMove($event)', @touchend='coverTouchEnd($event)')
         .bg.img(v-bg='interview.img', query='imageView2/1/w/750/h/1334/interlace/1')
@@ -148,7 +149,7 @@
             .main-title {{interview.title}}
             .sub-title(v-if='interview.sub_title') {{interview.sub_title}}
             .arrow.center
-                span.icon-down
+                icon(name="enter")
     .interview(@touchstart='contentTouchStart($event)', @touchmove='contentTouchMove($event)', @touchend='contentTouchEnd($event)')
         .top.img
         .brief
@@ -162,8 +163,8 @@
             .title(v-if='base.titles.length > 0') {{base.titles[0].name | truncate 300}}
             ul.operation
                 li.attention(@click='followMaster()', v-if='!base.follow && !isSelf')
-                    span.icon-plus
-                    | 关注
+                    icon(name="plus")
+                    span 关注
                 li.attentioned(@click='followMaster()', v-if='base.follow && !isSelf') 已关注
                 li.share(@click='share') 分享
                 li.store(v-link="{name: 'user', params: {id: base.id}}") 店铺

@@ -793,9 +793,6 @@
     }
   ],
   "height": 1024,
-  "metadata": {
-    "name": "icomoon"
-  },
   "preferences": {
     "showGlyphs": true,
     "showQuickUse": true,
@@ -824,11 +821,15 @@
       "classSelector": ".icon",
       "height": 32,
       "columns": 16,
-      "margin": 16
+      "margin": 16,
+      "autoHost": true
     },
     "historySize": 100,
     "showCodes": true,
     "gridSize": 16,
-    "showLiga": false
+    "showLiga": false,
+    "quickUsageToken": {
+      "myxx": "YTI3OWU2ZTAwOWI2NGQzYzJlNjk4YTRhNmE5YWFhYzAjMSMxNDc2NjkwMjQ0IyMj"
+    }
   }
 }

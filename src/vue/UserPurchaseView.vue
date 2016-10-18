@@ -3,7 +3,7 @@
     .purchase-item.won
         background-image: none
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-purchase-view(:class="{'bg': !items.isEmpty}")
     template(v-for='item in items')
         .hr

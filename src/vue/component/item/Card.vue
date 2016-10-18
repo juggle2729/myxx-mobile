@@ -36,7 +36,7 @@
         color: #d8d8d8
         margin-right: 36px
 </style>
-<template lang="pug">
+<template lang="jade">
 .card-component.bg-white.flex(v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
     div(v-if="jb")
         .data-label.fz-22.center.white 鉴宝
@@ -48,8 +48,8 @@
     .data-detail
         .fz-30.line-clamp-4 {{jb ? item.entry.description : item.entry.content}}
         .flex(v-if="!jb")
-            like(:active="false", :count="item.entry.like_count", readonly=true, v-if="item.type === 'tp'")
-            comment(:count="item.entry.comment_count")
+            icon-like(:active="false", :count="item.entry.like_count", readonly=true, v-if="item.type === 'tp'")
+            icon-comment(:count="item.entry.comment_count")
         .fz-26.light(v-else) {{item.entry.comment_count}}个回答
 </template>
 <script>

@@ -2,14 +2,17 @@
 .star-icon
     display: block
 </style>
-<template lang="pug">
+<template lang="jade">
 .star-icon(@click="star")
-    .icon-star.fz-32(:class="{'red': active}")
+    icon.fz-32(name="star", :class="{'red': active}")
     span {{active ? '已收藏' : '收藏'}}
 </template>
 <script>
+import Icon from './Icon.vue'
 export default {
     name: 'star-icon',
+
+    components: {Icon},
 
     props: {
         active: Boolean,
@@ -22,7 +25,6 @@ export default {
 
     methods: {
         star() {
-            console.log(this.active, this.$put)
             this[this.active ? '$put' : '$post']('users/favs', {doc_type: this.type, doc_id: this.id})
                 .then(() => {
                     this.active = !this.active

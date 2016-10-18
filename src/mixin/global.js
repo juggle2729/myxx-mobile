@@ -1,11 +1,13 @@
 import Q from 'q'
+import lodash from 'lodash'
 import bridge from '../bridge'
 import config from '../config'
 
 const mixin = {
     data() {
         return {
-            config
+            config,
+            lodash
         }
     },
 

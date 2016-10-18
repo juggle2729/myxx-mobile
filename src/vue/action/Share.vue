@@ -14,6 +14,18 @@
     z-index: 999
     background: rgba(0, 0, 0, .6) url($qn + 'share.png') right 10px top 10px / 100% auto no-repeat
 </style>
-<template lang="pug">
+<template lang="jade">
 .share-action(@click="params.handler = undefined")
 </template>
+<script>
+export default {
+    name: 'share-action',
+
+    props: {
+        params: {
+            type: Object,
+            required: true
+        }
+    }
+}
+</script>

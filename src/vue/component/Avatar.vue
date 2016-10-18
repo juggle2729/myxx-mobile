@@ -19,7 +19,7 @@ $max-width = 40px
         max-height: $max-width
         max-width: $max-width
 </style>
-<template lang="pug">
+<template lang="jade">
 .avatar.round(:size="size", v-bg.sm="user.photo || 'app/avatar.png'", @click.stop="viewProfile")
     img.vip(:src="'vip/' + user.role + '.svg' | qn", v-if="user.vip_flag")
 </template>

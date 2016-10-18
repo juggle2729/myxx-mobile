@@ -36,7 +36,7 @@
         margin-top: 48px
         margin-bottom: 24px
 </style>
-<template lang="pug">
+<template lang="jade">
 .jade-comment.bg-white
     .comment-header.flex.fz-22.bdb
         .gray 评论&nbsp&nbsp{{total}}

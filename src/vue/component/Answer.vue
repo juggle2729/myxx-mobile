@@ -17,7 +17,7 @@
             bottom: 1px
             height: 40px
             background-color: rgba(136, 136, 136, 0.9)
-            img 
+            img
                 height: 24px
                 width: 24px
                 display: block
@@ -33,26 +33,26 @@
             -webkit-box-flex: 1
             text-align: center
 </style>
-<template lang="pug">
+<template lang="jade">
 .answer-item
     .header.flex.mgb-24.pdh-20
         .flex-1.flex
             avatar(:user="item.identifier", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.identifier.nickname}}
-        follow(v-if="!item.identifier.is_followed", :user="item.identifier.id", :follow="item.identifier.is_followed")
+        icon-follow(v-if="!item.identifier.is_followed", :user="item.identifier.id", :follow="item.identifier.is_followed")
     .answer.pdh
         .video(v-bg.video="item.video")
         .fz-26.gray.flex(:class="{'mgv-28': item.result}")
-            span.mgr-8(v-if="item.result") 回答结果为{{config.jdResult[item.result]}} 
+            span.mgr-8(v-if="item.result") 回答结果为{{config.jdResult[item.result]}}
             span(v-if="item.value") 估价为{{config.jdPrice[item.value]}}
     .question.bg-light
         .desc.fz-30 {{item.jianbao.user.nickname}}: {{item.jianbao.description}}
         .flex.medias.mgt-24(v-if="item.jianbao.pictures.length > 0")
             .media.img(v-for='pic in item.jianbao.pictures', v-bg='pic', v-if='$index < 3')
     .interact.fz-26.flex.bdt
-        comment.bdr(:count="item.comment_count")
-        like.bdr(:target="item.id", type="20", :active="item.liked", :count="item.like_count")
-        share
+        icon-comment.bdr(:count="item.comment_count")
+        icon-like.bdr(:target="item.id", type="20", :active="item.liked", :count="item.like_count")
+        icon-share
 </template>
 <script>
 export default {

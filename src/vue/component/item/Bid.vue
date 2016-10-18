@@ -122,7 +122,7 @@
             .flex-1 &nbsp;
             template(v-if="bid.like_status==='normal'")
                 .btn.fz-26.bd-gray(@click.stop="setReason(bid, 'like')")
-                    i.icon-success.yellow
+                    icon.yellow(name="success")
                     span 备选
                 .btn.fz-26.bd-gray(@click.stop="setReason(bid, 'reject')")
                     span.red ✕
@@ -131,7 +131,7 @@
     .support.fz-26.pdh-24.bdt
         .flex
             .flex-1.gray {{bid.supports.count ? "玉友支持&nbsp;"+bid.supports.count : "暂无玉友支持"}}
-            .btn.bg-red.white.pdh-28(v-if="canSupport", @click="gotoSupport") 支持一下
+            .btn.bg-red.white.pdh-28(v-if="canSupport", @click.stop="gotoSupport") 支持一下
         .comments.bdt(v-if="bid.supports.count")
             .tag.fz-26.gray.bg-light(v-for="tag in bid.supports.tags") {{tag.name}}({{tag.count}})
             .comment.flex.pdt(v-for="comment in bid.supports.comments")
@@ -181,7 +181,7 @@ export default {
         },
 
         canSupport() {
-            return !this.bid.supported && this.isOpen && !this.isSelf && !(this.self || this.self.id == this.bid.bidder_id)
+            return !this.bid.supported && this.isOpen && !this.isSelf && !(this.self && this.self.id == this.bid.bidder_id)
         }
     },
 

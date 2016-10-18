@@ -16,7 +16,7 @@
             margin-top: 36px
             line-height: 56px
 </style>
-<template lang="pug">
+<template lang="jade">
 .about-view
     .imgs.center
         img(:src="'profile/about.png' | qn", v-link="!isProd ? {name: 'api'} : ''")

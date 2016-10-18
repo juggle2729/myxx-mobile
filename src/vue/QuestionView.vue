@@ -42,10 +42,9 @@
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     footer.flex.fz-26.bg-white.bdt
         .gray(v-link="{name: 'comments', params: {id:question.post_id, type: 10}}")
-            span.icon-comment
-            span {{question.comment_count || '评论'}}
+            icon-comment(:count="question.comment_count")
         .bdl.blue(@click="gotoDownload")
-            span.icon-add-answer
+            icon(name="add-answer")
             span 添加回答
     .hr
     .results(v-if="question.results.length")
@@ -57,12 +56,12 @@
                     .mgl.flex-1
                         .fz-26 {{result.identifier.nickname}}
                         .mgt.fz-22.gray {{result.identifier.title}}
-                    follow(:user='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
+                    icon-follow(:user='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
             .video.bg(v-bg='result.video', v-link="{name: 'answer', params: {id: result.id}}", query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
             .fz-30.pdh-32.pdb-32(v-if="result.value") 回答结果为真 估价为{{config.jdPrice[result.value]}}
             footer.flex.fz-26.bdt
-                like(:active='result.liked', :count='result.like_count', :target="result.id", type="20")
-                comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 20}}")
+                icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="20")
+                icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 20}}")
             .hr(v-if="!$index")
     .center.fz-30.pdt-40.mgt-40(v-else) 暂无回答
 </template>

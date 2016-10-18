@@ -27,7 +27,7 @@
         color: #c6c6c6
         padding-top: 5px
 </style>
-<template lang="pug">
+<template lang="jade">
 .cash.bg.fz-30
     .item.fz-30.bdb.bg-white.flex
         div 提现账户

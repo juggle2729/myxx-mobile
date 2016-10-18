@@ -6,7 +6,7 @@
         background-position: center
         background-size: cover
 </style>
-<template lang="pug">
+<template lang="jade">
 .activity-view
     .cover(v-bg="activity.cover")
     activities(:path="'cms/activities/' + $route.params.id + '/contents'")

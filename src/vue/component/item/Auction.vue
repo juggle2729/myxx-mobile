@@ -40,7 +40,7 @@
         top: 0
         right: 0
 </style>
-<template lang="pug">
+<template lang="jade">
 .auction-item
     .hr
     .list-item.flex.relative(:class="itemClass(item.status)", v-link="{name: 'auction', params: {id: }}")

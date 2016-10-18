@@ -38,7 +38,7 @@
         line-height: 100px
         width: 232px
 </style>
-<template lang="pug">
+<template lang="jade">
 .purchase-add-view
     .pdl-32
         .content.relative.bdb
