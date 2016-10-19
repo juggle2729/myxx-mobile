@@ -34,7 +34,7 @@
             text-align: center
 </style>
 <template lang="jade">
-.post-item
+.post-item.bg-white(v-link="{name: 'post', params: {id: item.post_id}}")
     .header.flex
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")

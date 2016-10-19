@@ -1,8 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .answer-item
-    margin-bottom: 20px
     .header
+        padding: 20px 20px 0
         .name
             color: #666666
     .medias
@@ -34,15 +34,15 @@
             text-align: center
 </style>
 <template lang="jade">
-.answer-item
-    .header.flex.mgb-24.pdh-20
+.answer-item.bg-white(v-link="{name:'question', params: {id: item.jianbao.post_id}}")
+    .header.flex.pdh-20
         .flex-1.flex
             avatar(:user="item.identifier", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.identifier.nickname}}
         icon-follow(v-if="!item.identifier.is_followed", :user="item.identifier.id", :follow="item.identifier.is_followed")
-    .answer.pdh
+    .answer.pdh.pdv-28
         .video(v-bg.video="item.video")
-        .fz-26.gray.flex(:class="{'mgv-28': item.result}")
+        .fz-26.gray.flex(:class="{'mgt-28': item.result}")
             span.mgr-8(v-if="item.result") 回答结果为{{config.jdResult[item.result]}}
             span(v-if="item.value") 估价为{{config.jdPrice[item.value]}}
     .question.bg-light

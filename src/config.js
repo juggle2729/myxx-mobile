@@ -72,6 +72,7 @@ export default {
             bz: 'rt'
         }
     ],
+    category: { 3: 'question', 6: 'topic', 10: 'post', 11: 'answer'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'
     },

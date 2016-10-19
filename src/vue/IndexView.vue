@@ -34,6 +34,10 @@ export default {
         return {
             links: [
                 {
+                    label: '专辑详情',
+                    href: '/collection/1'
+                },
+                {
                     label: '图文详情',
                     href: '/post/1'
                 },{

@@ -117,18 +117,42 @@
     .topic.bg
         .header.fz-26.gray.pdh-32
             span 热门帖子
-        hot-list(:path="'users/' + $route.params.id + '/sns'", :params="{limit: 10, user_id: $route.params.id, order_by: '-click_count'}")
+        template(v-for="item in items")
+            component(:is="config.category[item.type]", keep-alive, :item="item.entry")
+            .hr
 </template>
 <script>
 import Lv from 'component/Lv.vue'
-import List from 'component/List.vue'
+import topic from 'component/item/Topic.vue'
+import post from 'component/item/Post.vue'
+import question from 'component/item/Question.vue'
+import answer from 'component/item/Answer.vue'
+import paging from 'paging'
 export default {
     name: 'user-home',
+    mixins: [paging],
 
     components: {
         Lv,
-        HotList: new List('Card')
+        topic,
+        post,
+        question,
+        answer
     },
+
+    computed: {
+        paging() {
+            return {
+                path: `users/${this.$route.params.id}/sns`,
+                params: {
+                    limit: 10,
+                    user_id: this.$route.params.id,
+                    order_by: '-click_count'
+                }
+            }
+        }
+    },
+
     data() {
         return {
             type: '',

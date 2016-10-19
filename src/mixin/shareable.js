@@ -140,7 +140,6 @@ export default {
                     data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/question.png'
                     break
             }
-            console.log(data.icon)
             data = {title: '美玉秀秀', desc: '大师在线视频鉴宝', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
             data.title = _.truncate(data.title, {
                 length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40

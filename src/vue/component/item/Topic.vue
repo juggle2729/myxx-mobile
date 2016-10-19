@@ -27,9 +27,11 @@
             padding-top: 77%
         .activity
             display: inline-block
-            margin: 0 0 32px 32px
             padding: 10px 20px
             border-radius: 26px
+            position: absolute
+            left: 32px
+            bottom: 32px
             background-color: #ffecea
         .more
             position: absolute
@@ -49,7 +51,7 @@
             text-align: center
 </style>
 <template lang="jade">
-.topic-item
+.topic-item.bg-white(v-link="{name: 'story', params: {id: item.post_id}}")
     .header.flex
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")

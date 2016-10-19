@@ -1,8 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .question-item
-    margin-bottom: 20px
     .header
+        padding: 20px 20px 0
         .name
             color: #666666
     .medias
@@ -23,8 +23,8 @@
                 display: block
 </style>
 <template lang="pug">
-.question-item
-    .header.flex.mgb-24.pdh-20
+.question-item.bg-white(v-link="{name: 'question', params: {id: item.post_id}}")
+    .header.flex.pd-20
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.user.nickname}}

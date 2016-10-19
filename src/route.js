@@ -50,6 +50,16 @@ export default {
         }
     },
 
+    '/collection/:id': {
+        name: 'collection',
+        title: '专辑详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CollectionView.vue'))
+            }, 'collection')
+        }
+    },
+
     // 活动标签信息流
     '/activity/:id': { //该活动的id
         name: 'activity',
