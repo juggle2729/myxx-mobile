@@ -75,7 +75,7 @@
             .flex-1 {{i+1}}级
             div {{point}}分
     .hr
-    .usage.fz-30.bg-white(v-if="isUserView || self && self.add_product")
+    .usage.fz-30.bg-white(v-if="isUserView || self && self.goodsPublishPermission")
         h3.gray 店铺等级有什么用？
         p 店铺等级将展示在店铺的显眼位置，是买家选择店铺的重要参考标准。
         p 店铺等级越高，在搜索、推荐、专题中的排名越靠前，同时享受美玉秀秀平台专属推广。
@@ -125,6 +125,9 @@ export default {
                         this.lv = shop.level
                         this.point = shop.point
                     })
+            } else {
+                this.action('user')
+                    .then(user => this.$set('self', user))
             }
             next()
         }

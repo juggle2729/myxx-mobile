@@ -19,8 +19,8 @@
         opacity: 1
 </style>
 <template lang="jade">
-.play-action(@click="params.handler=undefined")
-    video(:src="config.video + params.id", controls)
+.play-action(@click="close")
+    video(:src="config.video + params.id", controls, @ended="close", @webkitendfullscreen="close")
 </template>
 <script>
 export default {
@@ -33,13 +33,17 @@ export default {
     },
 
     ready() {
-        // this.params.cb(this.start)
-        this.start()
+        this.params.cb(this.start)
     },
 
     methods: {
         start() {
+            console.log('auto start')
             document.querySelector('video').play()
+        },
+
+        close() {
+            this.params.handler = undefined
         }
     }
 }

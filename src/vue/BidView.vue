@@ -1,4 +1,7 @@
 <style lang="stylus">
+.bid-view
+    .comment .gray
+        color: #393939
 </style>
 <template lang="jade">
 .bid-view.bg(v-if="!$loadingRouteData")

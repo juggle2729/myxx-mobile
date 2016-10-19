@@ -64,7 +64,7 @@
             footer.flex.fz-26.bdt
                 icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="20")
                 icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 20}}")
-            .hr(v-if="!$index")
+            .hr(v-if="$index!==question.results.length-1")
     .center.fz-30.pdt-40.mgt-40.light(v-else) 暂无回答
 </template>
 <script>

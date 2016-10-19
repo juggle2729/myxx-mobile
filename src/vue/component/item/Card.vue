@@ -32,11 +32,8 @@
         -webkit-box-flex: 1
         > div:first-child
             margin-bottom: 20px
-    .like-icon, .comment-icon
-        color: #d8d8d8
-        margin-right: 36px
 </style>
-<template lang="pug">
+<template lang="jade">
 .card-component.bg-white.flex(v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
     div(v-if="jb")
         .media.img(v-bg.md="item.entry.picture")
@@ -47,7 +44,7 @@
         .fz-30.line-clamp-4 {{jb ? item.entry.description : (item.entry.content || item.entry.title)}}
         .flex(v-if="!jb")
             icon-like(:active="false", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
-            icon-comment(:count="item.entry.comment_count || item.entry.comment || 0")
+            icon-comment.fz-26(:count="item.entry.comment_count")
         .fz-26.light(v-else) {{item.entry.status}}个回答
 </template>
 <script>

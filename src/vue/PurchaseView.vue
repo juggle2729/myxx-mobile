@@ -156,7 +156,7 @@ export default {
     methods: {
         addBid() {
             if(this.isOpen){
-                const userInfo = this.purchase.conf.user_conf
+                const userInfo = this.purchase.conf.user_conf || {}
                 if(!userInfo.add_product) {
                     this.action('confirm', {
                         text: '申请开通店铺才能参与竞标，添加官方微信客服申请：jmyb66',
