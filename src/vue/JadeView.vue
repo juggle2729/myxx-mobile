@@ -161,13 +161,13 @@
         .bdt.flex-1.flex
             .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
                 icon.fz-30(name="chat")
-                div 私信
+                .mgt-6 私信
             .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
                 icon.fz-30(name="star")
-                div {{jade.is_faved ? '已收藏' : '收藏'}}
+                .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
             .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
-                icon.fz-24(name="comment")
-                div 评论  {{jade.comment_count}}
+                icon.fz-30(name="comment")
+                .mgt-6 评论  {{jade.comment_count}}
         .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
         .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
 </template>

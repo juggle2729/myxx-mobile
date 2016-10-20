@@ -18,6 +18,7 @@
 </style>
 <template lang="jade">
 .about-view
+    .fz-30.red.mg-40(v-link="{name: 'collection', params: {id: 1}}") 专辑详情
     .imgs.center
         img(:src="'profile/about.png' | qn", v-link="!isProd ? {name: 'api'} : ''")
         p.fz-34.default 美玉秀秀

@@ -3,9 +3,6 @@
     background-image: linear-gradient(top, white 600px, #efefef 0)
     header
         padding: 32px 32px 0 32px
-        .desc
-            margin: 30px 0 0
-            line-height: 1.5em
     .pictures
         .pic
             width: 256px
@@ -38,8 +35,8 @@
             .mgl
                 .fz-30 {{question.user.name}}
                 .mgt-14.fz-22.light {{question.click_count}}人浏览
-        .title.fz-34.bold.mgv-32.user-txt {{question.description}}
-        .desc.fz-30.gray.mgb-32.user-txt(v-if="question.remark") {{question.remark}}
+        .title.fz-34.bold.mgv-24.user-txt {{question.description}}
+        .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{question.remark}}
     .pictures.pdh-32.mgb-32.bg-white.scrollable
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     footer.flex.fz-30.bg-white.bdt

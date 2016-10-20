@@ -21,6 +21,7 @@
                 line-height: 60px
                 -webkit-box-flex: 1
                 text-align: center
+                width: 33.33%
 </style>
 <template lang="jade">
 .answer-view.pdb-10(v-if="!$loadingRouteData")

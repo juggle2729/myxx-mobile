@@ -10,7 +10,16 @@
                 filter: blur(20px)
                 background-size: cover
                 background-position: center
+            .blur-fix
+                position: absolute
+                width: 100%
+                z-index: 1
+                padding-top: 282px
                 background-color: rgba(0, 0, 0, 0.3)
+                border-bottom: 100px solid white
+                & + div
+                    position: relative
+                    z-index: 999
             .logo
                 height: 200px
                 width: 200px
@@ -20,6 +29,9 @@
                 color: rgba(255,255,255,0.7)
         .info
             height: 100px
+            position: relative
+            z-index: 999
+            padding-top: 10px
             .follow
                 height: 56px
                 line-height: 56px
@@ -28,6 +40,7 @@
     .collection-view
         .upside
             .blur.bd(:style="{backgroundImage: 'url(' + config.img + cc.media + ')'}")
+            .blur-fix
             .pdh-32.flex.pdv-40.white
                 .logo(v-bg="cc.media")
                 .mgl-28

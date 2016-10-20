@@ -40,9 +40,9 @@
             .blue.mgr-28(v-if="item.status") 
                 span {{item.status}}
                 span.gray 个回答
-            .blue
-                icon(name="invite")
-                span 邀请回答
+            .blue(@click.stop="gotoDownload")
+                icon.mgb-6(name="add-answer")
+                span 添加回答
 </template>
 <script>
 export default {
