@@ -69,6 +69,12 @@ export default {
     },
     route: {
         data({to}) {
+            const t = to.query.t;
+            if(!t) {
+                location.href = location.href + '&t=' + new Date().getTime();
+                return;
+            }
+
             this.selected = this.channels[0]
             this.id = to.query.id
             this.type = to.query.type
