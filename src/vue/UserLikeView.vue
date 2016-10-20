@@ -85,7 +85,7 @@ export default {
                                     card.description = '鉴定了 ' + _.get(entry, 'applier.name', '路人') + ' 的宝贝'
                                     break
                                 case 30:
-                                    card.description = entry.content || '发布的晒宝'
+                                    card.description = entry.content || '发布的话题'
                                     card.preview = {[entry.cover_type === 'picture' ? 'img' : 'video']: entry.cover}
                                     break
                                 case 40:

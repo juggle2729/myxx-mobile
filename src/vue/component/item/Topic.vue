@@ -1,7 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .topic-item
-    margin-bottom: 20px
     .header
         padding: 20px 16px
         .name

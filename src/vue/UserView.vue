@@ -52,7 +52,7 @@
             span.bdr.pdh-30 关注 {{user.follow_count}}
             span.pdh-30 粉丝数 {{user.fans_count}}
         p.gray.fz-26.mgt(v-if='user.title') 美玉认证: {{user.title}}
-    tabs(:tabs="{home: '主页', story: '帖子', evaluation: '鉴宝'}", :current.sync="view")
+    tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
         icon-follow(:user='user.id', :follow='user.is_followed', :has-border='false')
@@ -81,13 +81,18 @@ export default {
 
     data() {
         return {
-            view: 'home'
+            view: ''
         }
     },
 
     computed: {
         isSelf() {
             return _.get(this, 'self.id') == this.user.id
+        },
+
+        views() {
+            const tabs = {home: '主页', story: '帖子', evaluation: '鉴宝'}
+            return this.user.has_homepage ? tabs : _.omit(tabs, 'home')
         }
     },
 
@@ -97,6 +102,7 @@ export default {
                 return this.$fetch(`users/${to.params.id}/profile`)
                     .then(user => {
                         this.user = user
+                        this.view = user.has_homepage ? 'home' : 'story'
                         this.action('updateTitle', {text: `${user.nickname}的个人主页`})
                         this.setShareData({id: user.id, name: user.nickname, photo: user.photo, title: user.title})
                     })

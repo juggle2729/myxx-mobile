@@ -2,6 +2,7 @@ export default {
     '/question/:id': {
         name: 'question',
         title: '问答详情',
+        native: v => v >= 2.3,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('QuestionView.vue'))
@@ -12,6 +13,7 @@ export default {
     '/answer/:id': {
         name: 'answer',
         title: '回答详情',
+        native: v => v >= 2.3,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AnswerView.vue'))
@@ -43,6 +45,7 @@ export default {
     '/post/:id': {
         name: 'post',
         title: '图文详情',
+        native: v => v >= 2.3,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PostView.vue'))

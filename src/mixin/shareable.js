@@ -2,7 +2,7 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
-                const type = {'question': 'jianbao', 'answer':'jianbaoresult', 'story':'topic', 'jade':'product', 'master':'website'}
+                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic', jade: 'product', master: 'website'}
                 this.$fetch('log/content_readings', {
                             ...this.$route.query,
                             id: this.$route.params.id,

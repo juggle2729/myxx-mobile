@@ -69,7 +69,7 @@ export default {
             id: 100,
             name: '长图文',
             route: 'post',
-            bz: 'rt'
+            biz: 'rt'
         }
     ],
     category: { 3: 'question', 6: 'topic', 10: 'post', 11: 'answer'},

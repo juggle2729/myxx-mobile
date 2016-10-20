@@ -34,7 +34,7 @@
             margin-bottom: 20px
 </style>
 <template lang="jade">
-.card-component.bg-white.flex(v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
+.card-component.bg-white.flex(v-if="item.type!==11", v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
     div(v-if="jb")
         .media.img(v-bg.md="item.entry.picture")
     div(v-else)
@@ -42,12 +42,13 @@
         .media.img(v-else, v-bg.md="item.entry.cover")
     .data-detail
         .fz-30.line-clamp-4 {{jb ? item.entry.description : (item.entry.content || item.entry.title)}}
-        .flex(v-if="!jb")
-            icon-like(:active="false", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
-            icon-comment.fz-26(:count="item.entry.comment_count")
+        .flex.fz-30(v-if="!jb")
+            icon-like.pdr(:active="false", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
+            icon-comment(:count="item.entry.comment_count")
         .fz-26.light(v-else) {{item.entry.status}}个回答
 </template>
 <script>
+// TODO 适配type 11
 export default {
     name: 'card',
     computed: {
