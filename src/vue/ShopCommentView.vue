@@ -21,20 +21,24 @@
                 border-radius: 6px
         main
             padding: 24px 32px 32px 100px
-            .box
-                width: 72px
-                height: 38px
-                line-height: 38px
-                text-align: center
-                border-radius: 6px
-                background-color: #ff3c3c
-                &[type='中评']
-                    background-color: #ffcc00
-                &[type='差评']
-                    background-color: #888888
             .product
                 color: #f0a401
-                padding: 0 30px 0 20px
+                &[type]
+                    &::before
+                        content: attr(type)
+                        display: inline-block
+                        width: 72px
+                        height: 38px
+                        line-height: 38px
+                        text-align: center
+                        border-radius: 6px
+                        margin-right: 20px
+                        color: white
+                        background-color: #ff3c3c
+                    &[type='中评']::before
+                        background-color: #ffcc00
+                    &[type='差评']::before
+                        background-color: #888888
             .content
                 margin-top: 24px
                 line-height: 1.2
@@ -51,10 +55,8 @@
                 .fz-26.light.mgt {{item.create_at | moment}}
             .btn.bd.fz-26(@click="action('chat', {id: item.buyer_id, name: item.order.buyer.nickname, product: item.product_id})") 联系买家
         main(@click="action('orderDetail', {id: item.order_no})")
-            .flex
-                .box.white.fz-22(:type="tab.label") {{tab.label}}
-                .product.fz-26.line-clamp 商品名称：{{item.order.product.title}}
-            .content {{item.description || '[无内容]'}}
+            .product.fz-26.line-clamp(:type="tab.label") 商品名称：{{item.order.product.title}}
+            .content(v-if="item.description") {{item.description}}
     empty(v-if="!tab.items.length", title="暂无评论")
 </template>
 <script>
@@ -76,7 +78,7 @@ export default {
         data({from, to, next}) {
             this.tab = this.tabs[to.query.tab] || this.tabs.pro
             if(from.name !== to.name) {
-                return this.$fetch('mall/orders/comments')
+                return this.$fetch('mall/orders/comments', {limit: 999})
                     .then(({comments}) => {
                         comments.forEach(c => {
                             if(c.choice === 'good') {

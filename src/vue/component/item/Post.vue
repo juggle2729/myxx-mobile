@@ -1,9 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .post-item
-    margin-bottom: 20px
     .header
-        padding: 20px 16px
+        padding: 20px 16px 0
         .name
             color: #666666
     .pic
@@ -40,7 +39,7 @@
             avatar(:user="item.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.user.nickname}}
         icon-follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
-    .bg-light.mgv-20
+    .bg-light.mg
         .pic(v-bg="item.cover")
             .more.white.fz-30.flex.pdh-12(v-if="item.media_num > 1")
                 img.mgr-8(:src="'pic.png' | qn")

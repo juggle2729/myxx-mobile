@@ -13,18 +13,13 @@
             box-shadow: 0 0 0 4px rgba(136, 136, 136, 0.3)
     .tabs
         height: 100px
+        background-color: #fff
         > div
             line-height: 40px
             &.active
                 color: #cc3f4f
         &.default > div:first-child
             color: #cc3f4f
-    .tabs-fixed
-        will-change: visibility
-        position: fixed
-        visibility: hidden
-        width: 100%
-        z-index: 999
     .footer
         height: 98px
         line-height: 60px

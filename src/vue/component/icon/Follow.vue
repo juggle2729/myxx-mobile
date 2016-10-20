@@ -1,7 +1,7 @@
 <style lang="stylus">
 .follow-icon {
     border-radius: 6px
-    padding: 6px 12px
+    padding: 12px 12px
     background-color: transparent
     &.bd-light {
         background-color: #eeeeee
