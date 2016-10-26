@@ -49,7 +49,7 @@
                     p.content.fz-30.mgr {{{item.description}}}
                 template.preview(v-if='item.preview')
                     .preview(v-if='item.preview.img', v-bg.sm='item.preview.img')
-                    .preview.play(v-else='', v-bg.video='item.preview.video')
+                    .preview.play(v-else, v-bg.video='item.preview.video')
     partial(name='load-more', v-if='items.hasMore')
     empty(v-if='items.isEmpty', title='你还没有赞')
 </template>
@@ -73,31 +73,31 @@ export default {
                         if(!card.isEmpty) {
                             card.params = {id: card.post_id || card.id || card.target.id}
                             switch(type) {
-                                case 10:
+                                case 'jb':
                                     card.params.result = 'none'
                                     card.preview = {img: entry.picture}
                                     break
-                                case 20:
+                                case 'jd':
                                     card.params.result = card.id
                                     card.type.route = 'question' //鉴定结果，跳转到鉴宝页面
                                     card.preview = {video: entry.video}
                                     card.user = entry.identifier
-                                    card.description = '鉴定了 ' + _.get(entry, 'applier.name', '路人') + ' 的宝贝'
+                                    card.description = '鉴定了 ' + _.get(entry, 'jianbao.user.nickname', '路人') + ' 的宝贝'
                                     break
-                                case 30:
+                                case 'tp':
                                     card.description = entry.content || '发布的话题'
-                                    card.preview = {[entry.cover_type === 'picture' ? 'img' : 'video']: entry.cover}
+                                    card.preview = {[entry.medias[0].media_type === 'picture' ? 'img' : 'video']: entry.medias[0].media}
                                     break
-                                case 40:
+                                case 'pd':
                                     card.description = entry.name + ' ' + _.get(entry, 'moral.name', '')
                                     card.preview = {img: entry.imgs[0]}
                                     break
-                                case 70:
+                                case 'cm':
                                     card.type.route = _.find(this.config.types, {id: entry.target.type}).route
                                     card.description = entry.content
                                     card.preview = {[entry.media.type === 'picture' ? 'img' : 'video']: entry.media.id}
                                     break
-                                case 90:
+                                case 'wk':
                                     card.description = entry.title
                                     card.preview = {img: entry.picture}
                                     break

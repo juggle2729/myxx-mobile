@@ -25,7 +25,7 @@ export default {
         params() {
             return {
                 obj_id: this.$route.params.id,
-                biz_type: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value()
+                biz_type: _.chain(this.config.types).find({route: this.$route.name}).get('id').value()
             }
         }
     }

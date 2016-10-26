@@ -137,7 +137,12 @@ export default {
                 case 'question':
                     data.title = entry.title
                     data.desc = '玉友的这个问题，你有什么见解吗？'
-                    data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/question.png'
+                    data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/share/question.png'
+                    break
+                case 'topic':
+                    data.title = `推荐一个不错的话题 ${entry.title}`
+                    data.desc = entry.desc
+                    data.icon = 'https://o0x80w5li.qnssl.com/share/topic.png'
                     break
             }
             data = {title: '美玉秀秀', desc: '大师在线视频鉴宝', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}

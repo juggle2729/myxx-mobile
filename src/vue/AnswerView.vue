@@ -9,11 +9,9 @@
             &:not(:first-child)
                 margin-left: 4px
     .answer
-        padding: 28px 32px 0
         .video
-            width: 100%
-            padding-top: @width
-            margin: 28px 0 32px 0
+            padding-top: 100%
+            margin: 0 32px
         footer
             height: 100px
             margin: 0 -32px
@@ -33,16 +31,20 @@
     .pictures.pdh-32.bg-white.scrollable
         .pic(v-for="pic in answer.jianbao.pictures", v-bg.sm="pic")
     .hr
+    
     .answer.bg-white
-        header
+        header.mgv-28.mgh-32
             .user.flex
                 avatar(:user="answer.identifier")
                 .mgl.flex-1
                     .fz-26 {{answer.identifier.nickname}}
                     .mgt-14.fz-22.gray {{answer.identifier.title}}
                 icon-follow(:user='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
-        .video.bg(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
-        .fz-30.pdh-32.pdb-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
+        .video.bg.mgh-32(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
+        .fz-30.pd-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
+
+        shop(:shop="answer.identifier.shop")
+
         footer.flex.fz-30.light.bdt
             .gray
                 icon-like(:active="answer.liked", :count="answer.like_count", :target="answer.id", type="20")
@@ -56,6 +58,7 @@
     general-suggestion
 </template>
 <script>
+import Shop from 'component/Shop.vue'
 import CommentList from 'component/CommentList.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import shareable from 'shareable'
@@ -65,6 +68,7 @@ export default {
     mixins: [shareable],
 
     components: {
+        Shop,
         CommentList,
         GeneralSuggestion
     },

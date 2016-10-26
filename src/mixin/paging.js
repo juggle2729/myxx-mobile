@@ -29,7 +29,6 @@ export default {
                     cursor: this.items.cursor,
                     ...this.paging.params
                 };
-
                 return this.$fetch(this.paging.path, opts)
                     .then(data => {
                         let items = data[this.paging.list || 'entries'];

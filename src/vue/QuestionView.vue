@@ -39,6 +39,7 @@
         .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{question.remark}}
     .pictures.pdh-32.mgb-32.bg-white.scrollable
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
+    topics(:topics="tags", :title="false")
     footer.flex.fz-30.bg-white.bdt
         icon-comment(:count="question.comment_count", v-link="{name: 'comments', params: {id:question.post_id, type: 10}}")
         .bdl.blue(@click="gotoDownload")
@@ -48,7 +49,7 @@
     .results(v-if="question.results.length")
         .fz-26.center.gray.bg.pdv-20 回答&nbsp;{{question.results.length}}
         .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}}")
-            header
+            header 
                 .user.flex
                     avatar(:user="result.identifier")
                     .mgl.flex-1
@@ -64,10 +65,14 @@
     .center.fz-30.pdt-40.mgt-40.light(v-else) 暂无回答
 </template>
 <script>
+import Topics from 'component/Topics.vue'
 import shareable from 'shareable'
 export default {
     name: 'question-view',
     mixins: [shareable],
+    components: {
+        Topics
+    },
     data() {
         return {
             question: {}

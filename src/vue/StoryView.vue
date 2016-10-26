@@ -51,31 +51,34 @@
         icon(name="fire")
         span {{story.activity.name}}
 
-    .footer.flex.fz-30.light.bdt.bg-white
+    shop(:shop="story.user.shop")
+    .footer.flex.fz-30.light.bg-white.bdt
         icon-like(:active='story.liked', :count='story.like')
         icon-comment.bdl(:count="story.comment", @click='$refs.comments.addComment()')
         icon-share.bdl
-
-    div(v-if='story.tags.length')
-        .hr
-        tags(:tags='story.tags')
-
     .hr
+    
     comment-list(:type='30', :id='story.post_id', v-ref:comments)
-    product-suggestion(:id='story.post_id')
+    .hr
+
+    template(v-if='story.tags.length')
+        topics(:topics='story.tags')
+    
     general-suggestion
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'
-import Tags from 'component/Tags.vue'
+import Topics from 'component/Topics.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import ProductSuggestion from 'component/ProductSuggestion.vue'
+import Shop from 'component/Shop.vue'
 import shareable from 'shareable'
 export default {
     name: 'StoryView',
     mixins: [shareable],
     components: {
-        Tags,
+        Topics,
+        Shop,
         CommentList,
         GeneralSuggestion,
         ProductSuggestion
@@ -96,9 +99,9 @@ export default {
 
         pictures() {
             return _.chain(this.story.medias)
-                        .filter(item => item.media_type === 'picture')
-                        .map(item => item.media)
-                        .value()
+                    .filter(item => item.media_type === 'picture')
+                    .map(item => item.media)
+                    .value()
         },
 
         isSelf() {

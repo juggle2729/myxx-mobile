@@ -72,8 +72,11 @@ export default {
     },
     route: {
         data() {
-            return this.$fetch('balance/latest').then((data) => {
-                this.balance = data.current_amount
+            return this.$fetch('balance/withdraw/account').then((data) => {
+                this.balance = data.balance
+                this.name = data.name
+                this.account = data.bank_account
+                this.amount = data.balance
                 this.showAction()
             })
         }
@@ -81,12 +84,20 @@ export default {
     methods: {
         withdraw() {
             if (this.complete && this.amount <= (this.balance / 100)) {
-                this.$post('balance/withdraws', {
-                    name: this.name,
-                    bank_account: this.account,
-                    trans_amount: this.amount*100
-                }).then((data) => {
-                    this.$router.go({name: 'withdraw-result', params: {id: data.trans_no}})
+                this.action('confirm', {
+                    text: `账户名：${this.name}, 卡号：${this.account}, 确认提现？`,
+                    labels: ['取消', '立即提现']
+                }).then((result) => {
+                    if(result === '1') {
+                        this.$post('balance/withdraws', {
+                            name: this.name,
+                            bank_account: this.account,
+                            trans_amount: Math.floor(this.amount*100)
+                        }).then((data) => {
+                            this.action('toast', {text: data})
+                            this.$router.go({name: 'withdraw-result', params: {id: data.trans_no}})
+                        })
+                    }
                 })
             } else if(this.amount > (this.balance / 100)) {
                 this.action('toast', {text: '超过最大提现金额'})

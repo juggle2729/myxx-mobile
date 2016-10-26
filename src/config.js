@@ -34,45 +34,40 @@ export default {
     www: '//o0x80w5li.qnssl.com/',
     types: [
         {
-            id: 10,
+            id: 'jb', // 10
             name: '问答',
-            route: 'question',
-            biz: 'jb'
+            route: 'question'
         }, {
-            id: 20,
+            id: 'jd', // 20
             name: '回答',
-            route: 'answer',
-            biz: 'jd'
+            route: 'answer'
         }, {
-            id: 30,
+            id: 'tp', // 30
             name: '帖子',
-            route: 'story',
-            biz: 'tp'
+            route: 'story'
         }, {
-            id: 40,
+            id: 'pd', // 40
             name: '宝贝',
-            route: 'jade',
-            biz: 'pd'
+            route: 'jade'
         }, {
-            id: 50,
+            id: 'ws', // 50
             name: '人物志',
             route: 'master'
         }, {
-            id: 70,
+            id: 'cm', // 70
             name: '评论',
             route: ''
         }, {
-            id: 90,
+            id: 'wk', // 90
             name: '作品',
             route: 'work'
         }, {
-            id: 100,
+            id: 'rt', // 100
             name: '长图文',
-            route: 'post',
-            biz: 'rt'
+            route: 'post'
         }
     ],
-    category: { 3: 'question', 6: 'topic', 10: 'post', 11: 'answer'},
+    category: { 'jb': 'question', 'tp': 'story', 'rt': 'post', 'jd': 'answer'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'
     },

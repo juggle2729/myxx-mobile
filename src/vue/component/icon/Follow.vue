@@ -15,7 +15,7 @@
 }
 </style>
 <template lang="jade">
-.follow-icon.fz-26.gray.center(v-if="!isSelf", @click.stop="toggle", :class="{active: !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
+.follow-icon.fz-26.gray.center(v-if="!isSelf", @click.stop="toggle", :class="{'active': !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
     icon(v-if="!follow", name="plus")
     span {{follow ? '已关注' : '关注'}}
 </div>

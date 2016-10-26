@@ -63,6 +63,25 @@ export default {
         }
     },
 
+    '/collection/user/:uid': {
+        name: 'collection-self',
+        title: '专辑详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CollectionView.vue'))
+            }, 'collection')
+        }
+    },
+
+    '/topic/:id': {
+        name: 'topic',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('TopicView.vue'))
+            }, 'topic')
+        }
+    },
+
     // 活动标签信息流
     '/activity/:id': { //该活动的id
         name: 'activity',
@@ -194,7 +213,7 @@ export default {
     },
     '/user/:id/following': {
         name: 'user-following',
-        title: '关注的人',
+        title: '我的关注',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('UserFollowingView.vue'))

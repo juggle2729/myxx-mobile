@@ -25,7 +25,7 @@
         div {{info.bank_account}}
     .item.flex.bdb.bg-white
         .flex-1.gray 提现金额
-        div {{info.trans_amount | price}}
+        div ￥{{info.trans_amount/100}}
     .button.bg-red.white.fz-30.center(@click='back') 我知道了
 </template>
 <script>

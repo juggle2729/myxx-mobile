@@ -42,21 +42,22 @@
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
             p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{item.media}}
+    shop(:shop="post.user.shop")
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')
             icon-comment(:count="comment_count")
         icon-share.bdl
-    div(v-if='post.tags.length')
-        .hr
-        tags(:tags='post.tags')
     .hr
     comment-list(:type='100', :id='post.post_id', v-ref:comments)
-    product-suggestion(:id='post.post_id')
+    .hr
+    template(v-if='post.tags.length')
+        topics(:topics='post.tags')
     general-suggestion
 </template>
 <script>
-import Tags from 'component/Tags.vue'
+import Topics from 'component/Topics.vue'
+import Shop from 'component/Shop.vue'
 import CommentList from 'component/CommentList.vue'
 import ProductSuggestion from 'component/ProductSuggestion.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
@@ -65,7 +66,8 @@ export default {
     name: 'post-view',
     mixins: [shareable],
     components: {
-        Tags,
+        Topics,
+        Shop,
         CommentList,
         ProductSuggestion,
         GeneralSuggestion,

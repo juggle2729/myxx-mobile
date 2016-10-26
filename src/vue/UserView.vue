@@ -1,7 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .user-view
-    padding-bottom: 98px
     .banner
         padding: 12px 0 50px
         background-image: url($qn + 'user/left.png'), url($qn + 'user/right.png'), url($qn + 'user/banner.png')
@@ -36,10 +35,9 @@
         .button
             border-radius: 6px
             line-height: 72px
-            margin-right: 14px
 </style>
 <template lang="jade">
-.user-view.bg(v-if="!$loadingRouteData")
+.user-view.bg.pdb-98(v-if="!$loadingRouteData")
     .banner.bg.center
         avatar(:user='user', :size='120')
         p.fz-30 {{user.nickname}}
@@ -50,18 +48,18 @@
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
-        icon-follow(:user='user.id', :follow='user.is_followed', :has-border='false')
+        icon-follow.fz-30(:user='user.id', :follow='user.is_followed', :has-border='false')
         icon-share.bdl
-        .button.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
+        .button.mgr-14.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
             span 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")
 </template>
 <script>
-import tabs from 'component/Tabs.vue'
 import shareable from 'shareable'
-import home from 'UserHome.vue'
-import story from 'UserStory.vue'
-import evaluation from 'UserEvaluation.vue'
+import tabs from 'component/Tabs.vue'
+import home from 'component/UserHome.vue'
+import story from 'component/UserStory.vue'
+import collection from 'component/UserCollection.vue'
 export default {
     name: 'user-view',
 
@@ -71,7 +69,7 @@ export default {
         tabs,
         home,
         story,
-        evaluation
+        collection
     },
 
     data() {
@@ -86,7 +84,7 @@ export default {
         },
 
         views() {
-            const tabs = {home: '主页', story: '帖子', evaluation: '鉴宝'}
+            const tabs = {home: '主页', story: '动态', collection: '专辑'}
             return this.user.has_homepage ? tabs : _.omit(tabs, 'home')
         }
     },
