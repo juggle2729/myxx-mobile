@@ -46,7 +46,7 @@
     .data-detail
         .fz-30.line-clamp-4 {{jb ? item.entry.description : (item.entry.content || item.entry.title)}}
         .flex.fz-26(v-if="!jb")
-            icon-like.pdr-28(:active="false", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
+            icon-like.pdr-28(:active="false", type="tp", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
             icon-comment(:count="item.entry.comment_count")
         .fz-24.light(v-else) {{item.entry.status}}个回答
 </template>

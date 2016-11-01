@@ -10,10 +10,11 @@
 </style>
 <template lang="pug">
     .my-topic.bg-white
-        .item.mgl-32(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}")
+        .item.mgl-32(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'topic', params: {id: item.entry.id}}")
             .pdv-28.pdr-32
                 .fz-30.mgb {{item.entry.name}}
                 .fz-26.gray.line-clamp-2 {{item.entry.desc}}
+        empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

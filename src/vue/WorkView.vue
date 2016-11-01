@@ -83,7 +83,7 @@
         .fz-30.mgl.flex-1
             p {{work.user.nickname}}
             p.gray.mgt {{work.user.title}}
-        icon-follow(:user='work.user.id', :follow='work.user.is_followed', :has-border='true')
+        icon-follow(:target='work.user.id', :follow='work.user.is_followed', :has-border='true')
     .line.fz-26.flex.mgt 作品展示
     .cover.img(v-bg='cover', @click='coverflow(work.pictures, 0)')
     .medias
@@ -92,11 +92,11 @@
         .fz-36 {{work.title}}
         .fz-30.gray.prize {{work.prize}}
     .footer.flex.fz-30.gray.bdt.bg-white(:class="{'fixed': !env.isShare}")
-        icon-like(:target='work.id', :type='90', :active='work.is_liked', :count='work.like_count')
+        icon-like(:target='work.id', :active='work.is_liked', :count='work.like_count')
         icon-comment.bdl(:count="work.comment_count", @click='$refs.comments.addComment()')
         icon-share.bdl
     .hr
-    comment-list(:type='90', :id='work.id', v-ref:comments)
+    comment-list(type='wk', :id='work.id', v-ref:comments)
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'

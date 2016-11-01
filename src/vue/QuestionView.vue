@@ -32,16 +32,20 @@
     header.bg-white
         .user.flex
             avatar(:user="question.user")
-            .mgl
+            .mgl.flex-1
                 .fz-30 {{question.user.name}}
                 .mgt-14.fz-22.light {{question.click_count}}人浏览
+            .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
+                icon(name="plus")
+                span 关注问题
         .title.fz-34.bold.mgv-24.user-txt {{question.description}}
         .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{question.remark}}
     .pictures.pdh-32.mgb-32.bg-white.scrollable
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
-    topics(:topics="tags", :title="false")
+    template(v-if='question.categories.length')
+        topics(:topics="question.categories", :title="false")
     footer.flex.fz-30.bg-white.bdt
-        icon-comment(:count="question.comment_count", v-link="{name: 'comments', params: {id:question.post_id, type: 10}}")
+        icon-comment(:count="question.comment_count", v-link="{name: 'comments', params: {id:question.post_id, type: 'jb'}}")
         .bdl.blue(@click="gotoDownload")
             icon(name="add-answer")
             span 添加回答
@@ -55,12 +59,12 @@
                     .mgl.flex-1
                         .fz-26 {{result.identifier.nickname}}
                         .mgt-14.fz-22.gray {{result.identifier.title}}
-                    icon-follow(:user='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
+                    icon-follow(:target='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
             .video.bg(v-bg='result.video', @click.stop="play(result.video)", query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
             .fz-30.pdh-32.pdb-32(v-if="result.value") 回答结果为真 估价为{{config.jdPrice[result.value]}}
             footer.flex.fz-26.bdt
-                icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="20")
-                icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 20}}")
+                icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
+                icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 'jd'}}")
             .hr
     .center.fz-30.pdt-40.mgt-40.light(v-else) 暂无回答
 </template>

@@ -33,7 +33,7 @@ export default {
 
     props: {
         id: Number,
-        type: Number
+        type: String
     },
 
     computed: {

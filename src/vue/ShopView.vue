@@ -66,7 +66,7 @@
         avatar(:user='shop.owner')
         .fz-26.mgl.flex-1
             p {{shop.owner.nickname}}
-            p.mgt.gray {{shop.owner.title}}
+            p.gray(:class="{'mgt': shop.owner.title}") {{shop.owner.title}}
         icon.fz-30.light(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布
@@ -77,9 +77,6 @@
         icon-share.flex-1.center
 </template>
 <script>
-
-
-
 import lv from 'component/Lv.vue'
 import List from 'component/List.vue'
 import shareable from 'shareable'

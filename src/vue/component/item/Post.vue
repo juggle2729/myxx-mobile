@@ -38,7 +38,7 @@
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.user.nickname}}
-        icon-follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
+        icon-follow(v-if="!item.user.is_followed", :target="item.user.id", :follow="item.user.is_followed")
     .bg-light.mg
         .pic(v-bg="item.cover")
             .more.white.fz-30.flex.pdh-12(v-if="item.media_num > 1")
@@ -49,7 +49,7 @@
             .fz-26.gray.line-clamp-2(:class="{'mgt-20': item.description}") {{item.description}}
     .interact.fz-26.flex.bdt
         icon-comment.bdr(:count="item.comment_count")
-        icon-like.bdr(:target="item.post_id", type="100", :active="item.liked", :count="item.like_count")
+        icon-like.bdr(:target="item.post_id", type="rt", :active="item.liked", :count="item.like_count")
         icon-share
 </template>
 <script>

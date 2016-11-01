@@ -19,7 +19,7 @@
                 .name.fz-30 {{item.name}}
                 .fz-26.light 粉丝数&nbsp&nbsp{{item.fans_count}}
             .content.fz-26.gray {{item.desc}}
-        icon-follow(:user='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
+        icon-follow(:target='item.id', :follow='item.is_followed', :oneway='true', :has-border='true')
 </template>
 <script>
 export default {

@@ -28,9 +28,13 @@ export default {
     components: {Icon},
 
     props: {
-        user: {
+        target: {
             type: Number,
             required: true
+        },
+        type: {
+            type: String,
+            default: 'us'
         },
         follow: Boolean,
         oneway: Boolean,
@@ -39,7 +43,7 @@ export default {
 
     computed: {
         api() {
-            return `users/follow/${this.user||this.route.params.id}`
+            return `users/target/${this.target||this.route.params.id}/type/${this.type}/follow`
         },
         isSelf() {
             return _.get(this, 'self.id') == this.user

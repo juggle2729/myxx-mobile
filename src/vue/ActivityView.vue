@@ -7,8 +7,9 @@
         background-size: cover
 </style>
 <template lang="jade">
-.activity-view
+.activity-view.bg
     .cover(v-bg="activity.cover")
+    .hr
     activities(:path="'cms/activities/' + $route.params.id + '/contents'")
 </template>
 <script>

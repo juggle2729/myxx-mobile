@@ -31,7 +31,6 @@
             position: absolute
             left: 32px
             bottom: 32px
-            background-color: #ffecea
         .more
             position: absolute
             right: 0
@@ -55,15 +54,15 @@
         .flex-1.flex
             avatar(:user="item.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.user.nickname}}
-        icon-follow(v-if="!item.user.is_followed", :user="item.user.id", :follow="item.user.is_followed")
+        icon-follow(v-if="!item.user.is_followed", :target="item.user.id", :follow="item.user.is_followed")
     .content.bg-white.mgb-24.pdh-16
         .fz-30.line-clamp-2.mgb-28 {{item.content}}
-        .pic.video(v-if="item.cover_type==='video'", v-bg.video="item.cover", @click="play(item.cover)")
-            .activity.red.fz-26(v-if="item.activity")
+        .pic.video(v-if="item.medias[0].media_type==='video'", v-bg.video="item.medias[0].media", @click="play(item.medias[0].media)")
+            .activity.bg-red.white.fz-26(v-if="item.activity")
                 icon(name="fire")
                 span {{item.activity.name}}
         .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-2': item.medias.length == 2, 'pic-more': item.medias.length >= 3}")
-            .activity.red.fz-26(v-if="item.activity")
+            .activity.bg-red.white.fz-26(v-if="item.activity")
                 icon(name="fire")
                 span {{item.activity.name}}
             .more.white.fz-30.flex.pdh-12(v-if="item.medias.length > 3")
@@ -71,7 +70,7 @@
                 div {{item.medias.length}}
     .interact.fz-26.flex.bdt
         icon-comment.bdr(:count="item.comment_count || item.comment")
-        icon-like.bdr(:target="item.post_id", type="30", :active="item.liked", :count="item.like_count || item.like")
+        icon-like.bdr(:target="item.post_id", type="tp", :active="item.liked", :count="item.like_count || item.like")
         icon-share
 </template>
 <script>

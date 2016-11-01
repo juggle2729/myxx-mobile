@@ -9,7 +9,7 @@
 <template lang="pug">
     .topic-view
         .scrollable.mgl-32.bdb.pdv-24
-            .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'tag', params: {id: topic.id}}") {{topic.name}}
+            .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
         .flex.pdh-32.pdt-40
             .fz-34.bold.flex-1 {{topics.name}}
             .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
@@ -20,27 +20,36 @@
         template(v-for="item in items")
             component(:is="config.category[item.type]", keep-alive, :item="item.entry")
             .hr
-        empty(v-if='!items', title='暂无内容')
+        empty(v-if='items.isEmpty', title='暂无内容')
 </template>
 <script>
 import paging from 'paging'
+import shareable from 'shareable'
 import story from 'component/item/Story.vue'
 import post from 'component/item/Post.vue'
 import question from 'component/item/Question.vue'
 export default {
     name: 'TopicView',
-    mixins: [paging],
+    mixins: [paging, shareable],
     components: {
         story,
         post,
         question
+    },
+    data() {
+        return {
+            topics: {}
+        }
     },
     route: {
         data({to}) {
             return this.$fetch(`dc/sns/categories/${to.params.id}`).then((topics) => {
                 this.topics = topics
                 this.action('updateTitle', {text: topics.name})
-                this.setShareData({title: topics.name, desc: topics.desc})
+                this.setShareData({
+                    title: topics.name,
+                    desc: topics.desc
+                })
             })
         }
     },
@@ -53,11 +62,6 @@ export default {
                     limit: 10
                 }
             }
-        }
-    },
-    data() {
-        return {
-            stories: {}
         }
     }
 }

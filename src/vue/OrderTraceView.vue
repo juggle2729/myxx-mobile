@@ -43,7 +43,7 @@
     .basic.fz-30.bdb.flex
         .flex-1
             div 顺丰速运
-            .margin-top 运单号 {{trace.express_no}}
+            .mgt 运单号 {{trace.express_no}}
         .img(v-bg='trace.image', @click='coverflow([trace.image])')
     .info(v-for='item in trace.routes')
         .circle(:class="{'first-circle': $index < 1}")

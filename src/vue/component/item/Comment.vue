@@ -17,7 +17,7 @@
             .flex-1
                 .fz-26.gray {{item.reply_from.name}}
                 .fz-22.light.mgt-12 {{item.create_at | moment}}
-            icon-like(:target='item.id', type='70', :count='item.like_count', :active='item.liked', zero='')
+            icon-like(:target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
         .fz-30.content.user-txt(:to="item.reply_to && item.reply_to.name") {{{content}}}
 </template>
 <script>

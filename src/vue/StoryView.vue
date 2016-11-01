@@ -41,7 +41,7 @@
             .name.mgl
                 p.fz-30 {{story.user.name}}
                 .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
-        icon-follow(:user='story.user.id', :follow='story.user.is_followed', :has-border='true')
+        icon-follow(:target='story.user.id', :follow='story.user.is_followed', :has-border='true')
     .fz-30.mgh-32.user-txt {{story.content}}
 
     .pictures.pd-28(v-if="cover.media_type==='picture'")
@@ -50,20 +50,20 @@
     .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
         icon(name="fire")
         span {{story.activity.name}}
-
-    shop(:shop="story.user.shop")
+    template(v-if="story.user.shop")
+        shop(:shop="story.user.shop")
     .footer.flex.fz-30.light.bg-white.bdt
         icon-like(:active='story.liked', :count='story.like')
         icon-comment.bdl(:count="story.comment", @click='$refs.comments.addComment()')
         icon-share.bdl
     .hr
-    
-    comment-list(:type='30', :id='story.post_id', v-ref:comments)
+
+    comment-list(type='tp', :id='story.post_id', v-ref:comments)
     .hr
 
-    template(v-if='story.tags.length')
-        topics(:topics='story.tags')
-    
+    template(v-if='story.categories.length')
+        topics(:topics='story.categories')
+
     general-suggestion
 </template>
 <script>

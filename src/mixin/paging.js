@@ -45,7 +45,7 @@ export default {
                             total: data.total,
                             cursor: data.cursor,
                             hasMore: items.length === opts.limit && this.items.length < (data.total || 999999),
-                            isEmpty: this.items.length === 0,
+                            isEmpty: this.items.length === 0
                         });
                 });
             }

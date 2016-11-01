@@ -34,7 +34,7 @@
         .flex-1.mgl
             .fz-30 {{post.user.nickname}}
             .mgt-12.fz-22.light {{post.create_at | moment}} &nbsp;&#124;&nbsp; {{post.click_count}}人浏览
-        icon-follow(:user='post.user.id', :follow='post.user.is_followed', :has-border='true')
+        icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold.user-txt {{post.title}}
         .fz-30.dark.pdv-32.user-txt {{post.description}}
@@ -42,17 +42,18 @@
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
             p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{item.media}}
-    shop(:shop="post.user.shop")
+    template(v-if="post.user.shop")
+        shop(:shop="post.user.shop")
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
         .comment.bdl(@click='$refs.comment.comment()')
             icon-comment(:count="comment_count")
         icon-share.bdl
     .hr
-    comment-list(:type='100', :id='post.post_id', v-ref:comments)
+    comment-list(type='rt', :id='post.post_id', v-ref:comments)
     .hr
-    template(v-if='post.tags.length')
-        topics(:topics='post.tags')
+    template(v-if='post.categories.length')
+        topics(:topics='post.categories')
     general-suggestion
 </template>
 <script>

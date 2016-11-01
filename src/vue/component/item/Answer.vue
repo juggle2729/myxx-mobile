@@ -39,7 +39,7 @@
         .flex-1.flex
             avatar(:user="item.identifier", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.identifier.nickname}}
-        icon-follow(v-if="!item.identifier.is_followed", :user="item.identifier.id", :follow="item.identifier.is_followed")
+        icon-follow(v-if="!item.identifier.is_followed", :target="item.identifier.id", :follow="item.identifier.is_followed")
     .answer.pdh.pdv-28
         .video(v-bg.video="item.video")
         .fz-26.gray.flex(:class="{'mgt-28': item.result}")
@@ -51,7 +51,7 @@
             .media.img(v-for="pic in item.jianbao.pictures.splice(0,3)", v-bg='pic')
     .interact.fz-26.flex.bdt
         icon-comment.bdr(:count="item.comment_count")
-        icon-like.bdr(:target="item.id", type="20", :active="item.liked", :count="item.like_count")
+        icon-like.bdr(:target="item.id", type="jd", :active="item.liked", :count="item.like_count")
         icon-share
 </template>
 <script>

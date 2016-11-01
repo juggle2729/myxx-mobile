@@ -1,8 +1,8 @@
 <style lang="stylus">
     .collection-view
-        position: relative
-        z-index: -1
         .upside
+            position: relative
+            z-index: 1
             .blur
                 position:absolute;
                 height: 282px
@@ -72,7 +72,7 @@
         template(v-for="item in items")
             component(:is="config.category[item.type]", keep-alive, :item="item.entry")
             .hr
-        empty(v-if="!items", title="暂无内容")
+        empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

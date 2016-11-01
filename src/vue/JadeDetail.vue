@@ -28,7 +28,7 @@
     .img
         img(:src="config.img + img + '_750'", v-for="img in jade.pictures", @click="coverflow(jade.pictures, $index)")
     .hr
-    .tags
+    .tags(v-if="jade.tags.length > 0")
         .tag-title.fz-26.gray 标签
         .tag.pdh-28.mgr-16.mgb-16.fz-26.center.bg(v-for="tag in jade.tags", @click="gotoTagView(tag)") {{tag.name}}
     .recommends.bg.pdt(v-if="related.length")

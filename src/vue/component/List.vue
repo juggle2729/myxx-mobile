@@ -1,6 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .list
+    >div.story-item
+        margin-bottom: 20px
     &.empty
         background-image: url($qn + 'placeholder/empty.png')
         background-size: 160px 160px
@@ -15,7 +17,7 @@
 </style>
 <template lang="jade">
 .list(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
-    component(:is="comp", :item="item", v-for="item in items")
+    component(:is="comp", :item="item.entry || item", v-for="item in items")
 </template>
 <script>
 const opts = {

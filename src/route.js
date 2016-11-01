@@ -56,6 +56,7 @@ export default {
     '/collection/:id': {
         name: 'collection',
         title: '专辑详情',
+        native: v => v >= 2.4,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('CollectionView.vue'))
@@ -66,6 +67,7 @@ export default {
     '/collection/user/:uid': {
         name: 'collection-self',
         title: '专辑详情',
+        native: v => v >= 2.4,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('CollectionView.vue'))
@@ -75,6 +77,7 @@ export default {
 
     '/topic/:id': {
         name: 'topic',
+        native: v => v >= 2.4,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TopicView.vue'))

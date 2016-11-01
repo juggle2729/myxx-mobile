@@ -20,8 +20,8 @@
         avatar(:user='user', :size='120')
         .flex-1.mgl(v-link='user | profile')
             p.fz-30 {{user.nickname}}
-            p.fz-26.light.margin-top(v-if='user.title') {{user.title}}
-        icon-follow(:follow='user.follow', :user='user.id', :has-border='true')
+            p.fz-26.light.mgt-16(v-if='user.title') {{user.title}}
+        icon-follow(:follow='user.follow', :target='user.id', :has-border='true')
     partial(name='load-more', v-if='items.hasMore')
     empty(v-if='items.isEmpty', title='暂无粉丝')
 </template>

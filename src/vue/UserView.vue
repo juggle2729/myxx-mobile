@@ -1,6 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .user-view
+    padding-bottom: 98px
     .banner
         padding: 12px 0 50px
         background-image: url($qn + 'user/left.png'), url($qn + 'user/right.png'), url($qn + 'user/banner.png')
@@ -37,7 +38,7 @@
             line-height: 72px
 </style>
 <template lang="jade">
-.user-view.bg.pdb-98(v-if="!$loadingRouteData")
+.user-view.bg(v-if="!$loadingRouteData")
     .banner.bg.center
         avatar(:user='user', :size='120')
         p.fz-30 {{user.nickname}}
@@ -48,7 +49,7 @@
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
-        icon-follow.fz-30(:user='user.id', :follow='user.is_followed', :has-border='false')
+        icon-follow.fz-30(:target='user.id', :follow='user.is_followed', :has-border='false')
         icon-share.bdl
         .button.mgr-14.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
             span 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}

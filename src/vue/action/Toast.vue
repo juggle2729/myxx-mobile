@@ -11,6 +11,7 @@
     min-height: 80px
     top: 380px
     left: 50%
+    transform: translateX(-50%)
     background: rgba(40,40,40,.75)
     text-align: center
     border-radius: 8px

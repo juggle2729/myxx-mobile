@@ -33,8 +33,7 @@ export default {
                 path: `users/${this.$route.params.id}/sns`,
                 params: {
                     limit: 10,
-                    user_id: this.$route.params.id,
-                    order_by: '-click_count'
+                    user_id: this.$route.params.id
                 }
             }
         }

@@ -76,7 +76,7 @@ export default {
                 this.balance = data.balance
                 this.name = data.name
                 this.account = data.bank_account
-                this.amount = data.balance
+                data.name && (this.amount = data.balance)
                 this.showAction()
             })
         }
@@ -94,7 +94,6 @@ export default {
                             bank_account: this.account,
                             trans_amount: Math.floor(this.amount*100)
                         }).then((data) => {
-                            this.action('toast', {text: data})
                             this.$router.go({name: 'withdraw-result', params: {id: data.trans_no}})
                         })
                     }

@@ -175,7 +175,6 @@
 import Q from 'q'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import comment from './JadeComment.vue'
 import detail from './JadeDetail.vue'
 import attribute from './JadeAttribute.vue'
 import problem from './JadeProblem.vue'
@@ -184,7 +183,6 @@ export default {
     mixins: [shareable],
     components: {
         lv,
-        comment,
         detail,
         attribute,
         problem
@@ -258,7 +256,7 @@ export default {
         },
         gotoComments() {
             if(this.env.isApp) {
-                this.$router.go({name: 'comments', params: {id: this.jade.id, type: '40'}})
+                this.$router.go({name: 'comments', params: {id: this.jade.id, type: 'pd'}})
             } else {
                 this.gotoDownload()
             }

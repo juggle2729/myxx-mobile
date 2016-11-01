@@ -2,7 +2,7 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
-                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic', jade: 'product', master: 'website'}
+                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic', jade: 'product', master: 'website', user: 'profile'}
                 this.$fetch('log/content_readings', {
                             ...this.$route.query,
                             id: this.$route.params.id,
@@ -191,7 +191,7 @@ export default {
             document.getElementsByTagName('head')[0].appendChild(script)
 
             script.onload = () => {
-                const [noncestr, timeStamp] = ['myxx-!@#$#', Math.round(Date.now() / 1000)]
+                const [noncestr, timestamp] = ['myxx-!@#$#', Math.round(Date.now() / 1000)]
                 const formData = new FormData()
                 formData.append('noncestr', noncestr)
                 formData.append('timestamp', timestamp)
@@ -202,8 +202,8 @@ export default {
                     .then(result => {
                         wx.config({
                             appId: 'wxcc40bf300d6200a3',
-                            timestamp: timeStamp,
-                            nonceStr: nonceStr,
+                            timestamp: timestamp,
+                            nonceStr: noncestr,
                             signature: result.data.data.signature,
                             jsApiList: [
                                 'checkJsApi',
