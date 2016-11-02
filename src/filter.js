@@ -69,6 +69,10 @@ const filters = {
     profile(user) {
         const [id, tab] = [user.id, user.shop_status ? 'jade' : 'story']
         return {name: 'user', params: {id, tab}}
+    },
+
+    br(content) {
+        return content.replace(/[\r]/g, '<br>');
     }
 }
 export default {
