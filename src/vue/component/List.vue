@@ -17,7 +17,7 @@
 </style>
 <template lang="jade">
 .list(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
-    component(:is="comp", :item="item.entry || item", v-for="item in items")
+    component(:is="comp", :item="lodash.merge(item.entry || item, {type: item.type})", v-for="item in items")
 </template>
 <script>
 const opts = {

@@ -29,7 +29,7 @@
     .submit-btn.white.fz-30(@click="submit()", :class="{'bg-red': valid, 'bg-disable': !valid}") 提交
 </template>
 <script>
-const tags = '真皮真籽,皮色漂亮,原籽,肉细,结构小,白度好,油性好,无明显瑕疵,雕工精致,线条流畅,苏工,海派工,价格公道,性价比高,捡漏了'
+const tags = '真皮真籽,皮色漂亮,肉细,结构致密,白度好,油性好,无明显瑕疵,雕工精致,苏工,海派工,价格公道,捡漏了,老熟度好'
 export default {
     name: 'support-bid',
 

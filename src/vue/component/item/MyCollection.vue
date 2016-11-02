@@ -6,15 +6,15 @@
             height: 148px
             width: 148px
 </style>
-<template lang="pug">
-    .my-collection.bg-white
-        .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'collection', params: {id: item.entry.id}}")
-            .img(v-bg="item.entry.cover")
-            .mgl
-                .fz-34.mgb-16 {{item.entry.name}}
-                .fz-26.gray.mgb-24 {{item.entry.author.nickname}}
-                .fz-26.gray 关注 {{item.entry.followed_count}}
-        empty(v-if="items.isEmpty")
+<template lang="jade">
+.my-collection(:class="{'bg-white': !items.isEmpty}")
+    .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'collection', params: {id: item.entry.id}}")
+        .img(v-bg="item.entry.cover")
+        .mgl
+            .fz-34.mgb-16 {{item.entry.name}}
+            .fz-26.gray.mgb-24 {{item.entry.author.nickname}}
+            .fz-26.gray 关注 {{item.entry.followed_count}}
+    empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

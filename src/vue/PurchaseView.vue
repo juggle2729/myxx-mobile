@@ -164,7 +164,7 @@ export default {
                     })
                 } else if(!userInfo.shop_remain_bids) {
                     this.action('confirm', {
-                        text: '您今天参与的竞标数已达上限（3次），明天再试吧',
+                        text: '您今天参与的竞标数已达上限（10次），明天再试吧',
                         labels: ['我知道了']
                     })
                 } else {

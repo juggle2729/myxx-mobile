@@ -37,26 +37,25 @@
             font-size: 25px
 </style>
 <template lang="jade">
-.card-component.bg-white.flex(v-if="item.type!==11", v-link="jb ? {name: 'question', params: {id: item.entry.id}} : {name: 'story', params: {id: item.entry.post_id}}")
+.card-component.bg-white.flex(v-if="item.type!==11", v-link="jb ? {name: 'question', params: {id: item.id}} : {name: 'story', params: {id: item.post_id}}")
     div(v-if="jb")
-        .media.img(v-bg.md="item.entry.picture")
+        .media.img(v-bg.md="item.picture")
     div(v-else)
-        .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320")
-        .media.img(v-else, v-bg.md="item.entry.cover")
+        .media.img(v-if="item.cover_type === 'video'", v-bg="item.cover", query="vframe/jpg/offset/0/rotate/auto|imageView2/2/w/320")
+        .media.img(v-else, v-bg.md="item.cover")
     .data-detail
-        .fz-30.line-clamp-4 {{jb ? item.entry.description : (item.entry.content || item.entry.title)}}
+        .fz-30.line-clamp-4 {{jb ? item.description : (item.content || item.title)}}
         .flex.fz-26(v-if="!jb")
-            icon-like.pdr-28(:active="false", type="tp", :count="item.entry.like_count || item.entry.like", readonly=true, v-if="item.type === 'tp'")
-            icon-comment(:count="item.entry.comment_count")
-        .fz-24.light(v-else) {{item.entry.status}}个回答
+            icon-like.pdr-28(:active="false", type="tp", :count="item.like_count || item.like", readonly=true, v-if="item.type === 'tp'")
+            icon-comment(:count="item.comment_count")
+        .fz-24.light(v-else) {{item.status}}个回答
 </template>
 <script>
-// TODO 适配type 11
 export default {
     name: 'card',
     computed: {
         jb() {
-            return this.item.type == 3
+            return this.item.type == 'jb'
         }
     },
     props: {

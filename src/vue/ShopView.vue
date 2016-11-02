@@ -52,7 +52,7 @@
         .shop.flex.white
             .img(v-bg='shop.logo')
             .flex-1
-                .fz-30.flex.margin-bottom.name(:class="{'auth': shop.auth_flag}")
+                .fz-30.flex.mgb-10.name(:class="{'auth': shop.auth_flag}")
                     .line-clamp {{shop.shop_name}}
                 .fz-26
                     icon(name="location")
@@ -60,14 +60,14 @@
     .level.fz-30.flex(v-link="{name: 'level-help', params: {id: 'none'}}")
         .mgr 信誉评价等级
         lv.flex-1(:lv="shop.level")
-        icon.fz-30.light(name="enter")
+        icon.fz-20.light(name="enter")
     .hr
     .master.flex(v-link="{name: 'user', params: {id: shop.owner.id}}")
         avatar(:user='shop.owner')
         .fz-26.mgl.flex-1
             p {{shop.owner.nickname}}
-            p.gray(:class="{'mgt': shop.owner.title}") {{shop.owner.title}}
-        icon.fz-30.light(name="enter")
+            p.mgt-12.gray {{shop.owner.title || config.role[shop.owner.role]}}
+        icon.fz-20.light.mgb-16(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布
     product-list.bg(path="mall/homepage/searches", :params="{shop_id: $route.params.id, order_by: 'new'}", transform="products")

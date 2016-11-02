@@ -3,18 +3,18 @@
     .item
         height: 168px
 </style>
-<template lang="pug">
-    .my-user.bg-white
-        .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'user', params: {id: item.entry.id}}")
-            avatar(:user="item.entry")
-            .mgl-24.flex-1
-                .fz-30 {{item.entry.nickname}}
-                .fz-26.gray.mgt-16 {{item.entry.title || '普通用户'}}
-                .fz-26.light.flex.mgt-16
-                    .mgr-36 帖子数 {{item.entry.follow_count}}
-                    div 粉丝数 {{item.entry.fans_count}}
-            icon-follow(:target="item.entry.id", :follow="true", :has-border="true")
-        empty(v-if="items.isEmpty")
+<template lang="jade">
+.my-user(:class="{'bg-white': !items.isEmpty}")
+    .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'user', params: {id: item.entry.id}}")
+        avatar(:user="item.entry")
+        .mgl-24.flex-1
+            .fz-30 {{item.entry.nickname}}
+            .fz-26.gray.mgt-16 {{item.entry.title || '普通用户'}}
+            .fz-26.light.flex.mgt-16
+                .mgr-36 帖子数 {{item.entry.follow_count}}
+                div 粉丝数 {{item.entry.fans_count}}
+        icon-follow(:target="item.entry.id", :follow="true", :has-border="true")
+    empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

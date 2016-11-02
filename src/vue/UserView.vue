@@ -49,7 +49,7 @@
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
-        icon-follow.fz-30(:target='user.id', :follow='user.is_followed', :has-border='false')
+        icon-follow(:target='user.id', :follow='user.is_followed', :has-border='false')
         icon-share.bdl
         .button.mgr-14.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
             span 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}

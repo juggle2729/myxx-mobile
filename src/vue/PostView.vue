@@ -46,7 +46,7 @@
         shop(:shop="post.user.shop")
     .footer.flex.fz-30.light.bdt.bg-white
         icon-like(:active='post.liked', :count='post.like_count')
-        .comment.bdl(@click='$refs.comment.comment()')
+        .comment.bdl(@click='$refs.comments.addComment()')
             icon-comment(:count="comment_count")
         icon-share.bdl
     .hr

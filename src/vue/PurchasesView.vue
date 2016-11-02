@@ -70,11 +70,11 @@ export default {
                 if(this.env.isWechat) {
                     this.$router.go({name: 'purchase-add'})
                 } else {
-                    if(this.self.goodsPublishPermission) {
-                        this.action('toast', {success: '0', text: '请前往"商户专区"发布需求'})
-                    } else {
-                        this.action('newPurchase')
-                    }
+                    // if(this.self.goodsPublishPermission) {
+                    //     this.action('toast', {success: '0', text: '请前往"商户专区"发布需求'})
+                    // } else {
+                    this.action('newPurchase')
+                    // }
                 }
             })
         },
