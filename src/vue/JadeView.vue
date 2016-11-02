@@ -1,6 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .jade-view
+    position: relative
+    height: 100%
     .notice
         position: fixed
         z-index: 9
@@ -116,60 +118,75 @@
         z-index: 999
     .placeholder
         height: 148px
+    .offline
+        position: absolute
+        width: 100%
+        top: 45%
+        left: 50%
+        transform: translate(-50%, -50%)
+        img
+            display: block
+            margin: 0 auto
+            height: 244px
+            width: 386px
 </style>
 <template lang="jade">
 .jade-view
-    .notice-placeholder(v-if="firstVisit")
-    .notice.flex(v-if="firstVisit")
-        .txt.fz-26.flex-1 清仓只有商家能看到，了解更多请前往商户专区
-        .close(@click="closeNotice")
-    .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
-        .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
-        .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
-        div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
-    .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
-    .titles.bg-white
-        .header
-            .title.fz-32 {{jade.title}}
-            .flex
-                p.red.fz-44.flex-1 {{jade.price | price}}
-        .guarantee.bdt
-            img(:src="'jade/guarantee.png' | qn")
-    .hr
-    .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
-        .img(v-bg='jade.shop.logo')
-        .flex-1
-            .fz-30.flex.margin-bottom.name
-                .line-clamp.mgr {{jade.shop.shop_name}}
-                lv(:lv='jade.shop.level')
-            .fz-26.gray
-                icon(name="location")
-                span {{jade.shop.locale_name}}
-        icon.fz-30.gray(name="enter")
-    .master.flex.bg-white.bdt(v-link="{name: 'user', params: {id: jade.owner.id}}")
-        avatar(:user='jade.owner', :size='50')
-        .name.fz-26.gray.mgl {{jade.owner.name}}
-    .hr
-    .tabs.tabs-static.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
-        .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
-        .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
-        div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
-    .bg.tab-content
-        component(:is='view', keep-alive, :jade='jade')
-    .bg.placeholder
-    .float-box.flex.fixed.fz-30.bg-white
-        .bdt.flex-1.flex
-            .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
-                icon.fz-30(name="chat")
-                .mgt-6 私信
-            .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                icon.fz-30(name="star")
-                .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
-            .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
-                icon.fz-30(name="comment")
-                .mgt-6 评论  {{jade.comment_count}}
-        .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
-        .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
+    template(v-if="jade.status === 'online'")
+        .notice-placeholder(v-if="firstVisit")
+        .notice.flex(v-if="firstVisit")
+            .txt.fz-26.flex-1 清仓只有商家能看到，了解更多请前往商户专区
+            .close(@click="closeNotice")
+        .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
+            .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
+            .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
+            div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
+        .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
+        .titles.bg-white
+            .header
+                .title.fz-32 {{jade.title}}
+                .flex
+                    p.red.fz-44.flex-1 {{jade.price | price}}
+            .guarantee.bdt
+                img(:src="'jade/guarantee.png' | qn")
+        .hr
+        .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
+            .img(v-bg='jade.shop.logo')
+            .flex-1
+                .fz-30.flex.margin-bottom.name
+                    .line-clamp.mgr {{jade.shop.shop_name}}
+                    lv(:lv='jade.shop.level')
+                .fz-26.gray
+                    icon(name="location")
+                    span {{jade.shop.locale_name}}
+            icon.fz-30.gray(name="enter")
+        .master.flex.bg-white.bdt(v-link="{name: 'user', params: {id: jade.owner.id}}")
+            avatar(:user='jade.owner', :size='50')
+            .name.fz-26.gray.mgl {{jade.owner.name}}
+        .hr
+        .tabs.tabs-static.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
+            .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
+            .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
+            div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
+        .bg.tab-content
+            component(:is='view', keep-alive, :jade='jade')
+        .bg.placeholder
+        .float-box.flex.fixed.fz-30.bg-white
+            .bdt.flex-1.flex
+                .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
+                    icon.fz-30(name="chat")
+                    .mgt-6 私信
+                .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
+                    icon.fz-30(name="star")
+                    .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
+                .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
+                    icon.fz-30(name="comment")
+                    .mgt-6 评论  {{jade.comment_count}}
+            .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
+            .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
+    .offline(v-else)
+        img(:src="'mall/offline.png' | qn")
+        .mgt-28.gray.fz-26.center 该商品已下架
 </template>
 <script>
 import Q from 'q'
@@ -206,7 +223,7 @@ export default {
         const tabContent = this.$el.querySelector('.tab-content')
         // FIXME: 采用css解决方案
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
-        tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`
+        tabContent && (tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`)
 
         this.action('cache', {k: 'jade-visited'})
             .then(v => {
