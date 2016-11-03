@@ -69,8 +69,8 @@
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.medias.length}}
     .interact.fz-26.flex.bdt
-        icon-comment.bdr(:count="item.comment_count || item.comment")
         icon-like.bdr(:target="item.post_id", type="tp", :active="item.liked", :count="item.like_count || item.like")
+        icon-comment.bdr(:count="item.comment_count || item.comment")
         icon-share
 </template>
 <script>

@@ -66,7 +66,7 @@ export default {
     activate(done) {
         return this.$fetch(`sns/users/${this.$route.params.id}/collections`).then((data) => {
                 this.ccs = data.collections
-                this.user = this.ccs[0].author.nickname
+                this.user = _.get(this, 'ccs.0.author.nickname', this.$parent.user.nickname)
             }).then(done)
     }
 }

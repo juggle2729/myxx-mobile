@@ -50,8 +50,8 @@
         .flex.medias.mgt-24(v-if="item.jianbao.pictures.length > 0")
             .media.img(v-for="pic in item.jianbao.pictures.splice(0,3)", v-bg='pic')
     .interact.fz-26.flex.bdt
-        icon-comment.bdr(:count="item.comment_count")
         icon-like.bdr(:target="item.id", type="jd", :active="item.liked", :count="item.like_count")
+        icon-comment.bdr(:count="item.comment_count")
         icon-share
 </template>
 <script>

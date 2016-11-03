@@ -210,7 +210,8 @@ export default {
             jade: {
                 owner: {},
                 shop: {},
-                is_faved: false
+                is_faved: false,
+                status: ''
             },
             isSelf: false,
             isDefaultView: false,
@@ -305,6 +306,10 @@ export default {
     },
     events: {
         scroll() {
+            if(!this.fixedTabs) {
+                this.staticTabs = this.$el.querySelector('.tabs-static')
+                this.fixedTabs = this.$el.querySelector('.tabs-fixed')
+            }
             if(!this.env.isWechat) {
                 this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
             }

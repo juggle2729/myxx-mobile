@@ -29,6 +29,7 @@
             .more
                 position: absolute
                 right: 0
+                padding-top: 70px
                 background-color: rgba(0, 0, 0, 0.5)
     .interview
         .img
@@ -74,7 +75,7 @@
         .flex.medias
             template(v-for="entry in works.entries")
                 .media.img(v-if='$index < 4', v-bg='entry.picture', v-link="{name: 'work', params: {id: entry.id}}")
-            .media.more.pdt-70.fz-30.center.white(v-if='works.total > 4', v-link="{name: 'works', params: {id: $route.params.id}}")
+            .media.more.fz-30.center.white(v-if='works.total > 4', v-link="{name: 'works', params: {id: $route.params.id}}")
                 span 更多
                 icon(name="enter")
     .hr(v-if='interview')
@@ -88,7 +89,7 @@
     .website.bg-white(v-if='website', v-link="{name: 'master', params:{id: website.user_id}}")
         .header.pdh-32.fz-26.gray
             span.pdl-12 人物志
-        .cover.img(v-bg='website.logo')
+        .cover.img.bg(v-bg='website.logo')
         .title.fz-30.flex-1.line-clamp-2 {{website.title}}
     .hr(v-if='engravers && engravers.length > 0')
     .engraver.pdl-32.bg-white(v-if='engravers && engravers.length > 0')
@@ -101,7 +102,7 @@
                     p {{master.nickname}}
                     p.gray.mgt {{master.title}}
     .hr
-    .bg
+    .bg(v-if="items.length > 0")
         .header.fz-26.gray.pdh-32
             span.pdl-12 热门帖子
         template(v-for="item in items")
