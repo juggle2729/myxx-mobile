@@ -50,9 +50,16 @@
             line-height: 56px
         .guarantee
             line-height: 0
+            position: relative
             img
-                height: 72px
+                height: 97px
                 width: 100%
+            .icon-enter
+                height: 24px
+                width: 12px
+                position: absolute
+                right: 32px
+                top: 36px
     .master
         height: 72px
         line-height: 72px
@@ -74,6 +81,9 @@
                 line-height: 1.2
             img
                 width: 42px
+        .icon-enter
+            height: 24px
+            width: 12px
     .tabs
         width: 100%
         height: 90px
@@ -147,8 +157,9 @@
                 .title.fz-32 {{jade.title}}
                 .flex
                     p.red.fz-44.flex-1 {{jade.price | price}}
-            .guarantee.bdt
-                img(:src="'jade/guarantee.png' | qn")
+            .guarantee(@click="guarantee")
+                img(:src="'jade/instruction.png' | qn")
+                icon.fz-26.red(name="enter")
         .hr
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
             .img(v-bg='jade.shop.logo')
@@ -302,6 +313,10 @@ export default {
         closeNotice() {
             this.firstVisit = false
             this.action('cache', {k: 'jade-visited', v: 1})
+        },
+
+        guarantee() {
+            this.$root.popup = {handler: 'guarantee'}
         }
     },
     events: {
@@ -309,9 +324,10 @@ export default {
             if(!this.fixedTabs) {
                 this.staticTabs = this.$el.querySelector('.tabs-static')
                 this.fixedTabs = this.$el.querySelector('.tabs-fixed')
-            }
-            if(!this.env.isWechat) {
-                this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
+            } else {
+                if(!this.env.isWechat) {
+                    this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
+                }
             }
         }
     }

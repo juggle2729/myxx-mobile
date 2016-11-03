@@ -102,7 +102,7 @@
                     p {{master.nickname}}
                     p.gray.mgt {{master.title}}
     .hr
-    .bg(v-if="items.length > 0")
+    .bg(v-if="items.length")
         .header.fz-26.gray.pdh-32
             span.pdl-12 热门帖子
         template(v-for="item in items")

@@ -27,7 +27,7 @@
             .gray.mgt-16.mgb-24 {{cc.author.nickname}}
             .gray(v-if="cc.followed_count > 0") 关注 {{cc.followed_count}}
 
-    template(v-if="items")
+    template(v-if="items.length")
         .hr
         .header.fz-26.gray.pdl
             span.pdl-12 关注的专辑
