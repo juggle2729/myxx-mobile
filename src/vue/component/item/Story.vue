@@ -82,7 +82,7 @@ export default {
     computed: {
         imgSrc() {
             let src = _.chain(this.item.medias).slice(0,3).reduce((pre, item) => {
-                return pre + `url(${this.config.img + item.media}), `
+                return pre + `url(${this.config.img + item.media}_320), `
             }, '').trimEnd(', ')
             return _.trimEnd(src, ', ')
         }

@@ -38,41 +38,41 @@
                 height: 56px
                 line-height: 56px
 </style>
-<template lang="pug">
-    .collection-view.bg
-        .upside(v-if="!self")
-            .blur.bd(:style="{backgroundImage: 'url(' + config.img + cc.cover + ')'}")
-            .blur-fix
-            .pdh-32.flex.pdv-40.white
-                .logo(v-bg="cc.cover")
-                .mgl-28
-                    .fz-34.mgb-36.bold {{cc.name}}
-                    .flex.fz-30.transparent
-                        avatar(:user="cc.author")
-                        .mgl {{cc.author.nickname}}
-                        icon.mgl-16(name="enter")
-        .upside(v-if="self")
-            img.blur.bd(:src="'user/collection.jpg' | qn")
-            //- .blur-fix
-            .pdh-32.flex.pdv-40.white
-                img.logo(:src="'user/collection.jpg' | qn")
-                .mgl-28
-                    .fz-34.mgb-36.bold {{profile.nickname}}赞过的内容
-                    .flex.fz-30.transparent
-                        avatar(:user="profile")
-                        .mgl {{profile.nickname}}
-                        icon.mgl-16(name="enter")
-        .info.flex.pdh-32.fz-26(v-if="!self")
-            .gray.pdr.bdr 内容 {{cc.content_count}}
-            .gray.pdl.flex-1 关注 {{cc.followed_count}}
-            .pdl-32.bdl.red.follow(@click="gotoDownload")
-                icon(name="plus")
-                span 关注专辑
+<template lang="jade">
+.collection-view.bg
+    .upside(v-if="!self")
+        .blur.bd(:style="{backgroundImage: 'url(' + config.img + cc.cover + ')'}")
+        .blur-fix
+        .pdh-32.flex.pdv-40.white
+            .logo(v-bg="cc.cover")
+            .mgl-28
+                .fz-34.mgb-36.bold {{cc.name}}
+                .flex.fz-30.transparent
+                    avatar(:user="cc.author")
+                    .mgl {{cc.author.nickname}}
+                    icon.mgl-16(name="enter")
+    .upside(v-if="self")
+        img.blur.bd(:src="'user/collection.jpg' | qn")
+        //- .blur-fix
+        .pdh-32.flex.pdv-40.white
+            img.logo(:src="'user/collection.jpg' | qn")
+            .mgl-28
+                .fz-34.mgb-36.bold {{profile.nickname}}赞过的内容
+                .flex.fz-30.transparent
+                    avatar(:user="profile")
+                    .mgl {{profile.nickname}}
+                    icon.mgl-16(name="enter")
+    .info.flex.pdh-32.fz-26(v-if="!self")
+        .gray.pdr.bdr 内容 {{cc.content_count}}
+        .gray.pdl.flex-1 关注 {{cc.followed_count}}
+        .pdl-32.bdl.red.follow(@click="gotoDownload")
+            icon(name="plus")
+            span 关注专辑
+    .hr
+    template(v-for="item in items")
+        component(:is="config.category[item.type]", keep-alive, :item="item.entry")
         .hr
-        template(v-for="item in items")
-            component(:is="config.category[item.type]", keep-alive, :item="item.entry")
-            .hr
-        empty(v-if="items.isEmpty")
+    empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

@@ -41,7 +41,7 @@
             .name.mgl.fz-26 {{item.identifier.nickname}}
         icon-follow(v-if="!item.identifier.is_followed", :target="item.identifier.id", :follow="item.identifier.is_followed")
     .answer.pdh.pdv-28
-        .video(v-bg.video="item.video")
+        .video(v-bg="item.identifier.portrait")
         .fz-26.gray.flex(:class="{'mgt-28': item.result}")
             span.mgr-8(v-if="item.result") 回答结果为{{config.jdResult[item.result]}}
             span(v-if="item.value") 估价为{{config.jdPrice[item.value]}}
