@@ -42,7 +42,7 @@
                 p.fz-30 {{story.user.name}}
                 .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
         icon-follow(:target='story.user.id', :follow='story.user.is_followed', :has-border='true')
-    .fz-30.mgh-32.mgb-32.user-txt {{story.content}}
+    .fz-30.mgh-32.mgb-32.user-txt {{{story.content | input}}}
 
     .pictures.pd-28(v-if="cover.media_type==='picture'")
         .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')

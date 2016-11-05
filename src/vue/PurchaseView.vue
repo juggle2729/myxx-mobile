@@ -69,7 +69,7 @@
                 span 保证金已付
         .desc.fz-30.user-txt
             span.red 预算{{purchase.price_max | price}}左右
-            |   {{purchase.description}}
+            |   {{{purchase.description | input}}}
         ul.medias.flex
             li.img(v-for="pic in purchase.pictures", track-by="$index", @click="coverflow(purchase.pictures, $index)", v-bg="pic")
         ul.tags.fz-22.gray

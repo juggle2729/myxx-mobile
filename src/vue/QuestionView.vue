@@ -38,8 +38,8 @@
             .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
                 icon(name="plus")
                 span 关注问题
-        .title.fz-34.bold.mgv-24.user-txt {{question.description}}
-        .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{question.remark}}
+        .title.fz-34.bold.mgv-24.user-txt {{{question.description | input}}}
+        .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
     .pictures.pdh-32.mgb-32.bg-white.scrollable
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     template(v-if='question.categories.length')
@@ -53,7 +53,7 @@
     .results(v-if="question.results.length")
         .fz-26.center.gray.bg.pdv-20 回答&nbsp;{{question.results.length}}
         .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}}")
-            header 
+            header
                 .user.flex
                     avatar(:user="result.identifier")
                     .mgl.flex-1

@@ -24,7 +24,7 @@
 <template lang="jade">
 .answer-view.pdb-10(v-if="!$loadingRouteData")
     header.flex.pd-32
-        .title.flex-1.fz-34.bold.bdr.pdr-32.user-txt {{answer.jianbao.description}}
+        .title.flex-1.fz-34.bold.bdr.pdr-32.user-txt {{{answer.jianbao.description | input}}}
         .blue.fz-26.pdl-32.pdv-10(v-link="{name: 'question', params: {id: answer.jianbao.post_id}}")
             span.inline-block {{answer.jianbao.status}}个回答
             icon.fz-22.pdl-8(name="enter")
@@ -42,7 +42,7 @@
                 icon-follow(:target='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
         .video.bg.mgh-32(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
         .fz-30.pd-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
-        
+
         template(v-if="answer.identifier.shop")
             shop(:shop="answer.identifier.shop")
 

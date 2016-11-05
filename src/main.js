@@ -43,6 +43,7 @@ let router = new Router({history: true})
  * @return {boolean|string}      返回布尔值，决定history.go是否执行,或者一个新的路径
  */
 router.beforeGo((from, to, app) => {
+    debugger
     let interrupted = false
     if(app.env.version) { // 客户端环境
         let action = to.native && to.native(app.env.version)

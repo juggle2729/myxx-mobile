@@ -71,8 +71,17 @@ const filters = {
         return {name: 'user', params: {id, tab}}
     },
 
-    br(content) {
-        return content.replace(/[\r]/g, '<br>');
+    input(content) {
+        const at = (match, id, name) => {
+            let evt = `href="/user/${id}"`
+            if(/myxx/i.test(window.navigator.userAgent)) {
+                evt = `onclick="WebViewJavascriptBridge.callHandler('profile', {id:''+${id}})"`
+            }
+            return `<a class="blue" ${evt}>@${name}</a>`
+        }
+        return content
+                .replace(/\n/g, '<br>')
+                .replace(/\[\:(\d+)_([^\]]+?)\]/g, at)
     }
 }
 export default {

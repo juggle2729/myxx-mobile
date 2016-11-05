@@ -15,7 +15,7 @@
             .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
                 icon(name="plus")
                 span 关注话题
-        .fz-26.gray.user-txt.pd-32 {{topics.desc}}
+        .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
         .hr
         template(v-for="item in items")
             component(:is="config.category[item.type]", keep-alive, :item="item.entry")

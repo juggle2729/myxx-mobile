@@ -36,12 +36,12 @@
             .mgt-12.fz-22.light {{post.create_at | moment}} &nbsp;&#124;&nbsp; {{post.click_count}}人浏览
         icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
-        .fz-34.bold.user-txt {{post.title}}
-        .fz-30.dark.pdv-32.user-txt {{post.description}}
+        .fz-34.bold.user-txt {{{post.title | input}}}
+        .fz-30.dark.pdv-32.user-txt {{{post.description | input}}}
         template(v-for="item in post.medias")
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
-            p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | br}}}
+            p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
     template(v-if="post.user.shop")
         shop(:shop="post.user.shop")
     .footer.flex.fz-30.light.bdt.bg-white
