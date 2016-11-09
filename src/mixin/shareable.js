@@ -144,6 +144,16 @@ export default {
                     data.desc = entry.desc
                     data.icon = 'https://o0x80w5li.qnssl.com/share/topic.png'
                     break
+                case 'collection':
+                    data.title = entry.title
+                    data.desc = '推荐一个不错的美玉专辑，喜欢就关注吧！'
+                    data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/user/collection.jpg'
+                    break
+                case 'activity':
+                    data.title = entry.title
+                    data.desc = entry.desc
+                    data.icon = entry.icon || 'http://o0x80w5li.qnssl.com/logo.jpg'
+                    break
             }
             data = {title: '美玉秀秀', desc: '大师在线视频鉴宝', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
             data.title = _.truncate(data.title, {
@@ -160,7 +170,7 @@ export default {
             data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
-            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url')
+            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url', 'hasDownloadLink')
 
             this.action('shareable', this.$root.shareData)
 

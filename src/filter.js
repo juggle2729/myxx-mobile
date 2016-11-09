@@ -79,9 +79,7 @@ const filters = {
             }
             return `<a class="blue" ${evt}>@${name}</a>`
         }
-        return content
-                .replace(/\n/g, '<br>')
-                .replace(/\[\:(\d+)_([^\]]+?)\]/g, at)
+        return content ? content.replace(/\n/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''
     }
 }
 export default {

@@ -17,7 +17,7 @@
         position: relative
         transform: translate3d(0, 400px, 0)
         img
-            height: 377px
+            height: 334px
             width: 560px
         .tip
             position: absolute
@@ -30,7 +30,7 @@
 <template lang="jade">
 .guarantee-action(@click.self="close")
     .container
-        img(:src="'jade/guarantee.png' | qn")
+        img(:src="'jade/guarantee_1.png' | qn")
         .tip(@click="close")
 </template>
 <script>

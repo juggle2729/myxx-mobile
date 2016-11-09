@@ -76,13 +76,14 @@
 </template>
 <script>
 import paging from 'paging'
+import shareable from 'shareable'
 import story from 'component/item/Story.vue'
 import post from 'component/item/Post.vue'
 import question from 'component/item/Question.vue'
 import answer from 'component/item/Answer.vue'
 export default {
     name: 'CollectionView',
-    mixins: [paging],
+    mixins: [paging, shareable],
     components: {
         story,
         post,
@@ -113,6 +114,10 @@ export default {
             const path = this.self ? `users/${to.params.uid}/profile` : `sns/collections/${to.params.id}`
             return this.$fetch(path).then((data) => {
                 this.self ? (this.profile = data) : (this.cc = data)
+                this.setShareData({
+                    title: data.name,
+                    icon: data.cover
+                })
             })
         }
     }

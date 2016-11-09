@@ -211,7 +211,9 @@ const mixin = {
         },
 
         gotoDownload() {
-            window.location.href = config.download
+            if(!/myxx/i.test(window.navigator.userAgent)) {
+                window.location.href = config.download
+            }
         }
     }
 }
