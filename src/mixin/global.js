@@ -146,9 +146,10 @@ const mixin = {
                         const [path, version] = url.split('|')
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v11']
+                                ['X-Api-Version', version || 'v12']
                             ].filter(header => header[1]))
-                        this.$http[method](path, data, {headers})
+                        let noData = (method === 'get' || method === 'delete')
+                        this.$http[method](path, (noData ? {headers, params: data, body: data, emulateJSON: true} : data), (noData ? '' : {headers}))
                             .then(({data: resp}) => {
                                 if(resp.status === 200) {
                                     defer.resolve(resp.data)

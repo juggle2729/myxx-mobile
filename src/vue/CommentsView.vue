@@ -25,7 +25,7 @@
             border-radius: 8px
 </style>
 <template lang="jade">
-.comments-view
+.comments-view.bg(v-if="!$loadingRouteData")
     comment-list(v-ref:comments)
     .fake-input-placeholder
     .fake-input.fz-30.flex.bdt.bg-light(@click='$refs.comments.addComment()')

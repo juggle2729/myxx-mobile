@@ -44,13 +44,16 @@ import paging from 'paging'
 import List from 'component/List.vue'
 export default {
     name: 'user-collection',
+
     mixins: [paging],
+
     data() {
         return {
             ccs: [],
             user: ''
         }
     },
+
     computed: {
         paging() {
             return {
@@ -63,11 +66,20 @@ export default {
             }
         }
     },
+
     activate(done) {
         return this.$fetch(`sns/users/${this.$route.params.id}/collections`).then((data) => {
                 this.ccs = data.collections
                 this.user = _.get(this, 'ccs.0.author.nickname', this.$parent.user.nickname)
             }).then(done)
+    },
+
+    events: {
+        scrollToBottom(e) {
+            if(this.$route.query.tab == 'collection') {
+                this.fetch()
+            }
+        }
     }
 }
 </script>

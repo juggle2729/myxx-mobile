@@ -40,8 +40,8 @@
                     .fz-26 {{answer.identifier.nickname}}
                     .mgt-14.fz-22.gray {{answer.identifier.title}}
                 icon-follow(:target='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
-        .video.bg.mgh-32(v-bg='answer.video', @click='play(answer.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
-        .fz-30.pd-32(v-if="answer.value") 回答结果为真 估价为{{config.jdPrice[answer.value]}}
+        .video.bg.mgh-32(v-bg='answer.identifier.portrait', @click='play(answer.video)')
+        .fz-30.pd-32(v-if="answer.result") 回答结果为{{config.jdResult[answer.result]}}  {{answer.value && '估价为' + config.jdPrice[answer.value]}}
 
         template(v-if="answer.identifier.shop")
             shop(:shop="answer.identifier.shop")
@@ -54,7 +54,7 @@
             .gray.bdl
                 icon-share
     .hr
-    comment-list.bg-white(type='jd', :id='answer.id', v-ref:comments)
+    comment-list.bg-white(type='jd', :id='answer.id', :uid="answer.identifier.id", v-ref:comments)
     .hr
     general-suggestion
 </template>

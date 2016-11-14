@@ -7,18 +7,19 @@
             border-radius: 8px
 </style>
 <template lang="pug">
-    .topic-view
-        .scrollable.mgl-32.bdb.pdv-24
-            .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
-        .flex.pdh-32.pdt-40
-            .fz-34.bold.flex-1 {{topics.name}}
-            .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
-                icon(name="plus")
-                span 关注话题
-        .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
+    .topic-view.bg
+        section.bg-white
+            .scrollable.mgl-32.bdb.pdv-24
+                .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
+            .flex.pdh-32.pdt-40
+                .fz-34.bold.flex-1 {{topics.name}}
+                .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
+                    icon(name="plus")
+                    span 关注话题
+            .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
         .hr
         template(v-for="item in items")
-            component(:is="config.category[item.type]", keep-alive, :item="item.entry")
+            component(:is="config.category[item.type]", keep-alive, :item="item")
             .hr
         empty(v-if='items.isEmpty', title='暂无内容')
 </template>

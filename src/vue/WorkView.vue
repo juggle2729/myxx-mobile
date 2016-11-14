@@ -96,7 +96,7 @@
         icon-comment.bdl(:count="work.comment_count", @click='$refs.comments.addComment()')
         icon-share.bdl
     .hr
-    comment-list(type='wk', :id='work.id', v-ref:comments)
+    comment-list(type='wk', :id='work.id', :uid="work.user.id", v-ref:comments)
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'

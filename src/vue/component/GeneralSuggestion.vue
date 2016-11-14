@@ -6,6 +6,7 @@
     .list
         padding: 0 15px
         font-size: 0
+        background-color: #efefef
 </style>
 <template lang="jade">
 .general-suggestion.bg

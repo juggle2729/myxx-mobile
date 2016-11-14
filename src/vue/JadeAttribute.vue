@@ -13,9 +13,10 @@
 .jade-attribute.bg
     .params.bg-white
         ul
-            li.flex.fz-26(v-for="attr in attrs", v-if="jade[attr.k]")
-                p.label.gray {{attr.l}}
-                p.flex-1 {{jade[attr.k].name || jade[attr.k]}}
+            template(v-for="attr in attrs")
+                li.flex.fz-26(v-if="jade[attr.k]")
+                    p.label.gray {{attr.l}}
+                    p.flex-1 {{jade[attr.k].name || jade[attr.k]}}
 </template>
 <script>
 export default {

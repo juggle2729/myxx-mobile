@@ -1,6 +1,6 @@
 <style lang="stylus">
 .question-view
-    background-image: linear-gradient(top, white 600px, #efefef 0)
+    // background-image: linear-gradient(top, white 600px, #efefef 0)
     header
         padding: 32px 32px 0 32px
     .pictures
@@ -28,7 +28,7 @@
             line-height: 48px
 </style>
 <template lang="jade">
-.question-view(v-if="!$loadingRouteData")
+.question-view.bg(v-if="!$loadingRouteData")
     header.bg-white
         .user.flex
             avatar(:user="question.user")
@@ -38,9 +38,9 @@
             .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
                 icon(name="plus")
                 span 关注问题
-        .title.fz-34.bold.mgv-24.user-txt {{{question.description | input}}}
+        .title.fz-34.bold.pdv-24.user-txt {{{question.description | input}}}
         .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
-    .pictures.pdh-32.mgb-32.bg-white.scrollable
+    .pictures.pdh-32.mgb-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     template(v-if='question.categories.length')
         topics(:topics="question.categories", :title="false")
@@ -60,8 +60,9 @@
                         .fz-26 {{result.identifier.nickname}}
                         .mgt-14.fz-22.gray {{result.identifier.title}}
                     icon-follow(:target='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
-            .video.bg(v-bg='result.video', @click.stop="play(result.video)", query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/466')
-            .fz-30.pdh-32.pdb-32(v-if="result.value") 回答结果为真 估价为{{config.jdPrice[result.value]}}
+            .video.bg(v-bg='result.identifier.portrait', @click.stop="play(result.video)")
+            .fz-30.pdh-32.pdb-32(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
+
             footer.flex.fz-26.bdt
                 icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
                 icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 'jd'}}")

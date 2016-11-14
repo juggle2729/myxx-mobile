@@ -1,8 +1,10 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .story-item
+    .follow
+        height: 90px
     .header
-        padding: 20px 16px
+        padding: 20px
         .name
             color: #666666
     .content
@@ -49,42 +51,59 @@
             text-align: center
 </style>
 <template lang="jade">
-.story-item.bg-white(v-link="{name: 'story', params: {id: item.post_id}}")
-    .header.flex
+.story-item.bg-white(v-link="{name: 'story', params: {id: data.post_id}}")
+    .follow.bdb.flex.pdl.mgb(v-if="collection")
+        avatar(:user="data.user", :size="50")
+        .mgl.fz-26.gray.flex-1 {{data.user.nickname}} 添加至专辑
+        .fz-26.gray.pdr(v-if="collection", v-link="{name: 'collection', params: {id: item.event.what.id}}") 前往专辑
+    
+    .header.flex(v-if="!collection")
         .flex-1.flex
-            avatar(:user="item.user", :is-self="false", :size="50")
-            .name.mgl.fz-26 {{item.user.nickname}}
-        icon-follow(v-if="!item.user.is_followed", :target="item.user.id", :follow="item.user.is_followed")
+            avatar(:user="data.user", :is-self="false", :size="50")
+            .name.mgl.fz-26 {{data.user.nickname}}
+        icon-follow(v-if="!data.user.is_followed", :target="data.user.id", :follow="data.user.is_followed")
+    
     .content.bg-white.mgb-24.pdh-16
-        .fz-30.line-clamp-2.mgb-28 {{item.content}}
-        .pic.video(v-if="item.medias[0].media_type==='video'", v-bg.video="item.medias[0].media", @click="play(item.medias[0].media)")
-            .activity.bg-red.white.fz-26(v-if="item.activity")
+        .fz-30.line-clamp-2.mgb-28 {{{data.content | input}}}
+        .pic.video(v-if="data.medias[0].media_type==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
+            .activity.bg-red.white.fz-26(v-if="data.activity")
                 icon(name="fire")
-                span {{item.activity.name}}
-        .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-2': item.medias.length == 2, 'pic-more': item.medias.length >= 3}")
-            .activity.bg-red.white.fz-26(v-if="item.activity")
+                span {{data.activity.name}}
+        .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-2': data.medias.length == 2, 'pic-more': data.medias.length >= 3}")
+            .activity.bg-red.white.fz-26(v-if="data.activity")
                 icon(name="fire")
-                span {{item.activity.name}}
-            .more.white.fz-30.flex.pdh-12(v-if="item.medias.length > 3")
+                span {{data.activity.name}}
+            .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 3")
                 img.mgr-8(:src="'pic.png' | qn")
-                div {{item.medias.length}}
+                div {{data.medias.length}}
+    
     .interact.fz-26.flex.bdt
-        icon-like.bdr(:target="item.post_id", type="tp", :active="item.liked", :count="item.like_count || item.like")
-        icon-comment.bdr(:count="item.comment_count || item.comment")
+        icon-like.bdr(:target="data.post_id", type="tp", :active="data.liked", :count="data.like_count || data.like")
+        icon-comment.bdr(:count="data.comment_count || data.comment")
         icon-share
 </template>
 <script>
 export default {
     name: 'story-item',
+
     props: {
         item: Object
     },
+
     computed: {
         imgSrc() {
-            let src = _.chain(this.item.medias).slice(0,3).reduce((pre, item) => {
+            let src = _.chain(this.data.medias).slice(0,3).reduce((pre, item) => {
                 return pre + `url(${this.config.img + item.media}_320), `
             }, '').trimEnd(', ')
             return _.trimEnd(src, ', ')
+        },
+
+        collection() {
+            return _.get(this, 'item.event.action') === 'us_add_cl_obj'
+        },
+
+        data() {
+            return this.item.entry || this.item
         }
     }
 }

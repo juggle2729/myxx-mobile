@@ -70,7 +70,7 @@
             span 关注专辑
     .hr
     template(v-for="item in items")
-        component(:is="config.category[item.type]", keep-alive, :item="item.entry")
+        component(:is="config.category[item.type]", keep-alive, :item="item")
         .hr
     empty(v-if="items.isEmpty")
 </template>

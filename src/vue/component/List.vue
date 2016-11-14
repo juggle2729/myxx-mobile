@@ -16,7 +16,7 @@
         color: $colors.light
 </style>
 <template lang="jade">
-.list(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
+.list.bg-white(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
     component(:is="comp", :item="lodash.merge(item.entry || item, {type: item.type})", v-for="item in items")
 </template>
 <script>
@@ -38,9 +38,9 @@ const opts = {
         if(!_.get(this, 'ds.params.freeze')) {
             this.$on('scrollToBottom', this.fetch)
         }
-        _.delay(() => {
-            this.$el.style.minHeight = Math.max(window.innerHeight - this.$el.offsetTop, 50) + 'px'
-        }, 100)
+        // _.delay(() => {
+        //     this.$el.style.minHeight = Math.max(window.innerHeight - this.$el.offsetTop, 50) + 'px'
+        // }, 100)
     },
 
     methods: {

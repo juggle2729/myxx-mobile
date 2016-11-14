@@ -21,16 +21,13 @@ Vue.mixin(component)
 Vue.use(partial)
 Vue.use(store)
 
-Vue.http.interceptors.push({
-    request(req) {
-        // 如果url是全路径,忽略root
-        /\/\//.test(req.url) && (req.root = '')
-        return req
-    },
-    response(resp) {
-        return resp
-    }
-})
+Vue.http.interceptors.push((req, next) => {
+    // 如果url是全路径,忽略root
+    /\/\//.test(req.url) && (req.root = '')
+    req.credentials = true
+    // continue to next interceptor
+    next();
+});
 
 let router = new Router({history: true})
 
@@ -43,7 +40,6 @@ let router = new Router({history: true})
  * @return {boolean|string}      返回布尔值，决定history.go是否执行,或者一个新的路径
  */
 router.beforeGo((from, to, app) => {
-    debugger
     let interrupted = false
     if(app.env.version) { // 客户端环境
         let action = to.native && to.native(app.env.version)

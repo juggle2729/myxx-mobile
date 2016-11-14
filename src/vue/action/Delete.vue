@@ -22,7 +22,7 @@
         bottom: 0
         width: 100%
         background-color: white
-    .delete, .cancel
+    .delete, .cancel, .reply
         display: block
         text-align: center
         font-size: 36px
@@ -34,6 +34,9 @@
     .container
         .delete.red(@click="delete") 删除
         .hr
+        template(v-if="params.isReply != 'false'")
+            .reply(@click="reply") 回复
+            .hr
         .cancel(@click="cancel") 取消
 </template>
 <script>
@@ -48,6 +51,10 @@ export default {
     methods: {
         delete() {
             this.params.cb('1')
+            this.close()
+        },
+        reply() {
+            this.params.cb('2')
             this.close()
         },
         cancel() {

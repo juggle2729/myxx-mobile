@@ -58,10 +58,9 @@
         icon-share.bdl
     .hr
 
-    comment-list(type='tp', :id='story.post_id', v-ref:comments)
+    comment-list(type='tp', :id='story.post_id', :uid="story.user.id", v-ref:comments)
     .hr
-
-    template(v-if='story.categories.length')
+    template(v-if='story.categories')
         topics(:topics='story.categories')
     general-suggestion
 </template>
@@ -111,6 +110,7 @@ export default {
         data({to}) {
             return this.$fetch(`sns/topics/${to.params.id}`)
                 .then(story => {
+                    console.log(story.content)
                     this.setShareData(story)
                     this.story = story
                 })

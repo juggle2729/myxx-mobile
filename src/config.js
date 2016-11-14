@@ -5,7 +5,7 @@ let [api, img, video, download] = ((env='test') => {
         api: {
             test: '//test.api.meiyuxiuxiu.net',
             prod: '//api.meiyuxiuxiu.com',
-            docker: '//192.168.0.150:18004'
+            docker: '//192.168.0.150:18000'
         },
         img: {
             test: 'http://img.meiyuxiuxiu.net/',
@@ -68,7 +68,7 @@ export default {
         }
     ],
     role: {normal: '普通用户', engraver: '雕刻师', merchant: '商家', enterprise: '企业'},
-    category: { 'jb': 'question', 'tp': 'story', 'rt': 'post', 'jd': 'answer'},
+    category: { 'jb': 'question', 'tp': 'story', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'topic'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'
     },

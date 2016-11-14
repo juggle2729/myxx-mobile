@@ -40,19 +40,19 @@
 <template lang="jade">
 .user-view.bg(v-if="!$loadingRouteData")
     .banner.bg.center
-        avatar(:user='user', :size='120')
-        p.fz-30 {{user.nickname}}
+        avatar(:user='profile', :size='120')
+        p.fz-30 {{profile.nickname}}
         .fz-26.gray.record.mgt
-            span.bdr.pdh-30 关注 {{user.follow_count}}
-            span.pdh-30 粉丝数 {{user.fans_count}}
-        p.gray.fz-26.mgt(v-if='user.title') 美玉认证: {{user.title}}
+            span.bdr.pdh-30 关注 {{profile.follow_count}}
+            span.pdh-30 粉丝数 {{profile.fans_count}}
+        p.gray.fz-26.mgt(v-if='profile.title') 美玉认证: {{profile.title}}
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')
-        icon-follow(:target='user.id', :follow='user.is_followed', :has-border='false')
+        icon-follow(:target='profile.id', :follow='profile.is_followed', :has-border='false')
         icon-share.bdl
-        .button.mgr-14.bg-red.white.fz-30(v-if='user.shop_id', v-link="{name: 'shop', params: {id: user.shop_id}}")
-            span 进入{{(user.shop_type === 'studio') ? '工作室' : '店铺'}}
+        .button.mgr-14.bg-red.white.fz-30(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
+            span 进入{{(profile.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")
 </template>
 <script>
@@ -75,18 +75,19 @@ export default {
 
     data() {
         return {
-            view: ''
+            view: '',
+            profile: {}
         }
     },
 
     computed: {
         isSelf() {
-            return _.get(this, 'self.id') == this.user.id
+            return _.get(this, 'self.id') == this.profile.id
         },
 
         views() {
             const tabs = {home: '主页', story: '动态', collection: '专辑'}
-            return this.user.has_homepage ? tabs : _.omit(tabs, 'home')
+            return this.profile.has_homepage ? tabs : _.omit(tabs, 'home')
         }
     },
 
@@ -95,7 +96,7 @@ export default {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入个人主页
                 return this.$fetch(`users/${to.params.id}/profile`)
                     .then(user => {
-                        this.user = user
+                        this.profile = user
                         this.view = user.has_homepage ? 'home' : 'story'
                         this.action('updateTitle', {text: `${user.nickname}的个人主页`})
                         this.setShareData({id: user.id, name: user.nickname, photo: user.photo, title: user.title})
