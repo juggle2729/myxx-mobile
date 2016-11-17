@@ -100,8 +100,8 @@ const adapter = {
 let defer = Q.defer()
 if(/myxx/i.test(navigator.userAgent)) {
     //"MYXX/iOS/1.2;..."
-    // iOS v1.2后采用新的 WebviewBridge 注入方式
-    if(/ios/i.test(navigator.userAgent) && (+navigator.userAgent.split(';')[0].split('/').pop() > 1.1)) {
+    // iOS v1.2后采用新的 WebviewBridge 注入方式[忽略1.2以下版本]
+    if(/ios/i.test(navigator.userAgent)) {
         ((callback) => {
             if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
             if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
