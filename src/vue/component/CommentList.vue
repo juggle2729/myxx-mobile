@@ -88,11 +88,12 @@ export default {
         _.delay(() => {
             const [hot, lately] = [this.$el.querySelectorAll('.list')[0], this.$el.querySelectorAll('.list')[1]]
             const [hotTitle, latelyTitle] = [this.$el.querySelector('.hot'), this.$el.querySelector('.lately')]
+            // 待优化~
             if(!this.isPreview) {
-                !hot.classList.contains('empty') && hotTitle.classList.remove('none').add('block')
-                !lately.classList.contains('empty') && latelyTitle.classList.remove('none').add('block')
+                !hot.classList.contains('empty') && hotTitle.classList.remove('none') && hotTitle.classList.add('block')
+                !lately.classList.contains('empty') && latelyTitle.classList.remove('none') && latelyTitle.classList.add('block')
             }
-        }, 300)
+        }, 500)
     },
 
     methods: {

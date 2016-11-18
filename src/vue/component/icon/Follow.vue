@@ -1,9 +1,10 @@
 <style lang="stylus">
 .follow-icon {
-    border-radius: 6px
-    padding: 12px 12px
+    border-radius: 12px
+    padding: 0 12px
     background-color: transparent
     height: 60px
+    line-height: 58px
     width: 120px
     &.bd-light {
         background-color: #eeeeee
@@ -54,16 +55,16 @@ export default {
 
     methods: {
         toggle() {
-            // if(this.env.isApp) {
+            if(this.env.isApp) {
                 if(!(this.oneway && this.follow)) {
                     this[this.follow ? '$delete' : '$post'](this.api)
                         .then(() => {
                             this.follow = !this.follow
                         })
                 }
-            // } else {
-            //     this.gotoDownload()
-            // }
+            } else {
+                this.gotoDownload()
+            }
         }
     }
 }

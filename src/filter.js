@@ -77,7 +77,7 @@ const filters = {
                 `onclick="WebViewJavascriptBridge.callHandler('profile', {id:''+${id}})"` :
                 `onclick="{event.preventDefault();location.href='/user/${id}'}"`
 
-            return `<a class="blue" ${evt}>@${name}</a>`
+            return `<a style="color: #527fb0" ${evt}>@${name}</a>`
         }
         return content ? content.replace(/\n/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''
     }

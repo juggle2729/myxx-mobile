@@ -45,8 +45,8 @@
         .blur-fix
         .pdh-32.flex.pdv-40.white
             .logo(v-bg="cc.cover")
-            .mgl-28
-                .fz-34.mgb-36.bold {{cc.name}}
+            .mgl-28.flex-1
+                .fz-34.mgb-36.bold.line-clamp-2.mgr-32 {{cc.name}}
                 .flex.fz-30.transparent
                     avatar(:user="cc.author")
                     .mgl {{cc.author.nickname}}
@@ -56,8 +56,8 @@
         //- .blur-fix
         .pdh-32.flex.pdv-40.white
             img.logo(:src="'user/collection.jpg' | qn")
-            .mgl-28
-                .fz-34.mgb-36.bold {{profile.nickname}}赞过的内容
+            .mgl-28.flex-1
+                .fz-34.mgb-36.bold.line-clamp-2.mgr-32 {{profile.nickname}}赞过的内容
                 .flex.fz-30.transparent
                     avatar(:user="profile")
                     .mgl {{profile.nickname}}

@@ -40,7 +40,7 @@
                 span 关注问题
         .title.fz-34.bold.pdv-24.user-txt {{{question.description | input}}}
         .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
-    .pictures.pdh-32.mgb-32.bg-white.scrollable(v-if="question.pictures.length")
+    .pictures.pdh-32.pdb-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     template(v-if='question.categories.length')
         topics(:topics="question.categories", :title="false")

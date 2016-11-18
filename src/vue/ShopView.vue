@@ -36,6 +36,7 @@
         line-height: 84px
     .list
         padding-top: 20px
+        background-color: #efefef
         & > div
             margin: 0 0 20px 20px
 

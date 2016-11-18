@@ -21,7 +21,7 @@
         &.default > div:first-child
             color: #cc3f4f
     .footer
-        height: 98px
+        height: 112px
         line-height: 60px
         width: 100%
         position: fixed
@@ -30,7 +30,7 @@
         > div
             -webkit-box-flex: 1
             text-align: center
-            line-height: 60px
+            // line-height: 60px
         .follow-icon
             font-size: 30px
         .button

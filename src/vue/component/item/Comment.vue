@@ -24,9 +24,9 @@
                     .fz-22.light.mgt-12 {{item.create_at | moment}}
                 icon-like(:target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
             .fz-30.content.user-txt {{{content | input}}}
-        .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment || item.reply_comment === null", @click="$dispatch(((self && self.id==item.reply_comment.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item.reply_comment)")
+        .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment || item.reply_comment.delete_flag", @click.stop="$dispatch(((self && self.id==item.reply_comment.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item.reply_comment)")
             .reply.user-txt
-                span.fz-26.gray(v-if="item.reply_comment === null") 抱歉，此内容已删除
+                span.fz-26.gray(v-if="item.reply_comment.delete_flag") 抱歉，此内容已删除
                 template(v-else)
                     span.blue {{item.reply_comment.reply_from.nickname}} 
                     | {{': ' + item.reply_comment.content}}
