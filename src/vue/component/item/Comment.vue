@@ -8,17 +8,31 @@
         img
             height: 44px
             vertical-align: bottom
+    .reply
+        border: 20px solid #f9f9f9
+    .icon-enter
+        transform: rotate(90deg)
 </style>
 <template lang="jade">
-.comment-item.flex(@click="$dispatch((self && self.id==item.reply_from.id) ? 'delComment' : 'reply', item)")
+.comment-item.flex
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16
-        .flex.pdb
-            .flex-1
-                .fz-26.gray {{item.reply_from.name}}
-                .fz-22.light.mgt-12 {{item.create_at | moment}}
-            icon-like(:target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
-        .fz-30.content.user-txt(:to="item.reply_to && item.reply_to.name") {{{content | input}}}
+        section(@click="$dispatch(((self && self.id==item.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item, isHot)")
+            .flex.pdb
+                .flex-1
+                    .fz-26.gray {{item.reply_from.name}}
+                    .fz-22.light.mgt-12 {{item.create_at | moment}}
+                icon-like(:target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
+            .fz-30.content.user-txt {{{content | input}}}
+        .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment || item.reply_comment === null", @click="$dispatch(((self && self.id==item.reply_comment.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item.reply_comment)")
+            .reply.user-txt
+                span.fz-26.gray(v-if="item.reply_comment === null") 抱歉，此内容已删除
+                template(v-else)
+                    span.blue {{item.reply_comment.reply_from.nickname}} 
+                    | {{': ' + item.reply_comment.content}}
+            .fz-26.txt-right.pdr.pdb(v-if="more", @click.stop="deploy")
+                span 显示全部
+                icon(name="enter")
 </template>
 <script>
 
@@ -28,6 +42,20 @@ export default {
     props: {
         item: Object,
         target: Object
+    },
+
+    data() {
+        return {
+            more: false
+        }
+    },
+
+    ready() {
+        this.reply = this.$el.querySelector('.reply')
+        if(this.reply && _.replace(window.getComputedStyle(this.reply).height, 'px', '') > 105) {
+            this.more = true
+            this.reply.classList.add('reply', 'line-clamp-4')
+        }
     },
 
     computed: {
@@ -40,6 +68,21 @@ export default {
                 })
             }
             return content
+        },
+
+        isAuthor() {
+            return this.$parent.$parent.$parent.isSelf || (this.self && (this.self.id == this.$route.query.uid))
+        },
+
+        isHot() {
+            return (this.$parent.params.order_by === 'hot') || (this.$parent.params.order_by === 'score')
+        }
+    },
+
+    methods: {
+        deploy() {
+            this.more = false
+            this.reply.classList.remove('line-clamp-4')
         }
     }
 }

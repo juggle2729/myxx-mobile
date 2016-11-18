@@ -10,9 +10,12 @@ export default {
     },
     events: {
         scrollToBottom(e) {
-            // auto 可以为 undefined 或者 true
-            if (this.paging.auto !== false) {
-                this.fetch();
+            // 避免两个子组件切换时该事件分别执行一次
+            if(this.$options.events.scrollToBottom.length === 1) {   
+                // auto 可以为 undefined 或者 true
+                if (this.paging.auto !== false) {
+                    this.fetch();
+                }
             }
         }
     },

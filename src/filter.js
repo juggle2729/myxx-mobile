@@ -73,10 +73,10 @@ const filters = {
 
     input(content) {
         const at = (match, id, name) => {
-            let evt = `href="/user/${id}"`
-            if(/myxx/i.test(window.navigator.userAgent)) {
-                evt = `onclick="WebViewJavascriptBridge.callHandler('profile', {id:''+${id}})"`
-            }
+            let evt = (/myxx/i.test(window.navigator.userAgent)) ? 
+                `onclick="WebViewJavascriptBridge.callHandler('profile', {id:''+${id}})"` :
+                `onclick="{event.preventDefault();location.href='/user/${id}'}"`
+
             return `<a class="blue" ${evt}>@${name}</a>`
         }
         return content ? content.replace(/\n/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''

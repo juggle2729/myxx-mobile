@@ -50,7 +50,7 @@
             icon-comment(:count="comment_count")
         icon-share.bdl
     .hr
-    comment-list(type='rt', :id='post.post_id', v-ref:comments)
+    comment-list(type='rt', :id='post.post_id', :uid="post.user.id", v-ref:comments)
     .hr
     template(v-if='post.categories.length')
         topics(:topics='post.categories')

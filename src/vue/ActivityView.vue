@@ -5,6 +5,8 @@
         height: 536px
         background-position: center
         background-size: cover
+    .list
+        background-color: #efefef
 </style>
 <template lang="jade">
 .activity-view.bg

@@ -21,6 +21,7 @@ export default {
                 hasDownloadLink: true,
                 url: location.origin + location.pathname
             }
+            // entry.desc = entry.desc.replace(/\[\:(\d+)_([^\]]+?)\]/g, '@$2')
             switch(this.$route.name) {
                 case 'evaluation':
                     const result = _.get(entry, 'results[0]')
@@ -163,6 +164,10 @@ export default {
             data.desc = _.truncate(data.desc, {
                 length: /[\uD800-\uDBFF]/.test(data.desc.charAt(25)) ? 24 : 25
             })
+
+            // 解析title和desc中包含的@
+            data.title = _.replace(data.title, /\[\:(\d+)_([^\]]+?)\]/g, '@$2')
+            data.desc = _.replace(data.desc, /\[\:(\d+)_([^\]]+?)\]/g, '@$2')
 
             // 拼接分享落地页地址
             let query = {...this.$route.query, user: _.get(this, 'self.id', -1), time: Date.now()}
