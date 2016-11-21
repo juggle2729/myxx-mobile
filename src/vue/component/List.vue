@@ -7,13 +7,14 @@
         background-image: url($qn + 'placeholder/empty.png')
         background-size: 160px 160px
         background-position: 50% calc(50% - 160px)
-    &.loading::after
-        content: '加载中...'
-        display: block
-        line-height: 80px
-        text-align: center
-        font-size: 24px
-        color: $colors.light
+    // 全部评论页面及我的粉丝页面展示不合适，暂时去掉（pm-sxl）
+    // &.loading::after
+    //     content: '加载中...'
+    //     display: block
+    //     line-height: 80px
+    //     text-align: center
+    //     font-size: 24px
+    //     color: $colors.light
 </style>
 <template lang="jade">
 .list.bg-white(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")

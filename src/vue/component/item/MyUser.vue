@@ -10,9 +10,6 @@
         .mgl-24.flex-1
             .fz-30 {{item.entry.nickname}}
             .fz-26.gray.mgt-16 {{item.entry.title || '普通用户'}}
-            .fz-26.light.flex.mgt-16
-                .mgr-36 帖子数 {{item.entry.follow_count}}
-                div 粉丝数 {{item.entry.fans_count}}
         icon-follow(:target="item.entry.id", :follow="true", :has-border="true")
     empty(v-if="items.isEmpty")
 </template>

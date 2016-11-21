@@ -184,7 +184,7 @@
         .bg.placeholder
         .float-box.flex.fixed.fz-30.bg-white
             .bdt.flex-1.flex
-                .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
+                .fz-22.flex.flex-1.gray.contact-btn.bdr.red(@click='contact')
                     icon.fz-30(name="chat")
                     .mgt-6 私信
                 .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')

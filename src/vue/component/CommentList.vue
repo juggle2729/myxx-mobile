@@ -29,14 +29,14 @@
     .fz-26.red.center.pdv-32(v-if="hasMore", v-link="{name: 'comments', params: {id: id, type: type}, query: {uid: uid}}")
         span 查看全部{{$refs.hot && $refs.hot.total}}条评论
         icon.enter.fz-22(name="enter")
-
+    
     section.lately.none(v-if="!isPreview")
         .hr(v-if="hotItems && hotItems.length")
         .title.fz-26.gray.pdl-32.bdb.bg-white
             span.pdl-12 最新评论
     comments(v-if="!isPreview", :path="path", :params="{'order_by': 'new'}", transform="comments", v-ref:lately)
 
-    .no-comment.fz-26.light.center(v-if="hotItems && !hotItems.length && newItems && !newItems.length") 还没有人评论
+    .no-comment.fz-26.light.center.none 还没有人评论
 </template>
 <script>
 import List from 'component/List.vue'
@@ -88,12 +88,16 @@ export default {
         _.delay(() => {
             const [hot, lately] = [this.$el.querySelectorAll('.list')[0], this.$el.querySelectorAll('.list')[1]]
             const [hotTitle, latelyTitle] = [this.$el.querySelector('.hot'), this.$el.querySelector('.lately')]
+            const noComment = this.$el.querySelector('.no-comment')
             // 待优化~
             if(!this.isPreview) {
                 !hot.classList.contains('empty') && hotTitle.classList.remove('none') && hotTitle.classList.add('block')
                 !lately.classList.contains('empty') && latelyTitle.classList.remove('none') && latelyTitle.classList.add('block')
+                hot.classList.contains('empty') && lately.classList.contains('empty') && noComment.classList.remove('none') && noComment.classList.add('block')
             }
-        }, 500)
+
+            this.isPreview && hot.classList.contains('empty') && noComment.classList.remove('none') && noComment.classList.add('block')
+        }, 900)
     },
 
     methods: {
