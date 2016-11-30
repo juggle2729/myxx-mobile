@@ -1,6 +1,5 @@
 <style lang="stylus">
 .work-view
-    padding-bottom: 100px
     .header
         height: 160px
         line-height: 160px
@@ -91,10 +90,6 @@
     .desc
         .fz-36 {{work.title}}
         .fz-30.gray.prize {{work.prize}}
-    .footer.flex.fz-30.gray.bdt.bg-white(:class="{'fixed': !env.isShare}")
-        icon-like(:target='work.id', :active='work.is_liked', :count='work.like_count')
-        icon-comment.bdl(:count="work.comment_count", @click='$refs.comments.addComment()')
-        icon-share.bdl
     .hr
     comment-list(type='wk', :id='work.id', :uid="work.user.id", v-ref:comments)
 </template>

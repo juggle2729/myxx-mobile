@@ -15,9 +15,6 @@
         .detail
             .name
                 width: 380px
-        .level-comp
-            img
-                width: 42px
     .works
         .medias
             position: relative
@@ -61,7 +58,7 @@
         .flex.detail
             .img.mgr(v-bg='shop.logo')
             .flex-1
-                .fz-30.flex.margin-bottom.name(:class="{'auth': shop.auth_flag}")
+                .fz-30.flex.mgb-12.name(:class="{'auth': shop.auth_flag}")
                     .line-clamp.mgr {{shop.shop_name}}
                     lv(:lv="shop.level")
                 .fz-26.gray

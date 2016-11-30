@@ -1,5 +1,6 @@
 <style lang="stylus">
 .works-view
+    min-height: 100%
     padding-bottom: 112px
     .work
         padding: 20px 20px 0

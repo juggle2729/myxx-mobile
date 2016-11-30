@@ -1,16 +1,16 @@
 <style lang="stylus">
 @import '~style/myxx'
 #app
-    .share-bottom-placeholder
+    .share-top-placeholder
         height: 112px
-    .share-bottom
+    .share-top
         z-index: 990
         position: fixed
-        bottom: 0
+        top: 0
         height: 112px
         width: 100%
         padding: 0 24px
-        background-color: rgba(0, 0, 0, 0.9)
+        box-shadow: 0 0 20px 0 #c6c6c6;
         .logo
             line-height: 0
             img
@@ -22,7 +22,7 @@
             height: 60px
             line-height: 60px
             padding: 0 28px
-            border-radius: 5px
+            border-radius: 8px
     #user
         z-index: 99
         position: fixed
@@ -38,19 +38,19 @@
 </style>
 <template lang="jade">
 div(:class="{'loading': loading}")
-    router-view
     template(v-if="env.isShare && shareData.hasDownloadLink")
-        .share-bottom.flex(@click="gotoDownload()")
+        .share-top.flex.bg-white(@click="gotoDownload()")
             .logo.mgr
                 img(:src="'logo.png' | qn", alt="美玉秀秀")
-            .flex-1.white
+            .flex-1
                 .flex
                     .name.fz-30.bold 美玉秀秀
                     .fz-22.dot •
                     .slogan.fz-22 大师在线视频鉴宝
-                .fz-22.red.mgt 10万玉友的选择
+                .fz-22.gray.mgt-8 10万玉友的选择
             .download-btn.fz-30.white.bg-red 免费下载
-        .share-bottom-placeholder
+        .share-top-placeholder
+    router-view
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
         .fz-34(v-else, @click="login") 👤

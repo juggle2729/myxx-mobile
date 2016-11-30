@@ -44,11 +44,6 @@
             p.fz-30.dark.pdv-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
     template(v-if="post.user.shop")
         shop(:shop="post.user.shop")
-    .footer.flex.fz-30.light.bdt.bg-white
-        icon-like(:active='post.liked', :count='post.like_count')
-        .comment.bdl(@click='$refs.comments.addComment()')
-            icon-comment(:count="comment_count")
-        icon-share.bdl
     .hr
     comment-list(type='rt', :id='post.post_id', :uid="post.user.id", v-ref:comments)
     .hr

@@ -1,68 +1,79 @@
 <style lang="stylus">
 .answer-view
-    background-image: linear-gradient(top, white 1000px, #efefef 1000px)
+    // background-image: linear-gradient(top, white 600px, #efefef 0)
+    min-height: 100%
+    header
+        padding: 32px 32px 0 32px
     .pictures
-        padding-bottom: 32px
         .pic
             width: 256px
             padding-top: @width
             &:not(:first-child)
                 margin-left: 4px
-    .answer
+    .value
+        padding: 0 32px 32px 32px
+    footer
+        height: 100px
+        > div
+            line-height: 48px
+            -webkit-box-flex: 1
+            width: percentage(1/2)
+            text-align: center
+    .result
         .video
-            padding-top: 100%
-            margin: 0 32px
+            width: 466px
+            padding-top: @width
+            margin: 28px 0 32px 32px
         footer
-            height: 100px
-            margin: 0 -32px
-            > div
-                line-height: 60px
-                -webkit-box-flex: 1
-                text-align: center
-                width: 33.33%
+            height: 84px
+            line-height: 48px
 </style>
 <template lang="jade">
-.answer-view.pdb-10(v-if="!$loadingRouteData")
-    header.flex.pd-32
-        .title.flex-1.fz-34.bold.bdr.pdr-32.user-txt {{{answer.jianbao.description | input}}}
-        .blue.fz-26.pdl-32.pdv-10(v-link="{name: 'question', params: {id: answer.jianbao.post_id}}")
-            span.inline-block {{answer.jianbao.status}}个回答
-            icon.fz-22.pdl-8(name="enter")
-    .pictures.pdh-32.bg-white.scrollable
-        .pic(v-for="pic in answer.jianbao.pictures", v-bg.sm="pic")
+.answer-view(v-if="!$loadingRouteData")
+    header.bg-white
+        .user.flex
+            avatar(:user="question.user")
+            .mgl.flex-1
+                .fz-30 {{question.user.name}}
+                .mgt-14.fz-22.light {{question.click_count}}人浏览
+            .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
+                icon(name="plus")
+                span 关注问题
+        .title.fz-34.bold.pdv-24.user-txt {{{question.description | input}}}
+        .fz-30.gray.pdb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
+    .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
+        .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
+    template(v-if='question.categories.length')
+        topics(:topics="question.categories", :title="false")
+    .bg-white.pdv-36
+        share-button(txt="下载美玉秀秀，发表你的观点")
     .hr
-
-    .answer.bg-white
-        header.mgv-28.mgh-32
+    
+    .result.bg-white
+        header
             .user.flex
-                avatar(:user="answer.identifier")
+                avatar(:user="result.identifier")
                 .mgl.flex-1
-                    .fz-26 {{answer.identifier.nickname}}
-                    .mgt-14.fz-22.gray {{answer.identifier.title}}
-                icon-follow(:target='answer.identifier.id', :follow='answer.identifier.is_followed', :has-border='true')
-        .video.bg.mgh-32(v-bg='answer.identifier.portrait', @click='play(answer.video)')
-        .fz-30.pd-32(v-if="answer.result") 回答结果为{{config.jdResult[answer.result]}}  {{answer.value && '估价为' + config.jdPrice[answer.value]}}
+                    .fz-26 {{result.identifier.nickname}}
+                    .mgt-14.fz-22.gray {{result.identifier.title}}
+                icon-follow(:target='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
+        .video.bg(v-bg='result.identifier.portrait', @click.stop="play(result.video)")
+        .fz-30.pdh-32.pdb-32(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
 
-        template(v-if="answer.identifier.shop")
-            shop(:shop="answer.identifier.shop")
-
-        footer.flex.fz-30.light.bdt
-            .gray
-                icon-like(:active="answer.liked", :count="answer.like_count", :target="answer.id")
-            .gray.bdl(@click="$refs.comments.addComment()")
-                icon-comment(:count="answer.comment_count")
-            .gray.bdl
-                icon-share
-    .hr
-    comment-list.bg-white(type='jd', :id='answer.id', :uid="answer.identifier.id", v-ref:comments)
-    .hr
+        footer.flex.fz-26.bdt
+            icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
+            icon-comment.bdl(:count="result.comment_count", :id="result.id", type="jd")
+        .hr
+    
     general-suggestion
 </template>
 <script>
-import Shop from 'component/Shop.vue'
-import CommentList from 'component/CommentList.vue'
-import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import shareable from 'shareable'
+import Shop from 'component/Shop.vue'
+import Topics from 'component/Topics.vue'
+import CommentList from 'component/CommentList.vue'
+import ShareButton from 'component/ShareButton.vue'
+import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'answer-view',
 
@@ -70,22 +81,28 @@ export default {
 
     components: {
         Shop,
+        Topics,
         CommentList,
+        ShareButton,
         GeneralSuggestion
     },
 
     data() {
         return {
-            answer: {}
+            question: {},
+            result: {}
         }
     },
 
     route: {
         data({to}) {
-            return this.$fetch(`sns/results/${to.params.id}`)
-                    .then(answer => {
-                        this.answer = answer
-                        this.setShareData({title: answer.jianbao.description, master: answer.identifier.nickname, icon: answer.jianbao.pictures[0]})
+            return this.$fetch(`sns/jianbao/${to.query.qid}`)
+                    .then(question => {
+                        this.question = question
+                        this.result = _.filter(this.question.results, (item) => {
+                            return item.id == this.$route.params.id
+                        })[0]
+                        this.setShareData({title: question.description, master: this.result.identifier.nickname, icon: question.pictures[0]})
                     })
         }
     }

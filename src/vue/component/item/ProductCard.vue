@@ -26,12 +26,17 @@
     .media(v-bg='item.first_picture')
         .mark.fz-30.white(v-if="item.is_tob") 清仓
     .data-info
-        p.fz-26.line-clamp.desc {{item.title}}
-        p.fz-30.red.price {{item.price | price}}
+        .fz-26.line-clamp.desc {{item.title}}
+        .fz-30.red.price {{item.price | price}}
 </template>
 <script>
+import Lv from 'component/Lv.vue'
 export default {
     name: 'ProductCard',
+
+    components: {
+        Lv
+    },
 
     props: {
         item: Object

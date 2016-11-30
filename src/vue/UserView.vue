@@ -8,6 +8,9 @@
         background-position: left 12px top 12px, right 12px top 12px, center bottom
         background-size: 72px, 72px, cover
         background-repeat: no-repeat
+        .follow-icon
+            margin: 28px auto 0
+            color: #cc3f4f
         .avatar[size='120']
             margin: 48px auto 36px
             box-shadow: 0 0 0 4px rgba(136, 136, 136, 0.3)
@@ -46,6 +49,7 @@
             span.bdr.pdh-30 关注 {{profile.follow_count}}
             span.pdh-30 粉丝数 {{profile.fans_count}}
         p.gray.fz-26.mgt(v-if='profile.title') 美玉认证: {{profile.title}}
+        icon-follow(v-else, :target='profile.id', :follow='profile.is_followed', :has-border='true')
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white(v-if='!isSelf')

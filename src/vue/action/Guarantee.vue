@@ -36,6 +36,7 @@
 <script>
 export default {
     name: 'Guarantee',
+    
     methods: {
         close() {
             this.$root.popup.handler = undefined

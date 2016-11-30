@@ -27,7 +27,7 @@
         .fz-30.line-clamp-4 {{jb ? item.description : (item.content || item.title)}}
         .flex.fz-26(v-if="!jb")
             icon-like.pdr-28(:active="false", type="tp", :count="item.like_count || item.like", readonly=true)
-            icon-comment(:count="item.comment_count")
+            icon-comment(:count="item.comment_count", readonly=true)
         .fz-24.light(v-else) {{item.status}}个回答
 </template>
 <script>

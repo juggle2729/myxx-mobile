@@ -1,5 +1,6 @@
 <style lang="stylus">
     .collection-view
+        min-height: 100%
         .upside
             position: relative
             z-index: 1
@@ -39,7 +40,7 @@
                 line-height: 56px
 </style>
 <template lang="jade">
-.collection-view.bg
+.collection-view.bg.pdb-36
     .upside(v-if="!self")
         .blur.bd(:style="{backgroundImage: 'url(' + config.img + cc.cover + ')'}")
         .blur-fix
@@ -69,27 +70,34 @@
             icon(name="plus")
             span 关注专辑
     .hr
-    template(v-for="item in items")
-        component(:is="config.category[item.type]", keep-alive, :item="item")
-        .hr
+    div
+        template(v-for="item in items")
+            component(:is="config.category[item.type]", keep-alive, :item="item")
+            .hr
+        share-button.mgt-16(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多专辑内容")
     empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'
 import shareable from 'shareable'
-import story from 'component/item/Story.vue'
 import post from 'component/item/Post.vue'
-import question from 'component/item/Question.vue'
+import story from 'component/item/Story.vue'
 import answer from 'component/item/Answer.vue'
+import question from 'component/item/Question.vue'
+import ShareButton from 'component/ShareButton.vue'
 export default {
     name: 'CollectionView',
+    
     mixins: [paging, shareable],
+    
     components: {
         story,
         post,
+        answer,
         question,
-        answer
+        ShareButton
     },
+    
     data() {
         return {
             profile: {},
@@ -98,6 +106,7 @@ export default {
             }
         }
     },
+   
     computed: {
         self() {
             return this.$route.params.uid
@@ -109,6 +118,7 @@ export default {
             }
         }
     },
+    
     route: {
         data({to}) {
             const path = this.self ? `users/${to.params.uid}/profile` : `sns/collections/${to.params.id}`

@@ -52,10 +52,6 @@
         span {{story.activity.name}}
     template(v-if="story.user.shop")
         shop(:shop="story.user.shop")
-    .footer.flex.fz-30.light.bg-white.bdt
-        icon-like(:active='story.liked', :count='story.like')
-        icon-comment.bdl(:count="story.comment", @click='$refs.comments.addComment()')
-        icon-share.bdl
     .hr
 
     comment-list(type='tp', :id='story.post_id', :uid="story.user.id", v-ref:comments)

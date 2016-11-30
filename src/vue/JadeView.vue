@@ -79,8 +79,6 @@
             width: 380px
             .line-clamp
                 line-height: 1.2
-            img
-                width: 42px
         .icon-enter
             height: 24px
             width: 12px
@@ -127,7 +125,7 @@
         width: 100%
         z-index: 999
     .placeholder
-        height: 148px
+        height: 134px
     .offline
         position: absolute
         width: 100%
@@ -164,7 +162,7 @@
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
             .img(v-bg='jade.shop.logo')
             .flex-1
-                .fz-30.flex.margin-bottom.name
+                .fz-30.flex.mgb-12.name
                     .line-clamp.mgr {{jade.shop.shop_name}}
                     lv(:lv='jade.shop.level')
                 .fz-26.gray

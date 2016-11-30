@@ -1,6 +1,7 @@
 <style lang="stylus">
 .question-view
     // background-image: linear-gradient(top, white 600px, #efefef 0)
+    min-height: 100%
     header
         padding: 32px 32px 0 32px
     .pictures
@@ -39,20 +40,17 @@
                 icon(name="plus")
                 span 关注问题
         .title.fz-34.bold.pdv-24.user-txt {{{question.description | input}}}
-        .fz-30.gray.mgb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
+        .fz-30.gray.pdb-26.user-txt(v-if="question.remark") {{{question.remark | input}}}
     .pictures.pdh-32.pdb-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     template(v-if='question.categories.length')
         topics(:topics="question.categories", :title="false")
-    footer.flex.fz-30.bg-white.bdt
-        icon-comment(:count="question.comment_count", v-link="{name: 'comments', params: {id:question.post_id, type: 'jb'}}")
-        .bdl.blue(@click="gotoDownload")
-            icon(name="add-answer")
-            span 添加回答
-    .hr
+    .bg-white.pdb-36
+        share-button(txt="下载美玉秀秀，发表你的观点")
+    
     .results(v-if="question.results.length")
         .fz-26.center.gray.bg.pdv-20 回答&nbsp;{{question.results.length}}
-        .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}}")
+        .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}, query: { qid: $route.params.id }}")
             header
                 .user.flex
                     avatar(:user="result.identifier")
@@ -65,19 +63,28 @@
 
             footer.flex.fz-26.bdt
                 icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
-                icon-comment.bdl(:count="result.comment_count", v-link="{name: 'comments', params: {id:result.id, type: 'jd'}}")
+                icon-comment.bdl(:count="result.comment_count", :id="result.id", type="jd")
             .hr
-    .center.fz-30.pdt-40.mgt-40.light(v-else) 暂无回答
+    .center.fz-30.pdv-40.mgt-40.light(v-else) 暂无回答
+
+    general-suggestion
 </template>
 <script>
-import Topics from 'component/Topics.vue'
 import shareable from 'shareable'
+import Topics from 'component/Topics.vue'
+import ShareButton from 'component/ShareButton.vue'
+import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'question-view',
+    
     mixins: [shareable],
+    
     components: {
-        Topics
+        Topics,
+        ShareButton,
+        GeneralSuggestion
     },
+    
     data() {
         return {
             question: {}

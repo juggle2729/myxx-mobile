@@ -58,7 +58,7 @@
     
     .interact.fz-26.flex.bdt
         icon-like.bdr(:target="item.entry.post_id", type="rt", :active="item.entry.liked", :count="item.entry.like_count")
-        icon-comment.bdr(:count="item.entry.comment_count")
+        icon-comment.bdr(:count="item.entry.comment_count", :id="item.entry.post_id", type="rt")
         icon-share
 </template>
 <script>

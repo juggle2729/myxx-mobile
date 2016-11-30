@@ -1,6 +1,6 @@
 <style lang="stylus">
 .shop-view
-    padding-bottom: 98px
+    padding-bottom: 134px
     > header
         height: 460px
         background-size: cover
@@ -26,8 +26,6 @@
         padding: 0 32px
         .level-comp
             display: block
-            img
-                width: 42px
     .master
         padding: 0 32px
         height: 114px
@@ -48,7 +46,7 @@
         bottom: 0
 </style>
 <template lang="jade">
-.shop-view.bg-white(v-if='!$loadingRouteData')
+.shop-view.bg(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
         .shop.flex.white
             .img(v-bg='shop.logo')
@@ -58,12 +56,12 @@
                 .fz-26
                     icon(name="location")
                     span {{shop.locale_name}}
-    .level.fz-30.flex(v-link="{name: 'level-help', params: {id: 'none'}}")
+    .level.fz-30.flex.bg-white(v-link="{name: 'level-help', params: {id: 'none'}}")
         .mgr 信誉评价等级
         lv.flex-1(:lv="shop.level")
         icon.fz-20.light(name="enter")
     .hr
-    .master.flex(v-link="{name: 'user', params: {id: shop.owner.id}}")
+    .master.flex.bg-white(v-link="{name: 'user', params: {id: shop.owner.id}}")
         avatar(:user='shop.owner')
         .fz-26.mgl.flex-1
             p {{shop.owner.nickname}}
@@ -71,29 +69,51 @@
         icon.fz-20.light.mgb-16(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布
-    product-list.bg(path="mall/homepage/searches", :params="{shop_id: $route.params.id, order_by: 'new'}", transform="products")
+   
+    .list
+        product-card(v-for="item in items", :item="item")
+    
+    share-button.mgt-20(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多优质商品")
+    
     .footer.flex.bdt.fz-30.bg-white.gray
         icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
         icon-star.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
         icon-share.flex-1.center
 </template>
 <script>
-import lv from 'component/Lv.vue'
-import List from 'component/List.vue'
+import paging from 'paging'
 import shareable from 'shareable'
+import lv from 'component/Lv.vue'
+import ShareButton from 'component/ShareButton.vue'
+import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'shop-view',
 
-    mixins: [shareable],
+    mixins: [shareable, paging],
 
     components: {
         lv,
-        ProductList: new List('ProductCard')
+        ShareButton,
+        ProductCard
     },
+    
     data() {
         return {
             shop: {
                 owner: {}
+            }
+        }
+    },
+
+    computed: {
+        paging() {
+            return {
+                path: 'mall/homepage/searches',
+                list: 'products',
+                params: {
+                    shop_id: this.$route.params.id, 
+                    order_by: 'new'
+                }
             }
         }
     },

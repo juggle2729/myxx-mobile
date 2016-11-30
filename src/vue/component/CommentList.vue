@@ -20,16 +20,13 @@
 </style>
 <template lang="jade">
 .comment-list
-    header.bdb.fz-26.pdl-32.gray(v-if="isPreview") 评论&nbsp;&nbsp;{{$refs.hot && $refs.hot.total}}
+    header.bdb.fz-26.pdl-32.gray(v-if="isPreview") 热门评论
 
-    section.hot.none(v-if="!isPreview")
+    section.hot.none
         .title.fz-26.gray.pdl-32.bdb.bg-white
             span.pdl-12 热门评论
     comments(:path="path", :params="params", transform="comments", v-ref:hot)
-    .fz-26.red.center.pdv-32(v-if="hasMore", v-link="{name: 'comments', params: {id: id, type: type}, query: {uid: uid}}")
-        span 查看全部{{$refs.hot && $refs.hot.total}}条评论
-        icon.enter.fz-22(name="enter")
-    
+
     section.lately.none(v-if="!isPreview")
         .hr(v-if="hotItems && hotItems.length")
         .title.fz-26.gray.pdl-32.bdb.bg-white
@@ -37,14 +34,18 @@
     comments(v-if="!isPreview", :path="path", :params="{'order_by': 'new'}", transform="comments", v-ref:lately)
 
     .no-comment.fz-26.light.center.none 还没有人评论
+
+    share-button.mgb-36(v-if="isPreview")
 </template>
 <script>
 import List from 'component/List.vue'
+import ShareButton from 'component/ShareButton.vue'
 export default {
     name: 'comment-list',
 
     components: {
-        comments: new List('Comment')
+        comments: new List('Comment'),
+        ShareButton
     },
 
     props: {
