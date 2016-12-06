@@ -1,6 +1,6 @@
 <template lang="jade">
 .collection-follower-view.bg
-    user-list(:path="'users/target/'+ $route.params.id +'/type/cl/fans_list|v13'")
+    user-list(:path="'users/target/'+ $route.params.id +'/type/cl/fans_list'")
 </template>
 <script>
 import List from 'component/List.vue'
