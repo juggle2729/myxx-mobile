@@ -177,7 +177,7 @@ export default {
             // 分享信息暂存起来
             this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url', 'hasDownloadLink')
 
-            this.action('shareable', this.$root.shareData)
+            this.action('shareable', {...this.$root.shareData, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
 
             // 设置页面标题
             if(!this.env.isApp) {

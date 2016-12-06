@@ -80,7 +80,7 @@ export default {
         },
 
         showAction() {
-            this.action('action', {icon: 'question-2x.png'})
+            this.action('action', {icon: 'question-2x.png?'})
                 .then(() => {
                     this.$router.go({name: 'purchase-help'})
                 })

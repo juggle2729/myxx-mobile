@@ -92,7 +92,7 @@ export default {
         },
 
         setHelp() {
-            this.action('action', {icon: 'question-2x.png'})
+            this.action('action', {icon: 'question-2x.png?'})
                 .then(() => {
                     this.$router.go({name: 'bzone-help'})
                 })

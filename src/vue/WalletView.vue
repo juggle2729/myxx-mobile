@@ -35,7 +35,7 @@
         | 买家付款后, 货款计入"待结算金额"；买家确认收货后的5天内没有提出退货申请,
         | 货款转入"可提现金额", 您可以随时提现。
         br
-        p 每笔成功交易的订单将会收取3%的服务费。
+        p 活动期间0服务费，平台不收取任何费用。
     .rule.fz-30(v-link="{name: 'mall-help-category', params: {category: 'payment'}}")
         span 查看详细规则
         icon.gray.fz-24(name="enter")
