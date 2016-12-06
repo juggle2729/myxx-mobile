@@ -149,7 +149,7 @@ const mixin = {
                                 ['X-Api-Version', version || 'v12']
                             ].filter(header => header[1]))
                         let noData = (method === 'get' || method === 'delete')
-                        this.$http[method](path, (noData ? {headers, params: data, body: data, emulateJSON: true} : data), (noData ? '' : {headers}))
+                        this.$http[method](path, (noData ? {headers, params: _.omitBy(data, _.isNull), body: data, emulateJSON: true} : data), (noData ? '' : {headers}))
                             .then(({data: resp}) => {
                                 if(resp.status === 200) {
                                     defer.resolve(resp.data)

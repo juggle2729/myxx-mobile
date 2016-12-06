@@ -31,6 +31,16 @@ export default {
         }
     },
 
+    '/top-product': {
+        name: 'top-product',
+        title: '上传商品排行',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('TopProductView.vue'))
+            })
+        }
+    },
+
     '/story/:id': {
         name: 'story',
         title: '帖子详情',
@@ -60,6 +70,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('CollectionView.vue'))
+            }, 'collection')
+        }
+    },
+
+    '/collection/:id/follower': {
+        name: 'collection',
+        title: '专辑粉丝',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CollectionFollowerView.vue'))
             }, 'collection')
         }
     },
