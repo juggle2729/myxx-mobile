@@ -175,8 +175,8 @@
             .flex
                 .name.fz-30.bold 美玉秀秀
                 .fz-22.dot •
-                .slogan.fz-22 大师在线视频鉴宝
-            .fz-22.red.margin-top 10万玉友的选择
+                .slogan.fz-22 最大的和田玉互动社区
+            .fz-22.red.margin-top 30万玉友的选择
         .download-btn.fz-30.white.bg-red 免费下载
 </template>
 <script>

@@ -31,7 +31,7 @@
         .hr
         .header.fz-26.gray.pdl
             span.pdl-12 关注的专辑
-        .item.mgl.pdb.flex(v-for="item in items", :class="{'bdb': $index<(items.length-1), 'pdv': $index > 0}", v-link="{name: 'collection', params: {id: item.id}}")
+        .item.mgl.pdb.flex(v-for="item in items", :class="{'bdb': $index<(items.length-1), 'pdv': $index > 0}", v-link="{name: 'collection', params: {id: item.entry.id}}")
             .img.mgr(v-bg="item.entry.cover")
             .info.fz-26
                 .fz-34 {{item.entry.name}}

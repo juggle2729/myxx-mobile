@@ -46,8 +46,8 @@ div(:class="{'loading': loading}")
                 .flex
                     .name.fz-30.bold 美玉秀秀
                     .fz-22.dot •
-                    .slogan.fz-22 大师在线视频鉴宝
-                .fz-22.gray.mgt-8 10万玉友的选择
+                    .slogan.fz-22 {{['jade','shop'].indexOf($route.name)===-1 ? '最大的和田玉互动社区' : '最大的和田玉线上交易平台'}}
+                .fz-22.gray.mgt-8 30万玉友的选择
             .download-btn.fz-30.white.bg-red 免费下载
         .share-top-placeholder
     router-view
@@ -85,7 +85,7 @@ export default {
                 isTest: !/^app/.test(location.hostname)
             }
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk)
-            env.isShare = !!(!env.isApp && (_.has(this.$route, 'query.user') || _.has(this.$route, 'query.channel')))
+            env.isShare = _.hasIn(this, '$route.query.channel')
             if(env.isApp) {
                 env.version = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.')
                 console.log('version', env.version)

@@ -32,8 +32,8 @@
 .answer-view(v-if="!$loadingRouteData")
     header.bg-white
         .user.flex
-            .flex-1.title.fz-34.bold.pdv-24.user-txt {{{question.description | input}}}
-            .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
+            .flex-1.title.fz-30.bold.mgv-24.pdr.user-txt.bdr {{{question.description | input}}}
+            .flex.red.fz-26.pdl-32.pdv-12(@click="gotoDownload")
                 icon(name="plus")
                 span 关注问题
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")

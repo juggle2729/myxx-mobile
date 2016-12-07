@@ -118,11 +118,11 @@ export default {
     events: {
         delComment(comment, isHot) {
             this.action('delete', {isReply: comment.reply_from.id != this.self.id})
-                .then(confirm => (confirm === '1') ? this.$delete(`${this.path}/${comment.id}`).then(resp => resp) : 
+                .then(confirm => (confirm === '1') ? this.$delete(`${this.path}/${comment.id}`).then(resp => resp) :
                     ((confirm === '2') ? this.addComment(comment) : false))
                 .then(resp => {
                     if(resp) {
-                        isHot ? this.hotItems && this.hotItems.splice(_.findIndex(this.hotItems, {id: comment.id}), 1) : 
+                        isHot ? this.hotItems && this.hotItems.splice(_.findIndex(this.hotItems, {id: comment.id}), 1) :
                             this.newItems && this.newItems.splice(_.findIndex(this.newItems, {id: comment.id}), 1)
                         this.action('toast', {success: 1, text: '删除成功'})
                     }

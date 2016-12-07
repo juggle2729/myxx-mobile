@@ -1,7 +1,8 @@
 <style lang="stylus">
 .comment-item
-    -webkit-box-align: start
     padding: 26px 0 26px 32px
+    &.flex
+        -webkit-box-align: start
     .content
         &[to]::before
             content: '回复' attr(to) '说：'
@@ -18,7 +19,7 @@
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16
         section(@click="$dispatch(((self && self.id==item.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item, isHot)")
-            .flex.pdb
+            .flex.pdb.pdt-6
                 .flex-1
                     .fz-26.gray {{item.reply_from.name}}
                     .fz-22.light.mgt-12 {{item.create_at | moment}}
@@ -28,8 +29,8 @@
             .reply.user-txt
                 span.fz-26.gray(v-if="item.reply_comment.delete_flag") 抱歉，此内容已删除
                 template(v-else)
-                    span.blue {{item.reply_comment.reply_from.nickname}} 
-                    | {{': ' + item.reply_comment.content}}
+                    span.blue {{item.reply_comment.reply_from.nickname}}
+                    |：{{{item.reply_comment.content | input}}}
             .fz-26.txt-right.pdr.pdb(v-if="more", @click.stop="deploy")
                 span 显示全部
                 icon(name="enter")

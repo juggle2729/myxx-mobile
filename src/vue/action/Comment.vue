@@ -1,17 +1,16 @@
 <style lang="stylus">
 .comment-action
     position: fixed
+    transition: top  .3s ease
     &.pop-transition
-        opacity: 1
-        // transition: opacity .3s ease
-        transition: bottom  .2s ease
+        top: 0
     &.pop-enter, &.pop-leave
-        opacity: 0
+        top: 100%
     width: 100%
-    top: 0
     bottom: 0
     z-index: 999
     overflow-y: auto
+    -webkit-overflow-scrolling: touch
     background-color: #efefef
     .container
         margin: 0 auto
@@ -19,6 +18,8 @@
         padding-top: 100px
         .comment-item:last-child
             padding: 26px 0 0 32px
+            > .flex-1
+                background-image: none
         .tip
             position: fixed
             top: 0
@@ -38,7 +39,7 @@
 <template lang="jade">
 .comment-action(@click.self="close", :class="{'none': closed}")
     .container
-        .tip.center.fz-34.bg-white.pdr-32.bdb.flex
+        .tip.center.fz-34.bg-white.bdb.flex
             div 查看评论
             img(:src="'close.svg' | qn", @click="close")
         comments(:path="path", :params="{'order_by': 'new'}", transform="comments")
@@ -65,13 +66,13 @@ export default {
             return `users/target/${id}/type/${type}/comments`
         }
     },
-    
+
     props: {
         params: {
             type: Object
         }
     },
-    
+
     methods: {
         close() {
             this.closed = true

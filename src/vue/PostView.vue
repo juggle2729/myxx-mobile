@@ -55,7 +55,6 @@
 import Topics from 'component/Topics.vue'
 import Shop from 'component/Shop.vue'
 import CommentList from 'component/CommentList.vue'
-import ProductSuggestion from 'component/ProductSuggestion.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import shareable from 'shareable'
 export default {
@@ -65,7 +64,6 @@ export default {
         Topics,
         Shop,
         CommentList,
-        ProductSuggestion,
         GeneralSuggestion,
     },
     route: {

@@ -75,7 +75,7 @@ export default {
     },
 
     '/collection/:id/follower': {
-        name: 'collection',
+        name: 'collection-follower',
         title: '专辑粉丝',
         component(resolve) {
             require.ensure([], (require) => {

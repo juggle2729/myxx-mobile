@@ -17,7 +17,7 @@
         .level-comp
             display: block
             img
-                height: 40px
+                margin-bottom: 10px
     .logo
         height: 50px
         width: 50px
