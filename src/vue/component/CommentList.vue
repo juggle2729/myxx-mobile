@@ -15,6 +15,7 @@
         padding-bottom: 0
         > .flex-1
             background-image: none
+            border-bottom: none
     .enter
         padding-bottom: 3px
 </style>

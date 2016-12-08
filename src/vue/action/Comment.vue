@@ -20,6 +20,7 @@
             padding: 26px 0 0 32px
             > .flex-1
                 background-image: none
+                border-bottom: none
         .tip
             position: fixed
             top: 0

@@ -11,7 +11,7 @@
     .recommends > div
         margin: 0 0 20px 20px
         &.share-button-component
-            margin: 20px 36px 0 
+            margin: 20px 36px 0
     .tags
         padding: 0px 32px 24px
         font-size: 0
@@ -36,7 +36,7 @@
     .recommends.bg.pdt(v-if="related.length")
         .fz-26.gray 商品推荐
         product-card(v-for="item in related", :item="item")
-        share-button(txt="没找到感兴趣的，下载美玉秀秀看看吧！")
+        share-button(v-if="env.isShare", txt="没找到感兴趣的，下载美玉秀秀看看吧！")
 </template>
 <script>
 import ShareButton from 'component/ShareButton.vue'
@@ -58,7 +58,7 @@ export default {
 
     components: {
         ProductCard,
-        ShareButton 
+        ShareButton
     },
 
     ready() {
