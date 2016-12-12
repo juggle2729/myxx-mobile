@@ -11,7 +11,7 @@
 <template lang="jade">
 .general-suggestion.bg.pdb-36
     .title.fz-26.gray 相关推荐
-    card(v-for="item in items", :item="item.entry")
+    card(v-for="item in items", :item="item")
     share-button.mgt-36(txt="没找到感兴趣的？下载美玉秀秀看看吧！")
 </template>
 <script>

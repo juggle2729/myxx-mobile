@@ -106,7 +106,6 @@ export default {
         data({to}) {
             return this.$fetch(`sns/topics/${to.params.id}`)
                 .then(story => {
-                    console.log(story.content)
                     this.setShareData(story)
                     this.story = story
                 })
