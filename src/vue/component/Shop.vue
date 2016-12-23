@@ -5,7 +5,7 @@
         width: 120px
 </style>
 <template lang="pug">
-.shop-component.mgb-36.mgh-32.flex.bg-light.bd(v-link="{name: 'shop', params: {id: shop.id}}")
+.shop-component.mgt-32.flex.bg-light.bd(v-link="{name: 'shop', params: {id: shop.id}}")
     .logo.img(v-bg="shop.logo")
     .mgl
         .flex.fz-30

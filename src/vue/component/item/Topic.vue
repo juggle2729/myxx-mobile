@@ -7,15 +7,15 @@
         width: 148px
 </style>
 <template lang="jade">
-.topic-item.bg-white.pdh.pdb-24
-    .follow.flex
+.topic-item.bg-white.pdb-24
+    .follow.flex.bdb.pdh
         avatar(:user="user", :size="50")
-        .mgl.fz-26.gray {{user.nickname}}关注了话题
-    .content.flex.bg-light
+        .mgl.fz-26.gray {{user.nickname}} 关注了话题
+    .content.flex.pdt-24.pdh
         .img.cover.mgr(v-bg="item.entry.picture")
-        div
+        .flex-1
             .fz-30.mgb-16 {{item.entry.name}}
-            .fz-26.gray {{item.entry.desc}}
+            .fz-26.gray.user-txt.line-clamp-2 {{item.entry.desc}}
 </template>
 <script>
 export default {

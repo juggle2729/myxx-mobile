@@ -27,42 +27,59 @@
         width: 50%
         padding-top: 50%
     .question
-        padding: 28px 20px 24px 20px
+        margin-left: 20px
+        img.qs
+            display: block
+            height: 30px
+            width: 36px
+    .answer
+        .identify
+            width: 148px
+            padding-top: @width
+        .play
+            width: 108px
+            color: #527fb0
+            img
+                height: 68px
+                width: 68px
     .interact
-        height: 80px
-        line-height: 60px
-        > div
-            -webkit-box-flex: 1
-            text-align: center
+        height: 98px
+        line-height: 98px
+        .answer-icon
+            margin-right: 66px
 </style>
 <template lang="jade">
 .answer-item.bg-white(v-link="{name:'question', params: {id: item.entry.jianbao.post_id}}")
-    .follow.bdb.flex.pdl(v-if="collection")
+    .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.identifier", :size="50")
         .mgl.fz-26.gray.flex-1 {{item.entry.identifier.nickname}} 添加至专辑
-        .fz-26.gray.pdr(v-if="collection", v-link="{name: 'collection', params: {id: item.event.what.id}}") 前往专辑
 
     .header.flex.pdh-20(v-if="!collection")
-        .flex-1.flex
+        .flex.gray
             avatar(:user="item.entry.identifier", :is-self="false", :size="50")
-            .name.mgl.fz-26 {{item.entry.identifier.nickname}}
-        icon-follow(v-if="!item.entry.identifier.is_followed", :target="item.entry.identifier.id", :follow="item.entry.identifier.is_followed")
+            .name.mgl.fz-26 {{item.entry.identifier.nickname}} 回答了问题
 
-    .answer.pdh.pdv-28
-        .video(v-bg="item.entry.identifier.portrait")
-        .fz-26.gray.flex(:class="{'mgt-28': item.entry.result}")
-            span.mgr-8(v-if="item.entry.result") 回答结果为{{config.jdResult[item.entry.result]}}
-            span(v-if="item.entry.value") 估价为{{config.jdPrice[item.entry.value]}}
-
-    .question.bg-light
-        .desc.fz-30.user-txt {{item.entry.jianbao.user.nickname}}: {{{item.entry.jianbao.description | input}}}
+    .question.bdb.pdr.pdb-24(:class="{'pdt-28': !collection}")
+        .flex
+            img.qs(:src="'question.png' | qn")
+            .desc.fz-30.user-txt.mgl-10 {{item.entry.jianbao.user.nickname}}: {{{item.entry.jianbao.description | content | input}}}
         .flex.medias.mgt-24(v-if="item.entry.jianbao.pictures.length > 0")
             .media.img(v-for="pic in item.entry.jianbao.pictures.splice(0,3)", v-bg='pic')
 
-    .interact.fz-26.flex.bdt
-        icon-like.bdr(:target="item.entry.id", type="jd", :active="item.entry.liked", :count="item.entry.like_count")
-        icon-comment.bdr(:count="item.entry.comment_count", :id="item.entry.id", type="jd")
-        icon-share
+    .answer.pdh.pdv-28
+        .flex
+            .identify.bg(v-bg="item.entry.identifier.portrait")
+            .identifier.mgl.flex-1
+                .fz-30.bold {{item.entry.identifier.nickname}} 的回答
+                .fz-26.gray.pdt {{item.entry.identifier.title}}
+                .fz-26.gray.pdt(v-if="item.entry.result") 回答结果为{{config.jdResult[item.entry.result]}}  {{item.entry.value && '估价为' + config.jdPrice[item.entry.value]}}
+            .play.center(@click.stop="play(item.entry.video)")
+                img(:src="'question/play.png' | qn")
+                .fz-22.mgt 播放视频
+
+    .interact.fz-26.flex.bdt.pdh-32
+        icon-answer(:count="item.entry.jianbao.status")
+        icon-comment(:count="item.entry.comment_count", :id="item.entry.id", type="jd")
 </template>
 <script>
 export default {

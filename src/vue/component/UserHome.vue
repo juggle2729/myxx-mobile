@@ -50,13 +50,13 @@
                     border-bottom: 0
                     padding-bottom: 0
 </style>
-<template lang="pug">
+<template lang="jade">
 .user-home.bg.pdt
     .shop.pdh-32.pdb-30.bg-white(v-if='shop', v-link="{name: 'shop', params: {id: shop.id}}")
         header.fz-26.gray
             span.pdl-12 {{shop.shop_type === 'studio' ? '工作室' : '店铺'}}
         .flex.detail
-            .img.mgr(v-bg='shop.logo')
+            .img.mgr.bd(v-bg='shop.logo')
             .flex-1
                 .fz-30.flex.mgb-12.name(:class="{'auth': shop.auth_flag}")
                     .line-clamp.mgr {{shop.shop_name}}

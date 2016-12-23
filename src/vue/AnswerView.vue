@@ -32,7 +32,7 @@
 .answer-view(v-if="!$loadingRouteData")
     header.bg-white
         .user.flex
-            .flex-1.title.fz-30.bold.mgv-24.pdr.user-txt.bdr {{{question.description | input}}}
+            .flex-1.title.fz-30.bold.mgv-24.pdr.user-txt.bdr {{{question.description | content | input}}}
             .flex.red.fz-26.pdl-32.pdv-12(@click="gotoDownload")
                 icon(name="plus")
                 span 关注问题
@@ -62,7 +62,6 @@
 </template>
 <script>
 import shareable from 'shareable'
-import Shop from 'component/Shop.vue'
 import Topics from 'component/Topics.vue'
 import CommentList from 'component/CommentList.vue'
 import ShareButton from 'component/ShareButton.vue'
@@ -73,7 +72,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        Shop,
         Topics,
         CommentList,
         ShareButton,

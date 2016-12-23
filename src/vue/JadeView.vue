@@ -114,6 +114,8 @@
             [class^='icon-'], [class*=' icon-']
                 margin-bottom: 4px
                 padding: 0
+                height: 1.6em
+                width: @height
         .buy-btn
             text-align: center
             height: 98px
@@ -182,11 +184,11 @@
         .bg.placeholder
         .float-box.flex.fixed.fz-30.bg-white
             .bdt.flex-1.flex
-                .fz-22.flex.flex-1.gray.contact-btn.bdr.red(@click='contact')
+                .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
                     icon.fz-30(name="chat")
                     .mgt-6 私信
                 .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                    icon.fz-30(name="star")
+                    icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
                     .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
                 .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
                     icon.fz-30(name="comment")

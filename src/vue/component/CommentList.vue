@@ -1,14 +1,12 @@
 <style lang="stylus">
 .comment-list
-    header
+    .header
         line-height: 80px
     .title
         height: 84px
         line-height: 84px
         span
             border-left: 6px solid #cc3f4f
-    .no-comment
-        line-height: 140px
     .list.empty
         display: none
     .comment-item:last-child
@@ -18,10 +16,13 @@
             border-bottom: none
     .enter
         padding-bottom: 3px
+    .no-comment img
+        height: 78px
+        width: 92px
 </style>
 <template lang="jade">
-.comment-list
-    header.bdb.fz-26.pdl-32.gray(v-if="isPreview") 热门评论
+.comment-list.bg-white
+    .header.bdb.fz-26.pdl-32.gray(v-if="isPreview") 评论
 
     section.hot.none
         .title.fz-26.gray.pdl-32.bdb.bg-white
@@ -34,7 +35,9 @@
             span.pdl-12 最新评论
     comments(v-if="!isPreview", :path="path", :params="{'order_by': 'new'}", transform="comments", v-ref:lately)
 
-    .no-comment.fz-26.light.center.none 还没有人评论
+    .no-comment.fz-26.light.center.none.pdt-48.pdb-32
+        img(:src="'no-comment.png' | qn")
+        .mgt-32 暂无评论
 
     share-button.mgb-36(v-if="isPreview")
 </template>

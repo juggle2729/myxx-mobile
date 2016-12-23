@@ -1,6 +1,6 @@
 <style lang="stylus">
 .work-view
-    .header
+    .user
         height: 160px
         line-height: 160px
         padding: 0 36px 0 50px
@@ -77,7 +77,7 @@
 </style>
 <template lang="jade">
 .work-view(v-if='!$loadingRouteData')
-    .header.flex
+    .user.flex
         avatar(:user='work.user', :size='90')
         .fz-30.mgl.flex-1
             p {{work.user.nickname}}

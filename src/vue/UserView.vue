@@ -33,8 +33,7 @@
         > div
             -webkit-box-flex: 1
             text-align: center
-            // line-height: 60px
-        .follow-icon
+        .follow-icon, .share-icon
             font-size: 30px
         .button
             border-radius: 6px
@@ -52,10 +51,10 @@
         icon-follow(v-else, :target='profile.id', :follow='profile.is_followed', :has-border='true')
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
-    .footer.flex.bdt.bg-white(v-if='!isSelf')
+    .footer.flex.bdt.bg-white.fz-30(v-if='!isSelf')
         icon-follow(:target='profile.id', :follow='profile.is_followed', :has-border='false')
         icon-share.bdl
-        .button.mgr-14.bg-red.white.fz-30(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
+        .button.mgr-14.bg-red.white(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
             span 进入{{(profile.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")
 </template>

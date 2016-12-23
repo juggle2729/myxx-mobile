@@ -9,22 +9,29 @@
         background-color: #efefef
 </style>
 <template lang="jade">
-.general-suggestion.bg.pdb-36
+.general-suggestion.bg-white.pdb-36
     .title.fz-26.gray 相关推荐
+    topics(v-if='categories && categories.length', :topics="categories")
     card(v-for="item in items", :item="item")
     share-button.mgt-36(txt="没找到感兴趣的？下载美玉秀秀看看吧！")
 </template>
 <script>
 import Card from 'component/item/Card.vue'
+import Topics from 'component/Topics.vue'
 import ShareButton from 'component/ShareButton.vue'
 export default {
     name: 'general-suggestion',
 
     components: {
+        Topics,
         Card,
         ShareButton
     },
 
+    props: {
+        categories: Array
+    },
+    
     data() {
         return {
             items: []

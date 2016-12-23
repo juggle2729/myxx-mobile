@@ -8,8 +8,9 @@ import IconFollow from 'component/icon/Follow.vue'
 import IconLike from 'component/icon/Like.vue'
 import IconShare from 'component/icon/Share.vue'
 import IconStar from 'component/icon/Star.vue'
+import IconAnswer from 'component/icon/Answer.vue'
 
 // 公用组件全局引入
 export default {
-    components: {Icon, Avatar, Empty, PriceTag, IconChat, IconComment, IconFollow, IconLike, IconShare, IconStar}
+    components: {Icon, Avatar, Empty, PriceTag, IconChat, IconComment, IconFollow, IconLike, IconShare, IconStar, IconAnswer}
 }

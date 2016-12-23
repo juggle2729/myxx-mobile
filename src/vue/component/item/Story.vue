@@ -10,22 +10,16 @@
     .content
         .pic
             width: 100%
-            padding-top: 63%
+            padding-top: 66%
             border: 2px solid white
             position: relative
             background-size: cover
             background-position: center
             background-image: url($qn + 'placeholder/img.png')
-        .pic-2
-            padding-top: 50%
-            background-size: 50% 100%
-            background-position: left top, right top
         .pic-more
             padding-top: 66%
             background-size: 65.8% 100%, 34% 49.5%, 34% 50%
             background-position: left top, right top, right bottom
-        .video
-            padding-top: 77%
         .activity
             display: inline-block
             padding: 10px 20px
@@ -44,43 +38,39 @@
                 width: 24px
                 display: block
     .interact
-        height: 80px
-        line-height: 60px
-        > div
-            -webkit-box-flex: 1
-            text-align: center
+        height: 98px
+        line-height: 98px
+        .like-icon
+            margin-right: 66px
 </style>
 <template lang="jade">
 .story-item.bg-white(v-link="{name: 'story', params: {id: data.post_id}}")
-    .follow.bdb.flex.pdl.mgb(v-if="collection")
+    .follow.flex.pdl(v-if="collection")
         avatar(:user="data.user", :size="50")
         .mgl.fz-26.gray.flex-1 {{data.user.nickname}} 添加至专辑
-        .fz-26.gray.pdr(v-if="collection", v-link="{name: 'collection', params: {id: item.event.what.id}}") 前往专辑
     
     .header.flex(v-if="!collection")
         .flex-1.flex
             avatar(:user="data.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{data.user.nickname}}
-        icon-follow(v-if="!data.user.is_followed", :target="data.user.id", :follow="data.user.is_followed")
     
-    .content.bg-white.mgb-24.pdh-16
-        .fz-30.line-clamp-2.mgb-28 {{{data.content | input}}}
+    .content.bg-white.mgb-24.pdh-20
+        .fz-30.mgb-28.user-txt {{{data.content | content | input}}}
         .pic.video(v-if="data.medias[0].media_type==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
             .activity.bg-red.white.fz-26(v-if="data.activity")
                 icon(name="fire")
                 span {{data.activity.name}}
-        .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-2': data.medias.length == 2, 'pic-more': data.medias.length >= 3}")
+        .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-more': data.medias.length >= 3}")
             .activity.bg-red.white.fz-26(v-if="data.activity")
                 icon(name="fire")
                 span {{data.activity.name}}
-            .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 3")
+            .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 1 && data.medias.length !== 3")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{data.medias.length}}
     
-    .interact.fz-26.flex.bdt
-        icon-like.bdr(:target="data.post_id", type="tp", :active="data.liked", :count="data.like_count || data.like")
-        icon-comment.bdr(:count="data.comment_count || data.comment", :id="data.post_id", type="tp")
-        icon-share
+    .interact.fz-26.flex.bdt.pdh-32
+        icon-like(:target="data.post_id", type="tp", :active="data.liked", :count="data.like_count")
+        icon-comment(:count="data.comment_count || data.comment", :id="data.post_id", type="tp")
 </template>
 <script>
 export default {

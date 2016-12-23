@@ -11,6 +11,8 @@
             vertical-align: bottom
     .reply
         border: 20px solid #f9f9f9
+        .blue
+            color: #527fb0
     .icon-enter
         transform: rotate(90deg)
 </style>

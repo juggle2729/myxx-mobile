@@ -1,11 +1,12 @@
 <style lang="stylus">
 .like-icon
-    &.active
-        color: #cc3f4f
+    .icon
+        height: 2em
+        width: @height
 </style>
 <template lang="jade">
-.like-icon.fz-30.gray(:class="{active: active}", @click="like")
-    icon(name="like")
+.like-icon.fz-26.gray(@click="like", :class="{'red': active}")
+    icon(:name="active ? 'like-solid' : 'like'")
     span {{count || zero}}
 </template>
 <script>

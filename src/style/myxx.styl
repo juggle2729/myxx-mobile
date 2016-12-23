@@ -49,7 +49,7 @@ gap($size)
         .pd{$d}{$suffix}
             for $dir in $dirs
                 padding-{$dir}: $size px
-for $size in range(6, 50, 2)
+for $size in range(4, 50, 2)
     gap($size)
 gap(0)
 /****************************
@@ -121,6 +121,11 @@ $line-clamp
     display: -webkit-box
     -webkit-box-orient: vertical
     -webkit-line-clamp: 2
+.line-clamp-3
+    @extends $line-clamp
+    display: -webkit-box
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: 3
 .line-clamp-4
     @extends $line-clamp
     display: -webkit-box
@@ -130,6 +135,11 @@ $line-clamp
 .user-txt
     word-break: break-all
     line-height: 1.5
+    img
+        display: inline-block
+        vertical-align: top
+        height: 40px
+        width: 40px
 
 .hr
     height: 20px

@@ -34,24 +34,25 @@
 </style>
 <template lang="jade">
 .story-view.bg-white(v-if='!$loadingRouteData')
-    .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
-    .flex.pd-32
-        .flex.flex-1
-            avatar(:user='story.user')
-            .name.mgl
-                p.fz-30 {{story.user.name}}
-                .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
-        icon-follow(:target='story.user.id', :follow='story.user.is_followed', :has-border='true')
-    .fz-30.mgh-32.mgb-32.user-txt {{{story.content | input}}}
+    .pd-32
+        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+        .flex
+            .flex.flex-1
+                avatar(:user='story.user')
+                .name.mgl
+                    p.fz-30 {{story.user.name}}
+                    .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
+            icon-follow(:target='story.user.id', :follow='story.user.is_followed', :has-border='true')
+        .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
 
-    .pictures.pd-28(v-if="cover.media_type==='picture'")
-        .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
+        .pictures.pdt-28(v-if="cover.media_type==='picture'")
+            .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
 
-    .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
-        icon(name="fire")
-        span {{story.activity.name}}
-    template(v-if="story.user.shop")
-        shop(:shop="story.user.shop")
+        .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
+            icon(name="fire")
+            span {{story.activity.name}}
+        template(v-if="story.user.shop")
+            shop(:shop="story.user.shop")
     .hr
 
     comment-list(type='tp', :id='story.post_id', :uid="story.user.id", v-ref:comments)

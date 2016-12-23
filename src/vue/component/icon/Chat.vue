@@ -1,5 +1,5 @@
 <template lang="jade">
-.share-icon.fz-30.gray(@click.stop="chat(id, name, jade)")
+.share-icon.fz-26.gray(@click.stop="chat(id, name, jade)")
     icon(name="chat")
     span 私信
 </div>

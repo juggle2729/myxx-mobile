@@ -1,5 +1,11 @@
+<style lang="stylus">
+.comment-icon
+    .icon
+        height: 2em
+        width: @height
+</style>
 <template lang="jade">
-.comment-icon.fz-30.gray(@click.stop="comment")
+.comment-icon.fz-26.gray(@click.stop="comment")
     icon(name="comment")
     span {{count || '评论'}}
 </template>

@@ -44,6 +44,10 @@
         width: 100%
         position: fixed
         bottom: 0
+        [class^='icon-'], [class*=' icon-']
+            font-size: 30px
+            & + span
+                font-size: 30px
 </style>
 <template lang="jade">
 .shop-view.bg(v-if='!$loadingRouteData')

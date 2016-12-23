@@ -1,7 +1,7 @@
 export default {
     '/question/:id': {
         name: 'question',
-        title: '问答详情',
+        title: '问题详情',
         native: v => v >= 2.3,
         component(resolve) {
             require.ensure([], (require) => {

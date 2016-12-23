@@ -4,7 +4,7 @@
     .follow
         height: 90px
     .header
-        padding: 20px 20px 0
+        padding: 28px 20px 0
         .name
             color: #666666
     .pic
@@ -26,40 +26,44 @@
             width: 24px
             display: block
     .desc
-        padding: 28px 20px
+        .flex
+            -webkit-box-align: start
+        img.post
+            display: block
+            height: 30px
+            width: 78px
+            margin-top: 8px
     .interact
-        height: 80px
-        line-height: 60px
-        > div
-            -webkit-box-flex: 1
-            text-align: center
+        height: 98px
+        line-height: 98px
+        .like-icon
+            margin-right: 66px
 </style>
 <template lang="jade">
 .post-item.bg-white(v-link="{name: 'post', params: {id: item.entry.post_id}}")
-    .follow.bdb.flex.pdl(v-if="collection")
+    .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.user", :size="50")
         .mgl.fz-26.gray.flex-1 {{item.entry.user.nickname}} 添加至专辑
-        .fz-26.gray.pdr(v-if="collection", v-link="{name: 'collection', params: {id: item.event.what.id}}") 前往专辑
     
     .header.flex(v-if="!collection")
         .flex-1.flex
             avatar(:user="item.entry.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.entry.user.nickname}}
-        icon-follow(v-if="!item.entry.user.is_followed", :target="item.entry.user.id", :follow="item.entry.user.is_followed")
     
-    .bg-light.mg
+    .mgh.mgb-28(:class="{'mgt-24': !collection}")
         .pic(v-bg="item.entry.cover")
             .more.white.fz-30.flex.pdh-12(v-if="item.entry.media_num > 1")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.entry.media_num}}
-        .desc
-            p.fz-30.bold {{item.entry.title}}
-            .fz-26.gray.line-clamp-2(:class="{'mgt-20': item.entry.description}") {{{item.entry.description | input}}}
+        .desc.pdt-24
+            .flex
+                img.post(:src="'post.png' | qn")
+                .pdl-10.fz-30.bold.flex-1.user-txt.line-clamp-2 {{item.entry.title}}
+            .fz-26.gray.line-clamp-2.user-txt(:class="{'mgt-20': item.entry.description}") {{{item.entry.description | content | input}}}
     
-    .interact.fz-26.flex.bdt
-        icon-like.bdr(:target="item.entry.post_id", type="rt", :active="item.entry.liked", :count="item.entry.like_count")
-        icon-comment.bdr(:count="item.entry.comment_count", :id="item.entry.post_id", type="rt")
-        icon-share
+    .interact.fz-26.flex.bdt.pdh-32
+        icon-like(:target="item.entry.post_id", type="rt", :active="item.entry.liked", :count="item.entry.like_count")
+        icon-comment(:count="item.entry.comment_count", :id="item.entry.post_id", type="rt")
 </template>
 <script>
 export default {

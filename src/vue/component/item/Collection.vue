@@ -7,11 +7,11 @@
         width: 148px
 </style>
 <template lang="jade">
-.collection-item.bg-white.pdh.pdb-24
-    .follow.flex
+.collection-item.bg-white
+    .follow.flex.bdb.pdh
         avatar(:user="user", :size="50")
-        .mgl.fz-26.gray {{user.nickname}}关注了专辑
-    .content.flex.bg-light
+        .mgl.fz-26.gray {{user.nickname}} 关注了专辑
+    .content.flex.pdv-24.pdh
         .img.cover.mgr(v-bg="item.entry.cover")
         div
             .fz-30.mgb-16 {{item.entry.name}}

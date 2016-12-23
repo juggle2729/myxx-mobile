@@ -18,7 +18,6 @@ export default {
     methods: {
         setShareData(entry) {
             let data = {
-                hasDownloadLink: true,
                 // url: location.origin + location.pathname
                 url: location.href
             }
@@ -36,19 +35,16 @@ export default {
                     data.title = `【限量】${entry.title}`
                     data.desc = '玉友的新品上线啦！'
                     data.icon = entry.pictures[0]
-                    data.hasDownloadLink = false
                     break
                 case 'master':
                     data.title = entry.interview.title
                     data.desc = entry.baseData.name + ' ' + _.get(entry, '.baseData.titles.0.name', '')
                     data.icon = entry.baseData.photo
-                    data.hasDownloadLink = false
                     break
                 case 'user':
                     data.title = `${entry.name}的主页`
                     data.desc = entry.title || `我在美玉秀秀中认识了${entry.name}，推荐大家关注。`
                     data.icon = entry.photo
-                    data.hasDownloadLink = false
                     break
                 case 'top-master':
                     data.title = '【专业】鉴宝大神排行榜，你看服不服？'
@@ -60,7 +56,6 @@ export default {
                     data.title = entry.name
                     data.desc = `刚刚在美玉秀秀看到一个不错的${entry.type}，快来看看吧！`
                     data.icon = entry.logo
-                    data.hasDownloadLink = false
                     break
                 case 'works':
                     data.title = `${entry.name}的作品展`
@@ -127,7 +122,7 @@ export default {
             // data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
-            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url', 'hasDownloadLink')
+            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url')
 
             this.action('shareable', {...this.$root.shareData, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
 

@@ -80,6 +80,17 @@ const filters = {
             return `<a style="color: #527fb0" ${evt}>@${name}</a>`
         }
         return content ? content.replace(/\n/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''
+    },
+
+    content(desc) {
+        let content = desc ? desc.replace(/</g, '&lt').replace(/>/g, '&gt') : ''
+        if(/\[.{1,3}?\]/.test(content)) {
+            content = content.replace(/\[(.{1,3}?)\]/g, alt => {
+                const i = this.config.emoji.indexOf(alt.replace(/\[|\]/g, ''))
+                return i === -1 ? alt : `<img src="${this.config.www}/emoji/${i}.png" alt="${alt}" />`
+            })
+        }
+        return content
     }
 }
 export default {

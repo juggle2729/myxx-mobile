@@ -38,7 +38,7 @@
 </style>
 <template lang="jade">
 div(:class="{'loading': loading}")
-    template(v-if="env.isShare && shareData.hasDownloadLink")
+    template(v-if="env.isShare")
         .share-top.flex.bg-white(@click="gotoDownload()")
             .logo.mgr
                 img(:src="'logo.png' | qn", alt="美玉秀秀")

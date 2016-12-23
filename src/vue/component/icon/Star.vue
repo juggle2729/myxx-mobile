@@ -1,10 +1,13 @@
 <style lang="stylus">
 .star-icon
     display: block
+    .icon
+        width: 1.6em
+        height: @width
 </style>
 <template lang="jade">
 .star-icon(@click="star")
-    icon.fz-32(name="star", :class="{'red': active}")
+    icon.fz-32(:name="active ? 'star-solid' : 'star'")
     span {{active ? '已收藏' : '收藏'}}
 </template>
 <script>
