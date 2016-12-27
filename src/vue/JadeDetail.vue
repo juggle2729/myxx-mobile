@@ -36,7 +36,7 @@
     .recommends.bg.pdt(v-if="related.length")
         .fz-26.gray 商品推荐
         product-card(v-for="item in related", :item="item")
-        share-button(v-if="env.isShare", txt="没找到感兴趣的，下载美玉秀秀看看吧！")
+        share-button(v-if="env.isShare", txt="没找到感兴趣的，打开美玉秀秀看看吧！")
 </template>
 <script>
 import ShareButton from 'component/ShareButton.vue'

@@ -34,6 +34,10 @@ export default {
         return {
             links: [
                 {
+                    label: 'deep-link',
+                    href: '/deep-link'
+                },
+                {
                     label: '专辑详情',
                     href: '/collection/1'
                 },

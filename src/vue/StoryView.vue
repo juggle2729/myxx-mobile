@@ -20,7 +20,6 @@
             padding-top: @width
     .tag-activity
         display: inline-block
-        margin: 0 0 32px 32px
         padding: 10px 20px
         border-radius: 26px
         background-color: #ffecea
@@ -36,19 +35,17 @@
 .story-view.bg-white(v-if='!$loadingRouteData')
     .pd-32
         .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
-        .flex
-            .flex.flex-1
-                avatar(:user='story.user')
-                .name.mgl
-                    p.fz-30 {{story.user.name}}
-                    .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
-            icon-follow(:target='story.user.id', :follow='story.user.is_followed', :has-border='true')
+        .flex.mgt-32
+            avatar(:user='story.user')
+            .name.mgl
+                p.fz-30 {{story.user.name}}
+                .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
         .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
 
         .pictures.pdt-28(v-if="cover.media_type==='picture'")
             .pic(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
 
-        .tag-activity.red.fz-26(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
+        .tag-activity.red.fz-26.mgr-32(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
             icon(name="fire")
             span {{story.activity.name}}
         template(v-if="story.user.shop")

@@ -39,7 +39,7 @@
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     .bg-white.pdv-36
-        share-button(txt="下载美玉秀秀，发表你的观点")
+        share-button(txt="打开美玉秀秀，发表你的观点")
     .hr
 
     .result.bg-white

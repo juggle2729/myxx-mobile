@@ -1,4 +1,14 @@
 export default {
+    '/deep-link': {
+        name: 'deep-link',
+        title: 'deep-link',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('DeepLinkView.vue'))
+            }, 'question')
+        }
+    },
+
     '/question/:id': {
         name: 'question',
         title: '问题详情',

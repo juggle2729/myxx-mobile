@@ -215,6 +215,12 @@ const mixin = {
             if(!/myxx/i.test(window.navigator.userAgent)) {
                 window.location.href = config.download
             }
+        },
+
+        deepOpen() {
+            if(!this.$root.deep) {
+                this.$root.popup = {handler: 'browser'}
+            }
         }
     }
 }

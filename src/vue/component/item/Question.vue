@@ -14,7 +14,7 @@
             display: block
             height: 30px
             width: 36px
-            margin-top: 5px
+            margin-top: 7px
     .pic
         width: 100%
         padding-top: 66%

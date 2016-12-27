@@ -21,7 +21,7 @@
         template(v-for="item in items")
             component(:is="config.category[item.type]", keep-alive, :item="item")
             .hr
-        share-button.mgt-16(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多话题内容")
+        share-button.mgt-16(v-if="!items.hasMore", txt="打开美玉秀秀，查看更多话题内容")
         empty(v-if='items.isEmpty', title='暂无内容')
 </template>
 <script>

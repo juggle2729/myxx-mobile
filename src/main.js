@@ -62,9 +62,9 @@ router.beforeGo((from, to, app) => {
     }
     return !interrupted
 })
+
 router.beforeEach(({from, to, next}) => {
     // to.router.app.$el.classList.add('loading')
-
     // 同一路由内，仅切换tab时，不调整滚动位置
     if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
         window.scroll(0, 0)

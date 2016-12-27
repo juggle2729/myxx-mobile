@@ -9,5 +9,6 @@ import choice from './Delete.vue'
 import confirm from './Confirm.vue'
 import guarantee from './Guarantee.vue'
 import comment from './Comment.vue'
+import browser from './Browser.vue'
 
-export default {coverflow, keyboard, setPrice, play, share, login, toast, 'delete': choice, confirm, guarantee, comment}
+export default {coverflow, keyboard, setPrice, play, share, login, toast, 'delete': choice, confirm, guarantee, comment, browser}

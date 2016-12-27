@@ -64,7 +64,7 @@
     .pictures.pdh-32.pdb-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     .bg-white.mgb-36
-        share-button(txt="下载美玉秀秀，发表你的观点")
+        share-button(txt="打开美玉秀秀，发表你的观点")
     
     .results.bg-white
         .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results > 0 ? question.results.length : ''}}

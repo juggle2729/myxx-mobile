@@ -77,7 +77,7 @@
     .list
         product-card(v-for="item in items", :item="item")
     
-    share-button.mgt-20(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多优质商品")
+    share-button.mgt-20(v-if="!items.hasMore", txt="打开美玉秀秀，查看更多优质商品")
     
     .footer.flex.bdt.fz-30.bg-white.gray
         icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
