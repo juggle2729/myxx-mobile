@@ -9,10 +9,10 @@
             border-radius: 8px
 </style>
 <template lang="pug">
-.share-button-component(@click="deepOpen()")
-    a.btn(:href="path", target="_blank", v-if="$root.env.isIOSDeepLink")
-        .bg-red.white.center.fz-30 {{txt}}
-    .btn(v-else)
+.share-button-component(@click="gotoDownload")
+    //- a.btn(:href="path", target="_blank", v-if="$root.env.isIOSDeepLink")
+    //-     .bg-red.white.center.fz-30 {{txt}}
+    .btn
         .bg-red.white.center.fz-30 {{txt}}
 </template>
 <script>
@@ -22,7 +22,7 @@ export default {
     props: {
         txt: {
             type: String,
-            default: '打开美玉秀秀，参与评论互动'
+            default: '下载美玉秀秀，参与评论互动'
         }
     },
 

@@ -9,18 +9,14 @@
             img
                 width: 80px
                 height: 80px
-    .order
-        padding-left: 50px
-        .item
-            height: 112px
-            line-height: 112px
-        .customer
-            padding: 36px 0
-            .tel
-                margin: 28px 0
-            .address
-                margin-right: 50px
-                line-height: 1.2
+    .title
+        height: 90px
+        line-height: 90px
+    .content
+        .item :first-child
+            width: 164px
+        .address
+            -webkit-box-align: start
     .operation
         padding: 50px
         p
@@ -38,23 +34,43 @@
             .contact.flex
                 .flex-1.bdr.fz-26.gray(@click.stop="action('kf', {order: order.order_no})")
                     img.margin-bottom(:src="'service/online.svg' | qn", alt="online-service")
-                    p 在线客服
+                    .mgt-24 在线客服
                 .flex-1.fz-26.gray
                     a(href="tel:4000587266")
                         img.margin-bottom(:src="'service/tel.svg' | qn", alt="tel-service")
-                        p 电话客服
+                        .mgt-24 电话客服
         .hr
-        .order.fz-30
-            .item.bdb 订单金额
-                span.red.fz-36.mgl {{order.trans_amount | price}}
-            .item.bdb 订单编号
-                span.gray.mgl {{order.order_no}}
-            .customer
-                p {{order.receiver_name}}
-                p.tel {{order.receiver_phone}}
-                div.address.line-clamp-2.fz-26.gray {{order.receiver_address}}
+        .accout.mgl-32.pdr-32
+            .title.bdb.fz-30 官方唯一对公账户
+            .content.pdv-24.fz-26
+                .item.flex
+                    div 户名
+                    div 南京美玉秀秀网络科技有限公司
+                .item.flex.mgt-24
+                    div 账号
+                    div 10100501040009603
+                .item.flex.mgt-24
+                    div 开户行
+                    div 南京农行云南路支行
+                .gray.fz-26.mgt-32.user-txt 重要提示：切勿转账其他账号！转账完成，截图给客服小秀，会通知商家尽快发货
         .hr
-        .operation.fz-30
+        .order.mgl-32.pdr-32
+            .title.bdb.fz-30 订单详情
+            .content.pdv-24.fz-26
+                .item.flex
+                    div 订单金额
+                    .red {{order.trans_amount | price}}
+                .item.flex.mgt-24
+                    div 订单编号
+                    div {{order.order_no}}
+                .item.flex.mgt-24.address
+                    div 收货详情
+                    div
+                        div {{order.receiver_name}}
+                        .pdt-8 {{order.receiver_phone}}
+                        .pdt-8 {{order.receiver_address}}
+        .hr
+        .operation.fz-26.gray
             p 转账时请备注您的联系电话，我们收到货款后会第一时间与您确认后续事宜。
             .flex
                 .mgr.button.flex-1.bd-gray.center(@click="action('orderDetail', {id: order.order_no})") 订单详情

@@ -364,6 +364,16 @@ export default {
         }
     },
 
+    '/coupon-rule': {
+        name: 'coupon-rule',
+        title: '优惠券使用规则',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CouponRuleView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/wallet': {
         name: 'wallet',
         title: '我的钱包',

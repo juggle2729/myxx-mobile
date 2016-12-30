@@ -49,7 +49,7 @@ const adapter = {
                     // hack在微信等webview中无法修改document.title的情况
                     var iframe = document.createElement('iframe')
                     iframe.style.display = 'none'
-                    iframe.src = '//o0x80w5li.qnssl.com/logo.png'
+                    iframe.src = '//img.meiyuxiuxiu.com/static/logo.png'
                     iframe.onload = () => {
                        _.delay(() => {
                            iframe.onload = _.noop
