@@ -410,7 +410,15 @@ export default {
             }, 'wallet')
         }
     },
-
+    '/best-practice': {
+        name: 'best-practice',
+        title: '玩转美玉秀秀',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BestPracticeView.vue'))
+            }, 'help')
+        }
+    },
     '/help/mall': {
         name: 'mall-help',
         title: '帮助',
@@ -532,7 +540,6 @@ export default {
             }, 'recommend')
         }
     },
-
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',
