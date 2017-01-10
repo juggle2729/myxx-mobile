@@ -106,7 +106,7 @@
             width: 450px
         .buy-btn
             width: 300px
-        .contact-btn,.collect-btn,.comment-btn
+        .contact-btn,.collect-btn,.shop-btn
             -webkit-box-orient: vertical
             -webkit-box-pack: center
             width: 50%
@@ -158,7 +158,7 @@
                 .flex
                     p.red.fz-44.flex-1 {{jade.price | price}}
             .guarantee(@click="guarantee")
-                img(:src="'jade/instruction.png' | qn")
+                img(:src="'jade/terms.png' | qn")
                 icon.fz-26.red(name="enter")
         .hr
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
@@ -184,15 +184,15 @@
         .bg.placeholder
         .float-box.flex.fixed.fz-30.bg-white
             .bdt.flex-1.flex
-                .fz-22.flex.flex-1.gray.contact-btn.bdr(@click='contact')
+                .fz-22.flex.flex-1.red.contact-btn.bdr(@click='contact')
                     icon.fz-30(name="chat")
                     .mgt-6 私信
                 .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
                     icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
                     .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
-                .fz-22.flex.flex-1.gray.comment-btn(@click='gotoComments')
-                    icon.fz-30(name="comment")
-                    .mgt-6 评论  {{jade.comment_count}}
+                .fz-22.flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
+                    icon.fz-30(name="shop")
+                    .mgt-6 店铺
             .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
             .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
     .offline(v-else)
@@ -281,13 +281,6 @@ export default {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'})
             } else {
                 this.action('chat', {id: this.jade.default_admin.id, name: this.jade.default_admin.nickname, product: this.jade.id})
-            }
-        },
-        gotoComments() {
-            if(this.env.isApp) {
-                this.$router.go({name: 'comments', params: {id: this.jade.id, type: 'pd'}})
-            } else {
-                this.gotoDownload()
             }
         },
         go(tab) { // FIXME 采用v-link替代
