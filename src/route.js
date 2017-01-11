@@ -445,7 +445,6 @@ export default {
             }, 'help')
         }
     },
-
     '/help/purchase': {
         name: 'purchase-help',
         title: '求购竞标',
@@ -455,7 +454,6 @@ export default {
             }, 'help')
         }
     },
-
     '/help/bzone': {
         name: 'bzone-help',
         title: '什么是商户专区',
@@ -465,7 +463,6 @@ export default {
             }, 'help')
         }
     },
-
     '/help/level/:id': {
         name: 'level-help',
         title: '等级说明',
@@ -475,7 +472,6 @@ export default {
             }, 'help')
         }
     },
-
     '/help/comment': {
         name: 'level-comment',
         title: '商品评价说明',
@@ -494,6 +490,61 @@ export default {
             }, 'help')
         }
     },
+    '/help/medal/identity': {
+        name: 'identity-medal',
+        title: '身份认证',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MedalView.vue'));
+            }, 'help')
+        }
+    },
+    '/help/medal/author': {
+        name: 'author-medal',
+        title: '精华内容作者',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MedalView.vue'));
+            }, 'help')
+        }
+    },
+    '/help/credit': {
+        name: 'credit',
+        title: '如何赚积分',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CreditView.vue'));
+            }, 'help')
+        }
+    },
+    '/help/level/personal': {
+        name: 'personal-level',
+        title: '等级介绍',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PersonalLevelView.vue'));
+            }, 'help')
+        }
+    },
+    '/help/recognition': {
+        name: 'recognition-help',
+        title: '认同度',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('RecognitionView.vue'));
+            }, 'help')
+        }
+    },
+    '/help/best-practice': {
+        name: 'best-practice',
+        title: '玩转美玉秀秀',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BestPracticeView.vue'));
+            }, 'help')
+        }
+    },
+    
     '/auctions': {
         name: 'auctions',
         title: '拍卖专区',

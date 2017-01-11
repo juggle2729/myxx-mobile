@@ -67,7 +67,7 @@ export default {
             route: 'post'
         }
     ],
-    role: {normal: '普通用户', engraver: '雕刻师', merchant: '商家', enterprise: '企业'},
+    role: {normal: '普通用户', engraver: '雕刻师', merchant: '商户', enterprise: '企业'},
     category: { 'jb': 'question', 'tp': 'story', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'topic'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'

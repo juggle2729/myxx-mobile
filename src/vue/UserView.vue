@@ -3,17 +3,14 @@
 .user-view
     padding-bottom: 98px
     .banner
-        padding: 12px 0 50px
-        background-image: url($qn + 'user/left.png'), url($qn + 'user/right.png'), url($qn + 'user/banner.png')
-        background-position: left 12px top 12px, right 12px top 12px, center bottom
-        background-size: 72px, 72px, cover
-        background-repeat: no-repeat
-        .follow-icon
-            margin: 28px auto 0
-            color: #cc3f4f
+        padding: 48px 40px 36px 36px
         .avatar[size='120']
-            margin: 48px auto 36px
             box-shadow: 0 0 0 4px rgba(136, 136, 136, 0.3)
+    .medal
+        img
+            display: block
+            height: 30px
+            width: 30px
     .tabs
         height: 100px
         background-color: #fff
@@ -41,14 +38,34 @@
 </style>
 <template lang="jade">
 .user-view.bg(v-if="!$loadingRouteData")
-    .banner.bg.center
-        avatar(:user='profile', :size='120')
-        p.fz-30 {{profile.nickname}}
-        .fz-26.gray.record.mgt
-            span.bdr.pdh-30 关注 {{profile.follow_count}}
-            span.pdh-30 粉丝数 {{profile.fans_count}}
-        p.gray.fz-26.mgt(v-if='profile.title') 美玉认证: {{profile.title}}
-        icon-follow(v-else, :target='profile.id', :follow='profile.is_followed', :has-border='true')
+    .banner.bg-white.flex
+        avatar(:user="profile", :size="120")
+        .mgl-32.flex-1
+            .flex.bdb.pdb
+                .fz-34.bold {{profile.nickname}}
+            .flex.pdt
+                .center.flex-1
+                    .fz-30.mgb-14 {{profile.fans_count}}
+                    .fz-22 粉丝
+                .center.flex-1
+                    .fz-30.mgb-14 {{profile.follow_count}}
+                    .fz-22 关注
+                .center.flex-1
+                    .fz-30.mgb-14 {{profile.post_count}}
+                    .fz-22 发布
+                .center.flex-1
+                    .fz-30.mgb-14 {{profile.post_like_count}}
+                    .fz-22 获赞
+     .medal.bg-white.pdh-40.pdb-48
+            .flex(v-if="profile.vip_flag")
+                img(:src="'profile/' + profile.role + '.png' | qn")
+                .fz-26.gray.mgl-16 {{config.role[profile.role]}}认证{{'：'+profile.title}}
+            .flex.mgt(v-if="profile.level")
+                img(:src="'jb/' + profile.level + '.png' | qn")
+                .fz-26.gray.mgl-16 {{profile.level}}级鉴定师
+            .flex.mgt(v-if="profile.star_author")
+                img(:src="'medal/star_author.png' | qn")
+                .fz-26.gray.mgl-16 精华内容贡献者
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white.fz-30(v-if='!isSelf')

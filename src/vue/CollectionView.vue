@@ -30,6 +30,10 @@
                 width: .5em
             .transparent
                 color: rgba(255,255,255,0.7)
+            img
+                display: block
+                height: 30px
+                width: 30px
         .info
             height: 100px
             position: relative
@@ -51,6 +55,7 @@
                 .flex.fz-30.transparent
                     avatar(:user="cc.author")
                     .mgl {{cc.author.nickname}}
+                    img.mgl-8(v-if="cc.author.vip_flag", :src="'profile/'+cc.author.role+'.png' | qn")
                     icon.mgl-16(name="enter")
     .upside(v-if="self")
         img.blur.bd(:src="'user/collection.jpg' | qn")
@@ -62,6 +67,7 @@
                 .flex.fz-30.transparent
                     avatar(:user="profile")
                     .mgl {{profile.nickname}}
+                    img.mgl-8(v-if="cc.author.vip_flag", :src="'profile/'+cc.author.role+'.png' | qn")
                     icon.mgl-16(name="enter")
     .info.flex.pdh-32.fz-26(v-if="!self")
         .gray.pdr.bdr 内容 {{cc.content_count}}

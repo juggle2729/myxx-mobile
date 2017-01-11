@@ -2,6 +2,10 @@
 .story-view
     .cover.video
         padding-bottom: 100%
+    .name img
+        display: block
+        height: 30px
+        width: 30px
     .pictures
         font-size: 0
         .pic
@@ -38,7 +42,9 @@
         .flex.mgt-32
             avatar(:user='story.user')
             .name.mgl
-                p.fz-30 {{story.user.name}}
+                .flex
+                    .fz-30 {{story.user.name}}
+                    img.mgl-8(v-if="story.user.vip_flag", :src="'profile/' + story.user.role + '.png' | qn")
                 .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
         .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
 

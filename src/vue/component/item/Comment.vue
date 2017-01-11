@@ -3,6 +3,10 @@
     padding: 26px 0 26px 32px
     &.flex
         -webkit-box-align: start
+    .vip
+        display: block
+        width: 26px
+        height: 26px
     .content
         &[to]::before
             content: '回复' attr(to) '说：'
@@ -23,7 +27,9 @@
         section(@click="$dispatch(((self && self.id==item.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item, isHot)")
             .flex.pdb.pdt-6
                 .flex-1
-                    .fz-26.gray {{item.reply_from.name}}
+                    .flex
+                        .fz-26.gray {{item.reply_from.name}}
+                        img.mgl-8.vip(v-if="item.reply_from.vip_flag", :src="'profile/'+item.reply_from.role+'.png' | qn")
                     .fz-22.light.mgt-12 {{item.create_at | moment}}
                 icon-like(v-if="$route.name === 'comments'", :target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
             .fz-30.content.user-txt {{{content | input}}}

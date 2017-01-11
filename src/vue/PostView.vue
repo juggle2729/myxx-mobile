@@ -2,6 +2,10 @@
 .post-view
     > header
         padding: 32px 32px 40px
+        img
+            display: block
+            width: 30px
+            height: 30px
     main
         padding: 0 32px 40px
         img
@@ -32,7 +36,9 @@
     header.flex
         avatar(:user='post.user')
         .flex-1.mgl
-            .fz-30 {{post.user.nickname}}
+            .flex
+                .fz-30 {{post.user.nickname}}
+                img.mgl-8(v-if="post.user.vip_flag", :src="'profile/'+post.user.role+'.png' | qn")
             .mgt-12.fz-22.light {{post.create_at | moment}} &nbsp;&#124;&nbsp; {{post.click_count}}人浏览
         icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main

@@ -29,6 +29,10 @@
     .master
         padding: 0 32px
         height: 114px
+        img
+            display: block
+            height: 26px
+            width: 26px
     .title
         padding: 0 32px
         line-height: 84px
@@ -68,7 +72,9 @@
     .master.flex.bg-white(v-link="{name: 'user', params: {id: shop.owner.id}}")
         avatar(:user='shop.owner')
         .fz-26.mgl.flex-1
-            p {{shop.owner.nickname}}
+            .flex
+                div {{shop.owner.nickname}}
+                img.mgl-8(v-if="shop.owner.vip_flag", :src="'profile/'+shop.owner.role+'.png' | qn")
             p.mgt-12.gray {{shop.owner.title || config.role[shop.owner.role]}}
         icon.fz-20.light.mgb-16(name="enter")
     .hr

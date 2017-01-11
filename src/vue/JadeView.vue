@@ -67,6 +67,10 @@
         .name
             height: 72px
             line-height: 75px
+        img
+            display: block
+            height: 26px
+            width: 26px
     .shop
         height: 144px
         padding: 0 32px
@@ -173,7 +177,9 @@
             icon.fz-30.gray(name="enter")
         .master.flex.bg-white.bdt(v-link="{name: 'user', params: {id: jade.owner.id}}")
             avatar(:user='jade.owner', :size='50')
-            .name.fz-26.gray.mgl {{jade.owner.name}}
+            .flex
+                .name.fz-26.gray.mgl {{jade.owner.name}}
+                img.mgl-8(v-if="jade.owner.vip_flag", :src="'profile/'+jade.owner.role+'.png' | qn")
         .hr
         .tabs.tabs-static.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
             .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情

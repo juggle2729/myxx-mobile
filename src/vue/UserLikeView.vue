@@ -19,6 +19,10 @@
             height: 168px
             background-color: #efeff4
             padding: 0 24px
+            img
+                display: block
+                height: 26px
+                width: 26px
             .avatar-50
                 margin-right: 16px
             .content
@@ -45,8 +49,10 @@
                 .flex-1
                     .user.flex.mgb
                         avatar(:user='item.user', :size='50')
-                        p.fz-26.gray.mgl-16 {{item.user.name}}
-                    p.content.fz-30.mgr {{{item.description}}}
+                        .flex
+                            .fz-26.gray.mgl-16 {{item.user.name}}
+                            img.mgl-8(v-if="item.user.vip_flag", :src="'profile/'+item.user.role+'.png' | qn")
+                    p.content.fz-30.mgr {{{item.description | input}}}
                 template.preview(v-if='item.preview')
                     .preview(v-if='item.preview.img', v-bg.sm='item.preview.img')
                     .preview.play(v-else, v-bg.video='item.preview.video')

@@ -24,6 +24,10 @@
             width: 466px
             padding-top: @width
             margin: 28px 0 32px 32px
+        .user img
+            display: block
+            height: 26px
+            width: 26px
         footer
             height: 84px
             line-height: 48px
@@ -47,7 +51,10 @@
             .user.flex
                 avatar(:user="result.identifier")
                 .mgl.flex-1
-                    .fz-26 {{result.identifier.nickname}}
+                    .flex
+                        .fz-26 {{result.identifier.nickname}}
+                        img.mgl-8(v-if="result.identifier.vip_flag", :src="'profile/'+result.identifier.role+'.png' | qn")
+                        img.mgl-8(v-if="result.identifier.jianbao_level", :src="'jb/'+result.identifier.jianbao_level+'.png' | qn")
                     .mgt-14.fz-22.gray {{result.identifier.title}}
                 icon-follow(:target='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
         .video.bg(v-bg='result.identifier.portrait', @click.stop="play(result.video)")
