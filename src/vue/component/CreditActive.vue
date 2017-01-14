@@ -18,12 +18,12 @@
         .flex-4 加分项
         .flex-2 分值
         .flex-1.center 今日
-    .flex.gray.fz-26.bdt.item(v-for="item in items")
+    .flex.gray.fz-26.item(v-for="item in items")
         div {{item.title}}
         div
-            span.gray +{{item.point}}
-            span.light.fz-22 (每日上限{{item.point_max}})
-        .center.gray(:class="{'green': item.point_today}") {{'+' + item.point_today || 0}}
+            span.gray +{{item.point/100}}
+            span.light.fz-22 （每日上限{{item.point_max/100}}）
+        .center.gray(:class="{'green': item.point_today}") {{item.point_today > 0 ? ('+' + item.point_today/100) : 0}}
 </template>
 <script>
 import paging from 'paging'

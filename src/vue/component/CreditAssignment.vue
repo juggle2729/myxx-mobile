@@ -21,8 +21,8 @@
     .flex.gray.fz-26.item(v-for="item in items")
         div {{item.title}}
         div
-            span.gray {{item.point}}
-            span.light.fz-22 (上限{{item.point_max}})
+            span.gray {{item.point/100}}
+            span.light.fz-22 （上限{{item.point_max/100}}）
         .center.gray(:class="{'green': item.point_today == item.point_max}") {{item.point_today == item.point_max ? '已完成' : '未达成'}}
 </template>
 <script>
