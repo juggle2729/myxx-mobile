@@ -39,7 +39,7 @@
         img(:src="'no-comment.png' | qn")
         .mgt-32 暂无评论
 
-    deep-link(v-if="isPreview", label="下载美玉秀秀，参与评论互动")
+    deep-link(v-if="isPreview", label="打开美玉秀秀，参与评论互动")
 </template>
 <script>
 import List from 'component/List.vue'

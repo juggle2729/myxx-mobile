@@ -83,7 +83,7 @@
     .list
         product-card(v-for="item in items", :item="item")
 
-    deep-link(v-if="!items.hasMore", label="下载美玉秀秀，查看更多优质商品")
+    deep-link(v-if="!items.hasMore", label="打开美玉秀秀，查看更多优质商品")
 
     .footer.flex.bdt.fz-30.bg-white.gray
         icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')

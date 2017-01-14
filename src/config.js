@@ -19,7 +19,7 @@ let [api, img, video, download] = ((env='test') => {
         },
         download: {
             test: 'http://build.meiyuxiuxiu.net/',
-            prod: 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share',
+            prod: /android/.test(navigator.userAgent) ? 'https://o0xal1l6l.qnssl.com/jenkins-myxx-Android-latest.apk' : 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share',
             docker: 'http://build.meiyuxiuxiu.net/'
         }
     }

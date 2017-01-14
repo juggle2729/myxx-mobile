@@ -34,11 +34,13 @@
             line-height: 60px
             -webkit-box-flex: 1
             text-align: center
+    .topics-component
+        padding-top: 24px
 </style>
 <template lang="jade">
 .story-view.bg-white(v-if='!$loadingRouteData')
     .pd-32
-        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/0/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
         .flex.mgt-32
             avatar(:user='story.user')
             .name.mgl
@@ -60,8 +62,7 @@
 
     comment-list(type='tp', :id='story.post_id', :uid="story.user.id", v-ref:comments)
     .hr
-    template(v-if='story.categories')
-        topics(:topics='story.categories')
+    topics(v-if='story.categories', :topics='story.categories')
     general-suggestion
 </template>
 <script>

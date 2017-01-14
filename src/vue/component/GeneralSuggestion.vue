@@ -13,7 +13,7 @@
     .title.fz-26.gray 相关推荐
     topics(v-if='categories && categories.length', :topics="categories")
     card(v-for="item in items", :item="item")
-    deep-link(label="没找到感兴趣的？下载美玉秀秀看看吧！")
+    deep-link(label="没找到感兴趣的？打开美玉秀秀看看吧！")
 </template>
 <script>
 import Card from 'component/item/Card.vue'

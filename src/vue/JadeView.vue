@@ -155,7 +155,7 @@
             .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
             .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
             div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
-        .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/0/rotate/auto|imageView2/2/w/750')
+        .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
         .titles.bg-white
             .header
                 .title.fz-32 {{jade.title}}

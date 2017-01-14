@@ -42,7 +42,7 @@
                 span 关注问题
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
-    deep-link(label="下载美玉秀秀，发表你的观点")
+    deep-link(label="打开美玉秀秀，发表你的观点")
     .hr
 
     .result.bg-white
