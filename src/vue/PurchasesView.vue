@@ -1,9 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .purchases-view
-    .banner
-        width: 100%
-        display: block
     padding-bottom: 98px
     .purchase-btn
         position: fixed
@@ -15,7 +12,6 @@
 </style>
 <template lang="jade">
 .purchases-view
-    img.banner(:src="'purchase/banner.jpg' | qn", v-link="{name: 'bid-help-support'}")
     template(v-for="item in items")
         .hr
         purchase-item(:item="item")
