@@ -48,15 +48,15 @@
     .follow.flex.pdl(v-if="collection")
         avatar(:user="data.user", :size="50")
         .mgl.fz-26.gray.flex-1 {{data.user.nickname}} 添加至专辑
-    
+
     .header.flex(v-if="!collection")
         .flex-1.flex
             avatar(:user="data.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{data.user.nickname}}
-    
+
     .content.bg-white.mgb-24.pdh-20
         .fz-30.mgb-28.user-txt {{{data.content | content | input}}}
-        .pic.video(v-if="data.medias[0].media_type==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
+        .pic.video(v-if="lodash.get(data, 'medias.0.media_type')==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
             .activity.bg-red.white.fz-26(v-if="data.activity")
                 icon(name="fire")
                 span {{data.activity.name}}
@@ -67,7 +67,7 @@
             .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 1 && data.medias.length !== 3")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{data.medias.length}}
-    
+
     .interact.fz-26.flex.bdt.pdh-32
         icon-like(:target="data.post_id", type="tp", :active="data.liked", :count="data.like_count")
         icon-comment(:count="data.comment_count || data.comment", :id="data.post_id", type="tp")
@@ -93,7 +93,8 @@ export default {
         },
 
         data() {
-            return this.item.entry || this.item
+            const entry = this.item.entry || this.item
+            return _.isEmpty(entry) ? { medias: [], user: {} } : entry
         }
     }
 }

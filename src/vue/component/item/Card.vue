@@ -28,11 +28,11 @@
 <template lang="jade">
 .card-component.bg-white.pdr-32(v-link="{name: config.category[item.type], params: {id: item.entry.post_id || item.entry.id}}")
     div.pdt-28.mgl-32.bdt(v-if="morePics")
-        .fz-30.user-txt.line-clamp-2.mgb-24 {{item.entry.title || item.entry.description || item.entry.content | content | input}}
+        .fz-30.user-txt.line-clamp-2.mgb-24 {{{item.entry.title || item.entry.description || item.entry.content | content | input}}}
         div.flex
             .media.img(v-else, v-for="pic in pics", v-bg="pic", :class="{'mgl-4': $index > 0}")
         .dock.flex.fz-26.light
-            icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable") 
+            icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
             icon-like.pdr-28(v-else, :active="false", type="rt", :count="item.entry.like_count || item.entry.like", readonly=true)
             icon-comment.flex-1(:count="item.entry.comment_count", readonly=true)
             img.post(v-if="post", :src="'recommend/post.png' | qn")
@@ -41,7 +41,7 @@
             img(:src="'recommend/video.png' | qn")
         .media.img(v-else, v-bg="item.entry.picture || item.entry.medias[0].media")
         .desc.mgl.flex-1
-            .fz-30.user-txt.line-clamp-3 {{item.entry.content || item.entry.description || item.entry.title | content | input}}
+            .fz-30.user-txt.line-clamp-3 {{{item.entry.content || item.entry.description || item.entry.title | content | input}}}
             .flex.mgt.fz-26
                 icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
                 icon-like.pdr-28(v-else, :active="false", type="tp", :count="item.entry.like_count || item.entry.like", readonly=true)
@@ -51,7 +51,7 @@
 <script>
 export default {
     name: 'card',
-    
+
     computed: {
         post() {
             return this.item.type == 'rt'
@@ -70,7 +70,7 @@ export default {
             return _.get(this, 'item.entry.pictures.length') > 2 || _.get(this, 'item.entry.medias.length') > 2
         }
     },
-    
+
     props: {
         item: Object
     }

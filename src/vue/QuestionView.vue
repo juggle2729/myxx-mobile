@@ -61,11 +61,11 @@
                 span 关注问题
         .title.fz-34.bold.pdv-24.user-txt {{{question.description | content | input}}}
         .fz-30.gray.pdb-26.user-txt(v-if="question.remark") {{{question.remark | content | input}}}
-    .pictures.pdh-32.pdb-32.bg-white.scrollable(v-if="question.pictures.length")
+    .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     .bg-white.mgb-36
-        share-button(txt="下载美玉秀秀，发表你的观点")
-    
+        deep-link(label="下载美玉秀秀，发表你的观点")
+
     .results.bg-white
         .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results > 0 ? question.results.length : ''}}
         .result.bg-white(v-if="question.results.length", v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}, query: { qid: $route.params.id }}")
@@ -87,36 +87,34 @@
             img(:src="'question/no-answer.png' | qn")
             .mgt-32 暂无视频回答
         .hr(v-if="!question.results.length")
-    
+
     comment-list(type='jb', :id='question.post_id', :uid="question.user.id", v-ref:comments)
     .hr
-    
+
     .collection.pdh-32.fz-26.bg-white.flex(v-if="question.recommend_collection", v-link="{name: 'collection', params:{id: question.recommend_collection.id}}")
         img(:src="'recommend/collection.png' | qn")
         .pdl.flex-1.name.red {{question.recommend_collection.name}}
         icon.gray(name="enter")
     .hr
-    
+
     general-suggestion(:categories="question.categories")
 </template>
 <script>
 import shareable from 'shareable'
 import Topics from 'component/Topics.vue'
-import ShareButton from 'component/ShareButton.vue'
 import CommentList from 'component/CommentList.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'question-view',
-    
+
     mixins: [shareable],
-    
+
     components: {
         Topics,
-        ShareButton,
         CommentList,
         GeneralSuggestion
     },
-    
+
     data() {
         return {
             question: {}

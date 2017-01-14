@@ -20,8 +20,7 @@
 </style>
 <template lang="jade">
 .medal-view.pdt-48
-    img.center(:src="pic | qn") https://o0x80w5li.qnssl.com/medal/enterprise.png
-    //- img.center(src="https://o0x80w5li.qnssl.com/medal/enterprise.png")
+    img.center(:src="pic | qn")
     .name.flex.center.mgt-28.mgh-32
         .line.flex-1
         .fz-34.bold.mgh-28 {{current.name}}
@@ -76,11 +75,11 @@ export default {
         isAuthor() {
             return this.$route.name === 'author-medal'
         },
-        
+
         current() {
             return this.isAuthor ? author : identity
         },
-        
+
         pic() {
             return this.isAuthor ? (this.self.star_author ? 'medal/author.png' : 'medal/unstar.png') : (this.self.vip_flag ? `medal/${this.self.role}.png` : 'medal/unauthorized.png')
         }

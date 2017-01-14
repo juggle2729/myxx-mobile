@@ -18,12 +18,12 @@
                 width: 72px
         .dot
             margin: 0 10px
-        .download-btn
-            display: block
-            height: 60px
-            line-height: 60px
-            padding: 0 28px
-            border-radius: 8px
+        .deep-link
+            padding: 0
+            margin-bottom: 0
+            .btn
+                height: 60px
+                line-height: 60px
     #user
         z-index: 99
         position: fixed
@@ -40,7 +40,7 @@
 <template lang="jade">
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
-        .share-top.flex.bg-white(@click.stop="gotoDownload")
+        .share-top.flex.bg-white
             .logo.mgr
                 img(src="http://img.meiyuxiuxiu.com/static/logo.png", alt="美玉秀秀")
             .flex-1
@@ -49,8 +49,7 @@ div(:class="{'loading': loading}")
                     .fz-22.dot •
                     .slogan.fz-22 {{['jade','shop'].indexOf($route.name)===-1 ? '最大的和田玉互动社区' : '最大的和田玉线上交易平台'}}
                 .fz-22.gray.mgt-8 30万玉友的选择
-            //- a.download-btn.fz-30.white.bg-red(v-if="env.isIOSDeepLink", :href="path", target="_blank") 立即打开
-            .download-btn.fz-30.white.bg-red 免费下载
+            deep-link
         .share-top-placeholder
     router-view
     #user(v-if="env.isBrowser && env.isTest")
@@ -88,18 +87,11 @@ export default {
             }
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk)
             env.isShare = _.hasIn(this, '$route.query.channel')
-            env.IOSVersion = parseInt((ua.match(/\b[0-9]+_[0-9]+(?:_[0-9]+)?\b/)||[''])[0].replace(/_/g,'.'))
-            env.isIOSDeepLink = env.isIOS && (env.IOSVersion >= 9)
             if(env.isApp) {
                 env.version = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.')
                 console.log('version', env.version)
             }
             return env
-        },
-
-        path() {
-            this.deep = true
-            return this.env.isTest ? 'https://app.meiyuxiuxiu.com/story/70862' : location.href
         }
     },
     ready() {

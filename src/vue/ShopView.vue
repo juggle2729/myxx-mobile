@@ -1,6 +1,6 @@
 <style lang="stylus">
 .shop-view
-    padding-bottom: 134px
+    padding-bottom: 110px
     > header
         height: 460px
         background-size: cover
@@ -79,12 +79,12 @@
         icon.fz-20.light.mgb-16(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布
-   
+
     .list
         product-card(v-for="item in items", :item="item")
-    
-    share-button.mgt-20(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多优质商品")
-    
+
+    deep-link(v-if="!items.hasMore", label="下载美玉秀秀，查看更多优质商品")
+
     .footer.flex.bdt.fz-30.bg-white.gray
         icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
         icon-star.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
@@ -94,7 +94,6 @@
 import paging from 'paging'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import ShareButton from 'component/ShareButton.vue'
 import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'shop-view',
@@ -103,10 +102,9 @@ export default {
 
     components: {
         lv,
-        ShareButton,
         ProductCard
     },
-    
+
     data() {
         return {
             shop: {
@@ -121,7 +119,7 @@ export default {
                 path: 'mall/homepage/searches',
                 list: 'products',
                 params: {
-                    shop_id: this.$route.params.id, 
+                    shop_id: this.$route.params.id,
                     order_by: 'new'
                 }
             }

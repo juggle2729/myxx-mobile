@@ -39,17 +39,15 @@
         img(:src="'no-comment.png' | qn")
         .mgt-32 暂无评论
 
-    share-button.mgb-36(v-if="isPreview")
+    deep-link(v-if="isPreview", label="下载美玉秀秀，参与评论互动")
 </template>
 <script>
 import List from 'component/List.vue'
-import ShareButton from 'component/ShareButton.vue'
 export default {
     name: 'comment-list',
 
     components: {
-        comments: new List('Comment'),
-        ShareButton
+        comments: new List('Comment')
     },
 
     props: {

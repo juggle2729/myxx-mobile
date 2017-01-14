@@ -8,10 +8,8 @@
             width: 100%
             &:not(:last-child)
                 margin-bottom: 6px
-    .recommends > div
+    .recommends > div:not(.deep-link)
         margin: 0 0 20px 20px
-        &.share-button-component
-            margin: 20px 36px 0
     .tags
         padding: 0px 32px 24px
         font-size: 0
@@ -36,29 +34,25 @@
     .recommends.bg.pdt(v-if="related.length")
         .fz-26.gray 商品推荐
         product-card(v-for="item in related", :item="item")
-        share-button(v-if="env.isShare", txt="没找到感兴趣的，下载美玉秀秀看看吧！")
+        deep-link(v-if="env.isShare", label="没找到感兴趣的，下载美玉秀秀看看吧！")
 </template>
 <script>
-import ShareButton from 'component/ShareButton.vue'
 import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'JadeDetail',
 
+    components: {
+        ProductCard
+    },
+
     props: {
-        jade: {
-            type: Object
-        }
+        jade: Object
     },
 
     data() {
         return {
             related: []
         }
-    },
-
-    components: {
-        ProductCard,
-        ShareButton
     },
 
     ready() {

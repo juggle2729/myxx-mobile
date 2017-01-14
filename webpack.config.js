@@ -40,6 +40,9 @@ module.exports = {
     },
     babel: { // consider tree-shaking ?
         presets: ['es2015', 'stage-2']
+    },
+    stats: {
+      children: false
     }
 }
 

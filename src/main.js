@@ -2,6 +2,7 @@ require('fastclick').attach(document.body)
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
+import config from './config'
 import routes from './route'
 import directive from './directive'
 import mixin from './mixin/global'
@@ -63,15 +64,20 @@ router.beforeGo((from, to, app) => {
     return !interrupted
 })
 
-router.beforeEach(({from, to, next}) => {
-    // to.router.app.$el.classList.add('loading')
-    // 同一路由内，仅切换tab时，不调整滚动位置
-    if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-        window.scroll(0, 0)
+router.beforeEach(({from, to, next, abort}) => {
+    const universalLinkFailedAt = _.get(to, 'query.ulfa', 0)
+    if(Date.now() - universalLinkFailedAt < 10000) { // 如果页面是10秒内，由universal link触发失败而来，直接进入下载页面
+        abort()
+        location.href = config.download
+    } else {
+        // 同一路由内，仅切换tab时，不调整滚动位置
+        if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+            window.scroll(0, 0)
+        }
+        document.title = to.title || '美玉秀秀'
+        to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+        next()
     }
-    document.title = to.title || '美玉秀秀'
-    to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-    next()
 })
 
 router.alias({

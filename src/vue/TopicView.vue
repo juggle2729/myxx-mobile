@@ -6,30 +6,29 @@
             line-height: 72px
             border-radius: 8px
 </style>
-<template lang="pug">
-    .topic-view.bg.pdb-36
-        section.bg-white
-            .scrollable.mgl-32.bdb.pdv-24
-                .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
-            .flex.pdh-32.pdt-40
-                .fz-34.bold.flex-1 {{topics.name}}
-                .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
-                    icon(name="plus")
-                    span 关注话题
-            .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
+<template lang="jade">
+.topic-view.bg.pdb-36
+    section.bg-white
+        .scrollable.mgl-32.bdb.pdv-24
+            .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
+        .flex.pdh-32.pdt-40
+            .fz-34.bold.flex-1 {{topics.name}}
+            .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
+                icon(name="plus")
+                span 关注话题
+        .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
+    .hr
+    template(v-for="item in items")
+        component(:is="config.category[item.type]", keep-alive, :item="item")
         .hr
-        template(v-for="item in items")
-            component(:is="config.category[item.type]", keep-alive, :item="item")
-            .hr
-        share-button.mgt-16(v-if="!items.hasMore", txt="下载美玉秀秀，查看更多话题内容")
-        empty(v-if='items.isEmpty', title='暂无内容')
+    deep-link(v-if="!items.hasMore", label="下载美玉秀秀，查看更多话题内容")
+    empty(v-if='items.isEmpty', title='暂无内容')
 </template>
 <script>
 import paging from 'paging'
 import shareable from 'shareable'
 import story from 'component/item/Story.vue'
 import post from 'component/item/Post.vue'
-import ShareButton from 'component/ShareButton.vue'
 import question from 'component/item/Question.vue'
 export default {
     name: 'TopicView',
@@ -37,8 +36,7 @@ export default {
     components: {
         story,
         post,
-        question,
-        ShareButton
+        question
     },
     data() {
         return {

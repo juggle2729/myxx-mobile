@@ -42,8 +42,7 @@
                 span 关注问题
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
-    .bg-white.pdv-36
-        share-button(txt="下载美玉秀秀，发表你的观点")
+    deep-link(label="下载美玉秀秀，发表你的观点")
     .hr
 
     .result.bg-white
@@ -71,7 +70,6 @@
 import shareable from 'shareable'
 import Topics from 'component/Topics.vue'
 import CommentList from 'component/CommentList.vue'
-import ShareButton from 'component/ShareButton.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'answer-view',
@@ -81,7 +79,6 @@ export default {
     components: {
         Topics,
         CommentList,
-        ShareButton,
         GeneralSuggestion
     },
 

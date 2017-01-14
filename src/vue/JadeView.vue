@@ -131,7 +131,7 @@
         width: 100%
         z-index: 999
     .placeholder
-        height: 134px
+        height: 110px
     .offline
         position: absolute
         width: 100%
