@@ -81,8 +81,14 @@ export default {
         },
 
         pic() {
-            return this.isAuthor ? (this.self.star_author ? 'medal/author.png' : 'medal/unstar.png') : (this.self.vip_flag ? `medal/${this.self.role}.png` : 'medal/unauthorized.png')
+            if(this.self) {
+                return this.isAuthor ? (this.self.star_author ? 'medal/author.png' : 'medal/unstar.png') : (this.self.vip_flag ? `medal/${this.$root.user.role}.png` : 'medal/unauthorized.png')
+            }
         }
+    },
+
+    ready() {
+        this.action('user').then(user => this.$set('self', user))
     }
 }
 </script>

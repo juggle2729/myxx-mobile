@@ -6,6 +6,10 @@
         padding: 48px 40px 36px 36px
         .avatar[size='120']
             box-shadow: 0 0 0 4px rgba(136, 136, 136, 0.3)
+        img
+            display: block
+            height: 28px
+            width: 54px
     .medal
         img
             display: block
@@ -43,6 +47,7 @@
         .mgl-32.flex-1
             .flex.bdb.pdb
                 .fz-34.bold {{profile.nickname}}
+                img.mgl-8(:src="'profile/'+profile.level+'.png' | qn")
             .flex.pdt
                 .center.flex-1
                     .fz-30.mgb-14 {{profile.fans_count}}
@@ -60,9 +65,9 @@
             .flex(v-if="profile.vip_flag")
                 img(:src="'profile/' + profile.role + '.png' | qn")
                 .fz-26.gray.mgl-16 {{config.role[profile.role]}}认证{{'：'+profile.title}}
-            .flex.mgt(v-if="profile.level")
-                img(:src="'jb/' + profile.level + '.png' | qn")
-                .fz-26.gray.mgl-16 {{profile.level}}级鉴定师
+            .flex.mgt(v-if="profile.jianbao_level")
+                img(:src="'jb/' + profile.jianbao_level + '.png' | qn")
+                .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴定师
             .flex.mgt(v-if="profile.star_author")
                 img(:src="'medal/star_author.png' | qn")
                 .fz-26.gray.mgl-16 精华内容贡献者
