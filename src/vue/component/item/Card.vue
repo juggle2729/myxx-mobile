@@ -22,7 +22,7 @@
         height: 30px
         width: 78px
     [class^='icon-'], [class*=' icon-']
-        height: 1.4em
+        height: 1.3em
         width: @height
         color: #c6c6c6
         & + span

@@ -67,22 +67,23 @@
         deep-link(label="打开美玉秀秀，发表你的观点")
 
     .results.bg-white
-        .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results > 0 ? question.results.length : ''}}
-        .result.bg-white(v-if="question.results.length", v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}, query: { qid: $route.params.id }}")
-            .pdv-28.pdl-32.pdr.flex
-                .identify.bg(v-bg="result.identifier.portrait")
-                .identifier.mgl.flex-1
-                    .fz-30.bold.line-clamp-1 {{result.identifier.nickname}} 的回答
-                    .fz-26.gray.pdt {{result.identifier.title}}
-                    .fz-26.gray.pdt(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
-                .play.center(@click.stop="play(result.video)")
-                    img(:src="'question/play.png' | qn")
-                    .fz-22.mgt 播放视频
-            footer.flex.fz-26.bdt.pdh-32
-                icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
-                icon-comment.flex-1(:count="result.comment_count", :id="result.id", type="jd")
-                .light {{result.click_count}}次播放
-            .hr
+        .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results>0 ? question.results.length : ''}}
+        template(v-if="question.results.length")
+            .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}, query: { qid: $route.params.id }}")
+                .pdv-28.pdl-32.pdr.flex
+                    .identify.bg(v-bg="result.identifier.portrait")
+                    .identifier.mgl.flex-1
+                        .fz-30.bold.line-clamp-1 {{result.identifier.nickname}} 的回答
+                        .fz-26.gray.pdt {{result.identifier.title}}
+                        .fz-26.gray.pdt(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value&& '估价为' + config.jdPrice[result.value]}}
+                    .play.center(@click.stop="play(result.video)")
+                        img(:src="'question/play.png' | qn")
+                        .fz-22.mgt 播放视频
+                footer.flex.fz-26.bdt.pdh-32
+                    icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd", :recognition="true")
+                    icon-comment.flex-1.mgl(:count="result.comment_count", :id="result.id", type="jd")
+                    .light {{result.click_count}}次播放
+                .hr
         .center.fz-26.pdt-48.pdb-32.light.no-answer(v-if="!question.results.length")
             img(:src="'question/no-answer.png' | qn")
             .mgt-32 暂无视频回答

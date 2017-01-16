@@ -8,9 +8,6 @@
 <template lang="pug">
 .user-story.bg
     .hr
-    .bg-white.bdb.pdh.flex.gray.fz-26.gray.sum
-        .mgr-50 内容数 {{$parent.profile.post_count}}
-        div 获赞数 {{$parent.profile.post_like_count}}
     template(v-for="item in items")
         component(:is="config.category[item.type]", keep-alive, :item="item")
         .hr

@@ -49,7 +49,7 @@
             margin-right: 66px
 </style>
 <template lang="jade">
-.answer-item.bg-white(v-link="{name:'question', params: {id: item.entry.jianbao.post_id}}")
+.answer-item.bg-white(v-link="{name:'answer', params: {id: item.entry.id}}")
     .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.identifier", :size="50")
         .mgl.fz-26.gray.flex-1 {{item.entry.identifier.nickname}} 添加至专辑

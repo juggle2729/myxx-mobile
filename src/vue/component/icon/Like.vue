@@ -6,7 +6,7 @@
 </style>
 <template lang="jade">
 .like-icon.fz-26.gray(@click="like", :class="{'red': active}")
-    icon(:name="active ? 'like-solid' : 'like'")
+    icon(:name="name")
     span {{count || zero}}
 </template>
 <script>
@@ -22,6 +22,10 @@ export default {
         target: [Number],
         type: [Number],
         readonly: [Boolean],
+        recognition: {
+            type: Boolean,
+            default: () => false
+        }, // 是否显示为认同icon
         zero: {
             type: String,
             default: () => 0
@@ -35,6 +39,10 @@ export default {
                 throw Error('缺少参数')
             }
             return `users/target/${this.target}/type/${this.type}/like`
+        },
+
+        name() {
+            return this.recognition ? (this.active ? 'recognition-solid' : 'recognition') : (this.active ? 'like-solid' : 'like')
         }
     },
     methods: {

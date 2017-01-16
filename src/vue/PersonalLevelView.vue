@@ -5,7 +5,7 @@
 </style>
 <template lang="jade">
 .personal-level-view.bg-white.fz-30
-    img(:src="'user/level.png' | qn")
+    img(:src="'user/personal_level.png' | qn")
 </template>
 <script>
 export default {

@@ -60,7 +60,7 @@
         .fz-30.pdh-32.pdb-32(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
 
         footer.flex.fz-26.bdt
-            icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd")
+            icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd", :recognition="true")
             icon-comment.bdl(:count="result.comment_count", :id="result.id", type="jd")
         .hr
 

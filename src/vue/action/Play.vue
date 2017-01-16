@@ -20,7 +20,7 @@
 </style>
 <template lang="jade">
 .play-action(@click="close")
-    video(:src="config.video + params.id", controls, @ended="close", @webkitendfullscreen="close")
+    video(:src="config.video + params.id", controls, @webkitendfullscreen="close")
 </template>
 <script>
 export default {

@@ -9,7 +9,7 @@
             &:not(:last-child)
                 margin-bottom: 6px
     .recommends > div:not(.deep-link)
-        margin: 0 0 20px 20px
+        margin: 0 0 20px 15px
     .tags
         padding: 0px 32px 24px
         font-size: 0

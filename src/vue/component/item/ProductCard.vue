@@ -1,9 +1,8 @@
 <style lang="stylus">
 .product-card
     display: inline-block
-    width: 345px
+    width: 47%
     .media
-        width: 345px
         height: 345px
         position: relative
         .mark
@@ -15,7 +14,7 @@
             padding: 0 28px
             background-color: rgba(159, 42, 240, .8)
         .sold
-            width: 345px
+            // width: 345px
             height: 345px
             position: relative
             background-color: rgba(0, 0, 0, .6)

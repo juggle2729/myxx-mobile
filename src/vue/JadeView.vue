@@ -162,7 +162,7 @@
                 .flex
                     p.red.fz-44.flex-1 {{jade.price | price}}
             .guarantee(@click="guarantee")
-                img(:src="'jade/terms.png' | qn")
+                img(:src="'jade/term.png' | qn")
                 icon.fz-26.red(name="enter")
         .hr
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")

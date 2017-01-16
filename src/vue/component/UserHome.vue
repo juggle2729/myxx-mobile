@@ -15,6 +15,9 @@
         .detail
             .name
                 width: 380px
+            .icon-enter
+                width: 1em
+                height: 1em
     .works
         .medias
             position: relative

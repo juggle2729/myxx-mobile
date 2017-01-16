@@ -1,12 +1,12 @@
 <style lang="stylus">
 .credit-active
     .item
-        height: 80px
-        line-height: 80px
+        height: 90px
+        line-height: 90px
         &:not(:first-child)
             border-top: 1px dashed #efefef
         >div:first-child
-            width: 50%
+            width: 46%
         >div:nth-child(2)
             width: 34%
         >div:last-child
@@ -19,11 +19,11 @@
         .flex-2 分值
         .flex-1.center 今日
     .flex.gray.fz-26.item(v-for="item in items")
-        div {{item.title}}
-        div
-            span.gray +{{item.point/100}}
+        .user-txt.mgr {{item.title}}
+        .user-txt
+            span.gray {{item.point/100}}
             span.light.fz-22 （每日上限{{item.point_max/100}}）
-        .center.gray(:class="{'green': item.point_today}") {{item.point_today > 0 ? ('+' + item.point_today/100) : 0}}
+        .center.gray(:class="{'green': item.point_today}") {{item.point_today/100}}
 </template>
 <script>
 import paging from 'paging'

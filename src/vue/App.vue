@@ -10,7 +10,7 @@
         height: 112px
         width: 100%
         padding: 0 24px
-        box-shadow: 0 0 20px 0 #c6c6c6;
+        box-shadow: 0 0 30px 0 rgba(0,0,0,.2);
         .logo
             line-height: 0
             img

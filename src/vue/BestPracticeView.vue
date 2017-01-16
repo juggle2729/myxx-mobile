@@ -17,6 +17,9 @@
         line-height: 86px
         margin-left: 32px
         padding-right: 32px
+        .icon-enter
+            height: 1em
+            width: 1em
 </style>
 <template lang="jade">
 .best-practice-view.bg
@@ -24,7 +27,7 @@
         .title.flex.fz-30.gray.bdb
             .line.bg-red
             div {{item.title}}
-        .item.flex.fz-28.bdb(v-for='problem in item.problems', v-link="{name:'post', params: {id: problem.link}}")
+        .item.flex.fz-28.bdb(v-for='problem in item.problems', v-link="{name:'post', params: {id: problem.id}}")
             .flex-1 {{problem.title}}
             icon.gray(name="enter")
 </template>
@@ -35,19 +38,19 @@ const items = [
         problems: [
             {
                 title: '如何发布内容(求鉴宝、图文视频)？',
-                link: ''
+                id: '79864'
             }, {
                 title: '如何发布长图文？',
-                link: '77563'
+                id: '77563'
             }, {
                 title: '如何购买美玉？',
-                link: ''
+                id: '79851'
             }, {
                 title: '鉴宝师如何鉴定别人的宝贝？',
-                link: '77560'
+                id: '77560'
             }, {
                 title: '商户或工作室如何发布商品？',
-                link: ''
+                id: '80050'
             }
         ]
     }, {
@@ -55,19 +58,19 @@ const items = [
         problems: [
             {
                 title: '如何让鉴宝师帮我鉴定？',
-                link: ''
+                id: '79868'
             }, {
                 title: '商户或工作室如何入驻？',
-                link: ''
+                id: '80045'
             }, {
                 title: '商铺或工作室如何提升店铺等级？',
-                link: ''
+                id: '80051'
             }, {
                 title: '为什么线下交易容易出现问题？',
-                link: ''
+                id: '80066'
             }, {
                 title: '美玉秀秀担保交易如何担保？',
-                link: ''
+                id: '79850'
             }
         ]
     }
