@@ -1,7 +1,7 @@
 <style lang="stylus">
 .follow-icon
     border-radius: 12px
-    padding: 0 12px
+    padding: 0 8px
     background-color: transparent
     height: 60px
     line-height: 58px
@@ -21,7 +21,7 @@
 <template lang="jade">
 deep-link.has-icon.follow-icon.fz-26.bd-red.gray.center(v-if="env.isShare")
     icon(name="plus")
-    span {{follow ? '已关注' : '关注'}}
+    span.red 关注
 .follow-icon.fz-26.gray.center(v-else, @click.stop="toggle", :class="{'active': !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
     icon(v-if="!follow", name="plus")
     span(:class="{'red': !follow}") {{follow ? '已关注' : '关注'}}

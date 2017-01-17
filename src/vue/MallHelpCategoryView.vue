@@ -34,7 +34,7 @@ export default {
                         title: '美玉秀秀服务宝是如何保障交易的?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=2&sn=e586d5c1b173e3ff10ae9129f0264001'
                     }, {
-                        title: '"五天退货"支持范围、处理流程及条件?',
+                        title: '"三天退货"支持范围、处理流程及条件?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=3&sn=ed9941f5caafac854dfbc95bf717adbf'
                     }, {
                         title: '付款担保是什么?',
@@ -142,7 +142,7 @@ export default {
                         title: '如何申请退款?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000007&idx=3&sn=465699fa08af8044880a33f89e33c12a'
                     }, {
-                        title: '超过5天退货时间了，还能申请退货吗?',
+                        title: '超过3天退货时间了，还能申请退货吗?',
                         url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000007&idx=4&sn=df13beb5e919c6458f8af09a402b99b2'
                     }, {
                         title: '申请退款后，钱款退回到哪里?',

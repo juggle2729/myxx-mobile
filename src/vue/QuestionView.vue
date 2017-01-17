@@ -3,6 +3,10 @@
     min-height: 100%
     header
         padding: 32px 32px 0 32px
+    .user img
+        display: block
+        height: 30px
+        width: 30px
     .pictures
         .pic
             width: 256px
@@ -53,7 +57,9 @@
         .user.flex
             avatar(:user="question.user")
             .mgl.flex-1
-                .fz-30 {{question.user.name}}
+                .flex
+                    .fz-30 {{question.user.name}}
+                    img.mgl-8(v-if="question.user.vip_flag", :src="'profile/'+question.user.role+'.png' | qn")
                 .mgt-14.fz-22.light {{question.click_count}}人浏览
             deep-link.has-icon.red.fz-26.bdl.pdl-32.pdv-12
                 icon(name="plus")

@@ -15,7 +15,7 @@
         .flex
             .fz-30 {{item.nickname}}
             img.mgl-8(v-if="item.vip_flag", :src="'profile/'+item.role+'.png' | qn")
-        .fz-26.gray(:class="{'mgt-16': item.title}") {{item.title}}
+        .fz-26.gray.line-clamp(:class="{'mgt-16': item.title}") {{item.title}}
     icon-follow(:follow='item.followed', :target='item.id', :has-border="true")
 </template>
 <script>

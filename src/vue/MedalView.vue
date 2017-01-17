@@ -1,6 +1,6 @@
 <style lang="stylus">
 .medal-view
-    img
+    img.pic
         display: block
         margin: 0 auto
         height: 160px
@@ -12,22 +12,22 @@
             height: 1px
     .instruction
         .dot
+            display: block
             height: 10px
             width: 10px
-            border-radius: 50%
         .content
             padding: 0 32px 0 54px
 </style>
 <template lang="jade">
 .medal-view.pdt-48
-    img.center(:src="pic | qn")
+    img.pic.center(:src="(pic || 'placeholder/img.png') | qn")
     .name.flex.center.mgt-28.mgh-32
         .line.flex-1
         .fz-34.bold.mgh-28 {{current.name}}
         .line.flex-1
     .instruction.mgt-36(v-for="item in current.items")
         .flex.mgh-32.mgb
-            .dot.bg-red.mgr-12
+            img.dot.mgr-12(:src="'red_dot.png' | qn")
             .fz-30.bold {{item.title}}
         .content.fz-26.gray.user-txt {{{item.content | input}}}
 </template>

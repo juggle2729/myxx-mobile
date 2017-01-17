@@ -17,16 +17,17 @@
     .dock
         height: 66px
         line-height: 66px
+    .dock, .desc
+        [class^='icon-'], [class*=' icon-']
+            height: 1.3em
+            width: @height
+            color: #c6c6c6
+            & + span
+                color: #c6c6c6
     .post
         display: block
         height: 30px
         width: 78px
-    [class^='icon-'], [class*=' icon-']
-        height: 1.3em
-        width: @height
-        color: #c6c6c6
-        & + span
-            color: #c6c6c6
 </style>
 <template lang="jade">
 .card-component.bg-white.pdr-32(v-link="{name: config.category[item.type], params: {id: item.entry.post_id || item.entry.id}}")
@@ -45,7 +46,7 @@
         .media.img(v-else, v-bg="item.entry.picture || item.entry.medias[0].media")
         .desc.mgl.flex-1
             .fz-30.user-txt.line-clamp-3 {{{item.entry.content || item.entry.description || item.entry.title | content | input}}}
-            .flex.mgt.fz-26
+            .flex.mgt-12.fz-26
                 icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
                 icon-like(v-else, :count="item.entry.like_count || item.entry.like")
                 icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)

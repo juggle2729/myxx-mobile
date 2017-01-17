@@ -71,7 +71,7 @@
             .flex
                 div {{shop.owner.nickname}}
                 img.mgl-8(v-if="shop.owner.vip_flag", :src="'profile/'+shop.owner.role+'.png' | qn")
-            p.mgt-12.gray {{shop.owner.title || config.role[shop.owner.role]}}
+            p.mgt-12.gray.line-clamp {{shop.owner.title || config.role[shop.owner.role]}}
         icon.fz-20.light.mgb-16(name="enter")
     .hr
     .title.fz-26.gray.center.bg-white 新品发布

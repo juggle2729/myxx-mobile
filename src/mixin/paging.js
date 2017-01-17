@@ -47,7 +47,7 @@ export default {
                         _.merge(this.items, {
                             total: data.total,
                             cursor: data.cursor,
-                            hasMore: items.length === opts.limit && this.items.length < (data.total || 999999),
+                            hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
                 });

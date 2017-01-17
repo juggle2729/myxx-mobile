@@ -458,7 +458,7 @@ export default {
         }
     },
 
-    '/help/best-practice': {
+    '/best-practice': {
         name: 'best-practice',
         title: '玩转美玉秀秀',
         component(resolve) {

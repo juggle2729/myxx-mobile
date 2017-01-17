@@ -9,6 +9,9 @@
             display: block
             height: 28px
             width: 54px
+            &.large
+                height: 28px
+                width: 66px
         .center
             margin-right: 88px
     .medal
@@ -35,8 +38,9 @@
         > div
             -webkit-box-flex: 1
             text-align: center
-        .follow-icon, .share-icon
-            font-size: 30px
+        .icon-enter
+            height: 30px
+            width: 30px
         .button
             border-radius: 6px
             line-height: 72px
@@ -50,7 +54,7 @@
         .mgl-32.flex-1
             .flex.bdb.pdb
                 .fz-34.bold {{profile.nickname}}
-                img.mgl-8(:src="'profile/'+profile.level+'.png' | qn")
+                img.mgl-8(:src="'profile/'+profile.level+'.png' | qn", :class="{'large': profile.level > 9}")
             .flex.pdt
                 .center
                     .fz-30.mgb-14 {{profile.fans_count}}
@@ -67,10 +71,10 @@
      .medal.bg-white.pdh-40.pdb-48
             .flex(v-if="profile.vip_flag")
                 img(:src="'profile/' + profile.role + '.png' | qn")
-                .fz-26.gray.mgl-16 {{config.role[profile.role]}}认证{{'：'+profile.title}}
+                .fz-26.gray.mgl-16.line-clamp.flex-1 {{config.role[profile.role]}}认证{{'：'+profile.title}}
             .flex.pdt(v-if="profile.jianbao_level")
                 img(:src="'jb/' + profile.jianbao_level + '.png' | qn")
-                .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴定师
+                .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴宝师
             .flex.pdt(v-if="profile.star_author")
                 img(:src="'medal/star_author.png' | qn")
                 .fz-26.gray.mgl-16 精华内容贡献者
@@ -79,7 +83,7 @@
     .footer.flex.bdt.bg-white.fz-30(v-if='!isSelf')
         deep-link.has-icon.fz-30
             icon(name="plus")
-            span 关注
+            span.red 关注
         .button.mgr.bg-red.white(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
             span 进入{{(profile.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")

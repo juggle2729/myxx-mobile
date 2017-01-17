@@ -80,8 +80,8 @@
         template(v-for="item in items")
             component(:is="config.category[item.type]", keep-alive, :item="item")
             .hr
-        deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多专辑内容
     empty(v-if="items.isEmpty")
+    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多专辑内容
 </template>
 <script>
 import paging from 'paging'

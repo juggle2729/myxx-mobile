@@ -2,11 +2,10 @@
 .jade-problem
     .problem
         padding: 32px
-        .bg-red
-            height: 8px
-            width: 8px
-            border-radius: 50%
-            margin-right: 12px
+        img
+            display: block
+            height: 10px
+            width: 10px
         .desc
             line-height: 1.5
             margin: 20px 0 50px 0
@@ -20,21 +19,21 @@
 .jade-problem.bg
     .bg-white.problem
         .flex
-            .bg-red
+            img.mgr-12(:src="'red_dot.png' | qn")
             .fz-30 担保交易
-        .desc.gray.fz-30 顾客付款后，所付钱款由美玉秀秀平台暂时保管，顾客收到商品后，点击确认收货，且在签收之日起5日内没有申请退货，钱款才会转移给商家。
+        .desc.gray.fz-30 顾客付款后，所付钱款由美玉秀秀平台暂时保管，顾客收到商品后，点击确认收货，且在签收之日起3日内没有申请退货，钱款才会转移给商家。
         .flex
-            .bg-red
+            img.mgr-12(:src="'red_dot.png' | qn")
             .fz-30 物流和验货
         .desc.gray.fz-30
             | 1. 商品的配送由商家负责，物流统一为顺丰速运并且保价运输。
             br
             |             2. 顾客收到商品后，请务必当面验货，检查所购商品有无破损，是否和平台描述一致，如商品有严重破损或其他明显质量问题，请拍照记录并拒绝签收。
         .flex
-            .bg-red
-            .fz-30 5天退货
+            img.mgr-12(:src="'red_dot.png' | qn")
+            .fz-30 3天退货
         .desc.gray.fz-30
-            | 1. 自签收之日起5日内，商品无损坏且不影响二次销售的，商家承诺为顾客退货。
+            | 1. 自签收之日起3日内，商品无损坏且不影响二次销售的，商家承诺为顾客退货。
             br
             |             2. 请您在退货时务必使用顺丰速运，并且选择保价的方式配送。
             br

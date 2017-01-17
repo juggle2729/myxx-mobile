@@ -4,7 +4,6 @@
         padding-left: 32px
         ul > li
             padding: 26px 0
-            border-bottom: 1px solid #eee
         .label
             line-height: 1.5
             width: 178px

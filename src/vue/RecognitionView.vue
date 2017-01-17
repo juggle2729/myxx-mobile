@@ -3,7 +3,7 @@
     .dot
         height: 10px
         width: 10px
-        border-radius: 50%
+        display: block
     .content
         padding: 0 32px 0 54px
 </style>
@@ -11,7 +11,7 @@
 .recognition-view.bg-whtie
     .mgt-36(v-for="item in items")
         .flex.mgh-32.mgb
-            .dot.bg-red.mgr-12
+            img.dot.mgr-12(:src="'red_dot.png' | qn")
             .fz-30.bold {{item.title}}
         .content.fz-26.gray.user-txt {{{item.content | input}}}
 </template>

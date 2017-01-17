@@ -71,7 +71,7 @@ export default {
                     title: '为什么一定要当面验货?',
                     url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000006&idx=1&sn=400115e261bab073565fc180157c91be'
                 }, {
-                    title: '"五天退货"支持范围、处理流程及条件',
+                    title: '"三天退货"支持范围、处理流程及条件',
                     url: 'http://mp.weixin.qq.com/s?__biz=MzI3MjMyODIzOQ==&mid=100000003&idx=3&sn=ed9941f5caafac854dfbc95bf717adbf'
                 }, {
                     title: '商城商品的品质有保证吗?',
