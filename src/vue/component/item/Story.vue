@@ -69,7 +69,7 @@
                 div {{data.medias.length}}
 
     .interact.fz-26.flex.bdt.pdh-32
-        icon-like(:target="data.post_id", type="tp", :active="data.liked", :count="data.like_count")
+        icon-like(:active="data.liked", :count="data.like_count")
         icon-comment(:count="data.comment_count || data.comment", :id="data.post_id", type="tp")
 </template>
 <script>

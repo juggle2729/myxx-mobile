@@ -51,12 +51,6 @@ export default {
                     label: '求购竞标列表',
                     href: '/purchases'
                 }, {
-                    label: '拍卖专区',
-                    href: '/auctions'
-                }, {
-                    label: '鉴宝师排行',
-                    href: '/top-master'
-                }, {
                     label: '大额支付',
                     href: '/pay-offline/160808170534035573'
                 }, {

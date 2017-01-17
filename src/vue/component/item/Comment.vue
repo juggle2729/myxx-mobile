@@ -31,7 +31,7 @@
                         .fz-26.gray {{item.reply_from.name}}
                         img.mgl-8.vip(v-if="item.reply_from.vip_flag", :src="'profile/'+item.reply_from.role+'.png' | qn")
                     .fz-22.light.mgt-12 {{item.create_at | moment}}
-                icon-like(v-if="$route.name === 'comments'", :target='item.id', type='cm', :count='item.like_count', :active='item.liked', zero='')
+                icon-like(v-if="$route.name === 'comments'", :count='item.like_count', :active='item.liked', zero='')
             .fz-30.content.user-txt {{{content | input}}}
         .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment", @click.stop="$dispatch(((self && self.id==item.reply_comment.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item.reply_comment)")
             .reply.user-txt

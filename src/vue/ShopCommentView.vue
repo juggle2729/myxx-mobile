@@ -1,5 +1,5 @@
 <style lang="stylus">
-.user-comment-view
+.shop-comment-view
     padding-top: 100px
     .tabs
         position: fixed
@@ -44,7 +44,7 @@
                 line-height: 1.2
 </style>
 <template lang="jade">
-.user-comment-view.bg
+.shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
     .item.bdb.fz-30.bg-white(v-for="item in tab.items")
@@ -61,7 +61,7 @@
 </template>
 <script>
 export default {
-    name: 'UserCommentView',
+    name: 'shop-comment-view',
 
     data() {
         return {

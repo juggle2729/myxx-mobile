@@ -48,10 +48,6 @@
         width: 100%
         position: fixed
         bottom: 0
-        [class^='icon-'], [class*=' icon-']
-            font-size: 30px
-            & + span
-                font-size: 30px
 </style>
 <template lang="jade">
 .shop-view.bg(v-if='!$loadingRouteData')
@@ -83,12 +79,12 @@
     .list
         product-card(v-for="item in items", :item="item")
 
-    deep-link(v-if="!items.hasMore", label="打开美玉秀秀，查看更多优质商品")
+    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多优质商品
 
     .footer.flex.bdt.fz-30.bg-white.gray
-        icon-chat.flex-1.center(:id='shop.owner.id', :name='shop.owner.nickname')
-        icon-star.flex-1.center.bdh(:id='shop.id', type='sh', :active='shop.is_faved')
-        icon-share.flex-1.center
+        deep-link.has-icon.flex-1.fz-30
+            icon(name="star")
+            span 收藏
 </template>
 <script>
 import paging from 'paging'

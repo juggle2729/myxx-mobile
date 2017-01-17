@@ -1,5 +1,4 @@
 <style lang="stylus">
-@import '~style/partials/var'
 .question-item
     .follow
         height: 90px
@@ -22,7 +21,7 @@
         position: relative
         background-size: cover
         background-position: center
-        background-image: url($qn + 'placeholder/img.png')
+        background-image: url('//o0x80w5li.qnssl.com/placeholder/img.png')
     .pic-more
         padding-top: 66%
         background-size: 65.8% 100%, 34% 49.5%, 34% 50%
@@ -50,7 +49,7 @@
         .answer-icon
             margin-right: 66px
 </style>
-<template lang="pug">
+<template lang="jade">
 .question-item.bg-white(v-link="{name: 'question', params: {id: item.entry.post_id}}")
     .follow.flex.pdl(v-if="follow || collection")
         avatar(:user="user", :size="50")
@@ -60,7 +59,7 @@
         .flex-1.flex
             avatar(:user="item.entry.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.entry.user.nickname}}
-    
+
     .pdh
         .question.pdb.flex(:class="{'pdt': !follow && !collection}")
             img.qs(:src="'question.png' | qn")
@@ -69,7 +68,7 @@
             .more.white.fz-30.flex.pdh-12(v-if="item.entry.pictures.length > 1 && item.entry.pictures.length !== 3")
                 img.mgr-8(:src="'pic.png' | qn")
                 div {{item.entry.pictures.length}}
-    
+
     .dock.flex.fz-26.bdt.pdh-32.gray
         icon-answer(:count="item.entry.status", :identifiable="item.entry.identifiable")
         icon-comment(:count="item.entry.comment_count", :id="item.entry.post_id", type="jb")
@@ -86,11 +85,11 @@ export default {
         user() {
             return this.$parent.$parent.profile
         },
-        
+
         follow() {
             return _.get(this, 'item.event.action') === 'us_fw_jb'
         },
-        
+
         collection() {
             return _.get(this, 'item.event.action') === 'us_add_cl_obj'
         },

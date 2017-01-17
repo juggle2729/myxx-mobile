@@ -3,16 +3,21 @@
     display: block
     text-align: center
     font-size: 0
-    padding: 20px 32px
-    .btn
-        display: block
-        font-size: 30px
-        height: 80px
-        line-height: 80px
-        padding: 0 28px
-        border-radius: 8px
-        color: white
-        background-color: #CC3F4F
+    &.has-icon
+        .btn
+            display: block
+            color: #888888
+    &:not(.has-icon)
+        padding: 20px 32px
+        .btn
+            display: block
+            font-size: 30px
+            height: 80px
+            line-height: 80px
+            padding: 0 28px
+            border-radius: 8px
+            color: white
+            background-color: #CC3F4F
     .backdrop
         position: fixed
         top: 0
@@ -20,7 +25,8 @@
         right: 0
         bottom: 0
         z-index: 999
-        background: white url('//o0x80w5li.qnssl.com/open-in-browser-android.png') no-repeat center
+        background: white url('//o0x80w5li.qnssl.com/open-in-browser-android.png') no-repeat
+        background-position: top right
         background-size: 80%
         transition: transform .5s ease
         transform: translate3d(0, -1999px, 0)
@@ -28,14 +34,16 @@
             transform: translate3d(0, 0, 0)
 </style>
 <template lang="jade">
-.deep-link(v-if="env.isBrowser")
-    .btn(@click="myxx") {{label}}
-template(v-else)
-    a.deep-link(v-if="env.isIOS", :href="href", target="_blank")
-        .btn {{label}}
-    .deep-link(v-else)
-        .btn(@click="backdrop=true") {{label}}
-        .backdrop(@click="backdrop=false", :class="{show: backdrop}")
+.deep-link
+    .btn(v-if="env.isBrowser", @click="myxx")
+        slot 立即打开
+    template(v-else)
+        a.btn(v-if="env.isIOS", :href="href", target="_blank")
+            slot 立即打开
+        template(v-else)
+            .btn(@click="backdrop=true")
+                slot 立即打开
+            .backdrop(@click="backdrop=false", :class="{show: backdrop}")
 </template>
 <script>
 const getNativeLink = (() => {
@@ -47,7 +55,8 @@ const getNativeLink = (() => {
         collection: 'home/album',
         activity: 'home/category',
         user: 'user/homepage',
-        shop: 'user/shop'
+        shop: 'user/shop',
+        jade: 'mall/tab'
     }
     return (route) => {
         let schema = _.get(SCHEMA, route.name)
@@ -68,26 +77,10 @@ export default {
         }
     },
 
-    props: {
-        label: {
-            type: String,
-            default() {
-                return '立即打开'
-            }
-        },
-
-        path: {
-            type: String,
-            default() {
-                return location.pathname
-            }
-        }
-    },
-
     computed: {
         href() {
             const hasUniversalLinkSupport = this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
-            return hasUniversalLinkSupport ? this.path + '?ulfa=' + Date.now() : this.config.download
+            return hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
         }
     },
 

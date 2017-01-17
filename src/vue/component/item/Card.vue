@@ -36,8 +36,8 @@
             .media.img(v-else, v-for="pic in pics", v-bg="pic", :class="{'mgl-4': $index > 0}")
         .dock.flex.fz-26.light
             icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
-            icon-like.pdr-28(v-else, :active="false", type="rt", :count="item.entry.like_count || item.entry.like", readonly=true)
-            icon-comment.flex-1(:count="item.entry.comment_count", readonly=true)
+            icon-like(v-else, :active="false", :count="item.entry.like_count || item.entry.like")
+            icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
             img.post(v-if="post", :src="'recommend/post.png' | qn")
     div.pdv-28.mgl-32.bdt.flex(v-else)
         .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/7/rotate/auto|imageView2/2/w/320")
@@ -47,8 +47,8 @@
             .fz-30.user-txt.line-clamp-3 {{{item.entry.content || item.entry.description || item.entry.title | content | input}}}
             .flex.mgt.fz-26
                 icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
-                icon-like.pdr-28(v-else, :active="false", type="tp", :count="item.entry.like_count || item.entry.like", readonly=true)
-                icon-comment.flex-1(:count="item.entry.comment_count", readonly=true)
+                icon-like(v-else, :count="item.entry.like_count || item.entry.like")
+                icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
                 img.post(v-if="post", :src="'recommend/post.png' | qn")
 </template>
 <script>

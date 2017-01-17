@@ -1,6 +1,5 @@
 <style lang="stylus">
 .question-view
-    // background-image: linear-gradient(top, white 600px, #efefef 0)
     min-height: 100%
     header
         padding: 32px 32px 0 32px
@@ -56,18 +55,18 @@
             .mgl.flex-1
                 .fz-30 {{question.user.name}}
                 .mgt-14.fz-22.light {{question.click_count}}人浏览
-            .flex.red.fz-26.bdl.pdl-32.pdv-12(@click="gotoDownload")
+            deep-link.has-icon.red.fz-26.bdl.pdl-32.pdv-12
                 icon(name="plus")
-                span 关注问题
+                span.red 关注问题
         .title.fz-34.bold.pdv-24.user-txt {{{question.description | content | input}}}
         .fz-30.gray.pdb-26.user-txt(v-if="question.remark") {{{question.remark | content | input}}}
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
     .bg-white.mgb-36
-        deep-link(label="打开美玉秀秀，发表你的观点")
+        deep-link 打开美玉秀秀，发表你的观点
 
     .results.bg-white
-        .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results>0 ? question.results.length : ''}}
+        .num.fz-26.gray.bg-white.mgl-32.bdb 视频回答&nbsp;{{question.results > 0 ? question.results.length : ''}}
         template(v-if="question.results.length")
             .result.bg-white(v-for="result in question.results", v-link="{name: 'answer', params: {id: result.id}, query: { qid: $route.params.id }}")
                 .pdv-28.pdl-32.pdr.flex
@@ -75,12 +74,12 @@
                     .identifier.mgl.flex-1
                         .fz-30.bold.line-clamp-1 {{result.identifier.nickname}} 的回答
                         .fz-26.gray.pdt {{result.identifier.title}}
-                        .fz-26.gray.pdt(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value&& '估价为' + config.jdPrice[result.value]}}
+                        .fz-26.gray.pdt(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
                     .play.center(@click.stop="play(result.video)")
                         img(:src="'question/play.png' | qn")
                         .fz-22.mgt 播放视频
                 footer.flex.fz-26.bdt.pdh-32
-                    icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd", :recognition="true")
+                    icon-like(:active='result.liked', :count='result.like_count', :recognition="true")
                     icon-comment.flex-1.mgl(:count="result.comment_count", :id="result.id", type="jd")
                     .light {{result.click_count}}次播放
                 .hr
@@ -89,7 +88,7 @@
             .mgt-32 暂无视频回答
         .hr(v-if="!question.results.length")
 
-    comment-list(type='jb', :id='question.post_id', :uid="question.user.id", v-ref:comments)
+    comment-list(type='jb', :id='question.post_id')
     .hr
 
     .collection.pdh-32.fz-26.bg-white.flex(v-if="question.recommend_collection", v-link="{name: 'collection', params:{id: question.recommend_collection.id}}")

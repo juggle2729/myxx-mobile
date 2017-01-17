@@ -14,19 +14,26 @@
         i
             color: #cc3f4f
             display: inline-block
+    .btn
+        height: 60px
+        line-height: 58px
 </style>
 <template lang="jade">
-.follow-icon.fz-26.gray.center(v-if="!isSelf", @click.stop="toggle", :class="{'active': !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
+deep-link.has-icon.follow-icon.fz-26.bd-red.gray.center(v-if="env.isShare")
+    icon(name="plus")
+    span {{follow ? '已关注' : '关注'}}
+.follow-icon.fz-26.gray.center(v-else, @click.stop="toggle", :class="{'active': !follow, 'bd-light': hasBorder&&follow, 'bd-red': hasBorder&&!follow}")
     icon(v-if="!follow", name="plus")
     span(:class="{'red': !follow}") {{follow ? '已关注' : '关注'}}
 </div>
 </template>
 <script>
+import DeepLink from 'component/DeepLink.vue'
 import Icon from './Icon.vue'
 export default {
     name: 'follow-icon',
 
-    components: {Icon},
+    components: { DeepLink, Icon },
 
     props: {
         target: {
@@ -45,9 +52,6 @@ export default {
     computed: {
         api() {
             return `users/target/${this.target||this.route.params.id}/type/${this.type}/follow`
-        },
-        isSelf() {
-            return _.get(this, 'self.id') == this.user
         }
     },
 

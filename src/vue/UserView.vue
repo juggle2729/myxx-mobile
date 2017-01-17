@@ -1,7 +1,5 @@
 <style lang="stylus">
-@import '~style/partials/var'
 .user-view
-    padding-bottom: 98px
     .banner
         padding: 48px 40px 36px 36px
         -webkit-box-align: start
@@ -42,6 +40,8 @@
         .button
             border-radius: 6px
             line-height: 72px
+    .footer-placeholder
+        height: 112px
 </style>
 <template lang="jade">
 .user-view.bg(v-if="!$loadingRouteData")
@@ -77,11 +77,13 @@
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white.fz-30(v-if='!isSelf')
-        icon-follow(:target='profile.id', :follow='profile.is_followed', :has-border='false')
-        icon-share.bdl
+        deep-link.has-icon.fz-30
+            icon(name="plus")
+            span 关注
         .button.mgr.bg-red.white(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
             span 进入{{(profile.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")
+    .footer-placeholder.bg-white
 </template>
 <script>
 import shareable from 'shareable'

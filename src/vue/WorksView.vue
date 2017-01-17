@@ -25,8 +25,8 @@
         .desc.flex
             .fz-26.gray.flex-1.line-clamp {{item.title}}
             .flex
-                icon-like.mgr-50(:target='item.id', type="wk", :active='item.is_liked', :count='item.like_count')
-                icon-comment(:count='item.comment_count')
+                icon-like(:active='item.is_liked', :count='item.like_count')
+                icon-comment.mgl-50(:count='item.comment_count')
     .hr
     empty(v-if="items.isEmpty" title="暂无作品")
 </template>

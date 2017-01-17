@@ -108,22 +108,28 @@
             height: 100%
         & > div:first-child
             width: 450px
-        .buy-btn
-            width: 300px
         .contact-btn,.collect-btn,.shop-btn
+            font-size: 22px
             -webkit-box-orient: vertical
             -webkit-box-pack: center
             width: 50%
             height: 100%
+            .btn
+                font-size: 22px
             [class^='icon-'], [class*=' icon-']
                 margin-bottom: 4px
                 padding: 0
                 height: 1.6em
                 width: @height
-        .buy-btn
+        .contact-btn .btn
+            color: #CC3F4F
+        .buy-btn, .buy-btn .btn
+            width: 300px
+            color: white
             text-align: center
             height: 98px
             line-height: 98px
+            padding: 0
     .tabs-fixed
         will-change: visibility
         position: fixed
@@ -188,15 +194,27 @@
         .bg.tab-content
             component(:is='view', keep-alive, :jade='jade')
         .bg.placeholder
-        .float-box.flex.fixed.fz-30.bg-white
+        .float-box.flex.fixed.fz-30.bg-white(v-if="env.isShare")
             .bdt.flex-1.flex
-                .fz-22.flex.flex-1.red.contact-btn.bdr(@click='contact')
+                deep-link.has-icon.flex.flex-1.red.contact-btn.bdr
                     icon.fz-30(name="chat")
                     .mgt-6 私信
-                .fz-22.flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
+                deep-link.has-icon.flex.flex-1.gray.collect-btn.bdr
                     icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
                     .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
-                .fz-22.flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
+                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
+                    icon.fz-30(name="shop")
+                    .mgt-6 店铺
+            deep-link.has-icon.flex-2.buy-btn.bg-red 立即购买
+        .float-box.flex.fixed.fz-30.bg-white(v-else)
+            .bdt.flex-1.flex
+                .flex.flex-1.red.contact-btn.bdr(@click='contact')
+                    icon.fz-30(name="chat")
+                    .mgt-6 私信
+                .flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
+                    icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
+                    .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
+                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
             .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买

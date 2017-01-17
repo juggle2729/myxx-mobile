@@ -1,5 +1,8 @@
 <template lang="jade">
-.chat-icon.fz-26.gray(@click.stop="chat(id, name, jade)")
+deep-link(v-if='env.isShare')
+    icon(name="chat")
+    span.red 私信
+.chat-icon.fz-26.gray(v-else, @click.stop="chat(id, name, jade)")
     icon(name="chat")
     span.red 私信
 </div>

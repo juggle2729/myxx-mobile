@@ -44,12 +44,12 @@
     .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.user", :size="50")
         .mgl.fz-26.gray.flex-1 {{item.entry.user.nickname}} 添加至专辑
-    
+
     .header.flex(v-if="!collection")
         .flex-1.flex
             avatar(:user="item.entry.user", :is-self="false", :size="50")
             .name.mgl.fz-26 {{item.entry.user.nickname}}
-    
+
     .mgh.mgb-28(:class="{'mgt-24': !collection}")
         .pic(v-bg="item.entry.cover")
             .more.white.fz-30.flex.pdh-12(v-if="item.entry.media_num > 1")
@@ -60,9 +60,9 @@
                 img.post(:src="'post.png' | qn")
                 .pdl-10.fz-30.bold.flex-1.user-txt.line-clamp-2 {{item.entry.title}}
             .fz-26.gray.line-clamp-2.user-txt(:class="{'mgt-20': item.entry.description}") {{{item.entry.description | content | input}}}
-    
+
     .interact.fz-26.flex.bdt.pdh-32
-        icon-like(:target="item.entry.post_id", type="rt", :active="item.entry.liked", :count="item.entry.like_count")
+        icon-like(:active="item.entry.liked", :count="item.entry.like_count")
         icon-comment(:count="item.entry.comment_count", :id="item.entry.post_id", type="rt")
 </template>
 <script>

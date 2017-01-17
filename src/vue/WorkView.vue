@@ -91,7 +91,7 @@
         .fz-36 {{work.title}}
         .fz-30.gray.prize {{work.prize}}
     .hr
-    comment-list(type='wk', :id='work.id', :uid="work.user.id", v-ref:comments)
+    comment-list(type='wk', :id='work.id')
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'

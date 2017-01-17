@@ -90,7 +90,6 @@ router.alias({
     '/lessons': '/update',
     '/:id/apply/shop': '/update',
     '/:id/apply/site': '/update',
-    '/auctions/:id': 'user/:id/auctions',
     '/jade/:id': '/jade/:id/none',
     '/instructions': '/help/mall',
     '/instruction/:category': '/help/mall/:category',

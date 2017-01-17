@@ -39,9 +39,10 @@ const adapter = {
                         urls,
                         current: urls[+params.index]
                     })
-                } else {
-                    this.$root.popup = _.merge({}, params, {handler, cb})
                 }
+                // else {
+                //     this.$root.popup = _.merge({}, params, {handler, cb})
+                // }
                 break
             case 'updateTitle':
                 document.title = params.text

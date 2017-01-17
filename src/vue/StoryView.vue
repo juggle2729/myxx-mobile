@@ -60,7 +60,7 @@
             shop(:shop="story.user.shop")
     .hr
 
-    comment-list(type='tp', :id='story.post_id', :uid="story.user.id", v-ref:comments)
+    comment-list(type='tp', :id='story.post_id')
     .hr
     topics(v-if='story.categories', :topics='story.categories')
     general-suggestion

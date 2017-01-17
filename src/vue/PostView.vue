@@ -51,7 +51,7 @@
         template(v-if="post.user.shop")
             shop(:shop="post.user.shop")
     .hr
-    comment-list(type='rt', :id='post.post_id', :uid="post.user.id", v-ref:comments)
+    comment-list(type='rt', :id='post.post_id')
     .hr
     general-suggestion(:categories="post.categories")
 </template>

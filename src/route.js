@@ -27,7 +27,7 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TopMasterView.vue'))
-            })
+            }, 'top-list')
         }
     },
 
@@ -37,7 +37,7 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TopProductView.vue'))
-            })
+            }, 'top-list')
         }
     },
 
@@ -125,26 +125,6 @@ export default {
         }
     },
 
-    '/bzone': {
-        name: 'bzone',
-        title: '商户专区',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('BZoneView.vue'))
-            }, 'bzone')
-        }
-    },
-
-    '/purchase/add': {
-        name: 'purchase-add',
-        title: '发布求购',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchaseAddView.vue'))
-            }, 'purchase')
-        }
-    },
-
     '/purchases': {
         name: 'purchases',
         title: '求购竞标',
@@ -164,6 +144,7 @@ export default {
             }, 'purchase')
         }
     },
+
     '/bid/:id': {
         name: 'bid',
         title: '竞标作品',
@@ -191,16 +172,6 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('BidHelpSupportView.vue'))
             }, 'purchase')
-        }
-    },
-
-    '/masters': {
-        name: 'masters',
-        title: '人物志',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('MastersView.vue'))
-            }, 'master')
         }
     },
 
@@ -234,6 +205,7 @@ export default {
             }, 'profile')
         }
     },
+
     '/user/:id/following': {
         name: 'user-following',
         title: '我的关注',
@@ -243,6 +215,7 @@ export default {
             }, 'profile')
         }
     },
+
     '/user/:id/follower': {
         name: 'user-follower',
         title: '粉丝',
@@ -263,15 +236,6 @@ export default {
         }
     },
 
-    '/user/:id/auction': {
-        name: 'user-auction',
-        title: '我的拍卖',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsView.vue'))
-            }, 'profile')
-        }
-    },
 
     '/shop/:id': { // 工作室主页
         name: 'shop',
@@ -303,6 +267,7 @@ export default {
             }, 'profile')
         }
     },
+
     '/work/:id': {
         name: 'work',
         title: '作品详情',
@@ -314,32 +279,12 @@ export default {
         }
     },
 
-    '/:id/apply/master': {
-        name: 'apply-master',
-        title: '申请鉴定师权限',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ApplyMasterView.vue'))
-            }, 'apply')
-        }
-    },
-
     '/order/:id/trace': {
         name: 'trace',
         title: '物流追踪',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderTraceView.vue'))
-            }, 'mall')
-        }
-    },
-
-    '/order/:id/price': {
-        name: 'order-price',
-        title: '修改订单价格',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('OrderPriceView.vue'))
             }, 'mall')
         }
     },
@@ -373,6 +318,7 @@ export default {
             }, 'wallet')
         }
     },
+
     '/wallet/withdraw': {
         name: 'withdraw',
         title: '提现',
@@ -382,6 +328,7 @@ export default {
             }, 'wallet')
         }
     },
+
     '/wallet/:id/withdraw/result': {
         name: 'withdraw-result',
         title: '提现',
@@ -391,6 +338,7 @@ export default {
             }, 'wallet')
         }
     },
+
     '/wallet/:tab': {
         name: 'detail',
         title: '明细',
@@ -400,15 +348,7 @@ export default {
             }, 'wallet')
         }
     },
-    '/best-practice': {
-        name: 'best-practice',
-        title: '玩转美玉秀秀',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('BestPracticeView.vue'))
-            }, 'help')
-        }
-    },
+
     '/help/mall': {
         name: 'mall-help',
         title: '帮助',
@@ -418,6 +358,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/mall/terms': {
         name: 'mall-terms',
         title: '美玉商城入驻协议',
@@ -427,6 +368,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/mall/:category': {
         name: 'mall-help-category',
         component(resolve) {
@@ -435,6 +377,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/purchase': {
         name: 'purchase-help',
         title: '求购竞标',
@@ -444,15 +387,7 @@ export default {
             }, 'help')
         }
     },
-    '/help/bzone': {
-        name: 'bzone-help',
-        title: '什么是商户专区',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('BZoneHelpView.vue'))
-            }, 'help')
-        }
-    },
+
     '/help/level/:id': {
         name: 'level-help',
         title: '等级说明',
@@ -462,6 +397,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/comment': {
         name: 'level-comment',
         title: '商品评价说明',
@@ -471,15 +407,7 @@ export default {
             }, 'help')
         }
     },
-    '/help/auction': {
-        name: 'auction-help',
-        title: '拍卖指南',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionHelpView.vue'));
-            }, 'help')
-        }
-    },
+
     '/help/medal/identity': {
         name: 'identity-medal',
         title: '身份认证',
@@ -489,6 +417,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/medal/author': {
         name: 'author-medal',
         title: '精华内容作者',
@@ -498,6 +427,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/credit': {
         name: 'credit',
         title: '如何赚积分',
@@ -507,6 +437,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/level/personal': {
         name: 'personal-level',
         title: '等级介绍',
@@ -516,6 +447,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/recognition': {
         name: 'recognition-help',
         title: '认同度',
@@ -525,6 +457,7 @@ export default {
             }, 'help')
         }
     },
+
     '/help/best-practice': {
         name: 'best-practice',
         title: '玩转美玉秀秀',
@@ -535,52 +468,6 @@ export default {
         }
     },
 
-    '/auctions': {
-        name: 'auctions',
-        title: '拍卖专区',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionsView.vue'));
-            }, 'auction')
-        }
-    },
-    '/auction/:id/:prdId': {
-        name: 'auction',
-        title: '拍卖详情',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionView.vue'));
-            }, 'auction')
-        }
-    },
-    '/comments/:id/:type': {
-        name: 'comments',
-        title: '全部评论',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CommentsView.vue'))
-            }, 'comments')
-        }
-    },
-
-    '/pay/channels': {
-        name: 'pay-channels',
-        title: '付款',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PayChannelsView.vue'))
-            }, 'pay')
-        }
-    },
-
-    '/follow-suggestion': {
-        title: '推荐关注',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('FollowSuggestionView.vue'))
-            }, 'recommend')
-        }
-    },
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',
@@ -590,6 +477,7 @@ export default {
             }, 'other')
         }
     },
+
     '/update': {
         name: 'update',
         component(resolve) {
@@ -598,6 +486,7 @@ export default {
             }, 'other')
         }
     },
+
     '/404': {
         title: '页面不存在',
         name: '404',
@@ -607,6 +496,7 @@ export default {
             }, 'other')
         }
     },
+
     'api': {
         title: '客户端api测试',
         name: 'api',
@@ -616,6 +506,7 @@ export default {
             }, 'other')
         }
     },
+
     '/': {
         component(resolve) {
             require.ensure([], (require) => {
@@ -623,6 +514,7 @@ export default {
             }, 'browser')
         }
     },
+
     '*': {
         title: '找不到北',
         component(resolve) {

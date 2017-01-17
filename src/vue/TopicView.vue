@@ -21,7 +21,7 @@
     template(v-for="item in items")
         component(:is="config.category[item.type]", keep-alive, :item="item")
         .hr
-    deep-link(v-if="!items.hasMore", label="打开美玉秀秀，查看更多话题内容")
+    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多话题内容
     empty(v-if='items.isEmpty', title='暂无内容')
 </template>
 <script>

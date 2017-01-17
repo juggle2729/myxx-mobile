@@ -1,6 +1,5 @@
 <style lang="stylus">
 .answer-view
-    // background-image: linear-gradient(top, white 600px, #efefef 0)
     min-height: 100%
     header
         padding: 32px 32px 0 32px
@@ -37,12 +36,12 @@
     header.bg-white
         .user.flex
             .flex-1.title.fz-30.bold.mgv-24.pdr.user-txt.bdr {{{question.description | content | input}}}
-            .flex.red.fz-26.pdl-32.pdv-12(@click="gotoDownload")
+            deep-link.has-icon.red.fz-26.pdl-32.pdv-12
                 icon(name="plus")
-                span 关注问题
+                span.red 关注问题
     .pictures.pdh-32.bg-white.scrollable(v-if="question.pictures.length")
         .pic(v-for="pic in question.pictures", v-bg.sm="pic", @click="coverflow(question.pictures, $index)")
-    deep-link(label="打开美玉秀秀，发表你的观点")
+    deep-link 打开美玉秀秀，发表你的观点
     .hr
 
     .result.bg-white
@@ -60,7 +59,7 @@
         .fz-30.pdh-32.pdb-32(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
 
         footer.flex.fz-26.bdt
-            icon-like(:active='result.liked', :count='result.like_count', :target="result.id", type="jd", :recognition="true")
+            icon-like(:active='result.liked', :count='result.like_count', :recognition="true")
             icon-comment.bdl(:count="result.comment_count", :id="result.id", type="jd")
         .hr
 
@@ -69,7 +68,6 @@
 <script>
 import shareable from 'shareable'
 import Topics from 'component/Topics.vue'
-import CommentList from 'component/CommentList.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'answer-view',
@@ -78,7 +76,6 @@ export default {
 
     components: {
         Topics,
-        CommentList,
         GeneralSuggestion
     },
 
