@@ -279,6 +279,16 @@ export default {
         }
     },
 
+    '/order/:id/price': {
+        name: 'order-price',
+        title: '修改订单价格',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderPriceView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/order/:id/trace': {
         name: 'trace',
         title: '物流追踪',
