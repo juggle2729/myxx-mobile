@@ -94,7 +94,7 @@
             .mgt-32 暂无视频回答
         .hr(v-if="!question.results.length")
 
-    comment-list(type='jb', :id='question.post_id')
+    comment-list(type='jb', :id='question.post_id', :total="question.comment_count")
     .hr
 
     .collection.pdh-32.fz-26.bg-white.flex(v-if="question.recommend_collection", v-link="{name: 'collection', params:{id: question.recommend_collection.id}}")

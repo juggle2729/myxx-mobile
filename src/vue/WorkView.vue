@@ -91,7 +91,7 @@
         .fz-36 {{work.title}}
         .fz-30.gray.prize {{work.prize}}
     .hr
-    comment-list(type='wk', :id='work.id')
+    comment-list(type='wk', :id='work.id', :total="work.comment_count")
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'

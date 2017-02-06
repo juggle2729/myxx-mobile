@@ -54,6 +54,7 @@
 <script>
 export default {
     name: 'CashView',
+    
     data() {
         return {
             name: '',
@@ -62,14 +63,17 @@ export default {
             balance: ''
         }
     },
+    
     ready() {
         this.$on('restore', this.showAction)
     },
+    
     computed: {
         complete() {
             return this.name && this.account && this.amount
         }
     },
+    
     route: {
         data() {
             return this.$fetch('balance/withdraw/account').then((data) => {
@@ -81,6 +85,7 @@ export default {
             })
         }
     },
+    
     methods: {
         withdraw() {
             if (this.complete && this.amount <= (this.balance / 100)) {

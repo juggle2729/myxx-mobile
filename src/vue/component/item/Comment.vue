@@ -3,6 +3,12 @@
     padding: 26px 0 26px 32px
     &.flex
         -webkit-box-align: start
+    .pic
+        height: 156px
+        width: 156px
+    .one
+        max-height: 322px
+        max-width: 322px
     .vip
         display: block
         width: 26px
@@ -15,8 +21,13 @@
             vertical-align: bottom
     .reply
         border: 20px solid #f9f9f9
+        &:nth-child(2)
+            display: inline
         .blue
             color: #527fb0
+        img
+            height: 30px
+            width: 30px
     .icon-enter
         transform: rotate(90deg)
 </style>
@@ -24,7 +35,7 @@
 .comment-item.flex
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16
-        section(@click="$dispatch(((self && self.id==item.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item, isHot)")
+        section
             .flex.pdb.pdt-6
                 .flex-1
                     .flex
@@ -33,12 +44,18 @@
                     .fz-22.light.mgt-12 {{item.create_at | moment}}
                 icon-like(v-if="$route.name === 'comments'", :count='item.like_count', :active='item.liked', zero='')
             .fz-30.content.user-txt {{{content | input}}}
-        .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment", @click.stop="$dispatch(((self && self.id==item.reply_comment.reply_from.id) || isAuthor) ? 'delComment' : 'reply', item.reply_comment)")
-            .reply.user-txt
+            .flex.mgt-24(v-if="item.pictures.length > 1")
+                img.pic.mgr-10(v-for="pic in item.pictures", :src="config.img+pic.media", @click="coverflow(commentPics, $index)")
+            img.one(v-if="item.pictures.length === 1", :src="config.img + item.pictures[0].media", @click="coverflow(commentPics)")
+        .bg-light.mgt.mgb-12.fz-30(v-if="item.reply_comment")
+            .reply
                 span.fz-26.gray(v-if="item.reply_comment.delete_flag") 抱歉，此内容已删除
-                template(v-else)
+                .user-txt(v-else)
                     span.blue {{item.reply_comment.reply_from.nickname}}
                     |：{{{item.reply_comment.content | input}}}
+                    .flex(v-if="item.reply_comment.pictures.length", @click="coverflow(replyPics)")
+                        img.mgl-4(:src="'placeholder/comment.png' | qn")
+                        .blue 查看图片
             .fz-26.txt-right.pdr.pdb(v-if="more", @click.stop="deploy")
                 span 显示全部
                 icon(name="enter")
@@ -79,12 +96,12 @@ export default {
             return content
         },
 
-        isAuthor() {
-            return this.$parent.$parent.$parent.isSelf || (this.self && (this.self.id == this.$route.query.uid))
+        replyPics() { // 原评论图片数组
+            return _.map(this.item.reply_comment.pictures, 'media')
         },
 
-        isHot() {
-            return (this.$parent.params.order_by === 'hot') || (this.$parent.params.order_by === 'score')
+        commentPics() { // 最新评论图片数组
+            return _.map(this.item.pictures, 'media')
         }
     },
 
