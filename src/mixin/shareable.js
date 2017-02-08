@@ -162,6 +162,8 @@ export default {
                 // 不要使用封装后的$post,只有采用$http
                 this.$http.post('wx/jsapisignature', formData)
                     .then(result => {
+                        // 注册微信错误处理，防止页面白屏
+                        wx.error(res => console.log('wx.error', res))
                         wx.config({
                             appId: 'wxcc40bf300d6200a3',
                             timestamp: timestamp,
@@ -176,14 +178,14 @@ export default {
                                 'onMenuShareQZone'
                             ]
                         })
-                    // share list
-                    wx.ready(() => {
-                        wx.onMenuShareAppMessage(opts)
-                        wx.onMenuShareTimeline(opts)
-                        wx.onMenuShareQQ(opts)
-                        wx.onMenuShareWeibo(opts)
-                        wx.onMenuShareQZone(opts)
-                    })
+                        // share list
+                        wx.ready(() => {
+                            wx.onMenuShareAppMessage(opts)
+                            wx.onMenuShareTimeline(opts)
+                            wx.onMenuShareQQ(opts)
+                            wx.onMenuShareWeibo(opts)
+                            wx.onMenuShareQZone(opts)
+                        })
                 })
             }
         }
