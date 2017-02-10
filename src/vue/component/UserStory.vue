@@ -2,8 +2,6 @@
 @import '~style/partials/var'
 .user-story
     min-height: inherit
-    .sum
-        height: 80px
 </style>
 <template lang="pug">
 .user-story.bg
@@ -14,24 +12,24 @@
 </template>
 <script>
 import paging from 'paging'
-import story from 'component/item/Story.vue'
-import post from 'component/item/Post.vue'
-import question from 'component/item/Question.vue'
-import answer from 'component/item/Answer.vue'
-import collection from 'component/item/Collection.vue'
-import topic from 'component/item/Topic.vue'
+import Story from 'component/item/Story.vue'
+import Post from 'component/item/Post.vue'
+import Question from 'component/item/Question.vue'
+import Answer from 'component/item/Answer.vue'
+import Collection from 'component/item/Collection.vue'
+import Topic from 'component/item/Topic.vue'
 export default {
     name: 'user-story',
 
     mixins: [paging],
 
     components: {
-        story,
-        post,
-        question,
-        answer,
-        collection,
-        topic
+        Story,
+        Post,
+        Question,
+        Answer,
+        Collection,
+        Topic
     },
 
     computed: {

@@ -87,7 +87,7 @@
         .button.mgr.bg-red.white(v-if='profile.shop_id', v-link="{name: 'shop', params: {id: profile.shop_id}}")
             span 进入{{(profile.shop_type === 'studio') ? '工作室' : '店铺'}}
             icon.fz-22(name="enter")
-    .footer-placeholder.bg-white
+    .footer-placeholder
 </template>
 <script>
 import shareable from 'shareable'

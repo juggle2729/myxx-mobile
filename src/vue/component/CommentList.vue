@@ -1,30 +1,20 @@
 <style lang="stylus">
 .comment-list
-    .header
-        line-height: 80px
-    .title
-        height: 84px
-        line-height: 84px
-        span
-            border-left: 6px solid #cc3f4f
     .list.empty
         display: none
     .comment-item:last-child
         padding-bottom: 0
         > .flex-1
             background-image: none
-            border-bottom: none
-    .enter
-        padding-bottom: 3px
     .no-comment img
         height: 78px
         width: 92px
 </style>
 <template lang="jade">
 .comment-list.bg-white
-    .header.bdb.fz-26.pdl-32.gray 评论 {{total}}
+    .line-height-80.bdb.fz-26.pdl-32.gray 评论 {{total}}
 
-    comments(:path="path", :params="params", transform="comments", v-ref:hot)
+    comments(:path="path", :params="{limit: 5, freeze: true, order_by: 'score'}", transform="comments", v-ref:hot)
 
     .no-comment.fz-26.light.center.none.pdt-48.pdb-32
         img(:src="'no-comment.png' | qn")
@@ -51,10 +41,8 @@ export default {
         _.delay(() => {
             const hot = this.$el.querySelectorAll('.list')[0] 
             const noComment = this.$el.querySelector('.no-comment')
-            // 待优化~
+            // 待优化
             hot.classList.contains('empty') && noComment.classList.remove('none') && noComment.classList.add('block')
-
-            this.isPreview && hot.classList.contains('empty') && noComment.classList.remove('none') && noComment.classList.add('block')
         }, 900)
     },
 
@@ -63,10 +51,6 @@ export default {
             const id = this.id || this.$route.params.id
             const type = this.type || this.$route.params.type || _.find(this.config.types, {route: this.$route.name}).id
             return `users/target/${id}/type/${type}/comments`
-        },
-
-        params() {
-            return  {limit: 5, freeze: true, order_by: 'score'}
         }
     }
 }

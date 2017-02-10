@@ -3,10 +3,6 @@
 .answer-item
     .follow
         height: 90px
-    .header
-        padding: 20px 20px 0
-        .name
-            color: #666666
     .medias
         position: relative
         .media
@@ -23,11 +19,9 @@
                 height: 24px
                 width: 24px
                 display: block
-    .video
-        width: 50%
-        padding-top: 50%
     .question
-        margin-left: 20px
+        .desc
+            -webkit-box-align: start
         img.qs
             display: block
             height: 30px
@@ -42,11 +36,8 @@
             img
                 height: 68px
                 width: 68px
-    .interact
-        height: 98px
-        line-height: 98px
-        .answer-icon
-            margin-right: 66px
+    .answer-icon
+        margin-right: 66px
 </style>
 <template lang="jade">
 .answer-item.bg-white(v-link="{name:'answer', params: {id: item.entry.id}}")
@@ -54,15 +45,15 @@
         avatar(:user="item.entry.identifier", :size="50")
         .mgl.fz-26.gray.flex-1 {{item.entry.identifier.nickname}} 添加至专辑
 
-    .header.flex.pdh-20(v-if="!collection")
+    .pdt.flex.pdh(v-if="!collection")
         .flex.gray
             avatar(:user="item.entry.identifier", :is-self="false", :size="50")
-            .name.mgl.fz-26 {{item.entry.identifier.nickname}} 回答了问题
+            .dark.mgl.fz-26 {{item.entry.identifier.nickname}} 回答了问题
 
-    .question.bdb.pdr.pdb-24(:class="{'pdt-28': !collection}")
-        .flex
-            img.qs(:src="'question.png' | qn")
-            .desc.fz-30.user-txt.mgl-10 {{item.entry.jianbao.user.nickname}}: {{{item.entry.jianbao.description | content | input}}}
+    .question.bdb.pdr.pdb-24.mgl.mgr-32(:class="{'pdt-28': !collection}")
+        .flex.desc
+            img.qs.mgt-6(:src="'question.png' | qn")
+            .fz-30.user-txt.mgl-10 {{item.entry.jianbao.user.nickname}}: {{{item.entry.jianbao.description | content | input}}}
         .flex.medias.mgt-24(v-if="item.entry.jianbao.pictures.length > 0")
             .media.img(v-for="pic in item.entry.jianbao.pictures.splice(0,3)", v-bg='pic')
 
@@ -77,7 +68,7 @@
                 img(:src="'question/play.png' | qn")
                 .fz-22.mgt 播放视频
 
-    .interact.fz-26.flex.bdt.pdh-32
+    .line-height-98.fz-26.flex.bdt.pdh-32
         icon-answer(:count="item.entry.jianbao.status")
         icon-comment(:count="item.entry.comment_count", :id="item.entry.id", type="jd")
 </template>

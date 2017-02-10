@@ -44,6 +44,7 @@
                 bottom: 0
                 right: 0
                 height: 56px
+                line-height: 56px
                 background-color: rgba(0, 0, 0, .6)
                 z-index: 9
     footer
@@ -101,18 +102,18 @@
     main
         .img(v-bg="bid.product.first_picture")
             .sale-mark.fz-30.white(v-if="bid.product.is_tob") 清仓
-            price-tag.price-mark.fz-26.white.pdh-14(label="原价", :cents="bid.product.price")
+            .price-mark.fz-26.white.pdh-14 原价 {{bid.product.price | price}}
         .fz-30.pdt-24.user-txt
             span {{bid.description}}
     footer.flex
-        price-tag.fz-30.red(v-if="won", label="成交价", :cents="price")
+        .fz-30.red(v-if="won") 成交价 {{price | price}}
         template(v-else)
             template(v-if="self && self.id===bid.bidder_id")
-                price-tag.fz-30.red(label="竞标价", :cents="price")
+                .fz-30.red 竞标价 {{price | price}}
                 .btn-change.fz-26.bg-red.white.mgl-20.pdh-24(v-if="isOpen", @click.stop="setPrice(bid)") 改价
             template(v-else)
-                price-tag.fz-30(label="竞标价", :cents="bid.origin_ceil_price", :class="{'red': !bid.ceil_price, 'gray': bid.ceil_price}")
-                price-tag.fz-30.red(v-if="bid.ceil_price", label="新竞标价", :cents="price")
+                .price-tag.fz-30(:class="{'red': !bid.ceil_price, 'gray': bid.ceil_price}") 竞标价 {{bid.origin_ceil_price | price}}
+                .fz-30.red(v-if="bid.ceil_price") 新竞标价 {{price | price}}
     .operations.bdt.flex(v-if="isSelf")
         .btn.fz-26.bd-gray(@click.stop="chat(bid)") 私聊
         template(v-if="isOpen && isSelf && !won")

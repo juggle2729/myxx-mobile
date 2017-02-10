@@ -14,7 +14,6 @@
             padding: 0 28px
             background-color: rgba(159, 42, 240, .8)
         .sold
-            // width: 345px
             height: 345px
             position: relative
             background-color: rgba(0, 0, 0, .6)
@@ -27,12 +26,8 @@
                 top: 50%
                 left: 50%
                 transform: translate(-50%, -50%)
-    .data-info
-        padding: 32px 20px
-        .desc
-            margin-bottom: 32px
-        .price::first-letter
-            font-size: .9em
+    .price::first-letter
+        font-size: .9em
 </style>
 <template lang="jade">
 .product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}}")
@@ -40,8 +35,8 @@
         .mark.fz-30.white(v-if="item.is_tob") 清仓
         .sold(v-if="item.sell_status == 'sold'")
             .btn.white.fz-30.center.bd-white 已售出
-    .data-info
-        .fz-26.line-clamp.desc {{item.title}}
+    .pdv-32.pdh
+        .fz-26.line-clamp.mgb-32 {{item.title}}
         .fz-30.red.price {{item.price | price}}
 </template>
 <script>

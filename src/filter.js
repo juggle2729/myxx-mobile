@@ -79,7 +79,7 @@ const filters = {
 
             return `<a style="color: #527fb0" ${evt}>@${name}</a>`
         }
-        return content ? content.replace(/\n/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''
+        return content ? content.replace(/\r/g, '<br>').replace(/\[\:(\d+)_([^\]]+?)\]/g, at) : ''
     },
 
     content(desc) {

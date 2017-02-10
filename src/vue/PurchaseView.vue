@@ -5,53 +5,12 @@
     &.share
         padding-bottom: 142px
     .purchase
-        padding: 36px 32px
-        .guarantee
-            height: 48px
-            line-height: 48px
-            border-radius: 6px
-            padding: 0 12px
-            img
-                height: 24px
-                width: 19.2px
-                margin-right: 5px
-                vertical-align: text-bottom
-        .desc
-            margin-top: 36px
-        .medias
-            li
-                margin-top: 30px
-                height: 222px
-                width: 222px
-                &:not(:last-child)
-                    margin-right: 10px
-        .tags
-            li
-                display: inline-block
-                background-color: #f5f5f5
-                border-radius: 6px
-                padding: 8px 12px
-                margin: 24px 16px 0 0
-        .operations
-            margin-top: 36px
-            .operation
-                height: 90px
-                line-height: 90px
-                border-radius: 8px
-                text-align: center
-                width: 48%
-        .deadline
-            margin-top: 24px
-            b
-                color: #c6c6c6
-                margin: 0 5px
+        .deadline b
+            color: #c6c6c6
+            margin: 0 5px
         .join
-            height: 90px
-            line-height: 90px
             border-radius: 8px
-            margin-top: 36px
     .bids
-        padding: 0 16px
         > header
             padding: 60px 0
             .win-count::before
@@ -60,28 +19,13 @@
 </style>
 <template lang="jade">
 .purchase-view.bg(:class="{'share': env.isShare}")
-    .purchase.bg-white
-        header.flex
-            avatar(:user="purchase.owner")
-            .mgl.fz-30.gray.flex-1 {{purchase.owner.nickname}}
-            .guarantee.fz-22.gray.bd(v-if="paid", v-link="{name: 'purchase-help', query: {subject: 'guarantee'}}")
-                img(:src="'icon/guarantee.png' | qn")
-                span 保证金已付
-        .desc.fz-30.user-txt
-            span.red 预算{{purchase.price_max | price}}左右
-            |   {{{purchase.description | input}}}
-        ul.medias.flex
-            li.img(v-for="pic in purchase.pictures", track-by="$index", @click="coverflow(purchase.pictures, $index)", v-bg="pic")
-        ul.tags.fz-22.gray
-            li(v-for="attr in purchase.attributes", track-by="$index") {{attr}}
-        .operations.flex.fz-30(v-if="isSelf && !paid")
-            .operation.mgr.bd-gray(@click="remove(purchase.id)") 删除此求购
-            .operation.white.bg-red(@click="action('pay', {id: purchase.id, price: purchase.pledge, type: purchase.is_tob ? 'sale' : 'purchase'})") 立即支付保证金
-        .deadline.fz-26(v-if="isOpen")
+    .purchase.bg-white.pdb-40
+        purchase-item(:item="purchase")
+        .deadline.fz-26.mgh-32.mgb-32(v-if="isOpen")
             span.gray.mgr 距离竞标结束
             countdown.red(:msecs="purchase.closed_at")
-        .join.bg-gray.white.center.fz-30(v-if="btnTxt", :class="{'bg-red': isOpen}", @click="addBid()") {{btnTxt}}
-    .bids(v-if="purchase.total_count > 0")
+        .join.line-height-90.bg-gray.white.center.fz-30.mgh-32(v-if="btnTxt", :class="{'bg-red': isOpen}", @click="addBid()") {{btnTxt}}
+    .bids.pdh-16(v-if="purchase.total_count > 0")
         header.center.fz-26.gray
             span 竞标作品 {{purchase.total_count}}
             span.win-count(v-if="purchase.win_count") 中标作品 {{purchase.win_count}}
@@ -90,6 +34,7 @@
 </template>
 <script>
 import Q from 'q'
+import PurchaseItem from 'component/item/Purchase.vue'
 import countdown from 'component/Countdown.vue'
 import BidItem from 'component/item/Bid.vue'
 import paging from 'paging'
@@ -99,7 +44,8 @@ export default {
     mixins: [paging, shareable],
     components: {
         countdown,
-        BidItem
+        BidItem,
+        PurchaseItem
     },
 
     data() {

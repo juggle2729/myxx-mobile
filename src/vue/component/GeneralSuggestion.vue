@@ -1,8 +1,5 @@
 <style lang="stylus">
 .general-suggestion
-    .title
-        line-height: 84px
-        margin-left: 32px
     .list
         padding: 0 15px
         font-size: 0
@@ -10,7 +7,7 @@
 </style>
 <template lang="jade">
 .general-suggestion.bg-white
-    .title.fz-26.gray 相关推荐
+    .fz-26.gray.mgl-32.line-height-80 相关推荐
     topics(v-if='categories && categories.length', :topics="categories")
     card(v-for="item in items", :item="item")
     deep-link 没找到感兴趣的？打开美玉秀秀看看吧！

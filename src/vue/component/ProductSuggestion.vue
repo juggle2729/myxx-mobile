@@ -1,7 +1,5 @@
 <style lang="stylus">
 .product-suggestion
-    header
-        line-height: 80px
     .item
         width: 208px
     .cover
@@ -13,7 +11,7 @@
 <template lang="jade">
 .product-suggestion.bg-white.mgb-28(v-if='items.length')
     .hr
-    header.fz-26.gray.mgl-32 商品推荐
+    .line-height-80.fz-26.gray.mgl-32 商品推荐
     .scrollable.pdh-32
         .item.inline-block.fz-26.mgr(v-for='data in items', v-link="{name: 'jade', params: {id: data.entry.id, tab: 'detail'}}")
             .cover(v-bg.sm='data.entry.first_picture')

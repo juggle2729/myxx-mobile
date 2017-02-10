@@ -29,6 +29,14 @@ for $d in $directions
         border($d)
 
 /****************************
+*        垂直居中            *
+* **************************/
+for $size in 68 80 90 98 100
+    .line-height-{$size}
+        height: $size px
+        line-height: $size px
+
+/****************************
 *        常用间距            *
 * **************************/
 gap($size)
@@ -147,6 +155,7 @@ $line-clamp
 
 .round
     border-radius: 50%
+
 .bold
     font-weight: bold
 

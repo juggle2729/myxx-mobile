@@ -6,7 +6,7 @@
     &.has-icon
         .btn
             display: block
-            color: #888888
+            // color: #888888 此处设置色值导致已点赞按钮为灰色，待处理
     &:not(.has-icon)
         padding: 20px 32px
         .btn

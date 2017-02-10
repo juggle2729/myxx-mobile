@@ -1,11 +1,8 @@
 <style lang="stylus">
 .user-collection
     min-height: inherit
-    .header
-        height: 90px
-        line-height: 90px
-        span
-            border-left: 6px solid #cc3f4f
+    span
+        border-left: 6px solid #cc3f4f
     .item .img, img
         height: 148px
         width: 148px
@@ -13,7 +10,7 @@
 <template lang="jade">
 .user-collection.bg-white
     .hr
-    .header.fz-26.gray.pdl
+    .line-height-90.fz-26.gray.pdl
         span.pdl-12 创建的专辑
     .item.mgl.pdb.flex(:class="{'bdb': ccs.length > 0}", v-link="{name: 'collection-self', params: {uid: $route.params.id}}")
         img.mgr(:src="'user/collection.jpg' | qn")
@@ -29,7 +26,7 @@
 
     template(v-if="items.length")
         .hr
-        .header.fz-26.gray.pdl
+        .line-height-90.fz-26.gray.pdl
             span.pdl-12 关注的专辑
         .item.mgl.pdb.flex(v-for="item in items", :class="{'bdb': $index<(items.length-1), 'pdv': $index > 0}", v-link="{name: 'collection', params: {id: item.entry.id}}")
             .img.mgr(v-bg="item.entry.cover")
