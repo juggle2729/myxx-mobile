@@ -8,7 +8,7 @@ let preset = {
 const bg = {
     params: ['query', 'holder'],
     bind() {
-        this.query = this.params.query || preset[Object.keys(this.modifiers).pop() || 'lg'] || '';
+        this.query = this.params.query || preset[Object.keys(this.modifiers).pop() || 'sm'] || '';
         this.holder = this.params.holder === 'false' ? false : true;
     },
     update(id) {
