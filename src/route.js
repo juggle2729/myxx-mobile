@@ -54,7 +54,7 @@ export default {
 
     '/post/:id': {
         name: 'post',
-        title: '长图文详情',
+        title: '文章详情',
         native: v => v >= 2.3,
         component(resolve) {
             require.ensure([], (require) => {

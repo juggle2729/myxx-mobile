@@ -63,7 +63,6 @@
     .master
         height: 72px
         line-height: 72px
-        margin-left: 32px
         .name
             height: 72px
             line-height: 72px
@@ -83,9 +82,16 @@
             width: 380px
             .line-clamp
                 line-height: 1.2
-        .icon-enter
-            height: 24px
-            width: 12px
+        .icon-shop
+            height: 30px
+            width: 34px
+            margin-top: -46px
+            & + div
+                margin-top: -24px
+        .new
+            height: 32px
+            line-height: 32px
+            border-radius: 20px
     .tabs
         width: 100%
         height: 90px
@@ -177,11 +183,14 @@
                 .fz-30.flex.mgb-12.name
                     .line-clamp.mgr {{jade.shop.shop_name}}
                     lv(:lv='jade.shop.level')
-                .fz-26.gray
+                .fz-26.gray.flex
                     icon(name="location")
                     span {{jade.shop.locale_name}}
-            icon.fz-30.gray(name="enter")
-        .master.flex.bg-white.bdt(v-link="{name: 'user', params: {id: jade.owner.id}}")
+                    .new.bg-red.white.fz-22.pdh-16.mgl-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
+            .center
+                icon(name="shop")
+                .fz-22.gray 进店逛逛
+        .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: jade.owner.id}}")
             avatar(:user='jade.owner', :size='50')
             .flex
                 .name.fz-26.gray.mgl {{jade.owner.name}}

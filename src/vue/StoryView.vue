@@ -6,11 +6,8 @@
         display: block
         height: 30px
         width: 30px
-    .pictures
-        font-size: 0
-        .pic
-            width: 100%
-            padding-top: @width
+    .pictures img
+        width: 100%
     .tag-activity
         display: inline-block
         padding: 10px 20px
@@ -40,7 +37,7 @@
         .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
 
         .pictures.pdt-28(v-if="cover.media_type==='picture'")
-            .pic.mgb(v-for='pic in pictures', v-bg='pic', @click='coverflow(this.pictures, $index)')
+            img.mgb-10(v-for='pic in pictures', :src="config.img+pic", @click='coverflow(this.pictures, $index)')
 
         .tag-activity.red.fz-26.mgr-32(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
             icon(name="fire")

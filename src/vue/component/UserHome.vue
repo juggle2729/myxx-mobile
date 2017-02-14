@@ -10,9 +10,16 @@
         .detail
             .name
                 width: 380px
-            .icon-enter
-                width: 1em
-                height: 1em
+            .icon-shop
+                width: 34px
+                height: 30px
+                margin-top: -46px
+                & + div
+                    margin-top: -24px
+            .new
+                height: 32px
+                line-height: 32px
+                border-radius: 20px
     .works
         .medias
             position: relative
@@ -58,10 +65,13 @@
                 .fz-30.flex.mgb-12.name
                     .line-clamp.mgr {{shop.shop_name}}
                     lv(:lv="shop.level")
-                .fz-26.gray
+                .fz-26.gray.flex
                     icon(name="location")
                     span {{shop.locale_name}}
-            icon.fz-30.gray(name="enter")
+                    .new.bg-red.white.fz-22.pdh-16.mgl-16(v-if="shop.pd_count_today") 今日上新 {{shop.pd_count_today}}
+            .center
+                icon(name="shop")
+                .fz-22.gray 进店逛逛
     .hr(v-if='works')
     .works.pdh-32.pdb-30.bg-white(v-if='works')
         .line-height-90.fz-26.gray

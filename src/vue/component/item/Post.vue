@@ -27,7 +27,7 @@
         img.post
             display: block
             height: 30px
-            width: 78px
+            width: 56px
             margin-top: 8px
     .like-icon
         margin-right: 66px
@@ -50,7 +50,7 @@
                 div {{item.entry.media_num}}
         .desc.pdt-24
             .flex
-                img.post(:src="'post.png' | qn")
+                img.post(:src="'article.png' | qn")
                 .pdl-10.fz-30.bold.flex-1.user-txt.line-clamp-2 {{item.entry.title}}
             .fz-26.gray.line-clamp-2.user-txt(:class="{'mgt-20': item.entry.description}") {{{item.entry.description | content | input}}}
 

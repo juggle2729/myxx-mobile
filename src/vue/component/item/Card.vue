@@ -27,7 +27,7 @@
     .post
         display: block
         height: 30px
-        width: 78px
+        width: 56px
 </style>
 <template lang="jade">
 .card-component.bg-white.pdr-32(v-link="{name: config.category[item.type], params: {id: item.entry.post_id || item.entry.id}}")
@@ -39,7 +39,7 @@
             icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
             icon-like(v-else, :active="false", :count="item.entry.like_count || item.entry.like")
             icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
-            img.post(v-if="post", :src="'recommend/post.png' | qn")
+            img.post(v-if="post", :src="'recommend/article.png' | qn")
     div.pdv-28.mgl-32.bdt.flex(v-else)
         .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/7/rotate/auto|imageView2/2/w/320")
             img(:src="'recommend/video.png' | qn")
@@ -50,7 +50,7 @@
                 icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
                 icon-like(v-else, :count="item.entry.like_count || item.entry.like")
                 icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
-                img.post(v-if="post", :src="'recommend/post.png' | qn")
+                img.post(v-if="post", :src="'recommend/article.png' | qn")
 </template>
 <script>
 export default {
