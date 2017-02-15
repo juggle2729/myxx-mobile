@@ -359,6 +359,16 @@ export default {
         }
     },
 
+    '/complain/:type/:id': {
+        name: 'complain',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ComplainView.vue'))
+            }, 'complain')
+        }
+    },
+
+
     '/help/mall': {
         name: 'mall-help',
         title: '帮助',

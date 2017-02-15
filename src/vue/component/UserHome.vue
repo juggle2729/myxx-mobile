@@ -11,8 +11,8 @@
             .name
                 width: 380px
             .icon-shop
-                width: 34px
-                height: 30px
+                width: 44px
+                height: 48px
                 margin-top: -46px
                 & + div
                     margin-top: -24px

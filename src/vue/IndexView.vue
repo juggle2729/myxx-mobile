@@ -36,18 +36,19 @@ export default {
                 {
                     label: 'deep-link',
                     href: '/deep-link'
-                },
-                {
+                }, {
+                    label: '举报',
+                    href: '/complain/cm/1092'
+                }, {
                     label: '专辑详情',
                     href: '/collection/1'
-                },
-                {
+                }, {
                     label: '图文详情',
                     href: '/post/1'
-                },{
+                }, {
                     label: '问答详情',
                     href: '/question/211'
-                },{
+                }, {
                     label: '求购竞标列表',
                     href: '/purchases'
                 }, {
@@ -56,21 +57,6 @@ export default {
                 }, {
                     label: '商品详情',
                     href: '/jade/188/none'
-                }, {
-                    label: '订单详情',
-                    href: '/order/160615152959035578'
-                }, {
-                    label: '确认收货成功',
-                    href: '/order/receive/160520185535031891'
-                }, {
-                    label: '收货地址列表',
-                    href: '/address/list'
-                }, {
-                    label: '我的钱包',
-                    href: '/wallet'
-                }, {
-                    label: '明细',
-                    href: '/wallet-detail/expects'
                 }
             ]
         }

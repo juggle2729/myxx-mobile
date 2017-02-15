@@ -83,8 +83,8 @@
             .line-clamp
                 line-height: 1.2
         .icon-shop
-            height: 30px
-            width: 34px
+            height: 44px
+            width: 48px
             margin-top: -46px
             & + div
                 margin-top: -24px

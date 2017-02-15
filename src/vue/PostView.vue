@@ -12,6 +12,24 @@
             max-width: 100%
         .video
             padding-top: 100%
+        .jade
+            .img
+                height: 200px
+                width: 200px
+            .content
+                height: 200px
+                position: relative
+                &>div:nth-child(2)
+                    position: absolute
+                    width: 100%
+                    bottom: 28px
+                    .btn
+                        height: 32px
+                        line-height: 32px
+                        border-radius: 20px
+                        position: absolute
+                        bottom: 0
+                        right: 0
 
     .tag-activity
         position: relative
@@ -47,7 +65,14 @@
         template(v-for="item in post.medias")
             img.mgt-32(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
-            p.fz-30.dark.pdt-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
+            .jade.flex.mgt-32.bd(v-if="item.media_type==='pd'")
+                .img(v-bg="item.media.cover")
+                .fz-30.mgh.flex-1.pdv-28.content
+                    .line-clamp-2.bold.user-txt {{item.media.title}}
+                    .flex
+                        .flex-1.red {{item.media.price | price}}
+                        .btn.bg-red.white.pdh.fz-22(v-link="{name: 'jade', params: {id: item.media.id}}") 商品详情
+            p.fz-30.dark.mgt-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
         template(v-if="post.user.shop")
             shop(:shop="post.user.shop")
     .hr
