@@ -71,7 +71,7 @@
      .medal.bg-white.pdh-40.pdb-48
             .flex(v-if="profile.vip_flag")
                 img(:src="'profile/' + profile.role + '.png' | qn")
-                .fz-26.gray.mgl-16.line-clamp.flex-1 {{config.role[profile.role]}}认证{{'：'+profile.title}}
+                .fz-26.gray.mgl-16.line-clamp.flex-1 {{profile.title}}
             .flex.pdt(v-if="profile.jianbao_level")
                 img(:src="'jb/' + profile.jianbao_level + '.png' | qn")
                 .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴宝师

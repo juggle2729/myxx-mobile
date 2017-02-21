@@ -23,7 +23,7 @@
 <script>
 export default {
     name: 'complain-view',
- 
+
     data() {
         return {
             reason: '',
@@ -64,7 +64,7 @@ export default {
 
     computed: {
         items() {
-            return (this.$route.params.type === 'us') ? this.reasons[0] : this.reasons[1] 
+            return (this.$route.params.type === 'us') ? this.reasons[0] : this.reasons[1]
         }
     },
 
@@ -88,12 +88,16 @@ export default {
                     target_id: this.$route.params.id,
                     target_type: this.$route.params.type,
                     reason: this.reason
-                }).then(() => {
+                }).then(resp => {
                     this.result = true
+                }, err => {
+                    this.action('toast', {success: 0, text: '举报已受理，请勿重复举报'})
+                    _.delay(() => {
+                        this.action('back', {step: 1})
+                    }, 1000)
                 })
-                this.result = true
             } else {
-                this.action('back', {step: 3})
+                this.action('back', {step: 1})
             }
         }
     }

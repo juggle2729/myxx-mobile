@@ -361,6 +361,7 @@ export default {
 
     '/complain/:type/:id': {
         name: 'complain',
+        title: '举报',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ComplainView.vue'))

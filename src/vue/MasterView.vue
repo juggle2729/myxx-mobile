@@ -245,10 +245,12 @@ export default {
         coverTouchEnd() {
             var pageHeight = document.documentElement.clientHeight
             if (this.coverMoved > -this.minMove) {
+                console.log('coverTouchEnd', 0)
                 this.contentDom.style['-webkit-transform'] = 'translate3d(0,0,0)'
                 this.contentDom.style['-webkit-transition'] = '100ms linear'
             } else {
-                this.contentDom.style['-webkit-transform'] = 'translate3d(0,' + -pageHeight + 'px,0)'
+                console.log('coverTouchEnd', 1, pageHeight)
+                this.contentDom.style['-webkit-transform'] = `translate3d(0, -${pageHeight}px, 0)`
                 this.contentDom.style['-webkit-transition'] = '200ms linear'
                 this.contentDom.style.marginBottom = -pageHeight + 'px'
 
