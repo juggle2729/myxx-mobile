@@ -157,7 +157,7 @@ const mixin = {
                                     if([605, 608].indexOf(resp.status) !== -1) {
                                         this.action('login')
                                     } else {
-                                        defer.reject(resp.message)
+                                        defer.reject(resp)
                                         if([3002, 5004, 2001, 2000, 2100, 2104].indexOf(resp.status) !== -1) {
                                             if(this.env.isApp) {
                                                 this.$route.router.replace({'name': '404'})

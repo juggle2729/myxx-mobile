@@ -91,7 +91,7 @@ export default {
                 }).then(resp => {
                     this.result = true
                 }, err => {
-                    this.action('toast', {success: 0, text: '举报已受理，请勿重复举报'})
+                    this.action('toast', {success: 0, text: err.message})
                     _.delay(() => {
                         this.action('back', {step: 1})
                     }, 1000)
