@@ -3,22 +3,23 @@
     .icon
         height: 44px
         width: 44px
+        vertical-align: 1px
     .btn
-        margin-top: 60px
+        margin-top: 32px
         border-radius: 8px
     .result
         padding: 140px 0 80px
 </style>
 <template lang="jade">
-.complain-view.bg-white(v-if='!$loadingRouteData')
+.complain-view.bg(v-if='!$loadingRouteData')
     template(v-if="!result")
-        div(v-for="item in items")
+        .bg-white(v-for="item in items")
             .line-height-100.mgl-32.pdr-32.bdb.flex(@click="select(item.id)")
                 .fz-30.flex-1 {{item.desc}}
                 icon(:name="item.selected ? 'selected' : 'select'")
     template(v-else)
         .result.fz-30.user-txt.center.mgh-32 你的举报已受理，管理员会在1个工作日内处理，感谢你对美玉秀秀的维护和支持。
-    .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': reason}") {{result ? '我知道了' : '举报'}}
+    .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': reason}") {{result ? '我知道了' : '提交'}}
 </template>
 <script>
 export default {

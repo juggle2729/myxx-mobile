@@ -10,6 +10,8 @@
         .detail
             .name
                 width: 380px
+            .address
+                width: 200px
             .icon-shop
                 width: 44px
                 height: 48px
@@ -67,7 +69,7 @@
                     lv(:lv="shop.level")
                 .fz-26.gray.flex
                     icon(name="location")
-                    span {{shop.locale_name}}
+                    div(:class="{'address': shop.pd_count_today, 'line-clamp-1': shop.pd_count_today}") {{shop.locale_name}}
                     .new.bg-red.white.fz-22.pdh-16.mgl-16(v-if="shop.pd_count_today") 今日上新 {{shop.pd_count_today}}
             .center
                 icon(name="shop")

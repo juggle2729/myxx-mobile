@@ -8,8 +8,9 @@
             height: 30px
     main
         padding: 0 32px 40px
-        img
+        > img
             max-width: 100%
+            margin-top: 32px
         .video
             padding-top: 100%
         .jade
@@ -19,7 +20,7 @@
             .content
                 height: 200px
                 position: relative
-                &>div:nth-child(2)
+                & > div:nth-child(2)
                     position: absolute
                     width: 100%
                     bottom: 28px
@@ -30,6 +31,9 @@
                         position: absolute
                         bottom: 0
                         right: 0
+                .icon-enter
+                    font-size: 20px
+                    vertical-align: -1px
 
     .tag-activity
         position: relative
@@ -61,9 +65,9 @@
         icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold.user-txt {{{post.title | content | input}}}
-        .fz-30.dark.pdv-32.user-txt {{{post.description | content | input}}}
+        .fz-30.dark.pdt-32.user-txt {{{post.description | content | input}}}
         template(v-for="item in post.medias")
-            img.mgt-32(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
+            img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
             .jade.flex.mgt-32.bd(v-if="item.media_type==='pd'")
                 .img(v-bg="item.media.cover")
@@ -71,7 +75,8 @@
                     .line-clamp-2.bold.user-txt {{item.media.title}}
                     .flex
                         .flex-1.red {{item.media.price | price}}
-                        .btn.bg-red.white.pdh.fz-22(v-link="{name: 'jade', params: {id: item.media.id}}") 商品详情
+                        .btn.fz-26.gray(v-link="{name: 'jade', params: {id: item.media.id}}") 商品详情
+                            icon.mgl-12(name="enter")
             p.fz-30.dark.mgt-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
         template(v-if="post.user.shop")
             shop(:shop="post.user.shop")

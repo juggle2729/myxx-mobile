@@ -26,7 +26,7 @@
 .jade-detail.bg-white
     .pd-32.user-txt.fz-30(v-if="jade.detail") {{jade.detail}}
     .img
-        img(:src="config.img + img + '_320'", v-for="img in jade.pictures", @click="coverflow(jade.pictures, $index)")
+        img(:src="config.img + img + '?imageView2/0/w/375'", v-for="img in jade.pictures", @click="coverflow(jade.pictures, $index)")
     .hr
     .tags(v-if="jade.tags.length > 0")
         .tag-title.fz-26.gray 标签

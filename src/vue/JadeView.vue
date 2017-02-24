@@ -3,26 +3,6 @@
 .jade-view
     position: relative
     height: 100%
-    .notice
-        position: fixed
-        z-index: 9
-        top: 0
-        left: 0
-        width: 100%
-        height: 90px
-        line-height: 90px
-        padding: 0 30px
-        background-color: #fcf1e0
-        .txt
-            color: #eaa123
-        .close
-            height: 90px
-            width: 60px
-            background-image: url($qn + 'bzone/close-yellow.png')
-            background-position: right center
-            background-size: 28px 28px
-    .notice-placeholder
-        height: 90px
     .jade-video
         height: 577px
         background-size: contain
@@ -52,7 +32,7 @@
             line-height: 0
             position: relative
             img
-                height: 97px
+                // height: 97px
                 width: 100%
             .icon-enter
                 height: 24px
@@ -82,6 +62,8 @@
             width: 380px
             .line-clamp
                 line-height: 1.2
+        .address
+            width: 200px
         .icon-shop
             height: 44px
             width: 48px
@@ -89,9 +71,10 @@
             & + div
                 margin-top: -24px
         .new
-            height: 32px
-            line-height: 32px
-            border-radius: 20px
+            padding: 10px 32px 8px 32px
+            border-radius: 40px
+            transform: scale(.5)
+            transform-origin: left
     .tabs
         width: 100%
         height: 90px
@@ -159,10 +142,6 @@
 <template lang="jade">
 .jade-view
     template(v-if="jade.status === 'online'")
-        .notice-placeholder(v-if="firstVisit")
-        .notice.flex(v-if="firstVisit")
-            .txt.fz-26.flex-1 清仓只有商家能看到，了解更多请前往商户专区
-            .close(@click="closeNotice")
         .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
             .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
             .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
@@ -185,8 +164,8 @@
                     lv(:lv='jade.shop.level')
                 .fz-26.gray.flex
                     icon(name="location")
-                    span {{jade.shop.locale_name}}
-                    .new.bg-red.white.fz-22.pdh-16.mgl-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
+                    div(:class="{'address': jade.shop.pd_count_today, 'line-clamp-1': jade.shop.pd_count_today}") {{jade.shop.locale_name}}
+                    .new.bg-red.white.fz-48.mgl-32(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
             .center
                 icon(name="shop")
                 .fz-22.gray 进店逛逛
@@ -250,7 +229,6 @@ export default {
     },
     data() {
         return {
-            firstVisit: false,
             jade: {
                 owner: {},
                 shop: {},
@@ -269,13 +247,6 @@ export default {
         // FIXME: 采用css解决方案
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent && (tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`)
-
-        this.action('cache', {k: 'jade-visited'})
-            .then(v => {
-                if(!v && _.get(this, 'jade.is_tob')) {
-                    this.firstVisit = true
-                }
-            })
     },
     route: {
         canReuse({from, to}) {
@@ -290,9 +261,6 @@ export default {
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1
                         this.view = this.isDefaultView ? 'detail' : to.params.tab
                         this.jade = jade
-                        if(!jade.is_tob) {
-                            this.firstVisit = false
-                        }
                 })
             } else {
                 this.isDefaultView = false
@@ -334,11 +302,6 @@ export default {
                     text: this.jade.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
                 })
             })
-        },
-
-        closeNotice() {
-            this.firstVisit = false
-            this.action('cache', {k: 'jade-visited', v: 1})
         },
 
         guarantee() {

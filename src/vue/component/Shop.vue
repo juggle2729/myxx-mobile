@@ -25,7 +25,7 @@
             lv(:lv="shop.level")
         .flex.fz-26.gray.mgt-16
             icon(name="location")
-            .mgl-12(:class="'address, line-clamp-1': shop.pd_count_today") {{shop.locale_name}}
+            .mgl-12(:class="{'address': shop.pd_count_today, 'line-clamp-1': shop.pd_count_today}") {{shop.locale_name}}
             .new.bg-red.white.pdh-16.mgl-16.fz-22(v-if="shop.pd_count_today") 今日上新 {{shop.pd_count_today}}
     .center.pdh-32
         icon(name="shop")
