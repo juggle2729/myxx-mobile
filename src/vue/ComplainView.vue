@@ -4,6 +4,10 @@
         height: 44px
         width: 44px
         vertical-align: 1px
+    textarea
+        border: none
+        height: 200px
+        width: 100%
     .btn
         margin-top: 32px
         border-radius: 8px
@@ -17,9 +21,10 @@
             .line-height-100.mgl-32.pdr-32.bdb.flex(@click="select(item.id)")
                 .fz-30.flex-1 {{item.desc}}
                 icon(:name="item.selected ? 'selected' : 'select'")
+            textarea.pd-32.fz-30(v-if="item.desc==='其他' && item.selected", placeholder="填写投诉原因（必填）", v-model="content")
     template(v-else)
         .result.fz-30.user-txt.center.mgh-32 你的举报已受理，管理员会在1个工作日内处理，感谢你对美玉秀秀的维护和支持。
-    .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': reason}") {{result ? '我知道了' : '提交'}}
+    .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': content || reason}") {{result ? '我知道了' : '提交'}}
 </template>
 <script>
 export default {
@@ -27,8 +32,10 @@ export default {
 
     data() {
         return {
-            reason: '',
+            reason: '', // 非输入型举报原因,
+            content: '', // 其他举报原因
             result: false, // 是否为结果页
+            items: [], // 举报原因数组
             reasons : [
                 [
                     {
@@ -38,6 +45,36 @@ export default {
                     }, {
                         id: 1,
                         desc: '发布过大量垃圾信息',
+                        selected: false
+                    }, {
+                        id: 2,
+                        desc: '其他',
+                        selected: false
+                    }
+                ], [
+                    {
+                        id: 0,
+                        desc: '引导私下、非平台交易',
+                        selected: false
+                    }, {
+                        id: 1,
+                        desc: '不遵守平台发货规则',
+                        selected: false
+                    }, {
+                        id: 2,
+                        desc: '不遵守平台退货规则',
+                        selected: false
+                    }, {
+                        id: 3,
+                        desc: '对顾客进行人身攻击',
+                        selected: false
+                    }, {
+                        id: 4,
+                        desc: '滥发营销信息',
+                        selected: false
+                    }, {
+                        id: 5,
+                        desc: '其他',
                         selected: false
                     }
                 ], [
@@ -57,20 +94,35 @@ export default {
                         id: 3,
                         desc: '垃圾广告信息',
                         selected: false
+                    }, {
+                        id: 4,
+                        desc: '其他',
+                        selected: false
                     }
                 ]
             ]
         }
     },
 
-    computed: {
-        items() {
-            return (this.$route.params.type === 'us') ? this.reasons[0] : this.reasons[1]
-        }
-    },
-
     ready() {
-        const title = this.$route.params.type === 'us' ? '举报用户' : (this.$route.params.type === 'cm' ? '举报评论' : '举报内容')
+        let title = '' // 显示标题
+        switch(this.$route.params.type) {
+            case 'us':
+                title = '举报用户'
+                this.items = this.reasons[0]
+                break
+            case 'sh':
+                title = '投诉店铺'
+                this.items = this.reasons[1]
+                break
+            case 'cm':
+                title = '举报评论'
+                this.items = this.reasons[2]
+                break
+            default:
+                title = '举报内容'
+                this.items = this.reasons[2]
+        }
         this.action('updateTitle', {text: title})
     },
 
@@ -80,15 +132,15 @@ export default {
                 item.selected = false
             })
             this.items[id].selected = !this.items[id].selected
-            this.reason = this.items[id].desc
+            this.reason = (this.items[id].desc !== '其他') ? this.items[id].desc : ''
         },
 
         submit() {
-            if(!this.result && this.reason) {
+            if(!this.result && (this.content || this.reason)) {
                 this.$post(`users/complaints`, {
                     target_id: this.$route.params.id,
                     target_type: this.$route.params.type,
-                    reason: this.reason
+                    reason: this.content || this.reason
                 }).then(resp => {
                     this.result = true
                 }, err => {

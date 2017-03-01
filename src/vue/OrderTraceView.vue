@@ -2,55 +2,42 @@
 .trace-view
     min-height: 100%
     .basic
-        height: 134px
-        padding: 0 50px
+        height: 184px
+        margin-bottom: 60px
         .img
-            height: 100px
-            width: 100px
+            height: 120px
+            width: 120px
     .info
-        padding: 0 32px 0 112px
-        position: relative
-        .circle
-            position: absolute
-            top: 32px
-            left: 40px
+        margin: 0 32px 0 82px
+        box-sizing: content-box
+        border-left: 1px solid #efefef
+        &.new::before
+            background-color: #cc3f4f
+        &::before
+            content: ''
+            border: 8px solid white
+            display: block
+            background-color: #d9d9d9
             height: 20px
             width: 20px
             border-radius: 50%
-            z-index: 99
-            background-color: #888888
-        .timeline
-            position: absolute
-            left: 50px
-            width: 1px
-            height: 100%
-            background-color: #888888
+            margin: 5px 0 0 -17px
+        &.flex
+            -webkit-box-align: start
         .route
-            padding: 32px 0
-            &:first-child
-                line-height: 1.5
-        .first-circle
-            background-color: #09bb07
-            left: 38px
-            width: 26px
-            height: 26px
-            box-shadow: 0 0 0 3px rgba(9, 187, 7, 0.3)
-        .first-line
-            margin-top: 32px
+            padding: 0 0 60px 68px
 </style>
 <template lang="jade">
 .trace-view
-    .basic.fz-30.bdb.flex
-        .flex-1
-            div 顺丰速运
-            .mgt 运单号 {{trace.express_no}}
-        .img(v-bg='trace.image', @click='coverflow([trace.image])')
-    .info(v-for='item in trace.routes')
-        .circle(:class="{'first-circle': $index < 1}")
-        .timeline(:class="{'first-line': $index < 1}")
-        .route.fz-30.bdb
-            .margin-bottom {{item.remark}}
-            div {{item.datetime}}
+    .basic.fz-30.bdb.flex.pdh-32
+        .img(v-bg='trace.image', holder="true", @click='coverflow([trace.image])')
+        .flex-1.mgl
+            div 物流公司：{{trace.company}}
+            .mgt 物流单号：{{trace.express_no}}
+    .info.flex(v-for='item in trace.routes', :class="{'new': $index < 1}")
+        .route.flex-1
+            .mgb.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
+            .fz-22.gray(:class="{'red bold': $index < 1}") {{item.datetime}}
 </template>
 <script>
 export default {
@@ -63,8 +50,8 @@ export default {
     route: {
         data({to}) {
             return this.$fetch(`mall/express`, {
-                order_no: to.params.id
-            }).then((trace) => {
+                    order_no: to.params.id
+                }).then((trace) => {
                     return {trace}
                 })
         }
