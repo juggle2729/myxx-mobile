@@ -14,11 +14,12 @@ const mixin = {
 
     computed: {
         env() {
-            return this.$root.env
+            // IMPROVE 计算数学依赖$route,页面切换时this为null，导致出错
+            return this && this.$root.env
         },
 
         self() {
-            return this.$root.user
+            return this && this.$root.user
         }
     },
 

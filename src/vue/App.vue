@@ -89,7 +89,6 @@ export default {
             env.isShare = !env.isApp && (_.hasIn(this, '$route.query.channel') || _.hasIn(this, '$route.query.user'))
             if(env.isApp) {
                 env.version = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.')
-                console.log('version', env.version)
             }
             return env
         }

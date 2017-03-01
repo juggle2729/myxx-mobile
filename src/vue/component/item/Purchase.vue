@@ -42,7 +42,7 @@
             color: #cc3f4f
 
     .btns
-        >div
+        > div
             border-radius: 8px
             display: inline-block
             text-align: center
@@ -52,7 +52,7 @@
             padding: 0 20px
 </style>
 <template lang="jade">
-.purchase-item.bg-white(v-link="{name: 'purchase', params: {id: item.id}}")
+.purchase-item.bg-white(@click="gotoDetail")
     .item
         img.mark(v-if="item.win_count", :src="'purchase/winned.png' | qn")
         header.flex.fz-26
@@ -65,7 +65,9 @@
         .desc.mgt-24.fz-30.user-txt
             span.red 预算￥{{Math.round(this.item.price_max/100)}}左右
             |   {{item.description}}
-        ul.medias.flex(:class="{'mgt-24': item.pictures && item.pictures.length > 0}")
+        ul.medias.flex(v-if="isDetail", :class="{'mgt-24': item.pictures && item.pictures.length > 0}")
+            li.img(v-for="pic in item.pictures", track-by="$index", v-bg="pic", @click="coverflow(item.pictures, $index)")
+        ul.medias.flex(v-else, :class="{'mgt-24': item.pictures && item.pictures.length > 0}")
             li.img(v-for="pic in item.pictures", track-by="$index", v-bg="pic")
         ul.tags.fz-22.gray(:class="{'mgt-24': item.attributes && item.attributes.length > 0}")
             li(v-for='attr in item.attributes') {{attr}}
@@ -87,21 +89,27 @@
 <script>
 export default {
     name: 'PurchaseItem',
-    
+
     props: {
         item: Object
+    },
+
+    data() {
+        return {
+            isDetail: false
+        }
     },
 
     computed: {
         paid() {
             return this.item.status !=='np'
-        },
-        
-        isDetail() {
-            return this.$route.name === 'purchase'
         }
     },
-    
+
+    ready() {
+        this.isDetail = this.$route.name === 'purchase'
+    },
+
     methods: {
         del(id) {
             this.action('confirm', {
@@ -124,6 +132,11 @@ export default {
                 this.action('pay', {id: this.item.id, price: this.item.pledge, type: this.item.is_tob ? 'sale' : 'purchase'})
             } else {
                 this.gotoDownload()
+            }
+        },
+        gotoDetail() {
+            if(!this.isDetail) {
+                this.$router.go({name: 'purchase', params: {id: this.item.id}})
             }
         }
     }
