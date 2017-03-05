@@ -258,6 +258,26 @@ export default {
         }
     },
 
+    '/shop/:id/comments': {
+        name: 'shop-comments',
+        title: '店铺评价',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopCommentsView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/shop/:id/introduce': {
+        name: 'shop-introduce',
+        title: '店铺介绍',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopIntroduceView.vue'))
+            }, 'shop')
+        }
+    },
+
     '/:id/works': { // 仅分享
         name: 'works',
         title: '作品展示',

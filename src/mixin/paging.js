@@ -11,7 +11,7 @@ export default {
     events: {
         scrollToBottom(e) {
             // 避免两个子组件切换时该事件分别执行一次
-            if(this.$options.events.scrollToBottom.length === 1) {   
+            if(this.$options.events.scrollToBottom.length === 1) {
                 // auto 可以为 undefined 或者 true
                 if (this.paging.auto !== false) {
                     this.fetch();
@@ -20,7 +20,7 @@ export default {
         }
     },
     methods: {
-        fetch(fresh) {
+        fetch(fresh, other) { // other是针对一个页面多个分页的暂时解决方案
             if(this.items.loading) {
                 console.debug('loading in progress, skip...');
                 return Q(true);
@@ -30,7 +30,8 @@ export default {
                     limit: 10,
                     offset: fresh ? 0 : this.items.length,
                     cursor: this.items.cursor,
-                    ...this.paging.params
+                    ...this.paging.params,
+                    ...other
                 };
                 return this.$fetch(this.paging.path, opts)
                     .then(data => {

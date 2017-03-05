@@ -2,40 +2,43 @@
 .shop-view
     padding-bottom: 110px
     > header
-        height: 460px
+        height: 300px
+        position: relative
         background-size: cover
         background-position: center
-        .shop
+        .name
+            position: absolute
+            bottom: 12px
+            left: 156px
+            -webkit-box-align: baseline
+        img.collect
+            height: 52px
+            width: 152px
+            position: absolute
+            right: 0
+            bottom: 8px
+            &.uncollect
+                width: 120px
+    .shop
+        .icon-enter
+            vertical-align: -2px
+            height: 22px
+            width: 22px
+        .img
+            height: 120px
+            width: 120px
             position: relative
-            top: 320px
-            background-color: rgba(0, 0, 0, .6)
-            height: 140px
-            padding: 0 32px
-            .name
-                width: 500px
-                &.auth
-                    width: 400px
-            .img
-                height: 100px
-                width: 100px
-                border-radius: 6px
-                margin-right: 20px
-    .level
-        height: 100px
-        line-height: 100px
-        padding: 0 32px
-        .level-comp
-            display: block
-    .master
-        padding: 0 32px
-        height: 114px
+            bottom: 60px
+            z-index: 99
+            border-radius: 8px
+    .tabs > div
+        text-align: center
+        width: 33.33%
+        &:first-child
+            color: #c6c6c6
         img
-            display: block
-            height: 26px
-            width: 26px
-    .title
-        padding: 0 32px
-        line-height: 84px
+            height: 56px
+            width: 56px
     .list
         padding-top: 20px
         background-color: #efefef
@@ -48,49 +51,46 @@
         width: 100%
         position: fixed
         bottom: 0
+        .icon-chat
+            height: 48px
+            width: 48px
 </style>
 <template lang="jade">
 .shop-view.bg(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
-        .shop.flex.white
-            .img(v-bg='shop.logo')
-            .flex-1
-                .fz-30.flex.mgb-10.name(:class="{'auth': shop.auth_flag}")
-                    .line-clamp {{shop.shop_name}}
-                .fz-26
-                    icon(name="location")
-                    span {{shop.locale_name}}
-    .level.fz-30.flex.bg-white(v-link="{name: 'level-help', params: {id: 'none'}}")
-        .mgr 信誉评价等级
-        lv.flex-1(:lv="shop.level")
-        icon.fz-20.light(name="enter")
-    .hr
-    .master.flex.bg-white(v-link="{name: 'user', params: {id: shop.owner.id}}")
-        avatar(:user='shop.owner')
-        .fz-26.mgl.flex-1
-            .flex
-                div {{shop.owner.nickname}}
-                img.mgl-8(v-if="shop.owner.vip_flag", :src="'profile/'+shop.owner.role+'.png' | qn")
-            p.mgt-12.gray.line-clamp {{shop.owner.title || config.role[shop.owner.role]}}
-        icon.fz-20.light.mgb-16(name="enter")
-    .hr
-    .title.fz-26.gray.center.bg-white 新品发布
-
-    .list
-        product-card(v-for="item in items", :item="item")
-
-    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多优质商品
+        .name.flex
+            .white.bold.fz-30 {{shop.shop_name}}
+            lv(:lv="shop.level")
+        img.collect(:src="shop.is_faved ? 'shop/collected.png' : 'shop/uncollect.png' | qn", :class="{'uncollect': shop.is_faved}", @click="collect(shop.is_faved)")
+    .shop.pdh.bg-white.flex.line-height-90.bdb
+        .img.mgr-16(v-bg="shop.logo")
+        .fz-26.gray.flex.flex-1
+            icon(name="location")
+            .mgl-8 {{shop.locale_name}}
+        .fz-26.gray.flex(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
+            .mgr-12 店铺评价
+            icon(name="enter")
+    .tabs.pdv-28.bg-white.flex
+        .tab(@click="action('toast', {text: '敬请期待'})")
+            img(:src="'shop/auction.png' | qn")
+            .mgt-16.fz-22.light 拍卖
+        .tab(v-for="tab in tabs", @click="view=tab.id", :class="{'red': view === tab.id}")
+            img(:src="(view === tab.id ? tab.selected : tab.unselect )| qn")
+            .mgt-16.fz-22 {{tab.label}}
+    component(:is="view", :shop="shop")
 
     .footer.flex.bdt.fz-30.bg-white.gray
         deep-link.has-icon.flex-1.fz-30
-            icon(name="star")
-            span 收藏
+            icon.red(name="chat")
+            span 联系卖家
 </template>
 <script>
 import paging from 'paging'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
 import ProductCard from 'component/item/ProductCard.vue'
+import jade from 'component/AllJade.vue'
+import info from 'component/StoreInfo.vue'
 export default {
     name: 'shop-view',
 
@@ -98,26 +98,20 @@ export default {
 
     components: {
         lv,
-        ProductCard
+        ProductCard,
+        jade,
+        info
     },
 
     data() {
         return {
+            view: 'jade',
+            tabs: [
+                { id: 'jade', selected: 'shop/jade-selected.png', unselect: 'shop/jade-unselect.png', label: '全部商品'},
+                { id: 'info', selected: 'shop/info-selected.png', unselect: 'shop/info-unselect.png', label: '店铺信息'}
+            ],
             shop: {
                 owner: {}
-            }
-        }
-    },
-
-    computed: {
-        paging() {
-            return {
-                path: 'mall/homepage/searches',
-                list: 'products',
-                params: {
-                    shop_id: this.$route.params.id,
-                    order_by: 'new'
-                }
             }
         }
     },
@@ -129,6 +123,18 @@ export default {
                 this.action('updateTitle', {text: this.shop.shop_name})
                 this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:
                     this.shop.shop_type === 'studio' ? '工作室' : '店铺'})
+            })
+        }
+    },
+
+    methods: {
+        collect(status) {
+            this.method = status ? this.$put : this.$post
+            this.method('users/favs', {
+                doc_id: this.$route.params.id,
+                doc_type: 'sh'
+            }).then(() => {
+                this.shop.is_faved = !status
             })
         }
     }

@@ -26,6 +26,11 @@
             -webkit-box-align: start
         .route
             padding: 0 0 60px 68px
+    .no
+        margin-top: 160px
+        img
+            height: 160px
+            width: 160px
 </style>
 <template lang="jade">
 .trace-view
@@ -34,10 +39,14 @@
         .flex-1.mgl
             div 物流公司：{{trace.company}}
             .mgt 物流单号：{{trace.express_no}}
-    .info.flex(v-for='item in trace.routes', :class="{'new': $index < 1}")
-        .route.flex-1
-            .mgb.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
-            .fz-22.gray(:class="{'red bold': $index < 1}") {{item.datetime}}
+    div(v-if="trace.routes && trace.routes.length > 0")
+        .info.flex(v-for='item in trace.routes', :class="{'new': $index < 1}")
+            .route.flex-1
+                .mgb.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
+                .fz-22.gray(:class="{'red bold': $index < 1}") {{item.datetime}}
+    .no.center(v-else)
+        img(:src="'logistics.png' | qn")
+        .fz-30.gray.mgt-10 暂无物流信息
 </template>
 <script>
 export default {
