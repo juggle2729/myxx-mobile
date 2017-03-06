@@ -23,7 +23,7 @@
                 icon(:name="item.selected ? 'selected' : 'select'")
             textarea.pd-32.fz-30(v-if="item.desc==='其他' && item.selected", placeholder="填写投诉原因（必填）", v-model="content")
     template(v-else)
-        .result.fz-30.user-txt.center.mgh-32 你的举报已受理，管理员会在1个工作日内处理，感谢你对美玉秀秀的维护和支持。
+        .result.fz-30.user-txt.center.mgh-32 您的{{($route.params.type === 'sh') ? '投诉' : '举报'}}已受理，管理员会在1个工作日内处理，感谢您对美玉秀秀的维护和支持。
     .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': content || reason}") {{result ? '我知道了' : '提交'}}
 </template>
 <script>

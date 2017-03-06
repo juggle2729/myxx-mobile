@@ -31,14 +31,17 @@
             bottom: 60px
             z-index: 99
             border-radius: 8px
-    .tabs > div
-        text-align: center
-        width: 33.33%
-        &:first-child
-            color: #c6c6c6
-        img
-            height: 56px
-            width: 56px
+    .tabs
+        height: 150px
+        line-height: 150px
+        & > div
+            text-align: center
+            width: 33.33%
+            &:first-child
+                color: #c6c6c6
+            img
+                height: 56px
+                width: 56px
     .list
         padding-top: 20px
         background-color: #efefef
@@ -70,7 +73,7 @@
         .fz-26.gray.flex(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
             .mgr-12 店铺评价
             icon(name="enter")
-    .tabs.pdv-28.bg-white.flex
+    .tabs.bg-white.flex
         .tab(@click="action('toast', {text: '敬请期待'})")
             img(:src="'shop/auction.png' | qn")
             .mgt-16.fz-22.light 拍卖

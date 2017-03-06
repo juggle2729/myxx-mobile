@@ -14,17 +14,11 @@
             text-align: center
             &.v-link-active
                 color: #cc3f4f
-    .item
-        height: 166px
-        padding: 30px 32px
-        .detail
-            margin-top: 20px
-            height: 64px
-            .symbol
-                vertical-align: 5px
-            .line-clamp-2
-                width: 0%
-                line-height: 1.2
+    .symbol
+        vertical-align: 5px
+    .line-clamp-2
+        width: 0%
+        line-height: 1.2
 </style>
 <template lang="jade">
 .wallet-detail(v-if='!$loadingRouteData')
@@ -35,12 +29,12 @@
             | 已提现
         .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
             | 总流水
-    .item.fz-30.bdb(v-for='item in items')
+    .fz-30.bdb.pd-32(v-for='item in items')
         .flex.fz-22.gray
             .flex-1 {{item.trans_desc}}
             div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd hh:MM'}}
             div(v-if="!expect") {{timeTip}} {{item.create_at | date 'yyyy-m-dd hh:MM'}}
-        .flex.detail
+        .flex.mgt-40
             .flex-1.line-clamp-2(:class="{'light-green': item.remark === '等待银行处理'}") {{item.remark}}
             .red.fz-40.flex-1.right(v-if="expect || $route.params.tab === 'withdraws'")
                 | {{item.trans_amount | price}}

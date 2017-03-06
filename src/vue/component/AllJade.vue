@@ -59,7 +59,8 @@ export default {
             this.current = tab
             this.fetch(true, {
                 shop_id: this.$route.params.id,
-                order_by: this.current
+                order_by: (this.current === 'sold') ? 'new' : this.current,
+                sell_status: (this.current === 'sold') ? 'sold' : ''
             })
         }
     }

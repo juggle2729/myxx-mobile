@@ -278,6 +278,26 @@ export default {
         }
     },
 
+    '/shop/:id/violation': {
+        name: 'shop-violation',
+        title: '违规详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ViolationView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/shop/:id/credit': {
+        name: 'shop-credit',
+        title: '积分明细',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopCreditView.vue'))
+            }, 'shop')
+        }
+    },
+
     '/:id/works': { // 仅分享
         name: 'works',
         title: '作品展示',
@@ -400,21 +420,11 @@ export default {
         }
     },
 
-    '/help/mall/terms': {
-        name: 'mall-terms',
-        title: '美玉商城入驻协议',
+    '/help/mall/:type': {
+        name: 'mall-help-detail',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpTermsView.vue'))
-            }, 'help')
-        }
-    },
-
-    '/help/mall/:category': {
-        name: 'mall-help-category',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('MallHelpCategoryView.vue'))
+                resolve(require('MallHelpDetailView.vue'))
             }, 'help')
         }
     },

@@ -20,7 +20,7 @@
         img(:src="'no-comment.png' | qn")
         .mgt-32 暂无评论
 
-    deep-link 打开美玉秀秀，参与评论互动
+    deep-link {{tip}}
 </template>
 <script>
 import List from 'component/List.vue'
@@ -51,6 +51,10 @@ export default {
             const id = this.id || this.$route.params.id
             const type = this.type || this.$route.params.type || _.find(this.config.types, {route: this.$route.name}).id
             return `users/target/${id}/type/${type}/comments`
+        },
+
+        tip() {
+            return (this.total <= 5) ? '打开美玉秀秀，参与评论互动' : '打开美玉秀秀，查看全部'+this.total+'条评论'
         }
     }
 }
