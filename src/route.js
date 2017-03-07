@@ -236,7 +236,6 @@ export default {
         }
     },
 
-
     '/shop/:id': { // 工作室主页
         name: 'shop',
         native: v => v >= 1.7 && {name: 'shop'},
@@ -294,6 +293,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ShopCreditView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/shop/measure': {
+        name: 'shop-measure',
+        title: '店铺违规说明和处罚措施',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopMeasureView.vue'))
             }, 'shop')
         }
     },
