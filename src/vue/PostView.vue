@@ -65,17 +65,17 @@
         icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold.user-txt {{{post.title | content | input}}}
-        .fz-30.dark.pdt-32.user-txt {{{post.description | content | input}}}
+        .fz-30.dark.user-txt(:class="{'pdt-32': post.description}") {{{post.description | content | input}}}
         template(v-for="item in post.medias")
-            img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
+            img(v-if="item.media_type === 'picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
-            .jade.flex.mgt-32.bd(v-if="item.media_type==='pd'")
+            .jade.flex.mgt-32.bd(v-if="item.media_type === 'pd'", v-link="{name: 'jade', params: {id: item.media.id}}")
                 .img(v-bg="item.media.cover")
                 .fz-30.mgh.flex-1.pdv-28.content
                     .line-clamp-2.bold.user-txt {{item.media.title}}
                     .flex
                         .flex-1.red {{item.media.price | price}}
-                        .btn.fz-26.gray(v-link="{name: 'jade', params: {id: item.media.id}}") 商品详情
+                        .btn.fz-26.gray 商品详情
                             icon.mgl-12(name="enter")
             p.fz-30.dark.mgt-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
         template(v-if="post.user.shop")

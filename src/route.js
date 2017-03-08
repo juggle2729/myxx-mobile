@@ -297,12 +297,12 @@ export default {
         }
     },
 
-    '/shop/measure': {
+    '/shop/instruction': {
         name: 'shop-measure',
         title: '店铺违规说明和处罚措施',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ShopMeasureView.vue'))
+                resolve(require('ShopInstructionView.vue'))
             }, 'shop')
         }
     },

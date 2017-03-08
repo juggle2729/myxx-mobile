@@ -39,7 +39,7 @@
                 img.refund(:src="'shop/refund.png' | qn")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 店铺类型
-                div {{config.role[shop.shop_type]}}
+                div {{config.shopType[shop.shop_type]}}
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 入驻时间
                 div {{shop.create_at | date 'yyyy-mm-dd'}}

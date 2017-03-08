@@ -10,58 +10,22 @@
         .tab
             text-align: center
             line-height: 50px
-    .item
-        padding: 32px
-        header
-            .btn
-                width: 140px
-                height: 70px
-                line-height: 70px
-                text-align: center
-                border-radius: 6px
-        main
-            padding: 24px 32px 32px 100px
-            .product
-                color: #f0a401
-                &[type]
-                    &::before
-                        content: attr(type)
-                        display: inline-block
-                        width: 72px
-                        height: 38px
-                        line-height: 38px
-                        text-align: center
-                        border-radius: 6px
-                        margin-right: 20px
-                        color: white
-                        background-color: #ff3c3c
-                    &[type='中评']::before
-                        background-color: #ffcc00
-                    &[type='差评']::before
-                        background-color: #888888
-            .content
-                margin-top: 24px
-                line-height: 1.2
 </style>
 <template lang="jade">
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
-    .item.bdb.fz-30.bg-white(v-for="item in tab.items")
-        header.flex.mgb-12
-            avatar(:user="item.order.buyer", :size="80")
-            .flex-1.mgl
-                .fz-30.gray {{item.order.buyer.nickname}}
-                .fz-26.light.mgt {{item.create_at | moment}}
-            .btn.bd.fz-26(@click="action('chat', {id: item.buyer_id, name: item.order.buyer.nickname, product: item.product_id})") 联系买家
-        main(@click="action('orderDetail', {id: item.order_no})")
-            .product.fz-26.line-clamp(:type="tab.label") 商品名称：{{item.order.product.title}}
-            .content(v-if="item.description") {{item.description}}
+    opinion-list(:items="tab.items")
     empty(v-if="!tab.items.length", title="暂无评论")
 </template>
 <script>
+import OpinionList from 'component/OpinionList.vue'
 export default {
     name: 'shop-comment-view',
+
+    components: {
+        OpinionList
+    },
 
     data() {
         return {

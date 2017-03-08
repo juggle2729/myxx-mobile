@@ -6,11 +6,11 @@
 <template lang="jade">
     .all-jade.bg.pdt
         .options.bg-white.line-height-100.fz-30.flex
-            .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': current === tab.id}") {{tab.label}}
+            .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
     .list
         product-card(v-for="item in items", :item="item")
 
-    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多优质商品
+    deep-link(v-if="(items.length > 0) && !items.hasMore") 打开美玉秀秀，查看更多优质商品
 </template>
 <script>
 import paging from 'paging'
@@ -55,13 +55,34 @@ export default {
 
     methods: {
         obtain(tab) {
-            // this.current === tab && tab === ('price' || '-price')
-            this.current = tab
-            this.fetch(true, {
-                shop_id: this.$route.params.id,
-                order_by: (this.current === 'sold') ? 'new' : this.current,
-                sell_status: (this.current === 'sold') ? 'sold' : ''
-            })
+            if((this.current === tab) && (tab === ('price' || '-price'))) {
+                this.current = (tab === 'price') ? '-price' : 'price'
+                this.fetch(true, {
+                    shop_id: this.$route.params.id,
+                    order_by: this.current
+                })
+            } else {
+                this.current = tab
+                this.fetch(true, {
+                    shop_id: this.$route.params.id,
+                    order_by: (this.current === 'sold') ? 'new' : this.current,
+                    sell_status: (this.current === 'sold') ? 'sold' : ''
+                })
+            }
+        }
+    },
+
+    events: {
+        scrollToBottom(e) {
+            if(this.current === 'sold') {
+                this.fetch(false, {
+                    shop_id: this.$route.params.id,
+                    order_by: 'new',
+                    sell_status: 'sold'
+                })
+            } else {
+                this.fetch()
+            }
         }
     }
 }

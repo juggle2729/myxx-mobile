@@ -35,6 +35,7 @@ export default {
                     data.title = `【限量】${entry.title}`
                     data.desc = '玉友的新品上线啦！'
                     data.icon = entry.pictures[0]
+                    data.shopId = entry.shop.id
                     break
                 case 'master':
                     data.title = entry.interview.title
@@ -122,9 +123,9 @@ export default {
             // data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
-            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url')
+            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url', 'shopId')
 
-            this.action('shareable', {...this.$root.shareData, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
+            this.action('shareable', {...this.$root.shareData, userId: this.self.id, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
 
             // 设置页面标题
             if(!this.env.isApp) {

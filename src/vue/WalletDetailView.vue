@@ -35,12 +35,13 @@
             div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd hh:MM'}}
             div(v-if="!expect") {{timeTip}} {{item.create_at | date 'yyyy-m-dd hh:MM'}}
         .flex.mgt-40
-            .flex-1.line-clamp-2(:class="{'light-green': item.remark === '等待银行处理'}") {{item.remark}}
+            .flex-3.line-clamp-2(:class="{'light-green': item.remark === '等待银行处理'}") {{item.remark}}
             .red.fz-40.flex-1.right(v-if="expect || $route.params.tab === 'withdraws'")
                 | {{item.trans_amount | price}}
             .red.fz-40.flex-1.right(v-else, :class="{'light-blue': (item.trans_amount < 0 && item.trans_desc === '手续费'), 'light-green': item.trans_amount < 0}")
                 span.symbol {{(item.trans_amount> 0) ? '+' : '-'}}
-                | ￥{{(item.trans_amount > 0) ? item.trans_amount/100 : ~item.trans_amount/100}}
+                span(v-if="item.trans_amount > 0") {{item.trans_amount | price}}
+                span(v-else) {{~item.trans_amount+1 | price}}
     empty(v-if='isEmpty')
 </template>
 <script>
@@ -50,8 +51,8 @@ export default {
 
     data() {
         return {
-            isEmpty: false,
-            items: {},
+            isEmpty: '',
+            items: [],
             expects: false, // 交易中tab
             withdraws: false, // 已提现tab
             bills: false // 总流水tab
@@ -71,14 +72,14 @@ export default {
     route: {
         data({to, next}) {
             if(!this[to.params.tab]) { // 仅第一次访问该tab的时候获取数据
-                this.$fetch(`balance/${to.params.tab}`).then((data) => {
+                return this.$fetch(`balance/${to.params.tab}`).then((data) => {
                     this.items = data.entries
                     this[to.params.tab] = this.items
-                    this.isEmpty = !this.items.length
+                    this.isEmpty = (this.items.length == 0)
                 })
-                next()
             } else {
                 this.items = this[to.params.tab]
+                this.isEmpty = (this.items.length == 0)
                 next()
             }
         }

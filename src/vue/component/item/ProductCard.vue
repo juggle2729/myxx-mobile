@@ -22,7 +22,7 @@
         .mark.fz-30.white(v-if="item.is_tob") 清仓
     .pdv-32.pdh
         .fz-26.line-clamp.mgb-32 {{item.title}}
-        .fz-30(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
+        .fz-30.red(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
         .fz-30.red.price(v-else) {{item.price | price}}
 </template>
 <script>

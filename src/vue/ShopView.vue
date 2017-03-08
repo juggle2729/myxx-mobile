@@ -1,4 +1,5 @@
 <style lang="stylus">
+@import '~style/partials/var'
 .shop-view
     padding-bottom: 110px
     > header
@@ -6,6 +7,13 @@
         position: relative
         background-size: cover
         background-position: center
+        .shop-bg
+            position: absolute
+            bottom: 0
+            height: 120px
+            width: 100%
+            background-size: cover
+            background: url($qn + 'shop/bg.png?v2') repeat-x
         .name
             position: absolute
             bottom: 12px
@@ -17,8 +25,6 @@
             position: absolute
             right: 0
             bottom: 8px
-            &.uncollect
-                width: 120px
     .shop
         .icon-enter
             vertical-align: -2px
@@ -31,6 +37,7 @@
             bottom: 60px
             z-index: 99
             border-radius: 8px
+            border: 4px solid #f9f9f9
     .tabs
         height: 150px
         line-height: 150px
@@ -58,18 +65,19 @@
             height: 48px
             width: 48px
 </style>
-<template lang="jade">
+<template lang="pug">
 .shop-view.bg(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
+        .shop-bg
         .name.flex
             .white.bold.fz-30 {{shop.shop_name}}
             lv(:lv="shop.level")
-        img.collect(:src="shop.is_faved ? 'shop/collected.png' : 'shop/uncollect.png' | qn", :class="{'uncollect': shop.is_faved}", @click="collect(shop.is_faved)")
+        img.collect(:src="'shop/uncollect.png' | qn", @click="gotoDownload")
     .shop.pdh.bg-white.flex.line-height-90.bdb
         .img.mgr-16(v-bg="shop.logo")
         .fz-26.gray.flex.flex-1
             icon(name="location")
-            .mgl-8 {{shop.locale_name}}
+            .mgl-8.mgt-4 {{shop.locale_name}}
         .fz-26.gray.flex(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
             .mgr-12 店铺评价
             icon(name="enter")
@@ -77,38 +85,43 @@
         .tab(@click="action('toast', {text: '敬请期待'})")
             img(:src="'shop/auction.png' | qn")
             .mgt-16.fz-22.light 拍卖
-        .tab(v-for="tab in tabs", @click="view=tab.id", :class="{'red': view === tab.id}")
+        .tab(v-for="tab in tabs", @click="view = tab.id", :class="{'red': view === tab.id}")
             img(:src="(view === tab.id ? tab.selected : tab.unselect )| qn")
             .mgt-16.fz-22 {{tab.label}}
-    component(:is="view", :shop="shop")
+    component(:is="view", :shop="shop", keep-alive)
 
-    .footer.flex.bdt.fz-30.bg-white.gray
+    .footer.flex.bdt.bg-white
         deep-link.has-icon.flex-1.fz-30
             icon.red(name="chat")
-            span 联系卖家
+            span.black 联系卖家
 </template>
 <script>
-import paging from 'paging'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import ProductCard from 'component/item/ProductCard.vue'
 import jade from 'component/AllJade.vue'
 import info from 'component/StoreInfo.vue'
 export default {
     name: 'shop-view',
 
-    mixins: [shareable, paging],
+    ready() {
+        console.log('ready')
+        this.view = this.$route.query.tab || this.tabs[0].id
+        this.$watch('view', tab => {
+            this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab}})
+        })
+    },
+
+    mixins: [shareable],
 
     components: {
         lv,
-        ProductCard,
         jade,
         info
     },
 
     data() {
         return {
-            view: 'jade',
+            view: '',
             tabs: [
                 { id: 'jade', selected: 'shop/jade-selected.png', unselect: 'shop/jade-unselect.png', label: '全部商品'},
                 { id: 'info', selected: 'shop/info-selected.png', unselect: 'shop/info-unselect.png', label: '店铺信息'}
@@ -120,25 +133,17 @@ export default {
     },
 
     route: {
-        data({to}) {
-            return this.$fetch(`mall/shop/${to.params.id}/profile`).then((data) => {
-                this.shop = data
-                this.action('updateTitle', {text: this.shop.shop_name})
-                this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:
-                    this.shop.shop_type === 'studio' ? '工作室' : '店铺'})
-            })
-        }
-    },
-
-    methods: {
-        collect(status) {
-            this.method = status ? this.$put : this.$post
-            this.method('users/favs', {
-                doc_id: this.$route.params.id,
-                doc_type: 'sh'
-            }).then(() => {
-                this.shop.is_faved = !status
-            })
+        data({from, to, next}) {
+            if(from.name !== to.name) {
+                return this.$fetch(`mall/shop/${to.params.id}/profile`).then((data) => {
+                    this.shop = data
+                    this.action('updateTitle', {text: this.shop.shop_name})
+                    this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:
+                        this.shop.shop_type === 'studio' ? '工作室' : '店铺'})
+                })
+            } else {
+                next()
+            }
         }
     }
 }

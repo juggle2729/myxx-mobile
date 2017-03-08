@@ -34,8 +34,9 @@
 </style>
 <template lang="jade">
 .trace-view
-    .basic.fz-30.bdb.flex.pdh-32
-        .img(v-bg='trace.image', holder="true", @click='coverflow([trace.image])')
+    .basic.fz-26.bdb.flex.pdh-32
+        .img(v-if="trace.imgae", v-bg='trace.image', holder="true", @click='coverflow([trace.image])')
+        img.img(v-else, :src="'logistics.png?v2' | qn")
         .flex-1.mgl
             div 物流公司：{{trace.company}}
             .mgt 物流单号：{{trace.express_no}}
@@ -45,7 +46,7 @@
                 .mgb.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
                 .fz-22.gray(:class="{'red bold': $index < 1}") {{item.datetime}}
     .no.center(v-else)
-        img(:src="'logistics.png' | qn")
+        img(:src="'no-logistics.png' | qn")
         .fz-30.gray.mgt-10 暂无物流信息
 </template>
 <script>
