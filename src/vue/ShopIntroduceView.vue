@@ -25,7 +25,7 @@ export default {
     route: {
         data({to}) {
             return this.$fetch(`mall/shop/${this.$route.params.id}/gallery`).then((info) => {
-                this.info = info
+                this.info = info.medias
                 this.medias = []
                 var flag = -1
                 _.forEach(this.info, (item, index) => {

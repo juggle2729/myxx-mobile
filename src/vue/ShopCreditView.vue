@@ -3,7 +3,7 @@
     .light-green
         color: #09bb07
     .symbol
-        vertical-align: 5px
+        vertical-align: 3px
     .line-clamp-2
         width: 0%
         line-height: 1.2

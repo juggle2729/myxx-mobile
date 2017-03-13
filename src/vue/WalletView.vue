@@ -36,9 +36,6 @@
         | 货款转入"可提现金额", 您可以随时提现。
         br
         p 活动期间0服务费，平台不收取任何费用。
-    .rule.fz-30(v-link="{name: 'mall-help-category', params: {category: 'payment'}}")
-        span 查看详细规则
-        icon.gray.fz-24(name="enter")
 </template>
 <script>
 export default {

@@ -4,11 +4,16 @@
         display: none
     .comment-item:last-child
         padding-bottom: 0
-        > .flex-1
-            background-image: none
     .no-comment img
         height: 78px
         width: 92px
+    .all .btn
+        background-color: white
+        color: #cc3f4f
+        text-align: center
+        .icon-enter
+            width: 30px
+            height: 30px
 </style>
 <template lang="jade">
 .comment-list.bg-white
@@ -20,7 +25,10 @@
         img(:src="'no-comment.png' | qn")
         .mgt-32 暂无评论
 
-    deep-link {{tip}}
+    deep-link(v-if="total <= 5") 打开美玉秀秀，参与评论互动
+    deep-link.all(v-else)
+        span 打开美玉秀秀，查看全部{{total}}条评论
+        icon(name="enter")
 </template>
 <script>
 import List from 'component/List.vue'

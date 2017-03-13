@@ -17,7 +17,7 @@
         font-size: .9em
 </style>
 <template lang="jade">
-.product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}}")
+.product-card.bg-white(v-link="{name: 'jade', params: {id: item.id}, query: {referer: 'goods_relatedrecomented'}}")
     .media(v-bg='item.first_picture')
         .mark.fz-30.white(v-if="item.is_tob") 清仓
     .pdv-32.pdh

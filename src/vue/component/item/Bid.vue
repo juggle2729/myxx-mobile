@@ -92,7 +92,7 @@
                 padding-bottom: 40px
 </style>
 <template lang="jade">
-.bid-item.bg-white(v-link="{name: 'jade', params: {id: bid.product.id}}")
+.bid-item.bg-white(v-link="{name: 'jade', params: {id: bid.product.id}, query: {referer: 'goods_bid'}}")
     img.mark(v-if="mark", :src="mark | qn")
     header.flex
         .logo(v-bg="bid.shop.logo")

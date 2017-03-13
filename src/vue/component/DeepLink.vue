@@ -73,15 +73,17 @@ export default {
 
     data() {
         return {
+            href: '',
             backdrop: false
         }
     },
 
-    computed: {
-        href() {
-            const hasUniversalLinkSupport = this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
-            return hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
-        }
+    ready() {
+        const hasUniversalLinkSupport = this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
+        this.href = hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
+        setInterval(() => {
+            this.href = hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
+        }, 2000)
     },
 
     methods: {

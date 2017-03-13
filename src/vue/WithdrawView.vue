@@ -80,7 +80,7 @@ export default {
                 this.balance = data.balance
                 this.name = data.name
                 this.account = data.bank_account
-                data.name && (this.amount = data.balance)
+                data.name && (this.amount = _.floor(data.balance/100))
                 this.showAction()
             })
         }

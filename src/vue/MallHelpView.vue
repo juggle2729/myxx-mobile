@@ -8,7 +8,7 @@
 .mall-help-view.bg.pdv
     .bg-white.mgb(v-for="item in items")
         .line-height-98.fz-30.bold.mgl-32.pdr-32 {{item.name}}
-        .line-height-90.flex.fz-26.bdt.mgl-32.pdr-32(v-for='pro in item.pros', v-link="{path: '/help/mall/' + item.type + '#' + pro.id}")
+        .line-height-90.flex.fz-26.bdt.mgl-32.pdr-32(v-for='pro in item.pros', v-link="{path: '/help/mall-detail/' + item.type + '#' + pro.id}")
             .flex-1 {{pro.title}}
             icon.gray(name="enter")
 </template>

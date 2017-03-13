@@ -9,7 +9,7 @@
 </style>
 <template lang="pug">
 .mall-help-detail.bg-white.pdb-40
-    div(v-for="pro in item.pros")
+    div(v-for="pro in items[type].pros")
         .flex.pdh-32.pdb
             img.dot.mgr-12(:src="'red_dot.png' | qn")
             a.bold.fz-30(:id="pro.id") {{pro.title}}
@@ -21,10 +21,9 @@ export default {
 
     data() {
         return {
-            items: [
-                {
-                    type: 'common',
-                    name: '常见问题',
+            items: {
+                common: {
+                    title: '常见问题',
                     pros: [
                         {
                             id: 'common_1',
@@ -68,9 +67,9 @@ export default {
                             desc: '私下交易已经超过平台保障范围，可能产生的交易纠纷和资金风险平台不做保障，一切风险将有本人承担。'
                         }
                     ]
-                }, {
-                    type: 'customer',
-                    name: '售后问题',
+                },
+                customer: {
+                    title: '售后问题',
                     pros: [
                         {
                             id: 'customer_1',
@@ -102,9 +101,9 @@ export default {
                             desc: '未发货直接退款：1个工作日内钱款会退换至原支付账户\n退货退款：买家寄回退货商品，卖家收到商品后点击确认收货，1个工作日内钱款会退换至原支付账户'
                         }
                     ]
-                }, {
-                    type: 'logistics',
-                    name: '物流问题',
+                },
+                logistics: {
+                    title: '物流问题',
                     pros: [
                         {
                             id: 'logistics_1',
@@ -129,20 +128,18 @@ export default {
                         }
                     ]
                 }
-            ]
+            }
+        }
+    },
+
+    computed: {
+        type() {
+            return _.split(decodeURIComponent(this.$route.params.type), '#', 1)
         }
     },
 
     ready() {
-        this.action('updateTitle', {text: this.item.name})
-    },
-
-    computed: {
-        item() {
-            return _.filter(this.items, (item) => {
-                return item.type === this.$route.params.type
-            })[0]
-        }
+        this.action('updateTitle', {text: this.items[this.type].title})
     }
 }
 </script>

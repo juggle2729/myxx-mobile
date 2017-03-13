@@ -1,6 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .shop-view
+    min-height: 100%
     padding-bottom: 110px
     > header
         height: 300px
@@ -72,7 +73,8 @@
         .name.flex
             .white.bold.fz-30 {{shop.shop_name}}
             lv(:lv="shop.level")
-        img.collect(:src="'shop/uncollect.png' | qn", @click="gotoDownload")
+        deep-link.has-icon
+            img.collect(:src="'shop/uncollect.png' | qn", @click="gotoDownload")
     .shop.pdh.bg-white.flex.line-height-90.bdb
         .img.mgr-16(v-bg="shop.logo")
         .fz-26.gray.flex.flex-1
@@ -104,7 +106,6 @@ export default {
     name: 'shop-view',
 
     ready() {
-        console.log('ready')
         this.view = this.$route.query.tab || this.tabs[0].id
         this.$watch('view', tab => {
             this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab}})

@@ -27,9 +27,9 @@
             .pdv-32.flex.bdb.pdr-32(v-link="{name: 'user', params: {id: shop.owner.id}}")
                 .type.gray 创建者
                 avatar(:user="shop.owner")
-                .mgl.flex-1
+                .mgh.flex-1
                     .mgb-12 {{shop.owner.nickname}}
-                    .fz-26.gray {{shop.owner.title}}
+                    .fz-26.gray.line-clamp {{shop.owner.title}}
                 icon.gray(name="enter")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 店铺等级
@@ -43,20 +43,21 @@
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 入驻时间
                 div {{shop.create_at | date 'yyyy-mm-dd'}}
-        .header.fz-26.gray.bg 店铺介绍
-        .mgh-32.bg-white.mgt-34
-            .fz-30.user-txt.pdb-28 hello
-            .flex
-                .media(v-for="item in items", v-bg="item")
-            .detail.center.fz-26.red(v-link="{name:'shop-introduce', params: {id: $route.params.id}}")
-                span 查看完整店铺介绍
-                icon(name="enter")
-        template(v-if="comments")
+        template(v-if="desc")
+            .header.fz-26.gray.bg 店铺介绍
+            .mgh-32.bg-white.mgt-34
+                .fz-30.user-txt.pdb-28 {{desc}}
+                .flex
+                    .media(v-for="media in medias", track-by="$index", v-bg="media")
+                .detail.center.fz-26.red(v-link="{name:'shop-introduce', params: {id: $route.params.id}}")
+                    span 查看完整店铺介绍
+                    icon(name="enter")
+        template(v-if="comments.length > 0")
             .header.fz-26.gray.bg 店铺评价
             opinion-list(:items="comments")
-        .bdt.detail.center.fz-26.red(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
-            span 查看全部评价
-            icon(name="enter")
+            .bdt.detail.center.fz-26.red(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
+                span 查看全部评价
+                icon(name="enter")
 </template>
 <script>
 import lv from 'component/Lv.vue'
@@ -66,8 +67,9 @@ export default {
 
     data() {
         return {
+            desc: '',
             comments: [],
-            items: ['bbf3347d-68bc-4916-bec4-19a5af64c218', 'b547b5d4-bfed-4322-b2a2-560e69119b13', 'd57dfca5-9677-4872-9e13-a0bc42946d00']
+            medias: []
         }
     },
 
@@ -83,6 +85,12 @@ export default {
     activate(done) {
         return this.$fetch(`mall/shop/${this.$route.params.id}/comments`).then((data) => {
             this.comments = _.take(data.comments, 3)
+            this.$fetch(`mall/shop/${this.$route.params.id}/gallery`).then((info) => {
+                this.desc = info.medias[0].media
+                _.forEach(_.take(_.filter(info.medias, ['media_type', 'picture']),3), (item) => {
+                    this.medias.push(item.media)
+                })
+            })
         }).then(done)
     }
 }

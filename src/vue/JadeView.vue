@@ -13,11 +13,11 @@
         .header
             min-height: 164px
             padding: 28px 32px
-            .fz-44
-                fz-weight: bold
+            .price
+                font-weight: bold
                 &:first-letter
                     font-size: 32px
-                    fz-weight: normal
+                    font-weight: normal
         .title
             margin-bottom: 18px
             line-height: 1.5
@@ -63,7 +63,7 @@
             .line-clamp
                 line-height: 1.2
         .address
-            width: 200px
+            max-width: 200px
         .icon-shop
             height: 44px
             width: 48px
@@ -150,8 +150,9 @@
         .titles.bg-white
             .header
                 .title.fz-32 {{jade.title}}
-                .flex
-                    p.red.fz-44.flex-1 {{jade.price | price}}
+                .flex.red
+                    .fz-30(v-if="jade.sell_status === 'sold'") {{jade.sell_status_editable ? '实体店已售出' : '已售出'}}
+                    .price.fz-44.flex-1(v-else) {{jade.price | price}}
             .guarantee(@click="guarantee")
                 img(:src="'jade/term.png' | qn")
                 icon.fz-26.red(name="enter")
@@ -165,7 +166,7 @@
                 .fz-26.gray.flex
                     icon(name="location")
                     div(:class="{'address': jade.shop.pd_count_today, 'line-clamp-1': jade.shop.pd_count_today}") {{jade.shop.locale_name}}
-                    .new.bg-red.white.fz-48.mgl-32(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
+                    .new.bg-red.white.fz-48.mgl-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
             .center
                 icon(name="shop")
                 .fz-22.gray 进店逛逛

@@ -297,6 +297,26 @@ export default {
         }
     },
 
+    '/shop/guide': {
+        name: 'shop-guide',
+        title: '开店攻略',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopGuideView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/shop/guide-detail/:id': {
+        name: 'guide-detail',
+        title: '内容详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopGuideDetailView.vue'))
+            }, 'shop')
+        }
+    },
+    
     '/shop/instruction': {
         name: 'shop-measure',
         title: '店铺违规说明和处罚措施',
@@ -429,7 +449,7 @@ export default {
         }
     },
 
-    '/help/mall/:type': {
+    '/help/mall-detail/:type': {
         name: 'mall-help-detail',
         component(resolve) {
             require.ensure([], (require) => {

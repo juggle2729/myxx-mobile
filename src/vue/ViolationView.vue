@@ -2,7 +2,7 @@
 .violation-view.bg-white(v-if="!$loadingRouteData")
     .item.mgl-32.pdr-32.pdv-34.fz-30.bdb(v-for="item in items")
         .gray.bold {{item.title}}
-        .mgt-28 {{{item.desc}}}
+        .mgt-28.user-txt {{{item.desc}}}
     .mgl-32.mgt-24.fz-26.gray {{info.create_at | date 'yyyy-m-dd hh:MM'}}
 </template>
 <script>

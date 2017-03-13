@@ -55,7 +55,6 @@
 import CommentList from 'component/CommentList.vue'
 import Topics from 'component/Topics.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
-import ProductSuggestion from 'component/ProductSuggestion.vue'
 import Shop from 'component/Shop.vue'
 import shareable from 'shareable'
 export default {
@@ -65,13 +64,13 @@ export default {
         Topics,
         Shop,
         CommentList,
-        GeneralSuggestion,
-        ProductSuggestion
+        GeneralSuggestion
     },
 
     data() {
         return {
             story: {
+                user: {},
                 medias: []
             }
         }
@@ -87,10 +86,6 @@ export default {
                     .filter(item => item.media_type === 'picture')
                     .map(item => item.media)
                     .value()
-        },
-
-        isSelf() {
-            return _.get(this, 'self.id') === this.story.user.id
         }
     },
     route: {

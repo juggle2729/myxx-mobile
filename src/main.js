@@ -1,4 +1,6 @@
 require('fastclick').attach(document.body)
+require('script-loader!./Umeng')
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
@@ -77,6 +79,11 @@ router.beforeEach(({from, to, next, abort}) => {
         document.title = to.title || '美玉秀秀'
         to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
         next()
+    }
+
+    // 友盟webview统计
+    if(to.router.app.env.isApp && to.query.referer) {
+        window.MobclickAgent.onCCEvent(['goods', to.query.referer])
     }
 })
 

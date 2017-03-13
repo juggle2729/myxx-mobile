@@ -35,7 +35,7 @@
 <template lang="jade">
 .trace-view
     .basic.fz-26.bdb.flex.pdh-32
-        .img(v-if="trace.imgae", v-bg='trace.image', holder="true", @click='coverflow([trace.image])')
+        .img(v-if="trace.image", v-bg="trace.image", @click="coverflow([trace.image])")
         img.img(v-else, :src="'logistics.png?v2' | qn")
         .flex-1.mgl
             div 物流公司：{{trace.company}}
@@ -43,7 +43,7 @@
     div(v-if="trace.routes && trace.routes.length > 0")
         .info.flex(v-for='item in trace.routes', :class="{'new': $index < 1}")
             .route.flex-1
-                .mgb.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
+                .mgb-14.user-txt.fz-26(:class="{'red bold': $index < 1}") {{item.remark}}
                 .fz-22.gray(:class="{'red bold': $index < 1}") {{item.datetime}}
     .no.center(v-else)
         img(:src="'no-logistics.png' | qn")
