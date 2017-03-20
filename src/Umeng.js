@@ -1,7 +1,7 @@
-var isWebviewFlag;
+window.isWebviewFlag;
 
-function setWebViewFlag() {
-    isWebviewFlag = true;
+window.setWebViewFlag = function() {
+    window.isWebviewFlag = true;
 };
 
 function loadURL(url) {
@@ -47,7 +47,9 @@ window.MobclickAgent = {
      *            String类型.事件标签，事件的一个属性说明
      */
     onCCEvent : function(evenArray, evenValue, eventLabel) {
+        console.log(isWebviewFlag)
         if (isWebviewFlag) {
+            console.log(evenArray)
             exec("onCCEvent", [ evenArray, evenValue, eventLabel ]);
         }
     },

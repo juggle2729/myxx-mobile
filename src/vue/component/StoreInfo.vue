@@ -87,9 +87,11 @@ export default {
             this.comments = _.take(data.comments, 3)
             this.$fetch(`mall/shop/${this.$route.params.id}/gallery`).then((info) => {
                 this.desc = info.medias[0].media
-                _.forEach(_.take(_.filter(info.medias, ['media_type', 'picture']),3), (item) => {
-                    this.medias.push(item.media)
-                })
+                _.chain(info.medias)
+                .filter(['media_type', 'picture'])
+                .take(3)
+                .forEach(item => {this.medias.push(item.media)})
+                .value()
             })
         }).then(done)
     }

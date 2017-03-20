@@ -71,10 +71,9 @@
             & + div
                 margin-top: -24px
         .new
-            padding: 10px 32px 8px 32px
             border-radius: 40px
-            transform: scale(.5)
-            transform-origin: left
+            height: 32px
+            line-height: 32px
     .tabs
         width: 100%
         height: 90px
@@ -166,7 +165,7 @@
                 .fz-26.gray.flex
                     icon(name="location")
                     div(:class="{'address': jade.shop.pd_count_today, 'line-clamp-1': jade.shop.pd_count_today}") {{jade.shop.locale_name}}
-                    .new.bg-red.white.fz-48.mgl-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
+                    .new.bg-red.white.fz-22.mgl-16.pdh-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
             .center
                 icon(name="shop")
                 .fz-22.gray 进店逛逛

@@ -14,13 +14,13 @@ export default {
             if(this.$options.events.scrollToBottom.length === 1) {
                 // auto 可以为 undefined 或者 true
                 if (this.paging.auto !== false) {
-                    this.fetch();
+                    this.fetch()
                 }
             }
         }
     },
     methods: {
-        fetch(fresh, other) { // other是针对一个页面多个分页的暂时解决方案
+        fetch(fresh) {
             if(this.items.loading) {
                 console.debug('loading in progress, skip...');
                 return Q(true);
@@ -30,8 +30,7 @@ export default {
                     limit: 10,
                     offset: fresh ? 0 : this.items.length,
                     cursor: this.items.cursor,
-                    ...this.paging.params,
-                    ...other
+                    ...this.paging.params
                 };
                 return this.$fetch(this.paging.path, opts)
                     .then(data => {

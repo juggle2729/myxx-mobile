@@ -24,6 +24,10 @@ export default {
     data() {
         return {
             current: 'hot',
+            params: {
+                shop_id: this.$route.params.id,
+                order_by: 'hot' || this.current
+            },
             tabs: [
                 { id: 'hot', label: '热门'},
                 { id: 'new', label: '最新'},
@@ -46,44 +50,33 @@ export default {
             return {
                 path: 'mall/homepage/searches',
                 list: 'products',
-                params: {
-                    shop_id: this.$route.params.id,
-                    order_by: this.current
-                }
+                params: this.params
             }
         }
     },
 
     methods: {
         obtain(tab) {
-            if((this.current === tab) && (tab === ('price' || '-price'))) {
-                this.current = (tab === 'price') ? '-price' : 'price'
-                this.fetch(true, {
-                    shop_id: this.$route.params.id,
-                    order_by: this.current
-                })
-            } else {
-                this.current = tab
-                this.fetch(true, {
-                    shop_id: this.$route.params.id,
-                    order_by: (this.current === 'sold') ? 'new' : this.current,
-                    sell_status: (this.current === 'sold') ? 'sold' : ''
-                })
+            this.current = ((this.current === tab) && (tab === ('price' || '-price'))) ? ((tab === 'price') ? '-price' : 'price') : tab
+            this.params = {
+                shop_id: this.$route.params.id,
+                order_by: (this.current === 'sold') ? 'new' : this.current,
+                sell_status: (this.current === 'sold') ? 'sold' : ''
             }
+            this.fetch(true)
         }
     },
 
     events: {
         scrollToBottom(e) {
             if(this.current === 'sold') {
-                this.fetch(false, {
+                this.params = {
                     shop_id: this.$route.params.id,
                     order_by: 'new',
                     sell_status: 'sold'
-                })
-            } else {
-                this.fetch()
+                }
             }
+            this.fetch()
         }
     }
 }

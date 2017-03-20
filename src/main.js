@@ -80,10 +80,12 @@ router.beforeEach(({from, to, next, abort}) => {
         to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
         next()
     }
+})
 
-    // 友盟webview统计
+router.afterEach(({to, from}) => {
     if(to.router.app.env.isApp && to.query.referer) {
-        window.MobclickAgent.onCCEvent(['goods', to.query.referer])
+        window.setWebViewFlag()
+        window.MobclickAgent.onCCEvent(['goods', to.query.referer], 0, '商品')
     }
 })
 
