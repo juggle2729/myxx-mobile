@@ -78,7 +78,7 @@ export default {
         showAction() {
             this.action('action', {icon: 'question-2x.png?'})
                 .then(() => {
-                    this.$router.go({name: 'purchase-help'})
+                    this.$router.go({name: 'help-media', params: {type: 'purchase'}})
                 })
         }
     }

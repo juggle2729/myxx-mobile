@@ -1,7 +1,6 @@
 <style lang="stylus">
 .level-help-view
     .lvs
-        padding: 40px 50px 50px
         header
             border-radius: 6px
             height: 80px
@@ -11,56 +10,17 @@
             margin-top: 50px
             .level-comp
                 width: 260px
-    .usage
-        padding: 0 50px 60px
-        h3
-            font-size: 30px
-            padding: 42px 0 32px
-            &::before
-                content: '•'
-                color: #CC3F4F
-                margin-right: 12px
-        p
-            line-height: 1.5
-        .flex
-            label
-                display: inline-block
-                width: 280px
     .desc
         padding: 36px 50px 50px
         line-height: 1.5
 </style>
 <template lang="jade">
 .level-help-view.bg.pdb-30
-    .usage.fz-30.bg-white(v-if="isUserView || self && self.goodsPublishPermission")
-        h3.gray 如何赚取积分？
-        .flex.pdb-50
-            label 商品销售
-            span +(商品价格/40)分
-        .flex.pdb-50
-            label 好评
-            span +10分
-        .flex.pdb-50
-            label 中评
-            span +1分
-        .flex.pdb-50
-            label 差评
-            span -10分
-        .flex.pdb-50
-            label 参与求购竞标
-            span +1分
-        .flex
-            label 商品审核通过
-            span +5分
-        
-        h3.gray 店铺等级有什么用？
-        p 店铺等级将展示在店铺的显眼位置，是买家选择店铺的重要参考标准。
-        p 店铺等级越高，在搜索、推荐、专题中的排名越靠前，同时享受美玉秀秀平台专属推广。
-        h3.gray 如何提高店铺等级？
-        p 通过销售商品、获取评价以及其他行为获得积分，不同的积分对应相应的等级。
+    template(v-if="isUserView || self && self.goodsPublishPermission")
+        help-desc(type="shop_level")
     .desc.fz-30.gray(v-else) 店铺等级受销售额、好评率和退货率影响。等级越高，信誉和商品质量越有保障。
     .hr
-    .lvs.bg-white
+    .lvs.bg-white.pd-50
         header.fz-30.bd-gray 积分等级制度
         .item.flex.fz-30(v-for="(i, point) in lvs")
             lv(:lv="i+1")
@@ -68,11 +28,15 @@
             div {{point}}分
 </template>
 <script>
-import lv from 'component/Lv.vue'
+import Lv from 'component/Lv.vue'
+import HelpDesc from 'component/HelpDesc.vue'
 export default {
     name: 'LevelHelpView',
 
-    components: { lv },
+    components: {
+        Lv,
+        HelpDesc
+    },
 
     data() {
         return {

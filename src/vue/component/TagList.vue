@@ -5,7 +5,7 @@
         display: inline-block
 </style>
 <template lang="pug">
-.tag-list.bg-white.pdb-30.pdt-8.pdh-32
+.tag-list.bg-white.pdb-30.pdt-8.pdh-32.bdb
     .tag.line-height-60.fz-26.gray.bd.pdh.mgr-16(v-for="item in items") {{item.name}} {{item.num}}
 </template>
 <script>

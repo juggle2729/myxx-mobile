@@ -165,16 +165,6 @@ export default {
         }
     },
 
-    '/bid/support-help': {
-        name: 'bid-help-support',
-        title: '专业知识当参谋，帮玉友做选择',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('BidHelpSupportView.vue'))
-            }, 'purchase')
-        }
-    },
-
     '/master/:id': {
         name: 'master',
         title: '人物志',
@@ -297,35 +287,6 @@ export default {
         }
     },
 
-    '/shop/guide': {
-        name: 'shop-guide',
-        title: '开店攻略',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ShopGuideView.vue'))
-            }, 'shop')
-        }
-    },
-
-    '/shop/guide-detail/:id': {
-        name: 'guide-detail',
-        title: '内容详情',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ShopGuideDetailView.vue'))
-            }, 'shop')
-        }
-    },
-    
-    '/shop/instruction': {
-        name: 'shop-measure',
-        title: '店铺违规说明和处罚措施',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('ShopInstructionView.vue'))
-            }, 'shop')
-        }
-    },
 
     '/:id/works': { // 仅分享
         name: 'works',
@@ -374,16 +335,6 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PayOfflineView.vue'))
-            }, 'mall')
-        }
-    },
-
-    '/coupon-rule': {
-        name: 'coupon-rule',
-        title: '优惠券使用规则',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('CouponRuleView.vue'))
             }, 'mall')
         }
     },
@@ -444,36 +395,27 @@ export default {
         title: '帮助',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpView.vue'))
+                resolve(require('HelpMallView.vue'))
             }, 'help')
         }
     },
-
-    '/help/mall-detail/:type': {
-        name: 'mall-help-detail',
+    
+    '/help/shop/guide': {
+        name: 'shop-guide',
+        title: '开店攻略',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('MallHelpDetailView.vue'))
+                resolve(require('HelpShopGuideView.vue'))
             }, 'help')
         }
     },
 
-    '/help/purchase': {
-        name: 'purchase-help',
-        title: '求购竞标',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PurchaseHelpView.vue'))
-            }, 'help')
-        }
-    },
-
-    '/help/level/:id': {
-        name: 'level-help',
+    '/help/shop-level/:id': {
+        name: 'shop-level',
         title: '等级说明',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('LevelHelpView.vue'))
+                resolve(require('HelpShopLevelView.vue'))
             }, 'help')
         }
     },
@@ -488,19 +430,8 @@ export default {
         }
     },
 
-    '/help/medal/identity': {
-        name: 'identity-medal',
-        title: '身份认证',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('MedalView.vue'));
-            }, 'help')
-        }
-    },
-
-    '/help/medal/author': {
-        name: 'author-medal',
-        title: '精华内容作者',
+    '/help/medal/:type': {
+        name: 'medal',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('MedalView.vue'));
@@ -518,32 +449,49 @@ export default {
         }
     },
 
-    '/help/level/personal': {
-        name: 'personal-level',
-        title: '等级介绍',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('PersonalLevelView.vue'));
-            }, 'help')
-        }
-    },
-
-    '/help/recognition': {
-        name: 'recognition-help',
-        title: '认同度',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('RecognitionView.vue'));
-            }, 'help')
-        }
-    },
-
-    '/best-practice': {
+    '/help/best-practice': {
         name: 'best-practice',
         title: '玩转美玉秀秀',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('BestPracticeView.vue'));
+                resolve(require('HelpBestPracticeView.vue'));
+            }, 'help')
+        }
+    },
+
+    '/help/shop-promise/:id': {
+        name: 'help-shop-promise',
+        title: '店铺服务承诺',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpShopPromiseView.vue'));
+            }, 'help')
+        }
+    },
+
+    '/help/promise-detail/:type': {
+        name: 'promise-detail',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpPromiseDetailView.vue'));
+            }, 'help')
+        }
+    },
+
+    '/help/media/:type': {
+        name: 'help-media',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMediaView.vue'));
+            }, 'help')
+        }
+    },
+
+    '/help/desc/:type': {
+        name: 'help-desc',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpDescView.vue'));
             }, 'help')
         }
     },

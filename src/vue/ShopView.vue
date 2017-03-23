@@ -74,7 +74,7 @@
             .white.bold.fz-30 {{shop.shop_name}}
             lv(:lv="shop.level")
         deep-link.has-icon
-            img.collect(:src="'shop/uncollect.png' | qn", @click="gotoDownload")
+            img.collect(:src="'shop/follow.png' | qn", @click="gotoDownload")
     .shop.pdh.bg-white.flex.line-height-90.bdb
         .img.mgr-16(v-bg="shop.logo")
         .fz-26.gray.flex.flex-1

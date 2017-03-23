@@ -105,7 +105,18 @@ router.alias({
     '/recommend/follower': 'follow-suggestion',
     '/ranking/weekly': '/top-master',
     '/evaluation/:id': '/question/:id',
-    '/result/:id/:result': '/answer/:id'
+    '/result/:id/:result': '/answer/:id',
+    // 以下v3.2版本修改
+    '/help/purchase': '/help/media/purchase',
+    '/coupon-rule': '/help/desc/coupon',
+    '/best-practice': '/help/best-practice',
+    '/help/level/personal': '/help/media/personal_level',
+    '/help/recognition': '/help/desc/recognition',
+    '/shop/guide': '/help/shop-guide',
+    '/shop/guide-detail/:id': '/help/media/:type',
+    '/shop/instruction': '/help/media/instruction',
+    '/help/level/:id': '/help/shop-level/:id',
+    '/help/mall-detail/:type': '/help/desc/:type'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');

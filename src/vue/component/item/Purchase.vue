@@ -58,7 +58,7 @@
         header.flex.fz-26
             avatar(:user='item.owner', :size='50')
             .name.gray.flex-1 {{item.owner.nickname}}
-            .guarantee.fz-22.gray.bd(v-if="paid", v-link="{name: 'purchase-help', query: {subject: 'guarantee'}}")
+            .guarantee.fz-22.gray.bd(v-if="paid", v-link="{name: 'help-media', params: {type: 'guarantee'}}")
                 img(:src="'icon/guarantee.png' | qn")
                 span 保证金已付
             .txt-right.flex-1.red(v-else) 未支付保证金
