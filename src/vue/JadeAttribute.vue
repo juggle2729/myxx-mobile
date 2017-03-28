@@ -30,6 +30,7 @@ export default {
             attrs: [
                 {k: 'category', l: '分类'},
                 {k: 'size', l: '尺寸'},
+                {k: 'circle_size', l: '圈口'},
                 {k: 'weight', l: '重量'},
                 {k: 'variety', l: '种类'},
                 {k: 'place', l: '产地'},

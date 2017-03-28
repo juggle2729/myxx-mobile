@@ -7,14 +7,14 @@
 <template lang="pug">
 .help-media-view(:class="{'bg-light': bg}")
     img(:src="help.medias[$route.params.type].media | qn")
-
-    //- template(v-if="$route.params.type === 'instruction'")
-    //-     img(v-if="$index>0", v-for="item in 7", :src="'shop/instruction/'+item+'.png' | qn")
 </template>
 <script>
 import help from '../help'
+import shareable from 'shareable'
 export default {
     name: 'help-media-view',
+
+    mixins: [shareable],
 
     data() {
         return {
@@ -23,6 +23,7 @@ export default {
     },
 
     ready() {
+        this.setShareData({title: help.medias[this.$route.params.type].title})
         this.action('updateTitle', { text: help.medias[this.$route.params.type].title })
     },
 

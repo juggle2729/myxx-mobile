@@ -3,15 +3,16 @@ export default {
         'purchase': { media: 'purchase/purchase.png', title: '求购竞标'},
         'guarantee': { media: '/purchase/purchase-guarantee.png', title: '什么是保证金'},
         'personal_level': { media: 'user/personal_level.png', title: '等级介绍'},
-        'instruction': { media: 'shop/instruction.png', title: '店铺违规说明和处罚措施'},
-        'guide_1': { media: 'shop/guide/1.png?v2', title: '内容详情' },
-        'guide_2': { media: 'shop/guide/2.png?v2', title: '内容详情' },
-        'guide_3': { media: 'shop/guide/3.png?v2', title: '内容详情' },
-        'guide_4': { media: 'shop/guide/4.png?v2', title: '内容详情' },
-        'guide_5': { media: 'shop/guide/5.png?v2', title: '内容详情' },
-        'guide_6': { media: 'shop/guide/6.png?v2', title: '内容详情' },
-        'guide_7': { media: 'shop/guide/7.png?v2', title: '内容详情' },
-        'guide_8': { media: 'shop/guide/8.png?v2', title: '内容详情' }
+        'instruction': { media: 'shop/instruction.png', title: '店铺违规说明和处罚措施！' },
+        'guide_2': { media: 'shop/guide/2.png?v2', title: '想要更多关注和订单？教你几招' },
+        'guide_3': { media: 'shop/guide/3.png?v2', title: '评价是店铺的“最强代言人”' },
+        'guide_4': { media: 'shop/guide/4.png?v2', title: '店铺积分对我来说有何用？' },
+        'guide_5': { media: 'shop/guide/5.png?v2', title: '如何打造个性化店铺？' },
+        'guide_6': { media: 'shop/guide/6.png?v2', title: '买家付的钱去哪里了？如何提现？' },
+        'guide_7': { media: 'shop/guide/7.png?v2', title: '平台交易规则是怎样的？' },
+        'guide_8': { media: 'shop/guide/8.png?v2', title: '平台退货规则是怎样的？' },
+        'guide_9': { media: 'shop/guide/9.png?v3', title: '自然光标记是什么？有什么好处？' },
+        'guide_10': { media: 'shop/guide/10.png?v3', title: '烟标图标记是什么？有什么好处？' },
     },
     desc: {
         'jade_problem': {
@@ -223,7 +224,7 @@ export default {
             items: [
                 {
                     title: '店铺服务承诺',
-                    content: '店铺服务承诺是美玉秀秀退出的旨在提升平台交易中消费者合法权益和体验的服务体系。\n“三天无条件退货”，为加入店铺服务承诺的必选项。\n“烟标图”、“自然光拍摄”等都是其中的服务之一，由卖家自行选择加入。'
+                    content: '店铺服务承诺是美玉秀秀推出的旨在提升平台交易中消费者合法权益和体验的服务体系。\n“三天无条件退货”，为加入店铺服务承诺的必选项。\n“烟标图”、“自然光拍摄”等都是其中的服务之一，由卖家自行选择加入。'
                 }, {
                     title: '加入“店铺服务承诺”的优势有：',
                     content: '1、在您的商品上加上特殊标记，并有独立的筛选功能，让您商品可以马上被买家找到；\n2、拥有相关服务标记的商品，可信度高，买家更容易接受；\n3、为提高交易质量，部分活动只针对加入保障计划的店铺和商品开放'
@@ -233,8 +234,7 @@ export default {
                 }
             ]
         },
-        'shop_smoke': {
-            btn: true, // 是否在说明页面显示按钮
+        'cigar_scale': {
             title: '烟标图',
             items: [
                 {
@@ -252,8 +252,7 @@ export default {
                 }
             ]
         },
-        'shop_sun': {
-            btn: true,
+        'sunlight': {
             title: '自然光拍摄',
             items: [
                 {
@@ -272,7 +271,6 @@ export default {
             ]
         },
         'shop_return': {
-            btn: true,
             title: '三天无理由退货',
             items: [
                 { title: '任何入驻美玉秀秀的店铺必须遵守 [三天无理由退货] 基本服务。' },

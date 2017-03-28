@@ -5,8 +5,8 @@
 </style>
 <template lang="pug">
 .shop-comments-view
-    tag-list
-    .line-height-100.flex.fz-26.gray.bdb.pdh-32(@click="onlyContent")
+    tag-list(v-if="items.tags && (items.tags.length > 0)", :tags="items.tags")
+    .line-height-100.flex.fz-26.gray.bdb.pdh-32(@click="onlyContent", v-if="items.length")
         icon(:name="selected ? 'selected' : 'select'")
         .mgl-12 只看有内容的评价
     opinion-list(:items="items")
@@ -20,6 +20,13 @@ export default {
 
     mixins: [paging],
 
+    data() {
+        return {
+            selected: false,
+            params: {}
+        }
+    },
+
     components: {
         OpinionList,
         TagList
@@ -29,7 +36,8 @@ export default {
         paging() {
             return {
                 path: `mall/shop/${this.$route.params.id}/comments`,
-                list: 'comments'
+                list: 'comments',
+                params: this.params
             }
         }
     },
@@ -37,6 +45,8 @@ export default {
     methods: {
         onlyContent() {
             this.selected = !this.selected
+            this.params = this.selected ? { has_content: true } : {}
+            this.fetch(true)
         }
     }
 }

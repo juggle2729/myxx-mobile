@@ -1,5 +1,5 @@
 <template lang="pug">
-.violation-view.bg-white(v-if="!$loadingRouteData")
+.violation-detail.bg-white(v-if="!$loadingRouteData")
     .item.mgl-32.pdr-32.pdv-34.fz-30.bdb(v-for="item in items")
         .gray.bold {{item.title}}
         .mgt-28.user-txt {{{item.desc}}}
@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-    name: 'violation-view',
+    name: 'violation-detail',
 
     data() {
         return {

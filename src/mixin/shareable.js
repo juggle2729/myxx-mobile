@@ -109,7 +109,7 @@ export default {
                     data.desc = '美玉秀秀-最大的和田玉线上交易平台'
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'
                     break
-                case 'guide-detail':
+                case 'help-media':
                     data.title = entry.title
                     data.desc = '美玉秀秀-最大的和田玉线上交易平台'
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'

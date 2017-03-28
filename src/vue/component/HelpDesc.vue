@@ -14,7 +14,7 @@
     .mgt-36(v-for="item in help.desc[type].items")
         .flex.mgh-32.mgb
             img.dot.mgr-12(:src="'red_dot.png' | qn")
-            a.fz-30.bold(:id="item.id") {{item.title}}
+            a.fz-30.bold.user-txt(:id="item.id") {{item.title}}
         .content.fz-26.gray.user-txt {{{item.content | input}}}
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
     },
 
     ready() {
-        this.title && this.action('updateTitle', { text: help.desc[this.type].title })
+        this.title && this.action('updateTitle', { text: this.help.desc[this.type].title })
     },
 
     data() {

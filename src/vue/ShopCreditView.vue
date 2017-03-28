@@ -50,7 +50,7 @@ export default {
         showAction() {
             this.action('action', {label: '等级说明'})
                 .then(() => {
-                    this.$router.go({name: 'level-help', params: {id: this.$route.params.id}})
+                    this.$router.go({name: 'shop-level', params: {id: this.$route.params.id}})
                 })
         }
     }

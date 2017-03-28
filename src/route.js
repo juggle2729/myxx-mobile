@@ -128,7 +128,7 @@ export default {
     '/purchases': {
         name: 'purchases',
         title: '求购竞标',
-        component(resolve) {
+        component(resolve) {purchase
             require.ensure([], (require) => {
                 resolve(require('PurchasesView.vue'))
             }, 'purchase')
@@ -268,11 +268,11 @@ export default {
     },
 
     '/shop/:id/violation': {
-        name: 'shop-violation',
+        name: 'violation-detail',
         title: '违规详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('ViolationView.vue'))
+                resolve(require('ViolationDetailView.vue'))
             }, 'shop')
         }
     },
@@ -287,6 +287,15 @@ export default {
         }
     },
 
+    '/shop/violation': {
+        name: 'shop-violation',
+        title: '店铺违规记录',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopViolationView.vue'))
+            }, 'shop')
+        }
+    },
 
     '/:id/works': { // 仅分享
         name: 'works',
@@ -399,8 +408,18 @@ export default {
             }, 'help')
         }
     },
-    
-    '/help/shop/guide': {
+
+    '/help/mall/terms': {
+        name: 'mall-terms',
+        title: '美玉秀秀商城入驻协议',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMallTermsView.vue'))
+            }, 'help')
+        }
+    },
+
+    '/help/shop-guide': {
         name: 'shop-guide',
         title: '开店攻略',
         component(resolve) {
@@ -459,7 +478,7 @@ export default {
         }
     },
 
-    '/help/shop-promise/:id': {
+    '/help/shop-promise': {
         name: 'help-shop-promise',
         title: '店铺服务承诺',
         component(resolve) {
@@ -479,7 +498,7 @@ export default {
     },
 
     '/help/media/:type': {
-        name: 'help-media',
+        name: 'help-media', // 图片帮助页面模板
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('HelpMediaView.vue'));
@@ -487,7 +506,7 @@ export default {
         }
     },
 
-    '/help/desc/:type': {
+    '/help/desc/:type': { // 文本帮助页面模板
         name: 'help-desc',
         component(resolve) {
             require.ensure([], (require) => {
