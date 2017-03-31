@@ -2,10 +2,13 @@
 .store-info
     .header
         padding: 28px 32px 16px
-    img.refund
+    img
         display: block
         height: 30px
-        width: 164px
+        &.refund
+            width: 164px
+        &.type
+            width: 128px
     .icon-enter
         height: 26px
         width: 26px
@@ -25,10 +28,12 @@
         .header.fz-26.gray.bg 基本信息
         .mgl-32.fz-30
             .pdv-32.flex.bdb.pdr-32(v-link="{name: 'user', params: {id: shop.owner.id}}")
-                .type.gray 创建者
+                .type.gray 掌柜
                 avatar(:user="shop.owner")
                 .mgh.flex-1
-                    .mgb-12 {{shop.owner.nickname}}
+                    .flex
+                        .mgb-12 {{shop.owner.nickname}}
+                        img.mgl-8.mgb-10(v-if="shop.owner.vip_flag", :src="'profile/'+shop.owner.role+'.png' | qn")
                     .fz-26.gray.line-clamp {{shop.owner.title}}
                 icon.gray(name="enter")
             .line-height-100.flex.fz-30.bdb.pdr-32
@@ -39,7 +44,8 @@
                 img.refund(:src="'shop/refund.png' | qn")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 店铺类型
-                div {{config.shopType[shop.shop_type]}}
+                .mgr-8 {{config.shopType[shop.shop_type]}}
+                img.type(v-if="shop.auth_flag", :src="type | qn")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 入驻时间
                 div {{shop.create_at | date 'yyyy-mm-dd'}}
@@ -70,6 +76,12 @@ export default {
             desc: '',
             comments: [],
             medias: []
+        }
+    },
+
+    computed: {
+        type() {
+            return this.shop.shop_type === 'person' ? 'shop/name.png' : 'shop/licence.png'
         }
     },
 

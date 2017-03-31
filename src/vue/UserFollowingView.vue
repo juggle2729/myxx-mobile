@@ -27,7 +27,7 @@ export default {
     },
     computed: {
         views() {
-            return {'question': '问题', 'topic': '话题', 'collection': '专辑', 'user': '用户'}
+            return {'user': '用户', 'collection': '专辑', 'topic': '话题', 'question': '问题'}
         }
     }
 }

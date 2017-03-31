@@ -23,12 +23,12 @@
     .hr
     .pdl-32.fz-30.bg-white
         .line-height-100.bdb.bold 商品标记
-        .line-height-100.flex.bdb.pdr-32(v-if="items[profile.sunlight]", v-link="items[profile.sunlight].interaction ? {name: 'promise-detail', params: {type: 'sunlight'}, query: {isOpen: profile.sunlight}} : ''")
+        .line-height-100.flex.bdb.pdr-32(v-if="items[profile.sunlight]", v-link="items[profile.sunlight].interaction ? {name: 'promise-detail', params: {type: 'sunlight'}, query: {isOpen: profile.sunlight, num: profile.products_count}} : ''")
             img(:src="'shop/promise/sun.png' | qn")
             .mgl-12.flex-1 自然光拍摄
             .mgr-12(v-if="items[profile.sunlight]", :class="[items[profile.sunlight].color]") {{items[profile.sunlight].title}}
             icon.gray(name="enter", v-if="profile.sunlight != 'auditing'")
-        .line-height-100.flex.pdr-32(v-if="items[profile.cigar_scale]", v-link="items[profile.cigar_scale].interaction ? {name: 'promise-detail', params: {type: 'cigar_scale'}, query: {isOpen: profile.cigar_scale}} : ''")
+        .line-height-100.flex.pdr-32(v-if="items[profile.cigar_scale]", v-link="items[profile.cigar_scale].interaction ? {name: 'promise-detail', params: {type: 'cigar_scale'}, query: {isOpen: profile.cigar_scale, num: profile.products_count}} : ''")
             img(:src="'shop/promise/smoke.png' | qn")
             .mgl-12.flex-1 烟标图
             .mgr-12(v-if="items[profile.cigar_scale]", :class="[items[profile.cigar_scale].color]") {{items[profile.cigar_scale].title}}

@@ -5,7 +5,7 @@
 </style>
 <template lang="pug">
 .shop-comments-view
-    tag-list(v-if="items.tags && (items.tags.length > 0)", :tags="items.tags")
+    tag-list(v-if="tags && (tags.length > 0)", :tags="tags")
     .line-height-100.flex.fz-26.gray.bdb.pdh-32(@click="onlyContent", v-if="items.length")
         icon(:name="selected ? 'selected' : 'select'")
         .mgl-12 只看有内容的评价
@@ -23,13 +23,22 @@ export default {
     data() {
         return {
             selected: false,
-            params: {}
+            params: {},
+            tags: []
         }
     },
 
     components: {
         OpinionList,
         TagList
+    },
+
+    route: {
+        data({to}) {
+            return this.$fetch(`mall/shop/${to.params.id}/comments`).then(data => {
+                this.tags = data.tags
+            })
+        }
     },
 
     computed: {

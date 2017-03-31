@@ -11,7 +11,7 @@
             .flex-1 {{item.type}}
             div {{item.create_at | date 'yyyy-m-dd hh:MM'}}
         .flex.mgt-40
-            .flex-1.line-clamp-2 {{item.desc}}
+            .flex-1.line-clamp-2.mgr {{item.desc}}
             icon(name="enter")
 </template>
 <script>

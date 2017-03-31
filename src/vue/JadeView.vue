@@ -193,7 +193,7 @@
                 .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
-            deep-link.has-icon.flex-2.buy-btn.bg-red.white.fz-30 立即购买
+            deep-link.has-icon.flex-2.buy-btn.bg-red.white.fz-30 {{(jade.sell_status==='selling') ? '立即购买' : '已售出'}}
         .float-box.flex.fixed.fz-30.bg-white(v-else)
             .bdt.flex-1.flex
                 .flex.flex-1.red.contact-btn.bdr(@click='contact')

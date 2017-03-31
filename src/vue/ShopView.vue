@@ -20,6 +20,10 @@
             bottom: 12px
             left: 156px
             -webkit-box-align: baseline
+        .fans
+            position: absolute
+            left: 370px
+            bottom: 0
         img.collect
             height: 52px
             width: 152px
@@ -70,9 +74,11 @@
 .shop-view.bg(v-if='!$loadingRouteData')
     header(v-bg='shop.image_bg')
         .shop-bg
-        .name.flex
-            .white.bold.fz-30 {{shop.shop_name}}
-            lv(:lv="shop.level")
+        .name.flex.white
+            .bold.fz-30 {{shop.shop_name}}
+            .mgr-8.center.fans
+                .fz-26.mgb-4 {{shop.owner.fans_count}}
+                .fz-22 粉丝
         deep-link.has-icon
             img.collect(:src="'shop/follow.png' | qn", @click="gotoDownload")
     .shop.pdh.bg-white.flex.line-height-90.bdb

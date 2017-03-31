@@ -41,11 +41,15 @@ export default {
     methods: {
         apply(type) {
             if(!this.isOpen) {
-                this.$post('users/shop_certs', { cert_type: type}).then(resp => {
-                    this.result = true
-                }, err => {
-                    this.action('toast', {success: 0, text: err.message})
-                })
+                if(this.$route.query.num > '20') {
+                    this.$post('users/shop_certs', { cert_type: type}).then(resp => {
+                        this.result = true
+                    }, err => {
+                        this.action('toast', {success: 0, text: err.message})
+                    })
+                } else {
+                    this.action('toast', {text: '商品数量不足20个'})
+                }
             }
         }
     }
