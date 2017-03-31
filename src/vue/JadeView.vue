@@ -256,6 +256,7 @@ export default {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$fetch('mall/products/'+ this.$route.params.id)
                     .then(jade => {
+                        _.update(jade, 'circle_size', size => size ? size/100 : '')
                         this.setShareData(jade)
                         this.isSelf = (_.get(this, 'self.id') == (jade.owner.id || jade.default_admin.id))
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1

@@ -22,7 +22,7 @@ export default {
 
     data() {
         return {
-            view: 'question'
+            view: 'user'
         }
     },
     computed: {

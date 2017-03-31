@@ -128,7 +128,7 @@ export default {
     '/purchases': {
         name: 'purchases',
         title: '求购竞标',
-        component(resolve) {purchase
+        component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PurchasesView.vue'))
             }, 'purchase')

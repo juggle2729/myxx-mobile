@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
-    "start": "webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 0.0.0.0 --port 80",
+    "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 0.0.0.0 --port 80",
     "build": "NODE_ENV=production webpack --progress --hide-modules",
+    "build:www": "webpack --config webpack.www.config.js --progress --hide-modules",
     "stat": "NODE_ENV=production webpack --json > stat.json"
   },
   "devDependencies": {

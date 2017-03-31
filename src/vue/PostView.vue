@@ -69,7 +69,7 @@
         template(v-for="item in post.medias")
             img(v-if="item.media_type === 'picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
-            .jade.flex.mgt-32.bd(v-if="item.media_type === 'pd'", v-link="{name: 'jade', params: {id: item.media.id}}")
+            .jade.flex.mgt-32.bd-light(v-if="item.media_type === 'pd'", v-link="{name: 'jade', params: {id: item.media.id}}")
                 .img(v-bg="item.media.cover")
                 .fz-30.mgh.flex-1.pdv-28.content
                     .line-clamp-2.bold.user-txt {{item.media.title}}

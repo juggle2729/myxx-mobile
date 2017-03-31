@@ -24,6 +24,8 @@
             position: absolute
             left: 370px
             bottom: 0
+            > div
+                white-space: nowrap
         img.collect
             height: 52px
             width: 152px

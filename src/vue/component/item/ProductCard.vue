@@ -18,7 +18,7 @@
     img
         display: block
         height: 30px
-        width: 80px 
+        width: 80px
     .price::first-letter
         font-size: .9em
 </style>

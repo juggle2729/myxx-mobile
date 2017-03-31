@@ -32,8 +32,8 @@
     .fz-30.bdb.pd-32(v-for='item in items')
         .flex.fz-22.gray
             .flex-1 {{item.trans_desc}}
-            div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd hh:MM'}}
-            div(v-if="!expect") {{timeTip}} {{item.create_at | date 'yyyy-m-dd hh:MM'}}
+            div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd HH:MM'}}
+            div(v-if="!expect") {{timeTip}} {{item.create_at | date 'yyyy-m-dd HH:MM'}}
         .flex.mgt-40
             .flex-3.line-clamp-2(:class="{'light-green': item.remark === '等待银行处理'}") {{item.remark}}
             .red.fz-40.flex-1.right(v-if="expect || $route.params.tab === 'withdraws'")
