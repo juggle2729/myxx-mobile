@@ -79,16 +79,36 @@ export default {
                 }
             ]
         },
-        'coupon': {
+        'use_coupon': {
+            title: '优惠券使用规则',
             items: [
                 {
-                    title: '如何使用优惠券',
-                    content: '下单后，系统会自动选取满足条件的优惠券进行减额'
+                    title: '优惠券使用规则',
+                    content: `1. 单笔订单只能使用1张店铺优惠券和1张平台优惠卷，不支持同时使用多张店铺优惠卷。
+                            2. 使用优惠券的订单，若产生退货和退款，优惠券均不退回，退款金额按优惠后的最大可退金额退款，计算方式为：最大可退金额=需退款商品原价-订单中优惠的金额*（需退款商品原价/订单原价）。
+                            例：订单总价100元，其中使用20元店铺优惠券，交易成功后，要退其中原价为30元的商品，则可退金额为：30-20*（30/100）= 24元。 3. 请在有效期内使用优惠券, 未使用的优惠券过期后, 将自动作废。
+                            4. 店铺优惠卷由商家创建并发放，平台仅提供技术支持。`
+                }
+            ]
+        },
+        'create_coupon': {
+            title: '优惠券须知',
+            items: [
+                {
+                    title: '优惠券创建须知',
+                    content: `1. 一个店铺最多同时存在5种不同面额的优惠券。
+                            2. 优惠券减扣的金额和成本由店铺自身承担，平台只提供技术支持。
+                            3. 请谨慎选择优惠券面值和使用条件，优惠券创建后只能删除不能修改。`
                 }, {
-                    title: '使用规则',
-                    content: '1. 首单券：首次下单即可使用 \n2. 满减券：下单时金额满足满减条件后即可使用\n'+
-                        '3. 同一个订单同一类优惠券最多只能使用一张\n4. 取消订单时，自动退回对应的优惠券\n'+
-                        '5. 拒收或退货时，不退回对应的优惠券\n6. 优惠券必须在其有效期内使用。建议打开美玉秀秀APP消息推送，及时接收优惠券过期提醒'
+                    title: '优惠券能使用几张？',
+                    content: `1. 一个订单只能使用一张店铺优惠卷，按最大满足条件使用，例如订单金额为8000，买家领取了5000减500和2000减100优惠券，那么该订单使用的优惠卷为【5000减500】。
+                            2. 店铺优惠券可以和平台优惠券叠加使用。`
+                }, {
+                    title: '在哪里领取优惠券？',
+                    content: '正在发放中的优惠卷将在【商品详情页】和【店铺主页】中公开被所有用户领取。'
+                }, {
+                    title: '优惠券删除之后，还能被使用吗？',
+                    content: '删除后，买家无法再次领取，但已经被领取的优惠券在有效期内依然可以使用。'
                 }
             ]
         },
@@ -205,12 +225,15 @@ export default {
             items: [
                 {
                     title: '如何赚取积分？',
-                    content: '商品销售&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+（商品价格/40）\n'+
-                    '好评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+10分\n'+
-                    '中评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+1分\n'+
-                    '差评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-10分\n'+
-                    '参与求购竞标&emsp;&emsp;&emsp;&emsp;&emsp;+1分\n'+
-                    '商品审核通过&emsp;&emsp;&emsp;&emsp;&emsp;+5分\n'
+                    content: `商品销售&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+(商品价格/40)
+                    好评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+10分
+                    中评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+1分
+                    差评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-10分
+                    参与求购竞标&emsp;&emsp;&emsp;&emsp;&emsp;+1分
+                    商品审核通过&emsp;&emsp;&emsp;&emsp;&emsp;
+                    商品数量0-100&emsp;&emsp;&emsp;&emsp; +5分
+                    商品数量101-200&emsp;&emsp;&emsp;+3分
+                    商品数量201以上&emsp;&emsp;&emsp;+1分`
                 }, {
                     title: '店铺等级有什么用？',
                     content: '店铺等级将展示在店铺的显眼位置，是买家选择店铺的重要参考标准。\n店铺等级越高，在搜索、推荐、专题中的排名越靠前，同时享受美玉秀秀平台专属推广。'

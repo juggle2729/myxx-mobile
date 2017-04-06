@@ -116,7 +116,9 @@ router.alias({
     '/shop/guide-detail/:id': '/help/media/:type',
     '/shop/instruction': '/help/media/instruction',
     '/help/level/:id': '/help/shop-level/:id',
-    '/help/mall-detail/:type': '/help/desc/:type'
+    '/help/mall-detail/:type': '/help/desc/:type',
+    // v3.3修改
+    '/help/desc/coupon': '/help/desc/use_coupon'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');
