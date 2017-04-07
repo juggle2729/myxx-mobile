@@ -297,6 +297,12 @@ export default {
         }
     },
 
+    '/shop/:id/coupon': {
+        name: 'shop-coupon',
+        title: '送你N张优惠券，赶紧进店看看吧!',
+        component: resolve => require.ensure([], require => resolve(require('ShopCouponView.vue')), 'share')
+    },
+
     '/:id/works': { // 仅分享
         name: 'works',
         title: '作品展示',
@@ -397,7 +403,6 @@ export default {
             }, 'complain')
         }
     },
-
 
     '/help/mall': {
         name: 'mall-help',
