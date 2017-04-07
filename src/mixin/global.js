@@ -166,6 +166,7 @@ const mixin = {
                                                 console.debug(404, path)
                                             }
                                         } else {
+                                            this.action('toast', {success: '0', text: resp.message || '出错了'})
                                             console.debug(`[${resp.status}]${path}\n${resp.message}`)
                                         }
                                     }

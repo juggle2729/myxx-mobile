@@ -117,13 +117,11 @@ for $dis in block inline-block none
 $line-clamp
     overflow: hidden
     word-break: break-all
-
     text-overflow: ellipsis
 .line-clamp, .line-clamp-1
     @extends $line-clamp
     -webkit-line-clamp: 1
     white-space: nowrap
-    line-height: 1.2
 .line-clamp-2
     @extends $line-clamp
     display: -webkit-box
