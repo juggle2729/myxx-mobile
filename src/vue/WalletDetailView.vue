@@ -62,7 +62,7 @@ export default {
 
     computed: {
         hasShop() {
-            return _.has(this, 'self.shop_id') || _.has(this, 'self.shopId')
+            return true || _.has(this, 'self.shop_id') || _.has(this, 'self.shopId')
         },
 
         expect() {

@@ -1,5 +1,4 @@
 <style lang="stylus">
-@import '~style/partials/mixin'
 .topics-component
     padding: 0px 32px 10px
     font-size: 0

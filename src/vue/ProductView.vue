@@ -1,5 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
+@import '~style/partials/mixin'
 .product-view
     position: relative
     .prod-video
@@ -58,6 +59,10 @@
         .bd-red
             border-radius: 6px
             padding: 8px 20px
+        .deep-link .btn //reset deep-link style
+            border-radius: 6px
+            padding: 8px 20px
+            border(a, #cc3f4f)
     .shop
         height: 144px
         padding: 0 32px
@@ -163,9 +168,10 @@
                 img(:src="'product/term.png' | qn")
                 icon.fz-26.red(name="enter")
         .hr
-        .coupon.flex.fz-26.red.pdh-32.bdb(v-if="false")
-            .flex-1 5张店铺优惠券发放中
-            .bd-red(@click="getCoupon") 领券
+        .coupon.flex.fz-26.red.pdh-32.bdb(v-if="prod.shop.coupon_count")
+            .flex-1 {{prod.shop.coupon_count}}张店铺优惠券发放中
+            deep-link.has-icon(v-if="env.isShare") 领券
+            .bd-red(v-else, @click="getCoupon") 领券
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
             .img(v-bg='prod.shop.logo')
             .flex-1
@@ -294,6 +300,7 @@ export default {
                 this.action('orderConfirm', {product: this.prod.id})
             }
          },
+
         contact() {
             if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'})
@@ -301,9 +308,11 @@ export default {
                 this.action('chat', {id: this.prod.default_admin.id, name: this.prod.default_admin.nickname, product: this.prod.id})
             }
         },
+
         go(tab) { // FIXME 采用v-link替代
             (this.$route.params.tab !== tab) && this.$router.replace(`/product/${this.prod.id}/${tab}`)
         },
+
         collect(tab) {
             // TODO api
             const api = 'users/favs'
@@ -326,8 +335,8 @@ export default {
         },
 
         getCoupon() {
-            this.action('toast', {
-                text: '领券'
+            this.action('couponList', {
+                shop: this.prod.shop.id
             })
         }
     },
