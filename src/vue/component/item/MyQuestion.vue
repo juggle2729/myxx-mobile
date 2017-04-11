@@ -4,7 +4,7 @@
         height: 148px
         width: 148px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .my-question(:class="{'bg-white': !items.isEmpty}")
     .item.pdv.pdr-32.mgl-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'question', params: {id: item.entry.post_id}}")
         .img(v-bg="item.entry.picture")

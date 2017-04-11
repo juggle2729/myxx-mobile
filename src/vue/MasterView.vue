@@ -141,7 +141,7 @@
     50%
         margin-top: 5px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .master-view
     .cover(@touchstart='coverTouchStart($event)', @touchmove='coverTouchMove($event)', @touchend='coverTouchEnd($event)')
         .bg.img(v-bg='interview.img', query='imageView2/1/w/750/h/1334/interlace/1')

@@ -49,7 +49,7 @@
     }
 }
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-comment-view
     .tabs.flex.bdb.fz-30
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})

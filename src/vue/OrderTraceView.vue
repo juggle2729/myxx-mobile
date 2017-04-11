@@ -32,7 +32,7 @@
             height: 160px
             width: 160px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .trace-view
     .basic.fz-26.bdb.flex.pdh-32
         .img(v-if="trace.image", v-bg="trace.image", @click="coverflow([trace.image])")

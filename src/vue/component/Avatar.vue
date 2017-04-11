@@ -4,7 +4,7 @@ for $size in 240 222 180 120 108 90 80 68 50 36
         width: $size px
         height: @width
 </style>
-<template lang="jade">
+<template  lang="pug">
 .avatar.round(:size="size", v-bg.sm="user.photo || 'app/avatar.png'", @click.stop="viewProfile")
 </template>
 <script>

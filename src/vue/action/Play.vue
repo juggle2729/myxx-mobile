@@ -18,7 +18,7 @@
         max-height: 100%
         opacity: 1
 </style>
-<template lang="jade">
+<template  lang="pug">
 .play-action(@click="close")
     video(:src="config.video + params.id", controls, @webkitendfullscreen="close")
 </template>

@@ -20,7 +20,7 @@
         margin: 32px 32px 0
         border-radius: 8px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .support-bid-view.bg
     .form.bg-white
         textarea(type="text", placeholder="请输入支持理由(140字内)", v-model="input.comment")

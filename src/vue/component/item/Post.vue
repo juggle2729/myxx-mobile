@@ -32,7 +32,7 @@
     .like-icon
         margin-right: 66px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .post-item.bg-white(v-link="{name: 'post', params: {id: item.entry.post_id}}")
     .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.user", :size="50")

@@ -4,7 +4,7 @@
         line-height: 98px
         padding: 0 10px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .api-view.fz-30
     template(v-for="item in native")
         .item.center(@click="api(item.label, item.params)") {{item.title}}

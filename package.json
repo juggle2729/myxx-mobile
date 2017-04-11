@@ -1,5 +1,5 @@
 {
-  "name": "MeiYuXiuXiu-Mobile-App",
+  "name": "myxx-app",
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
@@ -41,7 +41,6 @@
     "dateformat": "^1.0.12",
     "fastclick": "^1.0.6",
     "lodash": "^4.0.1",
-    "pingpp-js": "^2.1.5",
     "q": "^1.4.1",
     "vue": "^1.0.8",
     "vue-resource": "^1.0.3",

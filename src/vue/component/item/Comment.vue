@@ -31,7 +31,7 @@
     .icon-enter
         transform: rotate(90deg)
 </style>
-<template lang="jade">
+<template  lang="pug">
 .comment-item.flex
     avatar.mgr(:user='item.reply_from')
     .flex-1.bdb.pdr-32.pdb-16

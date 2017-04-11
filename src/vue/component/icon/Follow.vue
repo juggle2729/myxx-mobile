@@ -18,7 +18,7 @@
         height: 60px
         line-height: 58px
 </style>
-<template lang="jade">
+<template  lang="pug">
 deep-link.has-icon.follow-icon.fz-26.bd-red.gray.center(v-if="env.isShare")
     icon(name="plus")
     span.red 关注

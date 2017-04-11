@@ -43,7 +43,7 @@
                 height: 56px
                 line-height: 56px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .collection-view.bg.pdb-36
     .upside(v-if="!self")
         .blur.bd(:style="{backgroundImage: 'url(' + config.img + cc.cover + ')'}")

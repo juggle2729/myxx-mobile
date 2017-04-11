@@ -2,7 +2,7 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
-                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic', jade: 'product', master: 'website', user: 'profile'}
+                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic',product: 'product', jade: 'product', master: 'website', user: 'profile'}
                 this.$fetch('log/content_readings', {
                             channel: _.get(this, '$route.query.channel', 'pc'),
                             id: this.$route.params.id,
@@ -31,6 +31,7 @@ export default {
                         data.icon = this.config.video + data.icon + '?vframe/jpg/offset/0/rotate/auto'
                     }
                     break
+                case 'product':
                 case 'jade':
                     data.title = `【限量】${entry.title}`
                     data.desc = '玉友的新品上线啦！'
@@ -134,7 +135,7 @@ export default {
             // data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
-            this.$root.shareData = _.pick(data, 'title', 'desc', 'icon', 'url', 'userId', 'shopId')
+            this.$root.shareData = _.pick(_.merge({shopId: 0}, data), 'title', 'desc', 'icon', 'url', 'userId', 'shopId')
 
             this.action('shareable', {...this.$root.shareData, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
 

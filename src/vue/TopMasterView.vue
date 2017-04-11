@@ -8,7 +8,7 @@
         margin: -100px auto 0
         line-height: 100px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .top-master-view
     .date.fz-26.white.center 最近更新：{{date}}
     tabs(:tabs="{weekly: '周榜', all: '总榜'}", :current.sync="view")

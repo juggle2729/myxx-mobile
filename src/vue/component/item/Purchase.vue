@@ -51,7 +51,7 @@
         .line-height-68
             padding: 0 20px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .purchase-item.bg-white(@click="gotoDetail")
     .item
         img.mark(v-if="item.win_count", :src="'purchase/winned.png' | qn")

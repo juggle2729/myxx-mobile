@@ -48,7 +48,7 @@ export default {
         }, {
             id: 'pd', // 40
             name: '宝贝',
-            route: 'jade'
+            route: 'product'
         }, {
             id: 'ws', // 50
             name: '人物志',

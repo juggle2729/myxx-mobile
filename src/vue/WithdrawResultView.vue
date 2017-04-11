@@ -15,7 +15,7 @@
         border-radius: 8px
         margin: 50px auto 0
 </style>
-<template lang="jade">
+<template  lang="pug">
 .cash-result.bg.fz-30
     .result.center
         p 您的提现申请已受理

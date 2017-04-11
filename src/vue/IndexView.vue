@@ -22,7 +22,7 @@
         text-shadow: 0 0 5px white
         color: white
 </style>
-<template lang="jade">
+<template  lang="pug">
 ul.index-view.bg.fz-34
     li(v-for="link in links")
         a(:href="link.href") {{link.label}}
@@ -56,7 +56,7 @@ export default {
                     href: '/pay-offline/160808170534035573'
                 }, {
                     label: '商品详情',
-                    href: '/jade/188/none'
+                    href: '/product/188/none'
                 }
             ]
         }

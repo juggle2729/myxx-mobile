@@ -7,7 +7,7 @@
         height: 148px
         width: 148px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-collection.bg-white
     .hr
     .line-height-90.fz-26.gray.pdl

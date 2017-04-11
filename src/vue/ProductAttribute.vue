@@ -1,5 +1,5 @@
  <style lang="stylus">
-.jade-attribute
+.product-attribute
     .params
         padding-left: 32px
         ul > li
@@ -9,20 +9,20 @@
             width: 178px
 </style>
 <template lang="pug">
-.jade-attribute.bg
+.product-attribute.bg
     .params.bg-white
         ul
             template(v-for="attr in attrs")
-                li.flex.fz-26(v-if="jade[attr.k]")
+                li.flex.fz-26(v-if="prod[attr.k]")
                     p.label.gray {{attr.l}}
-                    p.flex-1 {{jade[attr.k].name || jade[attr.k]}}
+                    p.flex-1 {{prod[attr.k].name || prod[attr.k]}}
 </template>
 <script>
 export default {
-    name: 'jade-attribute',
+    name: 'product-attribute',
 
     props: {
-        jade: Object
+        prod: Object
     },
 
     data() {

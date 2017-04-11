@@ -12,7 +12,7 @@ span + .icon
 span + .icon-enter
     padding-bottom: 4px
 </style>
-<template lang="jade">
+<template  lang="pug">
 svg(:class="'icon icon-' + name", preserve-aspect-ratio="none")
     use(:xlink:href="'#icon-' + name")
 </template>

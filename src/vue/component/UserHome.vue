@@ -56,7 +56,7 @@
                     border-bottom: 0
                     padding-bottom: 0
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-home.bg.pdt
     .shop.pdh-32.pdb-30.bg-white(v-if='shop', v-link="{name: 'shop', params: {id: shop.id}}")
         .line-height-90.fz-26.gray

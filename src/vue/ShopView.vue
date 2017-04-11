@@ -108,13 +108,13 @@
 <script>
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import jade from 'component/AllJade.vue'
+import product from 'component/AllProduct.vue'
 import info from 'component/StoreInfo.vue'
 export default {
     name: 'shop-view',
 
     ready() {
-        this.view = this.$route.query.tab || this.tabs[0].id
+        this.view = _.map(this.tabs, 'id').indexOf(this.$route.query.tab) === -1 ? this.tabs[0].id : this.$route.query.tab
         this.$watch('view', tab => {
             this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab}})
         })
@@ -124,7 +124,7 @@ export default {
 
     components: {
         lv,
-        jade,
+        product,
         info
     },
 
@@ -132,7 +132,7 @@ export default {
         return {
             view: '',
             tabs: [
-                { id: 'jade', selected: 'shop/jade-selected.png', unselect: 'shop/jade-unselect.png', label: '全部商品'},
+                { id: 'product', selected: 'shop/product-selected.png', unselect: 'shop/product-unselect.png', label: '全部商品'},
                 { id: 'info', selected: 'shop/info-selected.png', unselect: 'shop/info-unselect.png', label: '店铺信息'}
             ],
             shop: {

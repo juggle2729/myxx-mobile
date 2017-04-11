@@ -14,7 +14,7 @@
         padding: 36px 50px 50px
         line-height: 1.5
 </style>
-<template lang="jade">
+<template  lang="pug">
 .level-help-view.bg.pdb-30
     template(v-if="isUserView || self && self.goodsPublishPermission")
         help-desc(type="shop_level")

@@ -14,7 +14,7 @@
     .result
         padding: 140px 0 80px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .complain-view.bg(v-if='!$loadingRouteData')
     template(v-if="!result")
         .bg-white(v-for="item in items")

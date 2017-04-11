@@ -1,6 +1,6 @@
  <style lang="stylus">
  @import '~style/partials/mixin'
-.jade-detail
+.product-detail
     padding-top: 6px
     .img
         line-height: 0  /*暂时修复图片下面多出一部分空白的问题*/
@@ -22,15 +22,15 @@
             border-radius: 30px
             border(a, #c6c6c6)
 </style>
-<template lang="jade">
-.jade-detail.bg-white
-    .pd-32.user-txt.fz-30(v-if="jade.detail") {{jade.detail}}
+<template lang="pug">
+.product-detail.bg-white
+    .pd-32.user-txt.fz-30(v-if="prod.detail") {{prod.detail}}
     .img
-        img(:src="config.img + img + '?imageView2/0/w/750'", v-for="img in jade.pictures", @click="coverflow(jade.pictures, $index)")
+        img(:src="config.img + img + '?imageView2/0/w/750'", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
     .hr
-    .tags(v-if="jade.tags.length > 0")
+    .tags(v-if="prod.tags.length > 0")
         .tag-title.fz-26.gray 标签
-        .tag.pdh-28.mgr-16.mgb-16.fz-26.center.bg(v-for="tag in jade.tags", @click="gotoTagView(tag)") {{tag.name}}
+        .tag.pdh-28.mgr-16.mgb-16.fz-26.center.bg(v-for="tag in prod.tags", @click="gotoTagView(tag)") {{tag.name}}
     .recommends.bg.pdt(v-if="related.length")
         .fz-26.gray 商品推荐
         product-card(v-for="item in related", :item="item")
@@ -39,14 +39,14 @@
 <script>
 import ProductCard from 'component/item/ProductCard.vue'
 export default {
-    name: 'JadeDetail',
+    name: 'product-detail',
 
     components: {
         ProductCard
     },
 
     props: {
-        jade: Object
+        prod: Object
     },
 
     data() {

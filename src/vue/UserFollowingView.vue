@@ -1,4 +1,4 @@
-<template lang="jade">
+<template  lang="pug">
     .user-following.bg(v-if="!$loadingRouteData")
         tabs.bg-white(:tabs="views", :current.sync="view")
         component(:is="view", keep-alive)

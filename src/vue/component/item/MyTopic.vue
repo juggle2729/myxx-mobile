@@ -8,7 +8,7 @@
             top: 50%
             transform: translateY(-50%)
 </style>
-<template lang="jade">
+<template  lang="pug">
 .my-topic(:class="{'bg-white': !items.isEmpty}")
     .item.mgl-32(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'topic', params: {id: item.entry.id}}")
         .pdv-28.pdr-32

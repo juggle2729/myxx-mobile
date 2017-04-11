@@ -47,7 +47,7 @@
     .footer-placeholder
         height: 112px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-view.bg(v-if="!$loadingRouteData")
     .banner.bg-white.flex
         avatar(:user="profile", :size="120")
@@ -68,7 +68,7 @@
                 .center
                     .fz-30.mgb-14 {{profile.post_like_count}}
                     .fz-22 获赞
-     .medal.bg-white.pdh-40.pdb-48
+        .medal.bg-white.pdh-40.pdb-48
             .flex(v-if="profile.vip_flag")
                 img(:src="'profile/' + profile.role + '.png' | qn")
                 .fz-26.gray.mgl-16.line-clamp.flex-1 {{profile.title}}

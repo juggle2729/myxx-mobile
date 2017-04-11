@@ -31,7 +31,7 @@
             height: 84px
             line-height: 48px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .answer-view(v-if="!$loadingRouteData")
     header.bg-white
         .user.flex

@@ -6,7 +6,7 @@
         height: 148px
         width: 148px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .collection-item.bg-white
     .follow.flex.bdb.pdh
         avatar(:user="user", :size="50")

@@ -4,7 +4,7 @@
         height: 2em
         width: @height
 </style>
-<template lang="jade">
+<template  lang="pug">
 .answer-icon.fz-26.gray
     icon(name="add-answer")
     span {{count ? count+'个回答' : (identifiable ? '我来回答' : '邀请回答')}}

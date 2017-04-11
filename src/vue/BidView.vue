@@ -3,7 +3,7 @@
     .comment .gray
         color: #393939
 </style>
-<template lang="jade">
+<template  lang="pug">
 .bid-view.bg(v-if="!$loadingRouteData")
     bid-item(:bid="bid", :status="purchase.status", :is-self="isSelf")
 </template>

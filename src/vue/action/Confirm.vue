@@ -27,7 +27,7 @@
     .center
         line-height: 48px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .confirm-action
     .container.bg
         .center {{params.text}}

@@ -11,7 +11,7 @@
             background-color: #d9d9d9
             height: 1px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .medal-view.pdt-48
     img.pic.center(:src="(pic || 'placeholder/img.png') | qn")
     .name.flex.center.mgt-28.mgh-32

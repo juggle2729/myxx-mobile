@@ -6,7 +6,7 @@
             line-height: 72px
             border-radius: 8px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .topic-view.bg.pdb-36
     section.bg-white
         .scrollable.mgl-32.bdb.pdv-24

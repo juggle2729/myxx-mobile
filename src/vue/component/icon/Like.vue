@@ -3,7 +3,7 @@
     height: 2em
     width: @height
 </style>
-<template lang="jade">
+<template  lang="pug">
 deep-link.has-icon.like-icon.fz-26.gray(:class="{'red': active}")
     icon(:name="name")
     span {{count || zero}}

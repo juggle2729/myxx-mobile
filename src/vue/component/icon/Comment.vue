@@ -4,7 +4,7 @@
         height: 2em
         width: @height
 </style>
-<template lang="jade">
+<template  lang="pug">
 .comment-icon.fz-26.gray(@click.stop="comment")
     icon(name="comment")
     span {{count || '评论'}}

@@ -16,7 +16,7 @@
     //     font-size: 24px
     //     color: $colors.light
 </style>
-<template lang="jade">
+<template  lang="pug">
 .list.bg-white(:class="{'empty': hasMore===false && items.length===0, 'loading': isFetching}")
     component(:is="comp", :item="lodash.merge(item.entry || item, {type: item.type})", v-for="item in items")
 </template>

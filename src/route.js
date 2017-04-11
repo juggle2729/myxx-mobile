@@ -115,12 +115,12 @@ export default {
         }
     },
 
-    '/jade/:id/:tab': {
-        name: 'jade',
+    '/product/:id/:tab': {
+        name: 'product',
         title: '商品详情',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('JadeView.vue'))
+                resolve(require('ProductView.vue'))
             }, 'mall')
         }
     },

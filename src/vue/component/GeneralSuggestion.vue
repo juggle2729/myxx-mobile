@@ -5,7 +5,7 @@
         font-size: 0
         background-color: #efefef
 </style>
-<template lang="jade">
+<template  lang="pug">
 .general-suggestion.bg-white
     .fz-26.gray.mgl-32.line-height-80 相关推荐
     topics(v-if='categories && categories.length', :topics="categories")

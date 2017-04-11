@@ -1,8 +1,5 @@
-<template lang="jade">
-deep-link(v-if='env.isShare')
-    icon(name="chat")
-    span.red 私信
-.chat-icon.fz-26.gray(v-else, @click.stop="chat(id, name, jade)")
+<template  lang="pug">
+.chat-icon.fz-26.gray
     icon(name="chat")
     span.red 私信
 </div>
@@ -13,26 +10,6 @@ import Icon from './Icon.vue'
 export default {
     name: 'chat-icon',
 
-    components: {Icon},
-
-    props: {
-        id: [Number],
-        name: [String],
-        jade: [Number] // 商品id
-    },
-    computed: {
-        isSelf() {
-            return _.get(this, 'self.id') == this.id
-        }
-    },
-    methods: {
-        chat(id, name, jade) {
-            if(this.isSelf) {
-                this.action('toast', {success: 0, text: '您不能和自己聊天'})
-            } else{
-                this.action('chat', {id: id, name: name, product: jade})
-            }
-        }
-    }
+    components: { Icon }
 }
 </script>

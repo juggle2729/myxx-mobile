@@ -12,7 +12,7 @@
         &.high
             width: 58px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .level-comp
     img(:src="'level/'+ lv + '.png' | qn", :class="{'lg': lg, 'high': lv > 9}" )
 </template>

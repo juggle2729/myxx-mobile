@@ -7,7 +7,7 @@
     margin-top: 100px
     padding-top: 180px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .empty-component.fz-30.gray
     slot
         .title.center(v-if="title") {{title}}

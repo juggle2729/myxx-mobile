@@ -51,7 +51,7 @@
     *::before, *::after
         color: #333333
 </style>
-<template lang="jade">
+<template  lang="pug">
 .question-view.bg(v-if="!$loadingRouteData")
     header.bg-white
         .user.flex

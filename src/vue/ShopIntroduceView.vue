@@ -5,7 +5,7 @@
     .video
         padding-top: 100%
 </style>
-<template lang="jade">
+<template  lang="pug">
     .shop-introduce-view.pdh-32.pdb-32
         div.mgt-28(v-for="item in info")
             img(v-if="item.media_type==='picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")

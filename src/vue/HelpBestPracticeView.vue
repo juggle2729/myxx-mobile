@@ -5,7 +5,7 @@
         height: 22px
         width: 22px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .best-practice-view.bg.pdv
     .bg-white.mgb(v-for="item in items")
         .line-height-98.fz-30.bold.mgl-32.pdr-32 {{item.title}}

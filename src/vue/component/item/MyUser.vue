@@ -7,7 +7,7 @@
             height: 30px
             width: 30px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .my-user(:class="{'bg-white': !items.isEmpty}")
     .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'user', params: {id: item.entry.id}}")
         avatar(:user="item.entry", :size="120")

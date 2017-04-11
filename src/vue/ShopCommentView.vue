@@ -11,7 +11,7 @@
             text-align: center
             line-height: 50px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})

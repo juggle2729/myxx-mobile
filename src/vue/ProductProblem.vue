@@ -1,6 +1,6 @@
-<template lang="jade">
-.jade-problem.bg
-    help-desc(type="jade_problem")
+<template lang="pug">
+.product-problem.bg
+    help-desc(type="product_problem")
     .help.red.fz-30.center.bg-white.pdv-50(v-link="{name: 'mall-help'}")
         span 查看帮助
         icon.fz-24(name="enter")
@@ -8,7 +8,7 @@
 <script>
 import HelpDesc from 'component/HelpDesc.vue'
 export default {
-    name: 'jade-problem',
+    name: 'product-problem',
 
     components: {
         HelpDesc

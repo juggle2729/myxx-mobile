@@ -6,7 +6,7 @@
             height: 30px
             width: 56px
             display: block
-        .jade
+        .product
             height: 68px
             width: 68px
             border-radius: 6px
@@ -40,7 +40,7 @@
                     .fz-26 {{item.buyer ? item.buyer.nickname : '匿名用户'}}
                     .fz-22.light.mgt-14 {{item.create_at | moment}}
                 .reply.center.bd-gray.fz-26(v-if="!isChat && seller && !item.reply && item.description && !item.is_timeout", @click.stop="action('replyOpinion', {id: item.id})") 回复评价
-                .jade.img(v-if="!seller && !isChat", v-bg="item.order.product.cover")
+                .product.img(v-if="!seller && !isChat", v-bg="item.order.product.cover")
                 .btn.bd.fz-26(v-if="isChat", @click.stop="action('chat', {id: item.buyer_id, name: item.buyer.nickname, product: item.product_id})") 联系买家
             .flex.mgt
                 img.comment.mgr-8(:src="'shop/'+item.choice+'.png' | qn")
@@ -76,7 +76,7 @@ export default {
 
     methods: {
         go(item) {
-            this.seller ? this.action('orderDetail', {id: item.order_no}) : this.$router.go({name: 'jade', params: {id: item.product_id}})
+            this.seller ? this.action('orderDetail', {id: item.order_no}) : this.$router.go({name: 'product', params: {id: item.product_id}})
         }
     }
 }

@@ -1,10 +1,10 @@
 <style lang="stylus">
-.all-jade
+.all-product
     .option
         width: 25%
 </style>
-<template lang="jade">
-.all-jade.bg.pdt
+<template lang="pug">
+.all-product.bg.pdt
     .options.bg-white.line-height-100.fz-30.flex(v-if="!items.isEmpty")
             .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
     .list
@@ -17,7 +17,7 @@
 import paging from 'paging'
 import ProductCard from 'component/item/ProductCard.vue'
 export default {
-    name: 'all-jadd',
+    name: 'all-product',
 
     mixins: [paging],
 

@@ -1,4 +1,4 @@
-<template lang="jade">
+<template  lang="pug">
 .credit-medal-view.bg-white
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)

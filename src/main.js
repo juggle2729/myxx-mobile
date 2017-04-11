@@ -118,6 +118,8 @@ router.alias({
     '/help/level/:id': '/help/shop-level/:id',
     '/help/mall-detail/:type': '/help/desc/:type',
     // v3.3修改
+    '/jade/:id/:tab': '/product/:id/:tab',
+    '/product/:id': '/product/:id/none',
     '/help/desc/coupon': '/help/desc/use_coupon'
 })
 router.map(routes)

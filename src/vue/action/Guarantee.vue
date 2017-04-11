@@ -27,16 +27,16 @@
             width: 120px
             background: transparent
 </style>
-<template lang="jade">
+<template  lang="pug">
 .guarantee-action(@click.self="close")
     .container
-        img(:src="'jade/guarantee_1.png' | qn")
+        img(:src="'product/guarantee_1.png' | qn")
         .tip(@click="close")
 </template>
 <script>
 export default {
     name: 'Guarantee',
-    
+
     methods: {
         close() {
             this.$root.popup.handler = undefined

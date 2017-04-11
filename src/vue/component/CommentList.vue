@@ -15,7 +15,7 @@
             width: 30px
             height: 30px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .comment-list.bg-white
     .line-height-80.bdb.fz-26.pdl-32.gray 评论 {{total}}
 

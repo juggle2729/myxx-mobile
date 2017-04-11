@@ -29,7 +29,7 @@
         height: 30px
         width: 56px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .card-component.bg-white.pdr-32(v-link="{name: config.category[item.type], params: {id: item.entry.post_id || item.entry.id}}")
     div.pdt-28.mgl-32.bdt(v-if="morePics")
         .fz-30.user-txt.line-clamp-2.mgb-24 {{{item.entry.title || item.entry.description || item.entry.content | content | input}}}

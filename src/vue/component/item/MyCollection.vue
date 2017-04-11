@@ -6,7 +6,7 @@
             height: 148px
             width: 148px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .my-collection(:class="{'bg-white': !items.isEmpty}")
     .item.mgl-32.pdr-32.flex(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'collection', params: {id: item.entry.id}}")
         .img(v-bg="item.entry.cover")

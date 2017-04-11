@@ -37,7 +37,7 @@
             height: 60px
             box-shadow: 0 0 10px 5px #4CAF50
 </style>
-<template lang="jade">
+<template  lang="pug">
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
         .share-top.flex.bg-white
@@ -48,7 +48,7 @@ div(:class="{'loading': loading}")
                     .name.fz-30.bold 美玉秀秀
                     .fz-22.dot •
                     .slogan.fz-22 50万玉友的选择
-                .fz-22.gray.mgt-8 {{['jade','shop'].indexOf($route.name)===-1 ? '最大的和田玉互动社区' : '最大的和田玉线上交易平台'}}
+                .fz-22.gray.mgt-8 {{['product','jade','shop'].indexOf($route.name)===-1 ? '最大的和田玉互动社区' : '最大的和田玉线上交易平台'}}
             deep-link
         .share-top-placeholder
     router-view

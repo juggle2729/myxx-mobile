@@ -39,7 +39,7 @@
     .answer-icon
         margin-right: 66px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .answer-item.bg-white(v-link="{name:'answer', params: {id: item.entry.id}}")
     .follow.flex.pdl(v-if="collection")
         avatar(:user="item.entry.identifier", :size="50")

@@ -45,7 +45,7 @@
             padding: 1em 0
 </style>
 <template>
-<!-- 转换成jade有问题！！ -->
+<!-- 转换成pug有问题！！ -->
 <div class="keyboard">
     <div class="container bg">
         <div class="title">{{params.placeholder || '发表评论'}}<span class="count gray" :class="{'red': content.length>limit}">{{content.length}}/{{limit}}</span></div>

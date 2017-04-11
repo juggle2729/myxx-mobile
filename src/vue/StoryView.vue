@@ -23,7 +23,7 @@
     .topics-component
         padding-top: 24px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .story-view.bg-white(v-if='!$loadingRouteData')
     .pd-32
         .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/600/interlace/1')

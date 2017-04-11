@@ -1,9 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
-.jade-view
+.product-view
     position: relative
-    height: 100%
-    .jade-video
+    .prod-video
         height: 577px
         background-size: contain
         background-color: #000000
@@ -50,6 +49,15 @@
             display: block
             height: 26px
             width: 26px
+    .coupon
+        height: 100px
+        .flex-1
+            padding-left: 40px
+            background-image: url($qn + '/coupon/logo.png')
+            background-size: 28px
+        .bd-red
+            border-radius: 6px
+            padding: 8px 20px
     .shop
         height: 144px
         padding: 0 32px
@@ -84,8 +92,7 @@
             &.active
                 line-height: 54px // FIXME: 临时方案
                 color: #cc3f4f
-        &.default
-            > div:first-child
+        &.default > div:first-child
                 color: #cc3f4f
     .float-box
         position: fixed
@@ -138,49 +145,52 @@
             height: 244px
             width: 386px
 </style>
-<template lang="jade">
-.jade-view
-    template(v-if="jade.status === 'online'")
+<template lang="pug">
+.product-view
+    template(v-if="prod.status === 'online'")
         .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
             .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
             .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
             div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
-        .jade-video.video(v-bg='jade.video', @click='play(jade.video)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
+        .prod-video.video(v-bg='prod.video', @click='play(prod.video)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
         .titles.bg-white
             .header
-                .title.fz-32 {{jade.title}}
+                .title.fz-32 {{prod.title}}
                 .flex.red
-                    .fz-30(v-if="jade.sell_status === 'sold'") {{jade.sell_status_editable ? '实体店已售出' : '已售出'}}
-                    .price.fz-44.flex-1(v-else) {{jade.price | price}}
+                    .fz-30(v-if="prod.sell_status === 'sold'") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
+                    .price.fz-44.flex-1(v-else) {{prod.price | price}}
             .guarantee(@click="guarantee")
-                img(:src="'jade/term.png' | qn")
+                img(:src="'product/term.png' | qn")
                 icon.fz-26.red(name="enter")
         .hr
-        .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: jade.shop.id}}")
-            .img(v-bg='jade.shop.logo')
+        .coupon.flex.fz-26.red.pdh-32.bdb(v-if="false")
+            .flex-1 5张店铺优惠券发放中
+            .bd-red(@click="getCoupon") 领券
+        .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
+            .img(v-bg='prod.shop.logo')
             .flex-1
                 .fz-30.flex.mgb-12.name
-                    .line-clamp.mgr {{jade.shop.shop_name}}
-                    lv(:lv='jade.shop.level')
+                    .line-clamp.mgr {{prod.shop.shop_name}}
+                    lv(:lv='prod.shop.level')
                 .fz-26.gray.flex
                     icon(name="location")
-                    div(:class="{'address': jade.shop.pd_count_today, 'line-clamp-1': jade.shop.pd_count_today}") {{jade.shop.locale_name}}
-                    .new.bg-red.white.fz-22.mgl-16.pdh-16(v-if="jade.shop.pd_count_today") 今日上新 {{jade.shop.pd_count_today}}
+                    div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}
+                    .new.bg-red.white.fz-22.mgl-16.pdh-16(v-if="prod.shop.pd_count_today") 今日上新 {{prod.shop.pd_count_today}}
             .center
                 icon(name="shop")
                 .fz-22.gray 进店逛逛
-        .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: jade.owner.id}}")
-            avatar(:user='jade.owner', :size='50')
+        .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
+            avatar(:user='prod.owner', :size='50')
             .flex
-                .name.fz-26.gray.mgl {{jade.owner.name}}
-                img.mgl-8(v-if="jade.owner.vip_flag", :src="'profile/'+jade.owner.role+'.png' | qn")
+                .name.fz-26.gray.mgl {{prod.owner.name}}
+                img.mgl-8(v-if="prod.owner.vip_flag", :src="'profile/'+prod.owner.role+'.png' | qn")
         .hr
         .tabs.tabs-static.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
             .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
             .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
             div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
         .bg.tab-content
-            component(:is='view', keep-alive, :jade='jade')
+            component(:is='view', keep-alive, :prod='prod')
         .bg.placeholder
         .float-box.flex.fixed.fz-30.bg-white(v-if="env.isShare")
             .bdt.flex-1.flex
@@ -188,24 +198,24 @@
                     icon.fz-30(name="chat")
                     .mgt-6 私信
                 deep-link.has-icon.flex.flex-1.gray.collect-btn.bdr
-                    icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
-                    .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
-                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
+                    icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
+                    .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
+                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
-            deep-link.has-icon.flex-2.buy-btn.bg-red.white.fz-30 {{(jade.sell_status==='selling') ? '立即购买' : '已售出'}}
+            deep-link.has-icon.flex-2.buy-btn.bg-red.white.fz-30 {{(prod.sell_status==='selling') ? '立即购买' : '已售出'}}
         .float-box.flex.fixed.fz-30.bg-white(v-else)
             .bdt.flex-1.flex
                 .flex.flex-1.red.contact-btn.bdr(@click='contact')
                     icon.fz-30(name="chat")
                     .mgt-6 私信
-                .flex.flex-1.gray.collect-btn.bdr(:class="{'red': jade.is_faved}", @click='collect()')
-                    icon.fz-30(:name="jade.is_faved ? 'star-solid' : 'star'")
-                    .mgt-6 {{jade.is_faved ? '已收藏' : '收藏'}}
-                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: jade.shop.id}}")
+                .flex.flex-1.gray.collect-btn.bdr(:class="{'red': prod.is_faved}", @click='collect()')
+                    icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
+                    .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
+                .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
-            .fz-30.flex-2.buy-btn.bg-red.white(v-if="jade.sell_status==='selling'", @click='buy()') 立即购买
+            .fz-30.flex-2.buy-btn.bg-red.white(v-if="prod.sell_status==='selling'", @click='buy()') 立即购买
             .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
     .offline(v-else)
         img(:src="'mall/offline.png' | qn")
@@ -215,21 +225,24 @@
 import Q from 'q'
 import shareable from 'shareable'
 import lv from 'component/Lv.vue'
-import detail from './JadeDetail.vue'
-import attribute from './JadeAttribute.vue'
-import problem from './JadeProblem.vue'
+import detail from './ProductDetail.vue'
+import attribute from './ProductAttribute.vue'
+import problem from './ProductProblem.vue'
 export default {
-    name: 'JadeView',
+    name: 'product-view',
+
     mixins: [shareable],
+
     components: {
         lv,
         detail,
         attribute,
         problem
     },
+
     data() {
         return {
-            jade: {
+            prod: {
                 owner: {},
                 shop: {},
                 is_faved: false,
@@ -240,6 +253,7 @@ export default {
             view: undefined
         }
     },
+
     ready() {
         this.staticTabs = this.$el.querySelector('.tabs-static')
         this.fixedTabs = this.$el.querySelector('.tabs-fixed')
@@ -248,6 +262,7 @@ export default {
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent && (tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`)
     },
+
     route: {
         canReuse({from, to}) {
             return from.name === to.name && from.params.id === to.params.id
@@ -255,13 +270,13 @@ export default {
         data({from, to, next}) {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$fetch('mall/products/'+ this.$route.params.id)
-                    .then(jade => {
-                        _.update(jade, 'circle_size', size => size ? size/100 : '')
-                        this.setShareData(jade)
-                        this.isSelf = (_.get(this, 'self.id') == (jade.owner.id || jade.default_admin.id))
+                    .then(prod => {
+                        _.update(prod, 'circle_size', size => size ? size/100 : '')
+                        this.setShareData(prod)
+                        this.isSelf = (_.get(this, 'self.id') == (prod.owner.id || prod.default_admin.id))
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1
                         this.view = this.isDefaultView ? 'detail' : to.params.tab
-                        this.jade = jade
+                        this.prod = prod
                 })
             } else {
                 this.isDefaultView = false
@@ -270,45 +285,53 @@ export default {
             }
         }
     },
+
     methods: {
         buy() {
             if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能购买自己的商品'})
             } else {
-                this.action('orderConfirm', {product: this.jade.id})
+                this.action('orderConfirm', {product: this.prod.id})
             }
          },
         contact() {
             if(this.isSelf) {
                 this.action('toast', {success: 0, text: '您不能和自己聊天'})
             } else {
-                this.action('chat', {id: this.jade.default_admin.id, name: this.jade.default_admin.nickname, product: this.jade.id})
+                this.action('chat', {id: this.prod.default_admin.id, name: this.prod.default_admin.nickname, product: this.prod.id})
             }
         },
         go(tab) { // FIXME 采用v-link替代
-            (this.$route.params.tab !== tab) && this.$router.replace(`/jade/${this.jade.id}/${tab}`)
+            (this.$route.params.tab !== tab) && this.$router.replace(`/product/${this.prod.id}/${tab}`)
         },
         collect(tab) {
             // TODO api
             const api = 'users/favs'
             const data = {
                 doc_type: 'pd',
-                doc_id: this.jade.id
+                doc_id: this.prod.id
             }
-            this[this.jade.is_faved ? '$put' : '$post'](api, data)
+            this[this.prod.is_faved ? '$put' : '$post'](api, data)
             .then(() => {
-                this.jade.is_faved = !this.jade.is_faved
+                this.prod.is_faved = !this.prod.is_faved
                 this.action('toast', {
                     success: 1,
-                    text: this.jade.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
+                    text: this.prod.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
                 })
             })
         },
 
         guarantee() {
             this.$root.popup = {handler: 'guarantee'}
+        },
+
+        getCoupon() {
+            this.action('toast', {
+                text: '领券'
+            })
         }
     },
+
     events: {
         scroll() {
             if(!this.fixedTabs) {

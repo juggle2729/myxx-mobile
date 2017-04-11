@@ -10,7 +10,7 @@
         line-height: 98px
         text-align: center
 </style>
-<template lang="jade">
+<template  lang="pug">
 .purchases-view
     template(v-for="item in items")
         .hr

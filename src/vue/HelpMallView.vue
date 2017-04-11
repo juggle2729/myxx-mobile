@@ -4,7 +4,7 @@
         height: 22px
         width: 22px
 </style>
-<template lang="jade">
+<template lang="pug">
 .mall-help-view.bg.pdv
     .bg-white.mgb(v-for="pro in pros")
         .line-height-98.fz-30.bold.mgl-32.pdr-32 {{pro.title}}

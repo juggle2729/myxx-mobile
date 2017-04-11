@@ -11,7 +11,7 @@
         &:not(:last-child)
             margin-right: 20px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .topics-component.bg-white(v-if="topics && topics.length")
     .topic.pdh-28.mgb-18.fz-26.center.bg(v-for="topic in topics", @click="gotoTopicView(topic)") {{topic.name}}
 </template>

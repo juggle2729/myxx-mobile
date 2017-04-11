@@ -15,7 +15,7 @@ export default {
         'guide_10': { media: 'shop/guide/10.png?v3', title: '烟标图标记是什么？有什么好处？' },
     },
     desc: {
-        'jade_problem': {
+        'product_problem': {
             items: [
                 {
                     title: '担保交易',

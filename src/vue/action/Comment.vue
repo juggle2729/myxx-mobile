@@ -37,7 +37,7 @@
                 right: 32px
                 top: 32px
 </style>
-<template lang="jade">
+<template  lang="pug">
 .comment-action(@click.self="close", :class="{'none': closed}")
     .container
         .tip.center.fz-34.bg-white.bdb.flex

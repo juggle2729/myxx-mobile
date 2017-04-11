@@ -33,7 +33,7 @@
         &.show
             transform: translate3d(0, 0, 0)
 </style>
-<template lang="jade">
+<template  lang="pug">
 .deep-link
     .btn(v-if="env.isBrowser", @click="myxx")
         slot 立即打开
@@ -56,7 +56,8 @@ const getNativeLink = (() => {
         activity: 'home/category',
         user: 'user/homepage',
         shop: 'user/shop',
-        jade: 'mall/tab'
+        jade: 'mall/tab',
+        product: 'mall/tab'
     }
     return (route) => {
         let schema = _.get(SCHEMA, route.name)

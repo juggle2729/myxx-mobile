@@ -38,7 +38,7 @@
                 background-size: cover
                 background-position: center
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-like-view.bg(:class="{'bg-white': items.isEmpty}")
     div(v-for='item in items')
         .hr-20

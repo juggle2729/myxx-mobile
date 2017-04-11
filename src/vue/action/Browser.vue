@@ -14,7 +14,7 @@
     z-index: 999
     background: rgba(0, 0, 0, .6) url($qn + 'browser.png') right 10px top 10px / 100% auto no-repeat
 </style>
-<template lang="jade">
+<template  lang="pug">
 .browser-action(@click="params.handler = undefined")
 </template>
 <script>

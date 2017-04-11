@@ -34,7 +34,7 @@
             &.zoom
                 background-size: 200%
 </style>
-<template lang="jade">
+<template  lang="pug">
 .slider(:style="{height: height}", :class="{'fullscreen': height=='100%'}")
     .container
         .slide(v-for="id in ids", track-by="$index", v-bg="id")

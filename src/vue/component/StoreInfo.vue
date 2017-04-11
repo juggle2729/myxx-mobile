@@ -23,7 +23,7 @@
         height: 120px
         line-height: 120px
 </style>
-<template lang="jade">
+<template  lang="pug">
     .store-info.bg-white
         .header.fz-26.gray.bg 基本信息
         .mgl-32.fz-30

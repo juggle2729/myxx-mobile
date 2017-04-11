@@ -8,7 +8,7 @@
     &:last-child
         background-image: none
 </style>
-<template lang="jade">
+<template  lang="pug">
 .user-item.bg-white.flex.pdr-32.mgl-32.bdb
     avatar(:user='item', :size='120')
     .flex-1.mgl(v-link='item')

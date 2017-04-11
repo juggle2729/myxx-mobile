@@ -8,7 +8,7 @@
     .list
         background-color: #efefef
 </style>
-<template lang="jade">
+<template  lang="pug">
 .activity-view.bg
     .cover(v-bg="activity.cover")
     .hr
