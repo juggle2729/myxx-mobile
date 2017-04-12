@@ -1,8 +1,12 @@
 <style lang="stylus">
 @import '~style/myxx'
 #app
+    > :first-of-type:not(.share-top)
+        min-height: 100%
     .share-top-placeholder
         height: 112px
+        & + div
+            min-height: calc(100% - 112px)
     .share-top
         z-index: 990
         position: fixed
