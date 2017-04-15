@@ -76,6 +76,7 @@
             width: 160px
             line-height: 160px
             text-align: center
+            border-radius: 0 8px 8px 0
             background: linear-gradient(120deg, #f77080, #cc3f4f 90%, #cc3f4f)
             position: relative
             &::before
@@ -154,10 +155,13 @@
 </template>
 <script>
 import dateformat from 'dateformat'
+import shareable from 'shareable'
 import lv from 'component/Lv.vue'
 import DeepLink from 'component/DeepLink.vue'
 export default {
     name: 'shop-coupon-view',
+
+    mixins: [shareable],
 
     components: {
         lv,
@@ -186,7 +190,13 @@ export default {
                         coupon.coupon_end_time = dateformat(new Date(coupon.coupon_end_time), 'yyyy.m.d')
                         return coupon
                     })
-                    this.action('updateTitle', { text: `送你${this.coupons.length}张优惠券，赶紧进店看看吧!` })
+                    const title = `送你${this.coupons.length}张优惠券，赶紧进店看看吧!`
+                    this.action('updateTitle', { text: title })
+                    this.setShareData({
+                        title,
+                        desc: '优质美玉每日上新，优惠不断，仅限好友！',
+                        icon: 'https://o0x80w5li.qnssl.com/coupon/share_icon.png'
+                    })
                 })
         }
     },
