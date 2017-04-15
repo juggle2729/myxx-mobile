@@ -7,7 +7,7 @@ const adapter = {
             case 'login':
                 this.$store.remove('user') // 清除本地用户缓存
                 if(this.env.isWechat) {
-                    location.href = 'http://activity.meiyuxiuxiu.com/?wechat_auth=true&redirect_uri='+encodeURIComponent(location.href)
+                    location.href = 'http://www.meiyuxiuxiu.com/wechat'
                 } else if(this.env.isBrowser && this.env.isTest) {
                     this.$root.popup = _.merge({}, params, {handler, cb})
                 } else {
@@ -18,15 +18,11 @@ const adapter = {
                 let user = this.$store.get('user')
                 if(user) {
                     cb(user)
-                } else if(this.$route.query.code) {
-                  this.$http.post('users/login/wx', {code: this.$route.query.code, device_type: 0, wx_type: 'web'})
-                        .then(resp => {
-                                console.debug('get user', resp)
-                                this.$router.replace(_.merge(_.pick(this.$route, 'name', 'params'), {query: _.omit(this.$route.query, 'code')}))
-                                user = resp.data.data
-                                this.$store.set('user', user)
-                                cb(user)
-                            }, cb)
+                } else if(this.$route.query.wxuser) {
+                    const user = JSON.parse(decodeURIComponent(this.$route.query.wxuser))
+                    this.$store.set('user', user)
+                    cb(user)
+                    this.$router.replace(_.merge(_.pick(this.$route, 'name', 'params'), {query: _.omit(this.$route.query, 'wxuser')}))
                 } else {
                     cb()
                 }
