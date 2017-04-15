@@ -60,6 +60,7 @@
             border-radius: 6px
             padding: 8px 20px
         .deep-link .btn //reset deep-link style
+            font-size: 26px
             border-radius: 6px
             padding: 8px 20px
             border(a, #cc3f4f)

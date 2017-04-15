@@ -68,16 +68,16 @@
                 .center
                     .fz-30.mgb-14 {{profile.post_like_count}}
                     .fz-22 获赞
-        .medal.bg-white.pdh-40.pdb-48
-            .flex(v-if="profile.vip_flag")
-                img(:src="'profile/' + profile.role + '.png' | qn")
-                .fz-26.gray.mgl-16.line-clamp.flex-1 {{profile.title}}
-            .flex.pdt(v-if="profile.jianbao_level")
-                img(:src="'jb/' + profile.jianbao_level + '.png' | qn")
-                .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴宝师
-            .flex.pdt(v-if="profile.star_author")
-                img(:src="'medal/star_author.png' | qn")
-                .fz-26.gray.mgl-16 精华内容贡献者
+    .medal.bg-white.pdh-40.pdb-48
+        .flex(v-if="profile.vip_flag")
+            img(:src="'profile/' + profile.role + '.png' | qn")
+            .fz-26.gray.mgl-16.line-clamp.flex-1 {{profile.title}}
+        .flex.pdt(v-if="profile.jianbao_level")
+            img(:src="'jb/' + profile.jianbao_level + '.png' | qn")
+            .fz-26.gray.mgl-16 {{profile.jianbao_level}}级鉴宝师
+        .flex.pdt(v-if="profile.star_author")
+            img(:src="'medal/star_author.png' | qn")
+            .fz-26.gray.mgl-16 精华内容贡献者
     tabs(:tabs="views", :current.sync="view")
     component(:is="view", keep-alive)
     .footer.flex.bdt.bg-white.fz-30(v-if='!isSelf')
