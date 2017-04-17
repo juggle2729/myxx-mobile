@@ -107,8 +107,8 @@
         width: 100%
         & > div
             height: 100%
-        & > div:first-child
-            width: 450px
+        // & > div:first-child
+        //     width: 370px
         .contact-btn,.collect-btn,.shop-btn
             font-size: 22px
             -webkit-box-orient: vertical
@@ -124,13 +124,16 @@
                 width: @height
         .contact-btn .btn
             color: #CC3F4F
+        .add-btn
+            height: 98px
+            line-height: 98px
+            padding: 0 32px
         .buy-btn, .buy-btn .btn
-            width: 300px
+            padding: 0 32px
             color: white
             text-align: center
             height: 98px
             line-height: 98px
-            padding: 0
     .tabs-fixed
         will-change: visibility
         position: fixed
@@ -210,7 +213,7 @@
                 .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
-            deep-link.has-icon.flex-2.buy-btn.bg-red.white.fz-30 {{(prod.sell_status==='selling') ? '立即购买' : '已售出'}}
+            deep-link.has-icon.buy-btn.bg-red.white.fz-30 {{(prod.sell_status==='selling') ? '立即购买' : '已售出'}}
         .float-box.flex.fixed.fz-30.bg-white(v-else)
             .bdt.flex-1.flex
                 .flex.flex-1.red.contact-btn.bdr(@click='contact')
@@ -222,8 +225,12 @@
                 .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
-            .fz-30.flex-2.buy-btn.bg-red.white(v-if="prod.sell_status==='selling'", @click='buy()') 立即购买
-            .fz-30.flex-2.buy-btn.bg-gray.white(v-else) 已售出
+            template(v-if="prod.sell_status==='selling'")
+                .fz-30.add-btn.bg-yellow.white(@click="addToCart()") 加入购物车
+                .fz-30.buy-btn.bg-red.white(@click='buy()') 立即购买
+            template(v-else)
+                .fz-30.add-btn.bg-gray.white 加入购物车
+                .fz-30.buy-btn.bg-gray.white 已售出
     .offline(v-else)
         img(:src="'mall/offline.png' | qn")
         .mgt-28.gray.fz-26.center 该商品已下架
@@ -300,6 +307,15 @@ export default {
             } else {
                 this.action('orderConfirm', {product: this.prod.id})
             }
+         },
+
+         addToCart() {
+            this.$put('mall/cart', { product_id: this.prod.id }).then(resp => {
+                this.action('toast', {
+                    success: '1',
+                    text: '已加入购物车'
+                })
+            })
          },
 
         contact() {
