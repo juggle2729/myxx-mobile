@@ -4,6 +4,7 @@ export default {
         'guarantee': { media: '/purchase/purchase-guarantee.png', title: '什么是保证金'},
         'personal_level': { media: 'user/personal_level.png', title: '等级介绍'},
         'instruction': { media: 'shop/instruction.png', title: '店铺违规说明和处罚措施！' },
+        'guide_1': { media: 'shop/guide/1.png?v2', title: '这样发布商品可以获得大量曝光！' },
         'guide_2': { media: 'shop/guide/2.png?v2', title: '想要更多关注和订单？教你几招' },
         'guide_3': { media: 'shop/guide/3.png?v2', title: '评价是店铺的“最强代言人”' },
         'guide_4': { media: 'shop/guide/4.png?v2', title: '店铺积分对我来说有何用？' },
