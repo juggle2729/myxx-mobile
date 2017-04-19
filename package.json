@@ -4,9 +4,9 @@
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
     "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 0.0.0.0 --port 80",
-    "build": "NODE_ENV=production webpack --progress --hide-modules",
-    "build:www": "webpack --config webpack.www.config.js --progress --hide-modules",
-    "stat": "NODE_ENV=production webpack --json > stat.json"
+    "build": "rm -rf build && NODE_ENV=production webpack --progress --hide-modules",
+    "build:www": "rm -rf build && webpack --config webpack.www.config.js --progress --hide-modules",
+    "deploy": "./deploy.sh"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
