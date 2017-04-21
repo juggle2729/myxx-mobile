@@ -44,7 +44,7 @@
             margin-right: 66px
 </style>
 <template  lang="pug">
-.story-item.bg-white(v-link="{name: 'story', params: {id: data.post_id}}")
+.story-item.bg-white(v-link="{name: 'topic', params: {id: data.post_id}}")
     .follow.flex.pdl(v-if="collection")
         avatar(:user="data.user", :size="50")
         .mgl.fz-26.gray.flex-1 {{data.user.nickname}} 添加至专辑

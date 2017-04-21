@@ -88,6 +88,8 @@
             border-radius: 40px
             height: 32px
             line-height: 32px
+    .guarantee .icon-enter
+        color: #f1ab47
     .tabs
         width: 100%
         height: 90px
@@ -169,8 +171,8 @@
                     .fz-30(v-if="prod.sell_status === 'sold'") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
                     .price.fz-44.flex-1(v-else) {{prod.price | price}}
             .guarantee(@click="guarantee")
-                img(:src="'product/term.png' | qn")
-                icon.fz-26.red(name="enter")
+                img(:src="'product/term.png?v1' | qn")
+                icon.fz-26(name="enter")
         .hr
         .coupon.flex.fz-26.red.pdh-32.bdb(v-if="prod.shop.coupon_count")
             .flex-1 {{prod.shop.coupon_count}}张店铺优惠券发放中
@@ -187,7 +189,7 @@
                     div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}
                     .new.bg-red.white.fz-22.mgl-16.pdh-16(v-if="prod.shop.pd_count_today") 今日上新 {{prod.shop.pd_count_today}}
             .center
-                icon(name="shop")
+                icon.gray(name="shop")
                 .fz-22.gray 进店逛逛
         .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
             avatar(:user='prod.owner', :size='50')

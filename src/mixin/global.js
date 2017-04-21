@@ -56,7 +56,7 @@ const mixin = {
                     if(hasConfirm) {
                         fb = () => {
                             this.action('confirm', {
-                                text: '与商家私聊、下单交易请下载美玉秀秀App——最大的和田玉交流平台',
+                                text: '与商家私聊、下单交易请下载美玉秀秀App——最大的和田玉线上交流App',
                                 labels: ['稍后再说', '立即下载']
                             }).then((data) => {
                                 if(data === '1') {

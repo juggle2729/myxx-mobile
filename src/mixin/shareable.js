@@ -2,7 +2,7 @@ export default {
     ready() {
         if(this.env.isShare) {
             _.delay(() => { // 分享统计
-                const type = {question: 'jianbao', answer: 'jianbaoresult', story: 'topic', post: 'topic',product: 'product', jade: 'product', master: 'website', user: 'profile'}
+                const type = {question: 'jianbao', answer: 'jianbaoresult', topic: 'topic', post: 'topic',product: 'product', jade: 'product', master: 'website', user: 'profile'}
                 this.$fetch('log/content_readings', {
                             channel: _.get(this, '$route.query.channel', 'pc'),
                             id: this.$route.params.id,
@@ -23,7 +23,7 @@ export default {
             }
             // entry.desc = entry.desc.replace(/\[\:(\d+)_([^\]]+?)\]/g, '@$2')
             switch(this.$route.name) {
-                case 'story':
+                case 'topic':
                     data.title = entry.content
                     data.desc = entry.content
                     data.icon = entry.medias[0].media
@@ -90,7 +90,7 @@ export default {
                     data.desc = '玉友的这个问题，你有什么见解吗？'
                     data.icon = entry.icon || 'https://o0x80w5li.qnssl.com/share/question.png'
                     break
-                case 'topic':
+                case 'tag':
                     data.title = `推荐一个不错的话题 ${entry.title}`
                     data.desc = entry.desc
                     data.icon = 'https://o0x80w5li.qnssl.com/share/topic.png'
@@ -107,16 +107,16 @@ export default {
                     break
                 case 'shop-guide':
                     data.title = '美玉秀秀开店攻略'
-                    data.desc = '美玉秀秀-最大的和田玉线上交易平台'
+                    data.desc = '美玉秀秀-最大的和田玉线上交流App'
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'
                     break
                 case 'help-media':
                     data.title = entry.title
-                    data.desc = '美玉秀秀-最大的和田玉线上交易平台'
+                    data.desc = '美玉秀秀-最大的和田玉线上交流App'
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'
                     break
             }
-            data = {title: '美玉秀秀', desc: '最大的和田玉互动社区', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
+            data = {title: '美玉秀秀', desc: '最大的和田玉线上交流App', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
             // data.title = _.truncate(data.title, {
             //     length: /[\uD800-\uDBFF]/.test(data.title.charAt(40)) ? 39 : 40
             // })

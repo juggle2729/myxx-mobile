@@ -19,11 +19,11 @@
 <template  lang="pug">
 .about-view
     .imgs.center
-        img(:src="'profile/about.png' | qn", v-link="!isProd ? {name: 'api'} : ''")
+        img(:src="'profile/about.png' | qn")
         p.fz-34.default 美玉秀秀
         p.fz-22.gray v{{version}}
         .text
-            p.fz-30 美玉秀秀是国内最大的和田玉爱好者平台，高品质和田玉资源集合地。
+            p.fz-30 美玉秀秀是国内最大的和田玉线上交流App，高品质和田玉资源集合地。
             p.fz-30 美玉秀秀移动端是为全国各地的和田玉爱好者、藏家、商家、相关领域的大师以及权威人士提供专业和田玉鉴定、社交、交易的综合性平台。
             p.fz-30 客服电话：
                 a.red(href="tel:4000587266") 400-0587-266
@@ -31,16 +31,14 @@
 <script>
 export default {
     name: 'about-view',
+
     data() {
         return {
-            version: '1.0'
+            version: '1.0',
+            cookie: document.cookie
         }
     },
-    computed: {
-        isProd() { // 在非生产环境才可以进入客户端接口测试页面
-           return _.includes(this.config.api, 'com')
-        }
-    },
+
     ready() {
         this.action('version')
             .then(v => this.version = v)

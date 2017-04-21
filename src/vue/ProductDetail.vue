@@ -56,8 +56,7 @@ export default {
     },
 
     ready() {
-        this.$fetch('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'})
-            .then(data => {
+        this.$fetch('dc/rd', {obj_id: this.$route.params.id, biz_type: 'pd'}).then(data => {
                 this.related = data.entries.map(e => e.entry)
             })
     },

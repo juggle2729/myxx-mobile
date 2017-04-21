@@ -1,26 +1,22 @@
 // hosts设置
 let [api, img, video, download] = ((env='test') => {
-    env = /^app/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : env)
+    env = /meiyuxiuxiu\.com$/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : env)
     const hosts = {
         api: {
             test: '//test.api.meiyuxiuxiu.net',
-            prod: '//api.meiyuxiuxiu.com',
-            docker: '//192.168.0.150:18000'
+            prod: '//api.meiyuxiuxiu.com'
         },
         img: {
             test: 'http://img.meiyuxiuxiu.net/',
-            prod: 'http://img.meiyuxiuxiu.com/',
-            docker: 'http://img.meiyuxiuxiu.net/'
+            prod: 'http://img.meiyuxiuxiu.com/'
         },
         video: {
             test: 'http://video.meiyuxiuxiu.net/',
-            prod: 'http://video.meiyuxiuxiu.com/',
-            docker: 'http://video.meiyuxiuxiu.net/'
+            prod: 'http://video.meiyuxiuxiu.com/'
         },
         download: {
             test: 'http://build.meiyuxiuxiu.net/',
-            prod: /android/.test(navigator.userAgent) ? 'https://o0xal1l6l.qnssl.com/jenkins-myxx-Android-latest.apk' : 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share',
-            docker: 'http://build.meiyuxiuxiu.net/'
+            prod: /android/.test(navigator.userAgent) ? 'https://o0xal1l6l.qnssl.com/jenkins-myxx-Android-latest.apk' : 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share'
         }
     }
     return _.map(hosts, env)
@@ -44,7 +40,7 @@ export default {
         }, {
             id: 'tp', // 30
             name: '帖子',
-            route: 'story'
+            route: 'topic'
         }, {
             id: 'pd', // 40
             name: '宝贝',
@@ -69,7 +65,7 @@ export default {
     ],
     role: {normal: '普通用户', engraver: '雕刻师', merchant: '商户', enterprise: '企业'},
     shopType: {studio: '工作室', store: '商铺', enterprise: '商铺', person: '个人'},
-    category: { 'jb': 'question', 'tp': 'story', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'topic'},
+    category: { 'jb': 'question', 'tp': 'topic', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'tag'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'
     },

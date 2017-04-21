@@ -85,7 +85,7 @@
                 span 更多
                 icon(name="enter")
     .hr(v-if='interview')
-    .interview.pdh-32.pdb-30.bg-white(v-if='interview', v-link="{name: 'story', params: {id: interview.iv_post_id}}")
+    .interview.pdh-32.pdb-30.bg-white(v-if='interview', v-link="{name: 'topic', params: {id: interview.iv_post_id}}")
         .line-height-90.fz-26.gray
             span.pdl-12 专访
         .flex

@@ -120,7 +120,8 @@ router.alias({
     // v3.3修改
     '/jade/:id/:tab': '/product/:id/:tab',
     '/product/:id': '/product/:id/none',
-    '/help/desc/coupon': '/help/desc/use_coupon'
+    '/help/desc/coupon': '/help/desc/use_coupon',
+    '/story/:id': '/topic/:id'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');

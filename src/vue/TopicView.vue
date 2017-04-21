@@ -1,69 +1,100 @@
 <style lang="stylus">
-.topic-view
-    .scrollable
-        .item
-            height: 72px
-            line-height: 72px
-            border-radius: 8px
+.story-view
+    .cover.video
+        padding-bottom: 100%
+    .name img
+        display: block
+        height: 30px
+        width: 30px
+    .pictures img
+        width: 100%
+    .tag-activity
+        display: inline-block
+        padding: 10px 20px
+        border-radius: 26px
+        background-color: #ffecea
+    .footer
+        height: 100px
+        width: 100%
+        > div
+            line-height: 60px
+            -webkit-box-flex: 1
+            text-align: center
+    .topics-component
+        padding-top: 24px
 </style>
 <template  lang="pug">
-.topic-view.bg.pdb-36
-    section.bg-white
-        .scrollable.mgl-32.bdb.pdv-24
-            .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'topic', params: {id: topic.id}}") {{topic.name}}
-        .flex.pdh-32.pdt-40
-            .fz-34.bold.flex-1 {{topics.name}}
-            .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
-                icon(name="plus")
-                span 关注话题
-        .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
+.story-view.bg-white(v-if='!$loadingRouteData')
+    .pd-32
+        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+        .flex.mgt-32
+            avatar(:user='story.user')
+            .name.mgl
+                .flex
+                    .fz-30 {{story.user.name}}
+                    img.mgl-8(v-if="story.user.vip_flag", :src="'profile/' + story.user.role + '.png' | qn")
+                .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
+        .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
+
+        .pictures.pdt-28(v-if="cover.media_type==='picture'")
+            img.mgb-10(v-for='pic in pictures', :src="config.img+pic", @click='coverflow(this.pictures, $index)')
+
+        .tag-activity.red.fz-26.mgr-32(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
+            icon(name="fire")
+            span {{story.activity.name}}
+        template(v-if="story.user.shop")
+            shop(:shop="story.user.shop")
     .hr
-    template(v-for="item in items")
-        component(:is="config.category[item.type]", keep-alive, :item="item")
-        .hr
-    deep-link(v-if="!items.hasMore") 打开美玉秀秀，查看更多话题内容
-    empty(v-if='items.isEmpty', title='暂无内容')
+
+    comment-list(type='tp', :id='story.post_id', :total="story.comment_count")
+    .hr
+    topics(v-if='story.categories', :topics='story.categories')
+    general-suggestion
 </template>
 <script>
-import paging from 'paging'
+import CommentList from 'component/CommentList.vue'
+import Topics from 'component/Topics.vue'
+import GeneralSuggestion from 'component/GeneralSuggestion.vue'
+import Shop from 'component/Shop.vue'
 import shareable from 'shareable'
-import story from 'component/item/Story.vue'
-import post from 'component/item/Post.vue'
-import question from 'component/item/Question.vue'
 export default {
-    name: 'TopicView',
-    mixins: [paging, shareable],
+    name: 'StoryView',
+    mixins: [shareable],
     components: {
-        story,
-        post,
-        question
+        Topics,
+        Shop,
+        CommentList,
+        GeneralSuggestion
     },
+
     data() {
         return {
-            topics: {}
+            story: {
+                user: {},
+                medias: []
+            }
+        }
+    },
+
+    computed: {
+        cover() {
+            return this.story.medias[0] || {}
+        },
+
+        pictures() {
+            return _.chain(this.story.medias)
+                    .filter(item => item.media_type === 'picture')
+                    .map(item => item.media)
+                    .value()
         }
     },
     route: {
         data({to}) {
-            return this.$fetch(`dc/sns/categories/${to.params.id}`).then((topics) => {
-                this.topics = topics
-                this.action('updateTitle', {text: topics.name})
-                this.setShareData({
-                    title: topics.name,
-                    desc: topics.desc
+            return this.$fetch(`sns/topics/${to.params.id}`)
+                .then(story => {
+                    this.setShareData(story)
+                    this.story = story
                 })
-            })
-        }
-    },
-    computed: {
-        paging() {
-            return {
-                path: `dc/sns/categories/${this.$route.params.id}/posts`,
-                list: 'entries',
-                params: {
-                    limit: 10
-                }
-            }
         }
     }
 }

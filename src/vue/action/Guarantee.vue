@@ -15,9 +15,9 @@
         width: 560px
         margin: 0 auto
         position: relative
-        transform: translate3d(0, 400px, 0)
+        transform: translate3d(0, 200px, 0)
         img
-            height: 334px
+            height: 760px
             width: 560px
         .tip
             position: absolute
@@ -30,7 +30,7 @@
 <template  lang="pug">
 .guarantee-action(@click.self="close")
     .container
-        img(:src="'product/guarantee_1.png' | qn")
+        img(:src="'product/guarantee.png?v1' | qn")
         .tip(@click="close")
 </template>
 <script>

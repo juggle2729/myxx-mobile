@@ -41,14 +41,14 @@ export default {
         }
     },
 
-    '/story/:id': {
-        name: 'story',
+    '/topic/:id': {
+        name: 'topic',
         title: '帖子详情',
         native: v => v >= 1.6,
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('StoryView.vue'))
-            }, 'story')
+                resolve(require('TopicView.vue'))
+            }, 'topic')
         }
     },
 
@@ -95,13 +95,13 @@ export default {
         }
     },
 
-    '/topic/:id': {
-        name: 'topic',
+    '/tag/:id': {
+        name: 'tag',
         native: v => v >= 2.4,
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('TopicView.vue'))
-            }, 'topic')
+                resolve(require('TagView.vue'))
+            }, 'tag')
         }
     },
 
