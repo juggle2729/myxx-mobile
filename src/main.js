@@ -44,7 +44,7 @@ let router = new Router({history: true})
  */
 router.beforeGo((from, to, app) => {
     let interrupted = false
-    if(app.env.version) { // 客户端环境
+    if(app.env.isApp) { // 客户端环境
         let action = to.native && to.native(app.env.version)
         if(action) {
             action = _.isObject(action) ? _.merge(to, action) : to

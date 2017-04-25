@@ -87,13 +87,11 @@ export default {
                 isQQ: /qq\//i.test(ua),
                 isWeibo: /weibo/i.test(ua),
                 isDingTalk: /dingtalk/i.test(ua),
-                isTest: !/^app/.test(location.hostname)
+                isTest: !/meiyuxiuxiu\.com$/.test(location.hostname)
             }
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk)
             env.isShare = !env.isApp && (_.hasIn(this, '$route.query.channel') || _.hasIn(this, '$route.query.user'))
-            if(env.isApp) {
-                env.version = ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.')
-            }
+            env.version = env.isApp ? ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.') : 99
             return env
         }
     },

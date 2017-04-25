@@ -70,12 +70,12 @@ export default {
 
     computed: {
         hasShop() {
-            return _.has(this, 'self.shop_id') || _.has(this, 'self.shopId')
+            return this.env.version < 3.3 || _.get(this, 'self.shop_id') || _.get(this, 'self.shopId')
         },
 
         tab() { // 当前tab
             const routeTab = this.$route.params.tab
-            return this.hasShop ? (['expects', 'withdraws', 'bills'].indexOf(routeTab) !== -1 ? routeTab : 'expects' ) : 'bills'
+            return ['expects', 'withdraws', 'bills'].indexOf(routeTab) !== -1 ? routeTab : 'expects'
         },
 
         expect() {

@@ -228,10 +228,10 @@
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
             template(v-if="prod.sell_status==='selling'")
-                .fz-30.add-btn.bg-yellow.white(@click="addToCart()") 加入购物车
+                .fz-30.add-btn.bg-yellow.white(v-if="3.3 <= env.version", @click="addToCart()") 加入购物车
                 .fz-30.buy-btn.bg-red.white(@click='buy()') 立即购买
             template(v-else)
-                .fz-30.add-btn.bg-gray.white 加入购物车
+                .fz-30.add-btn.bg-gray.white(v-if="3.3 <= env.version") 加入购物车
                 .fz-30.buy-btn.bg-gray.white 已售出
     .offline(v-else)
         img(:src="'mall/offline.png' | qn")

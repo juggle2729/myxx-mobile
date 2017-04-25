@@ -12,10 +12,10 @@
         avatar(:user="user", :size="50")
         .mgl.fz-26.gray {{user.nickname}} 关注了话题
     .content.flex.pdt-24.pdh
-        .img.cover.mgr(v-bg="item.entry.picture")
+        img.cover.mgr(:src="'tag.png' | qn")
         .flex-1
-            .fz-30.mgb-16 {{item.entry.name}}
-            .fz-26.gray.user-txt.line-clamp-2 {{item.entry.desc}}
+            .fz-30.mgb-16 {{title}}
+            .fz-26.gray.user-txt.line-clamp-2 {{desc}}
 </template>
 <script>
 export default {
@@ -28,6 +28,14 @@ export default {
     computed: {
         user() {
             return this.$parent.$parent.profile
+        },
+
+        title() {
+            return this.item.entry.name || this.item.entry.content
+        },
+
+        desc() {
+            return this.item.entry.desc || this.title
         }
     }
 }
