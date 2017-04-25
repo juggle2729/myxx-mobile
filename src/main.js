@@ -27,7 +27,7 @@ Vue.use(store)
 Vue.http.interceptors.push((req, next) => {
     // 如果url是全路径,忽略root
     /\/\//.test(req.url) && (req.root = '')
-    req.credentials = true
+    req.credentials = req.method !== 'GET' && !/jsapisignature/.test(req.url)
     // continue to next interceptor
     next();
 });
