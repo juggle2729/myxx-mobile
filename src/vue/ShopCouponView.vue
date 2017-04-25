@@ -125,7 +125,7 @@
         avatar(:user='user')
         .hello.flex-1.mgl.fz-26.bg-white
             p Hi，我是{{user.nickname}}。
-            p.mgt 送你{{coupons.length}}张优惠券，赶紧领取进店看看吧！
+            p.mgt 送你{{coupons.length || ''}}张优惠券，赶紧领取进店看看吧！
     .shop.flex.detail(v-link="{name: 'shop', params: {id: shop.id}}")
         .logo(v-bg='shop.logo')
         .flex-1
@@ -190,7 +190,7 @@ export default {
                         coupon.coupon_end_time = dateformat(new Date(coupon.coupon_end_time), 'yyyy.m.d')
                         return coupon
                     })
-                    const title = `送你${this.coupons.length}张优惠券，赶紧进店看看吧!`
+                    const title = `送你${this.coupons.length || ''}张优惠券，赶紧进店看看吧!`
                     this.action('updateTitle', { text: title })
                     this.setShareData({
                         title,

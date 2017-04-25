@@ -9,11 +9,17 @@
         text-align: right
     .tabs
         height: 100px
+        position: fixed
+        z-index: 9
+        width: 100%
+        top: 0
         > div
             line-height: 40px
             text-align: center
             &.v-link-active
                 color: #cc3f4f
+    .tabs-placeholder
+        height: 100px
     .symbol
         vertical-align: 5px
     .line-clamp-2
@@ -21,13 +27,15 @@
 </style>
 <template lang="pug">
 .wallet-detail(v-if='!$loadingRouteData')
-    .tabs.flex.fz-30.bdb(v-if="hasShop")
-        .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}")
-            | 交易中
-        .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'withdraws'}, replace: true}")
-            | 已提现
-        .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
-            | 总流水
+    template(v-if="hasShop")
+        .tabs.flex.fz-30.bdb.bg-white
+            .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}")
+                | 交易中
+            .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'withdraws'}, replace: true}")
+                | 已提现
+            .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
+                | 总流水
+        .tabs-placeholder
     .fz-30.bdb.pd-32(v-for='item in items')
         .flex.fz-22.gray
             .flex-1 {{item.trans_desc}}
@@ -38,9 +46,12 @@
             .red.fz-40.flex-1.right(v-if="expect || $route.params.tab === 'withdraws'")
                 | {{item.trans_amount | price}}
             .red.fz-40.flex-1.right(v-else, :class="{'light-blue': (item.trans_amount < 0 && item.trans_desc === '手续费'), 'light-green': item.trans_amount < 0}")
-                span.symbol {{(item.trans_amount > 0) ? '+' : '-'}}
-                span(v-if="item.trans_amount > 0") {{item.trans_amount | price}}
-                span(v-else) {{~item.trans_amount+1 | price}}
+                template(v-if="item.trans_amount > 0")
+                    span.symbol +
+                    span {{item.trans_amount | price}}
+                template(v-else)
+                    span.symbol -
+                    span {{-item.trans_amount | price}}
     empty(v-if='isEmpty')
 </template>
 <script>
@@ -62,6 +73,11 @@ export default {
             return _.has(this, 'self.shop_id') || _.has(this, 'self.shopId')
         },
 
+        tab() { // 当前tab
+            const routeTab = this.$route.params.tab
+            return this.hasShop ? (['expects', 'withdraws', 'bills'].indexOf(routeTab) !== -1 ? routeTab : 'expects' ) : 'bills'
+        },
+
         expect() {
             return this.$route.params.tab === 'expects'
         },
@@ -73,17 +89,27 @@ export default {
 
     route: {
         data({to, next}) {
-            const tab = this.hasShop ? (['expects', 'withdraws', 'bills'].indexOf(to.params.tab) !== -1 ? to.params.tab : 'expects' ) : 'bills'
-            if(!this[tab]) { // 仅第一次访问该tab的时候获取数据
-                return this.$fetch(`balance/${tab}`).then(resp => {
+            if(!this[this.tab]) { // 仅第一次访问该tab的时候获取数据
+                return this.$fetch(`balance/${this.tab}?offset=0&limit=10`).then(resp => {
                     this.items = resp.entries
-                    this[tab] = this.items
+                    this[this.tab] = this.items
                     this.isEmpty = this.items.length === 0
                 })
             } else {
-                this.items = this[tab]
+                this.items = this[this.tab]
                 this.isEmpty = this.items.length === 0
                 next()
+            }
+        }
+    },
+
+    events: {
+        scrollToBottom(e) {
+            const offset = this.items.length
+            if(offset) { // tab已经初始化
+                return this.$fetch(`balance/${this.tab}?offset=${offset}&limit=10`).then(resp => {
+                    this.items = this.items.concat(resp.entries)
+                })
             }
         }
     }

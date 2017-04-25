@@ -115,7 +115,7 @@ const mixin = {
                     fallback = guard(true, true, 2.1)
                     break
                 case 'couponList':
-                    fallback = guard(true, true, 3.3)
+                    fallback = guard(false, true, 3.3)
                     break
             }
             if(fallback) {
