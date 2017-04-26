@@ -5,8 +5,8 @@
 </style>
 <template lang="pug">
 .all-product.bg.pdt
-    .options.bg-white.line-height-100.fz-30.flex(v-if="!items.isEmpty")
-            .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
+    .options.bg-white.line-height-100.fz-30.flex
+        .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
     .list
         product-card(v-for="item in items", :item="item")
     empty(v-if="items.isEmpty", title="暂无商品")
