@@ -47,16 +47,16 @@
                 .flex-1.fz-26.gray.line-clamp-1 {{item.product_title}}
             .fz-30.user-txt(:class="{'mgt-18': item.description}") {{item.description}}
             .pd.fz-26.gray.user-txt.bg-light.dark.mgt-16(v-if="item.reply") 掌柜回复： {{{item.reply.reply_content | content}}}
-            tag-list(:tags="item.tags", inner="true", v-if="item.tags", :class="{'mgt': items.tags}")
+            marks(:tags="item.tags", inner="true", v-if="item.tags", :class="{'mgt': items.tags}")
     empty(v-if="items.isEmpty", title="暂无评价")
 </template>
 <script>
-import TagList from 'component/TagList.vue'
+import Marks from 'component/Marks.vue'
 export default {
     name: 'opinion-list',
 
     components: {
-        TagList
+        Marks
     },
 
     props: {

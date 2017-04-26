@@ -8,18 +8,18 @@
 <template  lang="pug">
 .general-suggestion.bg-white
     .fz-26.gray.mgl-32.line-height-80 相关推荐
-    topics(v-if='categories && categories.length', :topics="categories")
+    tags(v-if='categories && categories.length', :tags="categories")
     card(v-for="item in items", :item="item")
     deep-link 没找到感兴趣的？打开美玉秀秀看看吧！
 </template>
 <script>
 import Card from 'component/item/Card.vue'
-import Topics from 'component/Topics.vue'
+import Tags from 'component/Tags.vue'
 export default {
     name: 'general-suggestion',
 
     components: {
-        Topics,
+        Tags,
         Card
     },
 

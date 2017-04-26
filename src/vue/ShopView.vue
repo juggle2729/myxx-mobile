@@ -45,6 +45,10 @@
             z-index: 99
             border-radius: 8px
             border: 4px solid #f9f9f9
+        .flex-1
+            .line-clamp-1
+                padding-right: 2em
+                width: 100%
     .tabs
         height: 150px
         line-height: 150px
@@ -74,7 +78,7 @@
 </style>
 <template lang="pug">
 .shop-view.bg(v-if='!$loadingRouteData')
-    header(v-bg='shop.image_bg')
+    header(v-bg.lg='shop.image_bg')
         .shop-bg
         .name.flex.white
             .bold.fz-30 {{shop.shop_name}}
@@ -87,7 +91,7 @@
         .img.mgr-16(v-bg="shop.logo")
         .fz-26.gray.flex.flex-1
             icon(name="location")
-            .mgl-8.mgt-4 {{shop.locale_name}}
+            .mgl-8.mgt-4.line-clamp-1 {{shop.locale_name}}
         .fz-26.gray.flex(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
             .mgr-12 店铺评价
             icon(name="enter")

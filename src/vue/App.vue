@@ -14,12 +14,10 @@
         height: 112px
         width: 100%
         padding: 0 24px
-        box-shadow: 0 0 30px 0 rgba(0,0,0,.2);
-        .logo
-            line-height: 0
-            img
-                height: 72px
-                width: 72px
+        box-shadow: 0 0 20px 0 rgba(0,0,0,.2)
+        img
+            display: block
+            height: 28px
         .dot
             margin: 0 10px
         .deep-link
@@ -45,13 +43,11 @@
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
         .share-top.flex.bg-white
-            .logo.mgr
-                img(src="http://img.meiyuxiuxiu.com/static/logo.png", alt="美玉秀秀")
             .flex-1
                 .flex
-                    .name.fz-30.bold 美玉秀秀
+                    img(:src="'logo-txt.svg?v1' | qn", alt="美玉秀秀")
                     .fz-22.dot •
-                    .slogan.fz-22 50万玉友的选择
+                    .flex-1.slogan.fz-22 50万玉友的选择
                 .fz-22.gray.mgt-8 最大的和田玉线上交易App
             deep-link
         .share-top-placeholder

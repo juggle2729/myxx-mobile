@@ -36,8 +36,8 @@
         background-color: #fcedd6
         margin-top: 28px
         border-radius: 12px 12px 0 0
-        padding: 28px 32px 36px 28px
-        border-bottom: 1px dotted #bd925f
+        padding: 28px 32px 28px 28px
+        border-bottom: 1px dotted rgba(189, 146, 95, .5)
         .logo
             height: 100px
             width: 100px
@@ -45,8 +45,11 @@
             margin-right: 20px
         .name
             color: #603500
+        .btn-to-shop
+            margin-top: -20px
         .icon-shop
             width: 46px
+            height: .9em
         .icon-location
             vertical-align: 1px
             height: 1.1em
@@ -58,13 +61,13 @@
     .coupons
         background-color: #fcedd6
         border-radius: 0 0 12px 12px
-        padding: 28px 26px 36px 28px
+        padding: 28px 26px 28px 28px
     .coupon
         &:not(:last-child)
             margin-bottom: 20px
         .flex-1
             height: 160px
-            padding: 20px 0 0 28px
+            padding: 20px 0 0 20px
             border-radius: 8px 0 0 8px
             .amount::before
                 content: '￥'
@@ -73,12 +76,15 @@
                 margin: 16px 0 10px 0
         .btn-get-coupon
             height: 160px
-            width: 160px
+            width: 172px
             line-height: 160px
             text-align: center
             border-radius: 0 8px 8px 0
             background: linear-gradient(120deg, #f77080, #cc3f4f 90%, #cc3f4f)
             position: relative
+            // &:focus
+            //     background-color: #cc3f4f
+            //     color: black
             &::before
                 content: ''
                 display: block
@@ -107,7 +113,7 @@
             display: inline-block
             height: 26px
             padding: 0 6px
-            vertical-align: middle
+            vertical-align: -1px
     .deep-link
         padding: 0
         .btn
@@ -123,27 +129,27 @@
 .shop-coupon-view(v-if='!$loadingRouteData')
     header.flex
         avatar(:user='user')
-        .hello.flex-1.mgl.fz-26.bg-white
+        .hello.flex-1.mgl-30.fz-26.bg-white
             p Hi，我是{{user.nickname}}。
-            p.mgt 送你{{coupons.length || ''}}张优惠券，赶紧领取进店看看吧！
+            p.mgt-12 送你{{coupons.length || ''}}张优惠券，赶紧领取进店看看吧！
     .shop.flex.detail(v-link="{name: 'shop', params: {id: shop.id}}")
         .logo(v-bg='shop.logo')
         .flex-1
             .fz-30.flex.mgb-20.name
-                .line-clamp.mgr {{shop.shop_name}}
+                .line-clamp.mgr-8 {{shop.shop_name}}
                 lv(:lv="shop.level")
             .fz-26.flex
                 icon(name="location")
                 div {{shop.locale_name}}
-        .center(v-link="{name: 'shop', params: {id: shop.id}}")
+        .btn-to-shop.center(v-link="{name: 'shop', params: {id: shop.id}}")
             icon(name="shop")
             .fz-22 进店逛逛
     .coupons(v-if="coupons.length")
         .coupon.flex(v-for="coupon in coupons")
             .flex-1.fz-22.gray.bg-white
                 .amount.fz-48.red.bold {{coupon.discount_amount}}
-                .desc 订单{{coupon.note}}，全店通用
-                .duration {{coupon.coupon_start_time}} - {{coupon.coupon_end_time}}
+                .desc.pdl-8 订单{{coupon.note}}，全店通用
+                .duration.pdl-8 {{coupon.coupon_start_time}} - {{coupon.coupon_end_time}}
             .btn-get-coupon.white.fz-30(@click="getCoupon(coupon.id)") 立即领取
     .empty.fz-26.center(v-else) 你的速度太慢了，优惠券已被领完了...
     .support.fz-26.center

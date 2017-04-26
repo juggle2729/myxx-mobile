@@ -67,7 +67,6 @@
 </template>
 <script>
 import shareable from 'shareable'
-import Topics from 'component/Topics.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
     name: 'answer-view',
@@ -75,7 +74,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        Topics,
         GeneralSuggestion
     },
 

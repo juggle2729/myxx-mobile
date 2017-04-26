@@ -116,12 +116,12 @@
 </template>
 <script>
 import Lv from 'component/Lv.vue'
-import Story from 'component/item/Story.vue'
+import Topic from 'component/item/Topic.vue'
 import Post from 'component/item/Post.vue'
 import Question from 'component/item/Question.vue'
 import Answer from 'component/item/Answer.vue'
 import Collection from 'component/item/Collection.vue'
-import Topic from 'component/item/Topic.vue'
+import Tag from 'component/item/Tag.vue'
 import paging from 'paging'
 export default {
     name: 'user-home',
@@ -130,12 +130,12 @@ export default {
 
     components: {
         Lv,
-        Story,
+        Topic,
         Post,
         Question,
         Answer,
         Collection,
-        Topic
+        Tag
     },
 
     computed: {

@@ -12,14 +12,14 @@
     .titles
         .header
             min-height: 164px
-            padding: 28px 32px
+            padding: 28px 32px 28px 26px
             .price
                 font-weight: bold
                 &:first-letter
                     font-size: 32px
                     font-weight: normal
         .title
-            margin-bottom: 18px
+            margin: 0 0 18px 4px
             line-height: 1.5
         .button
             padding: 0 20px 0 20px
@@ -53,12 +53,16 @@
     .coupon
         height: 100px
         .flex-1
-            padding-left: 40px
-            background-image: url($qn + '/coupon/logo.png')
-            background-size: 28px
+            padding: 2px 0 0 40px
+            background: transparent url($qn + '/coupon/logo.png') left center no-repeat
+            height: 80px
+            line-height: 80px
+            background-size: 28px 28px
         .bd-red
             border-radius: 6px
-            padding: 8px 20px
+            padding: 10px 20px 0
+            height: 48px
+            font-size: .34rem   // TODO: Android Webview 汉字渲染有毛病
         .deep-link .btn //reset deep-link style
             font-size: 26px
             border-radius: 6px
@@ -78,6 +82,7 @@
                 line-height: 1.2
         .address
             max-width: 200px
+            font-size: 0.34rem
         .icon-shop
             height: 44px
             width: 48px
@@ -136,6 +141,8 @@
             text-align: center
             height: 98px
             line-height: 98px
+        .buy-btn.bg-gray
+            border(l, #d9d9d9)
     .tabs-fixed
         will-change: visibility
         position: fixed
@@ -155,6 +162,14 @@
             margin: 0 auto
             height: 244px
             width: 386px
+.is-android
+    .product-view
+        .coupon .flex-1
+            padding: 4px 0 0 40px
+        .new
+            border-radius: 40px
+            height: 32px
+            line-height: 38px
 </style>
 <template lang="pug">
 .product-view
@@ -228,11 +243,11 @@
                     icon.fz-30(name="shop")
                     .mgt-6 店铺
             template(v-if="prod.sell_status==='selling'")
-                .fz-30.add-btn.bg-yellow.white(v-if="3.3 <= env.version", @click="addToCart()") 加入购物车
-                .fz-30.buy-btn.bg-red.white(@click='buy()') 立即购买
+                .fz-26.add-btn.bg-yellow.white(v-if="3.3 <= env.version", @click="addToCart()") 加入购物车
+                .fz-26.buy-btn.bg-red.white(@click='buy()') 立即购买
             template(v-else)
-                .fz-30.add-btn.bg-gray.white(v-if="3.3 <= env.version") 加入购物车
-                .fz-30.buy-btn.bg-gray.white 已售出
+                .fz-26.add-btn.bg-gray.white(v-if="3.3 <= env.version") 加入购物车
+                .fz-26.buy-btn.bg-gray.white 已售出
     .offline(v-else)
         img(:src="'mall/offline.png' | qn")
         .mgt-28.gray.fz-26.center 该商品已下架

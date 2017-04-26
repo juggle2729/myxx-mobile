@@ -27,14 +27,14 @@
 <script>
 import paging from 'paging'
 import shareable from 'shareable'
-import story from 'component/item/Story.vue'
+import topic from 'component/item/Topic.vue'
 import post from 'component/item/Post.vue'
 import question from 'component/item/Question.vue'
 export default {
     name: 'TopicView',
     mixins: [paging, shareable],
     components: {
-        story,
+        topic,
         post,
         question
     },

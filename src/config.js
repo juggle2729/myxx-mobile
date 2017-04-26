@@ -1,6 +1,6 @@
 // hosts设置
 let [api, img, video, download] = ((env='test') => {
-    env = /meiyuxiuxiu\.com$/.test(location.hostname) ? 'prod' : (/^test/.test(location.hostname) ? 'test' : env)
+    env = /meiyuxiuxiu\.com$/.test(location.hostname) ? 'prod' : (/meiyuxiuxiu\.net$/.test(location.hostname) ? 'test' : env)
     const hosts = {
         api: {
             test: '//test.api.meiyuxiuxiu.net',
@@ -20,7 +20,7 @@ let [api, img, video, download] = ((env='test') => {
         }
     }
     return _.map(hosts, env)
-})('test')
+})('prod')
 
 export default {
     api,

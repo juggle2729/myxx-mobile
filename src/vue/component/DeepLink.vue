@@ -36,13 +36,13 @@
 <template  lang="pug">
 .deep-link
     .btn(v-if="env.isBrowser", @click="myxx")
-        slot 立即打开
+        slot 打开
     template(v-else)
         a.btn(v-if="env.isIOS", :href="href", target="_blank")
-            slot 立即打开
+            slot 打开
         template(v-else)
             .btn(@click="backdrop=true")
-                slot 立即打开
+                slot 打开
             .backdrop(@click="backdrop=false", :class="{show: backdrop}")
 </template>
 <script>

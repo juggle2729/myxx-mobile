@@ -93,7 +93,7 @@
 import shareable from 'shareable'
 import tabs from 'component/Tabs.vue'
 import home from 'component/UserHome.vue'
-import story from 'component/UserStory.vue'
+import story from 'component/UserActivity.vue'
 import collection from 'component/UserCollection.vue'
 export default {
     name: 'user-view',

@@ -1,10 +1,10 @@
 <style lang="stylus">
 @import '~style/partials/var'
-.user-story
+.user-activity
     min-height: inherit
 </style>
 <template lang="pug">
-.user-story.bg
+.user-activity.bg
     .hr
     template(v-for="item in items")
         component(:is="config.category[item.type]", keep-alive, :item="item")
@@ -12,24 +12,24 @@
 </template>
 <script>
 import paging from 'paging'
-import Story from 'component/item/Story.vue'
+import Topic from 'component/item/Topic.vue'
 import Post from 'component/item/Post.vue'
 import Question from 'component/item/Question.vue'
 import Answer from 'component/item/Answer.vue'
 import Collection from 'component/item/Collection.vue'
-import Topic from 'component/item/Topic.vue'
+import Tag from 'component/item/Tag.vue'
 export default {
-    name: 'user-story',
+    name: 'user-activity',
 
     mixins: [paging],
 
     components: {
-        Story,
+        Topic,
         Post,
         Question,
         Answer,
         Collection,
-        Topic
+        Tag
     },
 
     computed: {

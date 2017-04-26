@@ -7,6 +7,7 @@ elif [ "$1" = "www" ]
 then
     echo "====== DEPLOY WWW ====="
     cp -r build/* ../www/static/mobile
+    scp -r build/* front@120.26.113.13:/home/front/www/static/mobile
     scp -r build/* front@114.55.72.65:/home/front/apps/www/static/mobile
 else
     echo "====== DEPLOY TEST ====="

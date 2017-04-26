@@ -87,7 +87,7 @@
 import paging from 'paging'
 import shareable from 'shareable'
 import post from 'component/item/Post.vue'
-import story from 'component/item/Story.vue'
+import topic from 'component/item/Topic.vue'
 import answer from 'component/item/Answer.vue'
 import question from 'component/item/Question.vue'
 export default {
@@ -96,7 +96,7 @@ export default {
     mixins: [paging, shareable],
 
     components: {
-        story,
+        topic,
         post,
         answer,
         question

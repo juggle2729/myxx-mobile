@@ -1,5 +1,5 @@
 <style lang="stylus">
-.story-view
+.topic-view
     .cover.video
         padding-bottom: 100%
     .name img
@@ -24,44 +24,43 @@
         padding-top: 24px
 </style>
 <template  lang="pug">
-.story-view.bg-white(v-if='!$loadingRouteData')
+.topic-view.bg-white(v-if='!$loadingRouteData')
     .pd-32
         .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
         .flex.mgt-32
-            avatar(:user='story.user')
+            avatar(:user='topic.user')
             .name.mgl
                 .flex
-                    .fz-30 {{story.user.name}}
-                    img.mgl-8(v-if="story.user.vip_flag", :src="'profile/' + story.user.role + '.png' | qn")
-                .mgt-12.fz-22.light {{story.create_at | moment}} &nbsp;|&nbsp; {{story.click}}人浏览
-        .fz-30.mgt-32.user-txt {{{story.content | content | input}}}
+                    .fz-30 {{topic.user.name}}
+                    img.mgl-8(v-if="topic.user.vip_flag", :src="'profile/' + topic.user.role + '.png' | qn")
+                .mgt-12.fz-22.light {{topic.create_at | moment}} &nbsp;|&nbsp; {{topic.click}}人浏览
+        .fz-30.mgt-32.user-txt {{{topic.content | content | input}}}
 
         .pictures.pdt-28(v-if="cover.media_type==='picture'")
             img.mgb-10(v-for='pic in pictures', :src="config.img+pic", @click='coverflow(this.pictures, $index)')
 
-        .tag-activity.red.fz-26.mgr-32(v-if="story.activity", v-link="{name: 'activity', params: {id: story.activity.id}}")
+        .tag-activity.red.fz-26.mgr-32(v-if="topic.activity", v-link="{name: 'activity', params: {id: topic.activity.id}}")
             icon(name="fire")
-            span {{story.activity.name}}
-        template(v-if="story.user.shop")
-            shop(:shop="story.user.shop")
+            span {{topic.activity.name}}
+        template(v-if="topic.user.shop")
+            shop(:shop="topic.user.shop")
     .hr
 
-    comment-list(type='tp', :id='story.post_id', :total="story.comment_count")
+    comment-list(type='tp', :id='topic.post_id', :total="topic.comment_count")
     .hr
-    topics(v-if='story.categories', :topics='story.categories')
     general-suggestion
 </template>
 <script>
 import CommentList from 'component/CommentList.vue'
-import Topics from 'component/Topics.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import Shop from 'component/Shop.vue'
 import shareable from 'shareable'
 export default {
-    name: 'StoryView',
+    name: 'topic-view',
+
     mixins: [shareable],
+
     components: {
-        Topics,
         Shop,
         CommentList,
         GeneralSuggestion
@@ -69,7 +68,7 @@ export default {
 
     data() {
         return {
-            story: {
+            topic: {
                 user: {},
                 medias: []
             }
@@ -78,22 +77,23 @@ export default {
 
     computed: {
         cover() {
-            return this.story.medias[0] || {}
+            return this.topic.medias[0] || {}
         },
 
         pictures() {
-            return _.chain(this.story.medias)
+            return _.chain(this.topic.medias)
                     .filter(item => item.media_type === 'picture')
                     .map(item => item.media)
                     .value()
         }
     },
+
     route: {
         data({to}) {
             return this.$fetch(`sns/topics/${to.params.id}`)
-                .then(story => {
-                    this.setShareData(story)
-                    this.story = story
+                .then(topic => {
+                    this.setShareData(topic)
+                    this.topic = topic
                 })
         }
     }

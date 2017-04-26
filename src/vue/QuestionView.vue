@@ -107,7 +107,6 @@
 </template>
 <script>
 import shareable from 'shareable'
-import Topics from 'component/Topics.vue'
 import CommentList from 'component/CommentList.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 export default {
@@ -116,7 +115,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        Topics,
         CommentList,
         GeneralSuggestion
     },

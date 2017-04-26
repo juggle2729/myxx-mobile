@@ -15,7 +15,7 @@
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
-    tag-list(v-if="tags.length > 0", :tags="tags")
+    marks(v-if="tags.length > 0", :tags="tags")
     .line-height-100.flex.fz-26.gray.bdb.pdh-32.bg-white(v-if="tab.items.length", @click="selected = !selected")
         icon(:name="selected ? 'selected' : 'select'")
         .mgl-12 只看有内容的评价
@@ -23,13 +23,13 @@
     empty(v-if="!tab.items.length", title="暂无评论")
 </template>
 <script>
-import TagList from 'component/TagList.vue'
+import Marks from 'component/Marks.vue'
 import OpinionList from 'component/OpinionList.vue'
 export default {
     name: 'shop-comment-view',
 
     components: {
-        TagList,
+        Marks,
         OpinionList
     },
 

@@ -5,7 +5,7 @@
 </style>
 <template lang="pug">
 .shop-comments-view
-    tag-list(v-if="tags && (tags.length > 0)", :tags="tags")
+    marks(v-if="tags && (tags.length > 0)", :tags="tags")
     .line-height-100.flex.fz-26.gray.bdb.pdh-32(@click="onlyContent", v-if="items.length")
         icon(:name="selected ? 'selected' : 'select'")
         .mgl-12 只看有内容的评价
@@ -13,7 +13,7 @@
 </template>
 <script>
 import paging from 'paging'
-import TagList from 'component/TagList.vue'
+import Marks from 'component/Marks.vue'
 import OpinionList from 'component/OpinionList.vue'
 export default {
     name: 'shop-comments-view',
@@ -30,7 +30,7 @@ export default {
 
     components: {
         OpinionList,
-        TagList
+        Marks
     },
 
     route: {
