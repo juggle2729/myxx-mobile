@@ -7,7 +7,7 @@ const adapter = {
             case 'login':
                 this.$store.remove('user') // 清除本地用户缓存
                 if(this.env.isWechat) {
-                    location.href = 'http://www.meiyuxiuxiu.com/wechat'
+                    location.href = 'http://www.meiyuxiuxiu.com/wechat?redirect_uri=' + encodeURIComponent(location.href)
                 } else if(this.env.isBrowser && this.env.isTest) {
                     this.$root.popup = _.merge({}, params, {handler, cb})
                 } else {
@@ -46,7 +46,7 @@ const adapter = {
                     // hack在微信等webview中无法修改document.title的情况
                     var iframe = document.createElement('iframe')
                     iframe.style.display = 'none'
-                    iframe.src = '//img.meiyuxiuxiu.com/static/logo.png'
+                    iframe.src = '//o0w8taeuo.qnssl.com/static/logo.png'
                     iframe.onload = () => {
                        _.delay(() => {
                            iframe.onload = _.noop

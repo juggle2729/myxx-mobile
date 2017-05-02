@@ -170,7 +170,7 @@
                 li.store(v-link="{name: 'user', params: {id: base.id}}") 店铺
     .share-bottom.flex(v-if='showDock', @click='gotoDownload()')
         .logo.mgr
-            img(src="http://img.meiyuxiuxiu.com/static/logo.png", alt='美玉秀秀')
+            img(src="//o0w8taeuo.qnssl.com/static/logo.png", alt='美玉秀秀')
         .flex-1.white
             .flex
                 .name.fz-30.bold 美玉秀秀

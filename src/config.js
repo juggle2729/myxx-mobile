@@ -7,12 +7,12 @@ let [api, img, video, download] = ((env='test') => {
             prod: '//api.meiyuxiuxiu.com'
         },
         img: {
-            test: 'http://img.meiyuxiuxiu.net/',
-            prod: 'http://img.meiyuxiuxiu.com/'
+            test: '//img.meiyuxiuxiu.net/',
+            prod: '//o0w8taeuo.qnssl.com/'
         },
         video: {
-            test: 'http://video.meiyuxiuxiu.net/',
-            prod: 'http://video.meiyuxiuxiu.com/'
+            test: '//video.meiyuxiuxiu.net/',
+            prod: '//obu4fsz3c.qnssl.com/'
         },
         download: {
             test: 'http://build.meiyuxiuxiu.net/',

@@ -100,7 +100,7 @@
         lv.flex-1.pdl-10.pdb-10(:lv="bid.shop.level")
         .win-count.fz-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
     main
-        .img(v-bg="bid.product.first_picture")
+        .img(v-bg.lg="bid.product.first_picture")
             .sale-mark.fz-30.white(v-if="bid.product.is_tob") 清仓
             .price-mark.fz-26.white.pdh-14 原价 {{bid.product.price | price}}
         .fz-30.pdt-24.user-txt
