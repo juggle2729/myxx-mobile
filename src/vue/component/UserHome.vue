@@ -138,18 +138,6 @@ export default {
         Tag
     },
 
-    computed: {
-        paging() {
-            return {
-                path: `users/${this.$route.params.id}/sns`,
-                params: {
-                    limit: 10,
-                    order_by: '-click_count'
-                }
-            }
-        }
-    },
-
     data() {
         return {
             type: '',
@@ -157,7 +145,14 @@ export default {
             works: '',
             interview: '',
             website: '',
-            engravers: []
+            engravers: [],
+            paging: {
+                path: `users/${this.$route.params.id}/sns`,
+                params: {
+                    limit: 10,
+                    order_by: '-click_count'
+                }
+            }
         }
     },
 

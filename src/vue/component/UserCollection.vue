@@ -47,13 +47,8 @@ export default {
     data() {
         return {
             ccs: [],
-            user: ''
-        }
-    },
-
-    computed: {
-        paging() {
-            return {
+            user: '',
+            paging: {
                 path: `users/${this.$route.params.id}/follow_list`,
                 list: 'entries',
                 params: {

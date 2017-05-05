@@ -44,7 +44,7 @@ export default {
     '/topic/:id': {
         name: 'topic',
         title: '帖子详情',
-        native: v => v >= 1.6,
+        native: v => v >= 1.6 && {name: 'story'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TopicView.vue'))

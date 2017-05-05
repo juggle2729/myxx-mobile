@@ -19,7 +19,8 @@ export default {
         setShareData(entry) {
             let data = {
                 // url: location.origin + location.pathname
-                url: location.href
+                url: location.href,
+                ...entry
             }
             // entry.desc = entry.desc.replace(/\[\:(\d+)_([^\]]+?)\]/g, '@$2')
             switch(this.$route.name) {

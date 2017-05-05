@@ -32,9 +32,9 @@ export default {
         Tag
     },
 
-    computed: {
-        paging() {
-            return {
+    data() {
+        return  {
+            paging: {
                 path: `users/${this.$route.params.id}/timeline`,
                 params: {
                     limit: 10

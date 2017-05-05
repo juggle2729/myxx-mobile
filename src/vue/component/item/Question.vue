@@ -95,10 +95,10 @@ export default {
         },
 
         imgSrc() {
-            let src = _.chain(this.item.entry.pictures).slice(0,3).reduce((pre, item) => {
-                return pre + `url(${this.config.img + item}_320), `
-            }, '').trimEnd(', ')
-            return _.trimEnd(src, ', ')
+            const isSingle = this.item.entry.pictures.length < 3
+            const size = isSingle ? '_750' : '_320'
+            const pics = isSingle ? this.item.entry.pictures.slice(0, 1) : this.item.entry.pictures.slice(0, 3)
+            return pics.map(pic => `url(${this.config.img + pic + size})`).join(', ')
         },
 
     }

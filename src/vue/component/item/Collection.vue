@@ -7,7 +7,7 @@
         width: 148px
 </style>
 <template  lang="pug">
-.collection-item.bg-white
+.collection-item.bg-white(v-link="{name:'collection', params: {id: item.entry.id}}")
     .follow.flex.bdb.pdh
         avatar(:user="user", :size="50")
         .mgl.fz-26.gray {{user.nickname}} 关注了专辑
