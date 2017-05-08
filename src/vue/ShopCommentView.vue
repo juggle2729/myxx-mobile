@@ -14,7 +14,7 @@
 <template  lang="pug">
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
-        .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{t.items.length}})
+        .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{stats[k]}})
     marks(v-if="tags.length > 0", :tags="tags")
     .line-height-100.flex.fz-26.gray.bdb.pdh-32.bg-white(v-if="tab.items.length", @click="selected = !selected")
         icon(:name="selected ? 'selected' : 'select'")
@@ -40,6 +40,7 @@ export default {
                 normal: {label: '中评', items: [], contents: []},
                 bad: {label: '差评', items: [], contents: []}
             },
+            stats: {},
             tab: {label: '好评', items: []},
             tags: [],
             selected: false
@@ -48,23 +49,22 @@ export default {
 
     route: {
         data({from, to, next}) {
-            this.tab = this.tabs[to.query.tab] || this.tabs.good
-            if(from.name !== to.name) {
-                return this.$fetch('mall/orders/comments', {limit: 999})
-                    .then((data) => {
-                        this.tags = data.tags
-                        data.comments.forEach(c => {
-                            this.tabs[c.choice].items.push(c)
-                        })
-                        this.$fetch('mall/orders/comments', {
-                            has_content: true,
-                            limit: 999
-                        }).then((content) => {
-                            content.comments.forEach(d => {
-                                this.tabs[d.choice].contents.push(d)
-                            })
-                        })
+            const choice = to.query.tab || 'good'
+            this.tab = this.tabs[choice]
+            if(!this.tab.items.length) {
+                return this.$fetch('mall/orders/comments', { limit: 20, choice }).then(resp => {
+                    this.stats = resp.stats
+                    this.tags = resp.tags
+                    this.tab.items = this.tab.items.concat(...resp.comments)
+
+                    this.$fetch('mall/orders/comments', {
+                        has_content: true,
+                        limit: 20,
+
+                    }).then(content => {
+                        this.tab.contents = this.tab.contents.concat(...content.comments)
                     })
+                })
             } else {
                 next()
             }
@@ -76,6 +76,24 @@ export default {
             const k = _.findKey(this.tabs, tab)
             this.$router.replace(_.merge({query: {tab: k}}, _.pick(this.$route, 'name', 'params')))
         })
+    },
+
+    events: {
+        scrollToBottom(e) {
+            const choice = this.$route.query.tab
+            this.$fetch('mall/orders/comments', { choice, limit: 10, offset: this.tab.items.length }).then(resp => {
+                this.tab.items = this.tab.items.concat(...resp.comments)
+
+                this.$fetch('mall/orders/comments', {
+                    has_content: true,
+                    choice,
+                    limit: 10,
+                    offset: this.tab.contents.length
+                }).then(content => {
+                    this.tab.contents = this.tab.contents.concat(...content.comments)
+                })
+            })
+        }
     }
 }
 </script>
