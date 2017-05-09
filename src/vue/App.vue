@@ -1,7 +1,7 @@
 <style lang="stylus">
 @import '~style/myxx'
 #app
-    > :first-of-type:not(.share-top)
+    > [class*='-view']
         min-height: 100%
     .share-top-placeholder
         height: 112px
@@ -38,6 +38,15 @@
             width: 60px
             height: 60px
             box-shadow: 0 0 10px 5px #4CAF50
+    .get-red-pocket
+        display block
+        height 194px
+        width 136px
+        position fixed
+        z-index 999
+        right 32px
+        bottom 32px
+        background transparent url("//o0x80w5li.qnssl.com/invitation/red-pocket.png") center / contain no-repeat
 </style>
 <template  lang="pug">
 div(:class="{'loading': loading}")
@@ -51,6 +60,7 @@ div(:class="{'loading': loading}")
                 .fz-22.gray.mgt-8 最大的和田玉线上交易App
             deep-link
         .share-top-placeholder
+        a.get-red-pocket(:href="!env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'")
     router-view
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
