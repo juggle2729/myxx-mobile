@@ -74,7 +74,7 @@ export default {
         },
 
         tab() { // 当前tab
-            const routeTab = this.$route.params.tab
+            const routeTab = this.$route.params.tab === 'records' ? 'bills' : this.$route.params.tab // 对records做特殊处理
             return ['expects', 'withdraws', 'bills'].indexOf(routeTab) !== -1 ? routeTab : 'expects'
         },
 

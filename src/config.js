@@ -20,7 +20,7 @@ let [api, img, video, download] = ((env='test') => {
         }
     }
     return _.map(hosts, env)
-})('prod')
+})('test')
 
 export default {
     api,

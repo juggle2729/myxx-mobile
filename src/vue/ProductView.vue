@@ -52,12 +52,20 @@
             width: 26px
     .coupon
         height: 100px
-        .flex-1
-            padding: 2px 0 0 40px
-            background: transparent url($qn + '/coupon/logo.png') left center no-repeat
-            height: 80px
-            line-height: 80px
-            background-size: 28px 28px
+        .coupon-labels
+            white-space nowrap
+            div
+                display inline-block
+                font-size 22px
+                color white
+                background-color #cc3f4f
+                background-image radial-gradient(at left center, white 4px, #cc3f4f 4px), radial-gradient(at right center, white 4px, #cc3f4f 4px)
+                background-size 10px 20px, 10px 20px
+                background-position left center, right center
+                background-repeat no-repeat
+                margin-right 6px
+                padding 6px 8px
+                border-radius 6px
         .bd-red
             border-radius: 6px
             padding: 10px 20px 0
@@ -174,10 +182,10 @@
 <template lang="pug">
 .product-view
     template(v-if="prod.status === 'online'")
-        .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
-            .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
-            .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
-            div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
+        //- .tabs.tabs-fixed.bdb.flex.fz-26.bg-white.center(:class="{'default': isDefaultView}")
+        //-     .bdr(@click="go('detail')", :class="{'active': $route.params.tab === 'detail'}") 详情
+        //-     .bdr(@click="go('attribute')", :class="{'active': $route.params.tab === 'attribute'}") 属性
+        //-     div(@click="go('problem')", :class="{'active': $route.params.tab === 'problem'}") 常见问题
         .prod-video.video(v-bg='prod.video', @click='play(prod.video)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
         .titles.bg-white
             .header
@@ -190,7 +198,9 @@
                 icon.fz-26(name="enter")
         .hr
         .coupon.flex.fz-26.red.pdh-32.bdb(v-if="prod.shop.coupon_count")
-            .flex-1 {{prod.shop.coupon_count}}张店铺优惠券发放中
+            .coupon-labels.flex-1
+                div(v-for="coupon in coupons") {{coupon.title}}
+                div(v-if="coupon_label_count < prod.shop.coupons.length") &middot;&middot;&middot;
             deep-link.has-icon(v-if="env.isShare") 领券
             .bd-red(v-else, @click="getCoupon") 领券
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
@@ -275,23 +285,35 @@ export default {
         return {
             prod: {
                 owner: {},
-                shop: {},
+                shop: {
+                    coupons: []
+                },
                 is_faved: false,
-                status: ''
+                status: 'online'
             },
             isSelf: false,
             isDefaultView: false,
-            view: undefined
+            view: undefined,
+            coupon_label_count: 2
+        }
+    },
+
+    computed: {
+        coupons() {
+            return this.prod.shop.coupons.slice(0, this.coupon_label_count)
         }
     },
 
     ready() {
         this.staticTabs = this.$el.querySelector('.tabs-static')
-        this.fixedTabs = this.$el.querySelector('.tabs-fixed')
+        // this.fixedTabs = this.$el.querySelector('.tabs-fixed')
         const tabContent = this.$el.querySelector('.tab-content')
         // FIXME: 采用css解决方案
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent && (tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`)
+
+        _.delay(this.adjustCouponLabels, 1000)
+
     },
 
     route: {
@@ -302,13 +324,16 @@ export default {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$fetch('mall/products/'+ this.$route.params.id)
                     .then(prod => {
+                        console.log(prod)
                         _.update(prod, 'circle_size', size => size ? size/100 : '')
                         this.setShareData(prod)
                         this.isSelf = (_.get(this, 'self.id') == (prod.owner.id || prod.default_admin.id))
                         this.isDefaultView = ['detail', 'attribute', 'problem'].indexOf(to.params.tab) === -1
                         this.view = this.isDefaultView ? 'detail' : to.params.tab
                         this.prod = prod
-                })
+                    }, () => {
+                        this.prod.status = ''
+                    })
             } else {
                 this.isDefaultView = false
                 this.view = to.params.tab
@@ -328,6 +353,7 @@ export default {
 
          addToCart() {
             this.$put('mall/cart', { product_id: this.prod.id }).then(resp => {
+                this.action('updateCartCount', { count: resp.cart_count })
                 this.action('toast', {
                     success: '1',
                     text: '已加入购物车'
@@ -372,20 +398,33 @@ export default {
             this.action('couponList', {
                 shop: this.prod.shop.id
             })
+        },
+
+        adjustCouponLabels() {
+            const container = this.$el.querySelector('.coupon-labels')
+            if(container) {
+                const overflow = container.scrollWidth > container.clientWidth
+                if(container.scrollWidth > container.clientWidth) {
+                    this.coupon_label_count -= 1
+                } else if(this.coupon_label_count < this.prod.shop.coupons.length) {
+                    this.coupon_label_count += 1
+                    _.delay(this.adjustCouponLabels, 50)
+                }
+            }
         }
     },
 
     events: {
-        scroll() {
-            if(!this.fixedTabs) {
-                this.staticTabs = this.$el.querySelector('.tabs-static')
-                this.fixedTabs = this.$el.querySelector('.tabs-fixed')
-            } else {
-                if(!this.env.isWechat) {
-                    this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
-                }
-            }
-        }
+        // scroll() {
+        //     if(!this.fixedTabs) {
+        //         this.staticTabs = this.$el.querySelector('.tabs-static')
+        //         this.fixedTabs = this.$el.querySelector('.tabs-fixed')
+        //     } else {
+        //         if(!this.env.isWechat) {
+        //             this.fixedTabs.style.visibility = window.scrollY - this.staticTabs.offsetTop > 0 ? 'visible' : 'hidden'
+        //         }
+        //     }
+        // }
     }
 }
 </script>
