@@ -23,9 +23,9 @@ export default {
     props: {
         lv: {
             type: Number,
-            default: 0
+            default: 1
         },
-        
+
         lg: {
             type: Boolean,
             default: true

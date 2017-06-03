@@ -1,20 +1,23 @@
 <style lang="stylus">
-.comment-icon
-    .icon
-        height: 2em
-        width: @height
+.comment-icon .icon
+    height: 2em
+    width: @height
 </style>
-<template  lang="pug">
-.comment-icon.fz-26.gray(@click.stop="comment")
+<template lang="pug">
+deep-link.has-icon.comment-icon.fz-26.gray
     icon(name="comment")
     span {{count || '评论'}}
 </template>
 <script>
 import Icon from './Icon.vue'
+import DeepLink from 'component/DeepLink.vue'
 export default {
     name: 'comment-icon',
 
-    components: {Icon},
+    components: {
+        Icon,
+        DeepLink
+    },
 
     props: {
         count: Number,

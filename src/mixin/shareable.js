@@ -38,7 +38,7 @@ export default {
                     data.desc = '玉友的新品上线啦！'
                     data.icon = entry.pictures[0]
                     data.userId = entry.owner.id
-                    data.shopId = entry.shop.id
+                    data.productId = entry.id
                     break
                 case 'master':
                     data.title = entry.interview.title
@@ -136,7 +136,7 @@ export default {
             // data.url = _.reduce(query, (r, v, k) => r + `${k}=${v}&`, data.url + "?").replace(/[\?|\&]$/, '')
 
             // 分享信息暂存起来
-            this.$root.shareData = _.pick(_.merge({shopId: 0}, data), 'title', 'desc', 'icon', 'url', 'userId', 'shopId')
+            this.$root.shareData = _.pick(_.merge({shopId: 0}, data), 'title', 'desc', 'icon', 'url', 'userId', 'shopId', 'productId')
 
             this.action('shareable', {...this.$root.shareData, id: this.$route.params.id ,type: _.get(_.find(this.config.types, {route: this.$route.name}), 'id')})
 

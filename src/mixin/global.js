@@ -20,6 +20,10 @@ const mixin = {
 
         self() {
             return this && this.$root.user
+        },
+
+        hasUniversalLinkSupport() {
+            return this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
         }
     },
 
@@ -166,11 +170,11 @@ const mixin = {
                                             if(this.env.isApp) {
                                                 this.$route.router.replace({'name': '404'})
                                             } else {
-                                                console.debug(404, path)
+                                                console.warn(404, path)
                                             }
                                         } else {
                                             this.action('toast', {success: '0', text: resp.message || '出错了'})
-                                            console.debug(`[${resp.status}]${path}\n${resp.message}`)
+                                            console.warn(`[${resp.status}]${path}\n${resp.message}`)
                                         }
                                     }
                                 }

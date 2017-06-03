@@ -24,10 +24,22 @@
             color: #c6c6c6
             & + span
                 color: #c6c6c6
-    .post
+    .deep-link.comment-icon
+        padding-left: 28px
+        -webkit-box-flex: 1
+    .deep-link.img
         display: block
         height: 30px
-        width: 56px
+        width: 130px
+        padding: 0
+        background: transparent url('//o0x80w5li.qnssl.com/open-in-app.png') no-repeat
+        background-size: contain
+        .btn
+            padding: 0
+            height: initial
+            line-height: initial
+            border-radius: initial
+            opacity: 0
 </style>
 <template  lang="pug">
 .card-component.bg-white.pdr-32(v-link="{name: config.category[item.type], params: {id: item.entry.post_id || item.entry.id}}")
@@ -38,8 +50,8 @@
         .dock.flex.fz-26.light
             icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
             icon-like(v-else, :active="false", :count="item.entry.like_count || item.entry.like")
-            icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
-            img.post(v-if="post", :src="'recommend/article.png' | qn")
+            icon-comment(:count="item.entry.comment_count", readonly=true)
+            deep-link.img x
     div.pdv-28.mgl-32.bdt.flex(v-else)
         .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/7/rotate/auto|imageView2/2/w/320")
             img(:src="'recommend/video.png' | qn")
@@ -49,8 +61,8 @@
             .flex.mgt-12.fz-26
                 icon-answer.mgr-40(v-if="jb", :count="item.entry.status", :identifiable="item.entry.identifiable")
                 icon-like(v-else, :count="item.entry.like_count || item.entry.like")
-                icon-comment.pdl-28.flex-1(:count="item.entry.comment_count", readonly=true)
-                img.post(v-if="post", :src="'recommend/article.png' | qn")
+                icon-comment(:count="item.entry.comment_count", readonly=true)
+                deep-link.img x
 </template>
 <script>
 export default {

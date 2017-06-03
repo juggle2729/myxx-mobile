@@ -53,6 +53,7 @@
     .coupon
         height: 100px
         .coupon-labels
+            opacity: 0
             white-space nowrap
             div
                 display inline-block
@@ -70,6 +71,7 @@
             border-radius: 6px
             padding: 10px 20px 0
             height: 48px
+            line-height: 30px
             font-size: .34rem   // TODO: Android Webview 汉字渲染有毛病
         .deep-link .btn //reset deep-link style
             font-size: 26px
@@ -170,14 +172,13 @@
             margin: 0 auto
             height: 244px
             width: 386px
-.is-android
+.old-android
     .product-view
-        .coupon .flex-1
-            padding: 4px 0 0 40px
+        .coupon-labels div
+            padding: 8px 8px 0
         .new
             border-radius: 40px
-            height: 32px
-            line-height: 38px
+            padding-top: 6px
 </style>
 <template lang="pug">
 .product-view
@@ -201,8 +202,8 @@
             .coupon-labels.flex-1
                 div(v-for="coupon in coupons") {{coupon.title}}
                 div(v-if="coupon_label_count < prod.shop.coupons.length") &middot;&middot;&middot;
-            deep-link.has-icon(v-if="env.isShare") 领券
-            .bd-red(v-else, @click="getCoupon") 领券
+            deep-link.btn-get-coupon.has-icon(v-if="env.isShare") 领券
+            .btn-get-coupon.bd-red(v-else, @click="getCoupon") 领券
         .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
             .img(v-bg='prod.shop.logo')
             .flex-1
@@ -312,7 +313,12 @@ export default {
         // tab内容最小高度为 window高度 - tabs高度 - $el的底部padding
         tabContent && (tabContent.style.minHeight = `calc(${window.innerHeight-this.staticTabs.clientHeight}px - ${window.getComputedStyle(this.$el)['padding-bottom']})`)
 
-        _.delay(this.adjustCouponLabels, 1000)
+        _.delay(() => {
+            const container = this.$el.querySelector('.coupon-labels')
+            if(container) {
+                this.adjustCouponLabels(container)
+            }
+        }, 50)
 
     },
 
@@ -324,7 +330,6 @@ export default {
             if(from.name !== to.name || from.params.id !== to.params.id) { // 初次进入商品详情页
                 return this.$fetch('mall/products/'+ this.$route.params.id)
                     .then(prod => {
-                        console.log(prod)
                         _.update(prod, 'circle_size', size => size ? size/100 : '')
                         this.setShareData(prod)
                         this.isSelf = (_.get(this, 'self.id') == (prod.owner.id || prod.default_admin.id))
@@ -400,16 +405,16 @@ export default {
             })
         },
 
-        adjustCouponLabels() {
-            const container = this.$el.querySelector('.coupon-labels')
-            if(container) {
-                const overflow = container.scrollWidth > container.clientWidth
-                if(container.scrollWidth > container.clientWidth) {
-                    this.coupon_label_count -= 1
-                } else if(this.coupon_label_count < this.prod.shop.coupons.length) {
-                    this.coupon_label_count += 1
-                    _.delay(this.adjustCouponLabels, 50)
-                }
+        adjustCouponLabels(container) {
+            const overflow = container.scrollWidth > container.clientWidth
+            if(container.scrollWidth > container.clientWidth) {
+                this.coupon_label_count -= 1
+                container.style.opacity = 1
+            } else if(this.coupon_label_count < this.prod.shop.coupons.length) {
+                this.coupon_label_count += 1
+                _.delay(() => this.adjustCouponLabels(container), 10)
+            } else {
+                container.style.opacity = 1
             }
         }
     },

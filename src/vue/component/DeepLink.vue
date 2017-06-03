@@ -33,8 +33,8 @@
         &.show
             transform: translate3d(0, 0, 0)
 </style>
-<template  lang="pug">
-.deep-link
+<template lang="pug">
+.deep-link(@click.stop="xxx")
     .btn(v-if="env.isBrowser", @click="myxx")
         slot 打开
     template(v-else)
@@ -80,14 +80,17 @@ export default {
     },
 
     ready() {
-        const hasUniversalLinkSupport = this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
-        this.href = hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
+        this.updateHref()
         setInterval(() => {
-            this.href = hasUniversalLinkSupport ? location.pathname + '?ulfa=' + Date.now() : this.config.download
+            this.updateHref()
         }, 2000)
     },
 
     methods: {
+        updateHref() {
+            this.href = this.hasUniversalLinkSupport ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+        },
+
         myxx() {
             const ifr = document.createElement('iframe')
             ifr.style.display = 'none'
@@ -105,7 +108,9 @@ export default {
                     clearTimeout(timer)
                 }
             }, 1500)
-        }
+        },
+
+        xxx() {}
     }
 }
 </script>

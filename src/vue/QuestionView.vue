@@ -33,6 +33,9 @@
             line-height: 98px
             .like-icon
                 margin-right: 56px
+            .comment-icon
+                margin-left: 12px
+                -webkit-box-flex: 1
     .no-answer img
         height: 78px
         width: 92px
@@ -86,8 +89,8 @@
                         .fz-22.mgt 播放视频
                 footer.flex.fz-26.bdt.pdh-32
                     icon-like(:active='result.liked', :count='result.like_count', :recognition="true")
-                    icon-comment.flex-1.mgl(:count="result.comment_count", :id="result.id", type="jd")
-                    .light {{result.click_count}}次播放
+                    icon-comment(:count="result.comment_count", :id="result.id", type="jd")
+                    .light {{result.video_play_count}}次播放
                 .hr
         .center.fz-26.pdt-48.pdb-32.light.no-answer(v-if="!question.results.length")
             img(:src="'question/no-answer.png' | qn")

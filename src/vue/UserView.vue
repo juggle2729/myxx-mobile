@@ -34,7 +34,7 @@
         width: 100%
         position: fixed
         bottom: 0
-        z-index: 999
+        z-index: 99
         > div
             -webkit-box-flex: 1
             text-align: center

@@ -152,8 +152,8 @@ router.start(require('App.vue'), '#app');
         doc.body.removeChild(testElem)
     }
     // is android
-    if(/android/i.test(window.navigator.userAgent)) {
-        doc.querySelector('html').classList.add('is-android')
+    if(/android.+redmi/i.test(window.navigator.userAgent)) {
+        doc.querySelector('html').classList.add('old-android')
     }
     // 处理微信viewport异常
     if(window.innerWidth < doc.body.clientWidth) {

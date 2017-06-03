@@ -92,12 +92,23 @@ import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import shareable from 'shareable'
 export default {
     name: 'post-view',
+
     mixins: [shareable],
+
     components: {
         Shop,
         CommentList,
         GeneralSuggestion,
     },
+
+    data() {
+        return {
+            post: {
+                user: {}
+            }
+        }
+    },
+
     route: {
         data({to}) {
             return this.$fetch(`sns/rich_texts/${to.params.id}`)

@@ -1,5 +1,7 @@
 <style lang="stylus">
 .all-product
+    a
+        margin: 0 0 20px 15px
     .option
         width: 25%
 </style>

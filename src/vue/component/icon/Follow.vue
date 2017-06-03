@@ -37,8 +37,7 @@ export default {
 
     props: {
         target: {
-            type: Number,
-            required: true
+            type: Number
         },
         type: {
             type: String,

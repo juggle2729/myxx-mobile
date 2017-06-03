@@ -36,7 +36,7 @@
             .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
                 | 总流水
         .tabs-placeholder
-    .fz-30.bdb.pd-32(v-for='item in items')
+    .fz-30.bdb.pd-32(v-for='item in items',  track-by="id")
         .flex.fz-22.gray
             .flex-1 {{item.trans_desc}}
             div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd HH:MM'}}

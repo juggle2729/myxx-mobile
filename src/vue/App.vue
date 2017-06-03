@@ -8,6 +8,8 @@
         & + div
             min-height: calc(100% - 112px)
     .share-top
+        background-color: rgba(0, 0, 0, .8)
+        color: white
         z-index: 990
         position: fixed
         top: 0
@@ -45,22 +47,22 @@
         position fixed
         z-index 999
         right 32px
-        bottom 32px
+        bottom 116px
         background transparent url("//o0x80w5li.qnssl.com/invitation/red-pocket.png") center / contain no-repeat
 </style>
 <template  lang="pug">
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
-        .share-top.flex.bg-white
+        .share-top.flex
             .flex-1
                 .flex
                     img(:src="'logo-txt.svg?v1' | qn", alt="美玉秀秀")
                     .fz-22.dot •
-                    .flex-1.slogan.fz-22 50万玉友的选择
-                .fz-22.gray.mgt-8 最大的和田玉线上交易App
+                    .flex-1.slogan.fz-22 最专业的和田玉APP
+                .fz-22.gray.mgt-8 80万和田玉玩家都在用
             deep-link
         .share-top-placeholder
-        a.get-red-pocket(:href="!env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'")
+        a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")
     router-view
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
@@ -96,9 +98,17 @@ export default {
                 isTest: !/meiyuxiuxiu\.com$/.test(location.hostname)
             }
             env.isBrowser = !(env.isApp || env.isWechat || env.isQQ || env.isWeibo || env.isDingTalk)
-            env.isShare = !env.isApp && (_.hasIn(this, '$route.query.channel') || _.hasIn(this, '$route.query.user'))
+            env.isShare = !env.isApp && (_.hasIn(this, '$route.query.isappinstalled') || _.hasIn(this, '$route.query.channel') || _.hasIn(this, '$route.query.user'))
             env.version = env.isApp ? ua.match(/^MYXX\/\w+\/([\d|\.]+)/).pop().replace(/\./g, (match, i) => i > 1 ? '' : '.') : 99
             return env
+        },
+
+        redPocketUrl() {
+            let url = ''
+            if(['topic', 'post', 'question', 'answer', 'product'].indexOf(this.$route.name) !== -1) {
+                url = !this.env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'
+            }
+            return url
         }
     },
     ready() {
