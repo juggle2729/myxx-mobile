@@ -36,6 +36,7 @@ export default {
     computed: {
         params() {
             return {
+                share: 1,
                 limit: 20,
                 obj_id: this.$route.params.id,
                 biz_type: _.chain(this.config.types).find({route: this.$route.name}).get('id').value()

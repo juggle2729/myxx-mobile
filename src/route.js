@@ -175,6 +175,16 @@ export default {
         }
     },
 
+    '/figure/:userId/:articleId': {
+        name: 'figure',
+        title: '人物志',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('FigureView.vue'))
+            }, 'figure')
+        }
+    },
+
     '/user/:id': { // 个人主页
         name: 'user',
         title: '',
