@@ -18,6 +18,9 @@
                 &:first-letter
                     font-size: 32px
                     font-weight: normal
+            img
+                width 161px
+                height 56px
         .title
             margin: 0 0 18px 4px
             line-height: 1.5
@@ -192,8 +195,9 @@
             .header
                 .title.fz-32 {{prod.title}}
                 .flex.red
-                    .fz-30(v-if="prod.sell_status === 'sold'") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
+                    .fz-30.flex-1(v-if="prod.sell_status === 'sold'") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
                     .price.fz-44.flex-1(v-else) {{prod.price | price}}
+                    img(v-if="prod.shop.activity_20170618", src="//o0x80w5li.qnssl.com/618/mark-product.png")
             .guarantee(@click="guarantee")
                 img(:src="'product/term.png?v1' | qn")
                 icon.fz-26(name="enter")
@@ -319,7 +323,6 @@ export default {
                 this.adjustCouponLabels(container)
             }
         }, 50)
-
     },
 
     route: {

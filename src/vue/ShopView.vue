@@ -1,5 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
+@import '~style/partials/mixin'
 .shop-view
     min-height: 100%
     padding-bottom: 110px
@@ -75,9 +76,40 @@
         .icon-chat
             height: 48px
             width: 48px
+    .coupons
+        height: 100px
+        .coupon-labels
+            opacity: 0
+            white-space nowrap
+            div
+                display inline-block
+                font-size 22px
+                color white
+                background-color #cc3f4f
+                background-image radial-gradient(at left center, white 4px, #cc3f4f 4px), radial-gradient(at right center, white 4px, #cc3f4f 4px)
+                background-size 10px 20px, 10px 20px
+                background-position left center, right center
+                background-repeat no-repeat
+                margin-right 6px
+                padding 6px 8px
+                border-radius 6px
+        .deep-link .btn //reset deep-link style
+            font-size: 26px
+            border-radius: 6px
+            padding: 8px 20px
+            border(a, #cc3f4f)
+.old-android
+    .shop-view
+        .coupon-labels div
+            padding: 8px 8px 0
 </style>
 <template lang="pug">
-.shop-view.bg(v-if='!$loadingRouteData')
+.shop-view.bg
+    .coupons.flex.fz-26.red.pdh-32.bdb.bg-white(v-if="shop.coupon_count")
+        .coupon-labels.flex-1
+            div(v-for="coupon in coupons") {{coupon.title}}
+            div(v-if="coupon_label_count < shop.coupons.length") &middot;&middot;&middot;
+        deep-link.btn-get-coupon.has-icon 领券
     header(v-bg.lg='shop.image_bg')
         .shop-bg
         .name.flex.white
@@ -122,6 +154,13 @@ export default {
         this.$watch('view', tab => {
             this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab}})
         })
+
+        _.delay(() => {
+            const container = this.$el.querySelector('.coupon-labels')
+            if(container) {
+                this.adjustCouponLabels(container)
+            }
+        }, 50)
     },
 
     mixins: [shareable],
@@ -141,21 +180,44 @@ export default {
             ],
             shop: {
                 owner: {}
-            }
+            },
+            coupon_label_count: 2
         }
     },
 
     route: {
         data({from, to, next}) {
             if(from.name !== to.name) {
-                return this.$fetch(`mall/shop/${to.params.id}/profile`).then((data) => {
-                    this.shop = data
+                return this.$fetch(`mall/shop/${to.params.id}/profile`).then(resp => {
+                    console.log(resp)
+                    this.shop = resp
                     this.action('updateTitle', {text: this.shop.shop_name})
                     this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:
                         this.shop.shop_type === 'studio' ? '工作室' : '店铺'})
                 })
             } else {
                 next()
+            }
+        }
+    },
+
+    computed: {
+        coupons() {
+            return this.shop.coupons.slice(0, this.coupon_label_count)
+        }
+    },
+
+    methods: {
+        adjustCouponLabels(container) {
+            const overflow = container.scrollWidth > container.clientWidth
+            if(container.scrollWidth > container.clientWidth) {
+                this.coupon_label_count -= 1
+                container.style.opacity = 1
+            } else if(this.coupon_label_count < this.shop.coupons.length) {
+                this.coupon_label_count += 1
+                _.delay(() => this.adjustCouponLabels(container), 10)
+            } else {
+                container.style.opacity = 1
             }
         }
     }
