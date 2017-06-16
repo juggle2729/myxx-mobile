@@ -7,8 +7,8 @@ const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin"
 module.exports = {
     entry: './src/main.js',
     output: {
-        filename: '[name].js',
-        chunkFilename: '[name].chunk.js',
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].chunk.[hash].js',
         path: path.resolve('build'),
         publicPath: '/static/mobile/'
     },
