@@ -1,7 +1,11 @@
+<style lang="stylus">
+.user-following
+    min-height 100%
+</style>
 <template  lang="pug">
-    .user-following.bg(v-if="!$loadingRouteData")
-        tabs.bg-white(:tabs="views", :current.sync="view")
-        component(:is="view", keep-alive)
+.user-following.bg(v-if="!$loadingRouteData")
+    tabs.bg-white(:tabs="views", :current.sync="view")
+    component(:is="view", keep-alive)
 </template>
 <script>
 import tabs from 'component/Tabs.vue'

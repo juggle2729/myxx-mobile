@@ -1,5 +1,7 @@
 <style lang="stylus">
 .my-topic
+    min-height 100%
+    min-height calc(100% - 100px)
     .item
         height: 188px
         position: relative
@@ -9,7 +11,7 @@
             transform: translateY(-50%)
 </style>
 <template  lang="pug">
-.my-topic(:class="{'bg-white': !items.isEmpty}")
+.my-topic
     .item.mgl-32(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'tag', params: {id: item.entry.id}}")
         .pdv-28.pdr-32
             .fz-30.mgb {{item.entry.name}}
