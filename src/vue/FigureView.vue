@@ -3,15 +3,15 @@
     .article
         color #666666
         line-height 1.7
-        img
+        img, video
             width 100%
-            &:first-child
-                padding 0
-        video
-            width 100%
-        & *
+            max-width 100%
+            padding 0 32px
+        div:not(.inner-img), div:not(.inner-video)
             padding 0 32px
             line-height inherit
+            &:empty, p:empty
+                display none
     .us-tile
         margin 32px 32px 20px
     .sh-tile
@@ -58,6 +58,11 @@ export default {
                     }
                 }).then(shop => {
                     this.shop = shop
+                }).then(() => {
+                    const firstImg = this.$el.querySelector('img')
+                    if(firstImg) {
+                        firstImg.style.padding = '0'
+                    }
                 })
         }
     }
