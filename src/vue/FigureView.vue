@@ -1,17 +1,20 @@
 <style lang="stylus">
 .figure-view
-    .article
-        color #666666
-        line-height 1.7
-        img, video
+    img.cover
+        width 100%
+    .media
+        padding 32px 32px 0
+        p
+            font-size 30px
+            color #666666
+            line-height 1.7
+        img
             width 100%
             max-width 100%
-            padding 0 32px
-        div:not(.inner-img), div:not(.inner-video)
-            padding 0 32px
-            line-height inherit
-            &:empty, p:empty
-                display none
+        .video
+            width 100%
+            padding-top percentage(9/16)
+            // background-size cover
     .us-tile
         margin 32px 32px 20px
     .sh-tile
@@ -19,7 +22,11 @@
 </style>
 <template lang="pug">
 .figure-view
-    .article.fz-30 {{{article}}}
+    img.cover(:src="config.img + cover")
+    .media(v-for="m in medias")
+        img(v-if="m.media_type === 'picture'", :src="config.img + m.media")
+        .video.bg(v-if="m.media_type === 'video'", v-bg.video='m.media', @click.stop="play(m.media)")
+        p(v-if="m.media_type === 'text'") {{m.media}}
     us(v-if="profile", :entry="profile")
     sh(v-if="shop", :entry="shop")
 </template>
@@ -36,7 +43,8 @@ export default {
 
     data() {
         return {
-            article: '',
+            cover: '',
+            medias: [],
             profile: undefined,
             shop:undefined
         }
@@ -44,11 +52,10 @@ export default {
 
     route: {
         data({to}) {
-            this.$fetch(`users/${to.params.userId}/profile`).then(x => console.log(x))
             return this.$fetch(`sites/${to.params.userId}/articles/${to.params.articleId}`).then(article => {
-                    this.article = article.text
+                    this.cover = article.image
+                    this.medias = article.medias
                     return this.$fetch(`users/${to.params.userId}/profile`)
-                    // this.setShareData({title: this.post.title, icon: this.medias[0]})
                 }).then(profile => {
                     this.profile = profile
                     if(profile.shop_id) {
@@ -58,11 +65,6 @@ export default {
                     }
                 }).then(shop => {
                     this.shop = shop
-                }).then(() => {
-                    const firstImg = this.$el.querySelector('img')
-                    if(firstImg) {
-                        firstImg.style.padding = '0'
-                    }
                 })
         }
     }
