@@ -19,7 +19,7 @@
 </style>
 <template lang="pug">
 .sh-tile.flex(v-link="{name: 'shop', params: {id: entry.id}}")
-    img(:src="CONF.IMG_ROOT + entry.logo + '_240'")
+    img(:src="config.img + entry.logo + '_240'")
     .flex-1
         .fz-30.flex.mgb-12
             .name.line-clamp.mgr {{entry.shop_name}}
