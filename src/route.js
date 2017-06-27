@@ -530,6 +530,16 @@ export default {
         }
     },
 
+    '/help/circle-size': {
+        name: 'circle-size',
+        title: '圈口',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('CircleSizeView.vue'));
+            }, 'help')
+        }
+    },
+
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',

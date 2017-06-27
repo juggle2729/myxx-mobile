@@ -31,7 +31,6 @@
 <template lang="pug">
 a.product-card.bg-white.bd-light(:href="href")
     .media(v-bg='item.first_picture')
-        .mark.fz-30.white(v-if="item.is_tob") 清仓
     .pdb-26.pdh(:class="{'pdt-26': btn}")
         .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}
         .flex.mgt-12.fz-22.light.mgb-10(v-if="btn")
