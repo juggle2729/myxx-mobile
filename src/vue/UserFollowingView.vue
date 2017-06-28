@@ -11,7 +11,7 @@
 import tabs from 'component/Tabs.vue'
 import question from 'component/item/MyQuestion.vue'
 import topic from 'component/item/MyTopic.vue'
-import collection from 'component/item/MyCollection.vue'
+import shop from 'component/item/MyShop.vue'
 import user from 'component/item/MyUser.vue'
 export default {
     name: 'UserFollowing',
@@ -20,7 +20,7 @@ export default {
         tabs,
         question,
         topic,
-        collection,
+        shop,
         user
     },
 
@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         views() {
-            return {'user': '用户', 'collection': '专辑', 'topic': '话题', 'question': '问题'}
+            return {'user': '用户', 'shop': '店铺', 'topic': '话题', 'question': '问题'}
         }
     }
 }

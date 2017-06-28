@@ -1,6 +1,6 @@
 <style lang="stylus">
 .level-comp
-    display: inline-block
+    font-size 0
     img
         height: 20px
         width: 46px

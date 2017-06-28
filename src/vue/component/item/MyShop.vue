@@ -1,0 +1,98 @@
+<style lang="stylus">
+@import '~style/partials/mixin'
+$width = calc((100% - 60px) / 3)
+.my-shop
+    .item
+        flex-direction column
+        -webkit-box-align start
+        & + .item
+            margin-top 20px
+        .img
+            height 120px
+            width 120px
+            border-radius 8px
+    .shop-info > .flex
+        flex-direction column
+        -webkit-box-align start
+    .line
+        color #efefef
+    .coupon-info
+        width 100%
+        border(t, #efefef)
+       .logo
+            width 20px
+            height 20px
+            background transparent url('//o0x80w5li.qnssl.com/coupon/logo.png') no-repeat
+            background-size contain
+    .product-info
+        width 100%
+    .product-item
+        width $width
+        padding-top $width
+        position relative
+        & + .product-item
+            margin-left 10px
+        .price
+            position absolute
+            bottom 0
+            left 0
+            padding 0 6px
+            line-height 32px
+            background-color rgba(0, 0, 0, 0.3)
+</style>
+<template lang="pug">
+.my-shop(:class="{'bg': !items.isEmpty}")
+    .item.pd-20.flex.bg-white(v-for="item in items", v-link="{name: 'shop', params: {id: item.id}}")
+        .shop-info.flex
+            .img(v-bg="item.logo")
+            .flex-1.mgl-20
+                .flex.name-level
+                    .fz-30.black {{ item.shop_name }}
+                    lv.mgl-8(:lv="level")
+                .mgt-14.fz-22.gray {{ item.locale_name }}
+                .mgt-16.fz-22.gray
+                    span 在售商品数 {{ `${item.selling_count}` }}
+                    span.line.mgh-20 |
+                    span 今日上新 {{ `${item.pd_count_today}` }}
+        .coupon-info.flex.mgt-20.pdt-20.line-clamp(v-if="!!item.coupon_count")
+            .logo
+            .fz-22.mgl-8.dark {{ couponInfo(item) }}
+        .product-info.flex.mgt-20(v-if="!!item.products_count")
+            .product-item.flex-1(v-for="product in item.products", v-bg='product.cover')
+                span.price.fz-22.white.center.pgh-6 {{ product.price | price }}
+    empty(v-if="items.isEmpty")
+</template>
+<script>
+import lv from 'component/Lv.vue'
+import paging from 'paging'
+export default {
+    name: 'my-shop',
+
+    mixins: [paging],
+
+    components: {
+        lv
+    },
+
+    computed: {
+        paging() {
+            return {
+                path: `users/${this.$route.params.id}/follow_list`,
+                list: 'shops',
+                params: {
+                    target_type: 'sh'
+                }
+            }
+        }
+    },
+
+    methods: {
+        couponInfo(item) {
+            return item.coupons.reduce((res, coupon) => {
+                res.push(coupon.title)
+                return res
+            }, []).join(', ')
+        }
+    }
+}
+</script>
