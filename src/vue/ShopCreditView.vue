@@ -48,10 +48,9 @@ export default {
 
     methods: {
         showAction() {
-            this.action('action', {label: '等级说明'})
-                .then(() => {
-                    this.$router.go({name: 'shop-level', params: {id: this.$route.params.id}})
-                })
+            this.action('action', {label: '等级说明'}).then(() => {
+                this.$router.go({name: 'shop-level', params: {id: this.$route.params.id}})
+            })
         }
     }
 }

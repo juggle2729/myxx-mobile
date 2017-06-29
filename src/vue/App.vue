@@ -62,7 +62,7 @@ div(:class="{'loading': loading}")
                 .fz-22.gray.mgt-8 80万和田玉玩家都在用
             deep-link
         .share-top-placeholder
-        a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")
+        //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")
     router-view
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
@@ -103,13 +103,13 @@ export default {
             return env
         },
 
-        redPocketUrl() {
-            let url = ''
-            if(['topic', 'post', 'question', 'answer', 'product'].indexOf(this.$route.name) !== -1) {
-                url = !this.env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'
-            }
-            return url
-        }
+        // redPocketUrl() {
+        //     let url = ''
+        //     if(['topic', 'post', 'question', 'answer', 'product'].indexOf(this.$route.name) !== -1) {
+        //         url = !this.env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'
+        //     }
+        //     return url
+        // }
     },
     ready() {
         emitter.on('back', () => this.$broadcast('restore'))

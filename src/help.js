@@ -219,18 +219,25 @@ export default {
             items: [
                 {
                     title: '如何赚取积分？',
-                    content: `商品销售&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+(商品价格/40)
-                    好评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+10分
-                    中评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+1分
-                    差评&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-10分
-                    参与求购竞标&emsp;&emsp;&emsp;&emsp;&emsp;+1分
-                    商品审核通过&emsp;&emsp;&emsp;&emsp;&emsp;
-                    商品数量0-100&emsp;&emsp;&emsp;&emsp; +5分
-                    商品数量101-200&emsp;&emsp;&emsp;+3分
-                    商品数量201以上&emsp;&emsp;&emsp;+1分`
+                    content: `发布商品
+                    0 - 50&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+10分
+                    50 - 100&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;+ 1 分
+                    101 - 200&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-10分
+                    商品总数超过200不再获取积分
+
+                    下架商品 减扣对应积分
+                    删除商品 减扣对应减积分
+
+                    参与求购竞标：1次2分
+                    每日最大获取10分
+
+                    交易完成      对应商品成交价/60
+                    获得好评      15分
+                    获得中评      不加积分
+                    获得差评      减扣对应商品成交价/40`
                 }, {
                     title: '店铺等级有什么用？',
-                    content: '店铺等级将展示在店铺的显眼位置，是买家选择店铺的重要参考标准。\n店铺等级越高，在搜索、推荐、专题中的排名越靠前，同时享受美玉秀秀平台专属推广。'
+                    content: '店铺等级将展示在店铺的显眼位置，是买家选择店铺的重要参考标准。\n店铺等级越高，在搜索、推荐中的排名越靠前，同时，店铺等级将和店铺评价一起，成为店铺在玉石行业中诚信经营的名片。'
                 }, {
                     title: '如何提高店铺等级？',
                     content: '通过销售商品、获取评价以及其他行为获得积分，不同的积分对应相应的等级。'

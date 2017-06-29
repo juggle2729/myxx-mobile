@@ -118,10 +118,9 @@ router.alias({
     '/help/level/:id': '/help/shop-level/:id',
     '/help/mall-detail/:type': '/help/desc/:type',
     // v3.3修改
-    '/jade/:id/:tab': '/product/:id/:tab',
-    '/product/:id': '/product/:id/none',
     '/help/desc/coupon': '/help/desc/use_coupon',
-    '/story/:id': '/topic/:id'
+    '/story/:id': '/topic/:id',
+    '/product/:id/:tab': '/product/:id'
 })
 router.map(routes)
 router.start(require('App.vue'), '#app');

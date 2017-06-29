@@ -115,7 +115,7 @@ export default {
         }
     },
 
-    '/product/:id/:tab': {
+    '/product/:id': {
         name: 'product',
         title: '商品详情',
         component(resolve) {
@@ -548,36 +548,46 @@ export default {
 
     '/help/answer/rules': {
         title: '鉴宝守则',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpAnswerRuleView.vue'));
+            }, 'help')
         }
     },
 
     '/help/master/verified': {
         title: '美玉秀秀鉴宝师',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMasterVerifiedView.vue'));
+            }, 'help')
         }
     },
 
     '/help/master/first-answer': {
         title: '完成第一次回答',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMasterFirstAnaswerView.vue'));
+            }, 'help')
         }
     },
 
     '/help/master/title': {
         title: ' 鉴宝师称号',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMasterTitleView.vue'));
+            }, 'help')
         }
     },
 
     '/help/master/recognition': {
         title: ' 鉴宝认同度',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpMasterRecognitionView.vue'));
+            }, 'help')
         }
     },
 
