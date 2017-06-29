@@ -115,7 +115,7 @@ export default {
         }
     },
 
-    '/product/:id/:tab': {
+    '/product/:id': {
         name: 'product',
         title: '商品详情',
         component(resolve) {
