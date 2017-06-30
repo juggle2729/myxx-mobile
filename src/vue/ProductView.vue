@@ -262,8 +262,8 @@
         .coupon-labels.flex-1
             div(v-for="coupon in coupons") {{coupon.title}}
             div(v-if="coupon_label_count < prod.shop.coupons.length") &middot;&middot;&middot;
-        deep-link.btn-get-coupon.has-icon(v-if="env.isShare") 领券
-        .btn-get-coupon.bd-red(v-else, @click="getCoupon") 领券
+        .btn-get-coupon.bd-red(v-if="env.isApp", @click="getCoupon") 领券
+        deep-link.btn-get-coupon.has-icon(v-else) 领券
     .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
         .img(v-bg='prod.shop.logo')
         .flex-1
@@ -319,7 +319,24 @@
             product-card(v-for="item in related", :item="item")
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
     .bg.placeholder
-    .float-box.flex.fixed.fz-30.bg-white(v-if="env.isShare")
+    .float-box.flex.fixed.fz-30.bg-white(v-if="env.isApp")
+        .bdt.flex-1.flex
+            .flex.flex-1.red.contact-btn.bdr(@click="contact()")
+                icon.fz-30(name="chat")
+                .mgt-6 私信
+            .flex.flex-1.gray.collect-btn.bdr(:class="{'red': prod.is_faved}", @click='collect()')
+                icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
+                .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
+            .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
+                icon.fz-30(name="shop")
+                .mgt-6 店铺
+        template(v-if="prod.sell_status==='selling'")
+            .fz-26.add-btn.bg-yellow.white(@click="addToCart()") 加入购物车
+            .fz-26.buy-btn.bg-red.white(@click="buy()") 立即购买
+        template(v-else)
+            .fz-26.add-btn.bg-gray.white 加入购物车
+            .fz-26.buy-btn.bg-gray.white 已售出
+    .float-box.flex.fixed.fz-30.bg-white(v-else)
         .bdt.flex-1.flex
             deep-link.has-icon.flex.flex-1.red.contact-btn.bdr
                 icon.fz-30(name="chat")
@@ -330,24 +347,8 @@
             .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                 icon.fz-30(name="shop")
                 .mgt-6 店铺
-        deep-link.has-icon.buy-btn.bg-red.white.fz-30 {{(prod.sell_status==='selling') ? '立即购买' : '已售出'}}
-    .float-box.flex.fixed.fz-30.bg-white(v-else)
-        .bdt.flex-1.flex
-            .flex.flex-1.red.contact-btn.bdr
-                icon.fz-30(name="chat")
-                .mgt-6 私信
-            .flex.flex-1.gray.collect-btn.bdr(:class="{'red': prod.is_faved}", @click='collect()')
-                icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
-                .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
-            .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
-                icon.fz-30(name="shop")
-                .mgt-6 店铺
-        template(v-if="prod.sell_status==='selling'")
-            .fz-26.add-btn.bg-yellow.white 加入购物车
-            .fz-26.buy-btn.bg-red.white 立即购买
-        template(v-else)
-            .fz-26.add-btn.bg-gray.white 加入购物车
-            .fz-26.buy-btn.bg-gray.white 已售出
+        deep-link.has-icon.buy-btn.bg-red.white.fz-30(v-if="prod.sell_status==='selling'") 立即购买
+        deep-link.has-icon.buy-btn.bg-gray.white.fz-30(v-else) 已售出
 .product-view.offline(v-else)
     img(:src="'mall/offline.png' | qn")
     .mgt-28.gray.fz-26.center 该商品已下架
@@ -378,6 +379,7 @@ export default {
                 tags: [],
                 banner: []
             },
+            isSelf: false,
             coupon_label_count: 2,
             related: [],
             alike: [],
@@ -437,15 +439,63 @@ export default {
     route: {
         data({from, to, next}) {
             return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
-                console.log('prod', prod)
                 _.update(prod, 'circle_size', size => size ? size/100 : '')
                 this.setShareData(prod)
                 this.prod = prod
+                this.isSelf = _.get(this, 'self.id') == prod.owner.id
             }, () => this.prod.status = '')
         }
     },
 
     methods: {
+         buy() {
+            if(this.isSelf) {
+                this.action('toast', {success: 0, text: '您不能购买自己的商品'})
+            } else {
+                this.action('orderConfirm', {product: this.prod.id})
+            }
+         },
+
+         addToCart() {
+            this.$put('mall/cart', { product_id: this.prod.id }).then(resp => {
+                this.action('updateCartCount', { count: resp.cart_count })
+                this.action('toast', {
+                    success: '1',
+                    text: '已加入购物车'
+                })
+            })
+         },
+
+        contact() {
+            if(this.isSelf) {
+                this.action('toast', {success: 0, text: '您不能和自己聊天'})
+            } else {
+                this.action('chat', {id: this.prod.default_admin.id, name: this.prod.default_admin.nickname, product: this.prod.id})
+            }
+        },
+
+        collect(tab) {
+            // TODO api
+            const api = 'users/favs'
+            const data = {
+                doc_type: 'pd',
+                doc_id: this.prod.id
+            }
+            this[this.prod.is_faved ? '$put' : '$post'](api, data)
+            .then(() => {
+                this.prod.is_faved = !this.prod.is_faved
+                this.action('toast', {
+                    success: 1,
+                    text: this.prod.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
+                })
+            })
+        },
+
+        getCoupon() {
+            this.action('couponList', {
+                shop: this.prod.shop.id
+            })
+        }
     }
 }
 </script>
