@@ -48,17 +48,18 @@ $width = calc((100% - 60px) / 3)
             .flex-1.mgl-20
                 .flex.name-level
                     .fz-30.black {{ item.shop_name }}
-                    lv.mgl-8(:lv="level")
+                    lv.mgl-8(:lv="item.level")
                 .mgt-14.fz-22.gray {{ item.locale_name }}
                 .mgt-16.fz-22.gray
-                    span 在售商品数 {{ `${item.selling_count}` }}
+                    span 在售商品数 {{ item.selling_count }}
                     span.line.mgh-20 |
-                    span 今日上新 {{ `${item.pd_count_today}` }}
+                    span 今日上新 {{ item.pd_count_today }}
         .coupon-info.flex.mgt-20.pdt-20.line-clamp(v-if="!!item.coupon_count")
             .logo
             .fz-22.mgl-8.dark {{ couponInfo(item) }}
         .product-info.flex.mgt-20(v-if="!!item.products_count")
-            .product-item.flex-1(v-for="product in item.products", v-bg='product.cover')
+            .product-item.flex-1(v-for="product in item.products", v-bg='product.cover',
+                v-link="{name: 'product', params: {id: product.id}}")
                 span.price.fz-22.white.center.pgh-6 {{ product.price | price }}
     empty(v-if="items.isEmpty")
 </template>

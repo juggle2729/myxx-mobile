@@ -541,8 +541,10 @@ export default {
 
     '/help/eco-system': {
         title: '良性生态8项举措',
-        component: {
-            template: '<h1>设计中</h1>'
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpEcoSystemView.vue'));
+            }, 'help')
         }
     },
 
