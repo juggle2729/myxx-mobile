@@ -118,6 +118,7 @@ export default {
     '/product/:id': {
         name: 'product',
         title: '商品详情',
+        native: v => v >= 3.8 && {name: 'product'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ProductView.vue'))
