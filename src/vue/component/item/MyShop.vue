@@ -48,7 +48,6 @@ $width = calc((100% - 60px) / 3)
             .flex-1.mgl-20
                 .flex.name-level
                     .fz-30.black {{ item.shop_name }}
-                    lv.mgl-8(:lv="item.level")
                 .mgt-14.fz-22.gray {{ item.locale_name }}
                 .mgt-16.fz-22.gray
                     span 在售商品数 {{ item.selling_count }}
@@ -64,16 +63,11 @@ $width = calc((100% - 60px) / 3)
     empty(v-if="items.isEmpty")
 </template>
 <script>
-import lv from 'component/Lv.vue'
 import paging from 'paging'
 export default {
     name: 'my-shop',
 
     mixins: [paging],
-
-    components: {
-        lv
-    },
 
     computed: {
         paging() {
