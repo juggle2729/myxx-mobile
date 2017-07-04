@@ -137,7 +137,6 @@
         .flex-1
             .fz-30.flex.mgb-20.name
                 .line-clamp.mgr-8 {{shop.shop_name}}
-                lv(:lv="shop.level")
             .fz-26.flex
                 icon(name="location")
                 div {{shop.locale_name}}
@@ -162,7 +161,6 @@
 <script>
 import dateformat from 'dateformat'
 import shareable from 'shareable'
-import lv from 'component/Lv.vue'
 import DeepLink from 'component/DeepLink.vue'
 export default {
     name: 'shop-coupon-view',
@@ -170,7 +168,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        lv,
         DeepLink
     },
 

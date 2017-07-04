@@ -43,13 +43,8 @@ a.product-card.bg-white.bd-light(:href="href")
 </template>
 <script>
 import config from '../../../config'
-import Lv from 'component/Lv.vue'
 export default {
     name: 'ProductCard',
-
-    components: {
-        Lv
-    },
 
     props: {
         item: Object

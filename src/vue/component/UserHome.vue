@@ -66,7 +66,6 @@
             .flex-1
                 .fz-30.flex.mgb-12.name
                     .line-clamp.mgr {{shop.shop_name}}
-                    lv(:lv="shop.level")
                 .fz-26.gray.flex
                     icon(name="location")
                     div(:class="{'address': shop.pd_count_today, 'line-clamp-1': shop.pd_count_today}") {{shop.locale_name}}
@@ -115,7 +114,6 @@
             .hr
 </template>
 <script>
-import Lv from 'component/Lv.vue'
 import Topic from 'component/item/Topic.vue'
 import Post from 'component/item/Post.vue'
 import Question from 'component/item/Question.vue'
@@ -129,7 +127,6 @@ export default {
     mixins: [paging],
 
     components: {
-        Lv,
         Topic,
         Post,
         Question,

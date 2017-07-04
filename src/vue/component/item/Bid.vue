@@ -97,7 +97,6 @@
     header.flex
         .logo(v-bg="bid.shop.logo")
         .fz-26.gray {{bid.shop.shop_name}}
-        lv.flex-1.pdl-10.pdb-10(:lv="bid.shop.level")
         .win-count.fz-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
     main
         .img(v-bg.lg="bid.product.first_picture")
@@ -141,11 +140,8 @@
                 icon.fz-22(name="enter")
 </template>
 <script>
-import lv from 'component/Lv.vue'
 export default {
     name: 'bid-item',
-
-    components: {lv},
 
     data() {
         return {

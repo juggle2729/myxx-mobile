@@ -269,7 +269,6 @@
         .flex-1
             .fz-30.flex.mgb-12.name
                 .line-clamp.mgr {{prod.shop.shop_name}}
-                lv(:lv='prod.shop.level')
             .fz-26.gray.flex
                 icon(name="location")
                 div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}
@@ -291,7 +290,7 @@
                     p {{prod[attr.k].name || prod[attr.k]}}
     .hr
     .prod-detail.bg-white
-        .pd-32.user-txt.fz-30(v-if="prod.detail") {{prod.detail}}
+        .pd-32.user-txt.fz-30(v-if="prod.detail") {{{prod.detail | input}}}
         .img
             img(:src="config.img + img + '?imageView2/0/w/750'", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
         .btn-complaint
@@ -355,7 +354,6 @@
 </template>
 <script>
 import shareable from 'shareable'
-import lv from 'component/Lv.vue'
 import ProductCard from 'component/item/ProductCard.vue'
 export default {
     name: 'product-view',
@@ -363,7 +361,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        lv,
         ProductCard
     },
 

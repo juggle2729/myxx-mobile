@@ -143,7 +143,6 @@
 </template>
 <script>
 import shareable from 'shareable'
-import lv from 'component/Lv.vue'
 import product from 'component/AllProduct.vue'
 import info from 'component/StoreInfo.vue'
 export default {
@@ -166,7 +165,6 @@ export default {
     mixins: [shareable],
 
     components: {
-        lv,
         product,
         info
     },
