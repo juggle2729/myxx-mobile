@@ -1,5 +1,6 @@
 <style lang="stylus">
 .figure-view
+    padding-bottom 12px
     .title
         padding 60px 32px 20px
         line-height 1.5
@@ -21,7 +22,7 @@
     .us-tile
         margin 32px 32px 20px
     .sh-tile
-        margin 0 32px 60px
+        margin 0 32px 20px
 </style>
 <template lang="pug">
 .figure-view

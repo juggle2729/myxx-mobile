@@ -220,15 +220,15 @@ export default {
                 {
                     title: '如何赚取积分？',
                     content: `发布商品
-                    0 - 50&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+10分
-                    50 - 100&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;+ 1 分
-                    101 - 200&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-10分
+                    0 - 50&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+3分
+                    50 - 100&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;+2分
+                    101 - 200&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;+1分
                     商品总数超过200不再获取积分
 
                     下架商品 减扣对应积分
-                    删除商品 减扣对应减积分
+                    删除商品 减扣对应积分
 
-                    参与求购竞标：1次2分
+                    参与求购竞标1次2分
                     每日最大获取10分
 
                     交易完成      对应商品成交价/60

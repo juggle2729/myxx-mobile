@@ -56,7 +56,6 @@
     .coupon
         height: 100px
         .coupon-labels
-            opacity: 0
             white-space nowrap
             div
                 display inline-block
@@ -350,7 +349,7 @@
         deep-link.has-icon.buy-btn.bg-gray.white.fz-30(v-else) 已售出
 .product-view.offline(v-else)
     img(:src="'mall/offline.png' | qn")
-    .mgt-28.gray.fz-26.center 该商品已下架
+    .mgt-28.gray.fz-30.center 商品已下架
 </template>
 <script>
 import shareable from 'shareable'
@@ -377,7 +376,7 @@ export default {
                 banner: []
             },
             isSelf: false,
-            coupon_label_count: 2,
+            coupon_label_count: 3,
             related: [],
             alike: [],
             attrs: [
@@ -401,6 +400,7 @@ export default {
 
     computed: {
         coupons() {
+            console.log(this.coupon_label_count, this.prod.shop.coupons)
             return this.prod.shop.coupons.slice(0, this.coupon_label_count)
         },
 

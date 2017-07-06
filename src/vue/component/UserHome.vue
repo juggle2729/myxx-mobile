@@ -91,7 +91,7 @@
             .img.mgr(v-bg='interview.iv_img')
             .fz-30.flex-1.title.line-clamp-2 {{interview.iv_title}}
     .hr(v-if='website')
-    .website.bg-white(v-if='website', v-link="{name: 'master', params:{id: website.user_id}}")
+    .website.bg-white(v-if='website', v-link="{name: 'figure', params:{ userId: website.user_id, articleId: website.article_id }}")
         .line-height-90.pdh-32.fz-26.gray
             span.pdl-12 人物志
         .cover.img.bg(v-bg='website.logo')

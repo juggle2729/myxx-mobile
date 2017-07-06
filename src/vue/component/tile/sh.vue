@@ -23,20 +23,14 @@
     .flex-1
         .fz-30.flex.mgb-12
             .name.line-clamp.mgr {{entry.shop_name}}
-            lv(:lv="entry.level")
         .fz-26.gray.flex
             icon(name="location")
             div {{entry.locale_name}}
     .center.red.fz-26 进店
 </template>
 <script>
-import Lv from 'component/Lv.vue'
 export default {
     name: 'sh-tile',
-
-    components: {
-        Lv
-    },
 
     props: {
         entry: {}

@@ -23,7 +23,7 @@ const mixin = {
         },
 
         hasUniversalLinkSupport() {
-            return this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
+            return this && this.env.isIOS && _.get(navigator.userAgent.match(/OS (\d+)/), 1) >= 9
         }
     },
 
