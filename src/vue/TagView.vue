@@ -53,6 +53,10 @@ export default {
                     desc: topics.desc
                 })
             })
+        },
+
+        canReuse({from, to}) {
+            return from.name !== to.name
         }
     },
     computed: {

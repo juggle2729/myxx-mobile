@@ -1,7 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .empty-component
-    background-image: url($qn + 'placeholder/empty.png')
+    background-image: url($qn + 'placeholder/empty.png?v1')
     background-size: 160px 160px
     background-position: center top
     margin-top: 100px

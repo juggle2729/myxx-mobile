@@ -95,19 +95,17 @@
         .address
             max-width: 200px
             font-size: 0.34rem
-        .icon-shop
-            height: 44px
-            width: 48px
-            margin-top: -46px
-            & + div
-                margin-top: -24px
+        .center
+            font-size 0
         img
             width 44px
             height @width
-        .new
-            border-radius: 40px
-            height: 32px
-            line-height: 32px
+            margin-bottom 8px
+    .shop-footer
+        height 120px
+        line-height 120px
+        .flex-1
+            line-height 32px
     .guarantee .icon-enter
         color: #f1ab47
     .placeholder
@@ -169,14 +167,6 @@
                 width: 100%
                 &:not(:last-child)
                     margin-bottom: 6px
-        .btn-complaint
-            text-align: right
-            padding: 18px 32px 16px 0
-            font-size: 0
-            & > div
-                display: inline-block
-                padding: 6px 10px
-                border-radius: 6px
     .prod-banner
         font-size 0
         .banner
@@ -199,7 +189,6 @@
                 width 90%
                 width calc(100% - 64px)
     .prod-alike
-        padding 0 0 20px 20px
         header
             height 90px
             line-height @height
@@ -240,9 +229,6 @@
     .product-view
         .coupon-labels div
             padding: 8px 8px 0
-        .new
-            border-radius: 40px
-            padding-top: 6px
 </style>
 <template lang="pug">
 .product-view(v-if="prod.status === 'online'")
@@ -274,6 +260,16 @@
         .center
             img(:src="config.www + 'icon.enter.shop.png'")
             .fz-22.gray 进店逛逛
+    .shop-footer.flex.fz-26.center
+        .flex-1.bdr
+            span.inline-block 全部商品
+            span.inline-block.red.mgl-16 {{prod.shop.selling_count}}
+        .flex-1.bdr
+            span.inline-block 今日上新
+            span.inline-block.red.mgl-16 {{prod.shop.pd_count_today}}
+        .flex-1
+            span.inline-block 拍卖
+            span.inline-block.light.mgl-8 敬请期待
     .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
         avatar(:user='prod.owner', :size='50')
         .flex
@@ -286,14 +282,12 @@
             template(v-for="attr in attrs")
                 li.fz-26(v-if="prod[attr.k]")
                     p.label.gray {{attr.l}}
-                    p {{prod[attr.k].name || prod[attr.k]}}
+                    p {{prod[attr.k].name || prod[attr.k]}}{{attr.u}}
     .hr
     .prod-detail.bg-white
         .pd-32.user-txt.fz-30(v-if="prod.detail") {{{prod.detail | input}}}
         .img
             img(:src="config.img + img + '?imageView2/0/w/750'", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
-        .btn-complaint
-            .fz-26.gray.bd(v-link="{name: 'complain', params: {type: 'pd', id: prod.id}}") 举报
     .prod-banner
         template(v-for="banner in banners")
             .hr
@@ -301,9 +295,9 @@
                 a(v-if="banner.title", :href="banner.url", target="_blank") {{banner.title}}
     .hr
     template(v-if="alike.length")
-        .prod-alike
-            header.fz-26.gray 看了这件宝贝的玉友还看了
-            .scrollable
+        .prod-alike.pdb
+            header.fz-26.gray.pdl 看了这件宝贝的玉友还看了
+            .scrollable.pdl
                 a.prod-card(v-for="p in alike", :href="p.href")
                     .cover(v-bg.sm="p.cover")
                     .fz-24.mgv.line-clamp {{p.title}}
@@ -381,9 +375,9 @@ export default {
             alike: [],
             attrs: [
                 {k: 'category', l: '分类'},
-                {k: 'size', l: '尺寸'},
-                {k: 'circle_size', l: '圈口'},
-                {k: 'weight', l: '重量'},
+                {k: 'size', l: '尺寸', u: 'mm'},
+                {k: 'circle_size', l: '圈口', u: 'mm'},
+                {k: 'weight', l: '重量', u: '克'},
                 {k: 'variety', l: '种类'},
                 {k: 'place', l: '产地'},
                 {k: 'skin', l: '皮色'},

@@ -4,7 +4,7 @@
     >div.story-item
         margin-bottom: 20px
     &.empty
-        background-image: url($qn + 'placeholder/empty.png')
+        background-image: url($qn + 'placeholder/empty.png?v1')
         background-size: 160px 160px
         background-position: 50% calc(50% - 160px)
     // 全部评论页面及我的粉丝页面展示不合适，暂时去掉（pm-sxl）
