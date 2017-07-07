@@ -292,7 +292,7 @@
         template(v-for="banner in banners")
             .hr
             .banner(:style="banner.style")
-                a(v-if="banner.title", :href="banner.url", target="_blank") {{banner.title}}
+                a(v-if="banner.title", href="/help/eco-system", target="_blank") {{banner.title}}
     .hr
     template(v-if="alike.length")
         .prod-alike.pdb
