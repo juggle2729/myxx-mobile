@@ -541,7 +541,7 @@ export default {
     },
 
     '/help/eco-system': {
-        title: '良性生态8项举措',
+        title: '打造和田玉良性生态的举措',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('HelpEcoSystemView.vue'));
