@@ -96,8 +96,8 @@
     img.mark(v-if="mark", :src="mark | qn")
     header.flex
         .logo(v-bg="bid.shop.logo")
-        .fz-26.gray {{bid.shop.shop_name}}
-        .win-count.fz-22.gray(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
+        .fz-26.gray.flex-1 {{bid.shop.shop_name}}
+        .win-count.fz-22.gray.mgt-4(v-if="bid.shop.recent_win_count") 近期中标{{bid.shop.recent_win_count}}笔
     main
         .img(v-bg.lg="bid.product.first_picture")
             .sale-mark.fz-30.white(v-if="bid.product.is_tob") 清仓

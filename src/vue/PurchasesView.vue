@@ -2,6 +2,7 @@
 @import '~style/partials/var'
 .purchases-view
     padding-bottom: 98px
+    min-height: 100%
     .purchase-btn
         position: fixed
         bottom: 0
