@@ -430,7 +430,7 @@ export default {
     route: {
         data({from, to, next}) {
             return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
-                _.update(prod, 'circle_size', size => size ? size/100 : '')
+                _.update(prod, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
                 this.setShareData(prod)
                 this.prod = prod
                 this.isSelf = _.get(this, 'self.id') == prod.owner.id
