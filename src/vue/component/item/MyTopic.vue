@@ -3,7 +3,7 @@
     min-height 100%
     min-height calc(100% - 100px)
     .item
-        height: 188px
+        height: 134px
         position: relative
         > div
             position: absolute
@@ -12,10 +12,11 @@
 </style>
 <template  lang="pug">
 .my-topic
-    .item.mgl-32(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'tag', params: {id: item.entry.id}}")
-        .pdv-28.pdr-32
-            .fz-30.mgb {{item.entry.name}}
-            .fz-26.gray.line-clamp-2 {{{item.entry.desc | input}}}
+    .items.bg-white.pdl-32
+        .item(v-for="item in items", :class="{'bdb': $index < (items.length - 1)}", v-link="{name: 'tag', params: {id: item.entry.id, name: item.entry.name}}")
+            .pdv-28.pdr-32
+                .fz-30.mgb-16 {{item.entry.name}}
+                .fz-26.gray.line-clamp-2 {{{item.entry.desc | input}}}
     empty(v-if="items.isEmpty")
 </template>
 <script>

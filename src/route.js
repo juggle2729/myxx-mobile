@@ -95,7 +95,7 @@ export default {
         }
     },
 
-    '/tag/:id': {
+    '/tag/:id/:name': {
         name: 'tag',
         native: v => v >= 2.4,
         component(resolve) {
