@@ -155,7 +155,7 @@
         .brief
             .detail {{base.brief | truncate 76}}
         .interview-video(v-if='interview.video')
-            .video(@click.stop='play(interview.video)', v-bg='interview.video', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/460/interlace/1')
+            .video(@click.stop='play(interview.video)', v-bg='interview.video', query='vframe/jpg/offset/5/rotate/auto|imageView2/1/w/600/h/460/interlace/1')
         .content(v-html='interview.content')
         .base-info
             avatar(:user='base', :size='222')

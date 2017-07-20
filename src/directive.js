@@ -3,7 +3,7 @@ let preset = {
     lg: '_750',
     md: '_320',
     sm: '_240',
-    video: '?vframe/jpg/offset/7/rotate/auto|imageView2/0/w/375'
+    video: '?vframe/jpg/offset/5/rotate/auto|imageView2/0/w/375'
 };
 const bg = {
     params: ['query', 'holder'],

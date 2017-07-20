@@ -68,7 +68,7 @@
         .fz-30.dark.user-txt(:class="{'pdt-32': post.description}") {{{post.description | content | input}}}
         template(v-for="item in post.medias")
             img(v-if="item.media_type === 'picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
-            .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
+            .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/5/rotate/auto|imageView2/2/w/750')
             .product.flex.mgt-32.bd-light(v-if="item.media_type === 'pd'", v-link="{name: 'product', params: {id: item.media.id}}")
                 .img(v-bg="item.media.cover")
                 .fz-30.mgh.flex-1.pdv-28.content

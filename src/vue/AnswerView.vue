@@ -56,7 +56,7 @@
                     .mgt-14.fz-22.gray {{result.identifier.title}}
                 icon-follow(:target='result.identifier.id', :follow='result.identifier.is_followed', :has-border='true')
         .video.bg(v-bg='result.identifier.portrait', @click.stop="play(result.video)")
-        .fz-30.pdh-32.pdb-32(v-if="result.result") 回答结果为{{config.jdResult[result.result]}}  {{result.value && '估价为' + config.jdPrice[result.value]}}
+        .fz-30.pdh-32.pdb-32(v-if="result.jd_tags && result.jd_tags.length") 回答结果：{{ result.jd_tags.join('、') }}
 
         footer.flex.fz-26.bdt
             icon-like(:active='result.liked', :count='result.like_count', :recognition="true")

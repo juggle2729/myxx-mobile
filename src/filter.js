@@ -38,10 +38,13 @@ const filters = {
                     m = dateformat(d, 'm月dd日 HH:MM')
                 }
             }
-        } else if(d.getTime() >= (YESTERDAY - DAY)) { // 昨天
-            m = `昨天${d.getHours()}:${d.getMinutes() < 10 ? '0' :''}${d.getMinutes()}`
-        } else { // N天前
-            m = Math.ceil((now - d) / DAY) + '天前'  // 这里需要用now - d，而不是diff
+        } else {
+            const diffDays = Math.ceil((now - d) / DAY) // 这里需要用now - d，而不是diff
+            if (diffDays < 8) {
+                m = diffDays + '天前'
+            } else {
+                m = dateformat(d, 'yyyy-mm-dd')
+            }
         }
         return m
     },
@@ -91,6 +94,11 @@ const filters = {
             })
         }
         return content
+    },
+
+    duration(duration) {
+        const padZero = val => _.padStart(val, 2, '0')
+        return `${padZero(parseInt(duration/60))}:${padZero(duration%60)}`
     }
 }
 export default {

@@ -29,6 +29,12 @@
             padding: 0 32px 0 54px
             p
                 line-height: 1.5
+    .single-item
+        padding 46px 52px 0
+        height 440px
+        line-height 1.4
+        &::-webkit-input-placeholder
+            color #c6c6c6
 </style>
 <template lang="pug">
 .complain-view(v-if='!$loadingRouteData', :class="{bg: !isFirstPdComplain}")
@@ -52,6 +58,8 @@
                     .fz-30.flex-1 {{item.desc}}
                     icon(:name="item.selected ? 'selected' : 'select'")
                 textarea.pd-32.fz-30(v-if="item.desc==='其他' && item.selected", placeholder="填写投诉原因（必填）", v-model="content")
+            .bg-white(v-if="items.length === 0")
+                textarea.single-item.fz-30(placeholder="请您描述您对目前鉴宝师鉴定结果的看法和观点，此信息提交后只有管理员能看到。", v-model="content")
         template(v-else)
             .result.fz-30.user-txt.center.mgh-32 {{feedback}}
         .btn.bg-gray.white.line-height-90.center.mgh-32.fz-30(@click="submit", :class="{'bg-red': content || reason}") {{result ? '我知道了' : '提交'}}
@@ -201,6 +209,12 @@ export default {
                 title = '存疑商品举报'
                 this.items = this.reasons[3]
                 break
+            case 'jb-1':
+                title = '不认同鉴定结果'
+                break
+            case 'jb-2':
+                title = '求鉴宝有滥用鉴宝资源嫌疑'
+                break
             default:
                 title = '举报内容'
                 this.items = this.reasons[2]
@@ -218,10 +232,14 @@ export default {
         },
 
         submit() {
+            let target_type = this.$route.params.type
+            if(_.includes(target_type, '-')) { // 举报鉴宝
+                target_type = target_type.substr(0, target_type.indexOf('-'))
+            }
             if(!this.result && (this.content || this.reason)) {
                 this.$post(`users/complaints`, {
                     target_id: this.$route.params.id,
-                    target_type: this.$route.params.type,
+                    target_type,
                     reason: this.content || this.reason,
                     remark: this.$route.query.order || ''
                 }).then(resp => {

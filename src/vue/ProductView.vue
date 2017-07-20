@@ -232,7 +232,7 @@
 </style>
 <template lang="pug">
 .product-view(v-if="prod.status === 'online'")
-    .prod-video.video(v-bg='prod.video', @click='play(prod.video)', query='vframe/jpg/offset/7/rotate/auto|imageView2/2/w/750')
+    .prod-video.video(v-bg='prod.video', @click='play(prod.video)', query='vframe/jpg/offset/5/rotate/auto|imageView2/2/w/750')
     .titles.bg-white
         .header
             .title.fz-32 {{prod.title}}

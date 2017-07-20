@@ -26,7 +26,7 @@
 <template  lang="pug">
 .topic-view.bg-white(v-if='!$loadingRouteData')
     .pd-32
-        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/7/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
+        .cover.video(v-if="cover.media_type=== 'video'", @click.stop='play(cover.media)', v-bg='cover.media', query='vframe/jpg/offset/5/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
         .flex.mgt-32
             avatar(:user='topic.user')
             .name.mgl

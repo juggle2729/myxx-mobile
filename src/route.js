@@ -10,6 +10,26 @@ export default {
         }
     },
 
+    '/question/:id/append': {
+        name: 'question-append',
+        title: '问题更新',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('QuestionAppendView.vue'))
+            }, 'question')
+        }
+    },
+
+    '/question/:id/feedback': {
+        name: 'question-feedback',
+        title: '对此鉴宝有疑议',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('QuestionFeedbackView.vue'))
+            }, 'question')
+        }
+    },
+
     '/answer/:id': {
         name: 'answer',
         title: '回答详情',

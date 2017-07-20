@@ -53,7 +53,7 @@
             icon-comment(:count="item.entry.comment_count", readonly=true)
             deep-link.img x
     div.pdv-28.mgl-32.bdt.flex(v-else)
-        .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/7/rotate/auto|imageView2/2/w/320")
+        .media.img(v-if="item.entry.cover_type === 'video'", v-bg="item.entry.cover", query="vframe/jpg/offset/5/rotate/auto|imageView2/2/w/320")
             img(:src="'recommend/video.png' | qn")
         .media.img(v-else, v-bg="item.entry.picture || item.entry.medias[0].media")
         .desc.mgl.flex-1
