@@ -233,14 +233,15 @@ export default {
 
         submit() {
             let target_type = this.$route.params.type
-            if(_.includes(target_type, '-')) { // 举报鉴宝
+            const isJianbao = _.includes(target_type, '-')
+            if(isJianbao) { // 举报鉴宝
                 target_type = target_type.substr(0, target_type.indexOf('-'))
             }
             if(!this.result && (this.content || this.reason)) {
                 this.$post(`users/complaints`, {
                     target_id: this.$route.params.id,
                     target_type,
-                    reason: this.content || this.reason,
+                    reason: (isJianbao ? document.title + ": " : '') + (this.content || this.reason),
                     remark: this.$route.query.order || ''
                 }).then(resp => {
                     this.result = true
