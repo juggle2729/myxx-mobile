@@ -168,10 +168,19 @@ export default {
     computed: {
         feedback() {
             let txt = ''
-            if(this.$route.params.type === 'pd') {
-                txt = '举报已受理，管理员会对您举报的商品进行二次审核，感谢您对美玉秀秀商城秩序的维护，美玉秀秀因为有你更精彩。'
-            } else {
-                txt = `您的${(this.$route.params.type === 'sh') ? '投诉' : '举报'}已受理，管理员会在1个工作日内处理，感谢您对美玉秀秀的维护和支持。`
+            switch (this.$route.params.type) {
+                case 'pd':
+                    txt = '举报已受理，管理员会对您举报的商品进行二次审核，感谢您对美玉秀秀商城秩序的维护，美玉秀秀因为有你更精彩。'
+                    break
+                case 'jb-1':
+                    txt = '您对鉴宝结果看法和观点已提交至管理员，管理员将根据您提交的信息进行审核处理。'
+                    break
+                case 'jb-2':
+                    txt = '您对此求鉴宝的疑议已提交至管理员，管理员将根据您提交的信息进行审核处理。'
+                    break
+                default:
+                    txt = `您的${(this.$route.params.type === 'sh') ? '投诉' : '举报'}已受理，管理员会在1个工作日内处理，感谢您对美玉秀秀的维护和支持。`
+                    break
             }
             return txt
         }
@@ -232,6 +241,10 @@ export default {
         },
 
         submit() {
+            if(!this.content && !this.reason) {
+                return;
+            }
+
             let target_type = this.$route.params.type
             const isJianbao = _.includes(target_type, '-')
             if(isJianbao) { // 举报鉴宝
