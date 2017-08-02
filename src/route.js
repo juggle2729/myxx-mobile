@@ -614,6 +614,66 @@ export default {
         }
     },
 
+    '/auction/mine': {
+        name: 'auction-mine',
+        title: '我的',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMineView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/margin': {
+        name: 'auction-margin',
+        title: '竞拍保证金',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMarginView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/addresses': {
+        name: 'addresses',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddessesView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/address/:id': {
+        name: 'address-add',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddressAddView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/area-list': {
+        name: 'area-list',
+        title: '选择地区',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AreaView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/pay': {
+        name: 'pay',
+        title: '付款',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PayView.vue'))
+            }, 'pay')
+        }
+    },
+
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',

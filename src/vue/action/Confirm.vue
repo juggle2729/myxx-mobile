@@ -29,7 +29,7 @@
 </style>
 <template  lang="pug">
 .confirm-action
-    .container.bg
+    .container.bg-white
         .center {{params.text}}
         .btns.bdt.flex
             .flex-1(@click="close('0')") {{params.labels ? params.labels[0] : '取消'}}
