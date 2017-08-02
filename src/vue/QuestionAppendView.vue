@@ -20,15 +20,16 @@
 </style>
 <template lang="pug">
 .question-append-view.bg
-    .append-info.bg-white(v-for="item in jb.append_info", track-by="$index")
+    .append-info.bg-white(v-for="item in append_info", track-by="$index")
         .flex
             avatar(:user='item.user')
             .flex-1.mgl-18.fz-26 {{item.user.nickname}}
             .fz-24 {{item.create_at | date 'yyyy-mm-dd H:MM'}}
-        .mgt-34.fz-30 新增{{item.pictures.length}}张图片,{{item.video ? 1 : 0}}个视频
-        .pictures.mgt-22(v-if="item.pictures.length || item.video")
+        .mgt-34.fz-30 新增{{item.pictures ? item.pictures.length : 0}}张图片,{{item.video ? 1 : 0}}个视频
+        .pictures.mgt-22
             .video.pic(v-if="item.video", v-bg.video='item.video', @click.stop="play(item.video)")
-            .pic(v-for="pic in item.pictures", v-bg.sm="pic", @click="coverflow(item.pictures, $index)")
+            template(v-if="item.pictures && item.pictures.length")
+                .pic(v-for="pic in item.pictures", v-bg.sm="pic", @click="coverflow(item.pictures, $index)")
 </template>
 <script>
 export default {
@@ -36,16 +37,15 @@ export default {
 
     data() {
         return {
-            jb: {
-                user: {},
-                append_info: []
-            }
+            append_info: []
         }
     },
 
     route: {
         data({ to }) {
-            return this.$fetch(`sns/jianbao/${to.params.id}`).then(jb => this.jb = jb)
+            return this.$fetch(`sns/jianbao/${to.params.id}`).then(({ append_info }) => {
+                return { append_info }
+            })
         }
     }
 }
