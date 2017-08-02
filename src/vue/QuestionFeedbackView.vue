@@ -62,7 +62,7 @@ export default {
     methods: {
         onAction(params) {
             if(_.isBoolean(params)) {
-                this.action('appendJianbaoInfo', { jianbaoId: this.$route.params.id })
+                this.action('appendJianbaoInfo', { jianbaoId: this.$route.params.id, userId: this.$route.query.userId })
             } else if(_.isObject(params)) {
                 this.$router.go(params)
             }
