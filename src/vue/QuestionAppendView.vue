@@ -43,9 +43,7 @@ export default {
 
     route: {
         data({ to }) {
-            return this.$fetch(`sns/jianbao/${to.params.id}`).then(({ append_info }) => {
-                return { append_info }
-            })
+            return this.$fetch(`sns/jianbao/${to.params.id}`).then(({ append_info }) => ({ append_info }))
         }
     }
 }
