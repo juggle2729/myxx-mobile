@@ -26,7 +26,7 @@
 </style>
 <template lang="pug">
 .question-feedback-view.bg
-    .item.bg-white.relative(v-for="item in items", track-by="$index", @click="onAction(item.path || item.action)")
+    .item.bg-white.relative(v-for="item in filterItems", track-by="$index", @click="onAction(item.path || item.action)")
         .left-info
             .title.fz-30 {{ item.title }}
             .desc.fz-26.mgt-24 {{ item.desc }}
@@ -56,6 +56,20 @@ export default {
                     path: { name: 'complain', params: { id: this.$route.params.id, type: 'jb-2' } }
                 }
             ]
+        }
+    },
+
+    computed: {
+        filterItems() {
+            if (!this.canAppend || this.canAppend === 'true') {
+                return this.items
+            }
+            this.items.splice(1, 1)
+            return this.items
+        },
+
+        canAppend() {
+            return this.$route.query.canAppend
         }
     },
 
