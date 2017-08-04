@@ -57,6 +57,9 @@ export default {
                 }, {
                     label: '商品详情',
                     href: '/product/188/none'
+                }, {
+                    label: '关于美玉秀秀',
+                    href: '/about'
                 }
             ]
         }
