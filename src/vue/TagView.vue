@@ -9,14 +9,14 @@
 <template  lang="pug">
 .topic-view.bg.pdb-36
     section.bg-white
-        .scrollable.mgl-32.bdb.pdv-24
+        .scrollable.mgl-32.bdb.pdv-24(v-if="topics.relate_categories && topics.relate_categories.length")
             .item.pdh-24.mgr.fz-26.bg(v-for="topic in topics.relate_categories", v-link="{name: 'tag', params: {id: topic.id}}") {{topic.name}}
-        .flex.pdh-32.pdt-40
+        .flex.pdh-32.pdt-40(:class="{'pdb-32': !hasDesc}")
             .fz-34.bold.flex-1 {{topics.name}}
             .bdl.pdl-32.flex.red.fz-26(@click="gotoDownload")
                 icon(name="plus")
                 span 关注话题
-        .fz-26.gray.user-txt.pd-32 {{{topics.desc | input}}}
+        .fz-26.gray.user-txt.pd-32(v-if="hasDesc") {{{topics.desc | input}}}
     .hr
     template(v-for="item in items")
         component(:is="config.category[item.type]", keep-alive, :item="item")
@@ -68,6 +68,9 @@ export default {
                     limit: 10
                 }
             }
+        },
+        hasDesc() {
+            return this.topics.desc && this.topics.desc.length
         }
     }
 }
