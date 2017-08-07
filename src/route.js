@@ -117,7 +117,7 @@ export default {
 
     '/tag/:id/:name': {
         name: 'tag',
-        native: v => v >= 2.4,
+        native: v => v >= 2.4 && {name: 'topic'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('TagView.vue'))
