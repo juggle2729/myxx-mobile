@@ -11,15 +11,18 @@ $width = calc((100% - 20px) / 3)
             height 120px
             width 120px
             border-radius 8px
+        &.has-product
+            .shop-info, .coupon-info
+                padding-bottom 20px
+        &.has-coupon
+            .shop-info
+                padding-bottom 20px
+                border(b, #efefef)
     .shop-info
         width 100%
         & > .flex
             flex-direction column
             -webkit-box-align start
-        &.has-product
-            padding-bottom 20px
-            margin-bottom 20px
-            border(b, #efefef)
     .line
         color #efefef
     .coupon-info
@@ -31,6 +34,7 @@ $width = calc((100% - 20px) / 3)
             background-size contain
     .product-info
         width 100%
+        font-size 0
     .product-item
         display inline-block
         width $width
@@ -48,8 +52,9 @@ $width = calc((100% - 20px) / 3)
 </style>
 <template lang="pug">
 .my-shop(:class="{'bg': !items.isEmpty}")
-    .item.pd-20.flex.bg-white(v-for="item in items", v-link="{name: 'shop', params: {id: item.id}}")
-        .shop-info.flex(:class="{'has-product': !!item.selling_count}")
+    .item.flex.bg-white.pd-20(v-for="item in items", v-link="{name: 'shop', params: {id: item.id}}",
+        :class="{'has-product': !!item.selling_count, 'has-coupon': !!item.coupon_count}")
+        .shop-info.flex
             .img(v-bg="item.logo")
             .flex-1.mgl-20
                 .flex.name-level
@@ -59,7 +64,7 @@ $width = calc((100% - 20px) / 3)
                     span 在售商品数 {{ item.selling_count }}
                     span.line.mgh-20 |
                     span 今日上新 {{ item.pd_count_today }}
-        .coupon-info.flex.line-clamp.mgb-20(v-if="!!item.coupon_count")
+        .coupon-info.flex.line-clamp.pdt-20(v-if="!!item.coupon_count")
             .logo
             .fz-22.mgl-8.dark {{ couponInfo(item) }}
         .product-info(v-if="!!item.selling_count")
