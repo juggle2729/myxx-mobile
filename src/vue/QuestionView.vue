@@ -172,12 +172,17 @@ export default {
 
     data() {
         return {
-            question: {}
+            question: {
+                append_info: []
+            }
         }
     },
 
     computed: {
         appendList() {
+            if (!this.question.append_info) {
+                return []
+            }
             return this.question.append_info.reduce((res, item) => {
                 if(item.video) {
                     res.push({type: 'video', key: item.video})
