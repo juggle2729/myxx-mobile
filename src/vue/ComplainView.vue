@@ -247,14 +247,16 @@ export default {
 
             let target_type = this.$route.params.type
             const isJianbao = _.includes(target_type, '-')
+            let title = ''
             if(isJianbao) { // 举报鉴宝
+                title = target_type === 'jb-1' ? '不认同鉴定结果: ' : (target_type === 'jb-2' ? '求鉴宝有滥用鉴宝资源嫌疑: ' : '')
                 target_type = target_type.substr(0, target_type.indexOf('-'))
             }
             if(!this.result && (this.content || this.reason)) {
                 this.$post(`users/complaints`, {
                     target_id: this.$route.params.id,
                     target_type,
-                    reason: (isJianbao ? document.title + ": " : '') + (this.content || this.reason),
+                    reason: (title || '') + (this.content || this.reason),
                     remark: this.$route.query.order || ''
                 }).then(resp => {
                     this.result = true
