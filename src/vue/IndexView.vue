@@ -60,6 +60,9 @@ export default {
                 }, {
                     label: '关于美玉秀秀',
                     href: '/about'
+                }, {
+                    label: '问题更新',
+                    href: '/question/6048/append'
                 }
             ]
         }
