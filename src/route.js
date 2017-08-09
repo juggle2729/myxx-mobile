@@ -634,6 +634,26 @@ export default {
         }
     },
 
+    '/auction/:id': {
+        name: 'auction',
+        title: '拍品详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/:id/:status/bids': {
+        name: 'auction-bids',
+        title: '出价记录',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionBidsView.vue'))
+            }, 'auction')
+        }
+    },
+
     '/addresses': {
         name: 'addresses',
         title: '收货地址管理',

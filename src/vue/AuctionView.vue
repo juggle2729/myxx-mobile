@@ -1,30 +1,47 @@
 <style lang="stylus">
 @import '~style/partials/var'
 @import '~style/partials/mixin'
-.product-view
+.auction-view
     position: relative
+    margin-top 88px
+    .status-bar
+        height 72px
+        .bold
+            line-height 40px
+            border-radius 4px
+        &.preview
+            background-color #f1ab47
+            .bold
+                color: #f1ab47
+        &.going
+            background-color #cc3f4f
+            .bold
+                color: #cc3f4f
+        &.fail,&.success
+            background-color #888
+            .bold
+                color: #888
     .titles
         .header
-            min-height: 164px
-            padding: 28px 32px 28px 26px
+            padding 36px 32px 0
+            .flex > *
+                border-radius 6px
+                line-height 48px
+            .margin
+                background url('//o0x80w5li.qnssl.com/auction/gurantee.png') no-repeat 12px center
+                background-size 28px 28px
             .price
-                font-weight: bold
-                &:first-letter
-                    font-size: 32px
-                    font-weight: normal
-            a img
-                width 161px
-                height 56px
-        .title
-            margin: 0 0 18px 4px
-            line-height: 1.5
-        .button
-            padding: 0 20px 0 20px
-            height: 72px
-            border-width: 0
-            border-radius: 10px
-            text-align: center
-            line-height: 56px
+                height 144px
+                &.preview .current-price
+                    color #c6c6c6
+                &.going, &.success
+                    .current-price
+                        color #cc3f4f
+                &.fail .current-price
+                    color #393939
+                .separator
+                    width 1px
+                    height 72px
         .guarantee
             line-height: 0
             position: relative
@@ -89,52 +106,36 @@
         .address
             max-width: 200px
             font-size: 0.34rem
-        .center
-            font-size 0
         img
             width 44px
             height @width
             margin-bottom 8px
-    .shop-footer
-        height 120px
-        line-height 120px
-        .flex-1
-            line-height 32px
+        .center
+            width 100px
     .guarantee .icon-enter
         color: #f1ab47
     .placeholder
         height: 110px
     .float-box
-        bottom: 0
-        height: 98px
-        width: 100%
-        & > div
-            height: 100%
-        .contact-btn,.collect-btn,.shop-btn
-            font-size: 22px
+        border(t, #d9d9d9)
+        bottom 0
+        height 98px
+        width 100%
+        .shop-btn, .alarm-btn
+            font-size 22px
             flex-direction column
-            width: 50%
             .btn
                 font-size: 22px
             [class^='icon-'], [class*=' icon-']
-                margin-bottom: 4px
                 padding: 0
                 height: 1.6em
                 width: @height
-        .contact-btn .btn
-            color: #CC3F4F
-        .add-btn
-            height: 98px
-            line-height: 98px
-            padding: 0 32px
-        .buy-btn, .buy-btn .btn
-            padding: 0 32px
-            color: white
-            text-align: center
-            height: 98px
-            line-height: 98px
-        .buy-btn.bg-gray
-            border(l, #d9d9d9)
+        .separator
+            width 1px
+            height 100%
+            border(r, #d9d9d9)
+         > div:last-child
+            line-height 98px
     .prod-attr
         header
             height 90px
@@ -179,17 +180,6 @@
                 display inline-block
                 width 90%
                 width calc(100% - 64px)
-    .prod-alike
-        header
-            height 90px
-            line-height @height
-        .prod-card
-            display inline-block
-            width 248px
-            margin-right 12px
-            .cover
-                width 248px
-                height @width
     .prod-related
         .recommends > a
             margin: 0 0 20px 15px
@@ -204,40 +194,52 @@
                 border-radius 8px
                 & + .tag
                     margin-left 20px
-    &.offline
-        position: absolute
-        width: 100%
-        top: 45%
-        left: 50%
-        transform: translate(-50%, -50%)
-        img
-            display: block
-            margin: 0 auto
-            height: 244px
-            width: 386px
     .auction:after
         content '>'
         margin-left 8px
         position relative
         bottom 2px
 .old-android
-    .product-view
+    .auction-view
         .coupon-labels div
             padding: 8px 8px 0
 </style>
 <template lang="pug">
-.product-view(v-if="prod.status === 'online'")
+.auction-view
+    auction-header-menu
     custom-swiper(:item="prod")
+    .status-bar.flex.pdl-32.fz-26(:class="auction.status")
+        .bold.pdh-12.bg-white {{ statusText }}
+        template(v-if="auction.status === 'preview'")
+            .white.mgl-16 距开始 {{ auction.start_time | diffNowTime }}
+        template(v-if="auction.status === 'going'")
+            .white.mgl-16 距结束 {{ auction.real_end_time | diffNowTime }}
     .titles.bg-white
         .header
             .title.fz-32 {{prod.title}}
-            .flex.red
-                .fz-44.flex-1.bold(v-if="prod.auction") 拍卖中
-                .fz-30.flex-1(v-if="!prod.auction && isSold") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
-                .price.fz-44.flex-1(v-if="!prod.auction && !isSold") {{prod.price | price}}
+            .flex.fz-22.gray.mgt-30.mgb-24
+                .margin.pdl-48.pdr-12.bd 保证金已付
+                .mail.pdh-12.mgl-12.bd(v-if="auction.free_shipping") 包邮
+            .price.flex.fz-22(:class="auction.status")
+                .flex-1.center
+                    .current-title {{ currentTitle }}
+                    template(v-if="lodash.isString(currentPrice)")
+                        .current-price.mgt-12.fz-36.bold {{ currentPrice }}
+                    template(v-if="lodash.isNumber(currentPrice)")
+                        .current-price.mgt-12.fz-36.bold {{ currentPrice | price }}
+                .separator.bdl
+                .flex-1.center
+                    .start-title 起拍价
+                    .bold.fz-36.mgt-12.fz-36.bold(:class="auction.status === 'preview' ? 'yellow-f1' : ''") {{ upset_price | price }}
+                .separator.bdl
+                .flex-1.center
+                    .increase-title 加价幅度
+                    .mgt-12.fz-36.bold {{ bid_increment | price }}
         .guarantee(@click="$root.popup = {handler: 'guarantee'}")
             img(:src="'product/term.png?v1' | qn")
             icon.fz-26(name="enter")
+    .hr
+    auction-bids(v-if='auction.id', :id='auction.id', :status='auction.status', :limit='3')
     .hr
     .coupon.flex.fz-26.red.pdh-32.bdb(v-if="prod.shop.coupon_count")
         .coupon-labels.flex-1
@@ -254,18 +256,8 @@
                 icon(name="location")
                 div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}
         .center
-            img(:src="config.www + 'icon.enter.shop.png'")
-            .fz-22.gray 进店逛逛
-    .shop-footer.flex.fz-26.center
-        .flex-1.bdr
-            span.inline-block 全部商品
-            span.inline-block.red.mgl-16 {{prod.shop.selling_count}}
-        .flex-1.bdr
-            span.inline-block 今日上新
-            span.inline-block.red.mgl-16 {{prod.shop.pd_count_today}}
-        .flex-1
-            span.inline-block 拍卖
-            span.inline-block.light.mgl-8 敬请期待
+            .fz-30.red {{prod.shop.auction_count}}
+            .fz-22.gray.mgt-14 正在拍卖
     .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
         avatar(:user='prod.owner', :size='50')
         .flex
@@ -290,15 +282,6 @@
             .banner(:style="banner.style")
                 a(v-if="banner.title", href="/help/eco-system") {{banner.title}}
     .hr
-    template(v-if="alike.length")
-        .prod-alike.pdb
-            header.fz-26.gray.pdl 看了这件宝贝的玉友还看了
-            .scrollable.pdl
-                a.prod-card(v-for="p in alike", :href="p.href")
-                    .cover(v-bg.sm="p.cover")
-                    .fz-24.mgv.line-clamp {{p.title}}
-                    .fz-26.red {{p.price | price}}
-        .hr
     .prod-related(v-if="related.length")
         .tag-title.fz-26.gray.pdl-20 相关推荐
         .tags(v-if="prod.tags.length > 0")
@@ -307,75 +290,55 @@
             product-card(v-for="item in related", :item="item")
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
     .bg.placeholder
-    .float-box.flex.fixed.fz-30.bg-white(v-if="env.isApp")
-        .bdt.flex-1.flex
-            .flex.flex-1.red.contact-btn.bdr(@click="contact()")
-                icon.fz-30(name="chat")
-                .mgt-6 私信
-            .flex.flex-1.gray.collect-btn.bdr(:class="{'red': prod.is_faved}", @click='collect()')
-                icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
-                .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
-            .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
-                icon.fz-30(name="shop")
-                .mgt-6 店铺
-        template(v-if="prod.auction")
-            .auction.fz-26.buy-btn.bg-red.white(v-link="{name: 'auction', params: {id: prod.auction.id}}") 此商品正在拍卖
-        template(v-if="!prod.auction && isSelling")
-            .fz-26.add-btn.bg-yellow.white(@click="addToCart()") 加入购物车
-            .fz-26.buy-btn.bg-red.white(@click="buy()") 立即购买
-        template(v-if="!prod.auction && !isSelling")
-            .fz-26.add-btn.bg-gray.white 加入购物车
-            .fz-26.buy-btn.bg-gray.white 已售出
-    .float-box.flex.fixed.fz-30.bg-white(v-else)
-        .bdt.flex-1.flex
-            deep-link.has-icon.flex.flex-1.red.contact-btn.bdr
-                icon.fz-30(name="chat")
-                .mgt-6 私信
-            deep-link.has-icon.flex.flex-1.gray.collect-btn.bdr
-                icon.fz-30(:name="prod.is_faved ? 'star-solid' : 'star'")
-                .mgt-6 {{prod.is_faved ? '已收藏' : '收藏'}}
-            .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
-                icon.fz-30(name="shop")
-                .mgt-6 店铺
-        .auction.has-icon.buy-btn.bg-red.white.fz-30(v-if="prod.auction",
-            v-link="{name: 'auction', params: {id: prod.auction.id}}") 此商品正在拍卖
-        deep-link.has-icon.buy-btn.bg-red.white.fz-30(v-if="!prod.auction && isSelling") 立即购买
-        deep-link.has-icon.buy-btn.bg-gray.white.fz-30(v-if="!prod.auction && !isSelling") 已售出
-.product-view.offline(v-else)
-    img(:src="'mall/offline.png' | qn")
-    .mgt-28.gray.fz-30.center 商品已下架
+    .float-box.flex.fixed.fz-30.bg-white
+        .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
+            icon.fz-30(name="shop")
+            .mgt-6 店铺
+        .separator
+        .flex.flex-1.alarm-btn(:class="auction.reminded ? 'red' : 'gray'", @click="toggleAlarm")
+            icon.fz-32(:name="auction.reminded ? 'alarmed' : 'alarm'")
+            .mgt-6 {{ auction.reminded ? '已设置提醒' : '设置提醒' }}
+        .separator
+        .white.fz-30.center(:class="[auction.status === 'going' ? 'bg-red' : 'bg-gray', isEnd ? 'flex-3' : 'flex-2']", @click="bidPrice") {{ operationText }}
+    auction-bid-price(:show.sync="showBidPrice", :auction="auction")
 </template>
 <script>
 import shareable from 'shareable'
-import ProductCard from 'component/item/ProductCard.vue'
+import AuctionHeaderMenu from 'component/AuctionHeaderMenu.vue'
 import CustomSwiper from "component/CustomSwiper.vue";
+import AuctionBids from 'component/AuctionBids.vue'
+import ProductCard from 'component/item/ProductCard.vue'
+import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 export default {
-    name: 'product-view',
+    name: 'auction-view',
 
     mixins: [shareable],
 
     components: {
+        AuctionHeaderMenu,
         CustomSwiper,
-        ProductCard
+        AuctionBids,
+        ProductCard,
+        AuctionBidPrice
     },
 
     data() {
         return {
-            prod: {
-                owner: {},
-                shop: {
-                    coupons: []
+            auction: {
+                product: {
+                    owner: {},
+                    shop: {
+                        coupons: []
+                    },
+                    tags: [],
+                    banner: [],
+                    auction: {}
                 },
-                is_faved: false,
-                status: 'online',
-                tags: [],
-                banner: [],
-                auction: {}
+                reminded: false
             },
-            isSelf: false,
             coupon_label_count: 3,
             related: [],
-            alike: [],
+            showBidPrice: false,
             attrs: [
                 {k: 'category', l: '分类'},
                 {k: 'size', l: '尺寸', u: 'mm'},
@@ -411,85 +374,84 @@ export default {
                 }
             })
         },
-        isSold() {
-            return this.prod.sell_status === 'sold'
+        prod() {
+            return this.auction.product
         },
-        isSelling() {
-            return this.prod.sell_status==='selling'
+        statusText() {
+            switch (this.auction.status) {
+                case 'preview':
+                    return '预展中'
+                case 'going':
+                    return '拍卖中'
+                case 'fail':
+                case 'success':
+                    return '已结束'
+                default:
+                    return ''
+            }
+        },
+        currentTitle() {
+            switch (this.auction.status) {
+                case 'preview':
+                case 'going':
+                    return '当前价'
+                case 'fail':
+                case 'success':
+                    return '结拍价'
+                default:
+                    return ''
+            }
+        },
+        currentPrice() {
+            switch (this.auction.status) {
+                case 'preview':
+                    return '尚未开拍'
+                case 'going':
+                    return this.auction.current_price || 0
+                case 'fail':
+                    return '已流拍'
+                case 'success':
+                    return this.auction.current_price || 0
+                default:
+                    return ''
+            }
+        },
+        isEnd() {
+            return this.auction.status === 'success' || this.auction.status === 'fail'
+        },
+        operationText() {
+            switch (this.auction.status) {
+                case 'preview':
+                    return '拍卖尚未开始'
+                case 'going':
+                    return '出价'
+                case 'fail':
+                    return '已流拍'
+                case 'success':
+                    return '已结拍'
+                default:
+                    return ''
+            }
         }
     },
 
     ready() {
-        this.$fetch('dc/mlym?limit=10').then(resp => {
-            this.alike = resp.entries.map(e => {
-                if(this.env.isApp || !this.env.isMobile) {
-                    e.href = `/product/${e.id}`
-                } else if(this.hasUniversalLinkSupport) {
-                    e.href = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${e.id}`)
-                }
-                return e
-            })
-        })
-        this.$fetch(`dc/rd?biz_type=pd&obj_id=${this.$route.params.id}`).then(resp => {
-            this.related = resp.entries
+        this.$fetch(`mall/auctions/${this.$route.params.id}/rmd`).then(resp => {
+            this.related = resp.products
         })
     },
 
     route: {
         data({from, to, next}) {
-            return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
-                _.update(prod, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
-                this.setShareData(prod)
-                this.prod = prod
-                this.isSelf = _.get(this, 'self.id') == prod.owner.id
-            }, () => this.prod.status = '')
+            return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
+                _.update(auction.product, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
+                this.setShareData(auction.product)
+                this.auction = auction
+            })
         }
     },
 
     methods: {
-         buy() {
-            if(this.isSelf) {
-                this.action('toast', {success: 0, text: '您不能购买自己的商品'})
-            } else {
-                this.action('orderConfirm', {product: this.prod.id})
-            }
-         },
-
-         addToCart() {
-            this.$put('mall/cart', { product_id: this.prod.id }).then(resp => {
-                this.action('updateCartCount', { count: resp.cart_count })
-                this.action('toast', {
-                    success: '1',
-                    text: '已加入购物车'
-                })
-            })
-         },
-
-        contact() {
-            if(this.isSelf) {
-                this.action('toast', {success: 0, text: '您不能和自己聊天'})
-            } else {
-                this.action('chat', {id: this.prod.default_admin.id, name: this.prod.default_admin.nickname, product: this.prod.id})
-            }
-        },
-
-        collect(tab) {
-            // TODO api
-            const api = 'users/favs'
-            const data = {
-                doc_type: 'pd',
-                doc_id: this.prod.id
-            }
-            this[this.prod.is_faved ? '$put' : '$post'](api, data)
-            .then(() => {
-                this.prod.is_faved = !this.prod.is_faved
-                this.action('toast', {
-                    success: 1,
-                    text: this.prod.is_faved ? '恭喜，宝贝收藏成功!' : '取消宝贝收藏成功!'
-                })
-            })
-        },
-
         getCoupon() {
             this.action('couponList', {
                 shop: this.prod.shop.id
@@ -498,6 +460,30 @@ export default {
 
         gotoTagView(tag) {
             this.$router.go({ name: 'tag', params: { id: tag.id, name: tag.name } })
+        },
+
+        toggleAlarm() {
+            this[this.auction.reminded ? '$delete' : '$post'](`mall/auctions/myb/${this.$route.params.id}/remind`)
+                .then(() => {
+                    this.auction.reminded = !this.auction.reminded
+                    this.action('toast', {
+                        success: 1,
+                        text: this.auction.reminded ? '设置提醒成功' : '取消提醒成功'
+                    })
+                })
+        },
+
+        bidPrice() {
+            if (this.auction.status !== 'going') {
+                return
+            }
+            this.showBidPrice = true
+        }
+    },
+
+    events: {
+        bidDone() {
+            this.$broadcast('freshBids')
         }
     }
 }

@@ -8,6 +8,7 @@ bg($key)
     top 0
     width 100%
     height 88px
+    z-index 999
     .icon
         padding 0 12px
     img

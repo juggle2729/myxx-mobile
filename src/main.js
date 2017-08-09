@@ -1,9 +1,11 @@
 require('fastclick').attach(document.body)
 require('script-loader!./Umeng')
+require('swiper/dist/css/swiper.min.css')
 
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import config from './config'
 import routes from './route'
 import directive from './directive'
@@ -15,8 +17,9 @@ import store from './store'
 
 // Vue configurations
 Vue.config.debug = process.env.NODE_ENV !== 'production'
-Vue.use(Resource)
 Vue.use(Router)
+Vue.use(Resource)
+Vue.use(VueAwesomeSwiper)
 Vue.use(filter)
 Vue.use(directive)
 Vue.mixin(mixin)

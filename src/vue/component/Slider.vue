@@ -52,7 +52,7 @@ export default {
             default: 0
         },
         height: {
-          default: '100%' // 默认高度
+            default: '100%' // 默认高度
         },
         close: {
             type: Function,

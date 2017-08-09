@@ -1,18 +1,25 @@
 <style lang="stylus">
 .product-card
-    display: inline-block
-    width: 47%
+    display inline-block
+    width 47%
     .media
-        height: 345px
-        position: relative
+        height 345px
+        position relative
         .mark
-            position: absolute
-            left: 0
-            top: 0
-            display: inline-block
-            line-height: 44px
-            padding: 0 28px
-            background-color: rgba(159, 42, 240, .8)
+            position absolute
+            left 0
+            top 0
+            display inline-block
+            line-height 44px
+            padding 0 28px
+            background-color rgba(159, 42, 240, .8)
+        .auction-flag
+            left 8px
+            top 8px
+            width 108px
+            height 40px
+            background url('//o0x80w5li.qnssl.com/auction/auction-flag.png') no-repeat
+            background-size contain
     .btn
         border-radius: 4px
     .flex
@@ -31,6 +38,7 @@
 <template lang="pug">
 a.product-card.bg-white.bd-light(:href="href")
     .media(v-bg='item.first_picture')
+        .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
         .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}
         .flex.mgt-12.fz-22.light.mgb-10(v-if="btn")

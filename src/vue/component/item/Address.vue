@@ -9,10 +9,6 @@ bg($icon, $size)
         padding 36px 32px
     .operation
         height 86px
-    .setting
-        bg(check, 30px)
-        &.default
-            background-image url($base + 'checked.png')
     .delete
         margin-left 72px
     .edit
@@ -28,7 +24,9 @@ bg($icon, $size)
             .fz-30 {{ item.receiver_phone }}
         .fz-26.gray-8f.mgt-28 {{ item.receiver_address_flat }}
     .operation.flex.pdh-32
-        .setting.flex.pdl-50.fz-26(:class="{ default: item.is_default }", @click="setDefault") {{ item.is_default ? '默认地址' : '设为默认' }}
+        .flex.fz-26
+            icon(:name="item.is_default ? 'checked' : 'uncheck'", @click="setDefault")
+            .address-text.mgl-20 {{ item.is_default ? '默认地址': '设为默认' }}
         .flex-1
         .edit.pdl-42.fz-26(@click="edit") 编辑
         .delete.pdl-42.fz-26(@click="del") 删除

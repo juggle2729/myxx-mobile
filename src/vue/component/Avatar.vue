@@ -1,8 +1,8 @@
 <style lang="stylus">
 for $size in 240 222 180 120 108 90 80 68 50 36
     .avatar[size={"'"+$size+"'"}]
-        width: $size px
-        height: @width
+        width $size px
+        height @width
 </style>
 <template  lang="pug">
 .avatar.round(:size="size", v-bg.sm="user.photo || 'app/avatar.png'", @click.stop="viewProfile")
