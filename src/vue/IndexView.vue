@@ -44,10 +44,10 @@ export default {
                     href: '/collection/1'
                 }, {
                     label: '图文详情',
-                    href: '/post/1'
+                    href: '/post/3829'
                 }, {
                     label: '问答详情',
-                    href: '/question/211'
+                    href: '/question/6048'
                 }, {
                     label: '求购竞标列表',
                     href: '/purchases'
@@ -60,9 +60,6 @@ export default {
                 }, {
                     label: '关于美玉秀秀',
                     href: '/about'
-                }, {
-                    label: '问题更新',
-                    href: '/question/6048/append'
                 }
             ]
         }
