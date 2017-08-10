@@ -1,5 +1,6 @@
 <style lang="stylus">
 .about-view
+    padding-bottom 60px
     .imgs
         padding-top 120px
         > img
@@ -11,22 +12,22 @@
             p:nth-child(3)
                 margin-top 72px
     .help
-        margin: 60px 32px
+        margin-top 60px
         .icon-enter
-            height: 22px
-            width: 22px
+            height 22px
+            width 22px
 </style>
 <template  lang="pug">
 .about-view.bg-light-gray
     .imgs.center
         img(:src="'profile/logo.png' | qn")
-        p.fz-26.gray.mgt-36 v{{version}}
+        p.fz-26.gray.mgt-36 V{{version}}
         .text
             p.fz-40 最大的和田玉爱好者平台
             p.mgt-20.fz-30 玩玉最专业 买玉最放心
             p.fz-30 客服电话：
                 a.red(href="tel:4000587266") 400-0587-266
-    .help.bg-white
+    .help.bg-white.mgl-32.mgr-32
         .line-height-100.fz-30.bold.mgl-32.pdr-32.gray 帮助中心
         .line-height-100.flex.fz-26.bdt.mgl-32.pdr-32(v-link="{path: '/help/mall'}")
             .flex-1 商城交易常见问题
