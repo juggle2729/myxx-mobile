@@ -654,6 +654,16 @@ export default {
         }
     },
 
+    '/auction/order': {
+        name: 'auction-order',
+        title: '订单',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionOrderView.vue'))
+            }, 'auction')
+        }
+    },
+
     '/addresses': {
         name: 'addresses',
         title: '收货地址管理',
