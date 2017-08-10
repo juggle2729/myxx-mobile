@@ -477,12 +477,25 @@ export default {
             if (this.auction.status !== 'going') {
                 return
             }
-            this.showBidPrice = true
+            return this.$fetch(`balance/latest`)
+                .then(({ aution_margin_buyer }) => {
+                    if (aution_margin_buyer <= 0) {
+                        this.$router.go({
+                            name: 'auction-margin',
+                            query: {
+                                id: this.auction.id
+                            }
+                        })
+                    } else {
+                        this.showBidPrice = true
+                    }
+                })
         }
     },
 
     events: {
-        bidDone() {
+        bidDone(latestPrice) {
+            this.auction.current_price = latestPrice
             this.$broadcast('freshBids')
         }
     }

@@ -90,11 +90,12 @@ export default {
         },
 
         confirmBid() {
+            const bid_price = this.bidPrice || this.initPrice
             this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
-                bid_price: this.bidPrice
+                bid_price
             }).then(() => {
                 this.show = false
-                this.$dispatch('bidDone')
+                this.$dispatch('bidDone', bid_price)
             })
         },
 

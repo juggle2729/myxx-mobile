@@ -74,18 +74,6 @@ export default {
         }
     },
 
-    ready() {
-        if (!this.self) {
-            this.action('user').then(user => {
-                if (!user) {
-                    this.action('login')
-                    return
-                }
-                this.$set('self', user)
-            })
-        }
-    },
-
     methods: {
         menuClick(menu) {
             if (menu.action) {

@@ -67,7 +67,12 @@ export default {
         },
         onConfirm() {
             if (this.isPaid && this.paySuccess) {
-                this.$router.go('/auction/mine')
+                this.$router.go({
+                    name: 'auction',
+                    params: {
+                        id: this.$route.query.id
+                    }
+                })
             } else {
                 this.$router.go({name: 'pay', query: { t: this.config.payBizType.auction.key }})
             }

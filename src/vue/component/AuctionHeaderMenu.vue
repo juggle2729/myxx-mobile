@@ -23,7 +23,7 @@ bg($key)
 .auction-header-menu.bg-white.flex.pdh-20
     .item(v-for="item in items", :class="{'flex-1': lodash.isString(item)}")
         .title.fz-36.black-24.center(v-if="lodash.isString(item)") {{ item }}
-        .icon(v-if="lodash.isObject(item)", v-link="{path: item.path, exact: true}")
+        .icon(v-if="lodash.isObject(item)", @click="linkToMenu(item)")
             img(:src="`//o0x80w5li.qnssl.com/auction/${item.key}-actived.png`")
 </template>
 <script>
@@ -36,7 +36,8 @@ export default {
                 {
                     key: 'home',
                     name: '首页',
-                    path: '/auction/home'
+                    path: '/auction/home',
+                    login: false
                 },
                 {
                     key: 'compete',
@@ -55,6 +56,22 @@ export default {
                     path: '/auction/mine'
                 }
             ]
+        }
+    },
+
+    methods: {
+        linkToMenu(item) {
+            if (item.login === false || this.self) {
+                this.$router.go(item.path)
+            } else {
+                this.action('user').then(user => {
+                    if (!user) {
+                        this.action('login')
+                        return
+                    }
+                    this.$set('self', user)
+                })
+            }
         }
     }
 }
