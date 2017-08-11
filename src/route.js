@@ -375,6 +375,16 @@ export default {
         }
     },
 
+    '/order/:id/reject': {
+        name: 'order-reject',
+        title: '商家拒绝退货',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderRejectView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/pay-offline/:id': {
         name: 'pay-offline',
         title: '大额支付',

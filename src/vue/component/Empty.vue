@@ -1,6 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .empty-component
+    position absolute
     width 100%
     height 100%
     &.empty-title

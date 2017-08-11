@@ -110,6 +110,16 @@ export default {
             return Q.resolve((() => {
                 if (this.bizType === this.config.payBizType.auction.key) {
                     return this.config.payBizType.auction.amount
+                } else if (this.bizType === this.config.payBizType.order) {
+                    return this.$fetch(`mall/order/${this.$route.query.id}`).then(order => {
+                        let cashAmount = 0
+                        order.pays.forEach(pay => {
+                            if (pay.pay_type === 'cs') {
+                                cashAmount += pay.amount
+                            }
+                        })
+                        return cashAmount
+                    })
                 }
                 return 0
             })()).then(waitPayAmount => {
