@@ -94,7 +94,6 @@ router.afterEach(({to, from}) => {
 
 router.alias({
     '/order/confirm/:product': '/update',
-    '/order/:id': '/update',
     '/order/:id/received': '/update',
     '/order/:id/sent': '/update',
     '/evaluations/:tab': '/update',

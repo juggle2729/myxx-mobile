@@ -1,9 +1,9 @@
 <style lang="stylus">
-.auction-order-view
+.order-list-view
     padding-bottom 100px
 </style>
 <template lang="pug">
-.auction-order-view
+.order-list-view.bg
     tabs(:tabs="views", :current="'all'")
     template(v-for="(index, item) in items")
         .hr
@@ -22,7 +22,7 @@ import OrderItem from 'component/item/Order.vue'
 import AuctionFooterMenu from 'component/AuctionFooterMenu.vue'
 import AuctionDialog from 'component/AuctionDialog.vue'
 export default {
-    name: 'auction-order-view',
+    name: 'order-list-view',
     mixins: [ paging ],
     components: [ tabs, OrderItem, AuctionFooterMenu, AuctionDialog ],
 
@@ -41,14 +41,11 @@ export default {
                 params: {
                     is_seller: false,
                     search_key: '',
-                    status: []
+                    status: this.status
                 }
             }
-        }
-    },
-
-    watch: {
-        $route() {
+        },
+        status() {
             const status = []
             switch (this.$route.query.tab) {
                 case 'pay':
@@ -64,7 +61,13 @@ export default {
                     status.push(this.config.orderStatus.refund_return)
                     break
             }
-            this.paging.params.status = status
+            return status
+        }
+    },
+
+    watch: {
+        $route() {
+            this.paging.params.status = this.status
             this.fetch(true)
         }
     },

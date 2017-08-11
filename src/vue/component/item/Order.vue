@@ -23,7 +23,7 @@
             margin-left 14px
 </style>
 <template lang="pug">
-.order-item.bg-white.pdl-32.pdt-32.fz-26
+.order-item.bg-white.pdl-32.pdt-32.fz-26(v-link="{name: 'order', params: {id: item.order_no}}")
     .flex.pdr-32
         .light {{ item.update_at | date 'yyyy-mm-dd HH:MM:ss' }}
         .flex-1
@@ -137,11 +137,21 @@ export default {
                         }
                     })
                     break
-                case 'reason':
+                case 'refund-reason':
                     this.$router.go({
                         name: 'order-reject',
                         params: {
-                            id: this.item.order_no
+                            id: this.item.order_no,
+                            type: 'refund'
+                        }
+                    })
+                    break
+                case 'back-reason':
+                    this.$router.go({
+                        name: 'order-reject',
+                        params: {
+                            id: this.item.order_no,
+                            type: 'back'
                         }
                     })
                     break
@@ -243,7 +253,7 @@ export default {
                     return [ this.applyRefundBtn ]
                     break
                 case this.orderStatus.refund_rejected:
-                    return [ this.reasonBtn, this.applyRefundBtn, this.cancelRefundBtn ]
+                    return [ this.reasonRefundBtn, this.applyRefundBtn, this.cancelRefundBtn ]
                     break
                 case this.orderStatus.wait_goods:
                     return [ this.logisticsBtn, this.applyBackBtn, this.confirmReceiveBtn ]
@@ -252,7 +262,7 @@ export default {
                     return [ this.logisticsBtn, this.applyBackBtn ]
                     break
                 case this.orderStatus.back_rejected:
-                    return [ this.reasonBtn, this.applyBackBtn, this.cancelBackBtn ]
+                    return [ this.reasonBackBtn, this.applyBackBtn, this.cancelBackBtn ]
                     break
                 case this.orderStatus.back_accepted: // 缺少一个确认发货
                     return [ this.cancelBackBtn ]
@@ -308,8 +318,12 @@ export default {
             return { key: 'cancel_back', name: '取消退货' }
         },
 
-        reasonBtn() {
-            return { key: 'reason', name: '查看原因' }
+        reasonRefundBtn() {
+            return { key: 'refund-reason', name: '查看原因' }
+        },
+
+        reasonBackBtn() {
+            return { key: 'back-reason', name: '查看原因' }
         },
 
         payBtn() {

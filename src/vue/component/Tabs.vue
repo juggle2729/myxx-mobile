@@ -7,7 +7,7 @@
         border-bottom 4px solid #242424
 </style>
 <template lang="pug">
-ul.tabs.flex.fz-30.bdb.pdh-20
+ul.tabs.flex.fz-30.bdb.pdh-20.bg-white
     li.flex-1.center(v-for="label in tabs", :class="$key===current ? 'black-24': 'gray-99'", @click="current=$key") {{label}}
 </template>
 <script>

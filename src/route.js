@@ -355,6 +355,26 @@ export default {
         }
     },
 
+    '/order-list': {
+        name: 'order-list',
+        title: '订单',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderListView.vue'))
+            }, 'mall')
+        }
+    },
+
+    '/order/:id': {
+        name: 'order',
+        title: '订单详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/order/:id/price': {
         name: 'order-price',
         title: '修改订单价格',
@@ -375,7 +395,7 @@ export default {
         }
     },
 
-    '/order/:id/reject': {
+    '/order/:id/:type/reject': {
         name: 'order-reject',
         title: '商家拒绝退货',
         component(resolve) {
@@ -660,16 +680,6 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionBidsView.vue'))
-            }, 'auction')
-        }
-    },
-
-    '/auction/order': {
-        name: 'auction-order',
-        title: '订单',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AuctionOrderView.vue'))
             }, 'auction')
         }
     },

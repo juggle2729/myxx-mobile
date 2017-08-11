@@ -62,7 +62,7 @@ export default {
                 {
                     key: 'order',
                     name: '订单',
-                    path: '/auction/order'
+                    path: '/order-list'
                 },
                 {
                     key: 'mine',

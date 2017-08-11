@@ -13,14 +13,20 @@
     .info
         flex-direction column
         align-items stretch
+    &.detail
+        .prod-img
+            width 108px
+            height @width
+        .name
+            font-size 26px
 </style>
 <template lang="pug">
-.order-item-item.bg-white.flex.pdr-32(:class="!index ? 'pdb-8' : 'pdt-8'")
+.order-item-item.bg-white.flex.pdr-32(:class="[!index ? 'pdb-8' : 'pdt-8', page]")
     .prod-img.relative(v-bg="item.cover")
         .auction-flag.absolute(v-if='item.auction')
     .flex.mgl-20.info
-        .fz-30.black.name {{ item.title }}
-        .mgt-24.red.fz-26 {{ item.trans_amount | price }}
+        .fz-30.black.name {{ item.title | truncate 15 }}
+        .mgt-24.gray.fz-26 {{ item.trans_amount | price }}
 </template>
 <script>
 export default {
@@ -28,7 +34,8 @@ export default {
 
     props: {
         item: Object,
-        index: Number
+        index: Number,
+        page: String
     }
 }
 </script>

@@ -1,6 +1,5 @@
 <style lang="stylus">
 .addresses-view
-    height 100%
     padding-top 88px
     .add-btn
         position fixed
