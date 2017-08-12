@@ -21,14 +21,70 @@
 </style>
 <template lang="pug">
 .order-operation.flex.pdr-32(v-if="btns.length")
-    .btn.pdh-28.fz-26(v-for="btn in btns", :class="btn.class", @click.stop="onBtnClick(btn.key)") {{ btn.name }}
+    .btn.pdh-28.fz-26(v-for="btn in btns", :class="btn.class", @click.stop="onBtnClick('pay')") {{ btn.name }}
 </template>
 <script>
 export default {
     name: 'order-operation',
 
+    data() {
+        return {
+            logisticsBtn: {
+                key: 'logistics',
+                name: '跟踪物流'
+            },
+            deleteOrderBtn: {
+                key: 'delete_order',
+                name: '删除订单'
+            },
+            applyRefundBtn: {
+                key: 'apply_refund',
+                name: '申请退款'
+            },
+            cancelRefundBtn: {
+                key: 'cancel_refund',
+                name: '取消退款'
+            },
+            cancelOrderBtn: {
+                key: 'cancel_order',
+                name: '取消订单'
+            },
+            applyBackBtn: {
+                key: 'apply_back',
+                name: '申请退货'
+            },
+            cancelBackBtn: {
+                key: 'cancel_back',
+                name: '取消退货'
+            },
+            reasonRefundBtn: {
+                key: 'refund-reason',
+                name: '查看原因'
+            },
+            reasonBackBtn: {
+                key: 'back-reason',
+                name: '查看原因'
+            },
+            payBtn: {
+                key: 'pay',
+                name: '付款',
+                class: 'red'
+            },
+            payDisabledBtn: {
+                key: 'pay_disabled',
+                name: '付款',
+                class: 'gray'
+            },
+            confirmReceiveBtn: {
+                key: 'confirm_receive',
+                name: '确认签收',
+                class: 'red'
+            }
+        }
+    },
+
     props: {
-        item: {
+        order: {
             type: Object,
             required: true
         },
@@ -39,16 +95,64 @@ export default {
     },
 
     methods: {
+        goPay() {
+            this.$router.go({
+                name: 'pay',
+                query: {
+                    id: this.order.order_no,
+                    t: 'order'
+                }
+            })
+        },
+        goSelectAddress() {
+            this.$router.go({
+                name: 'addresses',
+                query: {
+                    type: 'sd',
+                    select: true
+                }
+            })
+        },
         onBtnClick(btnKey) {
             switch (btnKey) {
                 case 'pay':
-                    this.$router.go({
-                        name: 'pay',
-                        query: {
-                            id: this.item.order_no,
-                            t: 'order'
+                    const addressInfo = this.addressInfo
+                    if (this.isAuctionOrder) {
+                        if (!addressInfo) {
+                            this.action('confirm', {
+                                text: '请先补充收货地址',
+                                labels: ['取消', '补充地址']
+                            }).then(selection => {
+                                if (+selection) {
+                                    this.goSelectAddress()
+                                }
+                            })
+                        } else {
+                            const cacheAddress = this.$store.get('selectedAddress')
+                            const addressArray = []
+                            if (cacheAddress) {
+                                addressArray.push(cacheAddress.name, cacheAddress.phone, cacheAddress.address)
+                            } else {
+                                addressArray.push(addressInfo.name, addressInfo.phone, addressInfo.address)
+                            }
+                            this.action('confirm', {
+                                title: '请确认收货地址',
+                                text: addressArray.join('<br/>'),
+                                labels: ['修改地址', '使用该地址']
+                            }).then(selection => {
+                                if (+selection) {
+                                    if (!cacheAddress) {
+                                        this.$store.set('selectedAddress', addressInfo)
+                                    }
+                                    this.goPay()
+                                } else {
+                                    this.goSelectAddress()
+                                }
+                            })
                         }
-                    })
+                    } else {
+                        this.goPay()
+                    }
                     break
                 case 'cancel_order':
                     this.action('confirm', {
@@ -56,9 +160,9 @@ export default {
                         labels: ['取消', '确认']
                     }).then(selection => {
                         if (+selection) {
-                            this.$put(`mall/order/${this.item.order_no}/cancel_unpaid`).then(newOrder => {
+                            this.$put(`mall/order/${this.order.order_no}/cancel_unpaid`).then(newOrder => {
                                 this.action('toast', { success: 1, text: '订单已取消' })
-                                this.item = newOrder
+                                this.order = newOrder
                             })
                         }
                     })
@@ -69,7 +173,7 @@ export default {
                         labels: ['取消', '确认']
                     }).then(selection => {
                         if (+selection) {
-                            this.$put(`mall/order/${this.item.order_no}/delete_order`).then(() => {
+                            this.$put(`mall/order/${this.order.order_no}/delete_order`).then(() => {
                                 this.action('toast', { success: 1, text: '删除成功' })
                                 this.$dispatch('deleteOrder', this.index)
                             })
@@ -80,7 +184,7 @@ export default {
                     this.$router.go({
                         name: 'trace',
                         params: {
-                            id: this.item.order_no
+                            id: this.order.order_no
                         }
                     })
                     break
@@ -94,9 +198,9 @@ export default {
                         labels: ['取消', '确认']
                     }).then(selection => {
                         if (+selection) {
-                            this.$put(`mall/order/${this.item.order_no}/cancel_refund`).then(newOrder => {
+                            this.$put(`mall/order/${this.order.order_no}/cancel_refund`).then(newOrder => {
                                 this.action('toast', { success: 1, text: '已取消退款' })
-                                this.item = newOrder
+                                this.order = newOrder
                             })
                         }
                     })
@@ -107,7 +211,7 @@ export default {
                         labels: ['取消', '确认']
                     }).then(selection => {
                         if (+selection) {
-                            this.$put(`mall/order/${this.item.order_no}/receive_goods`).then(newOrder => this.item = newOrder)
+                            this.$put(`mall/order/${this.order.order_no}/receive_goods`).then(newOrder => this.order = newOrder)
                         }
                     })
                     break
@@ -117,9 +221,9 @@ export default {
                         labels: ['取消', '确认']
                     }).then(selection => {
                         if (+selection) {
-                            this.$put(`mall/order/${this.item.order_no}/cancel_return`).then(newOrder => {
+                            this.$put(`mall/order/${this.order.order_no}/cancel_return`).then(newOrder => {
                                 this.action('toast', { success: 1, text: '已取消退货' })
-                                this.item = newOrder
+                                this.order = newOrder
                             })
                         }
                     })
@@ -128,7 +232,7 @@ export default {
                     this.$router.go({
                         name: 'order-reject',
                         params: {
-                            id: this.item.order_no,
+                            id: this.order.order_no,
                             type: 'refund'
                         }
                     })
@@ -137,7 +241,7 @@ export default {
                     this.$router.go({
                         name: 'order-reject',
                         params: {
-                            id: this.item.order_no,
+                            id: this.order.order_no,
                             type: 'back'
                         }
                     })
@@ -150,8 +254,44 @@ export default {
         orderStatus() {
             return this.config.orderStatus
         },
+
+        isAuctionOrder() {
+            return this.order.order_items.some(orderItem => !!orderItem.auction)
+        },
+
+        isReturn() { // 是否是退货
+            switch (this.order.status) {
+                case this.config.orderStatus.back_goods:
+                case this.config.orderStatus.back_received:
+                case this.config.orderStatus.back_approved:
+                case this.config.orderStatus.back_proposed:
+                case this.config.orderStatus.back_completed:
+                case this.config.orderStatus.back_timeout:
+                case this.config.orderStatus.back_failed:
+                case this.config.orderStatus.back_accepted:
+                    return true
+            }
+            return false;
+        },
+
+        addressInfo() {
+            if (this.isReturn && this.order.return_receiver_name) {
+                return {
+                    name: this.order.return_receiver_name,
+                    phone: this.order.return_receiver_phone,
+                    address:  this.order.return_receiver_address
+                }
+            } else if (!this.isReturn && this.order.receiver_name) {
+                return {
+                    name: this.order.receiver_name,
+                    phone: this.order.receiver_phone,
+                    address:  this.order.receiver_address
+                }
+            }
+        },
+
         btns() {
-            switch (this.item.status) {
+            switch (this.order.status) {
                 case this.orderStatus.refund_approved:
                 case this.orderStatus.refund_proposed:
                     break
@@ -209,54 +349,6 @@ export default {
                     break
             }
             return []
-        },
-
-        logisticsBtn() {
-            return { key: 'logistics', name: '跟踪物流' }
-        },
-
-        deleteOrderBtn() {
-            return { key: 'delete_order', name: '删除订单' }
-        },
-
-        applyRefundBtn() {
-            return { key: 'apply_refund', name: '申请退款' }
-        },
-
-        cancelRefundBtn() {
-            return { key: 'cancel_refund', name: '取消退款' }
-        },
-
-        cancelOrderBtn() {
-            return { key: 'cancel_order', name: '取消订单' }
-        },
-
-        applyBackBtn() {
-            return { key: 'apply_back', name: '申请退货' }
-        },
-
-        cancelBackBtn() {
-            return { key: 'cancel_back', name: '取消退货' }
-        },
-
-        reasonRefundBtn() {
-            return { key: 'refund-reason', name: '查看原因' }
-        },
-
-        reasonBackBtn() {
-            return { key: 'back-reason', name: '查看原因' }
-        },
-
-        payBtn() {
-            return { key: 'pay', name: '付款', class: 'red' }
-        },
-
-        payDisabledBtn() {
-            return { key: 'pay_disabled', name: '付款', class: 'gray' }
-        },
-
-        confirmReceiveBtn() {
-            return { key: 'confirm_receive', name: '确认签收', class: 'red' }
         }
     }
 }

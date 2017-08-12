@@ -14,10 +14,12 @@
     .container
         width: 620px
         margin: 0 auto
-        padding: 40px 26px 0
+        padding: 40px 32px 0
         border-radius: 8px
         font-size: 30px
         transform: translate3d(0, 400px, 0)
+    .content
+        line-height 1.5
     .btns
         margin-top: 40px
         > div
@@ -30,7 +32,8 @@
 <template  lang="pug">
 .confirm-action
     .container.bg-white
-        .center {{params.text}}
+        .center.bold.mgb-16(v-if="params.title") {{ params.title }}
+        .content(:class="!params.title ? 'center' : ''") {{{ params.text }}}
         .btns.bdt.flex
             .flex-1(@click="close('0')") {{params.labels ? params.labels[0] : '取消'}}
             .flex-1.bdl.red(v-if="params.labels[1]", @click="close('1')") {{params.labels[1]}}

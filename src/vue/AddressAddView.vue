@@ -38,6 +38,11 @@ import AuctionHeaderMenu from 'component/AuctionHeaderMenu.vue'
 export default {
     name: 'address-add-view',
     components: [ AuctionHeaderMenu ],
+
+    ready() {
+        this.action('updateTitle', { text: this.addressType === 'sd' ? '收货地址管理': '退货地址管理' })
+    },
+
     data() {
         return {
             address: {
@@ -60,12 +65,17 @@ export default {
             return +this.$route.params.id
         },
 
+        addressType() {
+            return this.$route.params.type
+        },
+
         addInfo() {
             return {
                 receiver_name: this.address.name,
                 receiver_phone: this.address.phone,
                 receiver_area_id: this.address.areaId,
-                receiver_address: this.address.address
+                receiver_address: this.address.address,
+                address_type: this.addressType
             }
         }
     },

@@ -18,7 +18,7 @@
         template(v-else)
             .red(:class="isNegotiable ? 'fz-22' : 'fz-30'") {{ priceText }}
         .black.fz-22.mgl-4(v-if="discountAmount > 0") (已优惠{{ discountAmount | price }})
-    order-operation(:item.sync="item", :index="index")
+    order-operation(:order.sync="item", :index="index")
 </template>
 <script>
 import OrderItemItem from './OrderItem.vue'

@@ -40,6 +40,11 @@ export default {
                     data.userId = entry.owner.id
                     data.productId = entry.id
                     break
+                case 'auction':
+                    data.title = `【限量】${entry.title}`
+                    data.desc = '玉友发布新的拍品了，快来参与竞拍夺宝！'
+                    data.icon = entry.pictures[0]
+                    break
                 case 'master':
                     data.title = entry.interview.title
                     data.desc = entry.baseData.name + ' ' + _.get(entry, '.baseData.titles.0.name', '')

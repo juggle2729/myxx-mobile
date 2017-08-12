@@ -63,6 +63,19 @@ export default {
         }
     },
 
+    beforeDestroy() {
+        this.$store.remove('selectedAddress')
+    },
+
+    computed: {
+        isAuction() {
+            return this.bizType === this.config.payBizType.auction.key
+        },
+        isOrder() {
+            return this.bizType === this.config.payBizType.order
+        }
+    },
+
     methods: {
         onSelect(payType) {
             if (!this.validBalance) {
@@ -72,10 +85,23 @@ export default {
         },
 
         pay() {
-            this.$post(`mall/auctions/myb/pay_margin`, {
-                channel_type: this.payType,
-                amount: this.waitPayAmount
-            }).then(this._payCallback.bind(this, true), this._payCallback.bind(this, false))
+            Q.resolve((() => {
+                if (this.isAuction) {
+                    return this.$post(`mall/auctions/myb/pay_margin`, {
+                        channel_type: this.payType,
+                        amount: this.waitPayAmount
+                    })
+                } else if (this.isOrder) {
+                    const addressInfo = this.$store.get('selectedAddress')
+                    return this.$put(`mall/order/${this.$route.query.id}/pay_order`, {
+                        channel_type: this.payType,
+                        receiver_name: addressInfo ? addressInfo.name: '',
+                        receiver_phone: addressInfo ? addressInfo.phone: '',
+                        receiver_address: addressInfo ? addressInfo.address: ''
+                    })
+                }
+                return Q.reject()
+            })()).then(this._payCallback.bind(this, true), this._payCallback.bind(this, false))
         },
 
         _payCallback(isSuccess, data) {
@@ -108,9 +134,9 @@ export default {
         data() {
             this.bizType = this.$route.query.t || this.config.payBizType.auction.key
             return Q.resolve((() => {
-                if (this.bizType === this.config.payBizType.auction.key) {
+                if (this.isAuction) {
                     return this.config.payBizType.auction.amount
-                } else if (this.bizType === this.config.payBizType.order) {
+                } else if (this.isOrder) {
                     return this.$fetch(`mall/order/${this.$route.query.id}`).then(order => {
                         let cashAmount = 0
                         order.pays.forEach(pay => {

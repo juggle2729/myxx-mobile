@@ -694,7 +694,7 @@ export default {
         }
     },
 
-    '/address/:id': {
+    '/address/:id/:type': {
         name: 'address-add',
         title: '收货地址管理',
         component(resolve) {

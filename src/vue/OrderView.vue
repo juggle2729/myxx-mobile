@@ -101,7 +101,7 @@ icon($name)
         template(v-else)
             .fz-26.red.amount 实付款: {{ amount.cashAmount | price }}
         .fz-26.pd-22.orange.desc.note(v-if="order.buyer_note") 订单备注：{{ order.buyer_note }}
-    order-operation(:item.sync="order", :index="0")
+    order-operation(:order.sync="order", :index="0")
     .bg.pdv-28.fz-26.gray
         .desc 订单编号：{{ order.order_no }}
         .desc.mgt-18 下单时间：{{ order.create_at | date 'yyyy-mm-dd HH:MM:ss' }}
@@ -270,19 +270,18 @@ export default {
         copyAddress() {
             const copyTarget = []
             if (this.isReturn) {
-                copyTarget.push(this.order.return_receiver_name, '\n', this.order.return_receiver_phone, '\n',
-                    this.order.return_receiver_address)
+                copyTarget.push(this.order.return_receiver_name, this.order.return_receiver_phone, this.order.return_receiver_address)
             } else {
-                copyTarget.push(this.order.receiver_name, '\n', this.order.receiver_phone, '\n', this.order.receiver_address)
+                copyTarget.push(this.order.receiver_name, this.order.receiver_phone, this.order.receiver_address)
             }
 
             if (window.clipboardData && window.clipboardData.setData) {
                 // IE specific code path to prevent textarea being shown while dialog is visible.
-                return clipboardData.setData("Text", copyTarget.join(''))
+                return clipboardData.setData("Text", copyTarget.join('\n'))
 
             } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
                 const textarea = document.createElement("textarea")
-                textarea.textContent = copyTarget.join('')
+                textarea.textContent = copyTarget.join('\n')
                 textarea.style.position = "fixed"  // Prevent scrolling to bottom of page in MS Edge.
                 document.body.appendChild(textarea)
                 textarea.select()
