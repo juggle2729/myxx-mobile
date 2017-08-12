@@ -42,11 +42,6 @@ export default {
 
     methods: {
         del() {
-            if (this.item.is_default) {
-                this.action('toast', {success: 0, text: '不能删除默认地址'})
-                return
-            }
-
             this.action('confirm', {
                 text: '确定删除此地址吗？',
                 labels: ['取消', '删除']
