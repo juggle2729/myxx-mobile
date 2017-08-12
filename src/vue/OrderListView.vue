@@ -10,7 +10,7 @@
         order-item(:item.sync="item", :index="index")
     empty(v-if="items.isEmpty")
     auction-footer-menu
-    auction-dialog(:show.sync="showRefundOrBackHint")
+    download-dialog(:show.sync="showRefundOrBackHint")
         .fz-36.center 退款退货
         p.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
         p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
@@ -20,11 +20,11 @@ import tabs from 'component/Tabs.vue'
 import paging from 'paging'
 import OrderItem from 'component/item/Order.vue'
 import AuctionFooterMenu from 'component/AuctionFooterMenu.vue'
-import AuctionDialog from 'component/AuctionDialog.vue'
+import DownloadDialog from 'component/DownloadDialog.vue'
 export default {
     name: 'order-list-view',
     mixins: [ paging ],
-    components: [ tabs, OrderItem, AuctionFooterMenu, AuctionDialog ],
+    components: [ tabs, OrderItem, AuctionFooterMenu, DownloadDialog ],
 
     data() {
         return {
@@ -45,6 +45,7 @@ export default {
                 }
             }
         },
+
         status() {
             const status = []
             switch (this.$route.query.tab) {

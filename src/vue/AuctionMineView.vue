@@ -28,7 +28,7 @@
         .fz-30.mgl-20 {{ item.name }}
         icon.fz-22.absolute.gray-99(name="enter")
     auction-footer-menu
-    auction-dialog(:show.sync="showContact")
+    download-dialog(:show.sync="showContact")
         .fz-36.center 联系客服
         p.mgt-40 进入美玉秀秀APP，体验最贴心的客服服务：
         p 1. 订单跟踪处理
@@ -37,14 +37,10 @@
 </template>
 <script>
 import AuctionFooterMenu from 'component/AuctionFooterMenu.vue'
-import AuctionDialog from 'component/AuctionDialog.vue'
+import DownloadDialog from 'component/DownloadDialog.vue'
 export default {
     name: 'auction-mine-view',
-
-    components: {
-        AuctionFooterMenu,
-        AuctionDialog
-    },
+    components: { AuctionFooterMenu, DownloadDialog },
 
     data() {
         return {
@@ -82,6 +78,7 @@ export default {
                 this.$router.go(menu.path)
             }
         },
+
         contactUs() {
             this.showContact = true
         }

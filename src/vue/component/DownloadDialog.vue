@@ -1,6 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
-.auction-dialog
+.download-dialog
     position fixed
     width 100%
     top 0
@@ -28,7 +28,7 @@
         line-height 120px
 </style>
 <template lang="pug">
-.auction-dialog(v-if="show")
+.download-dialog(v-if="show")
     .container.bg-white.black-24
         .close.absolute(@click="close")
         .content
@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-    name: 'auction-dialog',
+    name: 'download-dialog',
 
     props: {
         show: {
@@ -50,6 +50,7 @@ export default {
         close() {
             this.show = false
         },
+
         download() {
             window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
         }

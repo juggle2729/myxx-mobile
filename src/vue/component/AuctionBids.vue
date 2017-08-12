@@ -61,6 +61,7 @@ export default {
                 }
             }
         },
+
         showMore() {
             return this.limit && this.items.total > this.limit
         }

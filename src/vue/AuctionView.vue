@@ -311,16 +311,8 @@ import ProductCard from 'component/item/ProductCard.vue'
 import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 export default {
     name: 'auction-view',
-
     mixins: [shareable],
-
-    components: {
-        AuctionHeaderMenu,
-        CustomSwiper,
-        AuctionBids,
-        ProductCard,
-        AuctionBidPrice
-    },
+    components: {AuctionHeaderMenu, CustomSwiper, AuctionBids, ProductCard, AuctionBidPrice },
 
     data() {
         return {
@@ -374,9 +366,11 @@ export default {
                 }
             })
         },
+
         prod() {
             return this.auction.product
         },
+
         statusText() {
             switch (this.auction.status) {
                 case 'preview':
@@ -390,6 +384,7 @@ export default {
                     return ''
             }
         },
+
         currentTitle() {
             switch (this.auction.status) {
                 case 'preview':
@@ -402,6 +397,7 @@ export default {
                     return ''
             }
         },
+
         currentPrice() {
             switch (this.auction.status) {
                 case 'preview':
@@ -416,9 +412,11 @@ export default {
                     return ''
             }
         },
+
         isEnd() {
             return this.auction.status === 'success' || this.auction.status === 'fail'
         },
+
         operationText() {
             switch (this.auction.status) {
                 case 'preview':

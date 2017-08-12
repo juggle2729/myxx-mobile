@@ -48,6 +48,12 @@ icon($name)
         border(a, #f4d3a9)
         background-color #faf3ea
         line-height 1.5
+    .download
+        p
+            line-height 1.5
+        div:last-child
+            line-height 90px
+            border-radius 8px
 </style>
 <template lang="pug">
 .order-view(v-if="!$loadingRouteData")
@@ -95,19 +101,36 @@ icon($name)
         template(v-else)
             .fz-26.red.amount 实付款: {{ amount.cashAmount | price }}
         .fz-26.pd-22.orange.desc.note(v-if="order.buyer_note") 订单备注：{{ order.buyer_note }}
+    order-operation(:item.sync="order", :index="0")
+    .bg.pdv-28.fz-26.gray
+        .desc 订单编号：{{ order.order_no }}
+        .desc.mgt-18 下单时间：{{ order.create_at | date 'yyyy-mm-dd HH:MM:ss' }}
+    .pdh-32.pdv-48.download
+        .fz-30 下载美玉秀秀APP，更加方便的体验交易服务
+        p.fz-26.gray.mgt-28 1. 及时接受订单状态变化提醒
+        p.fz-26.gray 2. 领取店铺、平台优惠券，及时接受优惠信息
+        p.fz-26.gray 3. 交易完成后，可对卖家进行评价，和卖家建立良好的、长期的交易关系
+        .mgt-32.white.bg-red.fz-30.center(@click="download") 免费下载美玉秀秀APP
+    download-dialog(:show.sync="showRefundOrBackHint")
+        .fz-36.center 退款退货
+        p.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
+        p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
 </template>
 <script>
 import date from '../util/date'
 import OrderItemItem from './component/item/OrderItem.vue'
+import OrderOperation from './component/OrderOperation.vue'
+import DownloadDialog from './component/DownloadDialog.vue'
 export default {
     name: 'order-view',
-    components: [ OrderItemItem ],
+    components: [ OrderItemItem, OrderOperation, DownloadDialog ],
 
     data() {
         return {
             order: {
                 shop: {}
-            }
+            },
+            showRefundOrBackHint: false
         }
     },
 
@@ -286,12 +309,26 @@ export default {
                     order: this.order.order_no
                 }
             })
+        },
+
+        download() {
+            window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
         }
     },
 
     route: {
         data({ to }) {
             return this.$fetch(`mall/order/${to.params.id}`).then(order => ({ order }))
+        }
+    },
+
+    events: {
+        deleteOrder() {
+            this.action('back', {step: 1, refresh: true})
+        },
+
+        applyRefundOrBack() {
+            this.showRefundOrBackHint = true
         }
     }
 }

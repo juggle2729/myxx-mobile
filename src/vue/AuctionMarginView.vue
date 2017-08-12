@@ -33,16 +33,17 @@
                 p.center.fz-30.black 付款失败，请重新支付
         .confirm.fz-30.white.bg-red.center.mgt-32(@click="onConfirm") {{ isPaid ? '我知道了' : (!paySuccess ? '重新支付' : '确认支付保证金￥50') }}
         .mgt-36.fz-26.blue-52.center(v-if="isPaid", @click="onMarginRefund") 保证金退款
-    auction-dialog(:show.sync="showRefundHint")
+    download-dialog(:show.sync="showRefundHint")
         .fz-36.center 退款退货
         p.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
         p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
 </template>
 <script>
 import AuctionHeaderMenu from 'component/AuctionHeaderMenu.vue'
-import AuctionDialog from 'component/AuctionDialog.vue'
+import DownloadDialog from 'component/DownloadDialog.vue'
 export default {
     name: 'auction-margin-view',
+    components: { AuctionHeaderMenu, DownloadDialog },
 
     data() {
         return {
@@ -50,11 +51,6 @@ export default {
             paySuccess: true,
             showRefundHint: false
         }
-    },
-
-    components: {
-        AuctionHeaderMenu,
-        AuctionDialog
     },
 
     beforeDestroy() {
@@ -65,6 +61,7 @@ export default {
         onTouchStart(event) {
             return event.preventDefault()
         },
+
         onConfirm() {
             if (this.isPaid && this.paySuccess) {
                 this.$router.go({
@@ -77,6 +74,7 @@ export default {
                 this.$router.go({name: 'pay', query: { t: this.config.payBizType.auction.key }})
             }
         },
+
         onMarginRefund() {
             this.showRefundHint = true
         }
