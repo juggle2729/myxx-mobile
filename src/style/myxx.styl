@@ -76,12 +76,11 @@ for $dis in block inline-block none
         display: $dis
 
 .flex
-    display flex
-    align-items center
+    display: -webkit-box
+    -webkit-box-align: center
     for $i in 1..4
         > .flex-{$i}
-            flex-grow $i
-            flex-basis 0
+            -webkit-box-flex: $i
 
 /****************************
 *          align            *

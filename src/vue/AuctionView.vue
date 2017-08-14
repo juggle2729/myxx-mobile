@@ -134,8 +134,18 @@
             width 1px
             height 100%
             border(r, #d9d9d9)
-         > div:last-child
+        > div:last-child
             line-height 98px
+        &.third
+            > .flex-1
+                width 25%
+            > .flex-3
+                width 75%
+        &.second
+            > .flex-1
+                width 25%
+            > .flex-2
+                width 50%
     .prod-attr
         header
             height 90px
@@ -290,15 +300,15 @@
             product-card(v-for="item in related", :item="item")
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
     .bg.placeholder
-    .float-box.flex.fixed.fz-30.bg-white
+    .float-box.flex.fixed.fz-30.bg-white(:class="isEnd ? 'third' : 'second'")
         .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
             icon.fz-30(name="shop")
             .mgt-6 店铺
         .separator
-        .flex.flex-1.alarm-btn(:class="auction.reminded ? 'red' : 'gray'", @click="toggleAlarm")
+        .flex.flex-1.alarm-btn(v-if="!isEnd", :class="auction.reminded ? 'red' : 'gray'", @click="toggleAlarm")
             icon.fz-32(:name="auction.reminded ? 'alarmed' : 'alarm'")
             .mgt-6 {{ auction.reminded ? '已设置提醒' : '设置提醒' }}
-        .separator
+        .separator(v-if="!isEnd")
         .white.fz-30.center(:class="[auction.status === 'going' ? 'bg-red' : 'bg-gray', isEnd ? 'flex-3' : 'flex-2']", @click="bidPrice") {{ operationText }}
     auction-bid-price(:show.sync="showBidPrice", :auction="auction")
 </template>
