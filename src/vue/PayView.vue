@@ -69,7 +69,7 @@ export default {
 
     computed: {
         isAuction() {
-            return this.bizType === this.config.payBizType.auction.key
+            return this.bizType === this.config.payBizType.auction
         },
         isOrder() {
             return this.bizType === this.config.payBizType.order
@@ -132,10 +132,12 @@ export default {
 
     route: {
         data() {
-            this.bizType = this.$route.query.t || this.config.payBizType.auction.key
+            this.bizType = this.$route.query.t || this.config.payBizType.auction
             return Q.resolve((() => {
                 if (this.isAuction) {
-                    return this.config.payBizType.auction.amount
+                    return this.$fetch(`mall/auctions/get_margin`).then(( { myb_amount } ) => {
+                        return myb_amount
+                    })
                 } else if (this.isOrder) {
                     return this.$fetch(`mall/order/${this.$route.query.id}`).then(order => {
                         let cashAmount = 0
