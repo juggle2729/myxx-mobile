@@ -59,7 +59,7 @@ export default {
                 {
                     key: 'problem',
                     name: '常见问题',
-                    path: ''
+                    path: '/help/mall'
                 },
                 {
                     key: 'contact',

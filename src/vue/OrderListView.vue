@@ -16,7 +16,7 @@
         p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
 </template>
 <script>
-import tabs from 'component/Tabs.vue'
+import Tabs from 'component/Tabs.vue'
 import paging from 'paging'
 import OrderItem from 'component/item/Order.vue'
 import AuctionFooterMenu from 'component/AuctionFooterMenu.vue'
@@ -24,7 +24,7 @@ import DownloadDialog from 'component/DownloadDialog.vue'
 export default {
     name: 'order-list-view',
     mixins: [ paging ],
-    components: [ tabs, OrderItem, AuctionFooterMenu, DownloadDialog ],
+    components: [ Tabs, OrderItem, AuctionFooterMenu, DownloadDialog ],
 
     data() {
         return {

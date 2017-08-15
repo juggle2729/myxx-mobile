@@ -1,0 +1,49 @@
+<style lang="stylus">
+.auction-home-view
+    padding-bottom 100px
+</style>
+<template lang="pug">
+.auction-home-view.bg-gray-f7
+    tabs.bg-white(:tabs="views")
+    template(v-for="item in items")
+        .hr
+        auction-item(:item="item")
+    empty(v-if="items.isEmpty" title="暂无拍品消息")
+    auction-footer-menu
+</template>
+<script>
+import paging from 'paging'
+import AuctionFooterMenu from 'component/AuctionFooterMenu.vue'
+import AuctionItem from 'component/item/AuctionItem.vue'
+import Tabs from 'component/Tabs.vue'
+export default {
+    name: 'auction-home-view',
+    mixins: [ paging ],
+    components: [ Tabs, AuctionItem, AuctionFooterMenu ],
+
+    data() {
+        return {
+            views: {hot: '拍品推荐', preview: '即将开拍', end: '历史拍品'}
+        }
+    },
+
+    computed: {
+        paging() {
+            return {
+                path: 'mall/auctions',
+                list: 'auctions',
+                params: {
+                    filter: 'hot'
+                }
+            }
+        }
+    },
+
+    watch: {
+        $route() {
+            this.paging.params.filter = this.$route.query.tab
+            this.fetch(true)
+        }
+    }
+}
+</script>

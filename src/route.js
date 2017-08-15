@@ -455,6 +455,16 @@ export default {
         }
     },
 
+    '/wallet/margin': {
+        name: 'margin',
+        title: '拍品保证金余额明细',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WalletMarginView.vue'))
+            }, 'wallet')
+        }
+    },
+
     '/complain/:type/:id': {
         name: 'complain',
         title: '举报',
@@ -670,6 +680,26 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/home': {
+        name: 'home',
+        title: '首页',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionHomeView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/compete': {
+        name: 'compete',
+        title: '参拍',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionCompeteView.vue'))
             }, 'auction')
         }
     },

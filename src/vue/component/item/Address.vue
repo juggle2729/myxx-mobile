@@ -33,7 +33,7 @@ bg($icon, $size)
 </template>
 <script>
 export default {
-    name: 'AddressItem',
+    name: 'address-item',
 
     props: {
         item: Object,
