@@ -41,8 +41,8 @@ export default {
                     data.productId = entry.id
                     break
                 case 'auction':
-                    data.title = `【限量】${entry.title}`
-                    data.desc = '玉友发布新的拍品了，快来参与竞拍夺宝！'
+                    data.title = `【拍卖】${entry.title}正在拍卖中，赶快来围观`
+                    data.desc = '你觉得这个宝贝能拍到多少？'
                     data.icon = entry.pictures[0]
                     break
                 case 'master':
