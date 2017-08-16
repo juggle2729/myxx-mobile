@@ -44,7 +44,7 @@
     .mask.flex-1.bg-black(@click="close")
     .container.bg-white
         .flex.pdh-36.current
-            .fz-26.gray 当前价{{ (auction.current_price || 0) | price }}
+            .fz-26.gray 当前价{{ (auction.current_price || auction.upset_price || 0) | price }}
             .flex-1
             .fz-26.gray 加价幅度{{ auction.bid_increment | price }}
         .bid.flex.bg
@@ -76,7 +76,7 @@ export default {
 
     computed: {
         initPrice() {
-            return this.auction.current_price + this.auction.bid_increment
+            return (this.auction.current_price || this.auction.upset_price) + this.auction.bid_increment
         },
 
         canMinus() {
