@@ -308,7 +308,7 @@ export default {
                     return [ this.cancelOrderBtn, this.payDisabledBtn ]
                     break
                 case this.orderStatus.wait_pay:
-                    return [ this.cancelOrderBtn, this.payBtn]
+                    return this.isAuctionOrder ? [ this.payBtn ] : [ this.cancelOrderBtn, this.payBtn ]
                     break
                 case this.orderStatus.wait_send:
                     return [ this.applyRefundBtn ]
