@@ -600,6 +600,15 @@ export default {
         }
     },
 
+    '/help/auction-rule/:type': {
+        title: '拍卖规则说明',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionRuleView.vue'));
+            }, 'help')
+        }
+    },
+
     '/help/eco-system': {
         title: '打造和田玉良性生态的举措',
         component(resolve) {

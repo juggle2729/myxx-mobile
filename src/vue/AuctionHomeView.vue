@@ -8,7 +8,7 @@
     template(v-for="item in items")
         .hr
         auction-item(:item="item")
-    empty(v-if="items.isEmpty" title="暂无拍品消息")
+    empty(v-if="items.isEmpty")
     auction-footer-menu
 </template>
 <script>

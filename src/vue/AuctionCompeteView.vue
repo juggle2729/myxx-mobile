@@ -7,7 +7,7 @@
     tabs.bg-white.mgb-20(:tabs="views")
     template(v-for="(index, item) in items")
         compete-item(:item="item", :index="index")
-    empty(v-if="items.isEmpty" title="暂无拍品消息")
+    empty(v-if="items.isEmpty")
     auction-footer-menu
 </template>
 <script>
