@@ -384,7 +384,7 @@ export default {
                     return '拍卖中'
                 case 'fail':
                 case 'success':
-                    return '已结束'
+                    return '拍卖已结束'
                 default:
                     return ''
             }
