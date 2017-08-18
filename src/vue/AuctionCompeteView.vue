@@ -32,7 +32,7 @@ export default {
                 path: 'mall/auctions/myb',
                 list: 'auctions',
                 params: {
-                    tab: 'going'
+                    tab: this.$route.query.tab || 'going'
                 }
             }
         }

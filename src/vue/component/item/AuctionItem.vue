@@ -5,6 +5,8 @@
         .flex-1
             .status
                 height 32px
+                .mgr-12, .fz-26
+                    line-height 32px
         .margin
             background url('//o0x80w5li.qnssl.com/auction/gurantee.png') no-repeat 12px center
             background-size 24px 28px
@@ -36,7 +38,7 @@
         .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.pdh-32.flex.relative
         .price.red.fz-30.flex-1(v-if="tab === 'hot'") 当前价
-            span.fz-36  {{ item.current_price | price }}
+            span.fz-36  {{ item.current_price || item.upset_price | price }}
         .price.yellow-f1.fz-30.flex-1(v-if="tab === 'preview'") 起拍价
             span.fz-36  {{ item.upset_price | price }}
         .price.gray.fz-30.flex-1(v-if="tab === 'end' && item.status === 'success'") 成交价
@@ -55,7 +57,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.query.tab
+            tab: this.$route.query.tab || 'hot'
         }
     },
 

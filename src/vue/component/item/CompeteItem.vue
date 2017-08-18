@@ -44,7 +44,7 @@ bg($icon, $size)
         .price.fz-26.gray.mgt-20
             .inline-block(v-if="(tab !== 'remind' && item.status !== 'success') || (tab === 'remind' && item.status === 'going')")
                 span 当前价
-                span.mgl-10.red {{ item.current_price | price }}
+                span.mgl-10.red {{ item.current_price || item.upset_price | price }}
             .mgl-20.inline-block(v-if="tab !== 'remind' && item.status !== 'success' && item.my_bid")
                 span 我的出价
                 span.mgl-10.black {{ item.my_bid.bid_price | price }}
@@ -77,7 +77,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.query.tab
+            tab: this.$route.query.tab || 'going'
         }
     },
 

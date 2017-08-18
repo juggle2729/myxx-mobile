@@ -104,7 +104,7 @@
             .line-clamp
                 line-height: 1.2
         .address
-            max-width: 200px
+            max-width: 400px
             font-size: 0.34rem
         img
             width 44px
@@ -209,6 +209,12 @@
         margin-left 8px
         position relative
         bottom 2px
+    .wechat-code
+        width 100%
+        height @width
+        img
+            width 100%
+            height 100%
 .old-android
     .auction-view
         .coupon-labels div
@@ -221,9 +227,9 @@
     .status-bar.flex.pdl-32.fz-26(:class="auction.status")
         .bold.pdh-12.bg-white {{ statusText }}
         template(v-if="auction.status === 'preview'")
-            .white.mgl-16 距开始 {{ auction.start_time | diffNowTime }}
+            .white.mgl-16 {{ beforeStart }}
         template(v-if="auction.status === 'going'")
-            .white.mgl-16 距结束 {{ auction.real_end_time | diffNowTime }}
+            .white.mgl-16 {{ beforeEnd }}
     .titles.bg-white
         .header
             .title.fz-32 {{prod.title}}
@@ -306,6 +312,11 @@
         .separator(v-if="!isEnd")
         .white.fz-30.center(:class="[auction.status === 'going' ? 'bg-red' : 'bg-gray', isEnd ? 'flex-3' : 'flex-2']", @click="bidPrice") {{ operationText }}
     auction-bid-price(:show.sync="showBidPrice", :auction="auction")
+    download-dialog(:show.sync="showContact")
+        .fz-36.center 参拍提醒
+        p.mgt-40 长按识别二维码，或微信搜索"美玉秀秀"后关注美玉秀秀公众号，即可及时收到参拍提醒
+        .img.wechat-code.mgt-40.pd-20.bd-gray-e6
+            img(src="//o0x80w5li.qnssl.com/auction/wechatQRcode.png")
 </template>
 <script>
 import shareable from 'shareable'
@@ -314,10 +325,12 @@ import CustomSwiper from "component/CustomSwiper.vue";
 import AuctionBids from 'component/AuctionBids.vue'
 import ProductCard from 'component/item/ProductCard.vue'
 import AuctionBidPrice from 'component/AuctionBidPrice.vue'
+import date from '../util/date'
+import DownloadDialog from 'component/DownloadDialog.vue'
 export default {
     name: 'auction-view',
     mixins: [shareable],
-    components: {AuctionHeaderMenu, CustomSwiper, AuctionBids, ProductCard, AuctionBidPrice },
+    components: {AuctionHeaderMenu, CustomSwiper, AuctionBids, ProductCard, AuctionBidPrice, DownloadDialog },
 
     data() {
         return {
@@ -353,7 +366,10 @@ export default {
                 {k: 'genre', l: '流派'}
             ],
             auctionLoadDone: false, // 拍卖数据是否加载完成
-            relatedLoadDone: false // 推荐数据是否加载完成
+            relatedLoadDone: false, // 推荐数据是否加载完成
+            beforeStart: '',
+            beforeEnd: '',
+            showContact: false
         }
     },
 
@@ -448,6 +464,24 @@ export default {
             this.relatedLoadDone = true
             this.checkLeavePosition()
         })
+
+        setInterval(function() {
+            if (this.auction.status === 'preview') {
+                if (this.diffTime(this.auction.start_time)) {
+                    this.beforeStart = '距开始 ' + this.diffTime(this.auction.start_time)
+                } else {
+                    clearInterval()
+                    this.beforeStart = '已开始'
+                }
+            } else if (this.auction.status === 'going') {
+                if (this.diffTime(this.auction.real_end_time)) {
+                    this.beforeEnd = '距结束 ' + this.diffTime(this.auction.real_end_time)
+                } else {
+                    clearInterval()
+                    this.beforeEnd = '已结束'
+                }
+            }
+        }.bind(this),1000)
     },
 
     route: {
@@ -458,6 +492,8 @@ export default {
                 this.auction = auction
                 this.auctionLoadDone = true
                 this.checkLeavePosition()
+                this.beforeStart = '距开始 ' + this.diffTime(this.auction.start_time)
+                this.beforeEnd = '距结束 ' + this.diffTime(this.auction.real_end_time)
             })
         },
 
@@ -500,6 +536,7 @@ export default {
                         success: 1,
                         text: this.auction.reminded ? '设置提醒成功' : '取消提醒成功'
                     })
+                    this.auction.reminded && (this.showContact = true)
                 })
         },
 
@@ -520,6 +557,10 @@ export default {
                         this.showBidPrice = true
                     }
                 })
+        },
+
+        diffTime(time) {
+            return date.diffNowTime(time)
         }
     },
 

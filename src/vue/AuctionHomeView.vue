@@ -33,7 +33,7 @@ export default {
                 path: 'mall/auctions',
                 list: 'auctions',
                 params: {
-                    filter: 'hot'
+                    filter: this.$route.query.tab || 'hot'
                 }
             }
         }
