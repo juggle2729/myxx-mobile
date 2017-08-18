@@ -240,11 +240,11 @@
                 .separator.bdl
                 .flex-1.center
                     .start-title 起拍价
-                    .bold.fz-36.mgt-12.fz-36.bold(:class="auction.status === 'preview' ? 'yellow-f1' : ''") {{ upset_price | price }}
+                    .bold.fz-36.mgt-12.fz-36.bold(:class="auction.status === 'preview' ? 'yellow-f1' : ''") {{ auction.upset_price | price }}
                 .separator.bdl
                 .flex-1.center
                     .increase-title 加价幅度
-                    .mgt-12.fz-36.bold {{ bid_increment | price }}
+                    .mgt-12.fz-36.bold {{ auction.bid_increment | price }}
         .guarantee(@click="$root.popup = {handler: 'guarantee'}")
             img(:src="'product/term.png?v1' | qn")
             icon.fz-26(name="enter")
@@ -268,11 +268,6 @@
         .center
             .fz-30.red {{prod.shop.auction_count}}
             .fz-22.gray.mgt-14 正在拍卖
-    .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
-        avatar(:user='prod.owner', :size='50')
-        .flex
-            .name.fz-26.gray.mgl {{prod.owner.name}}
-            img.mgl-8(v-if="prod.owner.vip_flag", :src="'profile/'+prod.owner.role+'.png' | qn")
     .hr
     .prod-attr
         header.fz-26.gray.pdh-32.bdb 商品属性
@@ -413,11 +408,13 @@ export default {
                 case 'preview':
                     return '尚未开拍'
                 case 'going':
-                    return this.auction.current_price || 0
+                    // 当前价为0，默认显示起拍价
+                    return this.auction.current_price || this.auction.upset_price || 0
                 case 'fail':
                     return '已流拍'
                 case 'success':
-                    return this.auction.current_price || 0
+                    // 当前价为0，默认显示起拍价
+                    return this.auction.current_price || this.auction.upset_price || 0
                 default:
                     return ''
             }
