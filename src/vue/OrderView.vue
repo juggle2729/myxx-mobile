@@ -180,7 +180,7 @@ export default {
 
         addressInfo() {
             if (this.isReturn) {
-                if (!this.order.return_receiver_name) {
+                if (this.order.return_receiver_name) {
                     return {
                         title: '退货地址',
                         namePhone: `${this.order.return_receiver_name} ${this.order.return_receiver_phone}`,
@@ -188,10 +188,12 @@ export default {
                     }
                 }
             } else {
-                return {
-                    title: '收货地址',
-                    namePhone: `${this.order.receiver_name} ${this.order.receiver_phone}`,
-                    address: this.order.receiver_address
+                if (this.order.receiver_name) {
+                    return {
+                        title: '收货地址',
+                        namePhone: `${this.order.receiver_name} ${this.order.receiver_phone}`,
+                        address: this.order.receiver_address
+                    }
                 }
             }
         },
