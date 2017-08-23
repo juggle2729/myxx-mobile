@@ -104,7 +104,7 @@
             .line-clamp
                 line-height: 1.2
         .address
-            max-width: 400px
+            max-width: 92%
             font-size: 0.34rem
         img
             width 44px
@@ -210,26 +210,22 @@
         position relative
         bottom 2px
     .wechat-code
-        width 100%
-        height @width
         img
-            width 100%
-            height 100%
+            max-width 100%
+    .alarm-desc
+        line-height 1.5
 .old-android
     .auction-view
         .coupon-labels div
-            padding: 8px 8px 0
+            padding 8px 8px 0
 </style>
 <template lang="pug">
-.auction-view
+.auction-view(v-if="auction.id")
     auction-header-menu
     custom-swiper(:item="prod")
-    .status-bar.flex.pdl-32.fz-26(:class="auction.status")
+    .status-bar.flex.pdl-32.fz-26(v-if="auctionTime", :class="auction.status")
         .bold.pdh-12.bg-white {{ statusText }}
-        template(v-if="auction.status === 'preview'")
-            .white.mgl-16 {{ beforeStart }}
-        template(v-if="auction.status === 'going'")
-            .white.mgl-16 {{ beforeEnd }}
+        .white.mgl-16 {{ auctionTime }}
     .titles.bg-white
         .header
             .title.fz-32 {{prod.title}}
@@ -314,7 +310,7 @@
     auction-bid-price(:show.sync="showBidPrice", :auction="auction")
     download-dialog(:show.sync="showContact")
         .fz-36.center 参拍提醒
-        p.mgt-40 长按识别二维码，或微信搜索"美玉秀秀"后关注美玉秀秀公众号，即可及时收到参拍提醒
+        p.mgt-40.alarm-desc 长按识别二维码，或微信搜索"美玉秀秀"后关注美玉秀秀公众号，即可及时收到参拍提醒
         .img.wechat-code.mgt-40.pd-20.bd-gray-e6
             img(src="//o0x80w5li.qnssl.com/auction/wechatQRcode.png")
 </template>
@@ -367,9 +363,8 @@ export default {
             ],
             auctionLoadDone: false, // 拍卖数据是否加载完成
             relatedLoadDone: false, // 推荐数据是否加载完成
-            beforeStart: '',
-            beforeEnd: '',
-            showContact: false
+            showContact: false,
+            auctionTime: ''
         }
     },
 
@@ -464,24 +459,6 @@ export default {
             this.relatedLoadDone = true
             this.checkLeavePosition()
         })
-
-        setInterval(function() {
-            if (this.auction.status === 'preview') {
-                if (this.diffTime(this.auction.start_time)) {
-                    this.beforeStart = '距开始 ' + this.diffTime(this.auction.start_time)
-                } else {
-                    clearInterval()
-                    this.beforeStart = '已开始'
-                }
-            } else if (this.auction.status === 'going') {
-                if (this.diffTime(this.auction.real_end_time)) {
-                    this.beforeEnd = '距结束 ' + this.diffTime(this.auction.real_end_time)
-                } else {
-                    clearInterval()
-                    this.beforeEnd = '已结束'
-                }
-            }
-        }.bind(this),1000)
     },
 
     route: {
@@ -492,8 +469,11 @@ export default {
                 this.auction = auction
                 this.auctionLoadDone = true
                 this.checkLeavePosition()
-                this.beforeStart = '距开始 ' + this.diffTime(this.auction.start_time)
-                this.beforeEnd = '距结束 ' + this.diffTime(this.auction.real_end_time)
+
+                this.updateBidTime()
+                const interval = setInterval(() => {
+                    this.updateBidTime(interval)
+                }, 1000)
             })
         },
 
@@ -559,8 +539,25 @@ export default {
                 })
         },
 
-        diffTime(time) {
-            return date.diffNowTime(time)
+        updateBidTime(interval) {
+            let diffTime = ''
+            if (this.auction.status === 'preview') {
+                diffTime = date.diffNowTime(this.auction.start_time)
+                if (diffTime) {
+                    this.auctionTime = `距开始 ${diffTime}`
+                } else {
+                    interval && clearInterval(interval)
+                    this.auctionTime = '已开始'
+                }
+            } else if (this.auction.status === 'going') {
+                diffTime = date.diffNowTime(this.auction.real_end_time)
+                if (diffTime) {
+                    this.auctionTime = `距结束 ${diffTime}`
+                } else {
+                    interval && clearInterval(interval)
+                    this.auctionTime = '已结束'
+                }
+            }
         }
     },
 
