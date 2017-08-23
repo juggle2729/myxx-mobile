@@ -24,8 +24,8 @@ bg($icon, $size)
             .fz-30 {{ item.receiver_phone }}
         .fz-26.gray-8f.mgt-28 {{ item.receiver_address_flat }}
     .operation.flex.pdh-32
-        .flex.fz-26
-            icon(:name="item.is_default ? 'checked' : 'uncheck'", @click="setDefault")
+        .flex.fz-26(@click="setDefault")
+            icon(:name="item.is_default ? 'checked' : 'uncheck'")
             .address-text.mgl-20 {{ item.is_default ? '默认地址': '设为默认' }}
         .flex-1
         .edit.pdl-42.fz-26(@click="edit") 编辑

@@ -187,7 +187,6 @@ export default {
         data({from, to, next}) {
             if(from.name !== to.name) {
                 return this.$fetch(`mall/shop/${to.params.id}/profile`).then(resp => {
-                    console.log(resp)
                     this.shop = resp
                     this.action('updateTitle', {text: this.shop.shop_name})
                     this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:

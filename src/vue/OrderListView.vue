@@ -1,9 +1,10 @@
 <style lang="stylus">
 .order-list-view
-    padding-bottom 100px
+    &.has-data
+        padding 100px 0
 </style>
 <template lang="pug">
-.order-list-view.bg
+.order-list-view.bg(:class="{ 'has-data': !items.isEmpty }")
     tabs(:tabs="views", :current="'all'")
     template(v-for="(index, item) in items")
         .hr

@@ -1,6 +1,7 @@
 <style lang="stylus">
 .addresses-view
-    padding-top 88px
+    &.has-data
+        padding-top 88px
     .add-btn
         position fixed
         bottom 0
@@ -8,7 +9,7 @@
         line-height 100px
 </style>
 <template lang="pug">
-.addresses-view.bg-gray-f7
+.addresses-view.bg-gray-f7(:class="{ 'has-data': !items.isEmpty }")
     auction-header-menu
     template(v-for="(index, item) in items")
         .hr

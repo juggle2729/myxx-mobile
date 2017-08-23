@@ -65,7 +65,7 @@ div(:class="{'loading': loading}")
         //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")
     router-view
     #user(v-if="env.isBrowser && env.isTest")
-        img(v-if="self", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
+        img(v-if="self && self.photo", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
         .fz-34(v-else, @click="login") 👤
     component(:is="popup.handler", :params.sync="popup", transition="pop")
 </template>

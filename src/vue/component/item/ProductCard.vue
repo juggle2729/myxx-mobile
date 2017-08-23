@@ -36,7 +36,7 @@
             width: 130px
 </style>
 <template lang="pug">
-a.product-card.bg-white.bd-light(:href="href")
+a.product-card.bg-white.bd-light(@click="goToProduct(href)")
     .media(v-bg='item.first_picture')
         .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
@@ -79,6 +79,16 @@ export default {
             setInterval(() => {
                 this.href = originHref + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()
             }, 2000)
+        }
+    },
+
+    methods: {
+        goToProduct(url) {
+            // 当从拍卖详情离开时，要记住离开的位置
+            if (this.$route.name === 'auction') {
+                this.$store.set('leave-position', document.body.scrollTop)
+            }
+            location.href = url
         }
     }
 }

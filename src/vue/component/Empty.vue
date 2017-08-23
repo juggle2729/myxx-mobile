@@ -7,7 +7,7 @@
     &.empty-title
         background-image url($qn + 'placeholder/empty.png')
         background-size 160px 160px
-        background-position center 40%
+        background-position center
     .title
         position absolute
         top 50%

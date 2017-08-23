@@ -77,7 +77,9 @@ router.beforeEach(({from, to, next, abort}) => {
     } else {
         // 同一路由内，仅切换tab时，不调整滚动位置
         if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-            window.scroll(0, 0)
+            if (from.name !== 'auction' && to.name !== 'auction') { // 拍卖不需要回到顶部
+                window.scroll(0, 0)
+            }
         }
         document.title = to.title || '美玉秀秀'
         to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})

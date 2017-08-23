@@ -1,6 +1,11 @@
 <style lang="stylus">
 .tabs
+    position fixed
+    top 0
+    left 0
+    width 100%
     height 100px
+    z-index 100
     li
         line-height 100px
     .black-24
@@ -8,7 +13,7 @@
 </style>
 <template lang="pug">
 ul.tabs.flex.fz-30.bdb.pdh-20.bg-white
-    li.flex-1.center(v-for="label in tabs", :class="$key===current ? 'black-24': 'gray-99'", @click="current=$key") {{label}}
+    li.flex-1.center(v-for="label in tabs", :class="$key===current ? 'black-24': 'gray-99'", @click="current=$key") {{ label }}
 </template>
 <script>
 export default {

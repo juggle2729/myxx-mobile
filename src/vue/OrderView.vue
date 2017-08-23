@@ -13,6 +13,7 @@ icon($name)
         padding-top 26.667%
         background url($b + 'auction/order-stage.png') no-repeat
         background-size cover
+        margin-top 88px
     .column-flex
         flex-direction column
         align-items flex-start
@@ -57,6 +58,7 @@ icon($name)
 </style>
 <template lang="pug">
 .order-view(v-if="!$loadingRouteData")
+    auction-header-menu
     .stage
     .order-status.pdv-36.fz-26.flex.bdb(@click="seeReason")
         .flex.flex-1.mgr-32.column-flex
@@ -121,9 +123,10 @@ import date from '../util/date'
 import OrderItemItem from './component/item/OrderItem.vue'
 import OrderOperation from './component/OrderOperation.vue'
 import DownloadDialog from './component/DownloadDialog.vue'
+import AuctionHeaderMenu from './component/AuctionHeaderMenu.vue'
 export default {
     name: 'order-view',
-    components: [ OrderItemItem, OrderOperation, DownloadDialog ],
+    components: [ OrderItemItem, OrderOperation, DownloadDialog, AuctionHeaderMenu ],
 
     data() {
         return {

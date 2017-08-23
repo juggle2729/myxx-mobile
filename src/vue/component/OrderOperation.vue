@@ -21,7 +21,7 @@
 </style>
 <template lang="pug">
 .order-operation.flex.pdr-32(v-if="btns.length")
-    .btn.pdh-28.fz-26(v-for="btn in btns", :class="btn.class", @click.stop="onBtnClick('pay')") {{ btn.name }}
+    .btn.pdh-28.fz-26(v-for="btn in btns", :class="btn.class", @click.stop="onBtnClick(btn.key)") {{ btn.name }}
 </template>
 <script>
 export default {

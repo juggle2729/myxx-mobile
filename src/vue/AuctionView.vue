@@ -9,7 +9,7 @@
         .bold
             line-height 40px
             border-radius 4px
-        &.preview
+        &.preview, &.unpaid
             background-color #f1ab47
             .bold
                 color: #f1ab47
@@ -351,7 +351,9 @@ export default {
                 {k: 'theme', l: '题材'},
                 {k: 'moral', l: '寓意'},
                 {k: 'genre', l: '流派'}
-            ]
+            ],
+            auctionLoadDone: false, // 拍卖数据是否加载完成
+            relatedLoadDone: false // 推荐数据是否加载完成
         }
     },
 
@@ -386,7 +388,7 @@ export default {
                 case 'success':
                     return '拍卖已结束'
                 default:
-                    return ''
+                    return '未支付'
             }
         },
 
@@ -399,7 +401,7 @@ export default {
                 case 'success':
                     return '结拍价'
                 default:
-                    return ''
+                    return '当前价'
             }
         },
 
@@ -416,7 +418,7 @@ export default {
                     // 当前价为0，默认显示起拍价
                     return this.auction.current_price || this.auction.upset_price || 0
                 default:
-                    return ''
+                    return '未支付'
             }
         },
 
@@ -435,7 +437,7 @@ export default {
                 case 'success':
                     return '已结拍'
                 default:
-                    return ''
+                    return '未支付'
             }
         }
     },
@@ -443,6 +445,8 @@ export default {
     ready() {
         this.$fetch(`mall/auctions/${this.$route.params.id}/rmd`).then(resp => {
             this.related = resp.products
+            this.relatedLoadDone = true
+            this.checkLeavePosition()
         })
     },
 
@@ -452,11 +456,32 @@ export default {
                 _.update(auction.product, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
                 this.setShareData(auction.product)
                 this.auction = auction
+                this.auctionLoadDone = true
+                this.checkLeavePosition()
             })
+        },
+
+        deactivate() {
+            this.$store.set('leave-position', document.body.scrollTop)
         }
     },
 
     methods: {
+        checkLeavePosition() {
+            if (!this.relatedLoadDone || !this.auctionLoadDone) {
+                return
+            }
+            const leavePosition = this.$store.get('leave-position')
+            if (leavePosition) {
+                setTimeout(() => {
+                    window.scroll(0, leavePosition)
+                    this.$store.remove('leave-position')
+                }, 0)
+            } else {
+                window.scroll(0, 0)
+            }
+        },
+
         getCoupon() {
             this.action('couponList', {
                 shop: this.prod.shop.id
