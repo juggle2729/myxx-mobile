@@ -1,6 +1,6 @@
 <style lang="stylus">
 .auction-compete-view
-    padding-bottom 100px
+    padding 120px 0 100px 0
 </style>
 <template lang="pug">
 .auction-compete-view.bg-gray-f7

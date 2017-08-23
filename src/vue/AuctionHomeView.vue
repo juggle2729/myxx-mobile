@@ -1,6 +1,6 @@
 <style lang="stylus">
 .auction-home-view
-    padding-bottom 100px
+    padding 100px 0
 </style>
 <template lang="pug">
 .auction-home-view.bg-gray-f7
