@@ -27,7 +27,7 @@ export default {
             res.push(minutes + '分')
             least -= minutes * MINUTE_IN_MILLIS
         }
-        if (least > SECOND_IN_MILLIS && showSeconds) {
+        if (showSeconds && (res.length > 0 || least > SECOND_IN_MILLIS)) {
             const seconds = Number.parseInt(least/SECOND_IN_MILLIS)
             res.push(seconds + '秒')
             least -= seconds * SECOND_IN_MILLIS

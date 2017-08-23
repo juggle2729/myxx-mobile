@@ -512,11 +512,14 @@ export default {
             this[this.auction.reminded ? '$delete' : '$post'](`mall/auctions/myb/${this.$route.params.id}/remind`)
                 .then(() => {
                     this.auction.reminded = !this.auction.reminded
-                    this.action('toast', {
-                        success: 1,
-                        text: this.auction.reminded ? '设置提醒成功' : '取消提醒成功'
-                    })
-                    this.auction.reminded && (this.showContact = true)
+                    if (this.auction.reminded) {
+                        this.showContact = true
+                    } else {
+                        this.action('toast', {
+                            success: 1,
+                            text: '取消提醒成功'
+                        })
+                    }
                 })
         },
 
