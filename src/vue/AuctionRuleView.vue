@@ -22,7 +22,7 @@
         .tabs.fz-36.flex.bdb.bg-white.gray-cc.fixed
             .flex-1.line-height-80.center(@click="tab = 'buyer'", :class="{ black: tab === 'buyer' }") 买家版
             .flex-1.line-height-80.center(@click="tab = 'seller'", :class="{ black: tab === 'seller' }") 卖家版
-        img(v-show="tab === 'buyer'", src="https://o0x80w5li.qnssl.com/auction-rules-buyer.png")
+        img(v-show="tab === 'buyer'", src="https://o0x80w5li.qnssl.com/auction-rules-buyer-2.png")
         img(v-show="tab === 'seller'", src="https://o0x80w5li.qnssl.com/auction-rules-seller.png")
 </template>
 <script>
