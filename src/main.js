@@ -70,21 +70,15 @@ router.beforeGo((from, to, app) => {
 })
 
 router.beforeEach(({from, to, next, abort}) => {
-    const universalLinkFailedAt = _.get(to, 'query.ulfa', 0)
-    if(Date.now() - universalLinkFailedAt < 10000) { // 如果页面是10秒内，由universal link触发失败而来，直接进入下载页面
-        abort()
-        location.href = config.download
-    } else {
-        // 同一路由内，仅切换tab时，不调整滚动位置
-        if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-            if (from.name !== 'auction' && to.name !== 'auction') { // 拍卖不需要回到顶部
-                window.scroll(0, 0)
-            }
+    // 同一路由内，仅切换tab时，不调整滚动位置
+    if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+        if (from.name !== 'auction' && to.name !== 'auction') { // 拍卖不需要回到顶部
+            window.scroll(0, 0)
         }
-        document.title = to.title || '美玉秀秀'
-        to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-        next()
     }
+    document.title = to.title || '美玉秀秀'
+    to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+    next()
 })
 
 router.afterEach(({to, from}) => {

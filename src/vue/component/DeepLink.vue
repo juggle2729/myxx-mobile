@@ -88,7 +88,7 @@ export default {
 
     methods: {
         updateHref() {
-            this.href = this.hasUniversalLinkSupport ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+            this.href = this.hasUniversalLinkSupport ? location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') : this.config.download
         },
 
         myxx() {
