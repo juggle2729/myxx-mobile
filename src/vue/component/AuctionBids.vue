@@ -16,7 +16,7 @@
 <template lang="pug">
 .auction-bids.fz-26
     .flex.bdb.mgl-32(@click="seeMore")
-        .title.gray 出价记录 {{items.length || ''}}
+        .title.gray 出价记录 {{items.total || ''}}
         .flex-1
         icon.mgr-32.gray(name="enter", v-if="showMore")
     template(v-for="item in items")

@@ -64,33 +64,6 @@
             display: block
             height: 26px
             width: 26px
-    .coupon
-        height: 100px
-        .coupon-labels
-            white-space nowrap
-            div
-                display inline-block
-                font-size 22px
-                color white
-                background-color #cc3f4f
-                background-image radial-gradient(at left center, white 4px, #cc3f4f 4px), radial-gradient(at right center, white 4px, #cc3f4f 4px)
-                background-size 10px 20px, 10px 20px
-                background-position left center, right center
-                background-repeat no-repeat
-                margin-right 6px
-                padding 6px 8px
-                border-radius 6px
-        .bd-red
-            border-radius: 6px
-            padding: 10px 20px 0
-            height: 48px
-            line-height: 30px
-            font-size: .34rem   // TODO: Android Webview 汉字渲染有毛病
-        .deep-link .btn //reset deep-link style
-            font-size: 26px
-            border-radius: 6px
-            padding: 8px 20px
-            border(a, #cc3f4f)
     .shop
         height: 144px
         padding: 0 32px
@@ -214,10 +187,6 @@
             max-width 100%
     .alarm-desc
         line-height 1.5
-.old-android
-    .auction-view
-        .coupon-labels div
-            padding 8px 8px 0
 </style>
 <template lang="pug">
 .auction-view(v-if="auction.id")
@@ -253,12 +222,6 @@
     .hr
     auction-bids(v-if='auction.id', :id='auction.id', :status='auction.status', :limit='3')
     .hr
-    .coupon.flex.fz-26.red.pdh-32.bdb(v-if="prod.shop.coupon_count")
-        .coupon-labels.flex-1
-            div(v-for="coupon in coupons") {{coupon.title}}
-            div(v-if="coupon_label_count < prod.shop.coupons.length") &middot;&middot;&middot;
-        .btn-get-coupon.bd-red(v-if="env.isApp", @click="getCoupon") 领券
-        deep-link.btn-get-coupon.has-icon(v-else) 领券
     .shop.bg-white.flex.detail(v-link="{name: 'shop', params: {id: prod.shop.id}}")
         .img(v-bg='prod.shop.logo')
         .flex-1
@@ -333,16 +296,13 @@ export default {
             auction: {
                 product: {
                     owner: {},
-                    shop: {
-                        coupons: []
-                    },
+                    shop: {},
                     tags: [],
                     banner: [],
                     auction: {}
                 },
                 reminded: false
             },
-            coupon_label_count: 3,
             related: [],
             showBidPrice: false,
             attrs: [
@@ -369,10 +329,6 @@ export default {
     },
 
     computed: {
-        coupons() {
-            return this.prod.shop.coupons.slice(0, this.coupon_label_count)
-        },
-
         banners() {
             return this.prod.banner.map(b => {
                 return {
@@ -496,12 +452,6 @@ export default {
             } else {
                 window.scroll(0, 0)
             }
-        },
-
-        getCoupon() {
-            this.action('couponList', {
-                shop: this.prod.shop.id
-            })
         },
 
         gotoTagView(tag) {
