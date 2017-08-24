@@ -265,7 +265,7 @@
             span.inline-block.red.mgl-16 {{prod.shop.pd_count_today}}
         .flex-1
             span.inline-block 拍卖
-            span.inline-block.light.mgl-8 敬请期待
+            span.inline-block.red.mgl-16 {{prod.shop.auction_count}}
     .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
         avatar(:user='prod.owner', :size='50')
         .flex

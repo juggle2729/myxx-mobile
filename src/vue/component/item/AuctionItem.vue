@@ -31,19 +31,19 @@
             .title.fz-32 {{ item.product.title }}
             .status.flex.mgt-28
                 .mgr-12.fz-22.pdh-6.white(:class="bgColor") {{ auctionStatus }}
-                .fz-26.red(v-if="tab === 'hot'") 距结束 {{ item.end_time | diffNowTime }}
-                .fz-26.yellow-f1(v-if="tab === 'preview'") 距开始 {{ item.start_time | diffNowTime }}
-        .margin.pdl-44.pdr-12.bd.fz-22.gray 保证金已付
+                .fz-26.red(v-if="item.status === 'going'") 距结束 {{ item.real_end_time | diffNowTime }}
+                .fz-26.yellow-f1(v-if="item.status === 'preview'") 距开始 {{ item.start_time | diffNowTime }}
+        .margin.pdl-44.pdr-12.bd.fz-22.gray(v-if="item.status !== 'unpaid'") 保证金已付
     .pics.mgt-28.flex.pdh-20
         .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.pdh-32.flex.relative
-        .price.red.fz-30.flex-1(v-if="tab === 'hot'") 当前价
+        .price.red.fz-30.flex-1(v-if="item.status === 'going'") 当前价
             span.fz-36  {{ item.current_price || item.upset_price | price }}
-        .price.yellow-f1.fz-30.flex-1(v-if="tab === 'preview'") 起拍价
+        .price.yellow-f1.fz-30.flex-1(v-if="item.status === 'preview'") 起拍价
             span.fz-36  {{ item.upset_price | price }}
-        .price.gray.fz-30.flex-1(v-if="tab === 'end' && item.status === 'success'") 成交价
+        .price.gray.fz-30.flex-1(v-if="item.status === 'success'") 成交价
             span.fz-36  {{ item.current_price | price }}
-        .shop.gray.flex.absolute(v-link="{name: 'shop', params: {id: item.product.shop.id}}")
+        .shop.gray.flex.absolute(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")
             icon.fz-30(name="shop")
             span.fz-26.pdl-10 {{ item.product.shop.shop_name }}
 </template>
@@ -57,29 +57,35 @@ export default {
 
     data() {
         return {
-            tab: this.$route.query.tab || 'hot'
+            routeName: this.$route.name
         }
     },
 
     computed: {
         bgColor() {
-            switch (this.tab) {
-                case 'hot':
+            switch (this.item.status) {
+                case 'going':
                     return 'bg-red'
                 case 'preview':
                     return 'bg-yellow-f1'
-                case 'end':
+                case 'success':
+                case 'fail':
+                case 'unpaid':
                     return 'bg-gray'
             }
         },
         auctionStatus() {
-            switch (this.tab) {
-                case 'hot':
+            switch (this.item.status) {
+                case 'going':
                     return '拍卖中'
                 case 'preview':
                     return '预展中'
-                case 'end':
-                    return this.item.status === 'success' ? '已结拍' : '已流拍'
+                case 'success':
+                    return '已结拍'
+                case 'fail':
+                    return '已流拍'
+                case 'unpaid':
+                    return '未支付'
             }
         }
 
