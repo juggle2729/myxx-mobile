@@ -118,7 +118,8 @@ export default {
                 case 'pay':
                     const addressInfo = this.addressInfo
                     if (this.isAuctionOrder) {
-                        if (!addressInfo) {
+                        const cacheAddress = this.$store.get('selectedAddress')
+                        if (!addressInfo && !cacheAddress) {
                             this.action('confirm', {
                                 text: '请先补充收货地址',
                                 labels: ['取消', '补充地址']
@@ -128,7 +129,6 @@ export default {
                                 }
                             })
                         } else {
-                            const cacheAddress = this.$store.get('selectedAddress')
                             const addressArray = []
                             if (cacheAddress) {
                                 addressArray.push(cacheAddress.name, cacheAddress.phone, cacheAddress.address)

@@ -76,7 +76,7 @@ export default {
 
     computed: {
         initPrice() {
-            return (this.auction.current_price || this.auction.upset_price) + this.auction.bid_increment
+            return this.auction.current_price ? this.auction.current_price + this.auction.bid_increment : this.auction.upset_price
         },
 
         canMinus() {

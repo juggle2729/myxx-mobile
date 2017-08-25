@@ -72,14 +72,9 @@ export default {
 
     ready() {
         if(this.env.isApp || !this.env.isMobile) {
-            this.href = `/product/${this.item.id}?referer=goods_relatedrecomented`
+            this.href = `/product/${this.item.id}`
         } else if(this.hasUniversalLinkSupport) {
-            const originHref = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${this.item.id}`)
-            if (originHref.indexOf('referer') === -1) {
-                this.href = originHref + (location.href.indexOf('?') === -1 ? '?' : '&') + 'referer=goods_relatedrecomented'
-            } else {
-                this.href = originHref
-            }
+            this.href = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${this.item.id}`)
         }
     },
 

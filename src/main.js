@@ -1,12 +1,10 @@
 require('fastclick').attach(document.body)
-require('script-loader!./Umeng')
 require('swiper/dist/css/swiper.min.css')
 
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import config from './config'
 import routes from './route'
 import directive from './directive'
 import mixin from './mixin/global'
@@ -79,13 +77,6 @@ router.beforeEach(({from, to, next, abort}) => {
     document.title = to.title || '美玉秀秀'
     to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
     next()
-})
-
-router.afterEach(({to, from}) => {
-    if(to.router.app.env.isApp && to.query.referer) {
-        window.setWebViewFlag()
-        window.MobclickAgent.onCCEvent(['goods', to.query.referer], 0, '商品')
-    }
 })
 
 router.alias({
