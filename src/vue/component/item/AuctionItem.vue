@@ -12,6 +12,7 @@
             background-size 24px 28px
             line-height 48px
             border-radius 6px
+            transform translateY(-8px)
     .pics
         .pic
             width 234px
@@ -28,7 +29,7 @@
 .auction-item.bg-white(v-link="{name: 'auction', params: {id: item.id}}")
     .desc.pdh-32.pdt-34.flex
         .flex-1
-            .title.fz-32 {{ item.product.title }}
+            .title.fz-32.line-clamp-1 {{ item.product.title }}
             .status.flex.mgt-28
                 .mgr-12.fz-22.pdh-6.white(:class="bgColor") {{ auctionStatus }}
                 .fz-26.red(v-if="item.status === 'going'") 距结束 {{ item.real_end_time | diffNowTime }}

@@ -192,7 +192,7 @@
 .auction-view(v-if="auction.id")
     auction-header-menu
     custom-swiper(:item="prod")
-    .status-bar.flex.pdl-32.fz-26(v-if="auctionTime", :class="auction.status")
+    .status-bar.flex.pdl-32.fz-26(:class="auction.status")
         .bold.pdh-12.bg-white {{ statusText }}
         .white.mgl-16 {{ auctionTime }}
     .titles.bg-white
@@ -254,8 +254,6 @@
     .hr
     .prod-related(v-if="related.length")
         .tag-title.fz-26.gray.pdl-20 相关推荐
-        .tags(v-if="prod.tags.length > 0")
-            .tag.pdh-28.fz-26.center.bg-light-gray(v-for="tag in prod.tags", @click="gotoTagView(tag)") {{tag.name}}
         .recommends.bg.pdt(v-if="related.length")
             product-card(v-for="item in related", :item="item")
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
@@ -452,10 +450,6 @@ export default {
             } else {
                 window.scroll(0, 0)
             }
-        },
-
-        gotoTagView(tag) {
-            this.$router.go({ name: 'tag', params: { id: tag.id, name: tag.name } })
         },
 
         toggleAlarm() {

@@ -457,7 +457,7 @@ export default {
 
     '/wallet/margin': {
         name: 'margin',
-        title: '拍品保证金余额明细',
+        title: '拍品保证金',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletMarginView.vue'))

@@ -1,9 +1,10 @@
 <style lang="stylus">
 .auction-compete-view
-    padding 120px 0 100px 0
+    &.has-data
+        padding 120px 0 100px 0
 </style>
 <template lang="pug">
-.auction-compete-view.bg-gray-f7
+.auction-compete-view.bg(:class="{ 'has-data': !items.isEmpty }")
     tabs.bg-white.mgb-20(:tabs="views")
     template(v-for="(index, item) in items")
         compete-item(:item="item", :index="index")

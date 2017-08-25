@@ -1,9 +1,10 @@
 <style lang="stylus">
 .auction-home-view
-    padding 100px 0
+    &.has-data
+        padding 100px 0
 </style>
 <template lang="pug">
-.auction-home-view.bg-gray-f7
+.auction-home-view.bg(:class="{ 'has-data': !items.isEmpty }")
     tabs.bg-white(:tabs="views")
     template(v-for="item in items")
         .hr

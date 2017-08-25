@@ -18,9 +18,11 @@ bg($key)
         margin-left 44px
     .item:nth-child(4)
         margin-right 44px
+    &.share-page
+        top 112px
 </style>
 <template lang="pug">
-.auction-header-menu.bg-white.flex.pdh-20
+.auction-header-menu.bg-white.flex.pdh-20(:class="{ 'share-page': env.isShare }")
     .item(v-for="item in items", :class="{'flex-1': lodash.isString(item)}")
         .title.fz-36.black-24.center(v-if="lodash.isString(item)") {{ item }}
         .icon(v-if="lodash.isObject(item)", @click="linkToMenu(item)")

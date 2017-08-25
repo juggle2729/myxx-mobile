@@ -36,7 +36,7 @@
             width: 130px
 </style>
 <template lang="pug">
-a.product-card.bg-white.bd-light(@click="goToProduct(href)")
+a.product-card.bg-white.bd-light(@click="goToDetail(item)")
     .media(v-bg='item.first_picture')
         .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
@@ -46,8 +46,8 @@ a.product-card.bg-white.bd-light(@click="goToProduct(href)")
             img(v-if="item.cigar_scale", :src="'shop/cigar.png' | qn")
         .red.pdv-8.flex
             .fz-24.flex-1(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
-            .price.fz-30.flex-1(v-else) {{item.price | price}}
-            img(v-if="!env.isApp && $route.name !== 'shop'", src="//o0x80w5li.qnssl.com/open-in-app.png")
+            .price.fz-30.flex-1(v-if="!item.auction && item.sell_status !== 'sold'") {{item.price | price}}
+            .is-auction.fz-30.flex-1(v-if="item.auction") 拍卖中
 </template>
 <script>
 import config from '../../../config'
@@ -58,33 +58,29 @@ export default {
         item: Object
     },
 
-    data() {
-        return {
-            href: config.download
-        }
-    },
-
     computed: {
         btn() {
             return this.item.sunlight || this.item.cigar_scale
         }
     },
 
-    ready() {
-        if(this.env.isApp || !this.env.isMobile) {
-            this.href = `/product/${this.item.id}`
-        } else if(this.hasUniversalLinkSupport) {
-            this.href = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${this.item.id}`)
-        }
-    },
-
     methods: {
-        goToProduct(url) {
-            // 当从拍卖详情离开时，要记住离开的位置
-            if (this.$route.name === 'auction') {
-                this.$store.set('leave-position', document.body.scrollTop)
+        getHref(item) {
+            if(this.env.isApp || !this.env.isMobile) {
+                if (item.auction) {
+                    return `/auction/${item.auction.id}`
+                }
+                return `/product/${item.id}`
+            } else if(this.hasUniversalLinkSupport) {
+                if (item.auction) {
+                    return location.href.replace(location.pathname, `/auction/${item.auction.id}`)
+                }
+                return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${item.id}`)
             }
-            location.href = url
+        },
+
+        goToDetail(item) {
+            location.href = this.getHref(item)
         }
     }
 }
