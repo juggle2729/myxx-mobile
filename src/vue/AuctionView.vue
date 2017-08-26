@@ -429,10 +429,6 @@ export default {
                     this.updateBidTime(interval)
                 }, 1000)
             })
-        },
-
-        deactivate() {
-            this.$store.set('leave-position', document.body.scrollTop)
         }
     },
 
@@ -441,15 +437,7 @@ export default {
             if (!this.relatedLoadDone || !this.auctionLoadDone) {
                 return
             }
-            const leavePosition = this.$store.get('leave-position')
-            if (leavePosition) {
-                setTimeout(() => {
-                    window.scroll(0, leavePosition)
-                    this.$store.remove('leave-position')
-                }, 0)
-            } else {
-                window.scroll(0, 0)
-            }
+            this.checkDetailLeavePosition();
         },
 
         toggleAlarm() {

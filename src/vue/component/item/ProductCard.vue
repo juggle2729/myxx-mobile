@@ -65,14 +65,16 @@ export default {
     },
 
     methods: {
-        getHref(item) {
+        getDetailUrl(item) {
             if(this.env.isApp || !this.env.isMobile) {
                 if (item.auction) {
+                    this.saveDetailLeavePosition()
                     return `/auction/${item.auction.id}`
                 }
                 return `/product/${item.id}`
             } else if(this.hasUniversalLinkSupport) {
                 if (item.auction) {
+                    this.saveDetailLeavePosition()
                     return location.href.replace(location.pathname, `/auction/${item.auction.id}`)
                 }
                 return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${item.id}`)
@@ -80,7 +82,7 @@ export default {
         },
 
         goToDetail(item) {
-            location.href = this.getHref(item)
+            location.href = this.getDetailUrl(item)
         }
     }
 }

@@ -70,13 +70,19 @@ router.beforeGo((from, to, app) => {
 router.beforeEach(({from, to, next, abort}) => {
     // 同一路由内，仅切换tab时，不调整滚动位置
     if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-        if (from.name !== 'auction' && to.name !== 'auction') { // 拍卖不需要回到顶部
+        if (!from.detail && !to.detail && !from.list && !to.list) {
             window.scroll(0, 0)
         }
     }
     document.title = to.title || '美玉秀秀'
     to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
     next()
+})
+
+router.afterEach(({to, from}) => {
+    if (from.list && !to.detail) {
+        window.scroll(0, 0)
+    }
 })
 
 router.alias({

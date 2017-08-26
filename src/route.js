@@ -358,6 +358,7 @@ export default {
     '/order-list': {
         name: 'order-list',
         title: '订单',
+        list: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderListView.vue'))
@@ -686,6 +687,7 @@ export default {
     '/auction/:id': {
         name: 'auction',
         title: '拍品详情',
+        detail: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionView.vue'))
@@ -696,6 +698,7 @@ export default {
     '/auction/home': {
         name: 'home',
         title: '首页',
+        list: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionHomeView.vue'))

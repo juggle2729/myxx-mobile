@@ -6,7 +6,19 @@ export default {
         };
     },
     ready() {
-        this.fetch();
+        const cacheItems = this.$store.get(this._listItemsCacheKey())
+        if (cacheItems && this.$route.list) {
+            this.items = cacheItems
+            this.$nextTick(() => {
+                const leavePosition = this.$store.get(this._listCacheKey())
+                window.scrollTo(0, leavePosition);
+
+                this.$store.remove(this._listCacheKey())
+            })
+            this.$store.remove(this._listItemsCacheKey())
+        } else {
+            this.fetch();
+        }
     },
     events: {
         scrollToBottom(e) {
@@ -51,6 +63,21 @@ export default {
                             isEmpty: this.items.length === 0
                         });
                 });
+            }
+        },
+        _listCacheKey() {
+            return 'list-leave-position-' + this.$route.name
+        },
+        _listItemsCacheKey() {
+            return 'cache-items-' + this.$route.name
+        }
+    },
+    route: {
+        deactivate() {
+            if (this.$route.list) {
+                debugger
+                this.$store.set(this._listCacheKey(), this._scrollTop())
+                this.$store.set(this._listItemsCacheKey(), this.items)
             }
         }
     }

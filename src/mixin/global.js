@@ -32,7 +32,13 @@ const mixin = {
     },
 
     route: {
-        waitForData: true
+        waitForData: true,
+        deactivate({ to, from, next }) {
+            if (this.$route.detail && !to.list) {
+                this.$store.set(this._detailCacheKey(), this._scrollTop())
+            }
+            next()
+        }
     },
 
     created() {
@@ -233,6 +239,30 @@ const mixin = {
 
         touchStart(event) {
             event.preventDefault()
+        },
+
+        checkDetailLeavePosition() {
+            const leavePosition = this.$store.get(this._detailCacheKey())
+            if (leavePosition) {
+                setTimeout(() => {
+                    window.scroll(0, leavePosition)
+                    this.$store.remove(this._detailCacheKey())
+                }, 0)
+            } else {
+                window.scroll(0, 0)
+            }
+        },
+
+        saveDetailLeavePosition() {
+            this.$store.set(this._detailCacheKey(), this._scrollTop())
+        },
+
+        _detailCacheKey() {
+            return `detail-leave-position-${this.$route.name}-${this.$route.params.id}`
+        },
+
+        _scrollTop() {
+            return document.documentElement.scrollTop || document.body.scrollTop
         }
     }
 }
