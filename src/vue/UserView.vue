@@ -46,6 +46,8 @@
             line-height: 72px
     .footer-placeholder
         height: 112px
+    .tabs
+        position static !important
 </style>
 <template  lang="pug">
 .user-view.bg(v-if="!$loadingRouteData")
