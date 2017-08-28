@@ -56,9 +56,9 @@ bg($icon, $size)
                 span.mgl-10.black {{ item.current_price | price }}
         .status.fz-26.gray.absolute.flex
             template(v-if="item.status === 'going'")
-                .flex-1 距结束 {{ item.real_end_time | diffNowTime }}
+                .flex-1 {{ endCountdown }}
             template(v-if="item.status === 'preview'")
-                .flex-1 距开始 {{ item.start_time | diffNowTime }}
+                .flex-1 {{ startCountdown }}
             template(v-if="item.status === 'success' || item.status === 'fail'")
                 .flex-1 {{ auctionStatus }}
             .no-remind.gray.flex(v-if="tab === 'remind'",  @click.stop="cancelRemind(item.id)")
@@ -67,6 +67,7 @@ bg($icon, $size)
             .delete.pdl-38.gray.flex(v-if="tab === 'success' || tab === 'fail'", @click.stop="deleteAuction(item.id)") 删除
 </template>
 <script>
+import date from '../../../util/date'
 export default {
     name: 'compete-item',
 
@@ -82,6 +83,18 @@ export default {
     },
 
     computed: {
+        startCountdown() {
+            if (this.item.start_time - Date.now() <= 300000) {
+                return '即将开始'
+            }
+            return `距开始${date.diffNowTime(this.item.start_time)}`
+        },
+        endCountdown() {
+            if (this.item.real_end_time - Date.now() <= 300000) {
+                return '即将结束'
+            }
+            return `距结束${date.diffNowTime(this.item.real_end_time)}`
+        },
         auctionStatus() {
             switch (this.item.status) {
                 case 'success':

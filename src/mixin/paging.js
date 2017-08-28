@@ -62,7 +62,7 @@ export default {
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
-                });
+                }, () => this.items.loading = false);
             }
         },
         _listCacheKey() {

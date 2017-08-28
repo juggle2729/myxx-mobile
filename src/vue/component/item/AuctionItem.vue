@@ -32,8 +32,8 @@
             .title.fz-32.line-clamp-1 {{ item.product.title }}
             .status.flex.mgt-28
                 .mgr-12.fz-22.pdh-6.white(:class="bgColor") {{ auctionStatus }}
-                .fz-26.red(v-if="item.status === 'going'") 距结束 {{ item.real_end_time | diffNowTime }}
-                .fz-26.yellow-f1(v-if="item.status === 'preview'") 距开始 {{ item.start_time | diffNowTime }}
+                .fz-26.red(v-if="item.status === 'going'") {{ endCountdown }}
+                .fz-26.yellow-f1(v-if="item.status === 'preview'") {{ startCountdown }}
         .margin.pdl-44.pdr-12.bd.fz-22.gray(v-if="item.status !== 'unpaid'") 保证金已付
     .pics.mgt-28.flex.pdh-20
         .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
@@ -49,6 +49,7 @@
             span.fz-26.pdl-10 {{ item.product.shop.shop_name }}
 </template>
 <script>
+import date from '../../../util/date'
 export default {
     name: 'auction-item',
 
@@ -63,6 +64,18 @@ export default {
     },
 
     computed: {
+        startCountdown() {
+            if (this.item.start_time - Date.now() <= 300000) {
+                return '即将开始'
+            }
+            return `距开始${date.diffNowTime(this.item.start_time)}`
+        },
+        endCountdown() {
+            if (this.item.real_end_time - Date.now() <= 300000) {
+                return '即将结束'
+            }
+            return `距结束${date.diffNowTime(this.item.real_end_time)}`
+        },
         bgColor() {
             switch (this.item.status) {
                 case 'going':
