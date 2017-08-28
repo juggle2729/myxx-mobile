@@ -1,3 +1,8 @@
+<style lang="stylus">
+    .empty-component
+        &.empty-title
+            background-position center 100px
+</style>
 <template lang="pug">
 .all-auction.bg-gray-f7
     template(v-for="item in items")

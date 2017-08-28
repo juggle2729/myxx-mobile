@@ -4,14 +4,17 @@
         margin: 0 0 20px 15px
     .option
         width: 25%
+    .empty-component
+        &.empty-title
+            background-position center 60px
 </style>
 <template lang="pug">
 .all-product.bg.pdt
-    .options.bg-white.line-height-100.fz-30.flex
+    .options.bg-white.line-height-100.fz-30.flex(v-if="items.length")
         .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
     .list
         product-card(v-for="item in items", :item="item")
-    empty(v-if="items.isEmpty", title="暂无商品")
+    empty(v-if="items.isEmpty")
 
     deep-link(v-if="(items.length > 0) && !items.hasMore") 打开美玉秀秀，查看更多优质商品
 </template>
