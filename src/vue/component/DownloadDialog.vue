@@ -6,7 +6,6 @@
     top 0
     bottom 0
     z-index 999
-    background-color rgba(0, 0, 0, .3)
     .container
         width calc(100% - 120px)
         font-size 30px
@@ -28,7 +27,7 @@
         line-height 120px
 </style>
 <template lang="pug">
-.download-dialog(v-if="show")
+.download-dialog.bg-opacity-7(v-if="show")
     .container.bg-white.black-24
         .close.absolute(@click="close")
         .content

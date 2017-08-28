@@ -10,7 +10,7 @@
     .flex.flex-1
         .fz-26.mgl-20(:class="index === 0 ? 'bold' : 'gray'") {{ item.bidder.nickname }}
         .mgl-20.fz-22.light.time {{ createAt }}
-    .fz-26.bold(:class="priceClass") {{ item.bid_price | price }}
+    .fz-26(:class="priceClass") {{ item.bid_price | price }}
     .fz-22.white.mgl-12.result.center(:class="resultInfo.bg") {{ resultInfo.txt }}
 </template>
 <script>
@@ -30,7 +30,7 @@ export default {
         },
         priceClass() {
             if (this.index === 0) {
-                return this.status === 'success' ? 'green-2e' : 'red'
+                return this.status === 'success' ? 'green-2e bold' : 'red bold'
             }
             return 'light'
         },

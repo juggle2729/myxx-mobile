@@ -41,7 +41,7 @@
 </style>
 <template lang="pug">
 .auction-bid-price.flex(v-if="show")
-    .mask.flex-1.bg-black(@click="close")
+    .mask.flex-1.bg-opacity-7(@click="close")
     .container.bg-white
         .flex.pdh-36.current
             .fz-26.gray 当前价{{ (auction.current_price || auction.upset_price || 0) | price }}

@@ -10,7 +10,6 @@
     top: 0
     bottom: 0
     z-index: 999
-    background-color: rgba(0, 0, 0, .3)
     .container
         width: 620px
         margin: 0 auto
@@ -30,7 +29,7 @@
         line-height: 48px
 </style>
 <template  lang="pug">
-.confirm-action
+.confirm-action.bg-opacity-7
     .container.bg-white
         .center.bold.mgb-16(v-if="params.title") {{ params.title }}
         .content(:class="!params.title ? 'center' : ''") {{{ params.text }}}

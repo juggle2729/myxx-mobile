@@ -34,10 +34,14 @@ export default {
                 path: 'mall/auctions',
                 list: 'auctions',
                 params: {
-                    filter: this && (this.$route.query.tab || 'hot')
+                    filter: this.$route.query.tab || 'hot'
                 }
             }
         }
+    },
+
+    ready() {
+        this.fetch(true)
     },
 
     watch: {

@@ -55,6 +55,8 @@ icon($name)
         div:last-child
             line-height 90px
             border-radius 8px
+    .dialog-txt
+        line-height 1.3
 </style>
 <template lang="pug">
 .order-view(v-if="!$loadingRouteData")
@@ -102,7 +104,7 @@ icon($name)
             .fz-26.red.amount 实付款: 等待商家改价
         template(v-else)
             .fz-26.red.amount 实付款: {{ amount.cashAmount | price }}
-        .fz-26.pd-22.orange.desc.note(v-if="order.buyer_note") 订单备注：{{ order.buyer_note }}
+        .fz-26.pd-22.orange.desc.note.mgt-20(v-if="order.buyer_note") 订单备注：{{ order.buyer_note }}
     order-operation(:order.sync="order", :index="0")
     .bg.pdv-28.fz-26.gray
         .desc 订单编号：{{ order.order_no }}
@@ -115,8 +117,8 @@ icon($name)
         .mgt-32.white.bg-red.fz-30.center(@click="download") 免费下载美玉秀秀APP
     download-dialog(:show.sync="showRefundOrBackHint")
         .fz-36.center 退款退货
-        p.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
-        p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
+        p.dialog-txt.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
+        p.dialog-txt.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
 </template>
 <script>
 import date from '../util/date'

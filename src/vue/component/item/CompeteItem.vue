@@ -56,7 +56,7 @@ bg($icon, $size)
                 span.mgl-10.black {{ item.current_price | price }}
         .status.fz-26.gray.absolute.flex
             template(v-if="item.status === 'going'")
-                .flex-1 距结束 {{ item.end_time | diffNowTime }}
+                .flex-1 距结束 {{ item.real_end_time | diffNowTime }}
             template(v-if="item.status === 'preview'")
                 .flex-1 距开始 {{ item.start_time | diffNowTime }}
             template(v-if="item.status === 'success' || item.status === 'fail'")
