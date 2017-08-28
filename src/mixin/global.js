@@ -238,7 +238,11 @@ const mixin = {
         },
 
         touchStart(event) {
-            event.preventDefault()
+            this.env.isIOS && event.preventDefault()
+        },
+
+        toYuan(price) {
+            return (price/100).toFixed(2).replace(/\.00$/, '')
         },
 
         checkDetailLeavePosition() {

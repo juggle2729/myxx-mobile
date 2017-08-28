@@ -73,12 +73,12 @@ export default {
         }
     },
     route: {
-        deactivate() {
-            if (this.$route.list) {
-                debugger
+        deactivate({to, next}) {
+            if (this.$route.list && to && to.detail) { // 跳转至详情页才需要缓存
                 this.$store.set(this._listCacheKey(), this._scrollTop())
                 this.$store.set(this._listItemsCacheKey(), this.items)
             }
+            next()
         }
     }
 };

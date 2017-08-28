@@ -55,7 +55,7 @@ icon($name)
         div:last-child
             line-height 90px
             border-radius 8px
-    .dialog-txt
+    .download-dialog p
         line-height 1.3
 </style>
 <template lang="pug">
@@ -84,7 +84,6 @@ icon($name)
         .flex.full-width
             icon.gray.fz-30(name="location")
             .flex-1.fz-30.black {{ addressInfo.title }}
-            .operation.center.pdh-12.fz-22.gray(@click="copyAddress") 复制地址
         .desc.black.mgt-20 {{ addressInfo.namePhone }}
         .desc.gray.mgt-16 {{ addressInfo.address }}
     .flex.mgr-32.pdv-36.fz-26.column-flex.bdb
@@ -117,8 +116,8 @@ icon($name)
         .mgt-32.white.bg-red.fz-30.center(@click="download") 免费下载美玉秀秀APP
     download-dialog(:show.sync="showRefundOrBackHint")
         .fz-36.center 退款退货
-        p.dialog-txt.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
-        p.dialog-txt.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
+        p.mgt-40 为了您的资金安全，退款退货需要在美玉秀秀APP内申请
+        p.mgt-32.fz-26.gray-8f.special 进入APP后请使用微信登录
 </template>
 <script>
 import date from '../util/date'
@@ -272,36 +271,6 @@ export default {
                     id: this.order.order_no
                 }
             })
-        },
-
-        copyAddress() {
-            const copyTarget = []
-            if (this.isReturn) {
-                copyTarget.push(this.order.return_receiver_name, this.order.return_receiver_phone, this.order.return_receiver_address)
-            } else {
-                copyTarget.push(this.order.receiver_name, this.order.receiver_phone, this.order.receiver_address)
-            }
-
-            if (window.clipboardData && window.clipboardData.setData) {
-                // IE specific code path to prevent textarea being shown while dialog is visible.
-                return clipboardData.setData("Text", copyTarget.join('\n'))
-
-            } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-                const textarea = document.createElement("textarea")
-                textarea.textContent = copyTarget.join('\n')
-                textarea.style.position = "fixed"  // Prevent scrolling to bottom of page in MS Edge.
-                document.body.appendChild(textarea)
-                textarea.select()
-                try {
-                    return document.execCommand("copy")  // Security exception may be thrown by some browsers.
-                } catch (ex) {
-                    console.warn("Copy to clipboard failed.", ex)
-                    return false;
-                } finally {
-                    document.body.removeChild(textarea)
-                    this.action('toast', { success: 1, text: '复制成功' })
-                }
-            }
         },
 
         complainStore() {

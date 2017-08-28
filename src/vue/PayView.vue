@@ -131,6 +131,14 @@ export default {
     },
 
     route: {
+        activate({ next }) {
+            const url = location.href
+            if (url.indexOf('date') === -1) {
+                location.replace(url + '&date=' + Date.now())
+            } else {
+                next()
+            }
+        },
         data() {
             this.bizType = this.$route.query.t || this.config.payBizType.auction
             return Q.resolve((() => {

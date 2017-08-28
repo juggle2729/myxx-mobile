@@ -40,10 +40,6 @@ export default {
         }
     },
 
-    ready() {
-        this.fetch(true)
-    },
-
     watch: {
         $route() {
             this.paging.params.filter = this.$route.query.tab

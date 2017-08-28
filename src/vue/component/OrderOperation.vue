@@ -100,7 +100,7 @@ export default {
                 name: 'pay',
                 query: {
                     id: this.order.order_no,
-                    t: 'order'
+                    t: this.config.payBizType.order
                 }
             })
         },

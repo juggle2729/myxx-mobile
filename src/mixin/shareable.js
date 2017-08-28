@@ -152,13 +152,20 @@ export default {
 
             // 注册微信分享接口
             if(this.env.isWechat && !this.env.isTest) {
-                this.wechatShareInit({
-                    title: data.title,
-                    desc: data.desc,
-                    link: data.url,
-                    imgUrl: /^http/.test(data.icon) ? data.icon : this.config.img + data.icon + '?imageView2/1/w/310'
-                })
+                const img = new Image()
+                img.src = /^http/.test(data.icon) ? data.icon : this.config.img + data.icon + '?imageView2/1/w/310'
+                img.onload = this._shareInit.bind(this, data, img.src)
+                img.onerror = this._shareInit.bind(this, data, 'http://o0x80w5li.qnssl.com/logo.jpg')
             }
+        },
+
+        _shareInit(data, imgUrl) {
+            this.wechatShareInit({
+                title: data.title,
+                desc: data.desc,
+                link: data.url,
+                imgUrl
+            })
         },
 
         share() {

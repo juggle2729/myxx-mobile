@@ -756,7 +756,7 @@ export default {
         }
     },
 
-    '/pay': {
+    '/pay/wx': {
         name: 'pay',
         title: '付款',
         component(resolve) {
