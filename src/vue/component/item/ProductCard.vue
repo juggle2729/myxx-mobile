@@ -72,12 +72,16 @@ export default {
                     return `/auction/${item.auction.id}`
                 }
                 return `/product/${item.id}`
-            } else if(this.hasUniversalLinkSupport) {
+            } else {
                 if (item.auction) {
                     this.saveDetailLeavePosition()
                     return location.href.replace(location.pathname, `/auction/${item.auction.id}`)
+                } else if (this.hasUniversalLinkSupport) {
+                    return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu')
+                        .replace(location.pathname, `/product/${item.id}`)
+                } else {
+                    return location.href.replace(location.pathname, `/product/${item.id}`)
                 }
-                return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${item.id}`)
             }
         },
 

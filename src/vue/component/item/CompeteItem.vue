@@ -37,7 +37,7 @@ bg($icon, $size)
 <template lang="pug">
 .compete-item.pd-32.bg-white.bdb.flex(v-link="{name: 'auction', params: {id: item.id}}")
     .pic.fz-22.white(v-bg.sm="item.product.cover")
-        template(v-if="tab !== 'remind' && item.my_bid")
+        template(v-if="item.my_bid")
             .line-height-30.center(:class="bgColor") {{ item.my_bid.status_desc }}
     .desc.mgl-20.pdv-4.flex-1.relative
         .title.line-clamp.fz-26.black {{ item.product.title }}

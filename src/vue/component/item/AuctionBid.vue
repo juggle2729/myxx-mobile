@@ -1,12 +1,15 @@
 <style lang="stylus">
 .auction-bid-item
-   .result
+    .user-pic
+        width 50px
+        height @width
+    .result
         width 60px
         line-height 32px
 </style>
 <template lang="pug">
 .auction-bid-item.pdl-32.mgt-28.flex
-    avatar(:user="item.bidder", :size="50")
+    .user-pic.round(v-bg.sm="item.bidder.photo || 'app/avatar.png'")
     .flex.flex-1
         .fz-26.mgl-20(:class="index === 0 ? 'bold' : 'gray'") {{ item.bidder.nickname }}
         .mgl-20.fz-22.light.time {{ createAt }}
