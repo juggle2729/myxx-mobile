@@ -66,10 +66,10 @@ export default {
             }
         },
         _listCacheKey() {
-            return 'list-leave-position-' + this.$route.name
+            return `list-leave-position-${this.$route.name}`
         },
         _listItemsCacheKey() {
-            return 'cache-items-' + this.$route.name
+            return `cache-items-${this.$route.name}`
         }
     },
     route: {

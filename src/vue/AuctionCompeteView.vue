@@ -17,7 +17,7 @@ import CompeteItem from 'component/item/CompeteItem.vue'
 import Tabs from 'component/Tabs.vue'
 import paging from 'paging'
 export default {
-    name: 'auction-home-view',
+    name: 'auction-compete-view',
     mixins: [ paging ],
     components: [ Tabs, CompeteItem, AuctionFooterMenu ],
 

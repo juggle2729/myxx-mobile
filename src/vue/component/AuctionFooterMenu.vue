@@ -16,8 +16,8 @@ bg($key)
         background-size contain
     .flex-1
         flex-direction column
-    .menu-home
-        bg(home)
+    .menu-auction-home
+        bg(auction-home)
     .menu-compete
         bg(compete)
     .menu-order
@@ -25,8 +25,8 @@ bg($key)
     .menu-mine
         bg(mine)
     .active
-        .menu-home
-            bg(home-actived)
+        .menu-auction-home
+            bg(auction-home-actived)
         .menu-compete
             bg(compete-actived)
         .menu-order
@@ -50,7 +50,7 @@ export default {
         return {
             items: [
                 {
-                    key: 'home',
+                    key: 'auction-home',
                     name: '首页',
                     path: '/auction/home'
                 },

@@ -696,7 +696,7 @@ export default {
     },
 
     '/auction/home': {
-        name: 'home',
+        name: 'auction-home',
         title: '首页',
         list: true,
         component(resolve) {
@@ -709,6 +709,7 @@ export default {
     '/auction/compete': {
         name: 'compete',
         title: '参拍',
+        list: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionCompeteView.vue'))
