@@ -56,8 +56,6 @@
         & > div
             text-align: center
             width: 33.33%
-            &:first-child
-                color: #c6c6c6
             img
                 height: 56px
                 width: 56px
@@ -128,14 +126,10 @@
             .mgr-12 店铺评价
             icon(name="enter")
     .tabs.bg-white.flex
-        .tab(@click="action('toast', {text: '敬请期待'})")
-            img(:src="'shop/auction.png' | qn")
-            .mgt-16.fz-22.light 拍卖
         .tab(v-for="tab in tabs", @click="view = tab.id", :class="{'red': view === tab.id}")
             img(:src="(view === tab.id ? tab.selected : tab.unselect )| qn")
             .mgt-16.fz-22 {{tab.label}}
     component(:is="view", :shop="shop", keep-alive)
-
     .footer.flex.bdt.bg-white
         deep-link.has-icon.flex-1.fz-30
             icon.red(name="chat")
@@ -143,6 +137,7 @@
 </template>
 <script>
 import shareable from 'shareable'
+import auction from 'component/AllAuction.vue'
 import product from 'component/AllProduct.vue'
 import info from 'component/StoreInfo.vue'
 export default {
@@ -165,6 +160,7 @@ export default {
     mixins: [shareable],
 
     components: {
+        auction,
         product,
         info
     },
@@ -173,6 +169,7 @@ export default {
         return {
             view: '',
             tabs: [
+                { id: 'auction', selected: 'shop/auction-selected.png', unselect: 'shop/auction-unselect.png', label: '拍卖'},
                 { id: 'product', selected: 'shop/product-selected.png', unselect: 'shop/product-unselect.png', label: '全部商品'},
                 { id: 'info', selected: 'shop/info-selected.png', unselect: 'shop/info-unselect.png', label: '店铺信息'}
             ],
@@ -187,7 +184,6 @@ export default {
         data({from, to, next}) {
             if(from.name !== to.name) {
                 return this.$fetch(`mall/shop/${to.params.id}/profile`).then(resp => {
-                    console.log(resp)
                     this.shop = resp
                     this.action('updateTitle', {text: this.shop.shop_name})
                     this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:

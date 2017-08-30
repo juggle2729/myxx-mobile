@@ -40,6 +40,11 @@ export default {
                     data.userId = entry.owner.id
                     data.productId = entry.id
                     break
+                case 'auction':
+                    data.title = `【拍卖】${entry.title}正在拍卖中，赶快来围观`
+                    data.desc = '你觉得这个宝贝能拍到多少？'
+                    data.icon = entry.pictures[0]
+                    break
                 case 'master':
                     data.title = entry.interview.title
                     data.desc = entry.baseData.name + ' ' + _.get(entry, '.baseData.titles.0.name', '')
@@ -147,13 +152,20 @@ export default {
 
             // 注册微信分享接口
             if(this.env.isWechat && !this.env.isTest) {
-                this.wechatShareInit({
-                    title: data.title,
-                    desc: data.desc,
-                    link: data.url,
-                    imgUrl: /^http/.test(data.icon) ? data.icon : this.config.img + data.icon + '?imageView2/1/w/310'
-                })
+                const img = new Image()
+                img.src = /^http/.test(data.icon) ? data.icon : this.config.img + data.icon + '?imageView2/1/w/310'
+                img.onload = this._shareInit.bind(this, data, img.src)
+                img.onerror = this._shareInit.bind(this, data, 'http://o0x80w5li.qnssl.com/logo.jpg')
             }
+        },
+
+        _shareInit(data, imgUrl) {
+            this.wechatShareInit({
+                title: data.title,
+                desc: data.desc,
+                link: data.url,
+                imgUrl
+            })
         },
 
         share() {

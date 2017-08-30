@@ -1,5 +1,4 @@
 import Q from 'q'
-import lodash from 'lodash'
 import bridge from '../bridge'
 import config from '../config'
 import _ from 'lodash'
@@ -8,7 +7,7 @@ const mixin = {
     data() {
         return {
             config,
-            lodash
+            lodash: _
         }
     },
 
@@ -33,7 +32,13 @@ const mixin = {
     },
 
     route: {
-        waitForData: true
+        waitForData: true,
+        deactivate({ to, from, next }) {
+            if (this.$route.detail && !to.list) {
+                this.$store.set(this._detailCacheKey(), this._scrollTop())
+            }
+            next()
+        }
     },
 
     created() {
@@ -230,6 +235,38 @@ const mixin = {
             if(!this.$root.deep) {
                 this.$root.popup = {handler: 'browser'}
             }
+        },
+
+        touchStart(event) {
+            this.env.isIOS && event.preventDefault()
+        },
+
+        toYuan(price) {
+            return (price/100).toFixed(2).replace(/\.00$/, '')
+        },
+
+        checkDetailLeavePosition() {
+            const leavePosition = this.$store.get(this._detailCacheKey())
+            if (leavePosition) {
+                setTimeout(() => {
+                    window.scroll(0, leavePosition)
+                    this.$store.remove(this._detailCacheKey())
+                }, 0)
+            } else {
+                window.scroll(0, 0)
+            }
+        },
+
+        saveDetailLeavePosition() {
+            this.$store.set(this._detailCacheKey(), this._scrollTop())
+        },
+
+        _detailCacheKey() {
+            return `detail-leave-position-${this.$route.name}-${this.$route.params.id}`
+        },
+
+        _scrollTop() {
+            return document.documentElement.scrollTop || document.body.scrollTop
         }
     }
 }

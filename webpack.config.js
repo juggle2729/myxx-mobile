@@ -31,6 +31,9 @@ module.exports = {
             test: /\.jsx?$/,
             loader: 'babel',
             exclude: /node_modules/
+        }, {
+            test: /\.css$/,
+            loaders: ['style', 'css']
         }]
     },
     vue: {
@@ -42,7 +45,7 @@ module.exports = {
         presets: ['es2015', 'stage-2']
     },
     stats: {
-      children: false
+        children: false
     }
 }
 

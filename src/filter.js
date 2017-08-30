@@ -1,5 +1,6 @@
 import dateformat from 'dateformat'
 import config from './config'
+import date from './util/date'
 const filters = {
     moment(msec) {
         msec = +msec
@@ -99,8 +100,13 @@ const filters = {
     duration(duration) {
         const padZero = val => _.padStart(val, 2, '0')
         return `${padZero(parseInt(duration/60))}:${padZero(duration%60)}`
+    },
+
+    diffNowTime(targetTime) {
+        return date.diffNowTime(targetTime)
     }
 }
+
 export default {
     install(Vue) {
         _.each(filters, (fn, name) => {

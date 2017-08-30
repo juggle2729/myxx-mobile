@@ -355,6 +355,27 @@ export default {
         }
     },
 
+    '/order-list': {
+        name: 'order-list',
+        title: '订单',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderListView.vue'))
+            }, 'mall')
+        }
+    },
+
+    '/order/:id': {
+        name: 'order',
+        title: '订单详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/order/:id/price': {
         name: 'order-price',
         title: '修改订单价格',
@@ -371,6 +392,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('OrderTraceView.vue'))
+            }, 'mall')
+        }
+    },
+
+    '/order/:id/:type/reject': {
+        name: 'order-reject',
+        title: '商家拒绝退货',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderRejectView.vue'))
             }, 'mall')
         }
     },
@@ -421,6 +452,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletDetailView.vue'))
+            }, 'wallet')
+        }
+    },
+
+    '/wallet/margin': {
+        name: 'margin',
+        title: '拍品保证金',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WalletMarginView.vue'))
             }, 'wallet')
         }
     },
@@ -560,6 +601,15 @@ export default {
         }
     },
 
+    '/help/auction-rule/:type': {
+        title: '拍卖规则说明',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionRuleView.vue'));
+            }, 'help')
+        }
+    },
+
     '/help/eco-system': {
         title: '打造和田玉良性生态的举措',
         component(resolve) {
@@ -611,6 +661,109 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('HelpMasterRecognitionView.vue'));
             }, 'help')
+        }
+    },
+
+    '/auction/mine': {
+        name: 'auction-mine',
+        title: '我的',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMineView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/margin': {
+        name: 'auction-margin',
+        title: '竞拍保证金',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMarginView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/:id': {
+        name: 'auction',
+        title: '拍品详情',
+        detail: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/home': {
+        name: 'auction-home',
+        title: '首页',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionHomeView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/compete': {
+        name: 'compete',
+        title: '参拍',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionCompeteView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/:id/:status/bids': {
+        name: 'auction-bids',
+        title: '出价记录',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionBidsView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/addresses': {
+        name: 'addresses',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddessesView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/address/:id/:type': {
+        name: 'address-add',
+        title: '收货地址管理',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AddressAddView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/area-list': {
+        name: 'area-list',
+        title: '选择地区',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AreaView.vue'))
+            }, 'address')
+        }
+    },
+
+    '/pay/wx': {
+        name: 'pay',
+        title: '付款',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PayView.vue'))
+            }, 'pay')
         }
     },
 

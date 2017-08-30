@@ -46,6 +46,8 @@
             line-height: 72px
     .footer-placeholder
         height: 112px
+    .tabs
+        position static !important
 </style>
 <template  lang="pug">
 .user-view.bg(v-if="!$loadingRouteData")
@@ -91,20 +93,20 @@
 </template>
 <script>
 import shareable from 'shareable'
-import tabs from 'component/Tabs.vue'
-import home from 'component/UserHome.vue'
-import story from 'component/UserActivity.vue'
-import collection from 'component/UserCollection.vue'
+import Tabs from 'component/Tabs.vue'
+import Home from 'component/UserHome.vue'
+import Story from 'component/UserActivity.vue'
+import Collection from 'component/UserCollection.vue'
 export default {
     name: 'user-view',
 
     mixins: [shareable],
 
     components: {
-        tabs,
-        home,
-        story,
-        collection
+        Tabs,
+        Home,
+        Story,
+        Collection
     },
 
     data() {

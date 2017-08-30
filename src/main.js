@@ -1,10 +1,10 @@
 require('fastclick').attach(document.body)
-require('script-loader!./Umeng')
+require('swiper/dist/css/swiper.min.css')
 
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
-import config from './config'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import routes from './route'
 import directive from './directive'
 import mixin from './mixin/global'
@@ -15,8 +15,9 @@ import store from './store'
 
 // Vue configurations
 Vue.config.debug = process.env.NODE_ENV !== 'production'
-Vue.use(Resource)
 Vue.use(Router)
+Vue.use(Resource)
+Vue.use(VueAwesomeSwiper)
 Vue.use(filter)
 Vue.use(directive)
 Vue.mixin(mixin)
@@ -67,31 +68,25 @@ router.beforeGo((from, to, app) => {
 })
 
 router.beforeEach(({from, to, next, abort}) => {
-    const universalLinkFailedAt = _.get(to, 'query.ulfa', 0)
-    if(Date.now() - universalLinkFailedAt < 10000) { // 如果页面是10秒内，由universal link触发失败而来，直接进入下载页面
-        abort()
-        location.href = config.download
-    } else {
-        // 同一路由内，仅切换tab时，不调整滚动位置
-        if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+    // 同一路由内，仅切换tab时，不调整滚动位置
+    if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+        if (!from.detail && !to.detail && !from.list && !to.list) {
             window.scroll(0, 0)
         }
-        document.title = to.title || '美玉秀秀'
-        to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-        next()
     }
+    document.title = to.title || '美玉秀秀'
+    to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+    next()
 })
 
 router.afterEach(({to, from}) => {
-    if(to.router.app.env.isApp && to.query.referer) {
-        window.setWebViewFlag()
-        window.MobclickAgent.onCCEvent(['goods', to.query.referer], 0, '商品')
+    if (from.list && !to.detail) {
+        window.scroll(0, 0)
     }
 })
 
 router.alias({
     '/order/confirm/:product': '/update',
-    '/order/:id': '/update',
     '/order/:id/received': '/update',
     '/order/:id/sent': '/update',
     '/evaluations/:tab': '/update',

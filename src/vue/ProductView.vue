@@ -3,12 +3,6 @@
 @import '~style/partials/mixin'
 .product-view
     position: relative
-    .prod-video
-        height: 577px
-        background-size: contain
-        background-color: #000000
-        &.play::after
-            background-size: 144px 144px
     .titles
         .header
             min-height: 164px
@@ -111,7 +105,6 @@
     .placeholder
         height: 110px
     .float-box
-        position: fixed
         bottom: 0
         height: 98px
         width: 100%
@@ -119,10 +112,8 @@
             height: 100%
         .contact-btn,.collect-btn,.shop-btn
             font-size: 22px
-            -webkit-box-orient: vertical
-            -webkit-box-pack: center
+            flex-direction column
             width: 50%
-            height: 100%
             .btn
                 font-size: 22px
             [class^='icon-'], [class*=' icon-']
@@ -203,17 +194,16 @@
         .recommends > a
             margin: 0 0 20px 15px
         .tag-title
-            line-height: 90px
-            padding-left 32px
+            line-height 90px
         .tags
-            padding: 0px 32px 24px
-            font-size: 0
+            padding 0 20px 28px
+            font-size 0
             .tag
-                display: inline-block
-                height: 60px
-                line-height: 60px
-                border-radius: 30px
-                border(a, #c6c6c6)
+                display inline-block
+                line-height 68px
+                border-radius 8px
+                & + .tag
+                    margin-left 20px
     &.offline
         position: absolute
         width: 100%
@@ -225,6 +215,11 @@
             margin: 0 auto
             height: 244px
             width: 386px
+    .auction:after
+        content '>'
+        margin-left 8px
+        position relative
+        bottom 2px
 .old-android
     .product-view
         .coupon-labels div
@@ -232,13 +227,14 @@
 </style>
 <template lang="pug">
 .product-view(v-if="prod.status === 'online'")
-    .prod-video.video(v-bg='prod.video', @click='play(prod.video)', query='vframe/jpg/offset/5/rotate/auto|imageView2/2/w/750')
+    custom-swiper(:item="prod")
     .titles.bg-white
         .header
             .title.fz-32 {{prod.title}}
             .flex.red
-                .fz-30.flex-1(v-if="prod.sell_status === 'sold'") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
-                .price.fz-44.flex-1(v-else) {{prod.price | price}}
+                .fz-44.flex-1.bold(v-if="prod.auction") 拍卖中
+                .fz-30.flex-1(v-if="!prod.auction && isSold") {{prod.sell_status_editable ? '实体店已售出' : '已售出'}}
+                .price.fz-44.flex-1(v-if="!prod.auction && !isSold") {{prod.price | price}}
         .guarantee(@click="$root.popup = {handler: 'guarantee'}")
             img(:src="'product/term.png?v1' | qn")
             icon.fz-26(name="enter")
@@ -269,7 +265,7 @@
             span.inline-block.red.mgl-16 {{prod.shop.pd_count_today}}
         .flex-1
             span.inline-block 拍卖
-            span.inline-block.light.mgl-8 敬请期待
+            span.inline-block.red.mgl-16 {{prod.shop.auction_count}}
     .master.flex.bg-white.bdt.pdl-32(v-link="{name: 'user', params: {id: prod.owner.id}}")
         avatar(:user='prod.owner', :size='50')
         .flex
@@ -304,9 +300,9 @@
                     .fz-26.red {{p.price | price}}
         .hr
     .prod-related(v-if="related.length")
-        .tag-title.fz-26.gray 相关推荐
+        .tag-title.fz-26.gray.pdl-20 相关推荐
         .tags(v-if="prod.tags.length > 0")
-            .tag.pdh-28.mgr-16.mgb-16.fz-26.center.bg(v-for="tag in prod.tags", @click="gotoTagView(tag)") {{tag.name}}
+            .tag.pdh-28.fz-26.center.bg-light-gray(v-for="tag in prod.tags", @click="gotoTagView(tag)") {{tag.name}}
         .recommends.bg.pdt(v-if="related.length")
             product-card(v-for="item in related", :item="item")
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
@@ -322,10 +318,12 @@
             .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                 icon.fz-30(name="shop")
                 .mgt-6 店铺
-        template(v-if="prod.sell_status==='selling'")
+        template(v-if="prod.auction")
+            .auction.fz-26.buy-btn.bg-red.white(v-link="{name: 'auction', params: {id: prod.auction.id}}") 此商品正在拍卖
+        template(v-if="!prod.auction && isSelling")
             .fz-26.add-btn.bg-yellow.white(@click="addToCart()") 加入购物车
             .fz-26.buy-btn.bg-red.white(@click="buy()") 立即购买
-        template(v-else)
+        template(v-if="!prod.auction && !isSelling")
             .fz-26.add-btn.bg-gray.white 加入购物车
             .fz-26.buy-btn.bg-gray.white 已售出
     .float-box.flex.fixed.fz-30.bg-white(v-else)
@@ -339,8 +337,10 @@
             .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
                 icon.fz-30(name="shop")
                 .mgt-6 店铺
-        deep-link.has-icon.buy-btn.bg-red.white.fz-30(v-if="prod.sell_status==='selling'") 立即购买
-        deep-link.has-icon.buy-btn.bg-gray.white.fz-30(v-else) 已售出
+        .auction.has-icon.buy-btn.bg-red.white.fz-30(v-if="prod.auction",
+            v-link="{name: 'auction', params: {id: prod.auction.id}}") 此商品正在拍卖
+        deep-link.has-icon.buy-btn.bg-red.white.fz-30(v-if="!prod.auction && isSelling") 立即购买
+        deep-link.has-icon.buy-btn.bg-gray.white.fz-30(v-if="!prod.auction && !isSelling") 已售出
 .product-view.offline(v-else)
     img(:src="'mall/offline.png' | qn")
     .mgt-28.gray.fz-30.center 商品已下架
@@ -348,12 +348,14 @@
 <script>
 import shareable from 'shareable'
 import ProductCard from 'component/item/ProductCard.vue'
+import CustomSwiper from "component/CustomSwiper.vue";
 export default {
     name: 'product-view',
 
     mixins: [shareable],
 
     components: {
+        CustomSwiper,
         ProductCard
     },
 
@@ -367,7 +369,8 @@ export default {
                 is_faved: false,
                 status: 'online',
                 tags: [],
-                banner: []
+                banner: [],
+                auction: {}
             },
             isSelf: false,
             coupon_label_count: 3,
@@ -394,7 +397,6 @@ export default {
 
     computed: {
         coupons() {
-            console.log(this.coupon_label_count, this.prod.shop.coupons)
             return this.prod.shop.coupons.slice(0, this.coupon_label_count)
         },
 
@@ -408,6 +410,12 @@ export default {
                     }
                 }
             })
+        },
+        isSold() {
+            return this.prod.sell_status === 'sold'
+        },
+        isSelling() {
+            return this.prod.sell_status==='selling'
         }
     },
 
@@ -486,6 +494,10 @@ export default {
             this.action('couponList', {
                 shop: this.prod.shop.id
             })
+        },
+
+        gotoTagView(tag) {
+            this.$router.go({ name: 'tag', params: { id: tag.id, name: tag.name } })
         }
     }
 }

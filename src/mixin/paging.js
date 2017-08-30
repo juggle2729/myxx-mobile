@@ -6,7 +6,19 @@ export default {
         };
     },
     ready() {
-        this.fetch();
+        const cacheItems = this.$store.get(this._listItemsCacheKey())
+        if (cacheItems && this.$route.list) {
+            this.items = cacheItems
+            this.$nextTick(() => {
+                const leavePosition = this.$store.get(this._listCacheKey())
+                window.scrollTo(0, leavePosition);
+
+                this.$store.remove(this._listCacheKey())
+            })
+            this.$store.remove(this._listItemsCacheKey())
+        } else {
+            this.fetch();
+        }
     },
     events: {
         scrollToBottom(e) {
@@ -50,8 +62,23 @@ export default {
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
-                });
+                }, () => this.items.loading = false);
             }
+        },
+        _listCacheKey() {
+            return `list-leave-position-${this.$route.name}`
+        },
+        _listItemsCacheKey() {
+            return `cache-items-${this.$route.name}`
+        }
+    },
+    route: {
+        deactivate({to, next}) {
+            if (this.$route.list && to && to.detail) { // 跳转至详情页才需要缓存
+                this.$store.set(this._listCacheKey(), this._scrollTop())
+                this.$store.set(this._listItemsCacheKey(), this.items)
+            }
+            next()
         }
     }
 };

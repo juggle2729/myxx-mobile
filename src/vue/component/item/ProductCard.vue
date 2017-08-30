@@ -1,18 +1,25 @@
 <style lang="stylus">
 .product-card
-    display: inline-block
-    width: 47%
+    display inline-block
+    width 47%
     .media
-        height: 345px
-        position: relative
+        height 345px
+        position relative
         .mark
-            position: absolute
-            left: 0
-            top: 0
-            display: inline-block
-            line-height: 44px
-            padding: 0 28px
-            background-color: rgba(159, 42, 240, .8)
+            position absolute
+            left 0
+            top 0
+            display inline-block
+            line-height 44px
+            padding 0 28px
+            background-color rgba(159, 42, 240, .8)
+        .auction-flag
+            left 8px
+            top 8px
+            width 108px
+            height 40px
+            background url('//o0x80w5li.qnssl.com/auction/auction-flag.png') no-repeat
+            background-size contain
     .btn
         border-radius: 4px
     .flex
@@ -29,8 +36,9 @@
             width: 130px
 </style>
 <template lang="pug">
-a.product-card.bg-white.bd-light(:href="href")
+a.product-card.bg-white.bd-light(@click="goToDetail(item)")
     .media(v-bg='item.first_picture')
+        .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
         .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}
         .flex.mgt-12.fz-22.light.mgb-10(v-if="btn")
@@ -38,8 +46,8 @@ a.product-card.bg-white.bd-light(:href="href")
             img(v-if="item.cigar_scale", :src="'shop/cigar.png' | qn")
         .red.pdv-8.flex
             .fz-24.flex-1(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
-            .price.fz-30.flex-1(v-else) {{item.price | price}}
-            img(v-if="!env.isApp && $route.name !== 'shop'", src="//o0x80w5li.qnssl.com/open-in-app.png")
+            .price.fz-30.flex-1(v-if="!item.auction && item.sell_status !== 'sold'") {{item.price | price}}
+            .is-auction.fz-30.flex-1(v-if="item.auction") 拍卖中
 </template>
 <script>
 import config from '../../../config'
@@ -50,27 +58,35 @@ export default {
         item: Object
     },
 
-    data() {
-        return {
-            href: config.download
-        }
-    },
-
     computed: {
         btn() {
             return this.item.sunlight || this.item.cigar_scale
         }
     },
 
-    ready() {
-        if(this.env.isApp || !this.env.isMobile) {
-            this.href = `/product/${this.item.id}?referer=goods_relatedrecomented`
-        } else if(this.hasUniversalLinkSupport) {
-            const originHref = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${this.item.id}?referer=goods_relatedrecomented`)
-            this.href = originHref + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()
-            setInterval(() => {
-                this.href = originHref + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()
-            }, 2000)
+    methods: {
+        getDetailUrl(item) {
+            if(this.env.isApp || !this.env.isMobile) {
+                if (item.auction) {
+                    this.saveDetailLeavePosition()
+                    return `/auction/${item.auction.id}`
+                }
+                return `/product/${item.id}`
+            } else {
+                if (item.auction) {
+                    this.saveDetailLeavePosition()
+                    return location.href.replace(location.pathname, `/auction/${item.auction.id}`)
+                } else if (this.hasUniversalLinkSupport) {
+                    return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu')
+                        .replace(location.pathname, `/product/${item.id}`)
+                } else {
+                    return location.href.replace(location.pathname, `/product/${item.id}`)
+                }
+            }
+        },
+
+        goToDetail(item) {
+            location.href = this.getDetailUrl(item)
         }
     }
 }

@@ -8,20 +8,20 @@
     component(:is="view", keep-alive)
 </template>
 <script>
-import tabs from 'component/Tabs.vue'
-import question from 'component/item/MyQuestion.vue'
-import topic from 'component/item/MyTopic.vue'
-import shop from 'component/item/MyShop.vue'
-import user from 'component/item/MyUser.vue'
+import Tabs from 'component/Tabs.vue'
+import Question from 'component/item/MyQuestion.vue'
+import Topic from 'component/item/MyTopic.vue'
+import Shop from 'component/item/MyShop.vue'
+import User from 'component/item/MyUser.vue'
 export default {
     name: 'UserFollowing',
 
     components: {
-        tabs,
-        question,
-        topic,
-        shop,
-        user
+        Tabs,
+        Question,
+        Topic,
+        Shop,
+        User
     },
 
     data() {

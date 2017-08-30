@@ -46,36 +46,25 @@
             .backdrop(@click="backdrop=false", :class="{show: backdrop}")
 </template>
 <script>
-const getNativeLink = (() => {
-    const SCHEMA = {
-        story: 'home/shaibao',
-        post: 'home/long_topic',
-        question: 'home/jianbao',
-        answer: 'home/jianbao_result',
-        collection: 'home/album',
-        activity: 'home/category',
-        user: 'user/homepage',
-        shop: 'user/shop',
-        jade: 'mall/tab',
-        product: 'mall/tab'
-    }
-    return (route) => {
-        let schema = _.get(SCHEMA, route.name)
-        if(schema) {
-            schema += ('/' + route.params.id)
-        } else {
-            schema = 'home/tab'
-        }
-        return 'myxx://' + schema
-    }
-})()
 export default {
     name: 'deep-link',
 
     data() {
         return {
             href: '',
-            backdrop: false
+            backdrop: false,
+            schema: {
+                story: 'home/shaibao',
+                post: 'home/long_topic',
+                question: 'home/jianbao',
+                answer: 'home/jianbao_result',
+                collection: 'home/album',
+                activity: 'home/category',
+                user: 'user/homepage',
+                shop: 'user/shop',
+                jade: 'mall/tab',
+                product: 'mall/tab'
+            }
         }
     },
 
@@ -88,7 +77,22 @@ export default {
 
     methods: {
         updateHref() {
-            this.href = this.hasUniversalLinkSupport ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+            this.href = this.checkPageUniversalLinkSupport() ? location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu')
+                : this.config.download
+        },
+
+        checkPageUniversalLinkSupport() {
+            return this.hasUniversalLinkSupport && Object.keys(this.schema).some(item => location.pathname.indexOf(item) !== -1)
+        },
+
+        getNativeLink(route) {
+            let schema = _.get(this.schema, route.name)
+            if(schema) {
+                schema += ('/' + route.params.id)
+            } else {
+                schema = 'home/tab'
+            }
+            return 'myxx://' + schema
         },
 
         myxx() {
@@ -96,7 +100,7 @@ export default {
             ifr.style.display = 'none'
             ifr.height = 0
             ifr.width = 0
-            ifr.src = getNativeLink(this.$route)
+            ifr.src = this.getNativeLink(this.$route)
             document.body.appendChild(ifr)
 
             // 打开下载页面
