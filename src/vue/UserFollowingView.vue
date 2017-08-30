@@ -1,6 +1,9 @@
 <style lang="stylus">
 .user-following
     min-height 100%
+    padding-top 100px
+    .empty-component
+        height calc(100% - 100px)
 </style>
 <template  lang="pug">
 .user-following.bg(v-if="!$loadingRouteData")
