@@ -238,7 +238,7 @@ const mixin = {
         },
 
         touchStart(event) {
-            this.env.isIOS && event.preventDefault()
+            this.env.isIOS && !this.env.isTest && event.preventDefault()
         },
 
         toYuan(price) {
