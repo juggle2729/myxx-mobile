@@ -485,7 +485,6 @@ export default {
                 } else {
                     interval && clearInterval(interval)
                     this.auctionTime = '已开始'
-                    location.reload(true)
                 }
             } else if (this.auction.status === 'going') {
                 diffTime = date.diffNowTime(this.auction.real_end_time)
@@ -494,7 +493,6 @@ export default {
                 } else {
                     interval && clearInterval(interval)
                     this.auctionTime = '已结束'
-                    location.reload(true)
                 }
             }
         }
