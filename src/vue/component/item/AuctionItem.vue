@@ -1,52 +1,64 @@
 <style lang="stylus">
+@import '~style/partials/var'
 .auction-item
+    padding 30px 25px 18px
     .desc
         -webkit-box-align start
         .flex-1
+            .title
+                width 480px
+                padding-left 3px
             .status
-                height 32px
-                .mgr-12, .fz-26
+                .mgr-12
+                    width 100px
+                .mgr-12, .fz-30
                     line-height 32px
-        .margin
-            background url('//o0x80w5li.qnssl.com/auction/gurantee.png') no-repeat 12px center
-            background-size 24px 28px
-            line-height 48px
-            border-radius 6px
-            transform translateY(-8px)
+        .price
+            min-width 180px
+            .inline-block::first-letter
+                font-size 20px
+                margin 0 2px
     .pics
         .pic
-            width 234px
+            width 230px
             padding-top @width
             &:not(:first-child)
-                margin-left 4px
+                margin-left 5px
     .foot
-        height 120px
+        .margin
+            width 166px
+            height 48px
+            background-image: url($qn + 'auction/margin-paid-2.png')
+            background-size cover
         .shop
-            height 120px
-            right 32px
+            height 48px
+            -webkit-box-align center
+            -webkit-box-pack end
+            .icon
+                transform translateY(-18px)
 </style>
 <template lang="pug">
 .auction-item.bg-white(v-link="{name: 'auction', params: {id: item.id}}")
-    .desc.pdh-32.pdt-34.flex
+    .desc.flex
         .flex-1
-            .title.fz-32.line-clamp-1 {{ item.product.title }}
-            .status.flex.mgt-28
-                .mgr-12.fz-22.pdh-6.white(:class="bgColor") {{ auctionStatus }}
-                .fz-26.red(v-if="item.status === 'going'") {{ endCountdown }}
-                .fz-26.yellow-f1(v-if="item.status === 'preview'") {{ startCountdown }}
-        .margin.pdl-44.pdr-12.bd.fz-22.gray(v-if="item.status !== 'unpaid'") 保证金已付
-    .pics.mgt-28.flex.pdh-20
+            .title.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.product.title }}
+            .status.flex.mgt-22
+                .mgr-12.fz-24.white.txt-center(:class="bgColor") {{ auctionStatus }}
+                .fz-30.red-e6(v-if="item.status === 'going'") {{ endCountdown }}
+                .fz-30.yellow-f5(v-if="item.status === 'preview'") {{ startCountdown }}
+        .price.black-47.fz-20(v-if="item.status === 'going'") 当前价
+            .inline-block.fz-32.red-e6  {{ item.current_price || item.upset_price | price }}
+        .price.black-47.fz-20(v-if="item.status === 'preview'") 起拍价
+            .inline-block.fz-32.yellow-f5  {{ item.upset_price | price }}
+        .price.black-47.fz-20(v-if="item.status === 'success'") 成交价
+            .inline-block.fz-32.black-47  {{ item.current_price | price }}
+    .pics.mgt-16.flex
         .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
-    .foot.pdh-32.flex.relative
-        .price.red.fz-30.flex-1(v-if="item.status === 'going'") 当前价
-            span.fz-36  {{ item.current_price || item.upset_price | price }}
-        .price.yellow-f1.fz-30.flex-1(v-if="item.status === 'preview'") 起拍价
-            span.fz-36  {{ item.upset_price | price }}
-        .price.gray.fz-30.flex-1(v-if="item.status === 'success'") 成交价
-            span.fz-36  {{ item.current_price | price }}
-        .shop.gray.flex.absolute(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")
-            icon.fz-30(name="shop")
-            span.fz-26.pdl-10 {{ item.product.shop.shop_name }}
+    .foot.flex.pdt-14
+        .margin(v-if="item.status !== 'unpaid'")
+        .shop.gray.flex-1.txt-right.flex(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")
+            icon.fz-28(name="shop")
+            .fz-24.black-47.pdl-10 {{ item.product.shop.shop_name }}
 </template>
 <script>
 import date from '../../../util/date'
@@ -79,13 +91,13 @@ export default {
         bgColor() {
             switch (this.item.status) {
                 case 'going':
-                    return 'bg-red'
+                    return 'bg-red-e6'
                 case 'preview':
-                    return 'bg-yellow-f1'
+                    return 'bg-yellow-f5'
                 case 'success':
                 case 'fail':
                 case 'unpaid':
-                    return 'bg-gray'
+                    return 'bg-black-47'
             }
         },
         auctionStatus() {

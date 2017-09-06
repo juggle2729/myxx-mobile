@@ -15,7 +15,9 @@
         bottom 0
         width 100%
     .current
-        height 60px
+        height 100px
+        .gray
+            border-color #e6e6e6
     .bid
         height 180px
         justify-content center
@@ -44,9 +46,12 @@
     .mask.flex-1.bg-opacity-7(@click="close")
     .container.bg-white
         .flex.pdh-36.current
-            .fz-26.gray 当前价{{ (auction.current_price || auction.upset_price || 0) | price }}
-            .flex-1
-            .fz-26.gray 加价幅度{{ auction.bid_increment | price }}
+            .flex-1.flex
+                .fz-26.gray.pdr-20.bdr 当前价{{ (auction.current_price || auction.upset_price || 0) | price }}
+                .fz-26.gray.pdl-20 加价幅度{{ auction.bid_increment | price }}
+            .line-height-100.flex.fz-26(@click="toggleAnonymous")
+                icon(:name="isAnonymous ? 'selected' : 'select'")
+                .mgl-12 匿名出价
         .bid.flex.bg
             .minus.fz-40.center(:class="[canMinus ? 'white' : 'light', canMinus ? 'bg-red' : 'bg-white']", @click="togglePrice(false)")
             .fz-40.red.mgh-48 {{ (bidPrice || initPrice) | price }}
@@ -59,7 +64,8 @@ export default {
 
     data() {
         return {
-            bidPrice: 0
+            bidPrice: 0,
+            isAnonymous: false
         }
     },
 
@@ -84,6 +90,10 @@ export default {
         }
     },
 
+    ready() {
+        this.isAnonymous = this.$store.get('isAnonymous') || false
+    },
+
     methods: {
         close() {
             this.show = false
@@ -92,10 +102,12 @@ export default {
         confirmBid() {
             const bid_price = this.bidPrice || this.initPrice
             this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
-                bid_price
+                bid_price,
+                is_anonymous: this.isAnonymous
             }).then(() => {
                 this.show = false
                 this.$dispatch('bidDone', bid_price)
+                this.$store.set('isAnonymous', this.isAnonymous)
             })
         },
 
@@ -105,6 +117,10 @@ export default {
             }
             isAdd ? (this.bidPrice = this.bidPrice + this.auction.bid_increment) :
                 (this.canMinus && (this.bidPrice = this.bidPrice - this.auction.bid_increment))
+        },
+
+        toggleAnonymous() {
+            this.isAnonymous = !this.isAnonymous
         }
     }
 }

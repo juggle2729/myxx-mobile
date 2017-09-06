@@ -2,13 +2,18 @@
 .shop-comments-view
     [class^='icon-'], [class*=' icon-']
         vertical-align: -5px
+    .marks-border
+        padding-bottom 26px
+        border-bottom 1px solid #ededed
 </style>
 <template lang="pug">
 .shop-comments-view
-    marks(v-if="tags && (tags.length > 0)", :tags="tags")
-    .line-height-100.flex.fz-26.gray.bdb.pdh-32(@click="onlyContent", v-if="items.length")
-        icon(:name="selected ? 'selected' : 'select'")
-        .mgl-12 只看有内容的评价
+    .pdh-36.bg-white
+        .mark.pdt-36(v-if="tags && (tags.length > 0)", :class="{'marks-border': $route.name === 'shop'}")
+            marks(:tags="tags")
+        .line-height-80.flex.fz-26.gray.bdb.pdh-28(@click="onlyContent", v-if="items.length && $route.name !== 'shop'")
+            icon(:name="selected ? 'selected' : 'select'")
+            .mgl-12 只看有内容的评价
     opinion-list(:items="items")
 </template>
 <script>
@@ -31,6 +36,12 @@ export default {
     components: {
         OpinionList,
         Marks
+    },
+
+    ready() {
+        this.$route.name === 'shop' && this.$fetch(`mall/shop/${this.$route.params.id}/comments`).then(data => {
+            this.tags = data.tags
+        })
     },
 
     route: {

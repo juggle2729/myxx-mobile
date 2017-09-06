@@ -1,24 +1,27 @@
 <style lang="stylus">
 .shop-comment-view
-    padding-top: 100px
+    padding-top 100px
     .tabs
-        position: fixed
-        top: 0
-        width: 100%
-        height: 100px
-        z-index: 9
+        position fixed
+        top 0
+        width 100%
+        height 100px
+        z-index 9
         .tab
-            text-align: center
-            line-height: 50px
+            text-align center
+            line-height 50px
+    .empty-component
+        height calc(100% - 100px)
 </style>
 <template  lang="pug">
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
         .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{stats[k]}})
-    marks(v-if="tags.length > 0", :tags="tags")
-    .line-height-100.flex.fz-26.gray.bdb.pdh-32.bg-white(v-if="tab.items.length", @click="selected = !selected")
-        icon(:name="selected ? 'selected' : 'select'")
-        .mgl-12 只看有内容的评价
+    .pdh-36.bg-white(:class="{'pdt-36': tags.length > 0}")
+        marks(v-if="tags.length > 0", :tags="tags")
+        .line-height-80.flex.fz-26.black-24.bdb.pdh-28(v-if="tab.items.length", @click="selected = !selected")
+            icon(:name="selected ? 'selected' : 'select'")
+            .mgl-20 只看有内容的评价
     opinion-list(:items="selected ? tab.contents : tab.items")
     empty(v-if="!tab.items.length", title="暂无评论")
 </template>
@@ -27,11 +30,7 @@ import Marks from 'component/Marks.vue'
 import OpinionList from 'component/OpinionList.vue'
 export default {
     name: 'shop-comment-view',
-
-    components: {
-        Marks,
-        OpinionList
-    },
+    components: { Marks, OpinionList },
 
     data() {
         return {

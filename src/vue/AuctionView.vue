@@ -28,8 +28,8 @@
                 border-radius 6px
                 line-height 48px
             .margin
-                background url('//o0x80w5li.qnssl.com/auction/gurantee.png') no-repeat 12px center
-                background-size 28px 28px
+                background url('//o0x80w5li.qnssl.com/auction/gurantee-2.png') no-repeat 8px 3px
+                background-size 40px 40px
             .price
                 height 144px
                 &.preview .current-price
@@ -201,6 +201,7 @@
             .flex.fz-22.gray.mgt-30.mgb-24
                 .margin.pdl-48.pdr-12.bd 保证金已付
                 .mail.pdh-12.mgl-12.bd(v-if="auction.free_shipping") 包邮
+                .mail.pdh-12.mgl-12.bd(v-else) 货到付款
             .price.flex.fz-22(:class="auction.status")
                 .flex-1.center
                     .current-title {{ currentTitle }}

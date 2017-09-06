@@ -2,133 +2,102 @@
 @import '~style/partials/var'
 @import '~style/partials/mixin'
 .shop-view
-    min-height: 100%
-    padding-bottom: 110px
+    min-height 100%
+    padding-bottom 110px
     > header
-        height: 300px
-        position: relative
-        background-size: cover
-        background-position: center
-        .shop-bg
-            position: absolute
-            bottom: 0
-            height: 120px
-            width: 100%
-            background-size: cover
-            background: url($qn + 'shop/bg.png?v2') repeat-x
-        .name
-            position: absolute
-            bottom: 12px
-            left: 156px
-            -webkit-box-align: baseline
-        .fans
-            position: absolute
-            left: 370px
-            bottom: 0
-            > div
-                white-space: nowrap
-        img.collect
-            height: 52px
-            width: 152px
-            position: absolute
-            right: 0
-            bottom: 8px
-    .shop
-        .icon-enter
-            vertical-align: -2px
-            height: 22px
-            width: 22px
-        .img
-            height: 120px
-            width: 120px
-            position: relative
-            bottom: 60px
-            z-index: 99
-            border-radius: 8px
-            border: 4px solid #f9f9f9
-        .flex-1
-            .line-clamp-1
-                padding-right: 2em
-                width: 100%
+        border-color #ededed
+        padding 52px 36px 24px
+        -webkit-box-pack center
+        -webkit-box-orient vertical
+        .shop-logo
+            width 120px
+            height @width
+            border-radius 24px
+            border 2px solid #f9f9f9
+        .collect
+            width 140px
+            padding 13px 0
+            right 36px
+            top 112px
+            border-radius 50px
+        .address
+            transform translateY(-2px)
+        .border
+            width 1px
+            height 18px
     .tabs
-        height: 150px
-        line-height: 150px
-        & > div
-            text-align: center
-            width: 33.33%
-            img
-                height: 56px
-                width: 56px
+        .tabs-placeholder
+            width 100%
+            height 100px
+        ul
+            width 100%
+            height 100px
+            top 0
+            z-index 100
+            border-color #ededed
+            li
+                line-height 100px
+            .black-24
+                font-weight bold
+                border-bottom 4px solid #242424
+            &.on-top
+                position fixed
+                top 112px
     .list
-        padding-top: 20px
-        background-color: #efefef
+        padding-top 20px
+        background-color #efefef
         & > div
-            margin: 0 0 20px 15px
+            margin 0 0 20px 15px
 
     .footer
-        height: 98px
-        line-height: 48px
-        width: 100%
-        position: fixed
-        bottom: 0
+        height 98px
+        line-height 48px
+        width 100%
+        position fixed
+        bottom 0
         .icon-chat
-            height: 48px
-            width: 48px
+            height 48px
+            width 48px
     .coupons
-        height: 100px
+        width 100%
+        -webkit-box-pack justify
         .coupon-labels
-            opacity: 0
-            white-space nowrap
-            div
-                display inline-block
-                font-size 22px
-                color white
-                background-color #cc3f4f
-                background-image radial-gradient(at left center, white 4px, #cc3f4f 4px), radial-gradient(at right center, white 4px, #cc3f4f 4px)
-                background-size 10px 20px, 10px 20px
-                background-position left center, right center
-                background-repeat no-repeat
-                margin-right 6px
-                padding 6px 8px
-                border-radius 6px
-        .deep-link .btn //reset deep-link style
-            font-size: 26px
-            border-radius: 6px
-            padding: 8px 20px
-            border(a, #cc3f4f)
+            .fz-20
+                padding 5px 10px
+        .btn-get-coupon
+            width 100px
+            border-radius 36px
+            padding 6px 20px
+            right 36px
+            bottom 24px
 .old-android
     .shop-view
         .coupon-labels div
-            padding: 8px 8px 0
+            padding 8px 8px 0
 </style>
 <template lang="pug">
 .shop-view.bg
-    .coupons.flex.fz-26.red.pdh-32.bdb.bg-white(v-if="shop.coupon_count")
-        .coupon-labels.flex-1
-            div(v-for="coupon in coupons") {{coupon.title}}
-            div(v-if="coupon_label_count < shop.coupons.length") &middot;&middot;&middot;
-        deep-link.btn-get-coupon.has-icon 领券
-    header(v-bg.lg='shop.image_bg')
-        .shop-bg
-        .name.flex.white
-            .bold.fz-30 {{shop.shop_name}}
-            .mgr-8.center.fans
-                .fz-26.mgb-4 {{shop.owner.fans_count}}
-                .fz-22 粉丝
-        deep-link.has-icon
-            img.collect(:src="'shop/follow.png' | qn", @click="gotoDownload")
-    .shop.pdh.bg-white.flex.line-height-90.bdb
-        .img.mgr-16(v-bg="shop.logo")
-        .fz-26.gray.flex.flex-1
-            icon(name="location")
-            .mgl-8.mgt-4.line-clamp-1 {{shop.locale_name}}
-        .fz-26.gray.flex(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
-            .mgr-12 店铺评价
-            icon(name="enter")
-    .tabs.bg-white.flex
-        .tab(v-for="tab in tabs", @click="view = tab.id", :class="{'red': view === tab.id}")
-            img(:src="(view === tab.id ? tab.selected : tab.unselect )| qn")
-            .mgt-16.fz-22 {{tab.label}}
+    header.bg-white.bdb.flex.relative
+        .shop-logo(v-bg="shop.logo")
+        deep-link.has-icon.collect.bd-black-24.fz-24.black-24.absolute(@click="gotoDownload") 关注掌柜
+        .fz-36.bold.black-24.mgt-40 {{ shop.shop_name }}
+        .flex.fz-20.black-47.mgt-20
+            .address.flex
+                icon(name="location")
+                .mgl-6.mgt-4.line-height-30.line-clamp-1 {{ shop.locale_name }}
+            .border.bg-gray-b3.mgh-16
+            .fans
+                span 粉丝：
+                span {{ shop.owner.fans_count }}
+        .coupons.flex.mgt-50(v-if="shop.coupon_count")
+            .coupon-labels.flex
+                .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-for="coupon in coupons") {{ coupon.title }}
+                .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-if="coupon_label_count < shop.coupons.length") &middot;&middot;&middot;
+            deep-link.flex-1.btn-get-coupon.has-icon.fz-24.red-e6.bd-red-e6.absolute 领券
+    .tabs.relative
+        .tabs-placeholder
+        ul.flex.fz-30.bdb.pdh-20.bg-white.absolute(:class="onTop")
+            li.flex-1.center(v-for="tab in tabs", :class="view === tab.id ? 'black-24': 'gray-99'", @click="view = tab.id") {{ tab.name }}
     component(:is="view", :shop="shop", keep-alive)
     .footer.flex.bdt.bg-white
         deep-link.has-icon.flex-1.fz-30
@@ -137,14 +106,35 @@
 </template>
 <script>
 import shareable from 'shareable'
-import auction from 'component/AllAuction.vue'
-import product from 'component/AllProduct.vue'
-import info from 'component/StoreInfo.vue'
+import Auction from 'component/AllAuction.vue'
+import Product from 'component/AllProduct.vue'
+import Praise from 'component/ShopPraise.vue'
+import Info from 'component/StoreInfo.vue'
+import Tabs from 'component/Tabs.vue'
 export default {
     name: 'shop-view',
+    mixins: [shareable],
+    components: { Auction, Product, Praise, Info, Tabs },
+
+    data() {
+        return {
+            view: 'product',
+            tabs: [
+                { id: 'auction', name: '拍卖'},
+                { id: 'product', name: '全部商品'},
+                { id: 'praise', name: '口碑'},
+                { id: 'info', name: '店铺信息'}
+            ],
+            shop: {
+                owner: {}
+            },
+            coupon_label_count: 2,
+            onTop: ''
+        }
+    },
 
     ready() {
-        this.view = _.map(this.tabs, 'id').indexOf(this.$route.query.tab) === -1 ? this.tabs[0].id : this.$route.query.tab
+        this.view = this.$route.query.tab || this.view
         this.$watch('view', tab => {
             this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab}})
         })
@@ -155,29 +145,11 @@ export default {
                 this.adjustCouponLabels(container)
             }
         }, 50)
-    },
 
-    mixins: [shareable],
-
-    components: {
-        auction,
-        product,
-        info
-    },
-
-    data() {
-        return {
-            view: '',
-            tabs: [
-                { id: 'auction', selected: 'shop/auction-selected.png', unselect: 'shop/auction-unselect.png', label: '拍卖'},
-                { id: 'product', selected: 'shop/product-selected.png', unselect: 'shop/product-unselect.png', label: '全部商品'},
-                { id: 'info', selected: 'shop/info-selected.png', unselect: 'shop/info-unselect.png', label: '店铺信息'}
-            ],
-            shop: {
-                owner: {}
-            },
-            coupon_label_count: 2
-        }
+        this.$on('scroll', () => {
+            window.scrollY >= this.$el.children[1].offsetTop - this.$el.offsetTop
+                ? this.onTop = 'on-top' : this.onTop = ''
+        })
     },
 
     route: {

@@ -138,6 +138,7 @@ export default {
     '/product/:id': {
         name: 'product',
         title: '商品详情',
+        detail: true,
         native: v => v >= 3.8 && {name: 'product'},
         component(resolve) {
             require.ensure([], (require) => {
@@ -261,6 +262,7 @@ export default {
         name: 'shop',
         native: v => v >= 1.7 && {name: 'shop'},
         title: '',
+        detail: true,
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ShopView.vue'))
@@ -774,6 +776,28 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('AboutView.vue'))
             }, 'other')
+        }
+    },
+
+    '/product/recent': {
+        name: 'product-recent',
+        title: '每日上新',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ProductRankingView.vue'))
+            }, 'product')
+        }
+    },
+
+    '/product/top100': {
+        name: 'product-top100',
+        title: '玉友都在看',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ProductRankingView.vue'))
+            }, 'product')
         }
     },
 

@@ -31,7 +31,7 @@ for $d in $directions
 /****************************
 *        垂直居中            *
 * **************************/
-for $size in 30 36 44 60 68 80 90 98 100 104
+for $size in 28 30 32 36 44 50 60 68 80 90 98 100 104
     .line-height-{$size}
         height: $size px
         line-height: $size px
@@ -57,7 +57,7 @@ gap($size)
         .pd{$d}{$suffix}
             for $dir in $dirs
                 padding-{$dir}: $size px
-for $size in range(4, 50, 2)
+for $size in range(4, 50, 2, 10)
     gap($size)
 gap(0)
 /****************************
@@ -155,7 +155,7 @@ $line-clamp
 
 .hr
     height: 20px
-    background-color: $colors.bg
+    background-color: $colors.bg-gray-f7
 
 .round
     border-radius: 50%
