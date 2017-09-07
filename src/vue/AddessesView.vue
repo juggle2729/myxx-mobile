@@ -1,7 +1,7 @@
 <style lang="stylus">
 .addresses-view
     &.has-data
-        padding-top 88px
+        padding-top 100px
     .add-btn
         position fixed
         bottom 0

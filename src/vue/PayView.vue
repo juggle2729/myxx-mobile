@@ -113,7 +113,7 @@ export default {
                         } else if (result === "fail") {
                             this._doneCallback()
                         } else if (result === "cancel") {
-                            this._doneCallback(false, true)
+                            this._doneCallback(true, true)
                         }
                     })
                 } else {
@@ -124,8 +124,8 @@ export default {
             }
         },
 
-        _doneCallback(isPaid = false, paySuccess = false) {
-            this.$store.set('pay_result', { isPaid, paySuccess })
+        _doneCallback(tryPaid = true, paySuccess = false) {
+            this.$store.set('pay_result', { tryPaid, paySuccess })
             this.action('back', {step: 1})
         }
     },
@@ -143,8 +143,9 @@ export default {
             this.bizType = this.$route.query.t || this.config.payBizType.auction
             return Q.resolve((() => {
                 if (this.isAuction) {
-                    return this.$fetch(`mall/auctions/get_margin`).then(( { myb_amount } ) => {
-                        return myb_amount
+                    return this.$fetch(`mall/auctions/myb/margin_rule`)
+                        .then(({buyer_current_amount}) => {
+                        return this.$route.query.m - buyer_current_amount
                     })
                 } else if (this.isOrder) {
                     return this.$fetch(`mall/order/${this.$route.query.id}`).then(order => {

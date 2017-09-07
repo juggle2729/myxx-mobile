@@ -3,7 +3,7 @@
 @import '~style/partials/mixin'
 .auction-view
     position: relative
-    margin-top 88px
+    padding-top 100px
     .status-bar
         height 72px
         .bold
@@ -21,6 +21,12 @@
             background-color #888
             .bold
                 color: #888
+    .delay-explain
+        border-color #efefef
+        .icon-enter
+            width 14px
+            height 24px
+            transform translateY(-6px)
     .titles
         .header
             padding 36px 32px 0
@@ -195,13 +201,18 @@
     .status-bar.flex.pdl-32.fz-26(:class="auction.status")
         .bold.pdh-12.bg-white {{ statusText }}
         .white.mgl-16 {{ auctionTime }}
+        .white.mgl-16(v-if="auction.status === 'fail' || auction.status === 'success'") {{ endTime }}
+    .delay-explain.line-height-72.pdh-32.bdb.flex.red(v-if="auction.delay_remind_text", v-link="{name: 'delay-records', params: {id: auction.id}}")
+        .fz-22 {{ auction.delay_remind_text }}
+        .flex-1
+        icon(name="enter")
     .titles.bg-white
         .header
-            .title.fz-32 {{prod.title}}
+            .title.fz-32 {{ prod.title }}
             .flex.fz-22.gray.mgt-30.mgb-24
                 .margin.pdl-48.pdr-12.bd 保证金已付
                 .mail.pdh-12.mgl-12.bd(v-if="auction.free_shipping") 包邮
-                .mail.pdh-12.mgl-12.bd(v-else) 货到付款
+                .flex-1.txt-right {{ auction.click_count }}人围观
             .price.flex.fz-22(:class="auction.status")
                 .flex-1.center
                     .current-title {{ currentTitle }}
@@ -285,6 +296,7 @@ import ProductCard from 'component/item/ProductCard.vue'
 import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 import date from '../util/date'
 import DownloadDialog from 'component/DownloadDialog.vue'
+import dateformat from 'dateformat'
 export default {
     name: 'auction-view',
     mixins: [shareable],
@@ -356,6 +368,14 @@ export default {
                 default:
                     return '未支付'
             }
+        },
+
+        endTime() {
+            if (this.auction.delay_count > 0) {
+                return `${dateformat(this.auction.real_end_time, 'mm-dd hh:MM:ss')}
+                        结束 (延时${this.auction.delay_count}次)`
+            }
+            return `${dateformat(this.auction.real_end_time, 'mm-dd hh:MM:ss')}结束`
         },
 
         currentTitle() {
@@ -462,19 +482,20 @@ export default {
             if (this.auction.status !== 'going') {
                 return
             }
-            return this.$fetch(`balance/latest`)
-                .then(({ aution_margin_buyer }) => {
-                    if (aution_margin_buyer <= 0) {
-                        this.$router.go({
-                            name: 'auction-margin',
-                            query: {
-                                id: this.auction.id
-                            }
-                        })
-                    } else {
-                        this.showBidPrice = true
-                    }
-                })
+            return this.$fetch(`mall/auctions/myb/margin_rule`).then(marginRules => {
+                if (marginRules.over_amount - marginRules.auction_used_amount <
+                    (this.auction.current_price || this.auction.upset_price)
+                    || marginRules.buyer_current_amount <= 0) {
+                    this.$router.go({
+                        name: 'pay-margin',
+                        query: {
+                            id: this.auction.id
+                        }
+                    })
+                } else {
+                    this.showBidPrice = true
+                }
+            })
         },
 
         updateBidTime(interval) {

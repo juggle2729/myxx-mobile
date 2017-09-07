@@ -101,13 +101,20 @@ export default {
 
         confirmBid() {
             const bid_price = this.bidPrice || this.initPrice
-            this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
-                bid_price,
-                is_anonymous: this.isAnonymous
-            }).then(() => {
-                this.show = false
-                this.$dispatch('bidDone', bid_price)
-                this.$store.set('isAnonymous', this.isAnonymous)
+            this.action('confirm', {
+                text: '确认出价？',
+                labels: ['取消', '确定']
+            }).then((choice) => {
+                if (choice === '1') {
+                    this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
+                        bid_price,
+                        is_anonymous: this.isAnonymous
+                    }).then(() => {
+                        this.show = false
+                        this.$dispatch('bidDone', bid_price)
+                        this.$store.set('isAnonymous', this.isAnonymous)
+                    })
+                }
             })
         },
 

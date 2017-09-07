@@ -14,10 +14,12 @@
                 .mgr-12, .fz-30
                     line-height 32px
         .price
-            min-width 180px
             .inline-block::first-letter
                 font-size 20px
                 margin 0 2px
+        .bid-times
+            right 0
+            bottom 4px
     .pics
         .pic
             width 230px
@@ -39,7 +41,7 @@
 </style>
 <template lang="pug">
 .auction-item.bg-white(v-link="{name: 'auction', params: {id: item.id}}")
-    .desc.flex
+    .desc.flex.relative
         .flex-1
             .title.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.product.title }}
             .status.flex.mgt-22
@@ -48,10 +50,11 @@
                 .fz-30.yellow-f5(v-if="item.status === 'preview'") {{ startCountdown }}
         .price.black-47.fz-20(v-if="item.status === 'going'") 当前价
             .inline-block.fz-32.red-e6  {{ item.current_price || item.upset_price | price }}
-        .price.black-47.fz-20(v-if="item.status === 'preview'") 起拍价
-            .inline-block.fz-32.yellow-f5  {{ item.upset_price | price }}
+        .price.black-47.fz-20(v-if="item.status === 'preview' || item.status === 'fail'") 起拍价
+            .inline-block.fz-32(:class="item.status === 'preview' ? 'yellow-f5' : 'black-47'")  {{ item.upset_price | price }}
         .price.black-47.fz-20(v-if="item.status === 'success'") 成交价
             .inline-block.fz-32.black-47  {{ item.current_price | price }}
+        .bid-times.absolute.fz-24.gray-b3 {{ item.bid_count > 0 ? `${item.bid_count}次出价` : '暂无出价' }}
     .pics.mgt-16.flex
         .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.flex.pdt-14
@@ -114,7 +117,6 @@ export default {
                     return '未支付'
             }
         }
-
     }
 }
 </script>

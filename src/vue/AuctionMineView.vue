@@ -49,7 +49,7 @@ export default {
                 {
                     key: 'margin',
                     name: '保证金管理',
-                    path: '/auction/margin'
+                    path: '/auction/bid-margin'
                 },
                 {
                     key: 'address',

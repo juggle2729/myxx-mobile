@@ -1,7 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
 bg($key)
-    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '.png')
+    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '-4.1' + '.png')
 .auction-footer-menu
     border(t, #e8e8e8)
     position fixed

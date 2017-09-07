@@ -676,8 +676,18 @@ export default {
         }
     },
 
-    '/auction/margin': {
-        name: 'auction-margin',
+    '/auction/pay-margin': {
+        name: 'pay-margin',
+        title: '缴纳保证金',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMarginView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/bid-margin': {
+        name: 'bid-margin',
         title: '竞拍保证金',
         component(resolve) {
             require.ensure([], (require) => {
@@ -725,6 +735,36 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionBidsView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/:id/delay-records': {
+        name: 'delay-records',
+        title: '延时记录',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('DelayRecordsView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/bid-detail': {
+        name: 'bid-detail',
+        title: '出价明细',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionBidDetailView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/margin-rule': {
+        name: 'margin-rule',
+        title: '保证金规则',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionMarginRuleView.vue'))
             }, 'auction')
         }
     },
