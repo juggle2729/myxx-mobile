@@ -700,6 +700,7 @@ export default {
         name: 'auction',
         title: '拍品详情',
         detail: true,
+        native: v => v >= 4.1 && {name: 'auction'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionView.vue'))
