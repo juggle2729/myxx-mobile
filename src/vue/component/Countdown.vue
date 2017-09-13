@@ -14,12 +14,16 @@ export default {
     name: 'Countdown',
 
     props: {
-        msecs: Number
+        msecs: Number,
+        now: {
+            type: Number,
+            default: Date.now()
+        }
     },
 
     computed: {
         txt() {
-            const d = Math.round((this.msecs - Date.now()) / 1000)
+            const d = Math.round((this.msecs - this.now) / 1000)
             const arr = [['<b>天</b>', 24*60*60], ['<b>小时</b>', 60*60], ['<b>分</b>', 60], ['<b>秒</b>', 1]]
             return arr
                 .filter(([, v]) => v <= d)
@@ -30,8 +34,8 @@ export default {
 
     ready() {
         const timer = setInterval(() => {
-            this.msecs += 1
-            if(!Math.round((this.msecs - Date.now()) / 1000)) {
+            this.now += 1000
+            if(!Math.round((this.msecs - this.now) / 1000)) {
                 this.$dispatch('timeup')
                 clearInterval(timer)
             }

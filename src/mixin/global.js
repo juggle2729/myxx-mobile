@@ -165,6 +165,8 @@ const mixin = {
                         this.$http[method](path, (noData ? {headers, params: _.omitBy(data, _.isNull), body: data, emulateJSON: true} : data), (noData ? '' : {headers}))
                             .then(({data: resp}) => {
                                 if(resp.status === 200) {
+                                    resp.data = resp.data || {}
+                                    resp.data.timestamp = resp.timestamp
                                     defer.resolve(resp.data)
                                 } else {    // 业务异常处理
                                     if([605, 608].indexOf(resp.status) !== -1) {

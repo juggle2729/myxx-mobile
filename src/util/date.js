@@ -1,6 +1,5 @@
 export default {
-    diffNowTime(targetTime, showSeconds = true) {
-        const nowMills = Date.now();
+    diffNowTime(targetTime, showSeconds = true, nowMills = Date.now()) {
         if (!targetTime || nowMills >= targetTime) {
             return
         }

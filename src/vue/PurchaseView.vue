@@ -23,7 +23,7 @@
         purchase-item(:item="purchase")
         .deadline.fz-26.mgh-32.mgb-32(v-if="isOpen")
             span.gray.mgr 距离竞标结束
-            countdown.red(:msecs="purchase.closed_at")
+            countdown.red(:msecs="purchase.closed_at", :now="purchase.timestamp")
         .join.line-height-90.bg-gray.white.center.fz-30.mgh-32(v-if="btnTxt", :class="{'bg-red': isOpen}", @click="addBid()") {{btnTxt}}
     .bids.pdh-16(v-if="purchase.total_count > 0")
         header.center.fz-26.gray

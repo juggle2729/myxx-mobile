@@ -448,6 +448,7 @@ export default {
                 if (_.includes(['preview', 'going'], this.auction.status)) {
                     this.updateBidTime()
                     const interval = setInterval(() => {
+                        this.auction.timestamp += 1000 // timestamp为服务器时间，用来进行倒计时
                         this.updateBidTime(interval)
                     }, 1000)
                 }
@@ -501,7 +502,7 @@ export default {
         updateBidTime(interval) {
             let diffTime = ''
             if (this.auction.status === 'preview') {
-                diffTime = date.diffNowTime(this.auction.start_time)
+                diffTime = date.diffNowTime(this.auction.start_time, true, this.auction.timestamp)
                 if (diffTime) {
                     this.auctionTime = `距开始 ${diffTime}`
                 } else {
@@ -509,7 +510,7 @@ export default {
                     this.auctionTime = '已开始'
                 }
             } else if (this.auction.status === 'going') {
-                diffTime = date.diffNowTime(this.auction.real_end_time)
+                diffTime = date.diffNowTime(this.auction.real_end_time, true, this.auction.timestamp)
                 if (diffTime) {
                     this.auctionTime = `距结束 ${diffTime}`
                 } else {
