@@ -38,7 +38,7 @@ bg($key)
 </style>
 <template lang="pug">
 .auction-footer-menu.bg-white.flex
-    .flex.flex-1(v-for="item in items", v-link="{path: item.path, activeClass: 'active', exact: true}")
+    .flex.flex-1(v-for="item in items", @click="linkToMenu(item)", :class="{'active': $route.path === item.path}")
         .icon(:class="'menu-' + item.key")
         .name.fz-20.gray-99 {{ item.name }}
 </template>
@@ -52,7 +52,8 @@ export default {
                 {
                     key: 'auction-home',
                     name: '首页',
-                    path: '/auction/home'
+                    path: '/auction/home',
+                    login: false
                 },
                 {
                     key: 'compete',
@@ -70,6 +71,26 @@ export default {
                     path: '/auction/mine'
                 }
             ]
+        }
+    },
+
+    methods: {
+        linkToMenu(item) {
+            if (item.login === false || this.self) {
+                // 手动点击跳转时清除缓存，避免缓存数据加载到非对应tab
+                this.$store.remove(`cache-items-${item.key}`)
+                this.$store.remove(`list-leave-position-${item.key}`)
+
+                this.$router.go(item.path)
+            } else {
+                this.action('user').then(user => {
+                    if (!user) {
+                        this.action('login')
+                        return
+                    }
+                    this.$set('self', user)
+                })
+            }
         }
     }
 }

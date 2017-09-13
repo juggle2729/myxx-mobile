@@ -68,15 +68,20 @@ router.beforeGo((from, to, app) => {
 })
 
 router.beforeEach(({from, to, next, abort}) => {
-    // 同一路由内，仅切换tab时，不调整滚动位置
-    if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-        if (!from.detail && !to.detail && !from.list && !to.list) {
-            window.scroll(0, 0)
+    if (to.router.app.env.isApp && to.name === 'auction') { // 拍卖主页
+        location.href = location.href.replace(location.pathname, `/auction/home`)
+        abort()
+    } else {
+        // 同一路由内，仅切换tab时，不调整滚动位置
+        if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+            if (!from.detail && !to.detail && !from.list && !to.list) {
+                window.scroll(0, 0)
+            }
         }
+        document.title = to.title || '美玉秀秀'
+        to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+        next()
     }
-    document.title = to.title || '美玉秀秀'
-    to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-    next()
 })
 
 router.afterEach(({to, from}) => {
