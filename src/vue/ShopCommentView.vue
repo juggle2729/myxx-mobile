@@ -9,16 +9,19 @@
         z-index 9
         .tab
             text-align center
-            line-height 50px
+            line-height 100px
+        .black-24
+            font-weight bold
+            border-bottom 4px solid #242424
     .empty-component
         height calc(100% - 100px)
 </style>
 <template  lang="pug">
 .shop-comment-view.bg
     .tabs.flex.bdb.fz-30.bg-white
-        .tab.flex-1(v-for="(k, t) in tabs", :class="{'red': tab===t, 'bdh': $index===1}", @click="tab=t") {{t.label}}({{stats[k]}})
-    .pdh-36.bg-white(:class="{'pdt-36': tags.length > 0}")
-        marks(v-if="tags.length > 0", :tags="tags")
+        .tab.flex-1(v-for="(k, t) in tabs", :class="tab === t ? 'black-24': 'dark-6b'", @click="tab = t") {{t.label}}({{stats[k]}})
+    .pdh-36.bg-white(:class="{'pdt-36': tags.length > 0 && $route.query.tab === 'good'}")
+        marks(v-if="tags.length > 0 && $route.query.tab === 'good'", :tags="tags")
         .line-height-80.flex.fz-26.black-24.bdb.pdh-28(v-if="tab.items.length", @click="selected = !selected")
             icon(:name="selected ? 'selected' : 'select'")
             .mgl-20 只看有内容的评价

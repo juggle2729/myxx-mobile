@@ -2,14 +2,17 @@
 .shop-comments-view
     [class^='icon-'], [class*=' icon-']
         vertical-align: -5px
-    .marks-border
-        padding-bottom 26px
-        border-bottom 1px solid #ededed
+    .bg-white
+        border-color #ededed
+    .mark
+        &.bdb
+            border-color #ededed
+            padding-bottom 26px
 </style>
 <template lang="pug">
 .shop-comments-view
-    .pdh-36.bg-white
-        .mark.pdt-36(v-if="tags && (tags.length > 0)", :class="{'marks-border': $route.name === 'shop'}")
+    .pdh-36.bg-white.bdt
+        .mark.pdt-36(v-if="tags && (tags.length > 0)", :class="{'bdb': $route.name === 'shop'}")
             marks(:tags="tags")
         .line-height-80.flex.fz-26.gray.bdb.pdh-28(@click="onlyContent", v-if="items.length && $route.name !== 'shop'")
             icon(:name="selected ? 'selected' : 'select'")

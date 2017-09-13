@@ -21,7 +21,7 @@
             background-color #888
             .bold
                 color: #888
-    .delay-explain
+    .delay-explain, .delay-remind
         border-color #efefef
         .icon-enter
             width 14px
@@ -206,6 +206,7 @@
         .fz-22 {{ auction.delay_remind_text }}
         .flex-1
         icon(name="enter")
+    .delay-remind.line-height-72.pdh-32.bdb.flex.red.fz-22(v-if="!auction.delay_remind_text && delayRemind") 最后5分钟，进入延时竞价周期
     .titles.bg-white
         .header
             .title.fz-32 {{ prod.title }}
@@ -297,6 +298,7 @@ import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 import date from '../util/date'
 import DownloadDialog from 'component/DownloadDialog.vue'
 import dateformat from 'dateformat'
+const FIVE_MINUTES = 5 * 60 * 1000
 export default {
     name: 'auction-view',
     mixins: [shareable],
@@ -335,7 +337,8 @@ export default {
             auctionLoadDone: false, // 拍卖数据是否加载完成
             relatedLoadDone: false, // 推荐数据是否加载完成
             showContact: false,
-            auctionTime: ''
+            auctionTime: '',
+            delayRemind: false
         }
     },
 
@@ -484,8 +487,10 @@ export default {
                 return
             }
             return this.$fetch(`mall/auctions/myb/margin_rule`).then(marginRules => {
-                if (marginRules.over_amount - marginRules.auction_used_amount <
-                    (this.auction.current_price || this.auction.upset_price)
+                const lowPrice = this.auction.current_price ?
+                    this.auction.current_price + this.auction.bid_increment : this.auction.upset_price
+                if ((marginRules.over_amount &&
+                    marginRules.over_amount - marginRules.auction_used_amount < lowPrice)
                     || marginRules.buyer_current_amount <= 0) {
                     this.$router.go({
                         name: 'pay-margin',
@@ -513,9 +518,11 @@ export default {
                 diffTime = date.diffNowTime(this.auction.real_end_time, true, this.auction.timestamp)
                 if (diffTime) {
                     this.auctionTime = `距结束 ${diffTime}`
+                    this.auction.real_end_time - Date.now() <= FIVE_MINUTES && (this.delayRemind = true)
                 } else {
                     interval && clearInterval(interval)
                     this.auctionTime = '已结束'
+                    this.delayRemind = false
                 }
             }
         }

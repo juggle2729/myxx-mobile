@@ -21,7 +21,7 @@
 .about-view.bg-light-gray
     .imgs.center
         img(:src="'profile/logo.png' | qn")
-        p.fz-26.gray.mgt-36 V{{version}}
+        p.fz-26.gray.mgt-36 V{{ version }}
         .text
             p.fz-40 最大的和田玉爱好者平台
             p.mgt-20.fz-30 玩玉最专业 买玉最放心
@@ -33,7 +33,10 @@
             .flex-1 商城交易常见问题
             icon.gray(name="enter")
         .line-height-100.flex.fz-26.bdt.mgl-32.pdr-32(v-for='item in problems', v-link="{path: '/help/desc/' + item.type, params: {type: item.type}}")
-            .flex-1 {{item.title}}
+            .flex-1 {{ item.title }}
+            icon.gray(name="enter")
+        .line-height-100.flex.fz-26.bdt.mgl-32.pdr-32(v-for="explanation in explanations", v-link="{name: 'help-explanation',params: {type: explanation.type}}")
+            .flex-1 {{ explanation.title }}
             icon.gray(name="enter")
 </template>
 <script>
@@ -44,7 +47,8 @@ export default {
     data() {
         return {
             version: '1.0',
-            problems: []
+            problems: [],
+            explanations: []
         }
     },
 
@@ -55,6 +59,12 @@ export default {
         _.forIn(help.desc, (value, key) => {
             if(/^about_/.test(key)) {
                 this.problems.push(value)
+            }
+        })
+
+        _.forIn(help.medias, (value, key) => {
+            if(/^about_/.test(key)) {
+                this.explanations.push(value)
             }
         })
     }

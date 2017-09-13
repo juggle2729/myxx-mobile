@@ -2,6 +2,7 @@
 .shop-praise
     .mgv-20
         padding 47px 20px 47px 36px
+        border-color #ededed
         .col
             height 118px
             border-color #ededed
@@ -25,7 +26,7 @@
 </style>
 <template lang="pug">
 .shop-praise.bg-gray-f7
-    .mgv-20.bg-white.flex
+    .mgv-20.bg-white.flex.bdt.bdb
         .col.fz-26.black-47
             .row
             .row 商品评价：
@@ -65,8 +66,8 @@ export default {
 
     ready() {
         this.$fetch(`mall/shop/${this.$route.params.id}/profile`).then(({comment_stats}) => {
-            this.productComment = comment_stats[0]['商品评价']
-            this.shopComment = comment_stats[1]['商家服务']
+            this.productComment = comment_stats[0]['product']
+            this.shopComment = comment_stats[1]['seller']
         })
     },
 

@@ -45,16 +45,16 @@
                 .option.center.fz-30(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
     template(v-for="item in items")
         .hr
-        single-product-item(:item="item", :index="$index")
+        product-item(:item="item", :index="$index")
     empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'
-import SingleProductItem from 'component/item/SingleProductItem.vue'
+import ProductItem from 'component/item/ProductItem.vue'
 export default {
     name: 'product-ranking-view',
     mixins: [ paging ],
-    components: { SingleProductItem },
+    components: { ProductItem },
 
     data() {
         return {

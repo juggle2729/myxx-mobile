@@ -2,6 +2,8 @@
 .all-product
     a
         margin: 0 0 20px 15px
+    .options
+        border-color #ededed
     .option
         width: 25%
     .empty-component
@@ -10,9 +12,9 @@
 </style>
 <template lang="pug">
 .all-product.bg.pdt
-    .options.bg-white.line-height-100.fz-30.flex
-        .option.center(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
-    .list
+    .options.bg-white.line-height-80.fz-26.flex.bdt.bdb
+        .option.center.gray-8f(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red-e6': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
+    .products.pdt-20
         product-card(v-for="item in items", :item="item")
     empty(v-if="items.isEmpty")
 

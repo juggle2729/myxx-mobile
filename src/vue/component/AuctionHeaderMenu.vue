@@ -9,7 +9,7 @@ bg($key)
     top 0
     width 100%
     height 100px
-    z-index 999
+    z-index 99
     .logo
         width 200px
         height 64px
@@ -31,7 +31,7 @@ bg($key)
     .flex-1
     .item.center(v-for="item in items")
         .icon(@click="linkToMenu(item)")
-            img(:src="`//o0x80w5li.qnssl.com/auction/${item.key}-actived-4.1.png`")
+            img(:src="`//o0x80w5li.qnssl.com/auction/${item.key}-actived-head.png`")
         .name.fz-20.black-24.mgt-4 {{ item.name }}
 </template>
 <script>

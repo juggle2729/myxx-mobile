@@ -2,6 +2,8 @@
 .store-info
     .header
         padding: 28px 32px 16px
+    .bdt
+        border-color #ededed
     img
         display: block
         height: 30px
@@ -26,13 +28,13 @@
 <template  lang="pug">
     .store-info.bg-white
         .header.fz-26.gray.bg 基本信息
-        .mgl-32.fz-30
+        .content.pdl-32.fz-30.bdt.bdb
             .pdv-32.flex.bdb.pdr-32(v-link="{name: 'user', params: {id: shop.owner.id}}")
                 .type.gray 掌柜
                 avatar(:user="shop.owner")
                 .mgh.flex-1
                     .flex
-                        .mgb-12 {{shop.owner.nickname}}
+                        .mgb-12.black-24 {{shop.owner.nickname}}
                         img.mgl-8.mgb-10(v-if="shop.owner.vip_flag", :src="'profile/'+shop.owner.role+'.png' | qn")
                     .fz-26.gray.line-clamp {{shop.owner.title}}
                 icon.gray(name="enter")
@@ -44,18 +46,18 @@
                 img.refund(:src="'shop/refund.png' | qn")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 店铺类型
-                .mgr-8 {{config.shopType[shop.shop_type]}}
+                .mgr-8.black-24 {{config.shopType[shop.shop_type]}}
                 img.type(v-if="shop.auth_flag", :src="type | qn")
             .line-height-100.flex.fz-30.bdb.pdr-32
                 .type.gray 入驻时间
-                div {{shop.create_at | date 'yyyy-mm-dd'}}
+                div.black-24 {{shop.create_at | date 'yyyy-mm-dd'}}
         template(v-if="desc")
             .header.fz-26.gray.bg 店铺介绍
             .mgh-32.bg-white.mgt-34
                 .fz-30.user-txt.pdb-28 {{desc}}
                 .flex
                     .media(v-for="media in medias", track-by="$index", v-bg="media")
-                .detail.center.fz-26.red(v-link="{name:'shop-introduce', params: {id: $route.params.id}}")
+                .detail.center.fz-26.red-e6(v-link="{name:'shop-introduce', params: {id: $route.params.id}}")
                     span 查看完整店铺介绍
                     icon(name="enter")
         template(v-if="comments.length > 0")

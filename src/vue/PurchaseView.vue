@@ -16,6 +16,9 @@
             .win-count::before
                 content: '\2022'
                 margin: 0 12px
+    .empty-component
+        .title
+            top 300px
 </style>
 <template  lang="pug">
 .purchase-view.bg(:class="{'share': env.isShare}")

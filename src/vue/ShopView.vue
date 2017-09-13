@@ -19,24 +19,27 @@
             padding 13px 0
             right 36px
             top 112px
-            border-radius 50px
+            border-radius 25px
         .address
-            transform translateY(-2px)
+            -webkit-box-pack center
+            img
+                width 30px
+                height @width
         .border
             width 1px
             height 18px
     .tabs
         .tabs-placeholder
             width 100%
-            height 100px
+            height 90px
         ul
             width 100%
-            height 100px
+            height 90px
             top 0
             z-index 100
             border-color #ededed
             li
-                line-height 100px
+                line-height 90px
             .black-24
                 font-weight bold
                 border-bottom 4px solid #242424
@@ -55,9 +58,17 @@
         width 100%
         position fixed
         bottom 0
-        .icon-chat
-            height 48px
-            width 48px
+        .deep-link
+            .btn
+                display -webkit-box
+                -webkit-box-pack center
+                -webkit-box-align center
+                -webkit-box-orient horizontal
+                .message-icon
+                    width 48px
+                    height @width
+                    background-image url('//o0x80w5li.qnssl.com/shop/message.png')
+                    background-size cover
     .coupons
         width 100%
         -webkit-box-pack justify
@@ -83,26 +94,25 @@
         .fz-36.bold.black-24.mgt-40 {{ shop.shop_name }}
         .flex.fz-20.black-47.mgt-20
             .address.flex
-                icon(name="location")
-                .mgl-6.mgt-4.line-height-30.line-clamp-1 {{ shop.locale_name }}
-            .border.bg-gray-b3.mgh-16
-            .fans
-                span 粉丝：
+                img(:src="'shop/address.png' | qn")
+                .mgl-6.line-height-30.line-clamp-1 {{ shop.locale_name }}
+                .border.bg-gray-b3.mgh-16
+                span 粉丝:
                 span {{ shop.owner.fans_count }}
         .coupons.flex.mgt-50(v-if="shop.coupon_count")
             .coupon-labels.flex
-                .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-for="coupon in coupons") {{ coupon.title }}
+                .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-for="coupon in coupons.slice(0,3)") {{ coupon.title }}
                 .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-if="coupon_label_count < shop.coupons.length") &middot;&middot;&middot;
             deep-link.flex-1.btn-get-coupon.has-icon.fz-24.red-e6.bd-red-e6.absolute 领券
     .tabs.relative
         .tabs-placeholder
         ul.flex.fz-30.bdb.pdh-20.bg-white.absolute(:class="onTop")
-            li.flex-1.center(v-for="tab in tabs", :class="view === tab.id ? 'black-24': 'gray-99'", @click="view = tab.id") {{ tab.name }}
+            li.flex-1.center(v-for="tab in tabs", :class="view === tab.id ? 'black-24': 'dark-6b'", @click="view = tab.id") {{ tab.name }}
     component(:is="view", :shop="shop", keep-alive)
     .footer.flex.bdt.bg-white
-        deep-link.has-icon.flex-1.fz-30
-            icon.red(name="chat")
-            span.black 联系卖家
+        deep-link.has-icon.flex-1.fz-36
+            .message-icon
+            .mgl-12.red-e6 联系卖家
 </template>
 <script>
 import shareable from 'shareable'
@@ -128,7 +138,7 @@ export default {
             shop: {
                 owner: {}
             },
-            coupon_label_count: 2,
+            coupon_label_count: 3,
             onTop: ''
         }
     },

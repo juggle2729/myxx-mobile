@@ -1,7 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .auction-item
-    padding 30px 25px 18px
+    border-color #ededed
+    padding 26px 25px 18px
     .desc
         -webkit-box-align start
         .flex-1
@@ -19,7 +20,7 @@
                 margin 0 2px
         .bid-times
             right 0
-            bottom 4px
+            bottom 7px
     .pics
         .pic
             width 230px
@@ -40,23 +41,23 @@
                 transform translateY(-18px)
 </style>
 <template lang="pug">
-.auction-item.bg-white(v-link="{name: 'auction', params: {id: item.id}}")
+.auction-item.bg-white.bdt.bdb(v-link="{name: 'auction', params: {id: item.id}}")
     .desc.flex.relative
         .flex-1
             .title.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.product.title }}
-            .status.flex.mgt-22
+            .status.flex.mgt-18
                 .mgr-12.fz-24.white.txt-center(:class="bgColor") {{ auctionStatus }}
                 .fz-30.red-e6(v-if="item.status === 'going'") {{ endCountdown }}
                 .fz-30.yellow-f5(v-if="item.status === 'preview'") {{ startCountdown }}
-        .price.black-47.fz-20(v-if="item.status === 'going'") 当前价
-            .inline-block.fz-32.red-e6  {{ item.current_price || item.upset_price | price }}
-        .price.black-47.fz-20(v-if="item.status === 'preview' || item.status === 'fail'") 起拍价
-            .inline-block.fz-32(:class="item.status === 'preview' ? 'yellow-f5' : 'black-47'")  {{ item.upset_price | price }}
-        .price.black-47.fz-20(v-if="item.status === 'success'") 成交价
-            .inline-block.fz-32.black-47  {{ item.current_price | price }}
-        .bid-times.absolute.fz-24.gray-b3 {{ item.bid_count > 0 ? `${item.bid_count}次出价` : '暂无出价' }}
+        .price.fz-32(v-if="item.status === 'going'")
+            .inline-block.red-e6  {{ item.current_price || item.upset_price | price }}
+        .price.fz-32(v-if="item.status === 'preview' || item.status === 'fail'")
+            .inline-block(:class="item.status === 'preview' ? 'yellow-f5' : 'black-47'")  {{ item.upset_price | price }}
+        .price.fz-32(v-if="item.status === 'success'")
+            .inline-block.black-47  {{ item.current_price | price }}
+        .bid-times.absolute.fz-24.gray-b3(v-if="!(item.status === 'preview' || item.status === 'fail')") {{ item.bid_count > 0 ? `${item.bid_count}次出价` : '暂无出价' }}
     .pics.mgt-16.flex
-        .pic(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
+        .pic.bg-gray-f7(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.flex.pdt-14
         .margin(v-if="item.status !== 'unpaid'")
         .shop.gray.flex-1.txt-right.flex(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")

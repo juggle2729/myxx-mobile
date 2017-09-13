@@ -1,7 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
 bg($key)
-    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '-4.1' + '.png')
+    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '-4.11' + '.png')
 .auction-footer-menu
     border(t, #e8e8e8)
     position fixed
@@ -38,7 +38,7 @@ bg($key)
 </style>
 <template lang="pug">
 .auction-footer-menu.bg-white.flex
-    .flex.flex-1(v-for="item in items", @click="linkToMenu(item)", :class="{'active': $route.path === item.path}")
+    .flex.flex-1(v-for="item in items", @click="linkToMenu(item)", :class="{'active': $route.title === item.name}")
         .icon(:class="'menu-' + item.key")
         .name.fz-20.gray-99 {{ item.name }}
 </template>

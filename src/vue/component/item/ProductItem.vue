@@ -1,6 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
-.single-product-item
+.product-item
     border-top 1px solid #ededed
     border-bottom 1px solid #ededed
     padding 20px 25px 28px
@@ -34,7 +34,7 @@
             right 0
 </style>
 <template lang="pug">
-.single-product-item.bg-white.relative(v-link="{name: 'product', params: {id: item.id}}")
+.product-item.bg-white.relative(v-link="{name: 'product', params: {id: item.id}}")
     .ranking.absolute.white.fz-20.center.line-height-28(v-if="$route.name === 'top100' && index <= 98") {{ index + 1 }}
     .desc.flex
         .flex-1.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.title }}
@@ -52,7 +52,7 @@
 <script>
 import date from '../../../util/date'
 export default {
-    name: 'single-product-item',
+    name: 'product-item',
 
     props: {
         item: Object,

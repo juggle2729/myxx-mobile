@@ -1,7 +1,10 @@
 <style lang="stylus">
-    .empty-component
-        &.empty-title
-            background-position center 100px
+.empty-component
+    &.empty-title
+        background-position center 100px
+.deep-link:not(.has-icon) .btn
+        background #e61717
+        border-radius 40px
 </style>
 <template lang="pug">
 .all-auction.bg-gray-f7
@@ -9,7 +12,7 @@
         .hr
         auction-item(:item="item")
     empty(v-if="items.isEmpty")
-    deep-link(v-if="(items.length > 0) && !items.hasMore") 打开美玉秀秀，查看更多优质拍品
+    deep-link.auction-btn(v-if="(items.length > 0) && !items.hasMore") 打开美玉秀秀，查看更多优质拍品
 </template>
 <script>
 import paging from 'paging'

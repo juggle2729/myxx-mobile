@@ -2,44 +2,48 @@
 @import '~style/myxx'
 #app
     > [class*='-view']
-        min-height: 100%
+        min-height 100%
     .share-top-placeholder
-        height: 112px
+        height 112px
         & + div
-            min-height: calc(100% - 112px)
+            min-height calc(100% - 112px)
     .share-top
-        background-color: rgba(0, 0, 0, .8)
-        color: white
-        z-index: 990
-        position: fixed
-        top: 0
-        height: 112px
-        width: 100%
-        padding: 0 24px
-        box-shadow: 0 0 20px 0 rgba(0,0,0,.2)
-        img
-            display: block
-            height: 28px
-        .dot
-            margin: 0 10px
+        color white
+        z-index 990
+        position fixed
+        top 0
+        height 112px
+        width 100%
+        padding 0 22px 0 18px
+        box-shadow 0 0 20px 0 rgba(0,0,0,.2)
+        .logo
+            width 200px
+            height 64px
+            transform translateY(-4px)
+            img
+                width 100%
+                height 100%
         .deep-link
-            padding: 0
-            margin-bottom: 0
+            padding 0
+            margin-bottom 0
             .btn
-                height: 60px
-                line-height: 60px
+                background #e61717
+                width 160px
+                height 50px
+                line-height 50px
+                border-radius 50px
     #user
-        z-index: 99
-        position: fixed
-        top: 0
-        right: 0
-        padding: 10px
-        cursor: pointer
+        z-index 99
+        position fixed
+        top 0
+        right 0
+        padding 10px
+        cursor pointer
         img
-            border-radius: 50%
-            width: 60px
-            height: 60px
-            box-shadow: 0 0 10px 5px #4CAF50
+            border-radius 50%
+            width 60px
+            height 60px
+            box-shadow 0 0 10px 5px #4CAF50
     .get-red-pocket
         display block
         height 194px
@@ -53,13 +57,12 @@
 <template  lang="pug">
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
-        .share-top.flex
-            .flex-1
-                .flex
-                    img(:src="'logo-txt.svg?v1' | qn", alt="美玉秀秀")
-                    .fz-22.dot •
-                    .flex-1.slogan.fz-22 最专业的和田玉APP
-                .fz-22.gray.mgt-8 80万和田玉玩家都在用
+        .share-top.flex.bg-black
+            .logo.mgr-26
+                img(:src="'share-logo.png' | qn", alt="美玉秀秀")
+            .flex-1.fz-20.gray-f4
+                .slogan 最专业的和田玉APP
+                .mgt-6 80万和田玉玩家都在用
             deep-link
         .share-top-placeholder
         //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")

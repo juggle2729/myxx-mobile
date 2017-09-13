@@ -18,6 +18,10 @@
         height 100px
         .gray
             border-color #e6e6e6
+    .icon-select, .icon-selected
+        width 46px
+        height @width
+        transform translateY(-2px)
     .bid
         height 180px
         justify-content center
@@ -106,13 +110,31 @@ export default {
                 labels: ['取消', '确定']
             }).then((choice) => {
                 if (choice === '1') {
-                    this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
-                        bid_price,
-                        is_anonymous: this.isAnonymous
-                    }).then(() => {
-                        this.show = false
-                        this.$dispatch('bidDone', bid_price)
-                        this.$store.set('isAnonymous', this.isAnonymous)
+                    this.$fetch(`mall/auctions/myb/margin_rule`).then(marginRules => {
+                        // 用户选取的出价大于其可用额度时跳转缴纳保证金页面
+                        if(marginRules.over_amount &&
+                            marginRules.over_amount - marginRules.auction_used_amount < bid_price) {
+                            this.$router.go({
+                                name: 'pay-margin',
+                                query: {
+                                    id: this.auction.id,
+                                    b: bid_price
+                                }
+                            })
+                        } else {
+                            this.$post(`mall/auctions/myb/${this.auction.id}/bids`, {
+                                bid_price,
+                                is_anonymous: this.isAnonymous
+                            }).then(() => {
+                                this.show = false
+                                this.$dispatch('bidDone', bid_price)
+                                this.$store.set('isAnonymous', this.isAnonymous)
+                                this.action('toast', {
+                                    success: 1,
+                                    text: '出价成功'
+                                })
+                            })
+                        }
                     })
                 }
             })

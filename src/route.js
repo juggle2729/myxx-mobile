@@ -115,7 +115,7 @@ export default {
         }
     },
 
-    '/tag/:id/:name': {
+    '/tag/:id': {
         name: 'tag',
         native: v => v >= 2.4 && {name: 'topic'},
         component(resolve) {
@@ -590,6 +590,15 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('HelpDescView.vue'));
+            }, 'help')
+        }
+    },
+
+    '/help/explanation/:type': {
+        name: 'help-explanation',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpExplanationView.vue'));
             }, 'help')
         }
     },
