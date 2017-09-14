@@ -66,6 +66,11 @@ export default {
 
     methods: {
         getDetailUrl(item) {
+            const _getUrl = baseUrl => {
+                return baseUrl.replace(location.pathname,
+                    `/${item.auction ? 'auction' : 'product'}/${item.auction ? item.auction.id : item.id}`)
+            }
+
             if(this.env.isApp || !this.env.isMobile) {
                 if (item.auction) {
                     this.saveDetailLeavePosition()
@@ -73,14 +78,11 @@ export default {
                 }
                 return `/product/${item.id}`
             } else {
-                if (item.auction) {
-                    this.saveDetailLeavePosition()
-                    return location.href.replace(location.pathname, `/auction/${item.auction.id}`)
-                } else if (this.hasUniversalLinkSupport) {
-                    return location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu')
-                        .replace(location.pathname, `/product/${item.id}`)
+                if (this.hasUniversalLinkSupport) {
+                    return _getUrl(location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu'))
                 } else {
-                    return location.href.replace(location.pathname, `/product/${item.id}`)
+                    item.auction && this.saveDetailLeavePosition()
+                    return _getUrl(location.href)
                 }
             }
         },

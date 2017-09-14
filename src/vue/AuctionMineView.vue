@@ -70,6 +70,12 @@ export default {
         }
     },
 
+    route: {
+        data() {
+            this.checkUser()
+        }
+    },
+
     methods: {
         menuClick(menu) {
             if (menu.action) {

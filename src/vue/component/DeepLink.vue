@@ -59,11 +59,10 @@ export default {
                 question: 'home/jianbao',
                 answer: 'home/jianbao_result',
                 collection: 'home/album',
-                activity: 'home/category',
                 user: 'user/homepage',
                 shop: 'user/shop',
-                jade: 'mall/tab',
-                product: 'mall/tab'
+                product: 'mall/product',
+                auction: 'mall/auctions'
             }
         }
     },

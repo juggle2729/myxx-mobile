@@ -5,7 +5,7 @@ for $size in 240 222 180 120 108 90 80 68 50 36
         height @width
 </style>
 <template  lang="pug">
-.avatar.round(:size="size", v-bg.sm="user.photo || 'app/avatar.png'", @click.stop="viewProfile")
+.avatar.round(:size="size", v-bg.sm="user.photo || user.avatarId || 'app/avatar.png'", @click.stop="viewProfile")
 </template>
 <script>
 export default {

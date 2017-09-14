@@ -263,6 +263,16 @@ const mixin = {
             this.$store.set(this._detailCacheKey(), this._scrollTop())
         },
 
+        checkUser() {
+            this.action('user').then(user => {
+                if (!user) {
+                    this.action('login')
+                    return
+                }
+                this.$set('self', user)
+            })
+        },
+
         _detailCacheKey() {
             return `detail-leave-position-${this.$route.name}-${this.$route.params.id}`
         },
