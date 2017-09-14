@@ -11,7 +11,7 @@
                 padding-left 3px
             .status
                 .mgr-12
-                    width 100px
+                    width 90px
                 .mgr-12, .fz-30
                     line-height 32px
         .price
@@ -84,13 +84,13 @@ export default {
             if (this.item.start_time - Date.now() <= 300000) {
                 return '即将开始'
             }
-            return `距开始${date.diffNowTime(this.item.start_time)}`
+            return `距开始${date.diffNowTime(this.item.start_time, false)}`
         },
         endCountdown() {
             if (this.item.real_end_time - Date.now() <= 300000) {
                 return '即将结束'
             }
-            return `距结束${date.diffNowTime(this.item.real_end_time)}`
+            return `距结束${date.diffNowTime(this.item.real_end_time, false)}`
         },
         bgColor() {
             switch (this.item.status) {

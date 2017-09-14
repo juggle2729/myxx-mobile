@@ -112,7 +112,7 @@
     .footer.flex.bdt.bg-white
         deep-link.has-icon.flex-1.fz-36
             .message-icon
-            .mgl-12.red-e6 联系卖家
+            .mgl-12.red-e6 联系商家
 </template>
 <script>
 import shareable from 'shareable'

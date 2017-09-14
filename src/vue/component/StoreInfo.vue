@@ -60,23 +60,15 @@
                 .detail.center.fz-26.red-e6(v-link="{name:'shop-introduce', params: {id: $route.params.id}}")
                     span 查看完整店铺介绍
                     icon(name="enter")
-        template(v-if="comments.length > 0")
-            .header.fz-26.gray.bg 店铺评价
-            opinion-list(:items="comments")
-            .bdt.detail.center.fz-26.red(v-link="{name: 'shop-comments', params: {id: $route.params.id}}")
-                span 查看全部评价
-                icon(name="enter")
 </template>
 <script>
 import lv from 'component/Lv.vue'
-import OpinionList from 'component/OpinionList.vue'
 export default {
     name: 'store-info',
 
     data() {
         return {
             desc: '',
-            comments: [],
             medias: []
         }
     },
@@ -87,26 +79,20 @@ export default {
         }
     },
 
-    components: {
-        lv,
-        OpinionList
-    },
+    components: { lv },
 
     props: {
         shop: Object
     },
 
     activate(done) {
-        return this.$fetch(`mall/shop/${this.$route.params.id}/comments`).then((data) => {
-            this.comments = _.take(data.comments, 3)
-            this.$fetch(`mall/shop/${this.$route.params.id}/gallery`).then((info) => {
-                this.desc = info.medias[0].media
-                _.chain(info.medias)
-                .filter(['media_type', 'picture'])
-                .take(3)
-                .forEach(item => {this.medias.push(item.media)})
-                .value()
-            })
+        return this.$fetch(`mall/shop/${this.$route.params.id}/gallery`).then((info) => {
+            this.desc = info.medias[0].media
+            _.chain(info.medias)
+            .filter(['media_type', 'picture'])
+            .take(3)
+            .forEach(item => {this.medias.push(item.media)})
+            .value()
         }).then(done)
     }
 }

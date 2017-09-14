@@ -19,17 +19,12 @@ export default {
         }
     },
 
-    ready() {
-        console.log(this.delayBids)
-    },
-
     route: {
         data() {
             this.$fetch(`mall/auctions/${this.$route.params.id}/bids`).then(({bids}) => {
                 this.delayBids = bids.filter(bid => {
                     return bid.delay_to
                 })
-                console.log(this.delayBids)
             })
         }
     }

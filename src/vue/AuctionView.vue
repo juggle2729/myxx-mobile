@@ -91,6 +91,12 @@
             margin-bottom 8px
         .center
             width 100px
+        .level-comp
+            width 144px
+            height 33px
+            img
+                width 100%
+                height 100%
     .guarantee .icon-enter
         color: #f1ab47
     .placeholder
@@ -199,8 +205,9 @@
     auction-header-menu
     custom-swiper(:item="prod")
     .status-bar.flex.pdl-32.fz-26(:class="auction.status")
-        .bold.pdh-12.bg-white {{ statusText }}
-        .white.mgl-16 {{ auctionTime }}
+        .bold.pdh-12.bg-white(v-if="updating") 更新中
+        .bold.pdh-12.bg-white(v-if="!updating") {{ statusText }}
+        .white.mgl-16(v-if="!(auction.status === 'fail' || auction.status === 'success')") {{ auctionTime }}
         .white.mgl-16(v-if="auction.status === 'fail' || auction.status === 'success'") {{ endTime }}
     .delay-explain.line-height-72.pdh-32.bdb.flex.red(v-if="auction.delay_remind_text", v-link="{name: 'delay-records', params: {id: auction.id}}")
         .fz-22 {{ auction.delay_remind_text }}
@@ -240,6 +247,7 @@
         .flex-1
             .fz-30.flex.mgb-12.name
                 .line-clamp.mgr {{prod.shop.shop_name}}
+                lv(:lv="prod.shop.level")
             .fz-26.gray.flex
                 icon(name="location")
                 div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}
@@ -298,11 +306,12 @@ import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 import date from '../util/date'
 import DownloadDialog from 'component/DownloadDialog.vue'
 import dateformat from 'dateformat'
+import Lv from 'component/Lv.vue'
 const FIVE_MINUTES = 5 * 60 * 1000
 export default {
     name: 'auction-view',
     mixins: [shareable],
-    components: {AuctionHeaderMenu, CustomSwiper, AuctionBids, ProductCard, AuctionBidPrice, DownloadDialog },
+    components: {AuctionHeaderMenu, CustomSwiper, AuctionBids, ProductCard, AuctionBidPrice, DownloadDialog, Lv },
 
     data() {
         return {
@@ -338,7 +347,10 @@ export default {
             relatedLoadDone: false, // 推荐数据是否加载完成
             showContact: false,
             auctionTime: '',
-            delayRemind: false
+            delayRemind: false,
+            updating: false,
+            statusUpdatedAt: '',
+            bidTimeInterval: null
         }
     },
 
@@ -442,19 +454,7 @@ export default {
     route: {
         data({from, to, next}) {
             return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
-                _.update(auction.product, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
-                this.setShareData(auction.product)
-                this.auction = auction
-                this.auctionLoadDone = true
-                this.checkLeavePosition()
-
-                if (_.includes(['preview', 'going'], this.auction.status)) {
-                    this.updateBidTime()
-                    const interval = setInterval(() => {
-                        this.auction.timestamp += 1000 // timestamp为服务器时间，用来进行倒计时
-                        this.updateBidTime(interval)
-                    }, 1000)
-                }
+                this.updateData(auction)
             })
         }
     },
@@ -504,15 +504,16 @@ export default {
             })
         },
 
-        updateBidTime(interval) {
+        updateBidTime(bidTimeInterval) {
             let diffTime = ''
             if (this.auction.status === 'preview') {
                 diffTime = date.diffNowTime(this.auction.start_time, true, this.auction.timestamp)
                 if (diffTime) {
                     this.auctionTime = `距开始 ${diffTime}`
                 } else {
-                    interval && clearInterval(interval)
-                    this.auctionTime = '已开始'
+                    bidTimeInterval && clearInterval(bidTimeInterval)
+                    this.updating = true
+                    this.auctionTime = '正在更新拍卖状态...'
                 }
             } else if (this.auction.status === 'going') {
                 diffTime = date.diffNowTime(this.auction.real_end_time, true, this.auction.timestamp)
@@ -520,11 +521,50 @@ export default {
                     this.auctionTime = `距结束 ${diffTime}`
                     this.auction.real_end_time - Date.now() <= FIVE_MINUTES && (this.delayRemind = true)
                 } else {
-                    interval && clearInterval(interval)
-                    this.auctionTime = '已结束'
+                    bidTimeInterval && clearInterval(bidTimeInterval)
+                    this.updating = true
+                    this.auctionTime = '正在更新拍卖状态...'
                     this.delayRemind = false
                 }
             }
+        },
+
+        updateData(auction) {
+            _.update(auction.product, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
+            this.setShareData(auction.product)
+            this.auction = auction
+            this.auctionLoadDone = true
+            this.statusUpdatedAt = auction.status_updated_at
+            this.checkLeavePosition()
+
+            if (_.includes(['preview', 'going'], this.auction.status)) {
+                this.updateBidTime()
+                this.bidTimeInterval && clearInterval(this.bidTimeInterval)
+                this.bidTimeInterval = setInterval(() => {
+                    this.auction.timestamp += 1000 // timestamp为服务器时间，用来进行倒计时
+                    this.updateBidTime(this.bidTimeInterval)
+                }, 1000)
+            }
+        },
+
+        checkAuctionStatus() {
+            const checkUpdateInterval = setInterval(() => {
+                this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
+                    if (auction.status_updated_at !== this.statusUpdatedAt) {
+                        clearInterval(checkUpdateInterval)
+                        this.updating = false
+                        this.updateData(auction)
+                        this.$broadcast('freshBids')
+                    }
+                    this.statusUpdatedAt = auction.status_updated_at
+                })
+            }, 1000)
+        }
+    },
+
+    watch: {
+        updating(newVal) {
+            newVal && this.checkAuctionStatus()
         }
     },
 

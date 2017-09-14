@@ -70,7 +70,6 @@
             .pdv-26.pdl-28.fz-26.black-47.user-txt.bg-gray-f7.dark.mgt-22.relative(v-if="item.reply")
                 span 商家回复： {{{ item.reply.reply_content | content }}}
                 .arrow.absolute
-            marks.mgt-10(:tags="item.tags", inner="true", v-if="item.tags", :class="{'mgt': items.tags}")
             .product.pdv-10.bd.mgt-22.flex(v-if="!isChat")
                 .img.mgl-20(v-bg="item.order_item.cover")
                 .title.fz-20.dark-6b.mgl-20.line-clamp-1.line-height-50 {{ item.product_title }}
@@ -79,10 +78,8 @@
     empty(v-if="items.isEmpty")
 </template>
 <script>
-import Marks from 'component/Marks.vue'
 export default {
     name: 'opinion-list',
-    components: { Marks },
 
     props: {
         items: Array

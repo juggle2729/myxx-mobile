@@ -819,6 +819,16 @@ export default {
         }
     },
 
+    '/pay-result': {
+        name: 'pay-result',
+        title: '支付结果',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PayResultView.vue'))
+            }, 'pay')
+        }
+    },
+
     '/about': {
         name: 'about',
         title: '关于美玉秀秀',

@@ -59,7 +59,8 @@ export default {
             payType: 'wx_pub', // 支付方式，默认为微信
             bizType: '',
             validBalance: false,
-            waitPayAmount: 0
+            waitPayAmount: 0,
+            orderId: ''
         }
     },
 
@@ -68,7 +69,7 @@ export default {
     },
 
     computed: {
-        isAuction() {
+        isAuctionMargin() {
             return this.bizType === this.config.payBizType.auction
         },
         isOrder() {
@@ -86,7 +87,7 @@ export default {
 
         pay() {
             Q.resolve((() => {
-                if (this.isAuction) {
+                if (this.isAuctionMargin) {
                     return this.$post(`mall/auctions/myb/pay_margin`, {
                         channel_type: this.payType,
                         amount: this.waitPayAmount
@@ -109,24 +110,30 @@ export default {
                 if (data.charge) {
                     require('pingpp-js').createPayment(data.charge, result => {
                         if (result === "success") {
-                            this._doneCallback(true, true)
+                            this._doneCallback(true)
                         } else if (result === "fail") {
                             this._doneCallback()
                         } else if (result === "cancel") {
-                            this._doneCallback(true, true)
+                            this._doneCallback(true)
                         }
                     })
                 } else {
-                    this._doneCallback(true, true)
+                    this._doneCallback(true)
                 }
             } else {
                 this._doneCallback()
             }
         },
 
-        _doneCallback(tryPaid = true, paySuccess = false) {
-            this.$store.set('pay_result', { tryPaid, paySuccess })
-            this.action('back', {step: 1})
+        _doneCallback(paySuccess = false) {
+            this.$store.set('pay_result', paySuccess)
+            const payData = {
+                replace: true,
+                biz_type: this.bizType
+            }
+            this.bizType === 'auction' && (payData.m = this.$route.query.m)
+            this.$route.query.id && (payData.id = this.$route.query.id)
+            this.$router.go({name: 'pay-result', query: payData})
         }
     },
 
@@ -142,7 +149,7 @@ export default {
         data() {
             this.bizType = this.$route.query.t || this.config.payBizType.auction
             return Q.resolve((() => {
-                if (this.isAuction) {
+                if (this.isAuctionMargin) {
                     return this.$fetch(`mall/auctions/myb/margin_rule`)
                         .then(({buyer_current_amount}) => {
                         return this.$route.query.m - buyer_current_amount
