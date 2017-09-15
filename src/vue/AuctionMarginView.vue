@@ -148,6 +148,7 @@ export default {
 
     methods: {
         onConfirm() {
+            console.log('********************this.choseMargin******************', this.choseMargin)
             this.$router.go({name: 'pay',
                 query: { t: this.config.payBizType.auction, m: this.choseMargin, id: this.$route.query.id }})
         },
