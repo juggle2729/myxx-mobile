@@ -19,7 +19,7 @@
         .gray
             border-color #e6e6e6
     .icon-select, .icon-selected
-        width 46px
+        width 30px
         height @width
         transform translateY(-2px)
     .bid

@@ -8,7 +8,7 @@
         background-size cover
     .item
         height 112px
-        border(b, #f7f7f7)
+        border(b, #ededed)
     .icon-enter
         width 14px
         height 24px
@@ -20,13 +20,14 @@
 </style>
 <template lang="pug">
 .auction-mine-view.bg-gray-f7(@touchstart="touchStart($event)")
-    .flex.pdv-36.bg-white.mgb-20
+    .flex.pdv-36.bg-white.mgb-20.bdb
         avatar.mgl-32(:user='self', :size='120')
         .mgl-28.fz-36.black-24 {{ self.nickname }}
-    .item.flex.bg-white.relative(v-for="item in items", @click="menuClick(item)")
-        .icon.mgl-32(:style="{backgroundImage: `url('//o0x80w5li.qnssl.com/auction/${item.key}.png')`}")
-        .fz-30.mgl-20 {{ item.name }}
-        icon.fz-22.absolute.gray-99(name="enter")
+    .bdb.bdt.bg-white
+        .item.flex.relative(v-for="item in items", @click="menuClick(item)")
+            .icon.mgl-32(:style="{backgroundImage: `url('//o0x80w5li.qnssl.com/auction/${item.key}.png')`}")
+            .fz-30.mgl-20 {{ item.name }}
+            icon.fz-22.absolute.gray-99(name="enter")
     auction-footer-menu
     download-dialog(:show.sync="showContact")
         .fz-36.center 联系客服

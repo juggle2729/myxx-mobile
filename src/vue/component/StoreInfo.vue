@@ -48,12 +48,12 @@
                 .type.gray 店铺类型
                 .mgr-8.black-24 {{config.shopType[shop.shop_type]}}
                 img.type(v-if="shop.auth_flag", :src="type | qn")
-            .line-height-100.flex.fz-30.bdb.pdr-32
+            .line-height-100.flex.fz-30.pdr-32
                 .type.gray 入驻时间
                 div.black-24 {{shop.create_at | date 'yyyy-mm-dd'}}
         template(v-if="desc")
             .header.fz-26.gray.bg 店铺介绍
-            .mgh-32.bg-white.mgt-34
+            .pdh-32.bg-white.pdt-34.bdt.bdb
                 .fz-30.user-txt.pdb-28 {{desc}}
                 .flex
                     .media(v-for="media in medias", track-by="$index", v-bg="media")

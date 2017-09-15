@@ -1,8 +1,6 @@
 <style lang="stylus">
 @import '~style/partials/var'
 .product-item
-    border-top 1px solid #ededed
-    border-bottom 1px solid #ededed
     padding 20px 25px 28px
     .ranking
         left 25px
@@ -34,8 +32,8 @@
             right 0
 </style>
 <template lang="pug">
-.product-item.bg-white.relative(v-link="{name: 'product', params: {id: item.id}}")
-    .ranking.absolute.white.fz-20.center.line-height-28(v-if="$route.name === 'top100' && index <= 98") {{ index + 1 }}
+.product-item.bg-white.relative.bdt.bdb(v-link="{name: 'product', params: {id: item.id}}")
+    .ranking.absolute.white.fz-20.center.line-height-28(v-if="$route.name === 'product-top100' && index <= 98") {{ index + 1 }}
     .desc.flex
         .flex-1.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.title }}
         .price.red-e6.fz-32 {{ item.price | price }}

@@ -5,7 +5,8 @@
 </style>
 <template lang="pug">
 .auction-compete-view.bg(:class="{ 'has-data': !items.isEmpty }")
-    tabs.bg-white.mgb-20(:tabs="views")
+    tabs.bg-white(:tabs="views")
+    .line-height-20.bdb(v-if="!items.isEmpty")
     template(v-for="(index, item) in items")
         compete-item(:item="item", :index="index")
     empty(v-if="items.isEmpty")

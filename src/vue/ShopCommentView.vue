@@ -13,6 +13,8 @@
         .black-24
             font-weight bold
             border-bottom 4px solid #242424
+    .icon
+        transform translateY(-3px)
     .empty-component
         height calc(100% - 100px)
 </style>

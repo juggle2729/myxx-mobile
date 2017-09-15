@@ -19,7 +19,7 @@
             div 出价时间: {{ bid.create_at | date 'yyyy-mm-dd HH:MM' }}
         .flex.mgt-40
             .flex-3.line-clamp-2 {{ bid.product_title }}
-            .red.fz-30.flex-1.txt-right
+            .red.fz-36.flex-1.txt-right
                 span.fz-24 {{ bid.status === 'win' ? '成交价' : '竞拍价' }}
                 .inline-block.price {{ bid.bid_price | price }}
     empty(v-if="!bids.length")

@@ -13,20 +13,18 @@
         width 100%
         .tabs-placeholder
             width 100%
-            height 130px
+            height 129px
         .bg-white
             width 100%
             top 0
             -webkit-box-pack center
-            border-bottom 1px solid #ededed
             .options
                 width 600px
-                border 1px solid #ededed
                 border-radius 40px
                 .option
                     width calc(100% / 3)
-                    &:not(:first-child)
-                        border-left 1px solid #e8e8e8
+                    &:first-child
+                        border 0
             &.on-top
                 position fixed
                 top 0
@@ -40,9 +38,9 @@
     .banner(:class="$route.name.split('-')[1]")
     .tabs.relative
         .tabs-placeholder.bg-white
-        .bg-white.flex.absolute.pdv-24(:class="onTop")
-            .options.line-height-80.flex
-                .option.center.fz-30(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
+        .bg-white.flex.absolute.pdv-24.bdb(:class="onTop")
+            .options.line-height-80.flex.bd
+                .option.center.fz-30.bdl(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
     template(v-for="item in items")
         .hr
         product-item(:item="item", :index="$index")

@@ -37,8 +37,10 @@
             height 48px
             -webkit-box-align center
             -webkit-box-pack end
-            .icon
-                transform translateY(-18px)
+            img
+                width 30px
+                height @width
+                transform translateY(-26px)
 </style>
 <template lang="pug">
 .auction-item.bg-white.bdt.bdb(v-link="{name: 'auction', params: {id: item.id}}")
@@ -61,7 +63,7 @@
     .foot.flex.pdt-14
         .margin(v-if="item.status !== 'unpaid'")
         .shop.gray.flex-1.txt-right.flex(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")
-            icon.fz-28(name="shop")
+            img(:src="'auction/shop-icon.png' | qn")
             .fz-24.black-47.pdl-10 {{ item.product.shop.shop_name }}
 </template>
 <script>

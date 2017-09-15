@@ -45,12 +45,12 @@
             border 0
 </style>
 <template lang="pug">
-.opinion-list.bg-white(:class="{ 'pdh-36': !items.isEmpty }")
+.opinion-list.bg-white.bdb(:class="{ 'pdh-36': !items.isEmpty }")
     .opinion.flex.pdt-36.pdb-20.bdb(v-for="item in items")
         template(v-if="item.buyer")
             avatar(:user="item.buyer")
         template(v-else)
-            img.anonymous(:src="'shop/anonymous-4.1.png' | qn")
+            img.anonymous(:src="'shop/anonymous-4.11.png' | qn")
         .mgl.flex-1(@click="go(item)")
             .flex
                 .fz-26.flex-1.black-24.bold {{ item.buyer ? item.buyer.nickname : '匿名用户' }}

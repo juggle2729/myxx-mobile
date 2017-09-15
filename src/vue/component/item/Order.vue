@@ -4,7 +4,7 @@
         justify-content flex-end
 </style>
 <template lang="pug">
-.order-item.bg-white.pdl-32.pdt-32.fz-26(v-link="{name: 'order', params: {id: item.order_no}}")
+.order-item.bg-white.pdl-32.pdt-32.fz-26.bdb.bdt(v-link="{name: 'order', params: {id: item.order_no}}")
     .flex.pdr-32
         .light {{ item.update_at | date 'yyyy-mm-dd HH:MM:ss' }}
         .flex-1

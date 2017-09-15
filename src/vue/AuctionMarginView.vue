@@ -5,6 +5,12 @@
     padding-bottom 80px
     .margin-desc
         line-height 1.4
+    .bid-detail
+        padding 0
+        img
+            width 30px
+            height @width
+            transform translateY(-13px)
     .bid-limit
         border-color #ededed
         .red-e6:first-letter
@@ -57,7 +63,7 @@
             .flex-1
             .bid-detail.flex
                 .fz-24.green-00.mgr-6(v-link="{name: 'bid-detail'}") 出价明细
-                icon.gray(name="enter")
+                img(:src="'right-arrow-4.1.png' | qn")
     .bid-limit.bg-white.bdt.bdb.flex.black-24.fz-26
         .flex-1.bdr.pdt-40.pdl-36
             div 已缴纳保证金
