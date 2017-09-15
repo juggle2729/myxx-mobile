@@ -111,9 +111,8 @@ export default {
             }).then((choice) => {
                 if (choice === '1') {
                     this.$fetch(`mall/auctions/myb/margin_rule`).then(marginRules => {
-                        // 用户选取的出价大于其可用额度时跳转缴纳保证金页面
-                        if(marginRules.over_amount &&
-                            marginRules.over_amount - marginRules.auction_used_amount < bid_price) {
+                        // 用户选取的出价大于其可用额度时跳转缴纳保证金页面; 如果保证金交满了,则over_amount为空
+                        if(marginRules.over_amount && marginRules.over_amount - marginRules.auction_used_amount < bid_price) {
                             this.$router.go({
                                 name: 'pay-margin',
                                 query: {
