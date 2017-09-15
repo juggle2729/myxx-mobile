@@ -1,6 +1,5 @@
 <style lang="stylus">
 .bid-detail
-    padding-top 100px
     .auction-header-menu
         left 0
     .pd-32
@@ -11,8 +10,8 @@
         font-size 24px
 </style>
 <template lang="pug">
-.bid-detail(:class="bids.length ? 'pdl-32' : ''")
-    auction-header-menu
+.bid-detail(:class="{'pdl-32': bids.length, 'pdt-100': !env.isApp}")
+    auction-header-menu(v-if="!env.isApp")
     .fz-30.bdb.pd-32(v-for="bid in bids")
         .flex.fz-22.gray
             .flex-1 {{ bid.status === 'win' ? '竞拍成功' : '竞拍领先' }}

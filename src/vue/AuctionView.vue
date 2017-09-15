@@ -550,7 +550,8 @@ export default {
         checkAuctionStatus() {
             const checkUpdateInterval = setInterval(() => {
                 this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
-                    if (auction.status_updated_at !== this.statusUpdatedAt) {
+                    if (auction.status_updated_at !== this.statusUpdatedAt
+                        || auction.real_end_time > this.auction.real_end_time) {
                         clearInterval(checkUpdateInterval)
                         this.updating = false
                         this.updateData(auction)

@@ -53,7 +53,7 @@
         line-height 39px
 </style>
 <template lang="pug">
-.auction-margin-view.bg-gray-f7(@touchstart="touchStart($event)")
+.auction-margin-view.bg-gray-f7
     auction-header-menu
     .margin-desc.pdh-36.pdv-32.fz-30.black-24(v-if="$route.name === 'pay-margin'") 您参与的拍品最低出价{{ auctionCurrentPrice | price }}，您当前剩余出价额度不足，需要缴纳对应金额的保证金，提高可出价总额才可继续出价
     .bid-total.bg-white(v-else)

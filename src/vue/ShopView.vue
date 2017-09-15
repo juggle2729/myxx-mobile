@@ -43,9 +43,12 @@
             .black-24
                 font-weight bold
                 border-bottom 4px solid #242424
-            &.on-top
+            &.share-on-top
                 position fixed
                 top 112px
+            &.on-top
+                position fixed
+                top 0
     .list
         padding-top 20px
         background-color #efefef
@@ -158,7 +161,7 @@ export default {
 
         this.$on('scroll', () => {
             window.scrollY >= this.$el.children[1].offsetTop - this.$el.offsetTop
-                ? this.onTop = 'on-top' : this.onTop = ''
+                ? this.onTop = (this.env.isShare ? 'share-on-top' : 'on-top') : this.onTop = ''
         })
     },
 
