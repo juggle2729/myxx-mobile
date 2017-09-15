@@ -39,7 +39,7 @@
 .product-ranking-view.bg
     .banner(:class="$route.name.split('-')[1]")
     .tabs.relative
-        .tabs-placeholder
+        .tabs-placeholder.bg-white
         .bg-white.flex.absolute.pdv-24(:class="onTop")
             .options.line-height-80.flex
                 .option.center.fz-30(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
