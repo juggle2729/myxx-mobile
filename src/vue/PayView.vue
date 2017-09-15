@@ -110,30 +110,34 @@ export default {
                 if (data.charge) {
                     require('pingpp-js').createPayment(data.charge, result => {
                         if (result === "success") {
-                            this._doneCallback(true)
+                            this._doneCallback(true, true)
                         } else if (result === "fail") {
                             this._doneCallback()
                         } else if (result === "cancel") {
-                            this._doneCallback(true)
+                            this._doneCallback(false, true)
                         }
                     })
                 } else {
-                    this._doneCallback(true)
+                    this._doneCallback(true, true)
                 }
             } else {
                 this._doneCallback()
             }
         },
 
-        _doneCallback(paySuccess = false) {
-            this.$store.set('pay_result', paySuccess)
-            const payData = {
-                replace: true,
-                biz_type: this.bizType
+        _doneCallback(isPaid = false, paySuccess = false) {
+            if (!isPaid && paySuccess) { // 取消支付，直接回退
+                this.action('back', {step: 1})
+            } else {
+                this.$store.set('pay_result', paySuccess)
+                const payData = {
+                    replace: paySuccess, // 支付失败，直接按照原路由返回
+                    biz_type: this.bizType
+                }
+                this.bizType === 'auction' && (payData.m = this.$route.query.m)
+                this.$route.query.id && (payData.id = this.$route.query.id)
+                this.$router.go({name: 'pay-result', query: payData})
             }
-            this.bizType === 'auction' && (payData.m = this.$route.query.m)
-            this.$route.query.id && (payData.id = this.$route.query.id)
-            this.$router.go({name: 'pay-result', query: payData})
         }
     },
 
