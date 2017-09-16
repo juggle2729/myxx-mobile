@@ -9,7 +9,7 @@
     template(v-for="item in items")
         .hr
         auction-item(:item="item")
-    empty(v-if="items.isEmpty")
+    empty(v-if="items.isEmpty && !$root.loading")
     auction-footer-menu
 </template>
 <script>
@@ -42,8 +42,9 @@ export default {
 
     watch: {
         $route() {
+            this.$root.loading = true
             this.paging.params.filter = this.$route.query.tab
-            this.fetch(true)
+            this.fetch(true).then(() => {this.$root.loading = false})
         }
     }
 }

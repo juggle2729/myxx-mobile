@@ -128,17 +128,17 @@ export default {
                         auction.current_price + auction.bid_increment : auction.upset_price
                 }).then(() => {
                     const bidPrice = this.$route.query.b || this.auctionCurrentPrice
-                    for (let item of this.marginRule) {
-                        if (!item.upper_limit || item.upper_limit - this.auctionUsedAmount >= bidPrice) {
-                            this.choseMargin = item.margin
+                    for (let i = 0, max = this.marginRule.length; i < max; i++) {
+                        if (!this.marginRule[i].upper_limit || this.marginRule[i].upper_limit - this.auctionUsedAmount >= bidPrice) {
+                            this.choseMargin = this.marginRule[i].margin
                             break
                         }
                     }
                 })
             } else {
-                for (let item of this.marginRule) {
-                    if (item.margin > this.buyerCurrentAmount) {
-                        this.choseMargin = item.margin
+                for (let i = 0, max = this.marginRule.length; i < max; i++) {
+                    if (this.marginRule[i].margin > this.buyerCurrentAmount) {
+                        this.choseMargin = this.marginRule[i].margin
                         break
                     }
                 }
