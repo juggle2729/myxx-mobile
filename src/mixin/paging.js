@@ -17,7 +17,7 @@ export default {
             })
             this.$store.remove(this._listItemsCacheKey())
         } else {
-            this.fetch();
+            this.fetch(true);
         }
     },
     events: {
@@ -33,11 +33,12 @@ export default {
     },
     methods: {
         fetch(fresh) {
-            if(this.$root.loading) {
+            if(this.items.loading) {
                 console.debug('loading in progress, skip...');
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
-                this.$root.loading = true;
+                this.items.loading = true;
+                this.$root.loading = fresh;
                 const opts = {
                     limit: 10,
                     offset: fresh ? 0 : this.items.length,
@@ -55,6 +56,7 @@ export default {
                         } else {
                             this.items.splice(this.items.length, 0, ...items);
                         }
+                        this.items.loading = false;
                         this.$root.loading = false;
                         _.merge(this.items, {
                             total: data.total,
@@ -62,7 +64,7 @@ export default {
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
-                }, () => this.$root.loading = false);
+                }, () => {this.items.loading = false;this.$root.loading = false;});
             }
         },
         _listCacheKey() {
