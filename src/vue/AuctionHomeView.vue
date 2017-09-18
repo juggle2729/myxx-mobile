@@ -42,9 +42,8 @@ export default {
 
     watch: {
         $route() {
-            this.$root.loading = true
             this.paging.params.filter = this.$route.query.tab
-            this.fetch(true).then(() => {this.$root.loading = false})
+            this.fetch(true)
         }
     }
 }

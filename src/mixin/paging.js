@@ -33,11 +33,11 @@ export default {
     },
     methods: {
         fetch(fresh) {
-            if(this.items.loading) {
+            if(this.$root.loading) {
                 console.debug('loading in progress, skip...');
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
-                this.items.loading = true;
+                this.$root.loading = true;
                 const opts = {
                     limit: 10,
                     offset: fresh ? 0 : this.items.length,
@@ -55,14 +55,14 @@ export default {
                         } else {
                             this.items.splice(this.items.length, 0, ...items);
                         }
-                        this.items.loading = false;
+                        this.$root.loading = false;
                         _.merge(this.items, {
                             total: data.total,
                             cursor: data.cursor,
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
-                }, () => this.items.loading = false);
+                }, () => this.$root.loading = false);
             }
         },
         _listCacheKey() {
