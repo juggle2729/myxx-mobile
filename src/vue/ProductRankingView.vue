@@ -3,7 +3,7 @@
 .product-ranking-view
     .banner
         width 100%
-        height 140px
+        padding-top 18.6%
         background-size cover
         &.recent
             background-image url($qn + 'recent-banner.png')
@@ -11,24 +11,21 @@
             background-image url($qn + 'top100-banner.png')
     .tabs
         width 100%
-        .tabs-placeholder
-            width 100%
-            height 129px
-        .bg-white
-            width 100%
+        z-index 99
+        &.fixed
+            position fixed
             top 0
-            -webkit-box-pack center
-            .options
-                width 600px
-                border-radius 40px
-                .option
-                    width calc(100% / 3)
-                    &:first-child
-                        border 0
-            &.on-top
-                position fixed
-                top 0
-                z-index 99
+        &.sticky
+            position sticky
+            top 0
+        .options
+            width 600px
+            border-radius 40px
+            margin 0 auto
+            .option
+                width calc(100% / 3)
+                &:first-child
+                    border 0
     .empty-component
         top 268px
         height calc(100% - 268px)
@@ -36,11 +33,9 @@
 <template lang="pug">
 .product-ranking-view.bg
     .banner(:class="$route.name.split('-')[1]")
-    .tabs.relative
-        .tabs-placeholder.bg-white
-        .bg-white.flex.absolute.pdv-24.bdb(:class="onTop")
-            .options.line-height-80.flex.bd
-                .option.center.fz-30.bdl(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
+    .tabs.bg-white.pdv-24(:class="tabClass")
+        .options.line-height-80.flex.bd
+            .option.center.fz-30.bdl(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
     template(v-for="item in items")
         .hr
         product-item(:item="item", :index="$index")
@@ -62,7 +57,7 @@ export default {
                 { id: 'origin', name: '原石'},
                 { id: 'finished', name: '成品'}
             ],
-            onTop: ''
+            tabClass: ''
         }
     },
 
@@ -84,9 +79,14 @@ export default {
     ready() {
         this.current = this.$route.query.tab || this.current
 
-        this.$on('scroll', () => {
-            window.scrollY >= 70 ? this.onTop = 'on-top' : this.onTop = ''
-        })
+        if (this.env.isIOS) {
+            this.tabClass = 'sticky'
+        } else {
+            const realTabsOffsetTop = this.$el.querySelector('.tabs').offsetTop
+            this.$on('scroll', () => {
+                this._scrollTop() >= realTabsOffsetTop ? (this.tabClass = 'fixed') : this.tabClass = ''
+            })
+        }
     },
 
     methods: {
