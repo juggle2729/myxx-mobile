@@ -1,5 +1,8 @@
 <style lang="stylus">
 @import '~style/partials/var'
+@keyframes fresh
+    from { transform: rotate(0deg) }
+    to { transform: rotate(360deg) }
 .auction-bids
     .title
         line-height 80px
@@ -16,13 +19,13 @@
         margin-bottom 28px
     .update-btn
         -webkit-box-pack center
-        &.fresh
-            background #f7f7f7
     .update-icon
-        width 25px
+        width 26px
         height @width
         background url($qn + 'auction/update.png') no-repeat center
         background-size 100%
+        &.fresh
+            animation fresh 0.8s
 </style>
 <template lang="pug">
 .auction-bids.fz-26
@@ -38,8 +41,8 @@
         .mgv-48.fz-26.light.center.empty(v-if="status === 'preview'") 拍卖尚未开始
         .mgv-48.fz-26.light.center.empty(v-else) 暂时没有人出价
     template(v-if="!items.isEmpty && $route.name === 'auction'")
-        .update-btn.line-height-100.bdt.flex(@touchstart="updateBidRecords", @touchend="freshStyle = ''", :class="freshStyle")
-            .update-icon
+        .update-btn.line-height-100.bdt.flex(@touchstart="refreshBid")
+            .update-icon(:class="freshStyle")
             .fz-26.red.mgl-12 点击刷新出价
 </template>
 <script>
@@ -79,6 +82,7 @@ export default {
                 path: `mall/auctions/${this.id}/bids`,
                 list: 'bids',
                 auto: !this.limit,
+                loading: false,
                 params: {
                     limit: this.limit
                 }
@@ -102,10 +106,12 @@ export default {
             this.fetch(true)
         },
 
-        updateBidRecords() {
+        refreshBid() {
             this.freshStyle = 'fresh'
+            setTimeout(() => this.freshStyle = '', 800) // 时间和动画时间保持一致
+
             this.fetch(true).then(() => {
-                this.$dispatch('bidDone', this.items[0].bid_price)
+                this.$dispatch('refreshPrice', this.items[0].bid_price)
             })
         }
     }

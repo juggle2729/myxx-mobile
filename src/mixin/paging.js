@@ -38,7 +38,7 @@ export default {
                 return Q(true);
             } else if(fresh || this.items.hasMore !== false) {
                 this.items.loading = true;
-                this.$root.loading = fresh;
+                this.$root.loading = fresh && this.paging.loading !== false;
                 const opts = {
                     limit: 10,
                     offset: fresh ? 0 : this.items.length,

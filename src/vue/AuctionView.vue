@@ -573,6 +573,9 @@ export default {
         bidDone(latestPrice) {
             this.auction.current_price = latestPrice
             this.$broadcast('freshBids')
+        },
+        refreshPrice(latestPrice) {
+            this.auction.current_price = latestPrice
         }
     }
 }
