@@ -8,5 +8,6 @@ import toast from './Toast.vue'
 import confirm from './Confirm.vue'
 import guarantee from './Guarantee.vue'
 import comment from './Comment.vue'
+import bindPhone from './BindPhone.vue'
 
-export default { keyboard, setPrice, play, share, login, toast, confirm, guarantee, comment }
+export default { keyboard, setPrice, play, share, login, toast, confirm, guarantee, comment, bindPhone }

@@ -458,9 +458,29 @@ export default {
         }
     },
 
-    '/wallet/:tab': {
-        name: 'detail',
-        title: '明细',
+    '/wallet/margin': {
+        name: 'margin',
+        title: '已冻结',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('WalletMarginView.vue'))
+            }, 'wallet')
+        }
+    },
+
+    '/wallet/seller-margin': {
+        name: 'seller-margin',
+        title: '商家拍卖保证金',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('SellerMarginView.vue'))
+            }, 'wallet')
+        }
+    },
+
+    '/wallet/detail/:target_type/:flow_type': {
+        name: 'wallet-detail',
+        title: '收支明细',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('WalletDetailView.vue'))
@@ -468,12 +488,12 @@ export default {
         }
     },
 
-    '/wallet/margin': {
-        name: 'margin',
-        title: '拍品保证金',
+    '/wallet/trading': {
+        name: 'wallet-trading',
+        title: '交易中',
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('WalletMarginView.vue'))
+                resolve(require('WalletTradingView.vue'))
             }, 'wallet')
         }
     },
@@ -631,6 +651,15 @@ export default {
         }
     },
 
+    '/help/auction-special': {
+        title: '专场要求',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpAuctionSpecialView.vue'));
+            }, 'help')
+        }
+    },
+
     '/help/eco-system': {
         title: '打造和田玉良性生态的举措',
         component(resolve) {
@@ -745,6 +774,16 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionCompeteView.vue'))
+            }, 'auction')
+        }
+    },
+
+    '/auction/special/:id': {
+        name: 'special',
+        title: '专场拍卖',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AuctionSpecialView.vue'))
             }, 'auction')
         }
     },

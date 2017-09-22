@@ -24,7 +24,7 @@ export default {
 
     data() {
         return {
-            views: {hot: '拍品推荐', preview: '即将开拍', end: '历史拍品'}
+            views: {going: '拍品推荐', preview: '即将开拍', end: '历史拍品'}
         }
     },
 
@@ -34,7 +34,7 @@ export default {
                 path: 'mall/auctions',
                 list: 'auctions',
                 params: {
-                    filter: this.$route.query.tab || 'hot'
+                    filter: this.$route.query.tab || 'going'
                 }
             }
         }

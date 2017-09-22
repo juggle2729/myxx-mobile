@@ -1,116 +1,134 @@
 <style lang="stylus">
-.wallet-detail
-    min-height: 100%
-    .light-green
-        color: #09bb07
-    .light-blue
-        color: #5b99ee
-    .right
-        text-align: right
-    .tabs
-        height: 100px
-        position: fixed
-        z-index: 9
-        width: 100%
-        top: 0
-        > div
-            line-height: 40px
-            text-align: center
-            &.v-link-active
-                color: #cc3f4f
-    .tabs-placeholder
-        height: 100px
-    .symbol
-        vertical-align: 5px
-    .line-clamp-2
-        width: 0%
+.wallet-detail-view
+    padding-top 84px
+    &.cover
+        height 100%
+    .select
+        width 100%
+        top 0
+        z-index 99
+        .arrow-icon
+            margin-left 10px
+            img
+                width 28px
+                height 28px
+    .select, li
+        height 84px
+        line-height 84px
+        padding 0 51px 0 47px
+    .mgl-62
+        margin-left 62px
+    .select-list
+        top 84px
+        z-index 9
+        width 100%
+        height calc(100% - 84px)
+        background rgba(0, 0, 0, 0.3)
+    .bill-item:last-child
+        border-bottom 1px solid #ededed
 </style>
-<template lang="pug">
-.wallet-detail(v-if='!$loadingRouteData')
-    template(v-if="hasShop")
-        .tabs.flex.fz-30.bdb.bg-white
-            .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'expects'}, replace: true}")
-                | 交易中
-            .flex-1.bdr(v-link="{name: 'detail', params: {tab: 'withdraws'}, replace: true}")
-                | 已提现
-            .flex-1(v-link="{name: 'detail', params: {tab: 'bills'}, replace: true}")
-                | 总流水
-        .tabs-placeholder
-    .fz-30.bdb.pd-32(v-for='item in items',  track-by="$index")
-        .flex.fz-22.gray
-            .flex-1 {{item.trans_desc}}
-            div(v-if="expect && item.expect_at") {{timeTip}} {{item.expect_at | date 'yyyy-m-dd HH:MM'}}
-            div(v-if="!expect") {{timeTip}} {{item.create_at | date 'yyyy-m-dd HH:MM'}}
-        .flex.mgt-40
-            .flex-3.line-clamp-2(:class="{'light-green': item.remark === '等待银行处理'}") {{item.remark}}
-            .red.fz-40.flex-1.right(v-if="expect || $route.params.tab === 'withdraws'")
-                | {{item.trans_amount | price}}
-            .red.fz-40.flex-1.right(v-else, :class="{'light-blue': (item.trans_amount < 0 && item.trans_desc === '手续费'), 'light-green': item.trans_amount < 0}")
-                template(v-if="item.trans_amount > 0")
-                    span.symbol +
-                    span {{item.trans_amount | price}}
-                template(v-else)
-                    span.symbol -
-                    span {{-item.trans_amount | price}}
-    empty(v-if='isEmpty')
+<template  lang="pug">
+.wallet-detail-view.bg(:class="{'cover': showTargetTypeList || showFlowTypeList}")
+    .select.flex.fz-26.bdb.gray-8f.bg-white.fixed
+        .center.flex
+            div 收支类型:
+            .mgl-32.flex(@click="toggleTargetType")
+                span {{ targetType.value }}
+                .arrow-icon
+                    img(:src="(showTargetTypeList ? 'arrow-upward.png' : 'arrow-downward.png') | qn")
+        .flex-1
+        .center.flex
+            div 收支方式:
+            .mgl-62.flex(@click="toggleFlowType")
+                span {{ flowType.value }}
+                .arrow-icon
+                    img(:src="(showFlowTypeList ? 'arrow-upward.png' : 'arrow-downward.png') | qn")
+    .select-list.fixed(v-if="showTargetTypeList || showFlowTypeList")
+        ul.bg-white
+            li.fz-26.bdb(v-for="item in options", @click="toggleType(item)", :class="(showTargetTypeList ? targetType.key === item.key : flowType.key === item.key) ? 'red-e6' : 'black-47'") {{ item.value }}
+    .mgt-22
+        template(v-for="item in items")
+            bill-item(:item="item")
 </template>
 <script>
+import paging from 'paging'
+import BillItem from 'component/item/Bill.vue'
 export default {
     name: 'wallet-detail-view',
+    mixins: [ paging ],
+    components: { BillItem },
 
     data() {
         return {
-            isEmpty: '',
-            items: [],
-            expects: false, // 交易中tab
-            withdraws: false, // 已提现tab
-            bills: false // 总流水tab
+            targetType: {},
+            flowType: {},
+            targetTypeList: [
+                {key: 'all', value: '全部'},
+                {key: 'prd', value: '商品订单'},
+                {key: 'pcs', value: '求购竞标'},
+                {key: 'rwd', value: '赞赏'},
+                {key: 'acm', value: '拍卖保证金'},
+                {key: 'avm', value: '拍卖违约金'},
+                {key: 'wtd', value: '提现'},
+            ],
+            flowTypeList: [
+                {key: 'all', value: '全部'},
+                {key: 'income', value: '收入'},
+                {key: 'expense', value: '支出'}
+            ],
+            options: [],
+            showTargetTypeList: false,
+            showFlowTypeList: false
         }
     },
 
     computed: {
-        hasShop() {
-            return this.env.version < 3.3 || _.get(this, 'self.shop_id') || _.get(this, 'self.shopId')
-        },
-
-        tab() { // 当前tab
-            const routeTab = this.$route.params.tab === 'records' ? 'bills' : this.$route.params.tab // 对records做特殊处理
-            return ['expects', 'withdraws', 'bills'].indexOf(routeTab) !== -1 ? routeTab : 'expects'
-        },
-
-        expect() {
-            return this.$route.params.tab === 'expects'
-        },
-
-        timeTip() {
-            return this.expect ? '可提现时间：' : (this.$route.params.tab === 'withdraws' ? '提现时间：' : '结算时间：')
+        paging() {
+            return {
+                path: 'balance/bills',
+                list: 'entries',
+                params: {
+                    target_type: (this.$route.params.target_type === 'all' ? null : this.$route.params.target_type),
+                    flow_type: (this.$route.params.flow_type === 'all' ? null : this.$route.params.flow_type)
+                }
+            }
         }
     },
 
-    route: {
-        data({to, next}) {
-            if(!this[this.tab]) { // 仅第一次访问该tab的时候获取数据
-                return this.$fetch(`balance/${this.tab}?offset=0&limit=10`).then(resp => {
-                    this.items = resp.entries
-                    this[this.tab] = this.items
-                    this.isEmpty = this.items.length === 0
-                })
+    ready() {
+        this.targetType = this.targetTypeList.filter(item => {
+            return item.key === this.$route.params.target_type
+        })[0]
+
+        this.flowType = this.flowTypeList.filter(item => {
+            return item.key === this.$route.params.flow_type
+        })[0]
+    },
+
+    methods: {
+        toggleTargetType() {
+            this.showFlowTypeList = false
+            this.showTargetTypeList = !this.showTargetTypeList
+            this.showTargetTypeList && (this.options = this.targetTypeList)
+        },
+
+        toggleFlowType() {
+            this.showTargetTypeList = false
+            this.showFlowTypeList = !this.showFlowTypeList
+            this.showFlowTypeList && (this.options = this.flowTypeList)
+        },
+
+        toggleType(item) {
+            if (this.showTargetTypeList) {
+                this.targetType = item
+                this.showTargetTypeList = false
             } else {
-                this.items = this[this.tab]
-                this.isEmpty = this.items.length === 0
-                next()
+                this.flowType = item
+                this.showFlowTypeList = false
             }
-        }
-    },
-
-    events: {
-        scrollToBottom(e) {
-            const offset = this.items.length
-            if(offset) { // tab已经初始化
-                return this.$fetch(`balance/${this.tab}?offset=${offset}&limit=10`).then(resp => {
-                    this.items = this.items.concat(resp.entries)
-                })
-            }
+            this.paging.params.target_type = this.targetType.key === 'all' ? null : this.targetType.key
+            this.paging.params.flow_type = this.flowType.key === 'all' ? null : this.flowType.key
+            this.fetch(true)
         }
     }
 }

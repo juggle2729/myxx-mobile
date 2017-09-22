@@ -6,6 +6,7 @@ const adapter = {
         switch(handler) {
             case 'login':
                 this.$store.remove('user') // 清除本地用户缓存
+                this.$store.remove('bindPhone') // 清除本地用户绑定手机号意愿
                 if(this.env.isWechat) {
                     location.href = 'http://www.meiyuxiuxiu.com/wechat?redirect_uri=' + encodeURIComponent(location.href)
                 } else if(this.env.isBrowser && this.env.isTest) {
@@ -69,6 +70,7 @@ const adapter = {
             case 'toast':
             case 'delete':
             case 'confirm':
+            case 'bindPhone':
                 this.$root.popup = _.merge({}, params, {handler, cb})
                 break
             case 'shareable':

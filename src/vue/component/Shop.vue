@@ -1,35 +1,51 @@
 <style lang="stylus">
 .shop-component
-    .logo
-        height: 120px
-        width: 120px
-    .address
-        width: 200px
-    .icon-shop
-        height: 44px
-        width: 48px
-        margin-top: -46px
-        & + div
-            margin-top: -24px
-    .new
-        height: 32px
-        line-height: 32px
-        border-radius: 20px
+    padding 0 42px 0 23px
+    .img
+        height 80px
+        width 80px
+        border-radius 16px
+        margin 25px 23px 26px 0
+    .flex-1
+        .name
+            width 380px
+            .line-clamp
+                line-height 1.2
+        .level-comp
+            width 130px
+            height 34px
+            img
+                width 100%
+                height 100%
+        .address-icon
+            width 30px
+            height @width
+            img
+                margin-top 3px
+                width 21px
+                height 24px
+    .center
+        font-size 0
+        img
+            width 44px
+            height @width
+        .fz-18
+            font-size 18px
 </style>
 <template lang="pug">
-.shop-component.mgt-32.flex.bg-light.bd(v-link="{name: 'shop', params: {id: shop.id}}")
-    .logo.img(v-bg="shop.logo")
-    .mgl.flex-1
-        .flex.fz-30
-            .mgr-12 {{shop.shop_name}}
+.shop-component.bg-white.flex.bdb(v-link="{name: 'shop', params: {id: shop.id}}")
+    .img(v-bg="shop.logo")
+    .flex-1
+        .fz-30.flex.name.black-47
+            .line-clamp.mgr {{ shop.shop_name }}的店铺
             lv(:lv="shop.level")
-        .flex.fz-26.gray.mgt-16
-            icon(name="location")
-            .mgl-12(:class="{'address': shop.pd_count_today, 'line-clamp-1': shop.pd_count_today}") {{shop.locale_name}}
-            .new.bg-red.white.pdh-16.mgl-16.fz-22(v-if="shop.pd_count_today") 今日上新 {{shop.pd_count_today}}
-    .center.pdh-32
-        icon(name="shop")
-        .gray.fz-22 进店逛逛
+        .fz-26.gray.flex.mgt-12
+            .address-icon.center.mgr-6
+                img(:src="'shop/address.png' | qn")
+            .fz-20.dark-6b {{ shop.locale_name }}
+    .center
+        img(:src="config.www + 'icon.enter.shop.png'")
+        .fz-18.gray-8f.mgt-18 进店逛逛
 </template>
 <script>
 import Lv from 'component/Lv.vue'

@@ -24,7 +24,7 @@
         .pic
             img(:src="'explanation/violation-product.png' | qn")
         .table.violation-product
-            img(:src="'explanation/table/violation-product.png' | qn")
+            img(:src="'explanation/table/violation-product-4.2.png' | qn")
     template(v-if="$route.params.type === 'about_violation_shop'")
         .pic
             img(:src="'explanation/violation-shop.png' | qn")

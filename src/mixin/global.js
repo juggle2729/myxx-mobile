@@ -87,14 +87,19 @@ const mixin = {
             switch(handler) {
                 case 'user':
                     callback = resp => {
-                            if(resp) {
-                                const user = _.update(_.isObject(resp) ? resp : JSON.parse(resp), 'id', id => +id)
-                                this.$root.user = user
-                                defer.resolve(user)
-                            } else {
-                                defer.resolve()
+                        if (resp) {
+                            const user = _.update(_.isObject(resp) ? resp : JSON.parse(resp), 'id', id => +id)
+                            this.$root.user = user
+                            defer.resolve(user)
+                            // 微信新用户登录时，跳转绑定手机号页面
+                            const needBind = user.is_new && !user.phone
+                            if (needBind && this.$store.get('bindPhone') !== false) {
+                                this.action('bindPhone')
                             }
+                        } else {
+                            defer.resolve()
                         }
+                    }
                     break
                 case 'keyboard':
                     callback = resp => resp.trim() ? defer.resolve(resp) : defer.reject()
@@ -108,6 +113,7 @@ const mixin = {
                 case 'upload':
                 case 'action':
                 case 'cache':
+                case 'bindPhone':
                     callback = resp => defer.resolve(resp)
                     break
                 case 'chat':
@@ -159,7 +165,7 @@ const mixin = {
                         const [path, version] = url.split('|')
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v24']
+                                ['X-Api-Version', version || 'v25']
                             ].filter(header => header[1]))
                         let noData = (method === 'get' || method === 'delete')
                         this.$http[method](path, (noData ? {headers, params: _.omitBy(data, _.isNull), body: data, emulateJSON: true} : data), (noData ? '' : {headers}))
@@ -179,7 +185,7 @@ const mixin = {
                                             } else {
                                                 console.warn(404, path)
                                             }
-                                        } else if ([12009].indexOf(resp.status) !== -1) { // ignore error
+                                        } else if ([12009, 1001, 1006].indexOf(resp.status) !== -1) { // ignore error
                                         } else {
                                             this.action('toast', {success: '0', text: resp.message || '出错了'})
                                             console.warn(`[${resp.status}]${path}\n${resp.message}`)
