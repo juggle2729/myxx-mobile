@@ -408,6 +408,16 @@ export default {
         }
     },
 
+    '/order/:id/confirm': { // id: product id
+        name: 'order-confirm',
+        title: '确认订单',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OrderConfirmView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/pay-offline/:id': {
         name: 'pay-offline',
         title: '大额支付',

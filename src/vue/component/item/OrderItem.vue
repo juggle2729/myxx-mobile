@@ -1,7 +1,7 @@
 <style lang="stylus">
 .order-item-item
     .prod-img
-        width 148px
+        width 120px
         height @width
     .auction-flag
         width 36px
@@ -19,14 +19,16 @@
             height @width
         .name
             font-size 26px
+    .price:first-letter
+        font-size 20px
 </style>
 <template lang="pug">
 .order-item-item.bg-white.flex.pdr-32(:class="[!index ? 'pdb-8' : 'pdt-8', page]")
     .prod-img.relative(v-bg="item.cover")
         .auction-flag.absolute(v-if='item.auction')
     .flex.mgl-20.info
-        .fz-30.black.name {{ item.title | truncate 15 }}
-        .mgt-24.gray.fz-26 {{ item.trans_amount | price }}
+        .fz-26.black-47.name {{ item.title | truncate 15 }}
+        .mgt-16.fz-32.price(:class="priceColor") {{ (item.trans_amount || item.price) | price }}
 </template>
 <script>
 export default {
@@ -35,7 +37,11 @@ export default {
     props: {
         item: Object,
         index: Number,
-        page: String
+        page: String,
+        priceColor: {
+            type: String,
+            default: 'gray'
+        }
     }
 }
 </script>

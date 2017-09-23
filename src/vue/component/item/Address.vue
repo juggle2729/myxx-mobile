@@ -15,6 +15,8 @@ bg($icon, $size)
         bg(edit, 26px)
     .delete
         bg(delete, 26px)
+    .full-address
+        line-height 1.5
 </style>
 <template lang="pug">
 .address-item.bg-white.black-24
@@ -22,7 +24,7 @@ bg($icon, $size)
         .flex
             .flex-1.fz-30 {{ item.receiver_name }}
             .fz-30 {{ item.receiver_phone }}
-        .fz-26.gray-8f.mgt-28 {{ item.receiver_address_flat }}
+        .fz-26.gray-8f.mgt-28.full-address {{ item.receiver_address_flat }}
     .operation.flex.pdh-32
         .flex.fz-26(@click="setDefault")
             icon(:name="item.is_default ? 'checked' : 'uncheck'")

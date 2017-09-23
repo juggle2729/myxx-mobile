@@ -156,7 +156,6 @@ export default {
                 if (this.isAuctionMargin) {
                     return this.$fetch(`mall/auctions/myb/margin_rule`)
                         .then(({buyer_current_amount}) => {
-                        console.log('*****************buyer_current_amount*************', this.$route.query.m, buyer_current_amount)
                         return this.$route.query.m - buyer_current_amount
                     })
                 } else if (this.isOrder) {

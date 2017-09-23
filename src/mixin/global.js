@@ -179,6 +179,7 @@ const mixin = {
                                             } else {
                                                 console.warn(404, path)
                                             }
+                                        } else if ([12009].indexOf(resp.status) !== -1) { // ignore error
                                         } else {
                                             this.action('toast', {success: '0', text: resp.message || '出错了'})
                                             console.warn(`[${resp.status}]${path}\n${resp.message}`)
