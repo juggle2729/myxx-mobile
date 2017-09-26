@@ -13,8 +13,8 @@
     auction-header-menu
     template(v-for="(index, item) in items")
         .hr
-        address-item(:item="item", :index="index", @click="selectAddress(item)")
-    empty(v-if="items.isEmpty", :title="isShipping ? '暂无收货地址' : '暂无退货地址'")
+        address-item(:item="item", :index="index", @click.self="selectAddress(item)")
+    empty(v-if="items.isEmpty")
     .add-btn.bg-red.white.fz-30.center(v-link="{name: 'address-add', params: {id: 0, type: type}}") {{ isShipping ? '新增收货地址' : '新增退货地址' }}
 </template>
 <script>

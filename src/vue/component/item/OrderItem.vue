@@ -27,8 +27,8 @@
     .prod-img.relative(v-bg="item.cover")
         .auction-flag.absolute(v-if='item.auction')
     .flex.mgl-20.info
-        .fz-26.black-47.name {{ item.title | truncate 15 }}
-        .mgt-16.fz-32.price(:class="priceColor") {{ (item.trans_amount || item.price) | price }}
+        .fz-26.black-47.name.bold {{ item.title | truncate 15 }}
+        .mgt-8.fz-32.price(:class="priceColor") {{ (item.trans_amount || item.price) | price }}
 </template>
 <script>
 export default {

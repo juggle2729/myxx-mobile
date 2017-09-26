@@ -30,8 +30,8 @@ bg($icon, $size)
             icon(:name="item.is_default ? 'checked' : 'uncheck'")
             .address-text.mgl-20 {{ item.is_default ? '默认地址': '设为默认' }}
         .flex-1
-        .edit.pdl-42.fz-26(@click="edit") 编辑
-        .delete.pdl-42.fz-26(@click="del") 删除
+        .edit.pdl-42.fz-26(@click.stop="edit") 编辑
+        .delete.pdl-42.fz-26(@click.stop="del") 删除
 </template>
 <script>
 export default {

@@ -23,9 +23,9 @@
         line-height 80px
     .item
         height 120px
+        padding 0 8px
     .icon
         width 46px
-        height 46px
     .close
         height 100px
         justify-content center
@@ -35,10 +35,10 @@
     .mask.flex-1.bg-opacity-7(@click="close")
     .container.bg-white
         .title.pdl-32.fz-26.gray-8f.bdb {{ type === 'shop' ? '店铺优惠券' : '平台优惠券' }}
-        .flex.item.mgh-32.bdb(v-for="coupon in list", @click="select(coupon)")
+        .flex.item.mgl-24.mgr-24.bdb(v-for="coupon in list", @click="select(coupon)")
             .fz-30.black-24.flex-1 {{ coupon.title }}
             icon(:name="+coupon.id === +selected.id ? 'checked' : 'uncheck'")
-        .flex.item.pdh-32(@click="select()")
+        .flex.item.mgl-24.mgr-24(@click="select()")
             .fz-30.black-24.flex-1 不使用优惠券
             icon(:name="lodash.isEmpty(selected) ? 'checked' : 'uncheck'")
         .close.fz-36.red-e5.flex.bdt(@click="close") 关闭

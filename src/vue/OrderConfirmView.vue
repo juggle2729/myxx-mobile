@@ -2,29 +2,39 @@
 @import '~style/partials/mixin'
 $b = '//o0x80w5li.qnssl.com/'
 $mgl = 62px
+icon($name)
+    width 100%
+    height 30px
+    background url($b + 'order/' + $name + '.png') no-repeat
+    background-size 30px 30px
+    padding-left 60px
+.order-view
 .order-confirm-view
     overflow hidden
     .address
         padding 30px 56px 45px 36px
     .no-address
-        padding 15px 24px 22px 36px
+        padding-left 36px
+        height 120px
     .full-address
         line-height 1.5
-    .icon-location, .icon-shop
-        vertical-align 12px
     .desc
         margin-left $mgl
     .icon-enter
         position absolute
         top 50%
-        right 24px
+        right 36px
         transform translateY(-50%)
+    .icon-location
+        icon(address)
+    .icon-shop
+        icon(shop)
     .product
         padding 30px 32px 0 36px
         flex-direction column
         align-items flex-start
     .order-item-item
-        margin 12px 0 24px $mgl
+        margin 36px 0 24px $mgl
     .separator
         width -webkit-calc(100% - 124px)
         height 1px
@@ -34,16 +44,19 @@ $mgl = 62px
         padding 38px 75px 38px 98px
     textarea
         border(a, #ededed)
-        margin 40px 40px 0 98px
+        margin 20px 40px 0 98px
         width -webkit-calc(100% - 128px)
         padding 21px 22px
         height 180px
         border none
         resize none
         border-radius 0
+        line-height 1.2
         &::-webkit-input-placeholder
             color #b3b3b3
             font-size 30px
+        &.has-coupon
+            margin-top 40px
     .bottom
         position fixed
         left 0
@@ -52,6 +65,7 @@ $mgl = 62px
         width 100%
     .price-info
         justify-content flex-end
+        align-items flex-end
         padding-right 24px
     .price
         margin-right 11px
@@ -59,27 +73,22 @@ $mgl = 62px
             font-size 20px
     .confirm
         width 222px
-        line-height 100px
+        line-height 101px
 </style>
 <template lang="pug">
 .order-confirm-view(v-if="!$loadingRouteData", @touchstart="touchStart($event)")
     .address.relative.bdb(v-if="!lodash.isEmpty(address)", @click="selectAddress")
-        .flex
-            icon.gray.fz-30(name="location")
-            .flex-1.fz-30.black-24.mgl-28 收货地址
-        .desc.black-47.fz-26 {{ address.name }} {{ address.phone }}
-        .desc.gray-b3.fz-24.mgt-18.full-address {{ address.address }}
+        .flex.icon-location.fz-30.black-24 收货地址
+        .desc.black-47.fz-26.mgt-28 {{ address.name }} {{ address.phone }}
+        .desc.gray-b3.fz-24.mgt-14.full-address {{ address.address }}
         icon.icon-enter.gray-b3.fz-22(name="enter")
     .no-address.flex.relative.bdb(v-else, @click="selectAddress")
-        icon.gray.fz-30(name="location")
-        .flex-1.fz-30.red-e6.mgl-28 请添加收货地址
+        .icon-location.flex-1.fz-30.red-e6 请添加收货地址
         icon.icon-enter.gray-b3.fz-22(name="enter")
     .product.flex
-        .flex
-            icon.gray.fz-30(name="shop")
-            .flex-1.fz-30.black-24.mgl-28 {{ product.shop.shop_name }}
+        .flex.icon-shop.fz-30.black-24 {{ product.shop.shop_name }}
         order-item-item(:item="product", :price-color="'red-e6'")
-    .separator.bdb
+    .separator.bdb(v-if="coupon.shop.length || coupon.platform.length")
     .shop-coupon.flex.relative(v-if="coupon.shop.length", @click="selectShopCoupon")
         .black-24.fz-26 店铺优惠券
         .red-e6.fz-24.flex-1.txt-right {{ selectedShopCoupon.title || '不使用优惠券' }}
@@ -90,7 +99,8 @@ $mgl = 62px
         .red-e6.fz-24.flex-1.txt-right {{ selectedPlatformCoupon.title || '不使用优惠券' }}
         icon.icon-enter.gray-b3.fz-22(name="enter")
     .separator.bdb(v-if="coupon.platform.length")
-    textarea.note.fz-30.black-24(placeholder="给商家留言，140字以内", v-model='note')
+    textarea.note.fz-30.black-24.bg-gray-f7(placeholder="给商家留言，140字以内", v-model='note',
+        :class="{'has-coupon': coupon.shop.length || coupon.platform.length}")
     .bottom.flex.bdt.bg-white
         .flex-1.price-info.flex
             .change-price.gray-b3.fz-24(v-if="!product.price") 部分商品待改价
@@ -98,7 +108,7 @@ $mgl = 62px
                 .fz-20.black-24 合计:
                 .price.fz-32.red-e6 {{ orderPrice | price }}
                 .gray-b3.fz-20(v-if="discount > 0") (已优惠{{ discount | price }})
-        .fz-36.white.confirm.center(:class="lodash.isEmpty(address) ? 'bg-gray' : 'bg-red-e5'", @click="confirmOrder") 确认订单
+        .fz-36.white.confirm.center(:class="lodash.isEmpty(address) ? 'bg-gray-e8' : 'bg-red-e5'", @click="confirmOrder") 确认订单
     coupon-select(:list="couponList", :selected="selectedCoupon", :type="couponType", :show.sync="showCouponSelect", transition="pop")
 </template>
 <script>
