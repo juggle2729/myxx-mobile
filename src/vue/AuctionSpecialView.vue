@@ -6,9 +6,11 @@
         background-size cover
     .info
         font-size 12px
+    .empty-component
+        height calc(100% - 430px)
 </style>
 <template  lang="pug">
-.auction-special-view.bg
+.auction-special-view.bg.pdb
     .banner(v-bg.lg="auctionDetail.picture")
     .info.line-height-50.white.pdh-26.flex(:class="infoBg")
         .status.fz-24 {{ auctionTime }}
@@ -18,6 +20,7 @@
     template(v-for="auction in auctionDetail.auctions")
         .hr
         auction-item(:item="auction")
+    empty(v-if="!auctionDetail.auctions.length" title="专场已下架")
 </template>
 <script>
 import Lv from 'component/Lv.vue'
@@ -37,7 +40,8 @@ export default {
                     shop_name: '',
                     locale_name: '',
                     id: ''
-                }
+                },
+                auctions: []
             }
         }
     },
@@ -61,7 +65,7 @@ export default {
                 case 'going':
                     return 'bg-red-e6'
                 case 'success':
-                    return 'bg-black-47'
+                    return 'bg-gray-6b'
             }
         },
         auctionTime() {
@@ -71,7 +75,7 @@ export default {
                 case 'going':
                     return `结束时间: ${dateformat(this.auctionDetail.real_end_time, 'mm月dd日 HH:MM')}`
                 case 'success':
-                    return `已结束: ${dateformat(this.auctionDetail.real_end_time, 'mm月dd日 HH:MM')}`
+                    return `已结束: ${dateformat(this.auctionDetail.real_end_time, 'mm月dd日 HH:MM')}结束`
             }
         }
     }

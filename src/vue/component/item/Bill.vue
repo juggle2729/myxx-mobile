@@ -22,7 +22,7 @@
         .title.fz-28.black-47.line-clamp-2 {{ item.remark }}
         .flex-1
         .fz-36.red-e6.txt-right
-            .fz-36(:class="item.trans_amount > 0 ? 'green-a1' : 'red-e6'") {{{ item.trans_amount > 0 ? '+' + item.trans_amount : item.trans_amount }}}
+            .fz-36(:class="item.trans_amount > 0 ? 'green-a1' : 'red-e6'") {{ billPrice }}
             .pay-way.fz-22.gray-8f {{ item.channel_desc }}
 </template>
 <script>
@@ -31,6 +31,13 @@ export default {
 
     props: {
         item: Object
+    },
+
+    computed: {
+        billPrice() {
+            return this.item.trans_amount > 0 ? `+${(this.item.trans_amount / 100).toFixed(2)}`
+                : (this.item.trans_amount / 100).toFixed(2)
+        }
     }
 }
 </script>

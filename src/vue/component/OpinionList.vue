@@ -45,7 +45,7 @@
             border 0
 </style>
 <template lang="pug">
-.opinion-list.bg-white.bdb(:class="{ 'pdh-36': !items.isEmpty }")
+.opinion-list.bg-white(:class="items.isEmpty ? '' : ['pdh-36', 'bdb']")
     .opinion.flex.pdt-36.pdb-20.bdb(v-for="item in items")
         template(v-if="item.buyer")
             avatar(:user="item.buyer")

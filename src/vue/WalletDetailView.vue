@@ -1,6 +1,7 @@
 <style lang="stylus">
 .wallet-detail-view
-    padding-top 84px
+    &.pdt-84
+        padding-top 84px
     &.cover
         height 100%
     .select
@@ -28,7 +29,7 @@
         border-bottom 1px solid #ededed
 </style>
 <template  lang="pug">
-.wallet-detail-view.bg(:class="{'cover': showTargetTypeList || showFlowTypeList}")
+.wallet-detail-view.bg(:class="{'cover': showTargetTypeList || showFlowTypeList, 'pdt-84': !items.isEmpty}")
     .select.flex.fz-26.bdb.gray-8f.bg-white.fixed
         .center.flex
             div 收支类型:
@@ -49,6 +50,7 @@
     .mgt-22
         template(v-for="item in items")
             bill-item(:item="item")
+    empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'

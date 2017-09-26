@@ -45,7 +45,7 @@
             .fz-20.dark-6b {{ shop.locale_name }}
     .center
         img(:src="config.www + 'icon.enter.shop.png'")
-        .fz-18.gray-8f.mgt-18 进店逛逛
+        .fz-18.gray-8f.mgt-12 进店逛逛
 </template>
 <script>
 import Lv from 'component/Lv.vue'

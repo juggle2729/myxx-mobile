@@ -10,6 +10,7 @@
         -webkit-box-align start
     .line-clamp-2
         width 0
+        padding-top 1px
     .price:first-letter
         font-size 20px
 </style>

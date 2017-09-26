@@ -23,6 +23,10 @@
         .left-border
             width calc((100% / 2) / 3)
             border-left 1px solid #ededed
+    .empty-component
+        height 300px
+        &.empty-title
+            background-position center 50px
 </style>
 <template lang="pug">
 .shop-praise.bg-gray-f7

@@ -1,7 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
 bg($key)
-    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '-4.11' + '.png')
+    background-image url('//o0x80w5li.qnssl.com/auction/' + $key + '-4.21' + '.png')
 .auction-footer-menu
     border(t, #e8e8e8)
     position fixed
@@ -34,7 +34,7 @@ bg($key)
         .menu-mine
             bg(mine-actived)
         .name
-            color #242424
+            color #cc3d3d
 </style>
 <template lang="pug">
 .auction-footer-menu.bg-white.flex
