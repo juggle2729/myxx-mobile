@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
-    "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 192.168.0.217 --port 80",
+    "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 192.168.0.220 --port 80",
     "build:app": "rm -rf build && NODE_ENV=production webpack --progress --hide-modules",
     "build": "rm -rf build && NODE_ENV=production webpack --config webpack.www.config.js --progress --hide-modules",
     "deploy": "./deploy.sh"

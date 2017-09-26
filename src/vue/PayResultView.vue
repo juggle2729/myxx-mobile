@@ -40,14 +40,14 @@ export default {
             if (this.bizType === 'auction'){
                 if (this.paySuccess) {
                     if (this.$route.query.id) {
-                        this.$router.go({
+                        this.$router.replace({
                             name: 'auction',
                             params: {
                                 id: this.$route.query.id
                             }
                         })
                     } else {
-                        this.$router.go('/auction/mine')
+                        this.$router.replace('/auction/mine')
                     }
                 } else {
                     this.$router.go({name: 'pay',
@@ -55,7 +55,7 @@ export default {
                 }
             } else {
                 if (this.paySuccess) {
-                    this.$router.go({name: 'order', params: {id: this.$route.query.id}})
+                    this.$router.replace({name: 'order', params: {id: this.$route.query.id}})
                 } else {
                     this.$router.go({name: 'pay',
                         query: { t: this.bizType, id: this.$route.query.id }})

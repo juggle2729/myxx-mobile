@@ -102,7 +102,7 @@ export default {
 
         _successCallback() {
             this.$store.remove('address')
-            this.$router.go('/addresses')
+            this.action('back', {step: 1})
         },
 
         _errorCallback(err) {

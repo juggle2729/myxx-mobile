@@ -8,7 +8,6 @@ icon($name)
     background url($b + 'order/' + $name + '.png') no-repeat
     background-size 30px 30px
     padding-left 60px
-.order-view
 .order-confirm-view
     overflow hidden
     .address
@@ -194,13 +193,24 @@ export default {
                 receiver_phone: this.address.phone,
                 receiver_address: this.address.address,
                 buyer_note: this.note
-            }).then(({ order_no }) => this.$router.replace({
-                name: 'pay',
-                query: {
-                    id: order_no,
-                    t: this.config.payBizType.order
+            }).then(({ order_no }) => {
+                if (this.product.price) { // 当商品价格不存在时，跳转到订单详情，不进行支付
+                    this.$router.replace({
+                        name: 'pay',
+                        query: {
+                            id: order_no,
+                            t: this.config.payBizType.order
+                        }
+                    })
+                } else {
+                    this.$router.replace({
+                        name: 'order',
+                        params: {
+                            id: order_no
+                        }
+                    })
                 }
-            }))
+            })
         }
     },
 

@@ -130,13 +130,17 @@ export default {
                 this.action('back', {step: 1})
             } else {
                 this.$store.set('pay_result', paySuccess)
-                const payData = {
-                    replace: paySuccess, // 支付失败，直接按照原路由返回
-                    biz_type: this.bizType
-                }
+
+                // check parameter
+                const payData = { biz_type: this.bizType }
                 this.bizType === 'auction' && (payData.m = this.$route.query.m)
                 this.$route.query.id && (payData.id = this.$route.query.id)
-                this.$router.go({name: 'pay-result', query: payData})
+
+                if (isPaid && paySuccess) {
+                    this.$router.replace({name: 'pay-result', query: payData})
+                } else {
+                    this.$router.go({name: 'pay-result', query: payData}) // 支付失败，直接按照原路由返回
+                }
             }
         }
     },

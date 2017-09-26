@@ -13,9 +13,9 @@
     auction-header-menu
     template(v-for="(index, item) in items")
         .hr
-        address-item(:item="item", :index="index", @click.self="selectAddress(item)")
+        address-item(:item="item", :index="index", @click="selectAddress(item)")
     empty(v-if="items.isEmpty")
-    .add-btn.bg-red.white.fz-30.center(v-link="{name: 'address-add', params: {id: 0, type: type}}") {{ isShipping ? '新增收货地址' : '新增退货地址' }}
+    .add-btn.bg-red.white.fz-30.center(v-link="{name: 'address-add', params: {id: 0, type: type}, query: {select: canSelect}}") {{ isShipping ? '新增收货地址' : '新增退货地址' }}
 </template>
 <script>
 import paging from 'paging'

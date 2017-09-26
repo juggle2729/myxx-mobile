@@ -59,7 +59,16 @@ export default {
         },
 
         edit() {
-            this.$router.go({name: 'address-add', params: { id: this.item.id }})
+            this.$router.go({
+                name: 'address-add',
+                params: {
+                    id: this.item.id,
+                    type: this.$route.query.type
+                },
+                query: {
+                    select: this.$route.query.select
+                }
+            })
         },
 
         setDefault() {
