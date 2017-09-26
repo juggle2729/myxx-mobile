@@ -9,6 +9,7 @@
         .title
             width 502px
             line-height 40px
+            padding-top 2px
         .pay-way
             margin-top 27px
 </style>

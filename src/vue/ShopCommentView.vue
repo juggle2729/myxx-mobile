@@ -12,7 +12,7 @@
             line-height 100px
         .black-24
             font-weight bold
-            border-bottom 4px solid #242424
+            border-bottom 4px solid #e61717
     .icon
         transform translateY(-3px)
     .empty-component

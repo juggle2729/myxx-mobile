@@ -3,6 +3,7 @@
 @import '~style/partials/mixin'
 .product-view
     position: relative
+    padding-top 100px
     .titles
         .header
             min-height: 164px
@@ -227,6 +228,7 @@
 </style>
 <template lang="pug">
 .product-view(v-if="prod.status === 'online'")
+    auction-header-menu
     custom-swiper(:item="prod")
     .titles.bg-white
         .header
@@ -328,6 +330,7 @@
 </template>
 <script>
 import shareable from 'shareable'
+import AuctionHeaderMenu from 'component/AuctionHeaderMenu.vue'
 import ProductCard from 'component/item/ProductCard.vue'
 import CustomSwiper from "component/CustomSwiper.vue";
 export default {
@@ -336,6 +339,7 @@ export default {
     mixins: [shareable],
 
     components: {
+        AuctionHeaderMenu,
         CustomSwiper,
         ProductCard
     },

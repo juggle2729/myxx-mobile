@@ -37,7 +37,7 @@
 </style>
 <template lang="pug">
 a.product-card.bg-white.bd-gray-ed(@click="goToDetail(item)")
-    .media(v-bg='item.first_picture')
+    .media(v-bg.md='item.first_picture')
         .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
         .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}

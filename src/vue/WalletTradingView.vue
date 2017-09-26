@@ -20,7 +20,7 @@
             .title.fz-28.black-47.line-clamp-1.line-height-36 {{ item.remark }}
             .flex-1
             .fz-36.red-e6.txt-right
-                .fz-36.red-e6.bold {{ item.trans_amount | price }}
+                .fz-36.red-e6 {{ item.trans_amount | price }}
     empty(v-if="items.isEmpty")
 </template>
 <script>

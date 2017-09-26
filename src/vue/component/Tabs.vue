@@ -9,6 +9,7 @@
     li
         line-height 100px
     .black-24
+        font-weight bold
         border-bottom 4px solid #e61717
     &.share-page
         top 112px

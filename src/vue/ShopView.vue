@@ -42,7 +42,7 @@
                 line-height 90px
             .black-24
                 font-weight bold
-                border-bottom 4px solid #242424
+                border-bottom 4px solid #e61717
             &.share-on-top
                 position fixed
                 top 112px

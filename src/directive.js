@@ -1,8 +1,8 @@
 import config from './config';
 let preset = {
     lg: '_750',
-    md: '_320',
-    sm: '_240',
+    md: '_480',
+    sm: '_320',
     video: '?vframe/jpg/offset/5/rotate/auto|imageView2/0/w/375'
 };
 const bg = {
