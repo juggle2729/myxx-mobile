@@ -13,7 +13,7 @@
             transform translateY(-13px)
     .bid-limit
         border-color #ededed
-        .red-e6:first-letter
+        .red-e6:not(.unlimited):first-letter
             font-size 26px
     .margin-list
         border-color #ededed
@@ -74,7 +74,7 @@
         .flex-1.pdt-40.pdl-36(v-else)
             div 可出价总额
             .red-e6.bold.line-height-120.fz-36(v-if="overAmount || overAmount === 0") {{ overAmount | price }}
-            .red-e6.bold.line-height-120.fz-36(v-else) 不限制
+            .red-e6.unlimited.bold.line-height-120.fz-36(v-else) 不限制
     template(v-if="overAmount || overAmount === 0")
         .fz-26.gray-8f.pdt-36.pdb-24.pdl-36 提高可出价总额
         .margin-list.pdh-36.bg-white.bdt.bdb
