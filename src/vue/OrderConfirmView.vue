@@ -75,7 +75,7 @@ icon($name)
         line-height 101px
 </style>
 <template lang="pug">
-.order-confirm-view(v-if="!$loadingRouteData", @touchstart="touchStart($event)")
+.order-confirm-view(v-if="!$loadingRouteData && product.sell_status && product.sell_status !== 'sold'", @touchstart="touchStart($event)")
     .address.relative.bdb(v-if="!lodash.isEmpty(address)", @click="selectAddress")
         .flex.icon-location.fz-30.black-24 收货地址
         .desc.black-47.fz-26.mgt-28 {{ address.name }} {{ address.phone }}
@@ -231,6 +231,10 @@ export default {
         data({ to }) {
             this.id = to.params.id
             return this.$fetch(`mall/products/${to.params.id}`).then(product => {
+                if (product.sell_status === 'sold') { // 如果是已售出，直接返回上一个页面
+                    this.action('back', {step: 1})
+                    return
+                }
                 this.product = product
                 const cacheAddress = this.$store.get('selectedAddress')
                 if (cacheAddress) {

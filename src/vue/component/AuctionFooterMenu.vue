@@ -63,12 +63,14 @@ export default {
                 {
                     key: 'order',
                     name: '订单',
-                    path: '/order-list'
+                    path: '/order-list',
+                    cache: 'order-list'
                 },
                 {
                     key: 'mine',
                     name: '我的',
-                    path: '/auction/mine'
+                    path: '/auction/mine',
+                    cache: 'auction-mine'
                 }
             ]
         }
@@ -78,8 +80,8 @@ export default {
         linkToMenu(item) {
             if (item.login === false || this.self) {
                 // 手动点击跳转时清除缓存，避免缓存数据加载到非对应tab
-                this.$store.remove(`cache-items-${item.key}`)
-                this.$store.remove(`list-leave-position-${item.key}`)
+                this.$store.remove(`cache-items-${item.cache || item.key}`)
+                this.$store.remove(`list-leave-position-${item.cache || item.key}`)
 
                 this.$router.go(item.path)
             } else {
