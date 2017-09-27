@@ -410,7 +410,8 @@ export default {
                 if(this.env.isApp || !this.env.isMobile) {
                     e.href = `/product/${e.id}`
                 } else if(this.hasUniversalLinkSupport) {
-                    e.href = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').replace(location.pathname, `/product/${e.id}`)
+                    e.href = location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu').
+                        replace(location.pathname, `/product/${e.id}`) + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()
                 }
                 return e
             })
