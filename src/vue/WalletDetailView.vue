@@ -44,7 +44,7 @@
                 span {{ flowType.value }}
                 .arrow-icon
                     img(:src="(showFlowTypeList ? 'arrow-upward.png' : 'arrow-downward.png') | qn")
-    .select-list.fixed(v-if="showTargetTypeList || showFlowTypeList")
+    .select-list.fixed(v-if="showTargetTypeList || showFlowTypeList", @click.self="touchBlank")
         ul.bg-white
             li.fz-26.bdb(v-for="item in options", @click="toggleType(item)", :class="(showTargetTypeList ? targetType.key === item.key : flowType.key === item.key) ? 'red-e6' : 'black-47'") {{ item.value }}
     .mgt-22
@@ -108,6 +108,11 @@ export default {
     },
 
     methods: {
+        touchBlank() {
+             this.showTargetTypeList = false
+             this.showFlowTypeList = false
+        },
+
         toggleTargetType() {
             this.showFlowTypeList = false
             this.showTargetTypeList = !this.showTargetTypeList

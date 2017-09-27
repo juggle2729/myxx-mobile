@@ -478,7 +478,17 @@ export default {
         }
     },
 
-    '/wallet/detail/:target_type/:flow_type': {
+    '/wallet/:tab': { // v <= 4.1
+        name: 'detail',
+        title: '明细',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('OldWalletDetailView.vue'))
+            }, 'wallet')
+        }
+    },
+
+    '/wallet/detail/:target_type/:flow_type': { // v >= 4.2
         name: 'wallet-detail',
         title: '收支明细',
         component(resolve) {
