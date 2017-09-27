@@ -27,8 +27,10 @@ import Lv from 'component/Lv.vue'
 import Shop from 'component/Shop.vue'
 import AuctionItem from 'component/item/AuctionItem.vue'
 import dateformat from 'dateformat'
+import shareable from 'shareable'
 export default {
     name: 'auction-special-view',
+    mixins: [ shareable ],
     components: { Lv, Shop, AuctionItem },
 
     data() {
@@ -53,7 +55,10 @@ export default {
     route: {
         data() {
             return this.$fetch(`mall/auctions/special/${this.$route.params.id}`)
-                .then(auctionDetail => ({auctionDetail}))
+                .then(auctionDetail => {
+                    this.auctionDetail = auctionDetail
+                    this.setShareData(auctionDetail)
+                })
         }
     },
 

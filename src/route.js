@@ -789,7 +789,7 @@ export default {
     },
 
     '/auction/special/:id': {
-        name: 'special',
+        name: 'auction-special',
         title: '专场拍卖',
         component(resolve) {
             require.ensure([], (require) => {

@@ -45,6 +45,11 @@ export default {
                     data.desc = '你觉得这个宝贝能拍到多少？'
                     data.icon = entry.pictures[0]
                     break
+                case 'auction-special':
+                    data.title = `【专场拍卖】${entry.title}正在拍卖中，赶快来围观`
+                    data.desc = `${entry.auction_count}件拍品，${entry.min_upset_price / 100}元起拍`
+                    data.icon = entry.picture
+                    break
                 case 'master':
                     data.title = entry.interview.title
                     data.desc = entry.baseData.name + ' ' + _.get(entry, '.baseData.titles.0.name', '')
