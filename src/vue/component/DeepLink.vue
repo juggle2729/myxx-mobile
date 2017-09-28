@@ -18,32 +18,14 @@
             border-radius: 8px
             color: white
             background-color: #CC3F4F
-    .backdrop
-        position: fixed
-        top: 0
-        left: 0
-        right: 0
-        bottom: 0
-        z-index: 999
-        background: white url('//o0x80w5li.qnssl.com/open-in-browser-android.png') no-repeat
-        background-position: top right
-        background-size: 80%
-        transition: transform .5s ease
-        transform: translate3d(0, -1999px, 0)
-        &.show
-            transform: translate3d(0, 0, 0)
 </style>
 <template lang="pug">
 .deep-link(@click.stop="xxx")
     .btn(v-if="env.isBrowser", @click="myxx")
         slot 打开
     template(v-else)
-        a.btn(v-if="env.isIOS", :href="href", target="_blank")
+        a.btn(:href="href", target="_blank")
             slot 打开
-        template(v-else)
-            .btn(@click="backdrop=true")
-                slot 打开
-            .backdrop(@click="backdrop=false", :class="{show: backdrop}")
 </template>
 <script>
 export default {
@@ -52,7 +34,6 @@ export default {
     data() {
         return {
             href: '',
-            backdrop: false,
             schema: {
                 story: 'home/shaibao',
                 post: 'home/long_topic',
@@ -76,7 +57,11 @@ export default {
 
     methods: {
         updateHref() {
-            this.href = this.checkPageUniversalLinkSupport() ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+            if (this.env.isIOS) {
+                this.href = this.checkPageUniversalLinkSupport() ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+            } else {
+                this.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
+            }
         },
 
         checkPageUniversalLinkSupport() {
