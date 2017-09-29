@@ -179,7 +179,7 @@ const mixin = {
                                         this.action('login')
                                     } else {
                                         defer.reject(resp)
-                                        if([3002, 5004, 2001, 2000, 2100, 2104, 3023, 17001].indexOf(resp.status) !== -1) {
+                                        if([3002, 5004, 2001, 2000, 2100, 2104, 17001].indexOf(resp.status) !== -1) {
                                             if(this.env.isApp) {
                                                 this.$route.router.replace({'name': '404'})
                                             } else {

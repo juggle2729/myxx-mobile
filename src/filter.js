@@ -5,7 +5,7 @@ const filters = {
     moment(msec) {
         msec = +msec
         let m = '···'
-        if(!_.isNumber(msec)) {
+        if(!_.isNumber(msec) || _.isNaN(msec)) {
             return m
         }
         const [d, now] = [new Date(msec), new Date()]
