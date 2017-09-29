@@ -7,9 +7,11 @@
         margin-top 33px
         -webkit-box-align start
         .title
-            width 502px
+            width 66%
             line-height 40px
             padding-top 2px
+        .txt-right
+            width calc(100% - 66%)
         .pay-way
             margin-top 27px
 </style>
@@ -21,10 +23,9 @@
         .fz-22.gray-b3 {{ item.create_at | date 'yyyy/mm/dd HH:MM' }}
     .desc.flex
         .title.fz-28.black-47.line-clamp-2 {{ item.remark }}
-        .flex-1
         .fz-36.red-e6.txt-right
             .fz-36(:class="item.trans_amount > 0 ? 'green-a1' : 'red-e6'") {{ billPrice }}
-            .pay-way.fz-22.gray-8f {{ item.channel_desc }}
+            .pay-way.fz-22.gray-8f.line-clamp-1 {{ item.channel_desc }}
 </template>
 <script>
 export default {
