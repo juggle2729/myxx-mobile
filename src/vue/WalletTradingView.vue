@@ -18,8 +18,7 @@
         .fz-26.gray-8f 待结算
         .desc.flex
             .title.fz-28.black-47.line-clamp-1.line-height-36 {{ item.remark }}
-            .flex-1
-            .fz-36.red-e6.txt-right
+            .flex-1.fz-36.red-e6.txt-right
                 .fz-36.red-e6 {{ item.trans_amount | price }}
     empty(v-if="items.isEmpty")
 </template>
