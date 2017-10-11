@@ -57,7 +57,7 @@ export default {
 
     methods: {
         updateHref() {
-            if (this.env.isIOS) {
+            if (this.env && this.env.isIOS) {
                 this.href = this.checkPageUniversalLinkSupport() ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
             } else {
                 this.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'

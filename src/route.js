@@ -888,16 +888,6 @@ export default {
         }
     },
 
-    '/about': {
-        name: 'about',
-        title: '关于美玉秀秀',
-        component(resolve) {
-            require.ensure([], (require) => {
-                resolve(require('AboutView.vue'))
-            }, 'other')
-        }
-    },
-
     '/product/recent': {
         name: 'product-recent',
         title: '每日上新',
@@ -917,6 +907,27 @@ export default {
             require.ensure([], (require) => {
                 resolve(require('ProductRankingView.vue'))
             }, 'product')
+        }
+    },
+
+
+    '/about': {
+        name: 'about',
+        title: '关于美玉秀秀',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('AboutView.vue'))
+            }, 'other')
+        }
+    },
+
+    '/video/:id': {
+        name: 'video',
+        title: '视频播放',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PlayView.vue'))
+            }, 'other')
         }
     },
 

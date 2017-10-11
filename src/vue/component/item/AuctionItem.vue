@@ -23,7 +23,7 @@
             bottom 7px
     .pics
         .pic
-            width 230px
+            width calc(100%/3)
             padding-top @width
             &:not(:first-child)
                 margin-left 5px
@@ -86,13 +86,13 @@ export default {
             if (this.item.start_time - Date.now() <= 300000) {
                 return '即将开始'
             }
-            return `距开始${date.diffNowTime(this.item.start_time, false)}`
+            return `距开始 ${date.diffNowTime(this.item.start_time, false)}`
         },
         endCountdown() {
             if (this.item.real_end_time - Date.now() <= 300000) {
                 return '即将结束'
             }
-            return `距结束${date.diffNowTime(this.item.real_end_time, false)}`
+            return `距结束 ${date.diffNowTime(this.item.real_end_time, false)}`
         },
         bgColor() {
             switch (this.item.status) {

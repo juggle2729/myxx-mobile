@@ -221,10 +221,12 @@ const mixin = {
             }
             if(this.env.isApp) {
                 this.action('play', args)
-            } else {
+            } else if (this.env.isWechat) {
                 bridge.then((bridge) => {
                     bridge.callHandler.call(this, 'play', args, fn => fn())
                 })
+            } else {
+                this.$router.go({name: 'video', params: { id: video }})
             }
         },
 

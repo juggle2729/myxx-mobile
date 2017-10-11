@@ -1,27 +1,3 @@
-<style lang="stylus">
-.play-action
-    position: fixed
-    left: 0
-    right: 0
-    top: 0
-    bottom: 0
-    z-index: 999
-    background-color: black
-    width: 100%
-    height: 100%
-    video
-        position: relative
-        top: 50%
-        transform: translate3d(0, -50%, 0)
-        width: 100%
-        height: auto
-        max-height: 100%
-        opacity: 1
-</style>
-<template  lang="pug">
-.play-action(@click="close")
-    video(:src="config.video + params.id", controls, @webkitendfullscreen="close")
-</template>
 <script>
 export default {
     name: 'Play',
@@ -38,8 +14,10 @@ export default {
 
     methods: {
         start() {
-            console.log('auto start')
-            document.querySelector('video').play()
+            const video = document.createElement('video')
+            video.controls = 'controls'
+            video.src = this.config.video + this.params.id
+            video.play().then(this.close).catch(this.close)
         },
 
         close() {
