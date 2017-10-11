@@ -31,6 +31,6 @@ export default {
             res.push(seconds + '秒')
             least -= seconds * SECOND_IN_MILLIS
         }
-        return res.join(' ')
+        return res.join('')
     }
 }
