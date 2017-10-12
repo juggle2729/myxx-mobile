@@ -11,8 +11,6 @@
     height: 100%
     video
         position: relative
-        top: 50%
-        transform: translate3d(0, -50%, 0)
         width: 100%
         height: auto
         max-height: 100%
@@ -20,20 +18,19 @@
 </style>
 <template lang="pug">
 .play-action(@click="close")
-    video(:src="config.video + id", autoplay, controls, @webkitendfullscreen="close")
+    video(:src="config.video + $route.params.id", autoplay, controls, @webkitendfullscreen="close")
 </template>
 <script>
 export default {
     name: 'Play',
-    data() {
-        return {
-            id: ''
-        }
-    },
 
-    route: {
-        data() {
-            this.id = this.$route.params.id
+    ready() {
+        const video = document.querySelector('video')
+        if (this.env.isMobile) {
+            video.style.opacity = 0
+        }
+        video.oncanplay = () => {
+            video.play()
         }
     },
 
