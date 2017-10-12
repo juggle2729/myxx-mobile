@@ -23,7 +23,7 @@
             bottom 7px
     .pics
         .pic
-            width 230px
+            width calc(100%/3)
             padding-top @width
             &:not(:first-child)
                 margin-left 5px

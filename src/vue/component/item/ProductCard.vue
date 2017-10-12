@@ -78,13 +78,8 @@ export default {
                 }
                 return `/product/${item.id}`
             } else {
-                if (this.hasUniversalLinkSupport) {
-                    return _getUrl(location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu')) +
-                        (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()
-                } else {
-                    item.auction && this.saveDetailLeavePosition()
-                    return _getUrl(location.href)
-                }
+                item.auction && this.saveDetailLeavePosition()
+                return _getUrl(location.href)
             }
         },
 
