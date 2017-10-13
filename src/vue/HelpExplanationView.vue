@@ -29,7 +29,7 @@
         .pic
             img(:src="'explanation/violation-shop.png' | qn")
         .table.violation-shop
-            img(:src="'explanation/table/violation-shop.png' | qn")
+            img(:src="'explanation/table/violation-shop-4.2.png' | qn")
     template(v-if="$route.params.type === 'about_high_grade_shop'")
         .pic
             img(:src="'explanation/high-grade-shop.png' | qn")
