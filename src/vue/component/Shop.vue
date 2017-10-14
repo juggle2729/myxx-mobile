@@ -37,7 +37,7 @@
     .img(v-bg="shop.logo")
     .flex-1
         .fz-30.flex.name.black-47
-            .line-clamp.mgr {{ shop.shop_name }}的店铺
+            .line-clamp.mgr {{ shop.shop_name }}
             lv(:lv="shop.level")
         .fz-26.gray.flex.mgt-12
             .address-icon.center.mgr-6
