@@ -387,10 +387,10 @@ export default {
 
         endTime() {
             if (this.auction.delay_count > 0) {
-                return `${dateformat(this.auction.real_end_time, 'mm-dd hh:MM:ss')}
+                return `${dateformat(this.auction.real_end_time, 'mm-dd HH:MM:ss')}
                         结束 (延时${this.auction.delay_count}次)`
             }
-            return `${dateformat(this.auction.real_end_time, 'mm-dd hh:MM:ss')}结束`
+            return `${dateformat(this.auction.real_end_time, 'mm-dd HH:MM:ss')}结束`
         },
 
         currentTitle() {

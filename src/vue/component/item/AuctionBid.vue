@@ -34,7 +34,7 @@ export default {
 
     computed: {
         createAt() {
-            return dateformat(this.item.create_at, 'mm-dd hh:MM:ss')
+            return dateformat(this.item.create_at, 'mm-dd HH:MM:ss')
         },
         priceClass() {
             if (this.index === 0) {
