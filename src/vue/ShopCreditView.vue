@@ -8,8 +8,12 @@
             border-radius 6px
             .real-progress
                 height 100%
-                width 200px
                 border-radius 6px
+        .next-level
+            .level-comp
+                img
+                    width 90px
+                    height 24px
     .title
         margin 27px 0 12px
     .light-green
@@ -29,13 +33,13 @@
     .progress-indicator.bg-white.bdb
         .flex
             .fz-30.black-24 当前等级：
-            lv(:lv="")
+            lv(:lv="shopLevel")
         .progress-bar.bg-gray-f7.mgt-50
             .real-progress.bg-red-e6
-        .flex.mgt-12
-            .fz-24.red-f2 距离下一等级还需321分
+        .next-level.flex.mgt-12(v-if="shopLevel < 15")
+            .fz-24.red-f2 距离下一等级还需{{ upgradeNeedPoint }}分
             .flex-1
-            lv(:lv="")
+            lv(:lv="shopLevel + 1")
     .title.center.fz-24.dark-6b — 积分明细 —
     .fz-30.bdb.pd-32.bg-white(v-for='item in items', v-link="item.violation_id ? {name: 'shop-violation', params: {id: item.violation_id}} : ''")
         .flex.fz-22.gray
@@ -56,9 +60,28 @@ export default {
     mixins: [paging],
     components: { Lv },
 
+    data() {
+        return {
+            shopLevel: 1,
+            upgradeNeedPoint: 0,
+            realProgressPercent: ''
+        }
+    },
+
     ready() {
         this.showAction()
         this.$on('restore', this.showAction)
+        this.$el.querySelector('.real-progress').style.width = `${this.realProgressPercent * 100}%`
+    },
+
+    route: {
+        data() {
+            return this.$fetch('mall/shop/profile').then(resp => {
+                this.upgradeNeedPoint = resp.point_upgrade - resp.point
+                this.shopLevel = resp.level
+                this.realProgressPercent = resp.point >= 10000000 ? '1' : resp.point / resp.point_upgrade
+            })
+        }
     },
 
     computed: {

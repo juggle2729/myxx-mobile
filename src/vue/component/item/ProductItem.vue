@@ -24,10 +24,10 @@
     .foot
         height 30px
         .flex-1
-            span
-                width 90px
-                &:not(:first-child)
-                    margin-left 10px
+            img
+                display block
+                height 30px
+                width auto
         .shop
             right 0
 </style>
@@ -42,8 +42,9 @@
         .pic.bg-gray-f7(v-for="pic in item.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.mgt-24.flex.relative
         .flex-1.flex
-            span.block.bd-gray-e3.fz-20.gray-b2.line-height-30.center(v-if="item.cigar_scale") 烟标图
-            span.block.bd-gray-e3.fz-20.gray-b2.line-height-30.center(v-if="item.sunlight") 自然光
+            img.mgr-8(v-if="item.sunlight", :src="'shop/sunlight.png' | qn")
+            img.mgr-8(v-if="item.cigar_scale", :src="'shop/cigar-4.3.png' | qn")
+            img(v-if="item.ziliao_feature", :src="'shop/ziliao.png' | qn")
         .shop.fz-24.black-47.flex.pdb-4.absolute(v-link="{name: 'shop', params: {id: item.shop.id}}")
             icon(name="shop")
             span.pdl-10 {{ item.shop.shop_name }}

@@ -21,19 +21,19 @@
             background url('//o0x80w5li.qnssl.com/auction/auction-flag.png') no-repeat
             background-size contain
     .btn
-        border-radius: 4px
+        border-radius 4px
     .flex
         img
-            display: block
-            height: 30px
-            width: 80px
+            display block
+            height 30px
+            width auto
     .price::first-letter
-        font-size: .9em
+        font-size .9em
     .red
         img
-            display: block
-            height: 30px
-            width: 130px
+            display block
+            height 30px
+            width 130px
 </style>
 <template lang="pug">
 a.product-card.bg-white.bd-gray-ed(@click="goToDetail(item)")
@@ -43,7 +43,8 @@ a.product-card.bg-white.bd-gray-ed(@click="goToDetail(item)")
         .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}
         .flex.mgt-12.fz-22.light.mgb-10(v-if="btn")
             img.mgr-8(v-if="item.sunlight", :src="'shop/sunlight.png' | qn")
-            img(v-if="item.cigar_scale", :src="'shop/cigar.png' | qn")
+            img.mgr-8(v-if="item.cigar_scale", :src="'shop/cigar-4.3.png' | qn")
+            img(v-if="item.ziliao_feature", :src="'shop/ziliao.png' | qn")
         .red.pdv-8.flex
             .fz-24.flex-1(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
             .price.fz-30.flex-1(v-if="!item.auction && item.sell_status !== 'sold'") {{item.price | price}}

@@ -67,7 +67,6 @@
                     .mgl-16 {{ tab.label }}
             marks.pdb-26.pdt-50.bdb.bg-white(v-if="tags.length > 0", :tags="tags")
         opinion-list(:items="items")
-    empty(v-if="items.isEmpty", title="暂无评论")
 </template>
 <script>
 import Marks from 'component/Marks.vue'

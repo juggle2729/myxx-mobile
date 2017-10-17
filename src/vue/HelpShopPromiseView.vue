@@ -28,11 +28,16 @@
             .mgl-12.flex-1 自然光拍摄
             .mgr-12(v-if="items[profile.sunlight]", :class="[items[profile.sunlight].color]") {{items[profile.sunlight].title}}
             icon.gray(name="enter", v-if="profile.sunlight != 'auditing'")
-        .line-height-100.flex.pdr-32(v-if="items[profile.cigar_scale]", v-link="items[profile.cigar_scale].interaction ? {name: 'promise-detail', params: {type: 'cigar_scale'}, query: {isOpen: profile.cigar_scale, num: profile.products_count}} : ''")
+        .line-height-100.flex.bdb.pdr-32(v-if="items[profile.cigar_scale]", v-link="items[profile.cigar_scale].interaction ? {name: 'promise-detail', params: {type: 'cigar_scale'}, query: {isOpen: profile.cigar_scale, num: profile.products_count}} : ''")
             img(:src="'shop/promise/smoke.png' | qn")
             .mgl-12.flex-1 烟标图
             .mgr-12(v-if="items[profile.cigar_scale]", :class="[items[profile.cigar_scale].color]") {{items[profile.cigar_scale].title}}
             icon.gray(name="enter", v-if="profile.cigar_scale != 'auditing'")
+        .line-height-100.flex.pdr-32(v-if="items[profile.ziliao_feature]", v-link="items[profile.ziliao_feature].interaction ? {name: 'promise-detail', params: {type: 'ziliao_feature'}, query: {isOpen: profile.ziliao_feature, num: profile.products_count}} : ''")
+            img(:src="'shop/promise/ziliao.png' | qn")
+            .mgl-12.flex-1 籽料特征图
+            .mgr-12(v-if="items[profile.ziliao_feature]", :class="[items[profile.ziliao_feature].color]") {{items[profile.ziliao_feature].title}}
+            icon.gray(name="enter", v-if="profile.ziliao_feature != 'auditing'")
     .hr
     .pdl-32.fz-30.bg-white
         .line-height-100.bdb.bold 店铺服务

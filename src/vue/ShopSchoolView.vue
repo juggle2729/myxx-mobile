@@ -22,9 +22,10 @@
     .tabs
         .option.center.fz-26.bg-white.line-height-60(v-for="category in categories", @click="changeCurrent(category)",
             :class="category.id===current ? 'red-e5': 'dark-6b'") {{ category.name }}
-    .card.pdh-20.bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
-            .pic(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")
-            .desc.mgl-28.fz-34.black-24.line-clamp-3 {{ item.title.rendered }}
+    .pdh-20
+        .bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
+            .pic.bg(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")
+            .flex-1.mgl-28.fz-34.black-24.line-clamp-3 {{ item.title.rendered }}
 </template>
 <script>
 import paging from 'paging'
@@ -33,7 +34,7 @@ export default {
 
     data() {
         return {
-            current: 0,
+            current: '',
             categories: [],
             items: []
         }
@@ -44,9 +45,7 @@ export default {
             return this.$cms('categories', { parent: 2, orderby: 'id' }).then(data => {
                 this.categories = data
                 this.current = this.categories[0].id
-                return this.$cms('posts', { categories: [this.current], context: 'embed' }).then(data => {
-                    this.items = data
-                })
+                return this.cms()
             })
         }
     },
@@ -54,6 +53,13 @@ export default {
     methods: {
         changeCurrent(tab) {
             this.current = tab.id
+            this.cms()
+        },
+
+        cms() {
+            this.$cms('posts', { categories: [this.current], context: 'embed' }).then(data => {
+                this.items = data
+            })
         },
 
         goLink(item) {
