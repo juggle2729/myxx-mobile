@@ -280,6 +280,36 @@ export default {
         }
     },
 
+    '/seller-shop/:id/comment': {
+        name: 'seller-comment',
+        title: '店铺评价',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopCommentView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/seller-shop/:id/school': {
+        name: 'seller-school',
+        title: '商学院',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopSchoolView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/seller-shop/:id/operating-status': {
+        name: 'seller-operating-status',
+        title: '营业状态',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopOperatingStatusView.vue'))
+            }, 'shop')
+        }
+    },
+
     '/shop/:id/comments': {
         name: 'shop-comments',
         title: '店铺评价',

@@ -1,102 +1,131 @@
 <style lang="stylus">
 .shop-comment-view
-    padding-top 100px
-    .tabs
-        position fixed
-        top 0
-        width 100%
-        height 100px
-        z-index 9
-        .tab
+    padding-top 22px
+    .evaluate
+        margin-bottom 20px
+        padding 47px 20px 47px 36px
+        border-color #ededed
+        .col
+            height 118px
+            border-color #ededed
+        .row
+            height calc(100% / 3)
+            line-height 39px
+        .title
             text-align center
-            line-height 100px
-        .black-24
+            font-size 24px
+            color #b3b3b3
+        .percent
+            font-size 26px
             font-weight bold
-            border-bottom 4px solid #e61717
+            color #242424
+        .number
+            font-size 26px
+            color #8f8f8f
+        .left-border
+            width calc((100% / 2) / 3)
+            border-left 1px solid #ededed
+    .tabs
+        .tab
+            margin 0 49px 0 0
     .icon
         transform translateY(-3px)
     .empty-component
-        height calc(100% - 100px)
+        height calc(100% - 440px)
 </style>
 <template  lang="pug">
 .shop-comment-view.bg
-    .tabs.flex.bdb.fz-30.bg-white
-        .tab.flex-1(v-for="(k, t) in tabs", :class="tab === t ? 'black-24': 'dark-6b'", @click="tab = t") {{t.label}}({{stats[k]}})
-    .pdh-36.bg-white(:class="{'pdt-36': tags.length > 0 && $route.query.tab === 'good'}")
-        marks(v-if="tags.length > 0 && $route.query.tab === 'good'", :tags="tags")
-        .line-height-80.flex.fz-26.black-24.bdb.pdh-28(v-if="tab.items.length", @click="selected = !selected")
-            icon(:name="selected ? 'selected' : 'select'")
-            .mgl-20 只看有内容的评价
-    opinion-list(:items="selected ? tab.contents : tab.items")
-    empty(v-if="!tab.items.length", title="暂无评论")
+    .evaluate.bg-white.flex.bdt.bdb
+        .col.fz-26.black-47
+            .row
+            .row 商品评价：
+            .row 商品服务：
+        .col.title.flex-1
+            .row 好评率
+            .row.percent {{ productComment[0] }}
+            .row.percent {{ shopComment[0] }}
+        .col.title.left-border
+            .row 好评
+            .row.number {{ productComment[1] }}
+            .row.number {{ shopComment[1] }}
+        .col.title.left-border
+            .row 中评
+            .row.number {{ productComment[2] }}
+            .row.number {{ shopComment[2] }}
+        .col.title.left-border
+            .row 差评
+            .row.number {{ productComment[3] }}
+            .row.number {{ shopComment[3] }}
+    .bg-white
+        .pdh-36
+            .line-height-110.flex.fz-26.black-24(@click="selected = !selected")
+                icon(:name="hasContent ? 'selected' : 'select'", @click="hasContent = !hasContent")
+                .mgl-20 只看有内容的评价
+            .tabs.flex.fz-26(:class="{'pdb-26 bdb': tags.length <= 0}")
+                .tab.flex(v-for="tab in tabs")
+                    icon(:name="tab.id === chooseTab ? 'selected' : 'select'", @click="chooseTab = tab.id")
+                    .mgl-16 {{ tab.label }}
+            marks.pdb-26.pdt-50.bdb.bg-white(v-if="tags.length > 0", :tags="tags")
+        opinion-list(:items="items")
+    empty(v-if="items.isEmpty", title="暂无评论")
 </template>
 <script>
 import Marks from 'component/Marks.vue'
 import OpinionList from 'component/OpinionList.vue'
+import paging from 'paging'
 export default {
     name: 'shop-comment-view',
+    mixins: [paging],
     components: { Marks, OpinionList },
 
     data() {
         return {
-            tabs: {  // items -> 所有评论, contents -> 有内容评论
-                good: {label: '好评', items: [], contents: []},
-                normal: {label: '中评', items: [], contents: []},
-                bad: {label: '差评', items: [], contents: []}
-            },
-            stats: {},
-            tab: {label: '好评', items: []},
+            tabs: [
+                {id: '', label: '全部'},
+                {id: 'good', label: '好评'},
+                {id: 'normal', label: '中评'},
+                {id: 'bad', label: '差评'}
+            ],
+            chooseTab: '',
+            hasContent: false,
             tags: [],
-            selected: false
+            productComment: [],
+            shopComment: []
         }
     },
 
-    route: {
-        data({from, to, next}) {
-            const choice = to.query.tab || 'good'
-            this.tab = this.tabs[choice]
-            if(!this.tab.items.length) {
-                return this.$fetch('mall/orders/comments', { limit: 20, choice }).then(resp => {
-                    this.stats = resp.stats
-                    this.tags = resp.tags
-                    this.tab.items = this.tab.items.concat(...resp.comments)
-
-                    this.$fetch('mall/orders/comments', {
-                        has_content: true,
-                        limit: 20,
-
-                    }).then(content => {
-                        this.tab.contents = this.tab.contents.concat(...content.comments)
-                    })
-                })
-            } else {
-                next()
+    computed: {
+        paging() {
+            return {
+                path: 'mall/orders/comments',
+                list: 'comments',
+                params: {
+                    limit: 20,
+                    choice: this.chooseTab,
+                    has_content: this.hasContent
+                }
             }
         }
     },
 
     ready() {
-        this.$watch('tab', tab => {
-            const k = _.findKey(this.tabs, tab)
-            this.$router.replace(_.merge({query: {tab: k}}, _.pick(this.$route, 'name', 'params')))
+        this.$fetch(`mall/shop/${this.$route.params.id}/profile`).then(({comment_stats}) => {
+            this.productComment = comment_stats[0]['product']
+            this.shopComment = comment_stats[1]['seller']
+        })
+        this.$fetch(`mall/orders/comments`).then(({tags}) => {
+            this.tags = tags
         })
     },
 
-    events: {
-        scrollToBottom(e) {
-            const choice = this.$route.query.tab
-            this.$fetch('mall/orders/comments', { choice, limit: 10, offset: this.tab.items.length }).then(resp => {
-                this.tab.items = this.tab.items.concat(...resp.comments)
-
-                this.$fetch('mall/orders/comments', {
-                    has_content: true,
-                    choice,
-                    limit: 10,
-                    offset: this.tab.contents.length
-                }).then(content => {
-                    this.tab.contents = this.tab.contents.concat(...content.comments)
-                })
-            })
+    watch: {
+        chooseTab(newVal) {
+            this.paging.params.choice = newVal
+            this.fetch(true)
+        },
+        hasContent(newVal) {
+            this.paging.params.has_content = newVal
+            this.fetch(true)
         }
     }
 }
