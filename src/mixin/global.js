@@ -213,6 +213,20 @@ const mixin = {
             return this.$req(url, 'delete', data)
         },
 
+        $cms(path, params = {}, method = 'get') {
+            let defer = Q.defer()
+            this.$http[method](`https://cms.meiyuxiuxiu.com/wp-json/wp/v2/${path}`,
+                { params }).then(response => {
+                if (response.status === 200) {
+                    defer.resolve(response.body)
+                } else {
+                    console.error('Cms Request Error ', JSON.stringify(response))
+                    defer.reject()
+                }
+            })
+            return defer.promise
+        },
+
         play(video) {
             let args = {
                 id: video,

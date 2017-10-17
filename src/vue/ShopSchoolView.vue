@@ -11,29 +11,20 @@
             margin-bottom 20px
             &:not(:nth-child(4n))
                 margin-right 10px
-    .card
-        -webkit-box-pack justify
-        .desc
-            width 410px
-        .pic
-            width 180px
-            height @width
+    .pic
+        width 148px
+        height @width
+        background-size cover
+        background-position center
 </style>
 <template  lang="pug">
 .shop-school-view.bg
     .tabs
-        .option.center.fz-26.bg-white.line-height-60(v-for="tab in tabs", @click="changeCurrent(tab)", :class="tab.id===current ? 'red-e5': 'dark-6b'") {{ tab.name }}
-    .pdh-20
-        .card.bg-white.mgb.flex.pd-40.bd
-            .desc
-                .fz-34.black-24.line-clamp-3 一张图搞懂如何发布拍品一张图搞懂如何发布拍品一张图搞懂如何发布拍品一张图搞懂如何发布拍品
-                .mgt-22.fz-22.gray-b3 阅读21344
-            .pic.bg
-        .card.bg-white.mgb.flex.pd-40.bd
-            .desc
-                .fz-34.black-24.line-clamp-3 一张图搞懂如何发布拍品一张图搞懂如何发布拍品一张图搞懂如何发布拍品一张图搞懂如何发布拍品
-                .mgt-22.fz-22.gray-b3 阅读21344
-            .pic.bg
+        .option.center.fz-26.bg-white.line-height-60(v-for="category in categories", @click="changeCurrent(category)",
+            :class="category.id===current ? 'red-e5': 'dark-6b'") {{ category.name }}
+    .card.pdh-20.bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
+            .pic(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")
+            .desc.mgl-28.fz-34.black-24.line-clamp-3 {{ item.title.rendered }}
 </template>
 <script>
 import paging from 'paging'
@@ -42,20 +33,31 @@ export default {
 
     data() {
         return {
-            current: '1',
-            tabs: [
-                { id: '1', name: '最新发布'},
-                { id: '2', name: '新手入门'},
-                { id: '3', name: '规则解读'},
-                { id: '4', name: '经验分享'},
-                { id: '5', name: '官方公告'}
-            ],
+            current: 0,
+            categories: [],
+            items: []
+        }
+    },
+
+    route: {
+        data({from, to, next}) {
+            return this.$cms('categories', { parent: 2, orderby: 'id' }).then(data => {
+                this.categories = data
+                this.current = this.categories[0].id
+                return this.$cms('posts', { categories: [this.current], context: 'embed' }).then(data => {
+                    this.items = data
+                })
+            })
         }
     },
 
     methods: {
         changeCurrent(tab) {
             this.current = tab.id
+        },
+
+        goLink(item) {
+            location.href = item.link
         }
     }
 }
