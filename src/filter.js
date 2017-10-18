@@ -67,6 +67,7 @@ const filters = {
     },
 
     date(msec, format='yyyy年m月dd日 H:MM') {
+        if (!msec) return ''
         return dateformat(new Date(msec), format)
     },
 
