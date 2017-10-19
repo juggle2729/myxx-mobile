@@ -54,11 +54,11 @@ const filters = {
         return _.truncate(str, {length})
     },
 
-    price(cents, zero='面议') {
+    price(cents, zero='面议', hasSymbol=true) {
         if (_.isNumber(cents) && cents >= 0) {
-            return ('￥' + (cents/100).toFixed(2)).replace(/\.00$/, '')
+            return (hasSymbol ? '￥' : '' + (cents/100).toFixed(2)).replace(/\.00$/, '')
         } else {
-            return '￥' + zero
+            return hasSymbol? '￥' : '' + zero
         }
     },
 

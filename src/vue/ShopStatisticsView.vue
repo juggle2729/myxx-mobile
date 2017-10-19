@@ -1,8 +1,5 @@
 <style lang="stylus">
 .shop-statistics
-    .icon-enter
-        height: 22px
-        width: 22px
     .shop-index
         -webkit-box-align baseline
     .items
@@ -56,7 +53,7 @@
         margin 33px 42px
     .rule
         margin 53px 43px 0
-        line-height 1.3
+        line-height 1.5
 </style>
 <template lang="pug">
 .shop-statistics.bg-white
@@ -83,22 +80,23 @@
             .one-week.week.flex
                 .fz-26.dark-6b 1周变化情况
                 .flex.data
-                    .black-24.fz-32 {{ weekData.one_week[0] }}
+                    .black-24.fz-32 {{ weekData.one_week[0] || 0 }}
                     .separator.bg-gray-b3
-                    .black-24.fz-32 {{ weekData.one_week[1] }}
-                    .fz-32.diff(:class="oneWeekDataDiff > 0 ? 'green-a1' : 'red-e6'") {{ oneWeekDataDiff === 0 ? 0 : (oneWeekDataDiff > 0 ? '+' + oneWeekDataDiff : oneWeekDataDiff) }}
+                    .black-24.fz-32 {{ weekData.one_week[1] || 0 }}
+                    .fz-32.diff(:class="oneWeekDataDiff === 0 ? 'black-24' : (oneWeekDataDiff > 0 ? 'green-a1' : 'red-e6')") {{ oneWeekDataDiff === 0 ? 0 : (oneWeekDataDiff > 0 ? '+' + oneWeekDataDiff : oneWeekDataDiff) }}
             .week-separator.bdt
             .four-week.week.flex
                 .fz-26.dark-6b 4周变化情况
                 .flex.data
-                    .black-24.fz-32 {{ weekData.four_week[0] }}
+                    .black-24.fz-32 {{ weekData.four_week[0] || 0 }}
                     .separator.bg-gray-b3
-                    .black-24.fz-32 {{ weekData.four_week[1] }}
-                    .fz-32.diff(:class="fourWeekDataDiff > 0 ? 'green-a1' : 'red-e6'") {{ fourWeekDataDiff === 0 ? 0 : (fourWeekDataDiff > 0 ? '+' + fourWeekDataDiff : fourWeekDataDiff) }}
+                    .black-24.fz-32 {{ weekData.four_week[1] || 0 }}
+                    .fz-32.diff(:class="fourWeekDataDiff === 0 ? 'black-24' : (fourWeekDataDiff > 0 ? 'green-a1' : 'red-e6')") {{ fourWeekDataDiff === 0 ? 0 : (fourWeekDataDiff > 0 ? '+' + fourWeekDataDiff : fourWeekDataDiff) }}
         template(v-if="tab === 1")
-            .rule.fz-24.gray-8f {{ calculateRule }}
+            .rule.fz-24.gray-8f(v-html="calculateRule")
 </template>
 <script>
+import rule from '../rule'
 export default {
     name: 'shop-statistics-view',
 
@@ -125,48 +123,49 @@ export default {
                     key: 'shop_index',
                     point: this.statistics.shop_index.point,
                     total: 500,
-                    rule: '总指数总指数总指数总指数总指数总指数总指数总指数总指数总指数总指数总指数总指数总指数'
+                    rule: rule.storeStatistics[0]
                 },
                 {
                     name: '商品',
                     key: 'product_index',
                     point: this.statistics.product_index.point,
-                    rule: '商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品'
+                    rule: rule.storeStatistics[1]
                 },
                 {
                     name: '服务',
                     key: 'service_index',
                     point: this.statistics.service_index.point,
-                    rule: '服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务服务'
+                    rule: rule.storeStatistics[2]
                 },
                 {
                     name: '活跃',
                     key: 'activity_index',
                     point: this.statistics.activity_index.point,
-                    rule: '计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则'
+                    rule: rule.storeStatistics[3]
                 },
                 {
                     name: '退货',
                     key: 'return_index',
                     point: this.statistics.return_index.point,
-                    rule: '计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则'
+                    rule: rule.storeStatistics[4]
                 },
                 {
                     name: '违规',
                     key: 'violation_index',
                     point: this.statistics.violation_index.point,
-                    rule: '计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则计算规则'
+                    rule: rule.storeStatistics[5]
                 }
             ]
         },
         weekData() {
+            if (!this.indexItems) return {}
             return this.statistics[this.indexItems[this.index].key]
         },
         oneWeekDataDiff() {
-            return this.weekData.one_week[1] - this.weekData.one_week[0]
+            return (this.weekData.one_week[1] || 0) - (this.weekData.one_week[0] || 0)
         },
         fourWeekDataDiff() {
-            return this.weekData.four_week[1] - this.weekData.four_week[0]
+            return (this.weekData.four_week[1] || 0) - (this.weekData.four_week[0] || 0)
         },
         calculateRule() {
             return this.indexItems[this.index].rule

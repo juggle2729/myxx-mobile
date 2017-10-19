@@ -370,6 +370,26 @@ export default {
         }
     },
 
+    '/seller-shop/:id/business': {
+        name: 'shop-business',
+        title: '我的店铺',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopBusinessView.vue'))
+            }, 'shop')
+        }
+    },
+
+    '/seller-shop/:id/business/:type': {
+        name: 'shop-business-detail',
+        title: '营业数据',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopBusinessDetailView.vue'))
+            }, 'shop')
+        }
+    },
+
     '/shop/:id/coupon': {
         name: 'shop-coupon',
         title: '送你N张优惠券，赶紧进店看看吧!',
