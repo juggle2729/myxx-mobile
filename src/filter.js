@@ -56,9 +56,9 @@ const filters = {
 
     price(cents, zero='面议', hasSymbol=true) {
         if (_.isNumber(cents) && cents >= 0) {
-            return (hasSymbol ? '￥' : '' + (cents/100).toFixed(2)).replace(/\.00$/, '')
+            return ((hasSymbol ? '￥' : '') + (cents/100).toFixed(2)).replace(/\.00$/, '')
         } else {
-            return hasSymbol? '￥' : '' + zero
+            return (hasSymbol ? '￥' : '') + zero
         }
     },
 
