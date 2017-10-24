@@ -95,7 +95,7 @@ export default {
         },
 
         fetch() {
-            this.$fetch('mall/shop/profile').then(resp => {
+            return this.$fetch('mall/shop/profile').then(resp => {
                 this.profile = resp
             })
         }

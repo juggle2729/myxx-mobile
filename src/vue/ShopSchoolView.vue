@@ -22,7 +22,7 @@
     .tabs
         .option.center.fz-26.bg-white.line-height-60(v-for="category in categories", @click="changeCurrent(category)",
             :class="category.id===current ? 'red-e5': 'dark-6b'") {{ category.name }}
-    .pdh-20
+    .pdh-20.pdb-20
         .bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
             .pic.bg(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")
             .flex-1.mgl-28.fz-34.black-24.line-clamp-3 {{ item.title.rendered }}
