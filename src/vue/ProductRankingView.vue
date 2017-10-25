@@ -95,6 +95,26 @@ export default {
                 this.paging.params.cursor = ''
                 this.current = tab.id
                 this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab.id}})
+
+                if (this.$route.name === 'product-top100') {
+                    switch (tab.id) {
+                        case 'all':
+                            return this.track('yuyoudouzaikan_quanbu')
+                        case 'origin':
+                            return this.track('yuyoudouzaikan_yuanshi')
+                        case 'finished':
+                            return this.track('yuyoudouzaikan_chengpin')
+                    }
+                } else {
+                    switch (tab.id) {
+                        case 'all':
+                            return this.track('meirishangxin_quanbu')
+                        case 'origin':
+                            return this.track('meirishangxin_yuanshi')
+                        case 'finished':
+                            return this.track('meirishangxin_chengpin')
+                    }
+                }
             }
         }
     },

@@ -302,6 +302,10 @@ const mixin = {
 
         _scrollTop() {
             return document.documentElement.scrollTop || document.body.scrollTop
+        },
+
+        track(trackId) {
+            this.env.isApp && window.MobclickAgent.onEvent(trackId)
         }
     }
 }
