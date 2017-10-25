@@ -1,13 +1,13 @@
 <style lang="stylus">
 .shop-business-detail
-    .title
-        height 80px
     .item
         height 100px
         & > div:first-child
             width 14%
         & > div:not(:first-child)
             width 43%
+    .title
+        height 80px
 </style>
 <template lang="pug">
 .shop-business-detail.bg-white

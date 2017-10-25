@@ -4,7 +4,8 @@ const HOUR_IN_MILLIS = MINUTE_IN_MILLIS * 60
 const DAY_IN_MILLIS = HOUR_IN_MILLIS * 24
 const MOUTH_IN_MILLIS = DAY_IN_MILLIS * 30
 
-const diffTime = (diff = 0, showSeconds = true) => {
+const _diffTime = (diff = 0, showSeconds = true) => {
+    if (!Number.isInteger(diff)) return []
     const res = []
     if (diff > DAY_IN_MILLIS) {
         const day = Number.parseInt(diff/DAY_IN_MILLIS)
@@ -26,7 +27,7 @@ const diffTime = (diff = 0, showSeconds = true) => {
         res.push(seconds + '秒')
         diff -= seconds * SECOND_IN_MILLIS
     }
-    return res.join('')
+    return res
 }
 
 export default {
@@ -35,9 +36,13 @@ export default {
      */
     diffNowTime(targetTime, showSeconds = true, nowMills = Date.now()) {
         if (!targetTime || nowMills >= targetTime) return
-        return diffTime(targetTime - nowMills, showSeconds)
+        return _diffTime(targetTime - nowMills, showSeconds).join('')
     },
-    diffTime,
+    diffTime(targetTime, len = 2) {
+        const res = _diffTime(targetTime)
+        if (len && Number.isInteger(len)) return res.slice(0, len).join('')
+        return res.join('')
+    },
     historyDate(targetTime) {
         if (!targetTime) {
             return

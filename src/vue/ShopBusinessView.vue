@@ -28,6 +28,8 @@
         width 50%
     .diff
         -webkit-box-align baseline
+    .black-24
+        font-weight 500
 </style>
 <template lang="pug">
 .shop-business.bg-white
@@ -43,17 +45,17 @@
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 在售总数
-                .mgt-28.fz-48.black-24 {{ stats.product_stats.selling_count }}
+                .mgt-20.fz-48.black-24 {{ stats.product_stats.selling_count }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 今日上新
-                .mgt-28.fz-48.black-24 {{ stats.product_stats.pd_count_today }}
+                .mgt-20.fz-48.black-24 {{ stats.product_stats.pd_count_today }}
         .flex.mgt-45
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 客单价 (元)
-                .mgt-28.fz-48.black-24 {{ stats.product_stats.trans_amount_buyer_average | price '0' false }}
+                .mgt-20.fz-48.black-24 {{ stats.product_stats.trans_amount_buyer_average | price '0' false }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 复购率
-                .mgt-28.fz-48.black-24 {{ stats.product_stats.repurchase_rate * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ stats.product_stats.repurchase_rate * 100 + '%' }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('click_stats')")
         .title-txt.flex.fz-26.gray-8f 店铺平台浏览
@@ -64,14 +66,14 @@
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日平台浏览 (人)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.click_stats.pv }}
-                    .fz-20.mgl-16(v-if='clickStatsPvDiff > 0', :class="this.diffClass(clickStatsPvDiff)") {{ this.diffRateStr(clickStatsPvDiff) }}
+                    .fz-20.mgl-16(v-if='clickStatsPvDiff !== 0', :class="this.diffClass(clickStatsPvDiff)") {{ this.diffRateStr(clickStatsPvDiff) }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日平台浏览 (次)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.click_stats.uv }}
-                    .fz-20.mgl-16(v-if='clickStatsUvDiff > 0', :class="this.diffClass(clickStatsUvDiff)") {{ this.diffRateStr(clickStatsUvDiff) }}
+                    .fz-20.mgl-16(v-if='clickStatsUvDiff !== 0', :class="this.diffClass(clickStatsUvDiff)") {{ this.diffRateStr(clickStatsUvDiff) }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('share_stats')")
         .title-txt.flex.fz-26.gray-8f 店铺分享浏览
@@ -82,14 +84,14 @@
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日分享浏览 (人)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.share_stats.pv }}
-                    .fz-20.mgl-16(v-if='shareStatsPvDiff > 0', :class="this.diffClass(shareStatsPvDiff)") {{ this.diffRateStr(shareStatsPvDiff) }}
+                    .fz-20.mgl-16(v-if='shareStatsPvDiff !== 0', :class="this.diffClass(shareStatsPvDiff)") {{ this.diffRateStr(shareStatsPvDiff) }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日分享浏览 (次)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.share_stats.uv }}
-                    .fz-20.mgl-16(v-if='shareStatsUvDiff > 0', :class="this.diffClass(shareStatsUvDiff)") {{ this.diffRateStr(shareStatsUvDiff) }}
+                    .fz-20.mgl-16(v-if='shareStatsUvDiff !== 0', :class="this.diffClass(shareStatsUvDiff)") {{ this.diffRateStr(shareStatsUvDiff) }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('order_stats')")
         .title-txt.flex.fz-26.gray-8f 付款
@@ -100,11 +102,11 @@
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日付款订单 (笔)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.order_paid_stats.count }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日付款总额 (元)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.order_paid_stats.sum | price '0' false }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('return_stats')")
@@ -116,31 +118,31 @@
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日退款退货订单 (笔)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.order_return_stats.count }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日退款退货总额 (元)
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.order_return_stats.sum | price '0' false }}
         .flex.mgt-45
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 近30日退货率
-                .mgt-28.fz-48.black-24 {{ stats.order_return_stats.order_return_rate_last_30days * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ stats.order_return_stats.order_return_rate_last_30days * 100 + '%' }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 累计退货率
-                .mgt-28.fz-48.black-24 {{ stats.order_return_stats.order_return_rate * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ stats.order_return_stats.order_return_rate * 100 + '%' }}
     .hr.bdv
     .title.title-txt.flex.fz-26.gray-8f.pdl-24.bdb 服务
     .pdv-50
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 发货速度
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ sendSpeed }}
                     .fz-20.mgl-16(v-if='sendDiff > 0', :class="this.diffClass(sendDiff)") {{ sendDiff >= 0 ? '高于均值' : '低于均值' }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 售后处理速度
-                .flex.mgt-28.diff
+                .flex.mgt-20.diff
                     .fz-48.black-24 {{ serviceSpeed }}
                     .fz-20.mgl-16(v-if='serviceDiff > 0', :class="this.diffClass(serviceDiff)") {{ serviceDiff >= 0 ? '高于均值' : '低于均值' }}
     .hr.bdv
@@ -217,7 +219,7 @@ export default {
 
     methods: {
         diffRate(cur, last) {
-            if (!cur || !last) return
+            if (!cur || !last || cur === last) return 0
             return ((cur-last)/last*100).toPrecision(4).replace(/\.00$/, '')
         },
 
