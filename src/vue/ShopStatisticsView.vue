@@ -24,6 +24,7 @@
         .separator
             width 1px
             height 30px
+            border-color #e3e3e3
     .tab
         text-align center
         width 50%
@@ -43,6 +44,9 @@
                 transform translate3d(16px, -3px, 0) rotate(30deg)
                 display block
                 background #b3b3b3
+        .original, .current, .diff
+            width 60px
+            text-align center
     .one-week
         margin-top 64px
     .diff
@@ -67,12 +71,12 @@
     .items
         .item.relative(v-for="(idx, item) in indexItems", @click="index=idx")
             .fz-26.dark-6b {{ item.name }}
-            .mgt-22.fz-48(:class="idx === index ? 'red-e6' : 'black-24'") {{ item.point }}
-            .mgt-18.fz-22.gray-b3 {{ `满分${item.total || 100}` }}
+            .mgt-18.fz-48(:class="idx === index ? 'red-e6' : 'black-24'") {{ item.point }}
+            .mgt-10.fz-22.gray-b3 {{ `满分${item.total || 100}` }}
             .active-bottom.mgt-25.bg-red-e6.mgh-26(v-if="idx === index")
             .right-separator.absolute.bdr(v-if="idx%3 !== 2")
     .mgh-20.bg-gray-f7.pdt-33.weeks.mgb-32(v-if="!lodash.isEmpty(weekData)")
-        .tabs.bd.flex
+        .tabs.bd-gray-e3.flex
             .tab.fz-30(:class="tab === 0 ? 'red-e6' : 'dark-6b'", @click="tab=0") 数据变化情况
             .separator.bdr
             .tab.fz-30(:class="tab === 1 ? 'red-e6' : 'dark-6b'", @click="tab=1") 计算规则
@@ -80,20 +84,20 @@
             .one-week.week.flex
                 .fz-26.dark-6b 1周变化情况
                 .flex.data
-                    .black-24.fz-32 {{ weekData.one_week[0] || 0 }}
+                    .original.black-24.fz-32 {{ weekData.one_week[0] || 0 }}
                     .separator.bg-gray-b3
-                    .black-24.fz-32 {{ weekData.one_week[1] || 0 }}
+                    .current.black-24.fz-32 {{ weekData.one_week[1] || 0 }}
                     .fz-32.diff(:class="oneWeekDataDiff === 0 ? 'black-24' : (oneWeekDataDiff > 0 ? 'green-a1' : 'red-e6')") {{ oneWeekDataDiff === 0 ? 0 : (oneWeekDataDiff > 0 ? '+' + oneWeekDataDiff : oneWeekDataDiff) }}
             .week-separator.bdt
             .four-week.week.flex
                 .fz-26.dark-6b 4周变化情况
                 .flex.data
-                    .black-24.fz-32 {{ weekData.four_week[0] || 0 }}
+                    .original.black-24.fz-32 {{ weekData.four_week[0] || 0 }}
                     .separator.bg-gray-b3
-                    .black-24.fz-32 {{ weekData.four_week[1] || 0 }}
+                    .current.black-24.fz-32 {{ weekData.four_week[1] || 0 }}
                     .fz-32.diff(:class="fourWeekDataDiff === 0 ? 'black-24' : (fourWeekDataDiff > 0 ? 'green-a1' : 'red-e6')") {{ fourWeekDataDiff === 0 ? 0 : (fourWeekDataDiff > 0 ? '+' + fourWeekDataDiff : fourWeekDataDiff) }}
         template(v-if="tab === 1")
-            .rule.fz-24.gray-8f(v-html="calculateRule")
+            .rule.fz-24.dark-6b.mgb(v-html="calculateRule")
 </template>
 <script>
 import rule from '../rule'

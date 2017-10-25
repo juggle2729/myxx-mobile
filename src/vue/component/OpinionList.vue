@@ -72,7 +72,7 @@
                 .arrow.absolute
             .product.pdv-10.bd.mgt-22.flex(v-if="!isChat")
                 .img.mgl-20(v-bg="item.order_item.cover")
-                .title.fz-20.dark-6b.mgl-20.line-clamp-1.line-height-50 {{ item.product_title }}
+                .flex-1.title.fz-20.dark-6b.mgl-20.line-clamp-1.line-height-50 {{ item.product_title }}
             .reply.center.bd-black-24.black-24.fz-26.mgt-24(v-if="!isChat && seller && !item.reply && item.description && !item.is_timeout", @click.stop="action('replyOpinion', {id: item.id})") 回复评价
             .btn.bd.fz-26.mgt-24(v-if="isChat", @click.stop="action('chat', {id: item.buyer_id, name: item.buyer.nickname, product: item.product_id})") 联系买家
     empty(v-if="items.isEmpty")

@@ -41,7 +41,7 @@
             .flex-1
             lv(:lv="shopLevel + 1")
     .title.center.fz-24.dark-6b — 积分明细 —
-    .fz-30.bdb.pd-32.bg-white(v-for='item in items', v-link="item.violation_id ? {name: 'shop-violation', params: {id: item.violation_id}} : ''")
+    .fz-30.bdb.pd-32.bg-white(v-for='item in items', v-link="item.violation_id ? {name: 'violation-detail', params: {id: item.violation_id}} : ''")
         .flex.fz-22.gray
             .flex-1 {{item.relate_desc}}
             div {{item.create_at | date 'yyyy-m-dd HH:MM'}}

@@ -660,7 +660,7 @@ export default {
 
     '/help/shop-promise': {
         name: 'help-shop-promise',
-        title: '店铺服务承诺',
+        title: '消费者保障服务',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('HelpShopPromiseView.vue'));

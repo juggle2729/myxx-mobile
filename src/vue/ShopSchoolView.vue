@@ -21,7 +21,7 @@
 .shop-school-view.bg
     .tabs
         .option.center.fz-26.bg-white.line-height-60.bd(v-for="category in categories", @click="changeCurrent(category)",
-            :class="category.id===current ? 'red-e5': 'dark-6b'") {{ category.name }}
+            :class="category.id===current ? 'red-e5': 'black-24'") {{ category.name }}
     .pdh-20.pdb-20
         .bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
             .pic.bg(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")

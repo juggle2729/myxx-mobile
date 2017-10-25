@@ -56,7 +56,7 @@
             .row 差评
             .row.number {{ productComment[3] }}
             .row.number {{ shopComment[3] }}
-    .bg-white
+    .bg-white.bdt
         .pdh-36
             .line-height-110.flex.fz-26.black-24(@click="hasContent = !hasContent")
                 icon(:name="hasContent ? 'selected' : 'select'")
