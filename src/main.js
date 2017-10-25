@@ -1,4 +1,5 @@
 require('fastclick').attach(document.body)
+require('script-loader!./Umeng')
 require('swiper/dist/css/swiper.min.css')
 
 import Vue from 'vue'
@@ -86,6 +87,9 @@ router.beforeEach(({from, to, next, abort}) => {
             }
             document.title = to.title || '美玉秀秀'
             to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+            if (to.router.app.env.isApp && from.path && to.target) { // 在APP内打开web子页面，打开新的窗口，避免路由路径冲突
+                window.open(to.path, to.name)
+            }
             next()
         }
     }

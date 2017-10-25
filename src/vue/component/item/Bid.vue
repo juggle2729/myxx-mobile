@@ -92,7 +92,7 @@
                 padding-bottom: 40px
 </style>
 <template  lang="pug">
-.bid-item.bg-white(v-link="{name: 'product', params: {id: bid.product.id}, query: {referer: 'goods_bid'}}")
+.bid-item.bg-white(v-link="{name: 'product', params: {id: bid.product.id}, query: {referer: 'goods_bid'}}", @click="track('qiugoujingbiao_shangpinxiangqing')")
     img.mark(v-if="mark", :src="mark | qn")
     header.flex
         .logo(v-bg="bid.shop.logo")

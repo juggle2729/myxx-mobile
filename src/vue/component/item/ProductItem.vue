@@ -32,7 +32,7 @@
             right 0
 </style>
 <template lang="pug">
-.product-item.bg-white.relative.bdt.bdb(v-link="{name: 'product', params: {id: item.id}}")
+.product-item.bg-white.relative.bdt.bdb(v-link="{name: 'product', params: {id: item.id}}", @click="clickProduct")
     .ranking.absolute.white.fz-20.center.line-height-28(v-if="$route.name === 'product-top100' && index <= 98") {{ index + 1 }}
     .desc.flex
         .flex-1.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.title }}
@@ -45,7 +45,7 @@
             img.mgr-8(v-if="item.sunlight", :src="'shop/sunlight.png' | qn")
             img.mgr-8(v-if="item.cigar_scale", :src="'shop/cigar-4.3.png' | qn")
             img(v-if="item.ziliao_feature", :src="'shop/ziliao.png' | qn")
-        .shop.fz-24.black-47.flex.pdb-4.absolute(v-link="{name: 'shop', params: {id: item.shop.id}}")
+        .shop.fz-24.black-47.flex.pdb-4.absolute(v-link="{name: 'shop', params: {id: item.shop.id}}", @click.stop="clickShop")
             icon(name="shop")
             span.pdl-10 {{ item.shop.shop_name }}
 </template>
@@ -57,6 +57,24 @@ export default {
     props: {
         item: Object,
         index: Number
+    },
+
+    methods: {
+        clickProduct() {
+            if (this.$route.name === 'product-top100') {
+                this.track('yuyoudouzaikan_shangpinxiangqing')
+            } else if (this.$route.name === 'product-recent') {
+                this.track('meirishangxin_shangpinxiangqing')
+            }
+        },
+
+        clickShop() {
+            if (this.$route.name === 'product-top100') {
+                this.track('yuyoudouzaikan_dianpu')
+            } else if (this.$route.name === 'product-recent') {
+                this.track('meirishangxin_dianpu')
+            }
+        }
     }
 }
 </script>

@@ -58,12 +58,12 @@
             .row.number {{ shopComment[3] }}
     .bg-white
         .pdh-36
-            .line-height-110.flex.fz-26.black-24(@click="selected = !selected")
-                icon(:name="hasContent ? 'selected' : 'select'", @click="hasContent = !hasContent")
+            .line-height-110.flex.fz-26.black-24(@click="hasContent = !hasContent")
+                icon(:name="hasContent ? 'selected' : 'select'")
                 .mgl-20 只看有内容的评价
             .tabs.flex.fz-26(:class="{'pdb-26 bdb': tags.length <= 0}")
-                .tab.flex(v-for="tab in tabs")
-                    icon(:name="tab.id === chooseTab ? 'selected' : 'select'", @click="chooseTab = tab.id")
+                .tab.flex(v-for="tab in tabs", @click="chooseTab = tab.id")
+                    icon(:name="tab.id === chooseTab ? 'selected' : 'select'")
                     .mgl-16 {{ tab.label }}
             marks.pdb-26.pdt-50.bdb.bg-white(v-if="tags.length > 0", :tags="tags")
         opinion-list(:items="items")
