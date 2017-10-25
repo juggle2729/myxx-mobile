@@ -96,24 +96,14 @@ export default {
                 this.current = tab.id
                 this.$router.replace({...this.$route, query: {...this.$route.query, tab: tab.id}})
 
-                if (this.$route.name === 'product-top100') {
-                    switch (tab.id) {
-                        case 'all':
-                            return this.track('yuyoudouzaikan_quanbu')
-                        case 'origin':
-                            return this.track('yuyoudouzaikan_yuanshi')
-                        case 'finished':
-                            return this.track('yuyoudouzaikan_chengpin')
-                    }
-                } else {
-                    switch (tab.id) {
-                        case 'all':
-                            return this.track('meirishangxin_quanbu')
-                        case 'origin':
-                            return this.track('meirishangxin_yuanshi')
-                        case 'finished':
-                            return this.track('meirishangxin_chengpin')
-                    }
+                const isTop100 = this.$route.name === 'product-top100'
+                switch (tab.id) {
+                    case 'all':
+                        return this.track(`${isTop100 ? 'yuyoudouzaikan' : 'meirishangxin'}_quanbu`)
+                    case 'origin':
+                        return this.track(`${isTop100 ? 'yuyoudouzaikan' : 'meirishangxin'}_yuanshi`)
+                    case 'finished':
+                        return this.track(`${isTop100 ? 'yuyoudouzaikan' : 'meirishangxin'}_chengpin`)
                 }
             }
         }

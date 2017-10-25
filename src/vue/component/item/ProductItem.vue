@@ -61,18 +61,21 @@ export default {
 
     methods: {
         clickProduct() {
-            if (this.$route.name === 'product-top100') {
-                this.track('yuyoudouzaikan_shangpinxiangqing')
-            } else if (this.$route.name === 'product-recent') {
-                this.track('meirishangxin_shangpinxiangqing')
-            }
+            this.clickTrack('shangpinxiangqing')
         },
 
         clickShop() {
-            if (this.$route.name === 'product-top100') {
-                this.track('yuyoudouzaikan_dianpu')
-            } else if (this.$route.name === 'product-recent') {
-                this.track('meirishangxin_dianpu')
+            this.clickTrack('dianpu')
+        },
+
+        clickTrack(target) {
+            switch(this.$route.name) {
+                case 'product-top100':
+                    this.track(`yuyoudouzaikan_${target}`)
+                    break;
+                case 'product-recent':
+                    this.track(`meirishangxin_${target}`)
+                    break;
             }
         }
     }

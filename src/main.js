@@ -58,7 +58,7 @@ router.beforeGo((from, to, app) => {
             // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
         } else {
-            app.action('go', {url: to.path})
+            app.action('go', {url: to.path, target: to.target || '' })
             interrupted = true
         }
     } else if(app.env.isShare) {
@@ -87,9 +87,6 @@ router.beforeEach(({from, to, next, abort}) => {
             }
             document.title = to.title || '美玉秀秀'
             to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-            if (to.router.app.env.isApp && from.path && to.target) { // 在APP内打开web子页面，打开新的窗口，避免路由路径冲突
-                window.open(to.path, to.name)
-            }
             next()
         }
     }

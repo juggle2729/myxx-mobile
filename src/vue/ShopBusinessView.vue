@@ -4,6 +4,8 @@
         -webkit-box-pack justify
         height 99px
         padding-right 32px
+        .black-24
+            font-weight normal !important
     .icon-enter
         width 15px
         height 26px

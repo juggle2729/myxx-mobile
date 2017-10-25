@@ -383,7 +383,7 @@ export default {
     '/seller-shop/:id/business/:type': {
         name: 'shop-business-detail',
         title: '营业数据',
-        target: true,
+        target: 'blank',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('ShopBusinessDetailView.vue'))
