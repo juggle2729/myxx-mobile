@@ -313,11 +313,12 @@ const mixin = {
             return num.toPrecision(precision).replace(/\.00$/, '')
         },
 
-        goCmsLink(path) {
+        goCmsLink(url) {
+            !/^http/.test(url) && (url = `https://cms.meiyuxiuxiu.com/${url}`)
             if (this.env.isApp) {
-                this.action('go', {url: `https://cms.meiyuxiuxiu.com/${path}`, target: 'blank' })
+                this.action('go', {url, target: 'blank' })
             } else {
-                location.href = `https://cms.meiyuxiuxiu.com/${path}`
+                location.href = url
             }
         }
     }
