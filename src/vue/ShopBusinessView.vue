@@ -57,7 +57,7 @@
                 .mgt-20.fz-48.black-24 {{ stats.product_stats.trans_amount_buyer_average | price '0' false }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 复购率
-                .mgt-20.fz-48.black-24 {{ stats.product_stats.repurchase_rate * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ precision(stats.product_stats.repurchase_rate * 100) + '%' }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('click_stats')")
         .title-txt.flex.fz-26.gray-8f 店铺平台浏览

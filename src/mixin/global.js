@@ -306,6 +306,11 @@ const mixin = {
 
         track(eventId) {
             this.env.isApp && !this.env.isTest && window.MobclickAgent.onEvent(eventId)
+        },
+
+        precision(num, precision = 4) {
+            if (!_.isNumber(num)) return 0
+            return num.toPrecision(precision).replace(/\.00$/, '')
         }
     }
 }
