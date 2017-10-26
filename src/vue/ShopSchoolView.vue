@@ -23,7 +23,7 @@
         .option.center.fz-26.bg-white.line-height-60.bd(v-for="category in categories", @click="changeCurrent(category)",
             :class="category.id===current ? 'red-e5': 'black-24'") {{ category.name }}
     .pdh-20.pdb-20
-        .bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goLink(item)")
+        .bg-white.mgb.flex.pd-40.bd(v-for="item in items", @click="goCmsLink(item.link)")
             .pic.bg(:style="{backgroundImage: `url(${item.better_featured_image.source_url})`}")
             .flex-1.mgl-28.fz-34.black-24.line-clamp-3 {{ item.title.rendered }}
 </template>
@@ -60,10 +60,6 @@ export default {
             this.$cms('posts', { categories: [this.current], context: 'embed' }).then(data => {
                 this.items = data
             })
-        },
-
-        goLink(item) {
-            location.href = item.link
         }
     }
 }

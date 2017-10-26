@@ -314,7 +314,11 @@ const mixin = {
         },
 
         goCmsLink(path) {
-            location.href = `https://cms.meiyuxiuxiu.com/${path}`
+            if (this.env.isApp) {
+                this.action('go', {url: `https://cms.meiyuxiuxiu.com/${path}`, target: 'blank' })
+            } else {
+                location.href = `https://cms.meiyuxiuxiu.com/${path}`
+            }
         }
     }
 }

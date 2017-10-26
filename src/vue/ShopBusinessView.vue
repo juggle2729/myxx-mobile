@@ -36,9 +36,9 @@
 <template lang="pug">
 .shop-business.bg-white
     .hr.bdv
-    .flex.pdl-32.last-login
+    .flex.pdl-32.last-login(@click="goCmsLink('2017/10/25/login-time-rule')")
         .black-24.fz-30 上一次登录时间
-        .flex.relative(@click="goCmsLink('2017/10/25/login-time-rule')")
+        .flex.relative
             .green-a1.fz-26.mgr-32 {{ lastLoginDate }}
             icon.gray.absolute(:name="'enter'")
     .hr.bdv
