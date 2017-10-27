@@ -13,6 +13,7 @@
         .flex.mgt-40
             .flex-1.line-clamp-2.mgr {{item.desc}}
             icon(name="enter")
+    empty(v-if="items.isEmpty")
 </template>
 <script>
 import paging from 'paging'
