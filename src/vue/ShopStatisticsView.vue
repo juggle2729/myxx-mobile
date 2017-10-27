@@ -64,14 +64,14 @@
     .pdt-50.pdl-42.pdb-21
         .black-24.fz-30 店铺指数:
         .flex.shop-index
-            .fz-60.red-e6.mgt-35 {{ statistics.shop_index.point }}
+            .fz-60.red-e6.mgt-35 {{ statistics.shop_index.point || '暂无数据' }}
             .fz-24.red-f2.mgl-21 {{ statistics.shop_index.remark }}
-        .mgt-42.gray-b3.fz-22 评估时间: {{ statistics.shop_index.update_at | date 'yyyy-mm-dd' }}
+        .mgt-42.gray-b3.fz-22 评估时间: {{ updateAt | date 'yyyy-mm-dd' }}
     .hr.bdv
     .items
         .item.relative(v-for="(idx, item) in indexItems", @click="index=idx")
             .fz-26.dark-6b {{ item.name }}
-            .mgt-18.fz-48(:class="idx === index ? 'red-e6' : 'black-24'") {{ item.point }}
+            .mgt-18.fz-48(:class="idx === index ? 'red-e6' : 'black-24'") {{ item.point || '-' }}
             .mgt-10.fz-22.gray-b3 {{ `满分${item.total || 100}` }}
             .active-bottom.mgt-25.bg-red-e6.mgh-26(v-if="idx === index")
             .right-separator.absolute.bdr(v-if="idx%3 !== 2")
@@ -161,18 +161,26 @@ export default {
                 }
             ]
         },
+
         weekData() {
             if (!this.indexItems) return {}
             return this.statistics[this.indexItems[this.index].key]
         },
+
         oneWeekDataDiff() {
             return (this.weekData.one_week[1] || 0) - (this.weekData.one_week[0] || 0)
         },
+
         fourWeekDataDiff() {
             return (this.weekData.four_week[1] || 0) - (this.weekData.four_week[0] || 0)
         },
+
         calculateRule() {
             return this.indexItems[this.index].rule
+        },
+
+        updateAt() {
+            return this.statistics.shop_index.update_at || Date.now()
         }
     },
 
