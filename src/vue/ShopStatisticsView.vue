@@ -133,30 +133,35 @@ export default {
                     name: '商品',
                     key: 'product_index',
                     point: this.statistics.product_index.point,
+                    total: 225,
                     rule: rule.storeStatistics[1]
                 },
                 {
                     name: '服务',
                     key: 'service_index',
                     point: this.statistics.service_index.point,
+                    total: 75,
                     rule: rule.storeStatistics[2]
                 },
                 {
                     name: '活跃',
                     key: 'activity_index',
                     point: this.statistics.activity_index.point,
+                    total: 50,
                     rule: rule.storeStatistics[3]
                 },
                 {
                     name: '退货',
                     key: 'return_index',
                     point: this.statistics.return_index.point,
+                    total: 50,
                     rule: rule.storeStatistics[4]
                 },
                 {
                     name: '违规',
                     key: 'violation_index',
                     point: this.statistics.violation_index.point,
+                    total: 100,
                     rule: rule.storeStatistics[5]
                 }
             ]
