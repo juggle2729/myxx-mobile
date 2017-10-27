@@ -58,7 +58,7 @@ router.beforeGo((from, to, app) => {
             // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
         } else {
-            app.action('go', {url: to.path, target: to.target || '' })
+            app.action('go', {url: to.path, target: to.target || to.query.target || '' })
             interrupted = true
         }
     } else if(app.env.isShare) {

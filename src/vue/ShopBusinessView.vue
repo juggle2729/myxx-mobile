@@ -36,7 +36,7 @@
 <template lang="pug">
 .shop-business.bg-white
     .hr.bdv
-    .flex.pdl-32.last-login(v-link="{path: '/help/desc/login_time_rule'}")
+    .flex.pdl-32.last-login(v-link="{path: '/help/desc/login_time_rule', query: {target: 'blank'}}")
         .black-24.fz-30 上一次登录时间
         .flex.relative
             .green-a1.fz-26.mgr-32 {{ lastLoginDate }}
