@@ -15,7 +15,7 @@
                     width 90px
                     height 24px
     .title
-        margin 27px 0 12px
+        padding 27px 0 12px
     .light-green
         color: #09bb07
     .symbol
@@ -40,18 +40,17 @@
             .fz-24.red-f2 距离下一等级还需{{ upgradeNeedPoint }}分
             .flex-1
             lv(:lv="shopLevel + 1")
-    .title.center.fz-24.dark-6b — 积分明细 —
-    .bdt
-        .fz-30.bdb.pd-32.bg-white(v-for='item in items', v-link="item.violation_id ? {name: 'violation-detail', params: {id: item.violation_id}} : ''")
-            .flex.fz-22.gray
-                .flex-1 {{item.relate_desc}}
-                div {{item.create_at | date 'yyyy-m-dd HH:MM'}}
-            .flex.mgt-40
-                .flex-2.line-clamp-2 {{item.remark}}
-                .flex-1.red.fz-30.txt-right(:class="{'light-green': item.point_value > 0}")
-                    span.symbol(v-if="item.point_value > 0") +
-                    span {{item.point_value}}分
-                icon.mgl-10.gray(name="enter", v-if="item.violation_id")
+    .title.center.fz-24.dark-6b.bdb — 积分明细 —
+    .fz-30.bdb.pd-32.bg-white(v-for='item in items', v-link="item.violation_id ? {name: 'violation-detail', params: {id: item.violation_id}} : ''")
+        .flex.fz-22.gray
+            .flex-1 {{item.relate_desc}}
+            div {{item.create_at | date 'yyyy-m-dd HH:MM'}}
+        .flex.mgt-40
+            .flex-2.line-clamp-2 {{item.remark}}
+            .flex-1.red.fz-30.txt-right(:class="{'light-green': item.point_value > 0}")
+                span.symbol(v-if="item.point_value > 0") +
+                span {{item.point_value}}分
+            icon.mgl-10.gray(name="enter", v-if="item.violation_id")
 </template>
 <script>
 import paging from 'paging'
