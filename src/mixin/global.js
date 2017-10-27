@@ -309,7 +309,7 @@ const mixin = {
         },
 
         precision(num, precision = 4) {
-            if (!_.isNumber(num)) return 0
+            if (!_.isNumber(num) || num === 0) return 0
             return num.toPrecision(precision).replace(/\.00$/, '')
         },
 

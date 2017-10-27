@@ -129,10 +129,10 @@
         .flex.mgt-45
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 近30日退货率
-                .mgt-20.fz-48.black-24 {{ stats.order_return_stats.order_return_rate_last_30days * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ precision(stats.order_return_stats.order_return_rate_last_30days * 100) + '%' }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 累计退货率
-                .mgt-20.fz-48.black-24 {{ stats.order_return_stats.order_return_rate * 100 + '%' }}
+                .mgt-20.fz-48.black-24 {{ precision(stats.order_return_stats.order_return_rate * 100) + '%' }}
     .hr.bdv
     .title.title-txt.flex.fz-26.gray-8f.pdl-24.bdb 服务
     .pdv-50
