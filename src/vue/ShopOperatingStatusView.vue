@@ -88,7 +88,7 @@ export default {
 
     methods: {
         askForAudit() {
-            if (this.processAuditStatus && this.processAuditStatus !== 'unaudited') {
+            if (this.profile.process_audit_status !== 'unaudited') {
                 if (this.profile.selling_count < 20) {
                     this.action('toast', {success: 0, text: '在售商品不足20个'})
                     return
