@@ -57,7 +57,8 @@ export default {
                 audit_status: '',
                 process_audit_status: '',
                 audit_reason: '',
-                remove_mall_reason: ''
+                remove_mall_reason: '',
+                selling_count: 0
             }
         }
     },
@@ -87,11 +88,17 @@ export default {
 
     methods: {
         askForAudit() {
-            this.processAuditStatus !== 'unaudited' &&
-            this.$post('users/shop_certs', { cert_type: 'audit' }).then(() => {
-                this.action('toast', {success: 1, text: '已发出申请'})
-                this.fetch()
-            })
+            if (this.processAuditStatus && this.processAuditStatus !== 'unaudited') {
+                if (this.profile.selling_count < 20) {
+                    this.action('toast', {success: 0, text: '在售商品不足20个'})
+                    return
+                }
+
+                this.$post('users/shop_certs', { cert_type: 'audit' }).then(() => {
+                    this.action('toast', {success: 1, text: '已发出申请'})
+                    this.fetch()
+                })
+            }
         },
 
         fetch() {

@@ -69,13 +69,13 @@
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日平台浏览 (人)
                 .flex.mgt-20.diff
-                    .fz-48.black-24 {{ stats.click_stats.pv }}
-                    .fz-20.mgl-16(v-if='clickStatsPvDiff !== 0', :class="this.diffClass(clickStatsPvDiff)") {{ this.diffRateStr(clickStatsPvDiff) }}
+                    .fz-48.black-24 {{ stats.click_stats.uv }}
+                    .fz-20.mgl-16(v-if='clickStatsUvDiff !== 0', :class="this.diffClass(clickStatsUvDiff)") {{ this.diffRateStr(clickStatsUvDiff) }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日平台浏览 (次)
                 .flex.mgt-20.diff
-                    .fz-48.black-24 {{ stats.click_stats.uv }}
-                    .fz-20.mgl-16(v-if='clickStatsUvDiff !== 0', :class="this.diffClass(clickStatsUvDiff)") {{ this.diffRateStr(clickStatsUvDiff) }}
+                    .fz-48.black-24 {{ stats.click_stats.pv }}
+                    .fz-20.mgl-16(v-if='clickStatsPvDiff !== 0', :class="this.diffClass(clickStatsPvDiff)") {{ this.diffRateStr(clickStatsPvDiff) }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('share_stats')")
         .title-txt.flex.fz-26.gray-8f 店铺分享浏览
@@ -87,13 +87,13 @@
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日分享浏览 (人)
                 .flex.mgt-20.diff
-                    .fz-48.black-24 {{ stats.share_stats.pv }}
-                    .fz-20.mgl-16(v-if='shareStatsPvDiff !== 0', :class="this.diffClass(shareStatsPvDiff)") {{ this.diffRateStr(shareStatsPvDiff) }}
+                    .fz-48.black-24 {{ stats.share_stats.uv }}
+                    .fz-20.mgl-16(v-if='shareStatsUvDiff !== 0', :class="this.diffClass(shareStatsUvDiff)") {{ this.diffRateStr(shareStatsUvDiff) }}
             .flex-1.pdl-40
                 .fz-26.dark-6b 昨日分享浏览 (次)
                 .flex.mgt-20.diff
-                    .fz-48.black-24 {{ stats.share_stats.uv }}
-                    .fz-20.mgl-16(v-if='shareStatsUvDiff !== 0', :class="this.diffClass(shareStatsUvDiff)") {{ this.diffRateStr(shareStatsUvDiff) }}
+                    .fz-48.black-24 {{ stats.share_stats.pv }}
+                    .fz-20.mgl-16(v-if='shareStatsPvDiff !== 0', :class="this.diffClass(shareStatsPvDiff)") {{ this.diffRateStr(shareStatsPvDiff) }}
     .hr.bdv
     .title.flex.pdl-24.bdb.justify(@click="goDetail('order_stats')")
         .title-txt.flex.fz-26.gray-8f 付款

@@ -3,7 +3,7 @@ export default {
     data() {
         return {
             items: []
-        };
+        }
     },
     ready() {
         const cacheItems = this.$store.get(this._listItemsCacheKey())
@@ -45,6 +45,14 @@ export default {
                     cursor: this.items.cursor,
                     ...this.paging.params
                 };
+
+                // show more loading icon
+                let moreEle = null
+                if (this.items.length) {
+                    moreEle = this._moreEle()
+                    this.$el.appendChild(moreEle)
+                }
+
                 return this.$fetch(this.paging.path, opts)
                     .then(data => {
                         let items = data[this.paging.list || 'entries'];
@@ -64,7 +72,16 @@ export default {
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
                         });
-                }, () => {this.items.loading = false;this.$root.loading = false;});
+
+                        // remove more loading icon
+                        moreEle && this.$el.removeChild(moreEle)
+                }, () => {
+                        this.items.loading = false
+                        this.$root.loading = false
+
+                        // remove more loading icon
+                        moreEle && this.$el.removeChild(moreEle)
+                    });
             }
         },
         _listCacheKey() {
@@ -72,6 +89,13 @@ export default {
         },
         _listItemsCacheKey() {
             return `cache-items-${this.$route.name}`
+        },
+        _moreEle() {
+            const ele = document.createElement('div')
+            ele.style.background = 'white url(\'https://o0x80w5li.qnssl.com/more.gif\') no-repeat center'
+            ele.style.backgroundSize = '24px'
+            ele.style.height = '60px'
+            return ele
         }
     },
     route: {

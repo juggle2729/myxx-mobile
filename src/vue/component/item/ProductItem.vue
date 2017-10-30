@@ -16,8 +16,11 @@
             font-size 20px
             margin-right 2px
     .pics
+        &.enough
+            display flex
+            justify-content space-between
         .pic
-            width 230px
+            width calc((100%-10px)/3)
             padding-top @width
             &:not(:first-child)
                 margin-left 5px
@@ -38,7 +41,7 @@
         .flex-1.fz-26.bold.black-47.line-height-32.line-clamp-1 {{ item.title }}
         .price.red-e6.fz-32(v-if="item.sell_status === 'selling'") {{ item.price | price }}
         .red-e6.fz-28(v-else) 已售出
-    .pics.flex
+    .pics.flex(:class="{'enough':item.pictures.length >= 3}")
         .pic.bg-gray-f7(v-for="pic in item.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.mgt-24.flex.relative
         .flex-1.flex
