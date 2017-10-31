@@ -160,6 +160,7 @@ export default {
     '/purchase/:id': {
         name: 'purchase',
         title: '求购详情',
+        native: v => v >= 4.4 && {name: 'bid'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PurchaseView.vue'))

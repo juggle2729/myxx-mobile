@@ -5,9 +5,9 @@
 </style>
 <template  lang="pug">
 .user-purchase-view(:class="{'bg': !items.isEmpty}")
-    template(v-for='item in items')
+    template(v-for='(index, item) in items')
         .hr
-        purchase-item(:item='item')
+        purchase-item(:item='item', :index="index")
     empty(v-if='items.isEmpty', title='暂无求购竞标')
 </template>
 <script>
@@ -32,6 +32,12 @@ export default {
             return {
                 path: 'mall/purchases'
             }
+        }
+    },
+
+    events: {
+        deletePurchase(targetIndex) {
+            this.items.splice(targetIndex, 1)
         }
     }
 }

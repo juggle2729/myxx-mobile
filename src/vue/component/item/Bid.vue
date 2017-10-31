@@ -3,12 +3,12 @@
     margin-bottom: 40px
     position: relative
     .mark
-        position: absolute
-        top: 0
-        right: 0
-        width: 184px
-        height: 144px
-        z-index: 9
+        position absolute
+        top 0
+        right 176px
+        width 149px
+        height 44px
+        z-index 9
     &:last-child
         margin-bottom: 0
     header
@@ -93,7 +93,7 @@
 </style>
 <template  lang="pug">
 .bid-item.bg-white(v-link="{name: 'product', params: {id: bid.product.id}}", @click="track('qiugoujingbiao_shangpinxiangqing')")
-    img.mark(v-if="mark", :src="mark | qn")
+    img.mark(v-if="mark", :src="'bid/winned.png' | qn")
     header.flex
         .logo(v-bg="bid.shop.logo")
         .fz-26.gray.flex-1 {{bid.shop.shop_name}}

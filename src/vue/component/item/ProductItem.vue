@@ -20,7 +20,7 @@
             display flex
             justify-content space-between
         .pic
-            width calc((100%-10px)/3)
+            width calc((100% - 10px)/3)
             padding-top @width
             &:not(:first-child)
                 margin-left 5px
