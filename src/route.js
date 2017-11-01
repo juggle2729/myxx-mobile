@@ -678,6 +678,15 @@ export default {
         }
     },
 
+    '/help/brand-shop-detail/:type': {
+        name: 'brand-shop-detail',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('HelpBrandShopDetailView.vue'));
+            }, 'help')
+        }
+    },
+
     '/help/media/:type': {
         name: 'help-media', // 图片帮助页面模板
         component(resolve) {
@@ -853,6 +862,7 @@ export default {
     '/auction/special/:id': {
         name: 'auction-special',
         title: '专场拍卖',
+        native: v => v >= 4.4 && {name: 'specialAuction'},
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('AuctionSpecialView.vue'))

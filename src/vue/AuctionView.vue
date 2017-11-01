@@ -31,11 +31,16 @@
         .header
             padding 36px 32px 0
             .flex > *
-                border-radius 6px
-                line-height 48px
+                border-radius 20px
+                line-height 40px
+            .official
+                background url('//o0x80w5li.qnssl.com/icon/official_auction.png') no-repeat 16px 5px
+                background-size 30px 30px
+                margin-right 5px
             .margin
-                background url('//o0x80w5li.qnssl.com/auction/gurantee-2.png') no-repeat 8px 3px
+                background url('//o0x80w5li.qnssl.com/auction/gurantee-2.png') no-repeat 8px -2px
                 background-size 40px 40px
+                margin-right 5px
             .price
                 height 144px
                 &.preview .current-price
@@ -218,9 +223,10 @@
         .header
             .title.fz-32 {{ prod.title }}
             .flex.fz-22.gray.mgt-30.mgb-24
-                .margin.pdl-48.pdr-12.bd 保证金已付
-                .mail.pdh-12.mgl-12.bd(v-if="auction.free_shipping") 包邮
-                .flex-1.txt-right {{ auction.click_count }}人围观
+                .official.pdl-49.pdr-19.bd(v-if="auction.product.shop.is_official_shop") 官方拍卖
+                .margin.pdl-49.pdr-19.bd 保证金已付
+                .mail.pdh-19.bd(v-if="auction.free_shipping") 包邮
+                .flex-1.txt-right.gray-b3 {{ auction.click_count }}人围观
             .price.flex.fz-22(:class="auction.status")
                 .flex-1.center
                     .current-title {{ currentTitle }}

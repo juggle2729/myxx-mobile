@@ -65,6 +65,7 @@
         .shop.gray.flex-1.txt-right.flex(v-if="routeName !== 'shop'",v-link="{name: 'shop', params: {id: item.product.shop.id}}")
             img(:src="'auction/shop-icon.png' | qn")
             .fz-24.black-47.pdl-10 {{ item.product.shop.shop_name }}
+            .brand-shop.small.mgl-10(v-if="item.product.shop.brand_shop")
 </template>
 <script>
 import date from '../../../util/date'

@@ -37,8 +37,8 @@
     .img(v-bg="shop.logo")
     .flex-1
         .fz-30.flex.name.black-47
-            .line-clamp.mgr {{ shop.shop_name }}
-            lv(:lv="shop.level")
+            .line-clamp {{ shop.shop_name }}
+            .brand-shop.mgl-10(v-if="shop.brand_shop")
         .fz-26.gray.flex.mgt-12
             .address-icon.center.mgr-6
                 img(:src="'shop/address.png' | qn")
@@ -48,13 +48,8 @@
         .fz-18.gray-8f.mgt-12 进店逛逛
 </template>
 <script>
-import Lv from 'component/Lv.vue'
 export default {
     name: 'Shop',
-
-    components: {
-        Lv
-    },
 
     props: {
         shop: Object

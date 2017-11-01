@@ -46,6 +46,14 @@
             .mgl-12.flex-1 三天无理由退货
             .green.mgr-12 已开通
             icon.gray(name="enter")
+    .hr
+    .pdl-32.fz-30.bg-white
+        .line-height-100.bdb.bold 品牌店铺
+        .line-height-100.flex.pdr-32(v-link="{name: 'brand-shop-detail', params: {type: 'brand_shop_rule'}}")
+            img(:src="'shop/brand.png' | qn")
+            .mgl-12.flex-1 品牌店铺
+            .mgr-12(:class="profile.brand_shop ? 'green': 'red'") {{ profile.brand_shop ? '已入选': '尚未入选' }}
+            icon.gray(name="enter")
 </template>
 <script>
 const items = { // interaction 是否可以点击进入二级页面

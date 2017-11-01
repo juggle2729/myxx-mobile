@@ -94,7 +94,9 @@
     header.bg-white.bdb.flex.relative
         .shop-logo(v-bg="shop.logo")
         deep-link.has-icon.collect.bd-black-24.fz-24.black-24.absolute(@click="gotoDownload") 关注掌柜
-        .fz-36.bold.black-24.mgt-40 {{ shop.shop_name }}
+        .flex.mgt-40
+            .fz-36.bold.black-24 {{ shop.shop_name }}
+            .brand-shop.mgl-10(v-if="shop.brand_shop")
         .flex.fz-20.black-47.mgt-20
             .address.flex
                 img(:src="'shop/address.png' | qn")

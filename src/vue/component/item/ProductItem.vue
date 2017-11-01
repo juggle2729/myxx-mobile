@@ -51,6 +51,7 @@
         .shop.fz-24.black-47.flex.pdb-4.absolute(v-link="{name: 'shop', params: {id: item.shop.id}}", @click.stop="clickShop")
             icon(name="shop")
             span.pdl-10 {{ item.shop.shop_name }}
+            .brand-shop.small.mgl-10(v-if="item.shop.brand_shop")
 </template>
 <script>
 import date from '../../../util/date'

@@ -65,7 +65,8 @@
             .img.mgr.bd(v-bg='shop.logo')
             .flex-1
                 .fz-30.flex.mgb-12.name
-                    .line-clamp.mgr {{shop.shop_name}}
+                    .line-clamp {{shop.shop_name}}
+                    .brand-shop.mgl-10(v-if="shop.brand_shop")
                 .fz-26.gray.flex
                     icon(name="location")
                     div(:class="{'address': shop.pd_count_today, 'line-clamp-1': shop.pd_count_today}") {{shop.locale_name}}
