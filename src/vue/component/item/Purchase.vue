@@ -81,7 +81,7 @@ bg($icon, $size)
                 span.red.mgr-8(v-if="item.win_count") {{item.win_count}}
                 span(v-if="item.win_count") 个中标
             .fz-24.red-e6.pay_margin.center(v-else, @click.stop="pay()") 支付保证金
-            .delete.flex.pdl-42(:class="{'disabled gray-b3': isGoing, 'black-24': !isGoing}", @click.stop="del(item.id)") 删除此求购
+            .delete.flex.pdl-42(v-if="canDelete", :class="{'disabled gray-b3': isGoing, 'black-24': !isGoing}", @click.stop="del(item.id)") 删除此求购
 </template>
 <script>
 export default {
@@ -110,6 +110,9 @@ export default {
         },
         isGoing() {
             return this.item.status === 'in'
+        },
+        canDelete() {
+            return this.item.total_count === 0 && this.item.owner.id === this.self.id // 不是自己的求购，且没有竞标才能删除
         }
     },
 
