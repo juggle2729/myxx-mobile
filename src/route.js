@@ -490,6 +490,26 @@ export default {
         }
     },
 
+    '/mall/supervise': {
+        name: 'mall-supervise',
+        title: '商城监督',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MallSuperviseView.vue'))
+            }, 'mall')
+        }
+    },
+
+    '/mall/judge/:type/:id': {
+        name: 'mall-judge',
+        title: '评判',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('MallJudgeView.vue'))
+            }, 'mall')
+        }
+    },
+
     '/wallet': {
         name: 'wallet',
         title: '我的钱包',

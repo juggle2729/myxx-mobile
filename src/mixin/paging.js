@@ -48,7 +48,7 @@ export default {
 
                 // show more loading icon
                 let moreEle = null
-                if (this.items.length) {
+                if (this.items.length && !fresh) {
                     moreEle = this._moreEle()
                     this.$el.appendChild(moreEle)
                 }
@@ -71,7 +71,16 @@ export default {
                             cursor: data.cursor,
                             hasMore: data.cursor || (items.length === opts.limit && this.items.length < (data.total || 999999)),
                             isEmpty: this.items.length === 0
-                        });
+                        })
+
+                        // 处理返回的一些特殊字段
+                        if (_.isArray(this.paging.specials)) {
+                            const specialObj = {}
+                            this.paging.specials.forEach(special => {
+                                specialObj[special] = data[_.snakeCase(special)]
+                            })
+                            _.merge(this.items, specialObj)
+                        }
 
                         // remove more loading icon
                         moreEle && this.$el.removeChild(moreEle)

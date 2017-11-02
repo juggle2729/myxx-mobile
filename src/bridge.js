@@ -45,7 +45,7 @@ const adapter = {
                 document.title = params.text
                 if(this.env.isWechat && this.env.isIOS) {
                     // hack在微信等webview中无法修改document.title的情况
-                    var iframe = document.createElement('iframe')
+                    const iframe = document.createElement('iframe')
                     iframe.style.display = 'none'
                     iframe.src = '//o0w8taeuo.qnssl.com/static/logo.png'
                     iframe.onload = () => {

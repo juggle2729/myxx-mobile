@@ -23,6 +23,8 @@
         line-height 1.8
         font-size 26px
         color #888888
+        &.red
+            color #e61717
 </style>
 <template lang="pug">
 .help-ziliao-feature-component.bg-white
@@ -35,6 +37,7 @@
         p 2. 毛孔细节图
         p 3. 透光结构图
         p 4. 原料以及制作过程图
+        p.red * 注意：籽料特征图是通过图片【直观地】对籽料特征进行展示，降低消费者判断成本，因此皮色、毛孔必须为【局部特写】，细节清晰。拍摄全局图片间接展示皮色、毛孔并不能算作籽料特征图。
         img.example.mgt-20(:src="'shop/promise/ziliao-example.png' | qn")
     .mgt-36
         .flex.mgh-32.mgb
