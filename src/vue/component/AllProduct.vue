@@ -12,7 +12,7 @@
 </style>
 <template lang="pug">
 .all-product.bg.pdt
-    .options.bg-white.line-height-80.fz-26.flex.bdt.bdb(v-if="items.length")
+    .options.bg-white.line-height-80.fz-26.flex.bdt.bdb
         .option.center.gray-8f(v-for="tab in tabs", @click="obtain(tab.id)", :class="{'red-e6': (current === tab.id) || (current === ('-'+tab.id))}") {{tab.label}}
     .products.pdt-20
         product-card(v-for="item in items", :item="item")

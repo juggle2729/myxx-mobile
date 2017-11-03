@@ -30,23 +30,44 @@
         line-height 80px
         border-radius 40px
         margin 51px 54px 0
+    .mark
+        background-image url('//o0x80w5li.qnssl.com/judge_success.png')
+        background-size 100px
+        background-position center
+        margin 112px 0 39px 0
+        width 100%
+        height 100px
+    .desc
+        margin 48px 75px 0
+        line-height 39px
+    .know
+        width 400px
+        line-height 80px
+        margin 114px 175px 0
+        border-radius 40px
 </style>
 <template lang="pug">
 .mall-judge-view
-    .flex.mgh-25.pdv-25.bdb
-        .logo(v-bg="photo")
-        .mgl-26.fz-34.bold.black-24 {{ title }}
-    .items.mgh-25.mgv-39
-        .item(v-for="item in items[type]", @click="choice = item.id")
-            .flex
-                icon.flex.mgl-25(:name="choice === item.id ? 'checked' : 'uncheck'")
-                .fz-30.black-24.mgl-20 {{ item.desc }}
-            textarea.mgt-32.bg-gray-f7.pd-22.fz-30.bd(v-if="item.id !== 'bd' && choice === item.id", v-model="desc", :placeholder="item.id === 'gd' ? '输入推荐分值，满分100分' : '输入评判内容（必填）'")
-            .options.mgt-46(v-if="item.options && item.id === choice")
-                .option.flex(v-for="option in item.options", @click="desc = option")
-                    .checkbox(:class="desc === option ? 'checked': ''")
-                    .mgl-13.gray-6b.fz-26 {{ option }}
-    .white.bg-red-e6.center.fz-36.submit(@click="onSubmit") 提交评判
+    template(v-if="!succeed")
+        .flex.mgh-25.pdv-25.bdb
+            .logo(v-bg="photo")
+            .mgl-26.fz-34.bold.black-24 {{ title }}
+        .items.mgh-25.mgv-39
+            .item(v-for="item in items[type]", @click="onChangeChoice(item)")
+                .flex
+                    icon.flex.mgl-25(:name="choice === item.id ? 'checked' : 'uncheck'")
+                    .fz-30.black-24.mgl-20 {{ item.desc }}
+                textarea.mgt-32.bg-gray-f7.pd-22.fz-30.bd(v-if="item.id === 'ot' && choice === item.id", v-model="desc", :placeholder="输入评判内容（必填）")
+                .options.mgt-46(v-if="item.options && item.id === choice")
+                    .option.flex(v-for="option in item.options", @click.stop="desc = option")
+                        .checkbox(:class="desc === option ? 'checked': ''")
+                        .mgl-13.gray-6b.fz-26 {{ option }}
+        .white.bg-red-e6.center.fz-36.submit(@click="onSubmit") 提交评判
+    template(v-else)
+        .mark
+        .mgt-59.black-47.fz-40.center 提交成功
+        .gray-b3.fz-24.desc 感谢您对美玉秀秀的支持，为消费者建立一个买玉最放心的平台
+        .know.white.fz-36.bg-red-e6.center(@click="onKnow") 我知道了
 </template>
 <script>
 export default {
@@ -92,7 +113,8 @@ export default {
                     }
                 ]
             },
-            submitting: false
+            submitting: false,
+            succeed: false
         }
     },
 
@@ -101,6 +123,7 @@ export default {
             const { type, id } = to.params
             this.type = type
             this.id = id
+            this.desc = this.items[this.type][0].desc
 
             if (this.type === 'pd') {
                 this.action('updateTitle', {text: '评判商品'})
@@ -119,6 +142,11 @@ export default {
     },
 
     methods: {
+        onChangeChoice(item) {
+            this.choice = item.id
+            this.desc = this.choice === 'gd' ? item.desc : ''
+        },
+
         onSubmit() {
             if(!this.desc.trim()) {
                 this.action('toast', {success: 0, text: '请填写理由'})
@@ -132,15 +160,16 @@ export default {
                 value: this.choice,
                 desc: this.desc.trim()
             }).then(() => {
-                this.action('toast', {success: 1, text: '评判成功'})
-                _.delay(() => {
-                    this.action('back', {step: 1, refresh: true})
-                    this.submitting = false
-                }, 1000)
+                this.succeed = true
+                this.submitting = false
             }, err => {
                 this.action('toast', {success: 0, text: err.message})
                 this.submitting = false
             })
+        },
+
+        onKnow() {
+            this.action('back', {step: 1, refresh: true})
         }
     }
 }
