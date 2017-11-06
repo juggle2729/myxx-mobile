@@ -44,7 +44,7 @@ export default {
     methods: {
         apply(type) {
             if(!this.isOpen) {
-                if(this.$route.query.num - 20 > 0) {
+                if(this.$route.query.num >= 20) {
                     this.$post('users/shop_certs', { cert_type: type}).then(resp => {
                         this.result = true
                     }, err => {

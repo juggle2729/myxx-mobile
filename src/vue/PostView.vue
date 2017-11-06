@@ -79,7 +79,7 @@
                             icon.mgl-12(name="enter")
             p.fz-30.dark.mgt-32.user-txt(v-if="item.media_type === 'text'") {{{item.media | input}}}
         template(v-if="post.user.shop")
-            shop(:shop="post.user.shop")
+            shop(:shop="post.user.shop", :type="'community'")
     .hr
     comment-list(type='rt', :id='post.post_id', :total="post.comment_count")
     .hr

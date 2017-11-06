@@ -33,7 +33,7 @@
             font-size 18px
 </style>
 <template lang="pug">
-.shop-component.bg-white.flex.bdb(v-link="{name: 'shop', params: {id: shop.id}}")
+.shop-component.flex(:class="type === 'community' ? 'bg-light bd' : 'bg-white bdb'", v-link="{name: 'shop', params: {id: shop.id}}")
     .img(v-bg="shop.logo")
     .flex-1
         .fz-30.flex.name.black-47
@@ -52,7 +52,8 @@ export default {
     name: 'Shop',
 
     props: {
-        shop: Object
+        shop: Object,
+        type: String
     }
 }
 </script>

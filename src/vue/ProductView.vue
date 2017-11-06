@@ -258,7 +258,8 @@
         .img(v-bg='prod.shop.logo')
         .flex-1
             .fz-30.flex.mgb-12.name
-                .line-clamp.mgr {{prod.shop.shop_name}}
+                .line-clamp {{prod.shop.shop_name}}
+                .brand-shop.mgl-10(v-if="prod.shop.brand_shop")
             .fz-26.gray.flex
                 icon(name="location")
                 div(:class="{'address': prod.shop.pd_count_today, 'line-clamp-1': prod.shop.pd_count_today}") {{prod.shop.locale_name}}

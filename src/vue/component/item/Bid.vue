@@ -93,7 +93,7 @@
 </style>
 <template  lang="pug">
 .bid-item.bg-white(v-link="{name: 'product', params: {id: bid.product.id}}", @click="track('qiugoujingbiao_shangpinxiangqing')")
-    img.mark(v-if="mark", :src="'bid/winned.png' | qn")
+    img.mark(v-if="mark", :src="mark | qn")
     header.flex
         .logo(v-bg="bid.shop.logo")
         .fz-26.gray.flex-1 {{bid.shop.shop_name}}

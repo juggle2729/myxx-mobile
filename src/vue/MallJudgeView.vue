@@ -1,17 +1,21 @@
 <style lang="stylus">
 .mall-judge-view
+    padding-bottom 51px
     .logo
         width 80px
         height 80px
     .icon
         width 46px
         height 46px
+        vertical-align 5px
     .item + .item
         margin-top 50px
     textarea
         resize none
         width 100%
         height 200px
+        line-height 1.3
+        border-radius 0
         &::-webkit-input-placeholder
             color #d6d6d6
     .options
@@ -29,7 +33,7 @@
         width 642px
         line-height 80px
         border-radius 40px
-        margin 51px 54px 0
+        margin 51px 54px 51px
     .mark
         background-image url('//o0x80w5li.qnssl.com/judge_success.png')
         background-size 100px
@@ -55,18 +59,18 @@
         .items.mgh-25.mgv-39
             .item(v-for="item in items[type]", @click="onChangeChoice(item)")
                 .flex
-                    icon.flex.mgl-25(:name="choice === item.id ? 'checked' : 'uncheck'")
+                    icon.mgl-25(:name="choice === item.id ? 'checked' : 'uncheck'")
                     .fz-30.black-24.mgl-20 {{ item.desc }}
-                textarea.mgt-32.bg-gray-f7.pd-22.fz-30.bd(v-if="item.id === 'ot' && choice === item.id", v-model="desc", :placeholder="输入评判内容（必填）")
-                .options.mgt-46(v-if="item.options && item.id === choice")
-                    .option.flex(v-for="option in item.options", @click.stop="desc = option")
-                        .checkbox(:class="desc === option ? 'checked': ''")
+                textarea.mgt-32.bg-gray-f7.pd-22.fz-30.bd(v-if="item.id === 'ot' && choice === item.id", v-model="desc", :placeholder="'输入评判内容（必填）'")
+                .options.mgv-46(v-if="item.options && item.id === choice", @click.stop="doNothing")
+                    .option.flex(v-for="option in item.options", @click.stop="onSelectOption(option)")
+                        .checkbox(:class="desc.indexOf(option) !== -1 ? 'checked': ''")
                         .mgl-13.gray-6b.fz-26 {{ option }}
         .white.bg-red-e6.center.fz-36.submit(@click="onSubmit") 提交评判
     template(v-else)
         .mark
         .mgt-59.black-47.fz-40.center 提交成功
-        .gray-b3.fz-24.desc 感谢您对美玉秀秀的支持，为消费者建立一个买玉最放心的平台
+        .gray-b3.fz-24.desc.center 感谢您对美玉秀秀的支持，为消费者建立一个买玉最放心的平台
         .know.white.fz-36.bg-red-e6.center(@click="onKnow") 我知道了
 </template>
 <script>
@@ -82,7 +86,7 @@ export default {
             choice: 'gd',
             desc: '',
             items: {
-                sh: [
+                pd: [
                     {
                         id: 'gd',
                         desc: '如实描述',
@@ -97,7 +101,7 @@ export default {
                         desc: '其他',
                     }
                 ],
-                pd: [
+                sh: [
                     {
                         id: 'gd',
                         desc: '值得推荐',
@@ -162,6 +166,8 @@ export default {
             }).then(() => {
                 this.succeed = true
                 this.submitting = false
+
+                window.scroll(0, 0) // 成功之后，回到页面顶部
             }, err => {
                 this.action('toast', {success: 0, text: err.message})
                 this.submitting = false
@@ -170,7 +176,19 @@ export default {
 
         onKnow() {
             this.action('back', {step: 1, refresh: true})
-        }
+        },
+
+        onSelectOption(option) {
+            const descArray = this.desc.length ? this.desc.split(',') : []
+            if (_.includes(descArray, option)) {
+                descArray.splice(descArray.indexOf(option), 1)
+            } else {
+                descArray.push(option)
+            }
+            this.desc = descArray.join(',')
+        },
+
+        doNothing() {}
     }
 }
 </script>

@@ -43,7 +43,7 @@
             icon(name="fire")
             span {{topic.activity.name}}
         template(v-if="topic.user.shop")
-            shop(:shop="topic.user.shop")
+            shop(:shop="topic.user.shop", :type="'community'")
     .hr
 
     comment-list(type='tp', :id='topic.post_id', :total="topic.comment_count")

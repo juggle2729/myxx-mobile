@@ -1,12 +1,13 @@
 <style lang="stylus">
+@import '~style/partials/mixin'
 .shop-praise
     .brand_shop
         background url('//o0x80w5li.qnssl.com/shop/brand_slogan.png') no-repeat
         background-size cover
         width 100%
-        padding-top 20%
+        padding-top 19.9%
     .mgv-20
-        padding 22px 20px 27px 36px
+        padding 22px 27px 26px
         border-color #ededed
         .col
             height 118px
@@ -27,23 +28,24 @@
             color #8f8f8f
         .left-border
             width calc((100% / 2) / 3)
-            border-left 1px solid #ededed
+            border(l, #ededed)
     .empty-component
         height 300px
         &.empty-title
             background-position center 50px
     .h-center
         -webkit-box-pack center
+        -webkit-box-align end
 </style>
 <template lang="pug">
 .shop-praise.bg-gray-f7
-    .mgv-20.bg-white.bdb
+    .mgv-20.bg-white.bdv
         .brand_shop.mgt-22.mgb-39(v-if="brandShop")
         .flex.black-24.fz-26.h-center.mgt-20.mgb-40
             p 开店
-            .mgh-10.fz-36 {{ openDays }}
+            .mgh-10.fz-36.bold {{ openDays }}
             p 天，累计评价
-            .mgh-10.fz-36 {{ commentCount }}
+            .mgh-10.fz-36.bold {{ commentCount }}
             p 人
         .flex.pdv-20
             .col.fz-26.black-47

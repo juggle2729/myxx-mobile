@@ -74,7 +74,7 @@ export default {
                         })
 
                         // 处理返回的一些特殊字段
-                        if (_.isArray(this.paging.specials)) {
+                        if (_.isArray(this.paging.specials) && !opts.offset) { // 第一页数据的时候才需要更新
                             const specialObj = {}
                             this.paging.specials.forEach(special => {
                                 specialObj[special] = data[_.snakeCase(special)]
