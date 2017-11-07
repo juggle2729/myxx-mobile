@@ -32,7 +32,7 @@ bg($icon, $size)
             height: 222px
             width: 222px
             &:not(:last-child)
-                margin-right: 10px
+                margin-right: 5px
     .tags
         li
             display: inline-block
@@ -53,11 +53,13 @@ bg($icon, $size)
         width 160px
         line-height 36px
         border-radius 18px
+    .desc
+        line-height 1.3
 </style>
 <template  lang="pug">
 .purchase-item.bg-white(@click="gotoDetail")
     .item
-        img.mark(v-if="item.win_count", :src="'bid/winned.png' | qn")
+        img.mark(v-if="item.win_count && !isDetail", :src="'bid/winned.png' | qn")
         header.flex.fz-26
             avatar(:user='item.owner', :size='50')
             .name.gray-b3.flex-1 {{item.owner.nickname}}
@@ -75,10 +77,10 @@ bg($icon, $size)
             li.img(v-for="pic in item.pictures", track-by="$index", v-bg="pic")
         .fz-26.flex.operation.mgt-38(v-if="!isDetail")
             .flex.gray-8f(v-if="isPaid")
-                span.mgr-8(:class="{'red': item.total_count}") {{item.total_count}}
+                span.mgr-8(:class="{'red-e6': item.total_count}") {{item.total_count}}
                 | 个竞标
                 .mgh-14(v-if="item.win_count") •
-                span.red.mgr-8(v-if="item.win_count") {{item.win_count}}
+                span.red-e6.mgr-8(v-if="item.win_count") {{item.win_count}}
                 span(v-if="item.win_count") 个中标
             .fz-24.red-e6.pay_margin.center(v-else, @click.stop="pay()") 支付保证金
             .delete.flex.pdl-42(v-if="canDelete", :class="{'disabled gray-b3': isGoing, 'black-24': !isGoing}", @click.stop="del(item.id)") 删除此求购

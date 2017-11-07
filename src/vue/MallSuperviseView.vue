@@ -31,7 +31,7 @@
     .third-line
         margin-left 143px
         width calc(100% - 143px)
-    .empty-componentpx
+    .empty-component
         height 50%
     .judge
         background-image url('//o0x80w5li.qnssl.com/judge.png')
@@ -58,15 +58,15 @@
             .flex.flex-1.pdl-40
                 .fz-26.gray-6b 总共评判商品（个）
                 .fz-48.black-24.mgt-28.bold {{ items.badTotal || 0 }}
-        .mgt-50.mgl-40.red-f2.fz-20 感谢您对美玉秀秀的支持，为消费者建立一个买玉最放心平台
+        .mgt-50.mgl-40.red-f2.fz-20 感谢您为玉石行业的健康发展添砖加瓦，一起出力构建良性的行业生态！
         .tabs.fz-30.flex.bd
             .tab.bdr.flex-1.center(@click="onTabChange('undo')", :class="status === 'undo' ? 'red-e6' : 'gray-8f'") 待评判
             .tab.flex-1.center(@click="onTabChange('done')", :class="status === 'done' ? 'red-e6' : 'gray-8f'") 监督记录
-        .hr.bdv
+        .hr(:class="items.length ? 'bdv' : 'bdt'")
         template(v-for="(index, item) in items")
-            .item.flex.mgh-32.fz-26.column(:class="index === items.length - 1 ? 'bdb': ''")
+            .item.flex.mgh-32.fz-26.column(:class="index === items.length - 1 ? 'bdb': ''", v-link="{name: item.target_type === 'sh' ? 'shop': 'product', params: { id: item.target_id }}")
                 .first-line.flex.bdb
-                    .gray-b3 平台邀请您评判{{ item.target_type === 'sh' ? '店铺' : '商品' }}
+                    .gray-b3 {{ status === 'undo' ? '平台邀请您评判' : '您评判了' }}{{ item.target_type === 'sh' ? '店铺' : '商品' }}
                     .red-e6.judge.flex(v-if="!isJudged", v-link="{name: 'mall-judge', params: { type: item.target_type, id: item.target_id }}") 评判{{ item.target_type === 'sh' ? '店铺' : '商品' }}
                     .gray-b3.fz-22(v-else) {{ item.create_at | date 'yyyy-m-dd H:MM' }}
                 .second-line.flex.pdv-24

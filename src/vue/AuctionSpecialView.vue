@@ -2,8 +2,7 @@
 .auction-special-view
     .banner
         width 100%
-        padding-top 32%
-        background-size cover
+        padding-top 56.25%
     .info
         font-size 12px
     .empty-component

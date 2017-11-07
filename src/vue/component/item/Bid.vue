@@ -5,9 +5,9 @@
     .mark
         position absolute
         top 0
-        right 176px
-        width 149px
-        height 44px
+        right 0
+        width 184px
+        height 144px
         z-index 9
     &:last-child
         margin-bottom: 0

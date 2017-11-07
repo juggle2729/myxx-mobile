@@ -70,7 +70,7 @@
     template(v-else)
         .mark
         .mgt-59.black-47.fz-40.center 提交成功
-        .gray-b3.fz-24.desc.center 感谢您对美玉秀秀的支持，为消费者建立一个买玉最放心的平台
+        .gray-b3.fz-24.desc.center 感谢您为玉石行业的健康发展添砖加瓦，一起出力构建良性的行业生态！
         .know.white.fz-36.bg-red-e6.center(@click="onKnow") 我知道了
 </template>
 <script>
@@ -109,7 +109,7 @@ export default {
                     {
                         id: 'bd',
                         desc: '需要整改',
-                        options: ['商品存疑', '图片模糊', '图片带有微信号']
+                        options: ['大量商品未如实描述或虚假描述', '大量商品图片、视频明显夸大', '大量出售非和田玉、翡翠商品']
                     },
                     {
                         id: 'ot',

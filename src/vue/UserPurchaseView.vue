@@ -6,7 +6,7 @@
 <template  lang="pug">
 .user-purchase-view(:class="{'bg': !items.isEmpty}")
     template(v-for='(index, item) in items')
-        .hr
+        .hr.bdv
         purchase-item(:item='item', :index="index")
     empty(v-if='items.isEmpty', title='暂无求购竞标')
 </template>
