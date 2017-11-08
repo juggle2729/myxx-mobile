@@ -19,7 +19,10 @@
         .item.flex.mgh-41(:class="index !== items.length - 1 ? 'bdb' : ''")
             .fz-30.black-24 {{ item.create_at | date 'mm-dd' }}
             .fz-30.black-24.txt-right {{ item.stats[0] }}
-            .fz-30.black-24.txt-right {{ item.stats[1] }}
+            template(v-if="isPrice")
+                .fz-30.black-24.txt-right {{ item.stats[1] | price }}
+            template(v-else)
+                .fz-30.black-24.txt-right {{ item.stats[1] }}
     .fz-24.gray-b3.pdv-41.center.bdt.bg-gray-f7(v-if="items.length") 仅展示最近30天数据
     empty(v-if="items.isEmpty")
 </template>
@@ -39,6 +42,10 @@ export default {
                     limit: 30
                 }
             }
+        },
+
+        isPrice() {
+            return this.titles && this.titles.length && this.titles[1].indexOf('元') !== -1
         },
 
         titles() {

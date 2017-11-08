@@ -96,6 +96,13 @@ export default {
         }
     },
 
+    route: {
+        activate({ to, from, next }) {
+            if (!_.isEmpty(from)) this.fetch(true) // 在回退到当前页面时，需要刷新列表
+            next()
+        }
+    },
+
     computed: {
         paging() {
             return {
