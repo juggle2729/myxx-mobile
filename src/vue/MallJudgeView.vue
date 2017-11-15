@@ -57,8 +57,8 @@
             .logo(v-bg="photo")
             .mgl-26.fz-34.bold.black-24 {{ title }}
         .items.mgh-25.mgv-39
-            .item(v-for="item in items[type]", @click="onChangeChoice(item)")
-                .flex
+            .item(v-for="item in items[type]")
+                .flex(@click="onChangeChoice(item)")
                     icon.mgl-25(:name="choice === item.id ? 'checked' : 'uncheck'")
                     .fz-30.black-24.mgl-20 {{ item.desc }}
                 textarea.mgt-32.bg-gray-f7.pd-22.fz-30.bd(v-if="item.id === 'ot' && choice === item.id", v-model="desc", :placeholder="'输入评判内容（必填）'")
@@ -147,6 +147,7 @@ export default {
 
     methods: {
         onChangeChoice(item) {
+            if (this.choice === item.id) return
             this.choice = item.id
             this.desc = this.choice === 'gd' ? item.desc : ''
         },
