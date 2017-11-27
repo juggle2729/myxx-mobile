@@ -2,6 +2,8 @@
 .swiper-container
     .swiper-slide
         padding-top 100%
+    &.live .swiper-slide
+        padding-top 75.07%
     .swiper-pagination
         display inline
         font-size 22px
@@ -15,10 +17,10 @@
         padding 10px
 </style>
 <template lang="pug">
-swiper(:options="swiperOption")
-    swiper-slide.flex.video(v-if='item.video && item.first_picture', v-bg.lg='item.first_picture', @click='play(item.video)')
+swiper(:options="swiperOption", :class="type")
+    swiper-slide.flex.video(v-if='item.video && item.first_picture', v-bg.lg='item.cover || item.first_picture', @click='play(item.video)')
     template(v-if="pictures.length")
-        swiper-slide.flex(v-for="picture in pictures", v-bg.lg='picture', @click='coverflow(pictures, $index)')
+        swiper-slide.flex(v-for="picture in pictures", v-bg.lg='picture', track-by='$index', @click='coverflow(pictures, $index)')
     .swiper-pagination(slot='pagination')
 </template>
 <script>
@@ -29,7 +31,8 @@ export default {
         item: {
             type: Object,
             required: true
-        }
+        },
+        type: String
     },
 
     data() {

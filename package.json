@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pages for MeiYuXiuXiu Mobile App",
   "scripts": {
-    "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 192.168.0.249 --port 80",
+    "start": "sudo webpack-dev-server --progress --inline --history-api-fallback --hot --quiet --host 192.168.0.239 --port 80",
     "build:app": "rm -rf build && NODE_ENV=production webpack --progress --hide-modules",
     "build": "rm -rf build && NODE_ENV=production webpack --config webpack.www.config.js --progress --hide-modules",
     "deploy": "./deploy.sh"
@@ -20,6 +20,7 @@
     "event-emitter": "^0.3.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-webpack-externals-plugin": "^3.6.0",
     "html-webpack-plugin": "^2.15.0",
     "jade": "^1.11.0",
     "node-sass": "^4.5.2",

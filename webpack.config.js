@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 module.exports = {
     entry: './src/main.js',
@@ -73,6 +74,24 @@ if (process.env.NODE_ENV === 'production') {
             minify: {collapseWhitespace: true, minifyCSS: true},
             hash: true
         }),
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'aliplayer',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/aliplayer-min.js',
+                    global: 'Aliplayer',
+                },
+                {
+                    module: 'aliplayer-css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/skins/default/aliplayer-min.css',
+                },
+                {
+                    module: 'RongIMLib',
+                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
+                    global: 'RongIMLib',
+                }
+            ]
+        }),
         new ExtractTextPlugin("style.css"),
         new CommonsChunkPlugin("commons.chunk.js")
     ];
@@ -82,6 +101,24 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html'
+        }),
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'aliplayer',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/aliplayer-min.js',
+                    global: 'Aliplayer',
+                },
+                {
+                    module: 'aliplayer-css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/skins/default/aliplayer-min.css',
+                },
+                {
+                    module: 'RongIMLib',
+                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
+                    global: 'RongIMLib',
+                }
+            ]
         })
     ];
     module.exports.devtool = 'source-map';

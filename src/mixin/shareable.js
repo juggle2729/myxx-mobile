@@ -126,6 +126,11 @@ export default {
                     data.desc = '美玉秀秀-最大的和田玉线上交流App'
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'
                     break
+                case 'live':
+                    data.title = `【直播】精彩直播正在进行，赶快来围观`
+                    data.desc = entry.title
+                    data.icon = entry.picture
+                    break
             }
             data = {title: '美玉秀秀', desc: '最大的和田玉线上交流App', icon: 'http://o0x80w5li.qnssl.com/logo.jpg', ...data}
             // data.title = _.truncate(data.title, {

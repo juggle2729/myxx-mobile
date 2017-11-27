@@ -1002,6 +1002,16 @@ export default {
         }
     },
 
+    '/live/:id': {
+        name: 'live',
+        list: true,
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('LiveView.vue'))
+            }, 'live')
+        }
+    },
+
 
     '/about': {
         name: 'about',

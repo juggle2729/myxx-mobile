@@ -270,6 +270,10 @@ const mixin = {
             return (price/100).toFixed(2).replace(/\.00$/, '')
         },
 
+        truncate(str='', length) {
+            return _.truncate(str, {length})
+        },
+
         checkDetailLeavePosition() {
             const leavePosition = this.$store.get(this._detailCacheKey())
             if (leavePosition) {
