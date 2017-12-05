@@ -3,6 +3,8 @@
 bg($key)
     background-image url('//o0x80w5li.qnssl.com/live/' + $key + '.png')
     background-size cover
+#app
+    background #1a1a1a
 .live-view
     overflow hidden
     background #1a1a1a
@@ -65,7 +67,7 @@ bg($key)
     .im
         bg(im)
         position absolute
-        bottom 120px
+        bottom 20px
         left 30px
         width 80px
         height 80px
@@ -73,24 +75,16 @@ bg($key)
     .definition
         bg(definition)
         position absolute
-        bottom 120px
+        bottom 20px
         left 141px
         width 80px
         height 80px
         color #fffefe
         padding-top 36px
         z-index 5
-    .download
-        position fixed
-        bottom 0
-        left 0
-        width 100%
-        line-height 100px
-        font-size 36px
-        z-index 5
     .definition-select
         position absolute
-        bottom 237px
+        bottom 37px
         left 130px
         z-index 5
         width 100px
@@ -99,8 +93,7 @@ bg($key)
         border-radius 50px
         flex-direction column
         .flex-1
-            color #fff
-            opacity 0.3
+            color #6b6b6b
         .selected
             color #fffefe
             opacity 1
@@ -116,7 +109,7 @@ bg($key)
     .messages
         position absolute
         left 10px
-        bottom 238px
+        bottom 138px
         width 512px
         max-height 540px
         overflow-y scroll
@@ -130,7 +123,7 @@ bg($key)
         padding 8px 17px
         background rgba(0, 0, 0, 0.2)
         line-height 1.4
-        border-radius 23px
+        border-radius 29px
         &.system
             color #f2d84c
         &:not(.system)
@@ -154,16 +147,13 @@ bg($key)
         z-index 6
     .auction-info
         position absolute
-        bottom 134px
+        bottom 34px
         right 10px
         z-index 5
         background rgba(0, 0, 0, 0.4)
         width 180px
         height 352px
         padding 15px 10px 11px
-        &.preview
-            height 288px
-            bottom 198px
     .prod-picture
         width 100%
         height 120px
@@ -175,7 +165,7 @@ bg($key)
     .time-status
         justify-content center
         flex-direction column
-        .ended
+        .ended, .preview
             width 100%
             line-height 50px
             background rgba(230, 23, 23, 0.3)
@@ -188,7 +178,7 @@ bg($key)
         width 239px
         height 60px
         position absolute
-        bottom 140px
+        bottom 40px
         right 32px
         z-index 5
         > div
@@ -378,9 +368,21 @@ bg($key)
         padding-right 20px
         :last-child
             line-height 1.2
+    .play-button
+        position fixed
+        top 50%
+        left 50%
+        transform translate3d(-50%, -50%, 0)
+        width 112px
+        height 112px
+        border-radius 50%
+        z-index 6
+        background-image url('//o0x80w5li.qnssl.com/icon/play.svg')
+        background-size cover
 </style>
 <template lang="pug">
 .live-view.relative
+    .play-button(v-if="showPlayButton", @click="startLive()")
     .loading(v-if="!isReady && !this.isEnd && !this.isSuspend")
     .player(v-if="live.status === 'going'", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
     .placeholder.flex(v-if="placeholder")
@@ -402,7 +404,7 @@ bg($key)
     .notification.flex.flex-column(v-if="messageNotification", transition='show')
         .fz-22.black-24 {{ messageNotification.title }}
         .fz-30.red-e6.mgt-10 {{ messageNotification.content }}
-    .messages(v-if="imMessages && imMessages.length")
+    .messages(v-if="imMessages && imMessages.length", @click.stop="cancelDefinitionSelect()")
         .wrapper
             .message.flex.fz-28(v-for="message in imMessages", :class="message.isSys ? 'system' : ''")
                 span.message-user-name {{ (message.isSys ? '系统消息': message.user.name) + '：' }}
@@ -416,8 +418,8 @@ bg($key)
         .time-status.flex.white
             template(v-if="currentAuction.status === 'success' || currentAuction.status === 'fail'")
                 .fz-22.mgt-31 结束时间
-                .fz-36.mgt-18 {{currentAuction.real_end_time | date 'HH:MM'}}
-                .fz-30.mgt-30.ended.center 已结束
+                .fz-36.mgt-12 {{currentAuction.real_end_time | date 'HH:MM'}}
+                .fz-30.mgt-24.ended.center 已结束
             template(v-if="currentAuction.status === 'going'")
                 .fz-22.mgt-26 倒计时
                 .fz-36.mgt-14 {{auctionCountDown}}
@@ -425,6 +427,7 @@ bg($key)
             template(v-if="currentAuction.status === 'preview'")
                 .fz-22.mgt-26 开拍时间
                 .fz-36.mgt-14 {{currentAuction.start_time | date 'HH:MM'}}
+                .fz-30.mgt-24.preview.center 尚未开拍
     .relative-product(v-if="liveProducts && liveProducts.length", @click="showLiveProduct()")
         .red-e6.absolute.center {{ liveProducts.length }}
     .live-products.flex(v-if="showLiveProductDialog && liveProducts.length", transition= 'show')
@@ -489,7 +492,6 @@ bg($key)
                             span.gray-8f {{ k + '：'}}
                             span.black-47 {{ v }}
                 .product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
-    .download.center.red-e6.bg-white(@click="gotoDownload") 打开美玉秀秀观看直播 > {{auctionPaging}}
     .definition-select.flex.pdv-30(v-show="showDefinitionSelect", transition= 'fade')
         .fz-30.flex.flex-1(v-for="(key, value) in definitions", :class="key === definition ? 'selected': ''", @click="selectDefinition(key)") {{ value }}
     .preview-image(v-show='bigImageUrl', transition= 'show', :style="{backgroundImage: 'url(' + bigImageUrl + ')'}", @click='bigImageUrl = ""')
@@ -552,7 +554,8 @@ export default {
             productAttributes: {},
             showSwiper: false, // 防止swiper缓存索引
             messageNotification: null,
-            notificationShowTime: 3000
+            notificationShowTime: 3000,
+            showPlayButton: false
         }
     },
 
@@ -568,6 +571,7 @@ export default {
         },
 
         source() {
+            if (!this.live) return
             if (this.live.status === 'going') {
                 return this.liveUrl()
             } else if (this.live.status === 'end' && this.live.playback_url) {
@@ -589,6 +593,7 @@ export default {
                     this.setShareData(live)
                     this.live = live
                     this.imtoken = imtoken
+                    this.showPlayButton = this.env && this.env.isMobile && live.status === 'going'
 
                     this.checkLiveData()
                     this.loadRongIMChatMessage()
@@ -651,7 +656,7 @@ export default {
                     if (auction.status === 'success') {
                         this.messageNotification = {
                             title: `${this.truncate(auction.product.title, 8)}已结拍`,
-                            content: `恭喜“${auction.current_bidder.nickname}”成交价￥${this.toYuan(auction.current_price)}}`
+                            content: `恭喜“${auction.current_bidder.nickname}”成交价￥${this.toYuan(auction.current_price)}`
                         }
                         delayTime = this.notificationShowTime
                     }
@@ -839,6 +844,12 @@ export default {
             }
         },
 
+        startLive() {
+            this.isReady = false
+            this.player.loadByUrl(this.liveUrl())
+            this.showPlayButton = false
+        },
+
         createPlayer() {
             if (!this.player) {
                 this.player = new Aliplayer({
@@ -861,9 +872,11 @@ export default {
                 })
             }
             this.player.on('ready', () => {
-                this.isReady = true
-                this.isSuspend = false
-                this.isEnd = false
+                setTimeout(() => { // 距离真正开始直播有一定延迟，目前默认为1s
+                    this.isReady = true
+                    this.isSuspend = false
+                    this.isEnd = false
+                }, 1000)
             })
             this.player.on('liveStreamStop', () => {
                 this.isEnd = true
