@@ -8,6 +8,8 @@ bg($key)
 .live-view
     overflow hidden
     background #1a1a1a
+    video
+        object-fit cover !important
     .player
         position absolute
         top 0
