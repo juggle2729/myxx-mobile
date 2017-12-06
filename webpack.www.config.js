@@ -78,17 +78,22 @@ if (process.env.NODE_ENV === 'production') {
             externals: [
                 {
                     module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/aliplayer-min.js',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/aliplayer-min.js',
                     global: 'Aliplayer',
                 },
                 {
                     module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/skins/default/aliplayer-min.css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/skins/default/aliplayer-min.css',
                 },
                 {
                     module: 'RongIMLib',
                     entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
                     global: 'RongIMLib',
+                },
+                {
+                    module: 'RongIMEmoji',
+                    entry: 'https://cdn.ronghub.com/RongEmoji-2.2.6.min.js',
+                    global: 'RongIMEmoji',
                 }
             ]
         }),
@@ -106,17 +111,22 @@ if (process.env.NODE_ENV === 'production') {
             externals: [
                 {
                     module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/aliplayer-min.js',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/aliplayer-min.js',
                     global: 'Aliplayer',
                 },
                 {
                     module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.2.0/skins/default/aliplayer-min.css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/skins/default/aliplayer-min.css',
                 },
                 {
                     module: 'RongIMLib',
                     entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
                     global: 'RongIMLib',
+                },
+                {
+                    module: 'RongIMEmoji',
+                    entry: 'https://cdn.ronghub.com/RongEmoji-2.2.6.min.js',
+                    global: 'RongIMEmoji',
                 }
             ]
         })

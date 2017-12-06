@@ -385,7 +385,7 @@ bg($key)
 <template lang="pug">
 .live-view.relative
     .play-button(v-if="showPlayButton", @click="startLive()")
-    .loading(v-if="!isReady && !this.isEnd && !this.isSuspend")
+    .loading(v-if="showLoading || (!isReady && !this.isEnd && !this.isSuspend)")
     .player(v-if="live.status === 'going'", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
     .placeholder.flex(v-if="placeholder")
         .hint.fz-28
@@ -457,7 +457,7 @@ bg($key)
                     .time.flex.white.flex-column(:class="dialogAuction.status")
                         template(v-if="dialogAuction.status === 'preview'")
                             .fz-22 开拍时间
-                            .mgt-10.fz-36 {{ dialogAuction.start_date | date 'HH:MM' }}
+                            .mgt-10.fz-36 {{ dialogAuction.start_time | date 'HH:MM' }}
                         template(v-if="dialogAuction.status === 'success' || dialogAuction.status === 'fail'")
                             .fz-32 {{ dialogAuction.status === 'success' ? '已结拍' : '已流拍' }}
                         template(v-if="dialogAuction.status === 'going'")
@@ -519,7 +519,7 @@ export default {
                 },
                 user: {}
             },
-            isReady: true, // TODO
+            isReady: true,
             isSuspend: false,
             isEnd: false,
             rongIM: {
@@ -557,18 +557,19 @@ export default {
             showSwiper: false, // 防止swiper缓存索引
             messageNotification: null,
             notificationShowTime: 3000,
-            showPlayButton: false
+            showPlayButton: false,
+            showLoading: false
         }
     },
 
     computed: {
         placeholder() {
-            if(this.live.status === 'published') {
-                return ['直播尚未开始，', '和玉友一起互动讨论']
+            if (this.isEnd) {
+                return ['直播已结束，', '去美玉直播间可以查看精彩回放']
             } else if (this.isSuspend) {
                 return ['主播离开一下，', '精彩不断，不要走开']
-            } else if (this.isEnd) {
-                return ['直播已结束，', '去美玉直播间可以查看精彩回放']
+            } else if(!this.liveUrl) {
+                return ['直播尚未开始，', '和玉友一起互动讨论']
             }
         },
 
@@ -838,7 +839,7 @@ export default {
         checkLiveData() {
             if (this.live.status === 'going' || (this.live.status === 'end' && this.live.playback_url)) {
                 setTimeout(this.createPlayer, 100)
-            } else if (this.live.status === 'published') { // 直播还未开始
+            } else if (!this.liveUrl()) { // 直播还未开始
                 this.isReady = true
             } else { // 直播已经结束，但是还未生成回放地址
                 this.isReady = true
@@ -848,8 +849,9 @@ export default {
 
         startLive() {
             this.isReady = false
-            this.player.loadByUrl(this.liveUrl())
+            this.player && this.player.loadByUrl(this.liveUrl())
             this.showPlayButton = false
+            this.showLoading = true
         },
 
         createPlayer() {
@@ -857,12 +859,12 @@ export default {
                 this.player = new Aliplayer({
                     id: 'J_prismPlayer',
                     autoplay: true,
-                    isLive: this.live.status === 'going',
+                    isLive: !!this.liveUrl(),
                     width: '100%',
                     height: '100%',
                     playsinline: true,
                     controlBarVisibility: 'hover',
-                    userH5Prism:true,
+                    useH5Prism:true,
                     source: this.source,
                     x5_video_position: 'top',
                     x5_orientation: 'portraint',
@@ -873,24 +875,38 @@ export default {
                     skinLayout: false
                 })
             }
-            this.player.on('ready', () => {
-                setTimeout(() => { // 距离真正开始直播有一定延迟，目前默认为1s
-                    this.isReady = true
-                    this.isSuspend = false
-                    this.isEnd = false
-                }, 1000)
-            })
+
             this.player.on('liveStreamStop', () => {
-                this.isEnd = true
-                this.isSuspend = false
-                this.isReady = false
+                console.log('liveStreamStop')
+                this.playerSuspend(true)
             })
+
             this.player.on('onM3u8Retry', () => {
-                if (this.isEnd) return
-                this.isSuspend = true
-                this.isReady = false
-                this.isEnd = false
+                console.log('onM3u8Retry')
+                this.playerSuspend()
             })
+
+            this.player.on('play', () => {
+                console.log('play')
+                this.isReady = true
+                this.isSuspend = false
+                this.isEnd = false
+                this.showPlayButton = false
+                this.showLoading = false
+            })
+
+            this.player.on('error', () => {
+                console.log('error')
+                this.playerSuspend(true)
+            })
+        },
+
+        playerSuspend(reconnect = false) {
+            this.isEnd = this.live.status === 'end'
+            this.isSuspend = true
+            this.isReady = false
+            this.showPlayButton = true
+            reconnect && !this.isEnd && this.player.loadByUrl(this.liveUrl())
         },
 
         loadRongIMChatMessage() {
@@ -915,6 +931,9 @@ export default {
         initRongIMInstance() {
             return Q.promise(resolve => {
                 RongIMLib.RongIMClient.init(this.rongIM.appKey, null, this.rongIM.config)
+
+                // 直接初始化
+                RongIMLib.RongIMEmoji.init()
 
                 // 连接状态监听器
                 RongIMClient.setConnectionStatusListener({
@@ -953,7 +972,7 @@ export default {
                         const { objectName, content: { content, imageUri, user, message} } = imMessage
                         switch (imMessage.messageType) {
                             case RongIMClient.MessageType.TextMessage:
-                                this.imMessages.push({ content, user })
+                                this.imMessages.push({ content: RongIMLib.RongIMEmoji.symbolToEmoji(content), user })
                                 break
                             case RongIMClient.MessageType.ImageMessage:
                                 this.imMessages.push({ content, user, imageUri })
