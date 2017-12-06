@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === 'production') {
                 },
                 {
                     module: 'RongIMLib',
-                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
+                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.9.min.js',
                     global: 'RongIMLib',
                 },
                 {
@@ -120,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
                 },
                 {
                     module: 'RongIMLib',
-                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.8.min.js',
+                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.9.min.js',
                     global: 'RongIMLib',
                 },
                 {
