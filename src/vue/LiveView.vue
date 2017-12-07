@@ -10,6 +10,12 @@ bg($key)
     background #1a1a1a
     video
         object-fit cover !important
+    .loading:before
+        width 72px
+        height @width
+        top 50%
+        left 50%
+        transform translate3d(-50%, -50%, 0)
     .player
         position absolute
         top 0
@@ -412,7 +418,7 @@ bg($key)
                 span.message-user-name {{ (message.isSys ? '系统消息': message.user.name) + '：' }}
                 span.message-content(:class="message.imageUri && 'image-content'", @click="previewImage(message.imageUri)") {{ message.imageUri ? '【图片】' : message.content }}
     .im(@click="gotoDownload")
-    .definition.fz-22.center(v-if="this.live.status === 'going'", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
+    .definition.fz-22.center(v-if="liveUrl()", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
     .auction-info.white(v-if="currentAuction", :class="currentAuction.status", @click="onAuctionDetail()")
         .fz-22.center - 当前拍品 -
         .prod-picture.mgt-13.flex(v-bg.md="currentAuction.product.first_picture")
@@ -430,7 +436,7 @@ bg($key)
                 .fz-22.mgt-26 开拍时间
                 .fz-36.mgt-14 {{currentAuction.start_time | date 'HH:MM'}}
                 .fz-30.mgt-24.preview.center 尚未开拍
-    .relative-product(v-if="liveProducts && liveProducts.length", @click="showLiveProduct()")
+    .relative-product(v-if="live.live_type === 'other'", @click="showLiveProduct()")
         .red-e6.absolute.center {{ liveProducts.length }}
     .live-products.flex(v-if="showLiveProductDialog && liveProducts.length", transition= 'show')
         .overlay(@click="showLiveProductDialog = false")
@@ -462,7 +468,7 @@ bg($key)
                             .fz-32 {{ dialogAuction.status === 'success' ? '已结拍' : '已流拍' }}
                         template(v-if="dialogAuction.status === 'going'")
                             .fz-22 倒计时
-                            .fz-36 {{ endAuctionTime(dialogAuction.real_end_time) }}
+                            .fz-36 {{ countDownTime(dialogAuction.real_end_time) }}
                     .price-status.flex.flex-1
                         .flex-1.flex.black-24.flex-column.mgl-41
                             .flex.symbol-wrapper
@@ -568,7 +574,7 @@ export default {
                 return ['直播已结束，', '去美玉直播间可以查看精彩回放']
             } else if (this.isSuspend) {
                 return ['主播离开一下，', '精彩不断，不要走开']
-            } else if(!this.liveUrl) {
+            } else if(!this.liveUrl()) {
                 return ['直播尚未开始，', '和玉友一起互动讨论']
             }
         },
@@ -781,8 +787,8 @@ export default {
             }
         },
 
-        endAuctionTime(realEndTime) {
-            const diff = realEndTime - this.live.timestamp
+        countDownTime(targetTime) {
+            const diff = targetTime - this.live.timestamp
 
             const seconds = Math.ceil(diff / 1000)
             if (seconds <= 0) return ''
@@ -792,19 +798,37 @@ export default {
         },
 
         checkAuctionCountDown() {
-            if (this.currentAuction && this.currentAuction.status === 'going') {
-                this.auctionCountDown = this.endAuctionTime(this.currentAuction.real_end_time)
-                if (!this.auctionCountDown) {
-                    this.loadSpecialDetail() // 如果倒计时结束，需要重新请求专场信息
-                    this.clearAuctionCountDown()
-                    return
-                }
+            if (this.currentAuction) {
+                if (this.currentAuction.status === 'going') {
+                    // 拍卖中代码层面需要做倒计时，防止IM消息接收不到，状态不同步，且页面也会展示
+                    this.auctionCountDown = this.countDownTime(this.currentAuction.real_end_time)
+                    if (!this.auctionCountDown) {
+                        this.loadSpecialDetail() // 如果倒计时结束，需要重新请求专场信息
+                        this.clearAuctionCountDown()
+                        return
+                    }
 
-                if (!this.auctionCountDownInterval) {
-                    this.auctionCountDownInterval = setInterval(() => {
-                        this.live.timestamp += 1000
-                        this.checkAuctionCountDown()
-                    }, 1000)
+                    if (!this.auctionCountDownInterval) {
+                        this.auctionCountDownInterval = setInterval(() => {
+                            this.live.timestamp += 1000
+                            this.checkAuctionCountDown()
+                        }, 1000)
+                    }
+                } else if (this.currentAuction.status === 'preview') {
+                    // 预展中代码层面需要做倒计时，防止IM消息接收不到，状态不同步，但页面不展示
+                    const countDownStr = this.countDownTime(this.currentAuction.start_time)
+                    if (!countDownStr) {
+                        this.loadSpecialDetail() // 如果倒计时结束，需要重新请求专场信息
+                        this.clearAuctionCountDown()
+                        return
+                    }
+
+                    if (!this.auctionCountDownInterval) {
+                        this.auctionCountDownInterval = setInterval(() => {
+                            this.live.timestamp += 1000
+                            this.checkAuctionCountDown()
+                        }, 1000)
+                    }
                 }
             }
             return ''
@@ -833,11 +857,12 @@ export default {
         },
 
         liveUrl() {
+            if (!this.live.pull_urls) return ''
             return this.env.isMobile ? this.live.pull_urls[this.definition].m3u8_url: this.live.pull_urls[this.definition].flv_url
         },
 
         checkLiveData() {
-            if (this.live.status === 'going' || (this.live.status === 'end' && this.live.playback_url)) {
+            if (this.liveUrl() || (this.live.status === 'end' && this.live.playback_url)) {
                 setTimeout(this.createPlayer, 100)
             } else if (!this.liveUrl()) { // 直播还未开始
                 this.isReady = true
