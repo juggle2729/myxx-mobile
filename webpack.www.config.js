@@ -6,7 +6,7 @@ const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin"
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: ['babel-polyfill', './src/main.js'],
     output: {
         filename: '[name].[hash].js',
         chunkFilename: '[name].chunk.[hash].js',
@@ -41,9 +41,6 @@ module.exports = {
         loaders: {
             stylus: 'style!css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus'
         }
-    },
-    babel: { // consider tree-shaking ?
-        presets: ['es2015', 'stage-2']
     },
     stats: {
       children: false

@@ -25,7 +25,7 @@
         .mgl-28.fz-36.black-24 {{ self.nickname }}
     .bdb.bdt.bg-white
         .item.flex.relative(v-for="item in items", @click="menuClick(item)")
-            .icon.mgl-32(:style="{backgroundImage: `url('//o0x80w5li.qnssl.com/auction/${item.key}.png')`}")
+            .icon.mgl-32(:style="{backgroundImage: bg(item) }")
             .fz-30.mgl-20 {{ item.name }}
             icon.fz-22.absolute.gray-99(name="enter")
     auction-footer-menu
@@ -88,6 +88,10 @@ export default {
 
         contactUs() {
             this.showContact = true
+        },
+
+        bg(item) {
+            return 'url(\'//o0x80w5li.qnssl.com/auction/' + item.key + '.png\')'
         }
     }
 }

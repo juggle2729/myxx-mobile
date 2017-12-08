@@ -1,5 +1,5 @@
 <style lang="stylus">
-.play-action
+.play-view
     position: fixed
     left: 0
     right: 0
@@ -16,7 +16,7 @@
         opacity: 1
 </style>
 <template lang="pug">
-.play-action(@click="close")
+.play-view(@click="close")
     video(:src="config.video + $route.params.id", autoplay, controls, @webkitendfullscreen="close")
 </template>
 <script>

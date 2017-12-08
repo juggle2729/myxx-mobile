@@ -390,9 +390,9 @@ bg($key)
 </style>
 <template lang="pug">
 .live-view.relative
-    .play-button(v-if="showPlayButton", @click="startLive()")
-    .loading(v-if="showLoading || (!isReady && !this.isEnd && !this.isSuspend)")
-    .player(v-if="live.status === 'going'", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
+    .play-button(v-if="showPlayButton", @click="startPlay()")
+    .loading(v-if="showLoading || (!isReady && !isEnd && !isSuspend)")
+    .player(v-if="!hasPlayback && isLive", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
     .placeholder.flex(v-if="placeholder")
         .hint.fz-28
             .center {{ placeholder[0] }}
@@ -418,7 +418,7 @@ bg($key)
                 span.message-user-name {{ (message.isSys ? '系统消息': message.user.name) + '：' }}
                 span.message-content(:class="message.imageUri && 'image-content'", @click="previewImage(message.imageUri)") {{ message.imageUri ? '【图片】' : message.content }}
     .im(@click="gotoDownload")
-    .definition.fz-22.center(v-if="liveUrl()", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
+    .definition.fz-22.center(v-if="!hasPlayback && isLive", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
     .auction-info.white(v-if="currentAuction", :class="currentAuction.status", @click="onAuctionDetail()")
         .fz-22.center - 当前拍品 -
         .prod-picture.mgt-13.flex(v-bg.md="currentAuction.product.first_picture")
@@ -523,7 +523,8 @@ export default {
                     lsd: {}, // 标清
                     lld: {} // 流畅
                 },
-                user: {}
+                user: {},
+                playback_url: ''
             },
             isReady: true,
             isSuspend: false,
@@ -574,24 +575,21 @@ export default {
                 return ['直播已结束，', '去美玉直播间可以查看精彩回放']
             } else if (this.isSuspend) {
                 return ['主播离开一下，', '精彩不断，不要走开']
-            } else if(!this.liveUrl()) {
+            } else if(!this.isLive) {
                 return ['直播尚未开始，', '和玉友一起互动讨论']
-            }
-        },
-
-        source() {
-            if (!this.live) return
-            if (this.live.status === 'going') {
-                return this.liveUrl()
-            } else if (this.live.status === 'end' && this.live.playback_url) {
-                return this.live.playback_url
-            } else {
-                console.log('Not found source')
             }
         },
 
         dialogAuctionId() {
             return this.specialAuction && this.specialAuction.auctions.map(auction => auction.id)[this.auctionIndex]
+        },
+
+        isLive() {
+            return !!this.liveUrl()
+        },
+
+        hasPlayback() {
+            return this.live && this.live.playback_url
         }
     },
 
@@ -602,7 +600,9 @@ export default {
                     this.setShareData(live)
                     this.live = live
                     this.imtoken = imtoken
-                    this.showPlayButton = this.env && this.env.isMobile && live.status === 'going'
+
+                    // 只要有回放或者推流，则显示播放按钮
+                    this.showPlayButton = this.env && this.env.isMobile && (this.isLive || this.hasPlayback)
 
                     this.checkLiveData()
                     this.loadRongIMChatMessage()
@@ -858,25 +858,32 @@ export default {
 
         liveUrl() {
             if (!this.live.pull_urls) return ''
-            return this.env.isMobile ? this.live.pull_urls[this.definition].m3u8_url: this.live.pull_urls[this.definition].flv_url
+            return this.env && this.env.isMobile ? this.live.pull_urls[this.definition].m3u8_url: this.live.pull_urls[this.definition].flv_url
         },
 
         checkLiveData() {
-            if (this.liveUrl() || (this.live.status === 'end' && this.live.playback_url)) {
-                setTimeout(this.createPlayer, 100)
-            } else if (!this.liveUrl()) { // 直播还未开始
-                this.isReady = true
-            } else { // 直播已经结束，但是还未生成回放地址
+            if (this.hasPlayback) { // 已有回放
                 this.isReady = true
                 this.isEnd = true
+                this.isSuspend = false
+            } else if (this.isLive) {
+                setTimeout(this.createPlayer, 100)
+            } else { // 直播尚未开始
+                this.isReady = true
+                this.isEnd = false
+                this.isSuspend = false
             }
         },
 
-        startLive() {
-            this.isReady = false
-            this.player && this.player.loadByUrl(this.liveUrl())
-            this.showPlayButton = false
-            this.showLoading = true
+        startPlay() {
+            if(this.hasPlayback) {
+                this.play(this.live.playback_url)
+            } else if (this.isLive) {
+                this.isReady = false
+                this.player && this.player.loadByUrl(this.liveUrl())
+                this.showPlayButton = false
+                this.showLoading = true
+            }
         },
 
         createPlayer() {
@@ -884,13 +891,13 @@ export default {
                 this.player = new Aliplayer({
                     id: 'J_prismPlayer',
                     autoplay: true,
-                    isLive: !!this.liveUrl(),
+                    isLive: this.isLive,
                     width: '100%',
                     height: '100%',
                     playsinline: true,
                     controlBarVisibility: 'hover',
                     useH5Prism:true,
-                    source: this.source,
+                    source: this.liveUrl(),
                     x5_video_position: 'top',
                     x5_orientation: 'portraint',
                     x5_type: 'h5',
@@ -916,7 +923,7 @@ export default {
                 this.isReady = true
                 this.isSuspend = false
                 this.isEnd = false
-                this.showPlayButton = false
+                this.env.isIOS && (this.showPlayButton = false)
                 this.showLoading = false
             })
 
@@ -936,7 +943,7 @@ export default {
 
         loadRongIMChatMessage() {
             this.rongIM.appKey = this.env.isTest ? 'z3v5yqkbvpuc0': 'uwd1c0sxdytj1'
-            this.imtoken && this.initRongIMInstance().then(instance => {
+            this.imtoken && this.live.chat_room_id && this.initRongIMInstance().then(instance => {
                 instance.joinChatRoom(this.live.chat_room_id, 50, {
                     onSuccess: () => {
                         console.log("joinChatRoom Successfully");

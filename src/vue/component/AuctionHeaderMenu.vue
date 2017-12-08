@@ -40,7 +40,7 @@ bg($key)
     .flex-1
     .item.center.relative(v-for="item in items")
         .icon(@click="linkToMenu(item)")
-            img(:src="`//o0x80w5li.qnssl.com/auction/${item.key}-actived-head.png`")
+            img(:src="'//o0x80w5li.qnssl.com/auction/' + item.key + '-actived-head.png'")
         .name.fz-20.black-24.mgt-4 {{ item.name }}
         .red-dot.absolute.bg-red-e6.center.white(v-if="item.hasRedDot && waitPayOrderCount > 0") {{ waitPayOrderCount }}
 </template>

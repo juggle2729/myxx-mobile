@@ -57,7 +57,7 @@
             .inline-block(:class="item.status === 'preview' ? 'yellow-f5' : 'black-47'")  {{ item.upset_price | price }}
         .price.fz-32(v-if="item.status === 'success'")
             .inline-block.black-47  {{ item.current_price | price }}
-        .bid-times.absolute.fz-24.gray-b3(v-if="!(item.status === 'preview' || item.status === 'fail')") {{ item.bid_count > 0 ? `${item.bid_count}次出价` : '暂无出价' }}
+        .bid-times.absolute.fz-24.gray-b3(v-if="!(item.status === 'preview' || item.status === 'fail')") {{ item.bid_count > 0 ? item.bid_count + '次出价' : '暂无出价' }}
     .pics.mgt-16.flex
         .pic.bg-gray-f7(v-for="pic in item.product.pictures.slice(0,3)", v-bg.sm="pic")
     .foot.flex.pdt-14
