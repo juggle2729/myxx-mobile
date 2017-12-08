@@ -43,7 +43,8 @@ export default {
                 user: 'user/homepage',
                 shop: 'user/shop',
                 product: 'mall/product',
-                auction: 'mall/auctions'
+                auction: 'mall/auctions',
+                live: 'live/liveDetail'
             }
         }
     },

@@ -181,6 +181,8 @@ bg($key)
             width 100%
             line-height 50px
             background #e61717
+        > :first-child
+            color rgba(255, 255, 255, 0.6)
     .relative-product
         bg(relative_product)
         width 239px
@@ -398,14 +400,14 @@ bg($key)
             .center {{ placeholder[0] }}
             .mgt-10 {{ placeholder[1] }}
     .anchor-info.flex
-        .avatar(v-bg.sm="live.user.photo")
+        .avatar(v-bg.sm="live.user.photo || 'app/avatar.png'")
         .flex-1.flex.user-info.white.mgl-11
             .fz-28 {{ live.user.nickname }}
-            .fz-20.mgt-12.join-count {{ live.join_count }}
+            .fz-20.mgt-12.join-count {{ joinCount || live.join_count }}
         .attention.fz-20(:class="live.user.followed ? 'followed': 'follow'", @click="gotoDownload") {{ live.user.followed ? '已关注': '关注' }}
     .bids.pdh-25.flex(v-if="auctionBids.length")
         .bid.relative.flex(v-for="bid in auctionBids")
-            .bidder-img(v-bg.sm="bid.bidder.photo")
+            .bidder-img(v-bg.sm="bid.bidder.photo || 'app/avatar.png'")
             .bidder-name.absolute.white {{ bid.bidder.nickname | truncate 10 }}
             .white.absolute.bid-price {{ toYuan(bid.bid_price) }}
             .bid-status.absolute.white(:class="!$index ? 'lead' : ''") {{$index === 0 ? '领先' : '淘汰'}}
@@ -429,7 +431,7 @@ bg($key)
                 .fz-36.mgt-12 {{currentAuction.real_end_time | date 'HH:MM'}}
                 .fz-30.mgt-24.ended.center 已结束
             template(v-if="currentAuction.status === 'going'")
-                .fz-22.mgt-26 倒计时
+                .fz-22.mgt-26 {{ currentAuction.delay_count ? ('延时' + currentAuction.delay_count + '次') : '倒计时' }}
                 .fz-36.mgt-14 {{auctionCountDown}}
                 .fz-30.mgt-30.auction-bid.center(@click="gotoDownload") 出价
             template(v-if="currentAuction.status === 'preview'")
@@ -565,7 +567,8 @@ export default {
             messageNotification: null,
             notificationShowTime: 3000,
             showPlayButton: false,
-            showLoading: false
+            showLoading: false,
+            joinCount: 0
         }
     },
 
@@ -618,8 +621,11 @@ export default {
     },
 
     methods: {
+        paddingDate(str) {
+            return _.padStart(str, 2, '0')
+        },
         setMessageNotification(message) {
-            const { auction, type } = message
+            const { content: { auction, bidder, delay_flag, delay_to, out_bid, bid_price, delay_duration, delay_count }, type } = message
             let delayTime = 0
             switch(type) {
                 case 'start':
@@ -630,9 +636,8 @@ export default {
                     delayTime = this.notificationShowTime
                     break
                 case 'bid':
-                    const { outBid, bidder, bid_price} = auction
                     let hasNotification = false
-                    if (outBid && outBid.bidder && outBid.bidder.id === this.self.id) { // 自己的出价信息
+                    if (out_bid && out_bid.bidder && out_bid.bidder.id === this.self.id) { // 自己的出价信息
                         this.messageNotification = {
                             title: `您的出价被“${bidder.nickname}”超过`,
                             content: `当前最高出价￥${this.toYuan(bid_price)}`
@@ -641,21 +646,21 @@ export default {
                         delayTime = this.notificationShowTime
                     }
 
-                    if (auction.delay_flag) {
+                    if (delay_flag) {
                         if (hasNotification) {
                             setTimeout(() => {
-                                const endDate = new Date(auction.delay_to)
+                                const endDate = new Date(delay_to)
                                 this.messageNotification = {
-                                    title: `最后${auction.delay_duration}秒出价第${auction.delay_count}次延时`,
-                                    content: `结束时间 ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`
+                                    title: `最后${delay_duration}秒出价第${delay_count}次延时`,
+                                    content: `结束时间 ${this.paddingDate(endDate.getHours())}:${this.paddingDate(endDate.getMinutes())}:${this.paddingDate(endDate.getSeconds())}`
                                 }
                             }, this.notificationShowTime)
                             delayTime = this.notificationShowTime * 2
                         } else {
-                            const endDate = new Date(auction.delay_to)
+                            const endDate = new Date(delay_to)
                             this.messageNotification = {
-                                title: `最后${auction.delay_duration}秒出价第${auction.delay_count}次延时`,
-                                content: `结束时间 ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`
+                                title: `最后${delay_duration}秒出价第${delay_count}次延时`,
+                                content: `结束时间 ${this.paddingDate(endDate.getHours())}:${this.paddingDate(endDate.getMinutes())}:${this.paddingDate(endDate.getSeconds())}`
                             }
                             delayTime = this.notificationShowTime
                         }
@@ -763,7 +768,7 @@ export default {
                     let targetAuction = auctions[auctions.length - 1]
                     for (let i = 0, len = auctions.length; i < len; i++) {
                         // 找出第一个还未结束的拍卖，包括预展中或者拍卖中的；否则，取最后一个
-                        if (auctions[i].start_time > this.live.timestamp || auctions[i].real_end_time > this.live.timestamp) {
+                        if (/preview|going/.test(auctions[i].status)) {
                             targetAuction = auctions[i]
                             this.auctionIndex = i
                             break
@@ -923,7 +928,7 @@ export default {
                 this.isReady = true
                 this.isSuspend = false
                 this.isEnd = false
-                this.env.isIOS && (this.showPlayButton = false)
+                this.env && this.env.isIOS && (this.showPlayButton = false)
                 this.showLoading = false
             })
 
@@ -942,7 +947,7 @@ export default {
         },
 
         loadRongIMChatMessage() {
-            this.rongIM.appKey = this.env.isTest ? 'z3v5yqkbvpuc0': 'uwd1c0sxdytj1'
+            this.rongIM.appKey = !this.env || this.env.isTest ? 'z3v5yqkbvpuc0': 'uwd1c0sxdytj1'
             this.imtoken && this.live.chat_room_id && this.initRongIMInstance().then(instance => {
                 instance.joinChatRoom(this.live.chat_room_id, 50, {
                     onSuccess: () => {
@@ -989,6 +994,12 @@ export default {
                                 break;
                             case RongIMLib.ConnectionStatus["KICKED_OFFLINE_BY_OTHER_CLIENT"]:
                                 console.log("用户账户在其他设备登录，本机会被踢掉线")
+                                this.action('confirm', {
+                                    text: '聊天室账户已在其他设备登录',
+                                    labels: ['忽略', '重连']
+                                }).then(choice => {
+                                    choice === '1' && location.reload(true)
+                                })
                                 break;
                             case RongIMLib.ConnectionStatus["DOMAIN_INCORRECT"]:
                                 console.log("当前运行域名错误，请检查安全域名配置")
@@ -1010,7 +1021,7 @@ export default {
                                 this.imMessages.push({ content, user, imageUri })
                                 break
                             case RongIMClient.MessageType.UnknownMessage: // 自定义消息
-                                const auction = message.content.auction
+                                const { auction, bidder, delay_flag, out_bid, bid_price, delay_duration } = message.content
                                 const isNewMessage = this.isNewMessage(imMessage)
                                 switch (objectName) {
                                     case 'AC:start': // 开拍
@@ -1018,7 +1029,7 @@ export default {
 
                                         if (isNewMessage) { // 新的拍品开始拍卖，需要更新拍品信息
                                             this.loadSpecialDetail()
-                                            this.setMessageNotification({ auction, type: 'start' })
+                                            this.setMessageNotification({ content: message.content, type: 'start' })
                                         }
                                         break
                                     case 'AC:end': // 结束
@@ -1031,27 +1042,31 @@ export default {
 
                                         if (isNewMessage) { // 当前拍品结束，需要更新拍品信息
                                             this.loadSpecialDetail()
-                                            this.setMessageNotification({ auction, type: 'end' })
+                                            this.setMessageNotification({ content: message.content, type: 'end' })
                                         }
                                         break
                                     case 'AC:bid': // 出价信息
-                                        const outBid = auction.out_bid
-                                        if (outBid && outBid.bidder && outBid.bidder.id === this.self.id) { // 被超过人是自己的时候才显示
+                                        if (out_bid && out_bid.bidder && out_bid.bidder.id === this.self.id) { // 被超过人是自己的时候才显示
                                             this.imMessages.push({ isSys: true,
-                                                content: `@${outBid.bidder.nickname}，您的出价被${auction.bidder.nickname}超过了，当前价${this.toYuan(auction.bid_price)}` })
+                                                content: `@${out_bid.bidder.nickname}，您的出价被${bidder.nickname}超过了，当前价${this.toYuan(bid_price)}` })
                                         }
-                                        if (auction.delay_flag) { // 延时提醒
-                                            this.imMessages.push({ isSys: true, content: `@所有人，延时期有人出价，拍品结束时间延时${auction.delay_duration}秒` })
+                                        if (delay_flag) { // 延时提醒
+                                            this.imMessages.push({ isSys: true, content: `@所有人，延时期有人出价，拍品结束时间延时${delay_duration}秒` })
                                         }
 
                                         if (isNewMessage) { // 有新的出价记录，需要更新出价列表
-                                            this.loadAuctionBids()
-                                            this.setMessageNotification({ auction, type: 'bid' })
+                                            this.loadSpecialDetail()
+                                            this.setMessageNotification({ content: message.content, type: 'bid' })
                                         }
                                         break
                                     case 'LIVE_PRODUCT:count':
                                         if (message.content.count !== this.liveProducts.length && isNewMessage) { // 数字有变化且是新消息
                                             this.loadLiveProducts() // 重新加载商品信息
+                                        }
+                                        break
+                                    case 'LIVE_JOIN:count':
+                                        if (isNewMessage) { // 判断是否是新消息
+                                            this.joinCount = message.content.count
                                         }
                                         break
                                 }
