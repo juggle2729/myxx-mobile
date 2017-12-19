@@ -56,17 +56,18 @@
 
     .content.bg-white.mgb-24.pdh-20
         .fz-30.mgb-28.user-txt {{{data.content | content | input}}}
-        .pic.video(v-if="lodash.get(data, 'medias.0.media_type')==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
-            .activity.bg-red.white.fz-26(v-if="data.activity")
-                icon(name="fire")
-                span {{data.activity.name}}
-        .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-more': data.medias.length >= 3}")
-            .activity.bg-red.white.fz-26(v-if="data.activity")
-                icon(name="fire")
-                span {{data.activity.name}}
-            .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 1 && data.medias.length !== 3")
-                img.mgr-8(:src="'pic.png' | qn")
-                div {{data.medias.length}}
+        template(v-if="data.medias")
+            .pic.video(v-if="lodash.get(data, 'medias.0.media_type')==='video'", v-bg.video="data.medias[0].media", @click="play(data.medias[0].media)")
+                .activity.bg-red.white.fz-26(v-if="data.activity")
+                    icon(name="fire")
+                    span {{data.activity.name}}
+            .pic(v-else, :style="{backgroundImage: imgSrc}", :class="{'pic-more': data.medias.length >= 3}")
+                .activity.bg-red.white.fz-26(v-if="data.activity")
+                    icon(name="fire")
+                    span {{data.activity.name}}
+                .more.white.fz-30.flex.pdh-12(v-if="data.medias.length > 1 && data.medias.length !== 3")
+                    img.mgr-8(:src="'pic.png' | qn")
+                    div {{data.medias.length}}
 
     .interact.fz-26.flex.bdt.pdh-32
         icon-like(:active="data.liked", :count="data.like_count")

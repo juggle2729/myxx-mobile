@@ -28,7 +28,6 @@
             display: block
             height: 30px
             width: 56px
-            margin-top: 8px
     .like-icon
         margin-right: 66px
 </style>

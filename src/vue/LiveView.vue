@@ -3,8 +3,6 @@
 bg($key)
     background-image url('//o0x80w5li.qnssl.com/live/' + $key + '.png')
     background-size cover
-#app
-    background #1a1a1a
 .live-view
     overflow hidden
     background #1a1a1a
@@ -143,16 +141,6 @@ bg($key)
                 color #6dcfd1
         & + .message
             margin-top 10px
-    .preview-image
-        position absolute
-        top 0
-        left 0
-        width 100%
-        height 102%
-        background-size contain
-        background-position center
-        background-color #000
-        z-index 6
     .auction-info
         position absolute
         bottom 34px
@@ -250,6 +238,8 @@ bg($key)
             color #e61717
             display inline-block
             margin-right 6px
+        &.fz-44:before
+            font-size 26px
     .bids
         position absolute
         top 120px
@@ -389,6 +379,9 @@ bg($key)
         z-index 6
         background-image url('//o0x80w5li.qnssl.com/icon/play.svg')
         background-size cover
+    .swiper-outer
+        width 100%
+        height 72.5%
 </style>
 <template lang="pug">
 .live-view.relative
@@ -445,13 +438,13 @@ bg($key)
         .products
             .fz-30.black-24.title.center.bdb 相关商品（{{liveProducts.length}}）
             .product-list
-                .product.pd-39.flex.bdb(v-for="product in liveProducts")
+                .product.pd-39.flex.bdb(v-for="product in liveProducts", @click.stop="previewProductDetail($index)")
                     .product-img(v-bg.md="product.cover")
                     .mgl-21.flex.flex-1
                         .fz-30.gray-47 {{ product.title }}
                         .flex.justify-between
                             .red-e6.fz-32.product-price {{ toYuan(product.price) }}
-                            .bg-red-e6.fz-28.white.center.purchase(:class="product.sell_status", @click="purchase(product)") {{ product.sell_status === 'selling' ? '立即购买' : '已售出' }}
+                            .bg-red-e6.fz-28.white.center.purchase(:class="product.sell_status", @click.stop="purchase(product)") {{ product.sell_status === 'selling' ? '立即购买' : '已售出' }}
     .live-auction.flex(v-if="showAuctionDialog && dialogAuction", transition= 'show')
         .overlay(@click="showAuctionDialog = false")
         .dialog-auction
@@ -460,7 +453,8 @@ bg($key)
                 .auction-name {{'(' + (auctionIndex + 1) + '/' + specialAuction.auctions.length + ')'}} {{ dialogAuction.product.title | truncate 15}}
                 .next(@click="nextAuction()") 下一件
             .content-wrapper
-                custom-swiper(v-if='showSwiper', :item="dialogAuction.product", :type="'live'")
+                .swiper-outer
+                    custom-swiper(v-if='showSwiper', :item="dialogAuction.product", :type="'live'")
                 .flex.time-price-status.bdb
                     .time.flex.white.flex-column(:class="dialogAuction.status")
                         template(v-if="dialogAuction.status === 'preview'")
@@ -502,9 +496,28 @@ bg($key)
                             span.gray-8f {{ k + '：'}}
                             span.black-47 {{ v }}
                 .product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
+    .live-auction.flex(v-if="showProductDialog && dialogProduct", transition= 'show')
+        .overlay(@click="showProductDialog = false")
+        .dialog-auction
+            .flex.title.pdh-30.fz-30.black-24
+                .last(@click="lastProduct()") 上一件
+                .auction-name {{'(' + (productIndex + 1) + '/' + liveProducts.length + ')'}} {{ dialogProduct.title | truncate 15}}
+                .next(@click="nextProduct()") 下一件
+            .content-wrapper
+                .swiper-outer
+                    custom-swiper(v-if='showSwiper', :item="dialogProduct", :type="'live'")
+                .flex.justify-between.pdh-42.time-price-status
+                        .red-e6.fz-44.product-price {{ toYuan(dialogProduct.price) }}
+                        .bg-red-e6.fz-28.white.center.purchase(:class="dialogProduct.sell_status", @click.stop="purchase(dialogProduct)") {{ dialogProduct.sell_status === 'selling' ? '立即购买' : '已售出' }}
+                .product-attribute.bg-gray-f7.bdb
+                    .fz-24.gray-8f 商品属性
+                    .attribute-list
+                        .attribute.fz-28(v-for="(k, v) in productAttributes")
+                            span.gray-8f {{ k + '：'}}
+                            span.black-47 {{ v }}
+                .product-description.fz-30.black-24(v-if="dialogProduct.detail") {{ dialogProduct.detail }}
     .definition-select.flex.pdv-30(v-show="showDefinitionSelect", transition= 'fade')
         .fz-30.flex.flex-1(v-for="(key, value) in definitions", :class="key === definition ? 'selected': ''", @click="selectDefinition(key)") {{ value }}
-    .preview-image(v-show='bigImageUrl', transition= 'show', :style="{backgroundImage: 'url(' + bigImageUrl + ')'}", @click='bigImageUrl = ""')
 </template>
 <script>
 import shareable from 'shareable'
@@ -536,7 +549,8 @@ export default {
                 config: {
                     protobuf : "//cdn.ronghub.com/protobuf-2.2.8.min.js"
                 },
-                userId: 0
+                userId: 0,
+                instance: null
             },
             player: null,
             imtoken: '',
@@ -550,7 +564,6 @@ export default {
                 lud: '超清'
             },
             showDefinitionSelect: false,
-            bigImageUrl: '',
             specialAuction: null,
             currentAuction: null,
             auctionCountDown: '',
@@ -560,8 +573,12 @@ export default {
             auctionBids: [],
             liveAuctions: {},
             showAuctionDialog: false,
-            auctionIndex: 0,
             dialogAuction: null,
+            auctionIndex: 0,
+            showProductDialog: false,
+            dialogProduct: {},
+            productIndex: 0,
+            cacheProducts: {},
             productAttributes: {},
             showSwiper: false, // 防止swiper缓存索引
             messageNotification: null,
@@ -587,36 +604,59 @@ export default {
             return this.specialAuction && this.specialAuction.auctions.map(auction => auction.id)[this.auctionIndex]
         },
 
+        dialogProductId() {
+            return this.liveProducts && this.liveProducts.map(product => product.id)[this.productIndex]
+        },
+
         isLive() {
             return !!this.liveUrl()
         },
 
         hasPlayback() {
             return this.live && this.live.playback_url
+        },
+
+        imPictures() {
+            return this.imMessages.filter(message => !!message.imageUri).map(message => message.imageUri)
         }
+    },
+
+    ready() {
+        document.querySelector('#app').style.background = '#1a1a1a'
     },
 
     route: {
         data({from, to, next}) {
-            return this.$fetch('im/token').then(({ imtoken }) => {
-                return this.$fetch('live/live/'+ this.$route.params.id).then(live => {
-                    this.setShareData(live)
-                    this.live = live
-                    this.imtoken = imtoken
+            const liveGoProduct = this.$store.get('live-go-product')
+            if (liveGoProduct) { // 刷新防止IM消息占线
+                this.$store.remove('live-go-product')
+                location.reload()
+            } else {
+                return this.$fetch('im/token').then(({ imtoken }) => {
+                    return this.$fetch('live/live/'+ this.$route.params.id).then(live => {
+                        this.setShareData(live)
+                        this.live = live
+                        this.imtoken = imtoken
 
-                    // 只要有回放或者推流，则显示播放按钮
-                    this.showPlayButton = this.env && this.env.isMobile && (this.isLive || this.hasPlayback)
+                        // 只要有回放或者推流，则显示播放按钮
+                        this.showPlayButton = this.env && this.env.isMobile && (this.isLive || this.hasPlayback)
 
-                    this.checkLiveData()
-                    this.loadRongIMChatMessage()
-                    this.loadSpecialDetail()
+                        this.checkLiveData()
+                        this.loadRongIMChatMessage()
+                        this.loadSpecialDetail()
 
-                    // 检查是否为商品直播，并加载商品列表
-                    if(!this.live.special_id) {
-                        this.loadLiveProducts()
-                    }
+                        // 检查是否为商品直播，并加载商品列表
+                        if(!this.live.special_id) {
+                            this.loadLiveProducts()
+                        }
+                    })
                 })
-            })
+            }
+        },
+
+        deactivate() {
+            //断开连接，防止一直占线
+            this.rongIM.instance && this.rongIM.instance.logout()
         }
     },
 
@@ -705,7 +745,7 @@ export default {
         onAuctionDetail() {
             if (this.liveAuctions[this.dialogAuctionId]) {
                 this.dialogAuction = this.liveAuctions[this.dialogAuctionId]
-                this.generateAttributes()
+                this.generateAttributes(this.dialogAuction.product)
                 this.showAuctionDialog = true
                 this.showSwiper = false
                 setTimeout(() => {
@@ -718,7 +758,7 @@ export default {
                 .then(auction => {
                     this.liveAuctions[auction.id] = auction
                     this.dialogAuction = auction
-                    this.generateAttributes()
+                    this.generateAttributes(this.dialogAuction.product)
                     this.showAuctionDialog = true
                     this.showSwiper = false
                     setTimeout(() => {
@@ -727,9 +767,56 @@ export default {
                 })
         },
 
-        generateAttributes() {
+        previewProductDetail(index) {
+            this.productIndex = index
+            this.onProductDetail()
+        },
+
+        lastProduct() {
+            this.productIndex--
+            if (this.productIndex < 0) {
+                this.productIndex = 0
+                return
+            }
+            this.onProductDetail()
+        },
+
+        nextProduct() {
+            this.productIndex++
+            if (this.productIndex > this.liveProducts.length - 1) {
+                this.productIndex = this.liveProducts.length - 1
+                return
+            }
+            this.onProductDetail()
+        },
+
+        onProductDetail() {
+            if (this.cacheProducts[this.dialogProductId]) {
+                this.dialogProduct = this.cacheProducts[this.dialogProductId]
+                this.generateAttributes(this.dialogProduct)
+                this.showProductDialog = true
+                this.showSwiper = false
+                setTimeout(() => {
+                    this.showSwiper = true
+                }, 10)
+                return
+            }
+
+            this.$fetch(`mall/products/${this.dialogProductId}`)
+                .then(product => {
+                    this.cacheProducts[product.id] = product
+                    this.dialogProduct = product
+                    this.generateAttributes(this.dialogProduct)
+                    this.showProductDialog = true
+                    this.showSwiper = false
+                    setTimeout(() => {
+                        this.showSwiper = true
+                    }, 10)
+                })
+        },
+
+        generateAttributes({ material, weight, category, size, circle_size, skin, variety, place, theme }) {
             const attributes = {}
-            const { product: { material, weight, category, size, circle_size, skin, variety, place, theme } } = this.dialogAuction
             material && (attributes['产状'] = material.name)
             weight && (attributes['重量'] = weight + '克')
             category && (attributes['分类'] = category.name)
@@ -744,8 +831,13 @@ export default {
 
         purchase(product) {
             if (product.sell_status !== 'selling') return
+            document.querySelector('#app').style.background = 'inherit'
+
             this.$router.go({ name: 'order-confirm', params: { id: product.id } })
             this.showLiveProductDialog = false
+            this.showProductDialog = false
+
+            this.$store.set('live-go-product', true)
         },
 
         showLiveProduct() {
@@ -846,9 +938,9 @@ export default {
                 })
         },
 
-        previewImage(bigImageUrl) {
-            if(!bigImageUrl) return
-            this.bigImageUrl = bigImageUrl
+        previewImage(imageUri) {
+            if(!imageUri) return
+            this.coverflow(this.imPictures, _.indexOf(this.imPictures, imageUri))
         },
 
         selectDefinition(definition) {
@@ -977,7 +1069,8 @@ export default {
                     onChanged:  status => {
                         switch (status) {
                             case RongIMLib.ConnectionStatus["CONNECTED"]:
-                                resolve(RongIMClient.getInstance())
+                                this.rongIM.instance = RongIMClient.getInstance()
+                                resolve(this.rongIM.instance)
                                 console.log("连接成功")
                                 break;
                             case RongIMLib.ConnectionStatus["CONNECTING"]:

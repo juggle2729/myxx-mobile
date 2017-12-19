@@ -18,6 +18,7 @@ import Question from 'component/item/Question.vue'
 import Answer from 'component/item/Answer.vue'
 import Collection from 'component/item/Collection.vue'
 import Tag from 'component/item/Tag.vue'
+import Live from 'component/item/Live.vue'
 export default {
     name: 'user-activity',
 
@@ -29,7 +30,8 @@ export default {
         Question,
         Answer,
         Collection,
-        Tag
+        Tag,
+        Live
     },
 
     data() {

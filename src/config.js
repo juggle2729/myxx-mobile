@@ -65,7 +65,7 @@ export default {
     ],
     role: {normal: '普通用户', engraver: '雕刻师', merchant: '商户', enterprise: '企业'},
     shopType: {studio: '工作室', store: '商铺', enterprise: '商铺', person: '个人'},
-    category: { 'jb': 'question', 'tp': 'topic', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'tag'},
+    category: { 'jb': 'question', 'tp': 'topic', 'rt': 'post', 'jd': 'answer', 'cl': 'collection', 'ct': 'tag', 'lv': 'live'},
     jdResult: {
         genuine: '真', fake: '假', unsure: '疑'
     },

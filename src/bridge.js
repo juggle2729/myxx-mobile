@@ -31,7 +31,10 @@ const adapter = {
             }
             case 'coverflow':
                 if(window.WeixinJSBridge) {
-                    let urls = params.ids.split(',').map(id => this.config.img + id)
+                    let urls = params.ids.split(',').map(id => {
+                        if (/^http/.test(id)) return id
+                        return this.config.img + id
+                    })
                     window.WeixinJSBridge.invoke('imagePreview', {
                         urls,
                         current: urls[+params.index]
