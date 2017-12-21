@@ -39,6 +39,8 @@
         .pictures.pdt-28(v-if="cover.media_type==='picture'")
             img.mgb-10(v-for='pic in pictures', :src="config.img+pic", @click='coverflow(this.pictures, $index)')
 
+        topic-tags(:tags="topic.categories")
+
         .tag-activity.red.fz-26.mgr-32(v-if="topic.activity", v-link="{name: 'activity', params: {id: topic.activity.id}}")
             icon(name="fire")
             span {{topic.activity.name}}
@@ -55,6 +57,7 @@ import CommentList from 'component/CommentList.vue'
 import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import Shop from 'component/Shop.vue'
 import shareable from 'shareable'
+import TopicTags from 'component/TopicTags.vue'
 export default {
     name: 'topic-view',
 
@@ -63,7 +66,8 @@ export default {
     components: {
         Shop,
         CommentList,
-        GeneralSuggestion
+        GeneralSuggestion,
+        TopicTags
     },
 
     data() {
