@@ -7,7 +7,9 @@
     height 100px
     z-index 100
     li
-        line-height 100px
+        height 100px
+        justify-content center
+        border-bottom 4px solid transparent
     .black-24
         font-weight bold
         border-bottom 4px solid #e61717
@@ -16,7 +18,7 @@
 </style>
 <template lang="pug">
 ul.tabs.flex.fz-30.bdb.pdh-20.bg-white(:class="{ 'share-page': env.isShare }")
-    li.flex-1.center(v-for="label in tabs", :class="$key===current ? 'black-24': 'gray-99'", @click="current=$key") {{ label }}
+    li.flex-1.flex(v-for="label in tabs", :class="$key===current ? 'black-24': 'gray-99'", @click="current=$key") {{ label }}
 </template>
 <script>
 export default {

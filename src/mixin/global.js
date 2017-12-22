@@ -324,6 +324,11 @@ const mixin = {
             } else {
                 location.href = url
             }
+        },
+
+        duration(duration = 0) {
+            const padZero = val => _.padStart(val, 2, '0')
+            return `${padZero(parseInt(duration/60))}'${padZero(duration%60)}''`
         }
     }
 }

@@ -10,8 +10,18 @@ bg($key)
         line-height 1.4
     .pic
         width calc(100% - 50px)
-        padding-top 56.14%
+        padding-top 44%
         margin 26px 25px 0
+        > .white
+            justify-content space-between
+            padding 0 17px
+            height 60px
+            background-color rgba(0, 0, 0, 0.3)
+            .fz-24
+                bg(play)
+                background-position left center
+                background-size 26px
+                padding-left 32px
     .absolute
         top 20px
         left 20px
@@ -27,7 +37,7 @@ bg($key)
                 background #242424
         .black-24
             background-color rgba(255, 255, 255, 0.5)
-            background-size 26px 100%
+            background-size 26px
             &.going
                 bg(going)
                 background-position 3px center
@@ -36,7 +46,6 @@ bg($key)
                 bg(preview)
                 background-position left center
                 padding-left 26px
-
 </style>
 <template  lang="pug">
 .live-item.bg-white.pdb-26(v-link="{name: 'live', params: { id: data.id }}")
@@ -49,6 +58,9 @@ bg($key)
         .flex.fz-20.absolute
             .white(:class="data.status") {{ status }}
             .black-24.fz-16(:class="data.status") {{ time }}
+        .flex.white
+            .fz-30 {{ data.title }}
+            .fz-24(v-if="data.status === 'end' && !!data.playback") {{ duration(data.playback.duration) }}
 </template>
 <script>
 import dateformat from 'dateformat'

@@ -102,7 +102,7 @@ export default {
         _moreEle() {
             const ele = document.createElement('div')
             ele.style.background = 'white url(\'https://o0x80w5li.qnssl.com/more.gif\') no-repeat center'
-            ele.style.backgroundSize = '72px 12px'
+            ele.style.backgroundSize = '60px 10px'
             ele.style.height = '48px'
             return ele
         }

@@ -62,7 +62,7 @@ div(:class="{'loading': loading}")
                 img(:src="'share-logo.png' | qn", alt="美玉秀秀")
             .flex-1.fz-20.gray-f4
                 .slogan 最专业的和田玉APP
-                .mgt-6 80万和田玉玩家都在用
+                .mgt-6 100万和田玉玩家都在用
             deep-link
         .share-top-placeholder
         //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")

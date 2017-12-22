@@ -9,7 +9,9 @@ bg($key)
             width: 30px
             height: 30px
     main
-        padding: 0 32px 40px
+        padding: 0 25px 40px
+        > .user-txt
+            padding 0 7px
         > .img
             margin-top 32px
             width 100%
@@ -77,7 +79,7 @@ bg($key)
     .going
         background-color #e61717
     .success, .fail, .end
-        background-color #c6c6c6
+        background-color #242424
     .special
         width 100%
         padding-top 56.29%
@@ -102,8 +104,16 @@ bg($key)
             height 60px
     .live
         width 100%
-        padding-top 56.29%
+        padding-top 44%
         position relative
+        .black-24.going
+            background-image url('//o0x80w5li.qnssl.com/live/going.png') !important
+            padding-left 30px !important
+        .fz-24
+            background-image url('//o0x80w5li.qnssl.com/live/play.png')
+            background-size 26px
+            background-position left center
+            padding-left 32px
 </style>
 <template lang="pug">
 .post-view.bg-white(v-if='!$loadingRouteData')
@@ -117,7 +127,7 @@ bg($key)
         icon-follow(:target='post.user.id', :follow='post.user.is_followed', :has-border='true')
     main
         .fz-34.bold.user-txt {{{post.title | content | input}}}
-        .fz-30.dark.user-txt(:class="{'pdt-32': post.description}") {{{post.description | content | input}}}
+        .fz-30.dark.user-txt(v-if="post.description", :class="{'pdt-32': post.description}") {{{post.description | content | input}}}
         template(v-for="item in post.medias")
             .img(v-if="item.media_type === 'picture'", v-bg="item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/5/rotate/auto|imageView2/2/w/750')
@@ -147,8 +157,10 @@ bg($key)
             .live.special.mgt-32(v-if="item.media_type === 'lv'", v-bg="item.media.picture", v-link="{name: 'live', params: { id: item.media.id }}")
                 .flex
                     .fz-20.white.center(:class="item.media.status") {{ liveStatus(item.media) }}
-                    .fz-16.black-24 {{ liveTime(item.media) }}
-                .flex.white.pdh-17.fz-30 {{ item.media.title }}
+                    .fz-16.black-24(:class="item.media.status") {{ liveTime(item.media) }}
+                .flex.white.pdh-17
+                    .fz-30 {{ item.media.title }}
+                    .fz-24(v-if="item.media.status === 'end' && !!item.media.playback") {{ duration(item.media.playback.duration) }}
         topic-tags(:tags="post.categories")
         template(v-if="post.user.shop")
             shop.mgt-20(:shop="post.user.shop", :type="'community'")
@@ -164,6 +176,7 @@ import GeneralSuggestion from 'component/GeneralSuggestion.vue'
 import shareable from 'shareable'
 import TopicTags from 'component/TopicTags.vue'
 import dateformat from 'dateformat'
+import date from '../util/date'
 export default {
     name: 'post-view',
 
@@ -208,12 +221,12 @@ export default {
                 case 'preview':
                     return {
                         status: '预展中',
-                        desc: `距开始时间${dateformat(new Date(auction.start_time), 'H时MM分')}`
+                        desc: `距开始时间${date.diffNowTime(auction.start_time)}`
                     }
                 case 'going':
                     return {
                         status: '拍卖中',
-                        desc: `距结束时间${dateformat(new Date(auction.real_end_time), 'H时MM分')}`
+                        desc: `距结束时间${date.diffNowTime(auction.real_end_time)}`
                     }
                 case 'success':
                     return {
@@ -225,6 +238,8 @@ export default {
                         status: '已流拍',
                         desc: `结束时间${dateformat(new Date(auction.real_end_time), 'H时MM分')}`
                     }
+                default:
+                    return {}
             }
         },
 
