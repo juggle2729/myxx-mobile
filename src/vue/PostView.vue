@@ -12,10 +12,9 @@ bg($key)
         padding: 0 25px 40px
         > .user-txt
             padding 0 7px
-        > .img
-            margin-top 32px
-            width 100%
-            padding-top 56.29%
+        > img
+            max-width: 100%
+            margin-top: 32px
         .video
             padding-top: 100%
         .product
@@ -104,7 +103,7 @@ bg($key)
             height 60px
     .live
         width 100%
-        padding-top 44%
+        padding-top 48%
         position relative
         .black-24.going
             background-image url('//o0x80w5li.qnssl.com/live/going.png') !important
@@ -129,7 +128,7 @@ bg($key)
         .fz-34.bold.user-txt {{{post.title | content | input}}}
         .fz-30.dark.user-txt(v-if="post.description", :class="{'pdt-32': post.description}") {{{post.description | content | input}}}
         template(v-for="item in post.medias")
-            .img(v-if="item.media_type === 'picture'", v-bg="item.media", @click="coverflow(medias, item.flag)")
+            img(v-if="item.media_type === 'picture'", :src="config.img + item.media", @click="coverflow(medias, item.flag)")
             .video(v-if="item.media_type === 'video'", v-bg='item.media', @click='play(item.media)', query='vframe/jpg/offset/5/rotate/auto|imageView2/2/w/750')
             .product.flex.mgt-32.bd-light(v-if="item.media_type === 'pd'", v-link="{name: 'product', params: {id: item.media.id}}")
                 .img(v-bg="item.media.cover")

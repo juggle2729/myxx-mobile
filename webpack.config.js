@@ -75,12 +75,12 @@ if (process.env.NODE_ENV === 'production') {
             externals: [
                 {
                     module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/aliplayer-min.js',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/aliplayer-min.js',
                     global: 'Aliplayer',
                 },
                 {
                     module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/skins/default/aliplayer-min.css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/skins/default/aliplayer-min.css',
                 },
                 {
                     module: 'RongIMLib',
@@ -108,12 +108,12 @@ if (process.env.NODE_ENV === 'production') {
             externals: [
                 {
                     module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/aliplayer-min.js',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/aliplayer-min.js',
                     global: 'Aliplayer',
                 },
                 {
                     module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.3.5/skins/default/aliplayer-min.css',
+                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/skins/default/aliplayer-min.css',
                 },
                 {
                     module: 'RongIMLib',

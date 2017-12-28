@@ -340,7 +340,8 @@ bg($key)
         margin-top 17px
         display inline-block
         width 50%
-        padding-left 69px
+        &:nth-child(odd)
+            padding-left 69px
     .attribute-list
         line-height 0
         margin-top 12px
