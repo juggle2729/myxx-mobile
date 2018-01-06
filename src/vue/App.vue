@@ -12,13 +12,13 @@
         z-index 990
         position fixed
         top 0
-        height 112px
+        height 100px
         width 100%
         padding 0 22px 0 18px
         box-shadow 0 0 20px 0 rgba(0,0,0,.2)
         .logo
-            width 200px
-            height 64px
+            width 186px
+            height 60px
             transform translateY(-4px)
             img
                 width 100%
@@ -28,10 +28,11 @@
             margin-bottom 0
             .btn
                 background #e61717
-                width 160px
-                height 50px
-                line-height 50px
-                border-radius 50px
+                font-size 26px
+                width 140px
+                height 46px
+                line-height 46px
+                border-radius 23px
     #user
         z-index 99
         position fixed
@@ -59,10 +60,8 @@ div(:class="{'loading': loading}")
     template(v-if="env.isShare")
         .share-top.flex.bg-black
             .logo.mgr-26
-                img(:src="'share-logo.png' | qn", alt="美玉秀秀")
-            .flex-1.fz-20.gray-f4
-                .slogan 最专业的和田玉APP
-                .mgt-6 100万和田玉玩家都在用
+                img(:src="'share-logo-white.png' | qn", alt="美玉秀秀")
+            .flex-1
             deep-link
         .share-top-placeholder
         //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")

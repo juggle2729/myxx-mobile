@@ -17,7 +17,7 @@
             padding: 0 28px
             border-radius: 8px
             color: white
-            background-color: #CC3F4F
+            background-color: #e61717
 </style>
 <template lang="pug">
 .deep-link(@click.stop="xxx")
@@ -30,6 +30,13 @@
 <script>
 export default {
     name: 'deep-link',
+
+    props: {
+        to: {
+            type: String,
+            default: ''
+        }
+    },
 
     data() {
         return {
@@ -59,7 +66,11 @@ export default {
     methods: {
         updateHref() {
             if (this.env && this.env.isIOS) {
-                this.href = this.checkPageUniversalLinkSupport() ? (location.href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (location.href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
+                let href = location.href
+                if (this.to) {
+                    href = location.origin + this.to
+                }
+                this.href = this.checkPageUniversalLinkSupport() ? (href.replace('www.meiyuxiuxiu', 'w3.meiyuxiuxiu') + (href.indexOf('?') === -1 ? '?' : '&') + 'ulfa=' + Date.now()) : this.config.download
             } else {
                 this.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
             }

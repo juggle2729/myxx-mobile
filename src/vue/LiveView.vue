@@ -31,6 +31,22 @@ bg($key)
         background #1a1a1a
         justify-content center
         z-index 2
+        .hint.fz-42
+            color #83838f
+        .download-desc
+            width 500px
+            margin 10px auto 0
+            font-size 28px
+            line-height 1.4
+            text-align center
+        .download
+            width 500px
+            margin 54px auto 0
+            .btn
+                line-height 100px
+                height 100px
+                border-radius 50px
+                font-size 36px
     .anchor-info
         position absolute
         top 22px
@@ -52,6 +68,7 @@ bg($key)
         bg(browser_white)
         background-size 20px 16px
         padding-left 24px
+        background-position left center
     .attention
         width 84px
         line-height 30px
@@ -61,6 +78,9 @@ bg($key)
         margin-right 26px
         position relative
         top -16px
+        .btn
+            background inherit
+            display inline
         &.followed
             border(a, #ccc)
             color #ccc
@@ -349,6 +369,7 @@ bg($key)
         line-height 1.6
         padding 49px 37px 166px
         word-break break-all
+        white-space pre-wrap
     .notification
         bg(notification)
         background-size 82px 83px
@@ -390,15 +411,16 @@ bg($key)
     .loading(v-if="showLoading || (!isReady && !isEnd && !isSuspend)")
     .player(v-if="!hasPlayback && isLive", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
     .placeholder.flex(v-if="placeholder")
-        .hint.fz-28
+        .hint(:class="showDownload ? 'fz-42' : 'fz-28'")
             .center {{ placeholder[0] }}
-            .mgt-10 {{ placeholder[1] }}
+            .mgt-10(:class="showDownload ? 'download-desc': ''") {{ placeholder[1] }}
+            deep-link.download(v-if="showDownload") 下载美玉秀秀App
     .anchor-info.flex
         .avatar(v-bg.sm="live.user.photo || 'app/avatar.png'")
         .flex-1.flex.user-info.white.mgl-11
             .fz-28 {{ live.user.nickname }}
             .fz-20.mgt-12.join-count {{ joinCount || live.join_count }}
-        .attention.fz-20(:class="live.user.followed ? 'followed': 'follow'", @click="gotoDownload") {{ live.user.followed ? '已关注': '关注' }}
+        deep-link.attention.fz-20.has-icon(:class="live.user.followed ? 'followed': 'follow'", :to="'/user/' + live.user.id") {{ live.user.followed ? '已关注': '关注' }}
     .bids.pdh-25.flex(v-if="auctionBids.length")
         .bid.relative.flex(v-for="bid in auctionBids")
             .bidder-img(v-bg.sm="bid.bidder.photo || 'app/avatar.png'")
@@ -413,7 +435,7 @@ bg($key)
             .message.flex.fz-28(v-for="message in imMessages", :class="message.isSys ? 'system' : ''")
                 span.message-user-name {{ (message.isSys ? '系统消息': message.user.name) + '：' }}
                 span.message-content(:class="message.imageUri && 'image-content'", @click="previewImage(message.imageUri)") {{ message.imageUri ? '【图片】' : message.content }}
-    .im(@click="gotoDownload")
+    .im(v-if="showPlayButton", @click="gotoDownload")
     .definition.fz-22.center(v-if="!hasPlayback && isLive", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
     .auction-info.white(v-if="currentAuction", :class="currentAuction.status", @click="onAuctionDetail()")
         .fz-22.center - 当前拍品 -
@@ -496,7 +518,7 @@ bg($key)
                         .attribute.fz-28(v-for="(k, v) in productAttributes")
                             span.gray-8f {{ k + '：'}}
                             span.black-47 {{ v }}
-                .product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
+                pre.product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
     .live-auction.flex(v-if="showProductDialog && dialogProduct", transition= 'show')
         .overlay(@click="showProductDialog = false")
         .dialog-auction
@@ -516,7 +538,7 @@ bg($key)
                         .attribute.fz-28(v-for="(k, v) in productAttributes")
                             span.gray-8f {{ k + '：'}}
                             span.black-47 {{ v }}
-                .product-description.fz-30.black-24(v-if="dialogProduct.detail") {{ dialogProduct.detail }}
+                pre.product-description.fz-30.black-24(v-if="dialogProduct.detail") {{ dialogProduct.detail }}
     .definition-select.flex.pdv-30(v-show="showDefinitionSelect", transition= 'fade')
         .fz-30.flex.flex-1(v-for="(key, value) in definitions", :class="key === definition ? 'selected': ''", @click="selectDefinition(key)") {{ value }}
 </template>
@@ -593,11 +615,11 @@ export default {
     computed: {
         placeholder() {
             if (this.isEnd) {
-                return ['直播已结束，', '去美玉直播间可以查看精彩回放']
+                return ['直播已结束', '进入美玉秀秀App，查看本场直播回放。还有更多精彩珠宝玉石相关直播哦~']
             } else if (this.isSuspend) {
-                return ['主播离开一下，', '精彩不断，不要走开']
+                return ['主播离开一下', '精彩不断，不要走开']
             } else if(!this.isLive) {
-                return ['直播尚未开始，', '和玉友一起互动讨论']
+                return ['直播尚未开始', '进入美玉秀秀App观看直播，更清晰更流畅，还能和主播零距离互动哦~']
             }
         },
 
@@ -619,11 +641,15 @@ export default {
 
         imPictures() {
             return this.imMessages.filter(message => !!message.imageUri).map(message => message.imageUri)
+        },
+
+        showDownload() {
+            return this.placeholder && /直播尚未开始|直播已结束/.test(this.placeholder[0])
         }
     },
 
     ready() {
-        document.querySelector('#app').style.background = '#1a1a1a'
+        document.querySelector('#app').style.background = '#1a1a15'
     },
 
     route: {
@@ -639,11 +665,13 @@ export default {
                         this.live = live
                         this.imtoken = imtoken
 
-                        // 只要有回放或者推流，则显示播放按钮
-                        this.showPlayButton = this.env && this.env.isMobile && (this.isLive || this.hasPlayback)
+                        // 只要有推流，才显示播放按钮
+                        this.showPlayButton = this.env && this.env.isMobile && this.isLive
 
                         this.checkLiveData()
-                        this.loadRongIMChatMessage()
+                        if (this.showPlayButton) { // 显示播放按钮的时候，才加载融云信息
+                            this.loadRongIMChatMessage()
+                        }
                         this.loadSpecialDetail()
 
                         // 检查是否为商品直播，并加载商品列表
@@ -955,12 +983,12 @@ export default {
         },
 
         liveUrl() {
-            if (!this.live.pull_urls) return ''
+            if (!this.live.pull_urls || this.live.status !== 'going') return ''
             return this.env && this.env.isMobile ? this.live.pull_urls[this.definition].m3u8_url: this.live.pull_urls[this.definition].flv_url
         },
 
         checkLiveData() {
-            if (this.hasPlayback) { // 已有回放
+            if (this.hasPlayback || this.live.status === 'end') { // 已有回放
                 this.isReady = true
                 this.isEnd = true
                 this.isSuspend = false
