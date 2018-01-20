@@ -6,7 +6,7 @@
 </style>
 <template lang="pug">
 .help-eco-system-view
-    img(src="//o0x80w5li.qnssl.com/help-eco-system.png")
+    img(src="//o0x80w5li.qnssl.com/help-eco-system.png?v1")
 </template>
 <script>
 export default {

@@ -4,9 +4,9 @@
     > [class*='-view']
         min-height 100%
     .share-top-placeholder
-        height 112px
+        height 100px
         & + div
-            min-height calc(100% - 112px)
+            min-height calc(100% - 100px)
     .share-top
         color white
         z-index 990
@@ -15,7 +15,6 @@
         height 100px
         width 100%
         padding 0 22px 0 18px
-        box-shadow 0 0 20px 0 rgba(0,0,0,.2)
         .logo
             width 186px
             height 60px
@@ -58,13 +57,12 @@
 <template  lang="pug">
 div(:class="{'loading': loading}")
     template(v-if="env.isShare")
-        .share-top.flex.bg-black
+        .share-top.flex(:class="showBlackBg ? 'bg-black' : 'bg-white bdb'")
             .logo.mgr-26
-                img(:src="'share-logo-white.png' | qn", alt="美玉秀秀")
+                img(:src="(showBlackBg ? 'share-logo-white.png' : 'share-logo.png') | qn", alt="美玉秀秀")
             .flex-1
             deep-link
         .share-top-placeholder
-        //- a.get-red-pocket(v-if="redPocketUrl", :href="redPocketUrl")
     router-view
     #user(v-if="env.isBrowser && env.isTest")
         img(v-if="self && self.photo", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
@@ -105,13 +103,9 @@ export default {
             return env
         },
 
-        // redPocketUrl() {
-        //     let url = ''
-        //     if(['topic', 'post', 'question', 'answer', 'product'].indexOf(this.$route.name) !== -1) {
-        //         url = !this.env.isTest ? 'https://h5.meiyuxiuxiu.com/invitation' : 'http://h5.meiyuxiuxiu.net/invitation'
-        //     }
-        //     return url
-        // }
+        showBlackBg() {
+            return _.includes(['live'], this.$route.name)
+        }
     },
     ready() {
         emitter.on('back', () => this.$broadcast('restore'))

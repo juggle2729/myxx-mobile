@@ -58,3 +58,12 @@
         p 2. 包含籽料特征图的商品数量需占总商品数量的50%以上
         p 您可以在商品管理中对之前发布的商品进行编辑修改，补充上传籽料特征图片。
 </template>
+<script>
+export default {
+    name: 'help-ziliao-feature-component',
+
+    ready() {
+        this.action('updateTitle', { text: '籽料特征图' })
+    }
+}
+</script>

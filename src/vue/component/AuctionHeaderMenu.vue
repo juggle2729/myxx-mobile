@@ -23,7 +23,7 @@ bg($key)
         width 48px
         height 48px
     &.share-page
-        top 112px
+        top 100px
     .red-dot
         top 0
         right 0

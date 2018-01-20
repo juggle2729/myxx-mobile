@@ -515,9 +515,9 @@ bg($key)
                 .product-attribute.bg-gray-f7.bdb
                     .fz-24.gray-8f 商品属性
                     .attribute-list
-                        .attribute.fz-28(v-for="(k, v) in productAttributes")
-                            span.gray-8f {{ k + '：'}}
-                            span.black-47 {{ v }}
+                        .attribute.fz-28(v-for="attr in productAttributes")
+                            span.gray-8f {{ attr.name }}
+                            span.black-47(v-if="attr.value") {{ attr.value }}
                 pre.product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
     .live-auction.flex(v-if="showProductDialog && dialogProduct", transition= 'show')
         .overlay(@click="showProductDialog = false")
@@ -535,9 +535,9 @@ bg($key)
                 .product-attribute.bg-gray-f7.bdb
                     .fz-24.gray-8f 商品属性
                     .attribute-list
-                        .attribute.fz-28(v-for="(k, v) in productAttributes")
-                            span.gray-8f {{ k + '：'}}
-                            span.black-47 {{ v }}
+                        .attribute.fz-28(v-for="attr in productAttributes")
+                            span.gray-8f {{ attr.name }}
+                            span.black-47(v-if="attr.value") {{ attr.value }}
                 pre.product-description.fz-30.black-24(v-if="dialogProduct.detail") {{ dialogProduct.detail }}
     .definition-select.flex.pdv-30(v-show="showDefinitionSelect", transition= 'fade')
         .fz-30.flex.flex-1(v-for="(key, value) in definitions", :class="key === definition ? 'selected': ''", @click="selectDefinition(key)") {{ value }}
@@ -602,7 +602,7 @@ export default {
             dialogProduct: {},
             productIndex: 0,
             cacheProducts: {},
-            productAttributes: {},
+            productAttributes: [],
             showSwiper: false, // 防止swiper缓存索引
             messageNotification: null,
             notificationShowTime: 3000,
@@ -844,18 +844,18 @@ export default {
                 })
         },
 
-        generateAttributes({ material, weight, category, size, circle_size, skin, variety, place, theme }) {
-            const attributes = {}
-            material && (attributes['产状'] = material.name)
-            weight && (attributes['重量'] = weight + '克')
-            category && (attributes['分类'] = category.name)
-            size && (!category || !(/手镯|戒指|扳指/.test(category.name))) && (attributes['尺寸'] = size + 'mm')
-            circle_size && category && /手镯|戒指|扳指/.test(category.name) && (attributes['圈口'] = circle_size + 'mm')
-            skin && (attributes['皮色'] = skin.name)
-            variety && (attributes['种类'] = variety.name)
-            place && (attributes['产地'] = place.name)
-            theme && (attributes['题材'] = theme.name)
-            this.productAttributes = attributes
+        generateAttributes(product) {
+            this.productAttributes.length = 0
+            this.productAttributes.push({
+                name: '重量',
+                value: product.weight + '克'
+            }, ...product.attrs.map(attr => {
+                attr.value && (attr.value = attr.value.join(','))
+                if (attr.value) {
+                    attr.value = this.truncate(attr.value, /\d/.test(attr.value) ? 18 : 12)
+                }
+                return attr
+            }))
         },
 
         purchase(product) {

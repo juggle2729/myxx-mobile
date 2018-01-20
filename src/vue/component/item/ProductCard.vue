@@ -40,12 +40,12 @@ a.product-card.bg-white.bd-gray-ed(@click="goToDetail(item)")
     .media(v-bg.md='item.first_picture')
         .auction-flag.absolute(v-if='item.auction')
     .pdb-26.pdh(:class="{'pdt-26': btn}")
-        .fz-26.line-clamp-1(:class="{'line-height-104': !btn}") {{item.title}}
+        .fz-26.line-clamp-1.black-24(:class="{'line-height-104': !btn}") {{item.title}}
         .flex.mgt-12.fz-22.light.mgb-10(v-if="btn")
             img.mgr-8(v-if="item.sunlight", :src="'shop/sunlight.png' | qn")
             img.mgr-8(v-if="item.cigar_scale", :src="'shop/cigar-4.3.png' | qn")
             img(v-if="item.ziliao_feature", :src="'shop/ziliao.png' | qn")
-        .red.pdv-8.flex
+        .red-e6.pdv-8.flex
             .fz-24.flex-1(v-if="item.sell_status === 'sold'") {{item.sell_status_editable ? '实体店已售出' : '已售出'}}
             .price.fz-30.flex-1(v-if="!item.auction && item.sell_status !== 'sold'") {{item.price | price}}
             .is-auction.fz-30.flex-1(v-if="item.auction") 拍卖中

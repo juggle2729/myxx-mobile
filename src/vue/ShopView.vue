@@ -53,7 +53,7 @@
                 border-bottom 4px solid #e61717
             &.share-on-top
                 position fixed
-                top 112px
+                top 100px
             &.on-top
                 position fixed
                 top 0

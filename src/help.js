@@ -313,6 +313,18 @@ export default {
                 }
             ]
         },
+        'certificate': {
+            title: '出具鉴定证书',
+            items: [
+                {
+                    title: '鉴定证书',
+                    content: '选择了鉴定证书选项，代表着对应商品可出具国家承认的、具备珠宝玉石成分明确鉴定结果的证书。'
+                }, {
+                    title: '商品发货',
+                    content: '如果商品勾选了鉴定证书，在商品发货时，需连同鉴定证书一起寄送给买家，买家无需支付额外费用。'
+                }
+            ]
+        },
         'about_customization': {
             title: '关于定制商品的规则说明及处理原则',
             type: 'about_customization',

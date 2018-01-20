@@ -141,22 +141,26 @@ export default {
                 ], [
                     {
                         id: 0,
-                        desc: '皮色存疑',
+                        desc: '描述不符',
                         selected: false
                     }, {
                         id: 1,
-                        desc: '疑似仿籽',
+                        desc: '视频和图片不是同一商品',
                         selected: false
                     }, {
                         id: 2,
-                        desc: '疑似非和田玉冒充和田玉',
+                        desc: '和田玉-疑似仿籽',
                         selected: false
                     }, {
                         id: 3,
-                        desc: '图片、视频展示的信息和卖家通过标题、属性描述的信息不相符',
+                        desc: '和田玉-皮色存疑',
                         selected: false
                     }, {
                         id: 4,
+                        desc: '翡翠-非A货翡翠商品',
+                        selected: false
+                    }, {
+                        id: 5,
                         desc: '其他',
                         selected: false
                     }

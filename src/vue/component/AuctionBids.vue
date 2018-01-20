@@ -4,7 +4,9 @@
     from { transform: rotate(0deg) }
     to { transform: rotate(360deg) }
 .auction-bids
-    .title
+    &.list-page
+        padding-bottom 28px
+    .bid-title
         line-height 80px
     .empty
         height 130px
@@ -22,17 +24,21 @@
     .update-icon
         width 26px
         height @width
-        background url($qn + 'auction/update.png') no-repeat center
+        background url($qn + 'auction/update.png?v1') no-repeat center
         background-size 100%
         &.fresh
             animation fresh 0.8s
+    &.show-transition
+        transition opacity .2s ease-out
+    &.show-leave, &.show-enter
+        opacity 0
 </style>
 <template lang="pug">
-.auction-bids.fz-26
+.auction-bids.fz-26(v-show="loadDone", transition= "show", :class="isListPage ? 'list-page' : ''")
     .flex.bdb.mgl-32(@click="seeMore")
-        .title.gray 出价记录
+        .gray.bid-title.bold 出价记录
         .flex-1
-        .bid-times.fz-26.gray.mgr-16(v-if="items.total > 0") {{ items.total }}次出价
+        .bid-times.fz-24.gray.mgr-16(v-if="items.total > 0") {{ items.total }}次出价
         icon.mgr-32.gray(name="enter", v-if="showMore")
     .bid-records
         template(v-for="item in items")
@@ -43,7 +49,7 @@
     template(v-if="!items.isEmpty && $route.name === 'auction'")
         .update-btn.line-height-100.bdt.flex(@touchstart="refreshBid")
             .update-icon(:class="freshStyle")
-            .fz-26.red.mgl-12 点击刷新出价
+            .fz-26.red-e6.mgl-12 点击刷新出价
 </template>
 <script>
 import paging from 'paging'
@@ -91,6 +97,14 @@ export default {
 
         showMore() {
             return this.limit && this.items.total > this.limit
+        },
+
+        loadDone() {
+            return typeof this.items.total !== 'undefined'
+        },
+
+        isListPage() {
+            return !this.items.isEmpty && this.$route.name !== 'auction'
         }
     },
 

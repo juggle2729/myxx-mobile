@@ -23,25 +23,30 @@
     .hr
     .pdl-32.fz-30.bg-white
         .line-height-100.bdb.bold 商品标记
-        .line-height-100.flex.bdb.pdr-32(v-if="items[profile.sunlight]", v-link="items[profile.sunlight].interaction ? {name: 'promise-detail', params: {type: 'sunlight'}, query: {isOpen: profile.sunlight, num: profile.products_count}} : ''")
+        .line-height-100.flex.bdb.pdr-32(v-link="{name: 'promise-detail', params: {type: 'sunlight'}}")
             img(:src="'shop/promise/sun.png' | qn")
             .mgl-12.flex-1 自然光拍摄
-            .mgr-12(v-if="items[profile.sunlight]", :class="[items[profile.sunlight].color]") {{items[profile.sunlight].title}}
-            icon.gray(name="enter", v-if="profile.sunlight != 'auditing'")
-        .line-height-100.flex.bdb.pdr-32(v-if="items[profile.cigar_scale]", v-link="items[profile.cigar_scale].interaction ? {name: 'promise-detail', params: {type: 'cigar_scale'}, query: {isOpen: profile.cigar_scale, num: profile.products_count}} : ''")
+            .mgr-12.gray 查看说明
+            icon.gray(name="enter")
+        .line-height-100.flex.bdb.pdr-32(v-link="{name: 'promise-detail', params: {type: 'cigar_scale'}}")
             img(:src="'shop/promise/smoke.png' | qn")
             .mgl-12.flex-1 烟标图
-            .mgr-12(v-if="items[profile.cigar_scale]", :class="[items[profile.cigar_scale].color]") {{items[profile.cigar_scale].title}}
-            icon.gray(name="enter", v-if="profile.cigar_scale != 'auditing'")
-        .line-height-100.flex.pdr-32(v-if="items[profile.ziliao_feature]", v-link="items[profile.ziliao_feature].interaction ? {name: 'promise-detail', params: {type: 'ziliao_feature'}, query: {isOpen: profile.ziliao_feature, num: profile.products_count}} : ''")
+            .mgr-12.gray 查看说明
+            icon.gray(name="enter")
+        .line-height-100.flex.pdr-32(v-link="{name: 'promise-detail', params: {type: 'ziliao_feature'}}")
             img(:src="'shop/promise/ziliao.png' | qn")
             .mgl-12.flex-1 籽料特征图
-            .mgr-12(v-if="items[profile.ziliao_feature]", :class="[items[profile.ziliao_feature].color]") {{items[profile.ziliao_feature].title}}
-            icon.gray(name="enter", v-if="profile.ziliao_feature != 'auditing'")
+            .mgr-12.gray 查看说明
+            icon.gray(name="enter")
+        .line-height-100.flex.pdr-32(v-link="{name: 'promise-detail', params: {type: 'certificate'}}")
+            img(:src="'shop/promise/certificate.png' | qn")
+            .mgl-12.flex-1 出具鉴定证书
+            .mgr-12.gray 查看说明
+            icon.gray(name="enter")
     .hr
     .pdl-32.fz-30.bg-white
         .line-height-100.bdb.bold 店铺服务
-        .line-height-100.flex.pdr-32(v-link="{name: 'promise-detail', params: {type: 'shop_return'}, query: {isOpen: 'succeed'}}")
+        .line-height-100.flex.pdr-32(v-link="{name: 'promise-detail', params: {type: 'shop_return'}}")
             img(:src="'shop/promise/three.png' | qn")
             .mgl-12.flex-1 三天无理由退货
             .green.mgr-12 已开通
@@ -56,18 +61,12 @@
             icon.gray(name="enter")
 </template>
 <script>
-const items = { // interaction 是否可以点击进入二级页面
-    'succeed': { title: '已开通', color: 'green', interaction: true},
-    'auditing': { title: '审核中', color: 'gray', interaction: false},
-    'unaudited': { title: '尚未开通', color: 'red', interaction: true}
-}
 export default {
     name: 'help-shop-promise',
 
     data() {
         return {
-            profile: {},
-            items: items
+            profile: {}
         }
     },
 

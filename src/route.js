@@ -762,7 +762,7 @@ export default {
     },
 
     '/help/eco-system': {
-        title: '打造和田玉良性生态的举措',
+        title: '打造良性生态的举措',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('HelpEcoSystemView.vue'));
@@ -852,8 +852,8 @@ export default {
         native: v => v >= 4.1 && {name: 'auction'},
         component(resolve) {
             require.ensure([], (require) => {
-                resolve(require('AuctionView.vue'))
-            }, 'auction')
+                resolve(require('ProductView.vue'))
+            }, 'mall') // 拍卖和商品页面结构差不多，共用一个页面
         }
     },
 
