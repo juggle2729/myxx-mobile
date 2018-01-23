@@ -41,7 +41,7 @@ bg($icon, $size)
             padding: 8px 12px
             margin-right: 8px
     .num:first-letter
-        color: #cc3f4f
+        color: #e61717
     .operation
         -webkit-box-pack justify
     .delete

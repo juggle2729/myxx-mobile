@@ -9,7 +9,7 @@
         width: 92px
     .all .btn
         background-color: white
-        color: #cc3f4f
+        color: #e61717
         text-align: center
         .icon-enter
             width: 30px
@@ -47,7 +47,7 @@ export default {
 
     ready() {
         _.delay(() => {
-            const hot = this.$el.querySelectorAll('.list')[0] 
+            const hot = this.$el.querySelectorAll('.list')[0]
             const noComment = this.$el.querySelector('.no-comment')
             // 待优化
             hot.classList.contains('empty') && noComment.classList.remove('none') && noComment.classList.add('block')

@@ -12,7 +12,7 @@
         box-sizing: content-box
         border-left: 1px solid #efefef
         &.new::before
-            background-color: #cc3f4f
+            background-color: #e61717
         &::before
             content: ''
             border: 8px solid white

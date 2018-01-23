@@ -14,9 +14,9 @@
             .bold
                 color: #f1ab47
         &.going
-            background-color #cc3f4f
+            background-color #e61717
             .bold
-                color: #cc3f4f
+                color: #e61717
         &.fail,&.success
             background-color #888
             .bold
@@ -47,7 +47,7 @@
                     color #c6c6c6
                 &.going, &.success
                     .current-price
-                        color #cc3f4f
+                        color #e61717
                 &.fail .current-price
                     color #393939
                 .separator
@@ -167,7 +167,7 @@
             text-align center
             a
                 background-color white
-                color #cc3f4f
+                color #e61717
                 font-size 26px
                 font-weight bold
                 height 90px

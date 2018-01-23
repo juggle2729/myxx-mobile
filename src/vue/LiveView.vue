@@ -517,7 +517,7 @@ bg($key)
                     .attribute-list
                         .attribute.fz-28(v-for="attr in productAttributes")
                             span.gray-8f {{ attr.name }}
-                            span.black-47(v-if="attr.value") {{ attr.value }}
+                            span.black-47.mgl-36(v-if="attr.value") {{ attr.value }}
                 pre.product-description.fz-30.black-24(v-if="dialogAuction.product.detail") {{ dialogAuction.product.detail }}
     .live-auction.flex(v-if="showProductDialog && dialogProduct", transition= 'show')
         .overlay(@click="showProductDialog = false")
@@ -537,7 +537,7 @@ bg($key)
                     .attribute-list
                         .attribute.fz-28(v-for="attr in productAttributes")
                             span.gray-8f {{ attr.name }}
-                            span.black-47(v-if="attr.value") {{ attr.value }}
+                            span.black-47.mgl-36(v-if="attr.value") {{ attr.value }}
                 pre.product-description.fz-30.black-24(v-if="dialogProduct.detail") {{ dialogProduct.detail }}
     .definition-select.flex.pdv-30(v-show="showDefinitionSelect", transition= 'fade')
         .fz-30.flex.flex-1(v-for="(key, value) in definitions", :class="key === definition ? 'selected': ''", @click="selectDefinition(key)") {{ value }}

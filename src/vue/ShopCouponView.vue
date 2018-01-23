@@ -80,10 +80,10 @@
             line-height: 160px
             text-align: center
             border-radius: 0 8px 8px 0
-            background: linear-gradient(120deg, #f77080, #cc3f4f 90%, #cc3f4f)
+            background: linear-gradient(120deg, #f77080, #e61717 90%, #e61717)
             position: relative
             // &:focus
-            //     background-color: #cc3f4f
+            //     background-color: #e61717
             //     color: black
             &::before
                 content: ''

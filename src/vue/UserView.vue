@@ -25,9 +25,9 @@
         > div
             line-height: 40px
             &.active
-                color: #cc3f4f
+                color: #e61717
         &.default > div:first-child
-            color: #cc3f4f
+            color: #e61717
     .footer
         height: 112px
         line-height: 60px

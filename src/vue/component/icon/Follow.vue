@@ -12,7 +12,7 @@
         background-color: #eeeeee
     &.active
         i
-            color: #cc3f4f
+            color: #e61717
             display: inline-block
     .btn
         height: 60px

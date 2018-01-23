@@ -100,7 +100,7 @@
 <template lang="pug">
 .shop-view.bg
     header.bg-white.bdb.flex.relative
-        .judge-shop.red-e6.fz-24.flex.absolute(v-if="self.is_platform_admin", v-link="{name: 'mall-judge', params: {type: 'sh', id: shop.id}}") 评判店铺
+        .judge-shop.red-e6.fz-24.flex.absolute(v-if="self && self.is_platform_admin", v-link="{name: 'mall-judge', params: {type: 'sh', id: shop.id}}") 评判店铺
         .shop-logo(v-bg="shop.logo")
         deep-link.has-icon.collect.bd-black-24.fz-24.black-24.absolute(@click="gotoDownload") 关注掌柜
         .flex.mgt-40

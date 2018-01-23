@@ -7,9 +7,9 @@ dark-6b()
     background-size 48px
     padding-top 52px
 .product-view
-    padding-bottom 98px
     .title
         margin 41px 34px 0
+        line-height 1.4
     .promise
         margin 15px 0 0 38px
     .text-item
@@ -92,6 +92,8 @@ dark-6b()
     .products
         display flex
         flex-wrap wrap
+        background #f7f7f7
+        padding-bottom 113px
     .product-card
         width calc((100% - 15px) / 2)
         margin-top 15px
@@ -143,9 +145,9 @@ dark-6b()
                 color #f1ab47
         &.going
             .pdh-10
-                background-color #cc3f4f
+                background-color #e61717
             .mgl-16
-                color #cc3f4f
+                color #e61717
         &.fail,&.success
             .pdh-10
                 background-color #888
@@ -188,7 +190,7 @@ dark-6b()
         .fz-44.flex-1.bold(v-if="prod.auction") 拍卖中
         .fz-30.flex-1(v-if="!prod.auction && isSold") {{ prod.sell_status_editable ? '实体店已售出' : '已售出' }}
         .price.fz-44.flex-1(v-if="!prod.auction && !isSold") {{ prod.price | price }}
-        .judge-product.fz-24.flex(v-if="self.is_platform_admin && !isAuction", v-link="{name: 'mall-judge', params: {type: 'pd', id: prod.id}}") 评判商品
+        .judge-product.fz-24.flex(v-if="self && self.is_platform_admin && !isAuction", v-link="{name: 'mall-judge', params: {type: 'pd', id: prod.id}}") 评判商品
     template(v-if="isAuction")
         .status-bar.flex.pdl-32.fz-20(:class="auction.status")
             .pdh-10(v-if="updating") 更新中

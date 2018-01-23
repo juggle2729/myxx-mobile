@@ -9,9 +9,9 @@
         border-radius 8px
         color #393939
         &.red
-            border(a, #cc3f4f)
+            border(a, #e61717)
             color white
-            background-color #cc3f4f
+            background-color #e61717
         &.gray
             border(a, #d9d9d9)
             color white

@@ -1,7 +1,7 @@
 <style lang="stylus">
 .user-home
     .line-height-90 span
-        border-left: 6px solid #cc3f4f
+        border-left: 6px solid #e61717
     .shop
         .img
             height: 100px

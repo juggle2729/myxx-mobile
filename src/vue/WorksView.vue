@@ -14,7 +14,7 @@
                 color: #d8d8d8
                 margin-left: 50px
                 &.active
-                    color: #cc3f4f
+                    color: #e61717
         &:not(:first-child)
             margin-top: 12px
 </style>

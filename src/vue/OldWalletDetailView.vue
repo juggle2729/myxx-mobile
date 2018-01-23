@@ -17,7 +17,7 @@
             line-height: 40px
             text-align: center
             &.v-link-active
-                color: #cc3f4f
+                color: #e61717
     .tabs-placeholder
         height: 100px
     .symbol

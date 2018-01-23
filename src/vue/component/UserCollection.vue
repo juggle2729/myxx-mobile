@@ -2,7 +2,7 @@
 .user-collection
     min-height: inherit
     span
-        border-left: 6px solid #cc3f4f
+        border-left: 6px solid #e61717
     .item .img, img
         height: 148px
         width: 148px
