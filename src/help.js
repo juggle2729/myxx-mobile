@@ -14,8 +14,8 @@ export default {
         'guide_8': { media: 'shop/guide/8.png?v2', title: '平台退货规则是怎样的？' },
         'guide_9': { media: 'shop/guide/9.png?v3', title: '自然光标记是什么？有什么好处？' },
         'guide_10': { media: 'shop/guide/10.png?v3', title: '烟标图标记是什么？有什么好处？' },
-        'about_violation_product': { type: 'about_violation_product', title: '关于违规商品的定义及处罚说明' },
-        'about_violation_shop': { type: 'about_violation_shop', title: '关于违规店铺的定义及处罚说明' },
+        'about_violation_product': { type: 'about_violation_product', title: '平台交易违规定义及处罚说明' },
+        'about_violation_shop': { type: 'about_violation_shop', title: '平台商品违规定义及处罚说明' },
         'about_high_grade_shop': { type: 'about_high_grade_shop', title: '关于优质店铺的要求及合作资源说明' }
     },
     desc: {

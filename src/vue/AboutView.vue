@@ -9,8 +9,6 @@
         .text
             p:nth-child(1)
                 margin-top 56px
-            p:nth-child(3)
-                margin-top 72px
     .help
         margin-top 60px
         .icon-enter
@@ -21,12 +19,7 @@
 .about-view.bg-light-gray
     .imgs.center
         img(:src="'profile/logo.png' | qn")
-        p.fz-26.gray.mgt-36 V{{ version }}
-        .text
-            p.fz-40 最大的和田玉爱好者平台
-            p.mgt-20.fz-30 玩玉最专业 买玉最放心
-            p.fz-30 客服电话：
-                a.red(href="tel:4000587266") 400-0587-266
+        p.fz-26.gray.mgt-28 V{{ version }}
     .help.bg-white.mgl-32.mgr-32
         .line-height-100.fz-30.bold.mgl-32.pdr-32.gray 帮助中心
         .line-height-100.flex.fz-26.bdt.mgl-32.pdr-32(v-link="{path: '/help/mall'}")
@@ -38,6 +31,8 @@
         .line-height-100.flex.fz-26.bdt.mgl-32.pdr-32(v-for="explanation in explanations", v-link="{name: 'help-explanation',params: {type: explanation.type}}")
             .flex-1 {{ explanation.title }}
             icon.gray(name="enter")
+    p.fz-30.center.mgt-40 客服电话：
+        a.red(href="tel:4000587266") 400-0587-266
 </template>
 <script>
 import help from '../help'
