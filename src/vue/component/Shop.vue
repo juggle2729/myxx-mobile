@@ -61,7 +61,7 @@
     .flex.mgt-48
         .flex.fz-26
             .black 全部商品
-            .red-e6.mgl-12 {{ shop.products_count }}
+            .red-e6.mgl-12 {{ shop.selling_count }}
         .separator
         .flex.fz-26
             .black 今日上新
