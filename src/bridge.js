@@ -33,16 +33,13 @@ const adapter = {
                 if(window.WeixinJSBridge) {
                     let urls = params.ids.split(',').map(id => {
                         if (/^http/.test(id)) return id
-                        return this.config.img + id
+                        return this.config.img + id + (_.includes(id, '_') ? '' : '_750')
                     })
                     window.WeixinJSBridge.invoke('imagePreview', {
                         urls,
                         current: urls[+params.index]
                     })
                 }
-                // else {
-                //     this.$root.popup = _.merge({}, params, {handler, cb})
-                // }
                 break
             case 'updateTitle':
                 document.title = params.text

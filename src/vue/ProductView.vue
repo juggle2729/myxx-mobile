@@ -226,7 +226,7 @@ dark-6b()
                 p.black-47(v-if="attr.value") {{ attr.value }}
     .imgs
         .img-item.video(v-if="prod.video", @click.stop='play(prod.video)', v-bg='prod.video', query='vframe/jpg/offset/5/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
-        .img-item(v-bg.lg="img", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
+        .img-item(v-bg.md="img", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
     shop(:shop="prod.shop")
     .mgt-36.bdt.bg-gray-f7
         .flex.bg-white.bd.relative(@click="onPage('/help/eco-system')")
