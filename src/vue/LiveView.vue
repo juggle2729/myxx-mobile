@@ -3,6 +3,11 @@
 bg($key)
     background-image url('//o0x80w5li.qnssl.com/live/' + $key + '.png')
     background-size cover
+p-border($w, $c) // 解决import mixin中的border冲突
+    border-left $w solid $c
+    border-top $w solid $c
+    border-right $w solid $c
+    border-bottom $w solid $c
 .live-view
     overflow hidden
     background #1a1a1a
@@ -110,7 +115,7 @@ bg($key)
         z-index 5
     .definition-select
         position absolute
-        bottom 37px
+        bottom 120px
         left 130px
         z-index 5
         width 100px
@@ -146,19 +151,22 @@ bg($key)
             display none
     .message
         display table
-        padding 8px 17px
+        padding 0 17px
         background rgba(0, 0, 0, 0.2)
-        line-height 1.4
+        line-height 50px
         border-radius 29px
-        &.system
+        &.sys
             color #f2d84c
-        &:not(.system)
+        &:not(.sys)
             .message-user-name
                 color #b8dd68
             .message-content
                 color #fff
             .image-content
                 color #6dcfd1
+        &.status
+            .message-content
+                color #f2d84c
         & + .message
             margin-top 10px
     .auction-info
@@ -196,10 +204,10 @@ bg($key)
         width 239px
         height 60px
         position absolute
-        bottom 40px
+        bottom 30px
         right 32px
         z-index 5
-        > div
+        .red-e6
             right 16px
             top 50%
             transform translateY(-50%)
@@ -208,6 +216,31 @@ bg($key)
             background #f2d84c
             font-size 18px
             border-radius 15px
+        .first-product
+            p-border(1px, #fff)
+            top -140px
+            left 50%
+            transform translateX(-50%)
+            width 160px
+            height 120px
+            &:after
+                p-border(10px, transparent)
+                content ""
+                display inline-block
+                border-top-color #fff
+                width 10px
+                height @width
+                position absolute
+                bottom -20px
+                left 50%
+                transform translateX(-50%)
+        .price
+            background-color rgba(0, 0, 0, 0.4)
+            line-height 30px
+            text-align center
+            position absolute
+            bottom 0
+            width 100%
     .overlay
         width 100%
         background rgba(0, 0, 0, 0.4)
@@ -401,6 +434,14 @@ bg($key)
         z-index 6
         background-image url('//o0x80w5li.qnssl.com/icon/play.svg')
         background-size cover
+    .watermark
+        bg(live_watermark)
+        position absolute
+        top 42px
+        right 30px
+        width 83px
+        height 50px
+        z-index 6
     .swiper-outer
         width 100%
         height 72.5%
@@ -408,6 +449,7 @@ bg($key)
 <template lang="pug">
 .live-view.relative
     .play-button(v-if="showPlayButton", @click="startPlay()")
+    .watermark
     .loading(v-if="showLoading || (!isReady && !isEnd && !isSuspend)")
     .player(v-if="!hasPlayback && isLive", id="J_prismPlayer", @click.stop="cancelDefinitionSelect()")
     .placeholder.flex(v-if="placeholder")
@@ -432,10 +474,10 @@ bg($key)
         .fz-30.red-e6.mgt-10 {{ messageNotification.content }}
     .messages(v-if="imMessages && imMessages.length", @click.stop="cancelDefinitionSelect()")
         .wrapper
-            .message.flex.fz-28(v-for="message in imMessages", :class="message.isSys ? 'system' : ''")
-                span.message-user-name {{ (message.isSys ? '系统消息': message.user.name) + '：' }}
+            .message.flex.fz-26(v-for="message in imMessages", :class="message.type || ''")
+                span.message-user-name {{ (message.type === 'sys' ? '系统消息': message.user.name) + (!message.type ? '：': ' ') }}
                 span.message-content(:class="message.imageUri && 'image-content'", @click="previewImage(message.imageUri)") {{ message.imageUri ? '【图片】' : message.content }}
-    .im(v-if="showPlayButton", @click="gotoDownload")
+    .im(v-if="!hasPlayback && isLive", @click="gotoDownload")
     .definition.fz-22.center(v-if="!hasPlayback && isLive", @click="showDefinitionSelect = !showDefinitionSelect") {{ definitions[definition] }}
     .auction-info.white(v-if="currentAuction", :class="currentAuction.status", @click="onAuctionDetail()")
         .fz-22.center - 当前拍品 -
@@ -455,6 +497,8 @@ bg($key)
                 .fz-36.mgt-14 {{currentAuction.start_time | date 'HH:MM'}}
                 .fz-30.mgt-24.preview.center 尚未开拍
     .relative-product(v-if="live.live_type === 'other'", @click="showLiveProduct()")
+        .first-product.absolute(v-if="liveProducts.length && showProductTipDialog", v-bg.sm="liveProducts[0].cover", @click.stop="previewProductDetail(0)")
+            .price.fz-20.white {{ liveProducts[0].price | price }}
         .red-e6.absolute.center {{ liveProducts.length }}
     .live-products.flex(v-if="showLiveProductDialog && liveProducts.length", transition= 'show')
         .overlay(@click="showLiveProductDialog = false")
@@ -608,7 +652,9 @@ export default {
             notificationShowTime: 3000,
             showPlayButton: false,
             showLoading: false,
-            joinCount: 0
+            joinCount: 0,
+            messageUIds: [],
+            showProductTipDialog: false
         }
     },
 
@@ -797,6 +843,7 @@ export default {
         },
 
         previewProductDetail(index) {
+            this.showProductTipDialog = false
             this.productIndex = index
             this.onProductDetail()
         },
@@ -845,14 +892,15 @@ export default {
         },
 
         generateAttributes(product) {
+            const attrs = _.cloneDeep(product.attrs)
             this.productAttributes.length = 0
             this.productAttributes.push({
                 name: '重量',
-                value: product.weight + '克'
-            }, ...product.attrs.map(attr => {
+                value: (product.weight || 0) + '克'
+            }, ...attrs.map(attr => {
                 attr.value && (attr.value = attr.value.join(','))
                 if (attr.value) {
-                    attr.value = this.truncate(attr.value, /\d/.test(attr.value) ? 18 : 12)
+                    attr.value = this.truncate(attr.value, /\d/.test(attr.value) ? 16 : 12)
                 }
                 return attr
             }))
@@ -877,6 +925,7 @@ export default {
             this.$fetch(`live/products`, { live_id: this.live.id })
                 .then(({ products }) => {
                     this.liveProducts = products
+                    this.showProductTipDialog = true
                 })
         },
 
@@ -1072,10 +1121,11 @@ export default {
             this.imtoken && this.live.chat_room_id && this.initRongIMInstance().then(instance => {
                 instance.joinChatRoom(this.live.chat_room_id, 50, {
                     onSuccess: () => {
-                        console.log("joinChatRoom Successfully");
+                        console.log("joinChatRoom Successfully")
+                        this.$post('live/join', { live_id: this.live.id })
                     },
                     onError: error => {
-                        console.log("joinChatRoom:errorcode: " + error);
+                        console.log("joinChatRoom:errorcode: " + error)
                     }
                 })
 
@@ -1147,7 +1197,7 @@ export default {
                                 const isNewMessage = this.isNewMessage(imMessage)
                                 switch (objectName) {
                                     case 'AC:start': // 开拍
-                                        this.imMessages.push({ isSys: true, content: `@所有人，${auction.product.title}已经开拍，可以参与竞价。` })
+                                        this.imMessages.push({ type: 'sys', content: `@所有人，${auction.product.title}已经开拍，可以参与竞价。` })
 
                                         if (isNewMessage) { // 新的拍品开始拍卖，需要更新拍品信息
                                             this.loadSpecialDetail()
@@ -1156,10 +1206,10 @@ export default {
                                         break
                                     case 'AC:end': // 结束
                                         if (auction.status === 'success') {
-                                            this.imMessages.push({ isSys: true,
+                                            this.imMessages.push({ type: 'sys',
                                                 content: `@所有人，${auction.product.title}已经结拍，成交价${this.toYuan(auction.current_price)}，恭喜${auction.current_bidder.nickname}！` })
                                         } else {
-                                            this.imMessages.push({ isSys: true, content: `@所有人，${auction.product.title}无人出价已流拍。` })
+                                            this.imMessages.push({ type: 'sys', content: `@所有人，${auction.product.title}无人出价已流拍。` })
                                         }
 
                                         if (isNewMessage) { // 当前拍品结束，需要更新拍品信息
@@ -1169,11 +1219,11 @@ export default {
                                         break
                                     case 'AC:bid': // 出价信息
                                         if (out_bid && out_bid.bidder && out_bid.bidder.id === this.self.id) { // 被超过人是自己的时候才显示
-                                            this.imMessages.push({ isSys: true,
+                                            this.imMessages.push({ type: 'sys',
                                                 content: `@${out_bid.bidder.nickname}，您的出价被${bidder.nickname}超过了，当前价${this.toYuan(bid_price)}` })
                                         }
                                         if (delay_flag) { // 延时提醒
-                                            this.imMessages.push({ isSys: true, content: `@所有人，延时期有人出价，拍品结束时间延时${delay_duration}秒` })
+                                            this.imMessages.push({ type: 'sys', content: `@所有人，延时期有人出价，拍品结束时间延时${delay_duration}秒` })
                                         }
 
                                         if (isNewMessage) { // 有新的出价记录，需要更新出价列表
@@ -1188,7 +1238,19 @@ export default {
                                         break
                                     case 'LIVE_JOIN:count':
                                         if (isNewMessage) { // 判断是否是新消息
-                                            this.joinCount = message.content.count
+                                            const { content: { increase_count, count, user }, messageUId } = message
+                                            this.joinCount = count
+                                            if (increase_count > 0 && !_.includes(this.messageUIds, messageUId)) {
+                                                console.log('live join')
+                                                this.messageUIds.push()
+                                                this.imMessages.push({ type: 'status', content: (increase_count > 1 ? `等${increase_count}人` : '') + '进入直播间', user })
+                                            }
+                                        }
+                                        break
+                                    case 'LIVE_FOLLOW:count':
+                                        if (isNewMessage) { // 判断是否是新消息
+                                            const { user } = message.content
+                                            user && this.imMessages.push({ type: 'status', content: '关注了主播', user })
                                         }
                                         break
                                 }

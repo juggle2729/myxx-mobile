@@ -47,7 +47,9 @@ module.exports = {
     }
 }
 
+let externalsPos = 0
 if (process.env.NODE_ENV === 'production') {
+    externalsPos = 4
     module.exports.vue.loaders.stylus = ExtractTextPlugin.extract('style', 'css!autoprefixer?{browsers:["ios >= 8", "android >= 4.1"]}!pxtorem?root=75&threshold=1!stylus')
     module.exports.plugins = [
         new webpack.DefinePlugin({
@@ -71,62 +73,45 @@ if (process.env.NODE_ENV === 'production') {
             minify: {collapseWhitespace: true, minifyCSS: true},
             hash: true
         }),
-        new HtmlWebpackExternalsPlugin({
-            externals: [
-                {
-                    module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/aliplayer-min.js',
-                    global: 'Aliplayer',
-                },
-                {
-                    module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/skins/default/aliplayer-min.css',
-                },
-                {
-                    module: 'RongIMLib',
-                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.9.min.js',
-                    global: 'RongIMLib',
-                },
-                {
-                    module: 'RongIMEmoji',
-                    entry: 'https://cdn.ronghub.com/RongEmoji-2.2.6.min.js',
-                    global: 'RongIMEmoji',
-                }
-            ]
-        }),
         new ExtractTextPlugin("style.css"),
         new CommonsChunkPlugin("commons.chunk.js")
     ];
 } else {
+    externalsPos = 3
     module.exports.plugins = [
         new webpack.ProvidePlugin({_: "lodash"}),
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
-        new HtmlWebpackExternalsPlugin({
-            externals: [
-                {
-                    module: 'aliplayer',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/aliplayer-min.js',
-                    global: 'Aliplayer',
-                },
-                {
-                    module: 'aliplayer-css',
-                    entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/skins/default/aliplayer-min.css',
-                },
-                {
-                    module: 'RongIMLib',
-                    entry: 'https://cdn.ronghub.com/RongIMLib-2.2.9.min.js',
-                    global: 'RongIMLib',
-                },
-                {
-                    module: 'RongIMEmoji',
-                    entry: 'https://cdn.ronghub.com/RongEmoji-2.2.6.min.js',
-                    global: 'RongIMEmoji',
-                }
-            ]
-        })
     ];
     module.exports.devtool = 'source-map';
 }
+
+module.exports.plugins.splice(externalsPos, 0, new HtmlWebpackExternalsPlugin({
+    externals: [
+        {
+            module: 'aliplayer',
+            entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/aliplayer-min.js',
+            global: 'Aliplayer',
+            append: true
+        },
+        {
+            module: 'aliplayer-css',
+            entry: 'https://g.alicdn.com/de/prismplayer/2.4.0/skins/default/aliplayer-min.css',
+            append: true
+        },
+        {
+            module: 'RongIMLib',
+            entry: 'https://cdn.ronghub.com/RongIMLib-2.2.9.min.js',
+            global: 'RongIMLib',
+            append: true
+        },
+        {
+            module: 'RongIMEmoji',
+            entry: 'https://cdn.ronghub.com/RongEmoji-2.2.6.min.js',
+            global: 'RongIMEmoji',
+            append: true
+        }
+    ]
+}))

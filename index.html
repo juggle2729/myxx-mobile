@@ -282,22 +282,5 @@ s6.7,15,15,15s15-6.7,15-15S32.3,10,24,10L24,10z"/>
 </defs>
 </svg>
 <div id="app"></div>
-<script>
-    (function(){
-        if (!/meiyuxiuxiu\.com$/.test(location.hostname)) { // 测试环境不做自动推送
-            return
-        }
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else{
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 </body>
 </html>
