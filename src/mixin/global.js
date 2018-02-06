@@ -329,6 +329,16 @@ const mixin = {
         duration(duration = 0) {
             const padZero = val => _.padStart(val, 2, '0')
             return `${padZero(parseInt(duration/60))}'${padZero(duration%60)}''`
+        },
+
+        actionToApp(to) {
+            if (!this.env.isApp) return false // 非app
+            let action = to.native && to.native(this.env.version)
+            if (!action) return false
+            action = _.isObject(action) ? _.merge(to, action) : to
+            this.action(action.name, action.params)
+            this.$router.replace('/transition')
+            return true
         }
     }
 }

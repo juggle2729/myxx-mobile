@@ -405,21 +405,23 @@ export default {
     },
 
     route: {
-        data() {
-            this.isAuction = this.$route.name === 'auction'
-            if (this.isAuction) {
-                return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
-                    this.updateAuctionData(auction)
-                })
-            } else {
-                return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
-                    _.update(prod, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
-                    this.setShareData(prod)
-                    this.prod = prod
-                    this.isSelf = _.get(this, 'self.id') == prod.owner.id
+        data({ to }) {
+            if(!this.actionToApp(to)) {
+                this.isAuction = this.$route.name === 'auction'
+                if (this.isAuction) {
+                    return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
+                        this.updateAuctionData(auction)
+                    })
+                } else {
+                    return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
+                        _.update(prod, 'circle_size', size => size ? (this.env.version < 3.8 ? size/100 : size) : '')
+                        this.setShareData(prod)
+                        this.prod = prod
+                        this.isSelf = _.get(this, 'self.id') == prod.owner.id
 
-                    this.setAttributes(prod)
-                }, () => this.prod.status = '')
+                        this.setAttributes(prod)
+                    }, () => this.prod.status = '')
+                }
             }
         }
     },

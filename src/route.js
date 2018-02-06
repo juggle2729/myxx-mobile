@@ -1042,6 +1042,16 @@ export default {
         }
     },
 
+    '/transition': {
+        title: '商品跳转中',
+        name: 'transition',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ProductTransitionView.vue'))
+            }, 'other')
+        }
+    },
+
     '/404': {
         title: '页面不存在',
         name: '404',
@@ -1052,7 +1062,7 @@ export default {
         }
     },
 
-    'api': {
+    '/api': {
         title: '客户端api测试',
         name: 'api',
         component(resolve) {

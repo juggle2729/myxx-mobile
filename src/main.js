@@ -57,7 +57,7 @@ router.beforeGo((from, to, app) => {
             && ['tab', ''].indexOf(_.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join(''))!==-1) {
             // 同一route内，做tab切换
         } else if(to.name === '404') {// 404切换
-        } else {
+        } else if(to.name !== 'transition'){ // IM消息跳转特殊处理
             app.action('go', {url: to.path, target: to.target || to.query.target || '' })
             interrupted = true
         }
@@ -75,20 +75,15 @@ router.beforeEach(({from, to, next, abort}) => {
         abort()
         location.href = config.download
     } else {
-        if (to.router.app.env.isApp && to.name === 'auction') { // 拍卖主页
-            location.href = location.href.replace(location.pathname, `/auction/home`)
-            abort()
-        } else {
-            // 同一路由内，仅切换tab时，不调整滚动位置
-            if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
-                if (!from.detail && !to.detail && !from.list && !to.list) {
-                    window.scroll(0, 0)
-                }
+        // 同一路由内，仅切换tab时，不调整滚动位置
+        if (from.name !== to.name || 'tab' !== _.reduce(from.params, (result, v, k) => v === to.params[k] ? result: result.concat(k), []).join('')) {
+            if (!from.detail && !to.detail && !from.list && !to.list) {
+                window.scroll(0, 0)
             }
-            document.title = to.title || '美玉秀秀'
-            to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
-            next()
         }
+        document.title = to.title || '美玉秀秀'
+        to.router.app.action('updateTitle', {text: to.title || '美玉秀秀'})
+        next()
     }
 })
 

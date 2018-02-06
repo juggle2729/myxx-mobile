@@ -457,10 +457,12 @@ export default {
     },
 
     route: {
-        data({from, to, next}) {
-            return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
-                this.updateData(auction)
-            })
+        data({ to }) {
+            if(!this.actionToApp(to)) {
+                return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
+                    this.updateData(auction)
+                })
+            }
         }
     },
 
