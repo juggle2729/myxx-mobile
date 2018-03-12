@@ -165,7 +165,7 @@ const mixin = {
                         const [path, version] = url.split('|')
                         let headers = _.fromPairs([ // 处理请求头
                                 ['X-Auth-Token', _.get(user, 'token')],
-                                ['X-Api-Version', version || 'v30']
+                                ['X-Api-Version', version || 'v32']
                             ].filter(header => header[1]))
                         let noData = (method === 'get' || method === 'delete')
                         this.$http[method](path, (noData ? {headers, params: _.omitBy(data, _.isNull), body: data, emulateJSON: true} : data), (noData ? '' : {headers}))

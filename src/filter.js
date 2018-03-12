@@ -44,7 +44,7 @@ const filters = {
             if (diffDays < 8) {
                 m = diffDays + '天前'
             } else {
-                m = dateformat(d, 'yyyy-mm-dd')
+                m = dateformat(d, 'yyyy/mm/dd')
             }
         }
         return m
@@ -105,6 +105,35 @@ const filters = {
 
     diffNowTime(targetTime) {
         return date.diffNowTime(targetTime)
+    },
+
+    percent(value){
+        if(value){
+            let symbol = value > 0 ? ' 高' : ' 低'
+            // let number = (''+Math.abs(value)).match(/(\d+\.\d{1})/)[0]
+            let number = Math.abs(value)
+            return symbol + number + '%'
+        }else{
+            if(value === 0){
+                return ' 持平'
+            }
+            return '-'
+        }
+    },
+    tofixed(value, length = 2){
+        if(typeof value === 'number'){
+            return value.toFixed(length)
+        }
+        return value
+    },
+    floorfix(value){
+        let num_str = ''+Math.abs(value)
+        let match = num_str.match(/(\d+\.\d{1})/)
+        if(match){
+            return match[0]
+        }else{
+            return num_str + '.0'
+        }
     }
 }
 

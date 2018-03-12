@@ -32,64 +32,45 @@
         transform translateY(-3px)
     .empty-component
         height calc(100% - 440px)
+
+    .type
+        padding 10px 22px
+        background-color #F7F9FC
+        color #6B6B6B
+        margin-right 20px
+        &.active
+            background-color #FFF0F0
+            color #E61717
+            font-weight bold
 </style>
 <template  lang="pug">
 .shop-comment-view.bg
-    .evaluate.bg-white.flex.bdt.bdb
-        .col.fz-26.black-47
-            .row
-            .row 商品评价：
-            .row 商品服务：
-        .col.title.flex-1
-            .row 好评率
-            .row.percent {{ productComment[0] }}
-            .row.percent {{ shopComment[0] }}
-        .col.title.left-border
-            .row 好评
-            .row.number {{ productComment[1] }}
-            .row.number {{ shopComment[1] }}
-        .col.title.left-border
-            .row 中评
-            .row.number {{ productComment[2] }}
-            .row.number {{ shopComment[2] }}
-        .col.title.left-border
-            .row 差评
-            .row.number {{ productComment[3] }}
-            .row.number {{ shopComment[3] }}
+    shop-score(:data="sellerComment")
     .bg-white.bdt
-        .pdh-36
-            .line-height-110.flex.fz-26.black-24(@click="hasContent = !hasContent")
-                icon(:name="hasContent ? 'selected' : 'select'")
-                .mgl-20 只看有内容的评价
-            .tabs.flex.fz-26(:class="{'pdb-26 bdb': tags.length <= 0}")
-                .tab.flex(v-for="tab in tabs", @click="chooseTab = tab.id")
-                    icon(:name="tab.id === chooseTab ? 'selected' : 'select'")
-                    .mgl-16 {{ tab.label }}
-            marks.pdb-26.pdt-50.bdb.bg-white(v-if="tags.length > 0", :tags="tags")
-        opinion-list(:items="items")
+        .pdt-40.pdb-32.pdl-18.flex.fz-26.mgh-32.bdb
+            .type(@click="changeType('all')", :class="type === 'all' ? 'active': ''") 全部
+            .type(@click="changeType('new')", :class="type === 'new' ? 'active': ''") 最新评价
+            .type(@click="changeType('picture')", :class="type === 'picture' ? 'active': ''") 有图
+        opinion-list(:items="items",:seller="true")
 </template>
 <script>
 import Marks from 'component/Marks.vue'
 import OpinionList from 'component/OpinionList.vue'
+import ShopScore from 'component/ShopScore.vue'
 import paging from 'paging'
+import emitter from "../util/emitter";
 export default {
     name: 'shop-comment-view',
     mixins: [paging],
-    components: { Marks, OpinionList },
+    components: { Marks, OpinionList, ShopScore },
 
     data() {
         return {
-            tabs: [
-                {id: '', label: '全部'},
-                {id: 'good', label: '好评'},
-                {id: 'normal', label: '中评'},
-                {id: 'bad', label: '差评'}
-            ],
-            chooseTab: '',
-            hasContent: false,
-            tags: [],
-            productComment: [],
-            shopComment: []
+            sellerComment: {},
+            type: 'all',
+            params: {
+                order_by: 'all'
+            }
         }
     },
 
@@ -98,32 +79,29 @@ export default {
             return {
                 path: 'mall/orders/comments',
                 list: 'comments',
-                params: {
-                    limit: 20,
-                    choice: this.chooseTab,
-                    has_content: this.hasContent
-                }
+                params: this.params,
             }
         }
     },
 
     ready() {
-        this.$fetch(`mall/shop/${this.$route.params.id}/profile`).then(({comment_stats}) => {
-            this.productComment = comment_stats[0]['product']
-            this.shopComment = comment_stats[1]['seller']
+        this.$fetch(`mall/shop/${this.$route.params.id}/profile`).then(({seller_comment}) => {
+            this.sellerComment = seller_comment
         })
-        this.$fetch(`mall/orders/comments`).then(({tags}) => {
-            this.tags = tags
+
+        emitter.on('reply_success',() => {
+            this.fetch(true)
         })
     },
 
-    watch: {
-        chooseTab(newVal) {
-            this.paging.params.choice = newVal
-            this.fetch(true)
-        },
-        hasContent(newVal) {
-            this.paging.params.has_content = newVal
+    methods: {
+        changeType(type){
+            this.type = type
+            if(type !== 'picture'){
+                this.params = {order_by: type}
+            }else{
+                this.params = {has_picture: true}
+            }
             this.fetch(true)
         }
     }
