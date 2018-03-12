@@ -7,7 +7,7 @@
 .user-activity.bg
     .hr
     template(v-for="item in items")
-        component(:is="config.category[item.type]", keep-alive, :item="item")
+        component(:is="config.category[item.type]", keep-alive, :item="item",class="bdb bdt")
         .hr
 </template>
 <script>
@@ -34,10 +34,12 @@ export default {
         Live
     },
 
+    props:['userId'],
+
     data() {
         return  {
             paging: {
-                path: `users/${this.$route.params.id}/timeline`,
+                path: this.userId ? `users/${this.userId}/timeline` :`users/${this.$route.params.id}/timeline`,
                 params: {
                     limit: 10
                 }

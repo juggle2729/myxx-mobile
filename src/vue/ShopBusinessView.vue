@@ -14,24 +14,21 @@
         top 50%
         transform translateY(-50%)
     .title
-        height 80px
+        height 112px
         padding-right 32px
         &.justify
             -webkit-box-pack justify
-    .title-txt
-        &::before
-            content ''
-            width 5px
-            height 26px
-            background-color #e61717
-            display block
-            margin-right 12px
     .flex-1
         width 50%
     .diff
         -webkit-box-align baseline
     .black-24
         font-weight 500
+.arrow-circle-icon
+    width 28px
+    height @width
+    background-image url('//o0x80w5li.qnssl.com/arrow-right-circle.png')
+    background-size cover
 </style>
 <template lang="pug">
 .shop-business.bg-white
@@ -39,11 +36,11 @@
     .flex.pdl-32.last-login(v-link="{path: '/help/desc/login_time_rule', query: {target: 'blank'}}")
         .black-24.fz-30 上一次登录时间
         .flex.relative
-            .green-a1.fz-26.mgr-32 {{ lastLoginDate }}
+            .green-3d.fz-26.mgr-32.bold {{ lastLoginDate }}
             icon.gray.absolute(:name="'enter'")
     .hr.bdv
-    .title.title-txt.flex.fz-26.gray-8f.pdl-24.bdb 商品
-    .pdv-50
+    .title.flex.fz-32.black-47.pdl-38 商品
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 在售总数
@@ -59,12 +56,12 @@
                 .fz-26.dark-6b 复购率
                 .mgt-20.fz-48.black-24 {{ precision(stats.product_stats.repurchase_rate * 100) + '%' }}
     .hr.bdv
-    .title.flex.pdl-24.bdb.justify(@click="goDetail('click_stats')")
-        .title-txt.flex.fz-26.gray-8f 店铺平台浏览
+    .title.flex.fz-32.black-47.pdl-38.justify(@click="goDetail('click_stats')")
+        .flex.fz-32.black-47 店铺平台浏览
         .flex.relative
             .gray-b3.fz-26.mgr-32 查看更多
             icon.gray.absolute(:name="'enter'")
-    .pdv-50
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日平台浏览 (人)
@@ -77,12 +74,12 @@
                     .fz-48.black-24 {{ stats.click_stats.pv }}
                     .fz-20.mgl-16(v-if='clickStatsPvDiff !== 0', :class="this.diffClass(clickStatsPvDiff)") {{ this.diffRateStr(clickStatsPvDiff) }}
     .hr.bdv
-    .title.flex.pdl-24.bdb.justify(@click="goDetail('share_stats')")
-        .title-txt.flex.fz-26.gray-8f 店铺分享浏览
+    .title.flex.fz-32.black-47.pdl-38.justify(@click="goDetail('share_stats')")
+        .flex.fz-32.black-47 店铺分享浏览
         .flex.relative
             .gray-b3.fz-26.mgr-32 查看更多
             icon.gray.absolute(:name="'enter'")
-    .pdv-50
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日分享浏览 (人)
@@ -95,12 +92,12 @@
                     .fz-48.black-24 {{ stats.share_stats.pv }}
                     .fz-20.mgl-16(v-if='shareStatsPvDiff !== 0', :class="this.diffClass(shareStatsPvDiff)") {{ this.diffRateStr(shareStatsPvDiff) }}
     .hr.bdv
-    .title.flex.pdl-24.bdb.justify(@click="goDetail('order_stats')")
-        .title-txt.flex.fz-26.gray-8f 付款
+    .title.flex.fz-32.black-47.pdl-38.justify(@click="goDetail('order_stats')")
+        .flex.fz-32.black-47 付款
         .flex.relative
             .gray-b3.fz-26.mgr-32 查看更多
             icon.gray.absolute(:name="'enter'")
-    .pdv-50
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日付款订单 (笔)
@@ -111,12 +108,12 @@
                 .flex.mgt-20.diff
                     .fz-48.black-24 {{ stats.order_paid_stats.sum | price '0' false }}
     .hr.bdv
-    .title.flex.pdl-24.bdb.justify(@click="goDetail('return_stats')")
-        .title-txt.flex.fz-26.gray-8f 退款退货
+    .title.flex.pdl-38.justify(@click="goDetail('return_stats')")
+        .flex.fz-32.black-47 退款退货
         .flex.relative
             .gray-b3.fz-26.mgr-32 查看更多
             icon.gray.absolute(:name="'enter'")
-    .pdv-50
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 昨日退款退货订单 (笔)
@@ -134,8 +131,8 @@
                 .fz-26.dark-6b 累计退货率
                 .mgt-20.fz-48.black-24 {{ precision(stats.order_return_stats.order_return_rate * 100) + '%' }}
     .hr.bdv
-    .title.title-txt.flex.fz-26.gray-8f.pdl-24.bdb 服务
-    .pdv-50
+    .title.flex.fz-32.black-47.pdl-38 服务
+    .pdt-30.pdb-60
         .flex
             .flex-1.bdr.pdl-40
                 .fz-26.dark-6b 发货速度
@@ -147,6 +144,15 @@
                 .flex.mgt-20.diff
                     .fz-48.black-24 {{ serviceSpeed }}
                     .fz-20.mgl-16(v-if='serviceDiff > 0', :class="this.diffClass(serviceDiff)") {{ serviceDiff >= 0 ? '高于均值' : '低于均值' }}
+        .flex.mgt-45
+            .flex-1.bdr.pdl-40(v-link="{path: '/shop/violation', query: {target: 'blank'}}")
+                .fz-26.dark-6b 90天内违规（次）
+                .mgt-20.fz-48.black-24
+                    span {{ stats.recent_violation_count }}
+                    .mgl-18.arrow-circle-icon.inline-block
+            .flex-1.pdl-40
+                .fz-26.dark-6b 交易纠纷率
+                .mgt-20.fz-48.black-24 {{ precision(stats.dispute_rote[0] * 100) + '%' }}
     .hr.bdv
 </template>
 <script>
@@ -230,7 +236,7 @@ export default {
         },
 
         diffClass(rate) {
-            return rate > 0 ? 'green-a1' : 'red-e6'
+            return rate > 0 ? 'high' : 'low'
         },
 
         goDetail(type) {

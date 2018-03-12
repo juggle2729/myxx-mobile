@@ -23,7 +23,7 @@
             display: block
     .desc
         .flex
-            -webkit-box-align: start
+            // -webkit-box-align: start
         img.post
             display: block
             height: 30px

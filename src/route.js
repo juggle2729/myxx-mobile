@@ -321,6 +321,16 @@ export default {
         }
     },
 
+    '/shop/:id/score': {
+        name: 'shop-score-detail',
+        title: '店铺评分详情',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('ShopScoreView.vue'))
+            }, 'shop')
+        }
+    },
+
     '/shop/violation': {
         name: 'shop-violation',
         title: '店铺违规记录',

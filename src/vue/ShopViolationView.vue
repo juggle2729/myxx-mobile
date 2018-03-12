@@ -6,7 +6,7 @@
 </style>
 <template lang="pug">
 .shop-violation.bg-white
-    .fz-30.bdb.pd-32(v-for='item in items', v-link="{name: 'violation-detail', params: {id: item.id}}")
+    .fz-30.bdb.pd-32(v-for='item in items', v-link="{name: 'violation-detail', params: {id: item.id}, query: {target: 'blank'}}")
         .flex.fz-22.gray
             .flex-1 {{item.type}}
             div {{item.create_at | date 'yyyy-m-dd hh:MM'}}

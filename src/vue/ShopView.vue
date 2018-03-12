@@ -48,8 +48,7 @@
             border-color #ededed
             li
                 line-height 90px
-            .black-24
-                font-weight bold
+            .bold
                 border-bottom 4px solid #e61717
             &.share-on-top
                 position fixed
@@ -121,8 +120,10 @@
     .tabs.relative
         .tabs-placeholder
         ul.flex.fz-30.bdb.pdh-20.bg-white.absolute(:class="onTop")
-            li.flex-1.center(v-for="tab in tabs", :class="view === tab.id ? 'black-24': 'dark-6b'", @click="view = tab.id") {{ tab.name }}
-    component(:is="view", :shop="shop", keep-alive)
+            li.flex-1.center.black-24(v-for="tab in tabs", :class="view === tab.id ? 'bold': ''", @click="view = tab.id")
+                span {{ tab.name }}
+                span.mgl-12.gray-8f.fz-22.number {{numbers[tab.id]}}
+    component(:is="view", :shop="shop", :user-id="shop.owner.id" keep-alive)
     .footer.flex.bdt.bg-white
         deep-link.has-icon.flex-1.fz-36
             .message-icon
@@ -133,24 +134,31 @@ import shareable from 'shareable'
 import Auction from 'component/AllAuction.vue'
 import Product from 'component/AllProduct.vue'
 import Praise from 'component/ShopPraise.vue'
-import Info from 'component/StoreInfo.vue'
+// import Info from 'component/StoreInfo.vue'
+import Story from 'component/UserActivity.vue'
 import Tabs from 'component/Tabs.vue'
 export default {
     name: 'shop-view',
     mixins: [shareable],
-    components: { Auction, Product, Praise, Info, Tabs },
+    components: { Auction, Product, Praise, Tabs, Story },
 
     data() {
         return {
             view: 'product',
             tabs: [
+                { id: 'product', name: '商品'},
                 { id: 'auction', name: '拍卖'},
-                { id: 'product', name: '全部商品'},
-                { id: 'praise', name: '口碑'},
-                { id: 'info', name: '店铺信息'}
+                { id: 'praise', name: '评价'},
+                { id: 'story', name: '动态'}
+                // { id: 'info', name: '店铺信息'}
             ],
             shop: {
                 owner: {}
+            },
+            numbers: {
+                product: 12,
+                auction: 12,
+                praise: 12,
             },
             coupon_label_count: 3,
             onTop: ''
@@ -181,6 +189,12 @@ export default {
             if(from.name !== to.name) {
                 return this.$fetch(`mall/shop/${to.params.id}/profile`).then(resp => {
                     this.shop = resp
+                    if(resp.auction_count == 0){
+                        this.tabs.splice(1,1)
+                    }
+                    this.numbers.auction = resp.auction_count
+                    this.numbers.product = resp.selling_count
+                    this.numbers.praise = resp.comment_count
                     this.action('updateTitle', {text: this.shop.shop_name})
                     this.setShareData({name: this.shop.shop_name, logo: this.shop.logo, type:
                         this.shop.shop_type === 'studio' ? '工作室' : '店铺'})

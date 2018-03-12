@@ -112,6 +112,7 @@ if(/myxx/i.test(navigator.userAgent)) {
             setTimeout(() => { document.documentElement.removeChild(WVJBIframe) }, 0)
         })((bridge) => {
             bridge.registerHandler('back', () => emitter.emit('back'))
+            bridge.registerHandler('replySuccess', () => emitter.emit('reply_success'))
             defer.resolve(bridge)
         })
     } else {
@@ -134,5 +135,8 @@ if(/myxx/i.test(navigator.userAgent)) {
 } else {
     defer.resolve(adapter)
 }
+
+// TOOPTIMIZE:  安卓使用loadURL方式通知页面回复成功
+window.replySuccess = () => emitter.emit('reply_success')
 
 export default defer.promise

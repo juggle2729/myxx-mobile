@@ -38,36 +38,7 @@
         -webkit-box-align end
 </style>
 <template lang="pug">
-.shop-praise.bg-gray-f7
-    .mgv-20.bg-white.bdv
-        .brand_shop.mgt-22.mgb-39(v-if="brandShop")
-        .flex.black-24.fz-26.h-center.mgt-20.mgb-40
-            p 开店
-            .mgh-10.fz-36.bold {{ openDays }}
-            p 天，累计评价
-            .mgh-10.fz-36.bold {{ commentCount }}
-            p 人
-        .flex.pdv-20
-            .col.fz-26.black-47
-                .row
-                .row 商品评价：
-                .row 商品服务：
-            .col.title.flex-1
-                .row 好评率
-                .row.percent {{ productComment[0] }}
-                .row.percent {{ shopComment[0] }}
-            .col.title.left-border
-                .row 好评
-                .row.number {{ productComment[1] }}
-                .row.number {{ shopComment[1] }}
-            .col.title.left-border
-                .row 中评
-                .row.number {{ productComment[2] }}
-                .row.number {{ shopComment[2] }}
-            .col.title.left-border
-                .row 差评
-                .row.number {{ productComment[3] }}
-                .row.number {{ shopComment[3] }}
+.shop-praise.bg-gray-f7.mgv-20
     shop-comments
 </template>
 <script>
