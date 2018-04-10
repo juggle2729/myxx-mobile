@@ -2,7 +2,6 @@
 .mall-supervise-view
     .total
         .flex-1
-            flex-direction column
             -webkit-box-align start
     .tabs
         width 400px
@@ -13,8 +12,10 @@
         -webkit-box-pack justify
         width 100%
         height 90px
-    .column
-        flex-direction column
+    .vertical
+        /* autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
     .photo
         width 120px
         height 120px
@@ -64,7 +65,7 @@
             .tab.flex-1.center(@click="onTabChange('done')", :class="status === 'done' ? 'red-e6' : 'gray-8f'") 监督记录
         .hr(:class="items.length ? 'bdv' : 'bdt'")
         template(v-for="(index, item) in items")
-            .item.flex.mgh-32.fz-26.column(:class="index === items.length - 1 ? 'bdb': ''", v-link="{name: item.target_type === 'sh' ? 'shop': 'product', params: { id: item.target_id }}")
+            .item.flex.mgh-32.fz-26.vertical(:class="index === items.length - 1 ? 'bdb': ''", v-link="{name: item.target_type === 'sh' ? 'shop': 'product', params: { id: item.target_id }}")
                 .first-line.flex.bdb
                     .gray-b3 {{ status === 'undo' ? '平台邀请您评判' : '您评判了' }}{{ item.target_type === 'sh' ? '店铺' : '商品' }}
                     .red-e6.judge.flex(v-if="!isJudged", v-link="{name: 'mall-judge', params: { type: item.target_type, id: item.target_id }}") 评判{{ item.target_type === 'sh' ? '店铺' : '商品' }}

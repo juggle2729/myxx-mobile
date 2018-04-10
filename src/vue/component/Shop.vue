@@ -1,7 +1,9 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
 .shop-component
-    flex-direction column
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
     padding 42px 31px 47px
     > .flex
         width 100%

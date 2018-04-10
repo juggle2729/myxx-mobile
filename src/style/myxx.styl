@@ -75,6 +75,13 @@ for $dis in block inline-block none
     .{$dis}
         display: $dis
 
+
+.flex2
+    display flex
+    justify-content center
+    for $i in 1..4
+        > .flex-{$i}
+            flex: $i
 .flex
     display: -webkit-box
     -webkit-box-align: center

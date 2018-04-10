@@ -8,7 +8,9 @@
         border-color #ededed
         padding 52px 36px 24px
         -webkit-box-pack center
-        -webkit-box-orient vertical
+        /* autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
         .judge-shop
             -webkit-box-pack center
             border(a, #e61717)

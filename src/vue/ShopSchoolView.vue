@@ -53,11 +53,11 @@ export default {
         }
     },
     events: {
-        // scrollToBottom(e) {
-        //     if(Math.ceil(this.count/10) >= this.page) {
-        //         this.cms()
-        //     }
-        // }
+        scrollToBottom(e) {
+            if(Math.ceil(this.count/10) >= this.page) {
+                this.cms()
+            }
+        }
     },
     methods: {
         changeCurrent(tab) {
@@ -69,9 +69,9 @@ export default {
         },
 
         cms() {
-            this.$cms('posts', { categories: [this.current], context: 'embed' ,per_page: 100}).then(data => {
+            this.$cms('posts', { categories: [this.current], context: 'embed' ,page: this.page}).then(data => {
                 this.items = data;
-                // this.page++;
+                this.page++;
             })
         }
     }
