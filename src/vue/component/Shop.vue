@@ -1,9 +1,7 @@
 <style lang="stylus">
 @import '~style/partials/mixin'
 .shop-component
-    /* autoprefixer: off */
-    -webkit-box-orient: vertical;
-    /* autoprefixer: on */
+    -webkit-box-orient vertical
     padding 42px 31px 47px
     > .flex
         width 100%
@@ -38,7 +36,7 @@
         .fz-18
             font-size 18px
     .mgt-48
-        justify-content space-between
+        -webkit-box-pack justify
         padding 0 10px
     .separator
         border(r, #d9d9d9)
