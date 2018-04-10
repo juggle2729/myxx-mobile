@@ -31,34 +31,47 @@
 import paging from 'paging'
 export default {
     name: 'shop-school-view',
-
+    mixins: [ paging ],
     data() {
         return {
             current: '',
             categories: [],
-            items: []
+            items: [],
+            page: 1,
+            count: 0
         }
     },
 
     route: {
         data({from, to, next}) {
             return this.$cms('categories', { parent: 2, orderby: 'id' }).then(data => {
-                this.categories = data
-                this.current = this.categories[0].id
-                return this.cms()
+                this.categories = data;
+                this.current = this.categories[0].id;
+                this.count = this.categories[0].count;
+                this.cms()
             })
         }
     },
-
+    events: {
+        // scrollToBottom(e) {
+        //     if(Math.ceil(this.count/10) >= this.page) {
+        //         this.cms()
+        //     }
+        // }
+    },
     methods: {
         changeCurrent(tab) {
-            this.current = tab.id
+            this.page = 1;
+            this.current = tab.id;
+            this.count = tab.count;
+            console.log(tab);
             this.cms()
         },
 
         cms() {
-            this.$cms('posts', { categories: [this.current], context: 'embed' }).then(data => {
-                this.items = data
+            this.$cms('posts', { categories: [this.current], context: 'embed' ,per_page: 100}).then(data => {
+                this.items = data;
+                // this.page++;
             })
         }
     }

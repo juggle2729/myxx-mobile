@@ -1051,7 +1051,33 @@ export default {
             }, 'other')
         }
     },
-
+    '/promotionList_record/:id': {
+        title: '列表位购买记录',
+        name: 'shop_record',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PromotionListRecordView.vue'))
+            }, 'other')
+        }
+    },
+    '/promotionWindow_record/:id': {
+        title: '橱窗位购买记录',
+        name: 'promotion_record',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PromotionWindowRecordView.vue'))
+            }, 'other')
+        }
+    },
+    '/promotion_newSpread/:id': {
+        title: '已购新店铺推广包',
+        name: 'shop_newSpread',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('PromotionNewSpreadView.vue'))
+            }, 'other')
+        }
+    },
     '/transition': {
         title: '商品跳转中',
         name: 'transition',

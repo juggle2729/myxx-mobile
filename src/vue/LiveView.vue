@@ -657,7 +657,6 @@ export default {
             showProductTipDialog: false
         }
     },
-
     computed: {
         placeholder() {
             if (this.isEnd) {

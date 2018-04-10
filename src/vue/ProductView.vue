@@ -106,7 +106,7 @@ dark-6b()
         width 100%
         height 98px
         > *
-            justify-content center
+            -webkit-box-pack:center;
             height 100%
         > :nth-child(1)
             padding-left 20px

@@ -223,7 +223,7 @@ const mixin = {
                     console.error('Cms Request Error ', JSON.stringify(response))
                     defer.reject()
                 }
-            })
+            });
             return defer.promise
         },
 
@@ -232,7 +232,7 @@ const mixin = {
                 id: video,
                 targetId: this.$route.params.id,
                 targetType: _.chain(this.config.types).find({route: this.$route.name}).get('biz').value() || this.$route.name
-            }
+            };
             if(this.env.isApp) {
                 this.action('play', args)
             } else if (this.env.isWechat) {
