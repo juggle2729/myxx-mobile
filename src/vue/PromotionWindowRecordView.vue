@@ -1,59 +1,23 @@
 <template>
     <div class="shopRecord">
         <ul>
-            <li>
-                <p class="timer fz-24">推广时间: 2018/03/14-2018/03/21</p>
+            <li v-for="item in data">
+                <p class="timer fz-24">推广时间: {{item.promotion_time.start_time | date 'yyyy/m/dd'}}-{{item.promotion_time.end_time | date 'yyyy/m/dd'}}</p>
                 <div class="content">
                     <div>
-                        <p class="fz-42 contentnums">123</p>
+                        <p class="fz-42 contentnums">{{item.stats.product_count}}</p>
                         <p class="fz-24 conts">累计推广商品</p>
                     </div>
                     <div>
-                        <p class="fz-42 contentnums">123</p>
+                        <p class="fz-42 contentnums">{{item.stats.all_view}}</p>
                         <p class="fz-24 conts">累计商品曝光</p>
                     </div>
                     <div>
-                        <p class="fz-42 contentnums">123</p>
+                        <p class="fz-42 contentnums">{{item.stats.all_click}}</p>
                         <p class="fz-24 conts">累计商品点击</p>
                     </div>
                 </div>
-                <p class="orderTime fz-20">购买日期: 2018/03/25</p>
-            </li>
-            <li>
-                <p class="timer fz-24">推广时间: 2018/03/14-2018/03/21</p>
-                <div class="content">
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计推广商品</p>
-                    </div>
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计商品曝光</p>
-                    </div>
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计商品点击</p>
-                    </div>
-                </div>
-                <p class="orderTime fz-20">购买日期: 2018/03/25</p>
-            </li>
-            <li>
-                <p class="timer fz-24">推广时间: 2018/03/14-2018/03/21</p>
-                <div class="content">
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计推广商品</p>
-                    </div>
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计商品曝光</p>
-                    </div>
-                    <div>
-                        <p class="fz-42 contentnums">123</p>
-                        <p class="fz-24 conts">累计商品点击</p>
-                    </div>
-                </div>
-                <p class="orderTime fz-20">购买日期: 2018/03/25</p>
+                <p class="orderTime fz-20">购买日期: {{item.pay_at| date 'yyyy/m/dd'}}</p>
             </li>
         </ul>
     </div>
@@ -62,8 +26,18 @@
 <script>
     export default {
         data() {
-            return {
+            return{
+                data: [
 
+                ]
+            }
+        },
+        route: {
+            data({from, to, next}) {
+                return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
+                    .then(resp => {
+                        this.data = resp.data
+                    })
             }
         }
     }

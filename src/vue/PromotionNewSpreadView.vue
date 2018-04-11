@@ -6,19 +6,19 @@
             <p class="spreadTime fz-30">剩余推广时间</p>
         </div>
         <div class="Remaining">
-            <span class="fz-78">6</span>
+            <span class="fz-78">{{dealyTime | date 'dd'}}</span>
             <span class="fz-24">天</span>
-            <span class="fz-78">21</span>
+            <span class="fz-78">{{dealyTime | date 'hh'}}</span>
             <span class="fz-24">时</span>
-            <span class="fz-78">39</span>
+            <span class="fz-78">{{dealyTime | date 'MM'}}</span>
             <span class="fz-24">分</span>
         </div>
         <div class="detailInfo">
             <ul>
-                <li><p class="txt fz-28">推广曝光</p><p class="fz-46">10000</p></li>
-                <li><p class="txt fz-28">累计推广点击</p><p class="fz-46">10000</p></li>
-                <li><p class="txt fz-28">昨日推广曝光</p><p class="fz-46">10000</p></li>
-                <li><p class="txt fz-28">昨日推广点击</p><p class="fz-46">10000</p></li>
+                <li><p class="txt fz-28">推广曝光</p><p class="fz-46">{{data.stats.current_product_view}}</p></li>
+                <li><p class="txt fz-28">累计推广点击</p><p class="fz-46">{{data.stats.current_product_click}}</p></li>
+                <li><p class="txt fz-28">昨日推广曝光</p><p class="fz-46">{{data.stats.yesterday_view}}</p></li>
+                <li><p class="txt fz-28">昨日推广点击</p><p class="fz-46">{{data.stats.yesterday_click}}</p></li>
             </ul>
             <div class="levelLine"></div>
             <div class="verticalLine"></div>
@@ -28,7 +28,23 @@
 
 <script>
     export default {
-        name: "shop-new-spread"
+        name: "shop-new-spread",
+        data() {
+            return{
+                newTime: new Date().getTime(),
+                dealyTime:'',
+                data: {}
+            }
+        },
+        route: {
+            // data({from, to, next}) {
+            //     return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
+            //         .then(resp => {
+            //             this.data = resp.data[0];
+            //             this.dealyTime = this.data[0].promotion_time.end_time - this.newTime;
+            //         })
+            // }
+        }
     }
 </script>
 
@@ -37,8 +53,10 @@
         width: 100%
         height: 100%
         background #2C66DB
-        padding-top 247px
+        padding-top 147px
         .foot
+            width 100%
+            height 100%
             position fixed
             bottom 0
         .spreadTop
