@@ -37,13 +37,13 @@
             }
         },
         route: {
-            // data({from, to, next}) {
-            //     return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
-            //         .then(resp => {
-            //             this.data = resp.data[0];
-            //             this.dealyTime = this.data[0].promotion_time.end_time - this.newTime;
-            //         })
-            // }
+            data({from, to, next}) {
+                return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
+                    .then(resp => {
+                        this.data = resp.data[0];
+                        this.dealyTime = this.data[0].promotion_time.end_time - this.newTime;
+                    })
+            }
         }
     }
 </script>
