@@ -17,7 +17,7 @@
                         <p class="fz-24 conts">累计商品点击</p>
                     </div>
                 </div>
-                <p class="orderTime fz-20">购买日期: {{item.pay_at| date 'yyyy/m/dd'}}</p>
+                <p class="orderTime fz-20">购买日期: {{item.create_at| date 'yyyy/m/dd'}}</p>
             </li>
         </ul>
     </div>
