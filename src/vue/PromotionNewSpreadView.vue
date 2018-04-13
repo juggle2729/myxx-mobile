@@ -15,10 +15,10 @@
         </div>
         <div class="detailInfo">
             <ul>
-                <li><p class="txt fz-28">推广曝光</p><p class="fz-46">{{data.stats.current_product_view}}</p></li>
-                <li><p class="txt fz-28">累计推广点击</p><p class="fz-46">{{data.stats.current_product_click}}</p></li>
-                <li><p class="txt fz-28">昨日推广曝光</p><p class="fz-46">{{data.stats.yesterday_view}}</p></li>
-                <li><p class="txt fz-28">昨日推广点击</p><p class="fz-46">{{data.stats.yesterday_click}}</p></li>
+                <li><p class="txt fz-26">推广曝光</p><p class="fz-46">{{data.stats.current_product_view}}</p></li>
+                <li><p class="txt fz-26">累计推广点击</p><p class="fz-46">{{data.stats.current_product_click}}</p></li>
+                <li><p class="txt fz-26">昨日推广曝光</p><p class="fz-46">{{data.stats.yesterday_view}}</p></li>
+                <li><p class="txt fz-26">昨日推广点击</p><p class="fz-46">{{data.stats.yesterday_click}}</p></li>
             </ul>
             <div class="levelLine"></div>
             <div class="verticalLine"></div>
@@ -51,7 +51,7 @@
 <style lang="stylus">
     .shopNewSpread
         width: 100%
-        height: 100%
+        min-height: 100%
         background #2C66DB
         padding-top 147px
         .foot
@@ -67,7 +67,6 @@
                 font-family PingFangSC-Medium
             .spreadTime
                 margin-bottom 125px
-                font-family PingFangSC-Light
         .Remaining
             color #FAFAFA
             text-align center
@@ -76,10 +75,8 @@
             width: 600px
             height: 520px
             margin 0 auto
-            background-color #386FDD
-            opacity 0.6
+            background rgba(250,250,250,0.06)
             position relative
-            z-index 1111
             ul
                 display flex
                 -webkit-flex-wrap  wrap
@@ -101,7 +98,7 @@
                 margin auto
                 width 1px
                 height 420px
-                background:rgba(250,250,250,1);
+                background:rgba(250,250,250,0.2);
             .verticalLine
                 position absolute
                 left 0
@@ -111,5 +108,5 @@
                 margin auto
                 width 520px
                 height 1px
-                background:rgba(250,250,250,1);
+                background:rgba(250,250,250,0.2);
 </style>
