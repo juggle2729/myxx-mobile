@@ -21,22 +21,26 @@
             </li>
         </ul>
     </div>
+    <empty v-if="!IsEmpty"></empty>
 </template>
 
 <script>
+    import Empty from "component/Empty.vue"
+
     export default {
         data() {
             return{
-                data: [
-
-                ]
+                data: [],
+                IsEmpty: 0
             }
         },
+        components:{Empty},
         route: {
             data({from, to, next}) {
                 return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
                     .then(resp => {
                         this.data = resp.data
+                        this.IsEmpty = this.data.length
                     })
             }
         }

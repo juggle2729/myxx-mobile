@@ -6,19 +6,19 @@
             <p class="spreadTime fz-30">剩余推广时间</p>
         </div>
         <div class="Remaining">
-            <span class="fz-78">{{dealyTime | date 'dd'}}</span>
-            <span class="fz-24">天</span>
-            <span class="fz-78">{{dealyTime | date 'hh'}}</span>
+            <span class="fz-78 bold">{{dealyTime | date 'dd'}}</span>
+            <span class="fz-24 ">天</span>
+            <span class="fz-78 bold">{{dealyTime | date 'hh'}}</span>
             <span class="fz-24">时</span>
-            <span class="fz-78">{{dealyTime | date 'MM'}}</span>
+            <span class="fz-78 bold">{{dealyTime | date 'MM'}}</span>
             <span class="fz-24">分</span>
         </div>
         <div class="detailInfo">
             <ul>
-                <li><p class="txt fz-26">推广曝光</p><p class="fz-46">{{data.stats.current_product_view}}</p></li>
-                <li><p class="txt fz-26">累计推广点击</p><p class="fz-46">{{data.stats.current_product_click}}</p></li>
-                <li><p class="txt fz-26">昨日推广曝光</p><p class="fz-46">{{data.stats.yesterday_view}}</p></li>
-                <li><p class="txt fz-26">昨日推广点击</p><p class="fz-46">{{data.stats.yesterday_click}}</p></li>
+                <li><p class="txt fz-26">推广曝光</p><p class="bold fz-46">{{data.stats.current_product_view}}</p></li>
+                <li><p class="txt fz-26">累计推广点击</p><p class="bold fz-46">{{data.stats.current_product_click}}</p></li>
+                <li><p class="txt fz-26">昨日推广曝光</p><p class="bold fz-46">{{data.stats.yesterday_view}}</p></li>
+                <li><p class="txt fz-26">昨日推广点击</p><p class="bold fz-46">{{data.stats.yesterday_click}}</p></li>
             </ul>
             <div class="levelLine"></div>
             <div class="verticalLine"></div>
@@ -41,7 +41,8 @@
                 return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
                     .then(resp => {
                         this.data = resp.data[0];
-                        this.dealyTime = this.data[0].promotion_time.end_time - this.newTime;
+                        this.dealyTime = this.data.promotion_time.end_time - this.newTime;
+                        console.log(this.data)
                     })
             }
         }
@@ -51,7 +52,7 @@
 <style lang="stylus">
     .shopNewSpread
         width: 100%
-        min-height: 100%
+        height: 110%
         background #2C66DB
         padding-top 147px
         .foot
@@ -64,13 +65,16 @@
             color #FAFAFA
             .spread
                 margin-bottom 29px
-                font-family PingFangSC-Medium
+                font-weight bold
             .spreadTime
                 margin-bottom 125px
+                color #d9e4ff
         .Remaining
             color #FAFAFA
             text-align center
             margin-bottom 136px
+            .bold
+                font-weight bold
         .detailInfo
             width: 600px
             height: 520px
@@ -89,6 +93,9 @@
                         text-align center
                     .txt
                         margin 90px 0 30px 0
+                        color #d9e4ff
+                    .bold
+                        font-weight bold
             .levelLine
                 position absolute
                 left 0
@@ -98,7 +105,7 @@
                 margin auto
                 width 1px
                 height 420px
-                background:rgba(250,250,250,0.2);
+                background:rgba(250,250,250,0.1);
             .verticalLine
                 position absolute
                 left 0
@@ -108,5 +115,5 @@
                 margin auto
                 width 520px
                 height 1px
-                background:rgba(250,250,250,0.2);
+                background:rgba(250,250,250,0.1);
 </style>

@@ -54,7 +54,8 @@ export default {
     },
     events: {
         scrollToBottom(e) {
-            if(Math.ceil(this.count/10) >= this.page) {
+            if(Math.ceil(this.count/10) > this.page) {
+                this.page++;
                 this.cms()
             }
         }
@@ -64,14 +65,14 @@ export default {
             this.page = 1;
             this.current = tab.id;
             this.count = tab.count;
-            console.log(tab);
+            this.items = [];
             this.cms()
         },
 
         cms() {
             this.$cms('posts', { categories: [this.current], context: 'embed' ,page: this.page}).then(data => {
-                this.items = data;
-                this.page++;
+                this.items = this.items.concat(data);
+                console.log(this.items);
             })
         }
     }

@@ -2,7 +2,7 @@
     <div class="shopRecord">
         <ul>
             <li v-for="item in data">
-                <p class="timer fz-24">推广时间: {{item.promotion_time.start_time | date 'yyyy/m/dd'}}-{{item.promotion_time.end_time | date 'yyyy/m/dd'}}</p>
+                <p class="timer fz-24" style="font-weight: bold">推广时间: {{item.promotion_time.start_time | date 'yyyy/m/dd'}}-{{item.promotion_time.end_time | date 'yyyy/m/dd'}}</p>
                 <div class="content">
                     <div>
                         <p class="fz-42 contentnums">{{item.stats.product_count}}</p>
@@ -21,20 +21,27 @@
             </li>
         </ul>
     </div>
+    <empty v-if="!IsEmpty"></empty>
 </template>
-
+Empty
 <script>
+    import Empty from "component/Empty.vue"
     export default {
         data() {
             return {
-                data: []
+                data: [],
+                IsEmpty: 0
             }
         },
+        components: {Empty},
+
         route: {
             data({from, to, next}) {
-                    return this.$fetch(`mall/promotion/my?scene=history&template_id=${to.params.id}`)
+                    return this.$fetch
+                    (`mall/promotion/my?scene=history&template_id=${to.params.id}`)
                         .then(resp => {
                             this.data = resp.data
+                            this.IsEmpty = this.data.length
                         })
             }
         }
@@ -44,17 +51,18 @@
 <style lang="stylus">
     .shopRecord
        li
-           padding    0 74px 0 32px
-           border-bottom 1px solid #E8EAED
+           padding    0 32px 0 32px
+           border-bottom 0.5px solid #E8EAED
            box-sizing content-box
            .timer
                 margin-top 47px
                 margin-bottom 5px
            .content
                height 180px
-               display flex
-               align-items: center
-               -webkit-justify-content space-around
+               padding 0 49px
+               display -webkit-box
+               -webkit-box-align center
+               -webkit-box-pack: justify;
                .contentnums
                     text-align center
                .conts
@@ -62,4 +70,5 @@
            .orderTime
                 font-family PingFangSC-Medium
                 margin-bottom 39px
+                color #B3B3B3
 </style>

@@ -20,7 +20,6 @@
             right 0
         .rule
             color: #2C66DB
-            font-size  20px
             line-height 1
 </style>
 <template lang="pug">
@@ -33,7 +32,7 @@
         .title.fz-28.black-47.line-clamp-2 {{ item.remark }}
         .fz-36.red-e6.txt-right
             .fz-36(:class="item.trans_amount > 0 ? 'green-a1' : 'red-e6'") {{ billPrice }}
-            .pay-way.rule(v-if="item.url" ,@click="tolink" ) 费用规则
+            .pay-way.rule.fz-22(v-if="item.url" ,@click="tolink" ) 费用规则
             .pay-way.fz-22.gray-8f.line-clamp-1(v-else="item.url") {{ item.channel_desc }}
 </template>
 <script>
