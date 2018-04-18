@@ -15,8 +15,8 @@
         </div>
         <div class="detailInfo">
             <ul>
-                <li><p class="txt fz-26">推广曝光</p><p class="bold fz-46">{{data.stats.current_product_view}}</p></li>
-                <li><p class="txt fz-26">累计推广点击</p><p class="bold fz-46">{{data.stats.current_product_click}}</p></li>
+                <li><p class="txt fz-26">推广曝光</p><p class="bold fz-46">{{data.stats.all_view}}</p></li>
+                <li><p class="txt fz-26">累计推广点击</p><p class="bold fz-46">{{data.stats.all_click}}</p></li>
                 <li><p class="txt fz-26">昨日推广曝光</p><p class="bold fz-46">{{data.stats.yesterday_view}}</p></li>
                 <li><p class="txt fz-26">昨日推广点击</p><p class="bold fz-46">{{data.stats.yesterday_click}}</p></li>
             </ul>
