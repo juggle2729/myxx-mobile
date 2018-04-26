@@ -22,7 +22,7 @@
         },
         methods: {
             orderDetail() {
-                this.action('orderDetail', {id: this.order_no})
+                this.action('orderDetail', {id: this.order_id})
             }
         }
     }
