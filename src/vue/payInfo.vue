@@ -63,8 +63,8 @@
                     amount: this.amount,
                     order_no: this.order_no ,
                     account_type: this.account_type
-                }).then(_ => {
-                    this.$router.go({name: 'pay-submit',params:{order: this.order_no}})
+                }).then(response => {
+                    this.$router.go({name: 'pay-sumbit',params:{order: this.order_no}})
                 })
             }
         }
