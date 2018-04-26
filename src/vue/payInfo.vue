@@ -16,7 +16,7 @@
         </div>
         <div class="prompt" v-show="prompted">
             <div class="message">
-                <div class="top pdt-47 pdb-47 pdl-40 pdr-40 fz-32 black-24">请确认您转账的账号是官方银行账号，并已成功转账</div>
+                <div class="top pdt-47 pdb-47 pdl-40 pdr-20 fz-32 black-24">请确认您转账的账号是官方银行账号，并已成功转账</div>
                 <div class="bottom">
                     <div class="fz-30 black-24" @click="prompted=false">取消</div>
                     <div class="fz-30" @click='transfer_toPayInfo'>是的,我已转账</div>
