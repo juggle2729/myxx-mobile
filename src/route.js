@@ -490,16 +490,33 @@ export default {
         }
     },
 
-    '/pay-offline/:id': {
+    '/pay-offline/:order': {
         name: 'pay-offline',
-        title: '大额支付',
+        title: '转账汇款',
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PayOfflineView.vue'))
             }, 'mall')
         }
     },
-
+    '/pay-info/:order/:accountType': {
+        name: 'pay-info',
+        title: '转账汇款',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('payInfo.vue'))
+            }, 'mall')
+        }
+    },
+    '/pay-sumbit/:order': {
+        name: 'pay-sumbit',
+        title: '转账汇款',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('paySumbit.vue'))
+            }, 'mall')
+        }
+    },
     '/mall/supervise': {
         name: 'mall-supervise',
         title: '商城监督',
@@ -1066,6 +1083,15 @@ export default {
         component(resolve) {
             require.ensure([], (require) => {
                 resolve(require('PromotionWindowRecordView.vue'))
+            }, 'other')
+        }
+    },
+    '/bigPrice/:id': {
+        title: '转账汇款',
+        name: 'big_price',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BIgPrice1.vue'))
             }, 'other')
         }
     },

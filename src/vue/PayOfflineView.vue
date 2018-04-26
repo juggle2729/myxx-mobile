@@ -1,95 +1,133 @@
-<style lang="stylus">
-.pay-offline-view
-    .instruction
-        .tip
-            margin: 50px 0
-            line-height: 1.4
-        .contact
-            margin-bottom: 40px
-            img
-                width: 80px
-                height: 80px
-    .title
-        height: 90px
-        line-height: 90px
-    .content
-        .item :first-child
-            width: 164px
-        .address
-            -webkit-box-align: start
-    .operation
-        padding: 50px
-        p
-            line-height: 1.3
-            margin-bottom: 50px
-        .button
-            border-radius: 6px
-            height: 72px
-            line-height: 72px
-</style>
-<template  lang="pug">
-    .pay-offline-view
-        .instruction.center
-            .tip.fz-32 大额支付支持银行转账交易<br>请联系客服
-            .contact.flex
-                .flex-1.bdr.fz-26.gray(@click.stop="action('kf', {order: order.order_no})")
-                    img.margin-bottom(:src="'service/online.svg' | qn", alt="online-service")
-                    .mgt-24 在线客服
-                .flex-1.fz-26.gray
-                    a(href="tel:4000587266")
-                        img.margin-bottom(:src="'service/tel.svg' | qn", alt="tel-service")
-                        .mgt-24 电话客服
-        .hr
-        .accout.mgl-32.pdr-32
-            .title.bdb.fz-30 官方唯一对公账户
-            .content.pdv-24.fz-26
-                .item.flex
-                    div 户名
-                    div 南京美玉秀秀网络科技有限公司
-                .item.flex.mgt-24
-                    div 账号
-                    div 10100501040009603
-                .item.flex.mgt-24
-                    div 开户行
-                    div 南京农行云南路支行
-                .gray.fz-26.mgt-32.user-txt 重要提示：切勿转账其他账号！转账完成，截图给客服小秀，会通知商家尽快发货
-        .hr
-        .order.mgl-32.pdr-32
-            .title.bdb.fz-30 订单详情
-            .content.pdv-24.fz-26
-                .item.flex
-                    div 订单金额
-                    .red {{order.trans_amount | price}}
-                .item.flex.mgt-24
-                    div 订单编号
-                    div {{order.order_no}}
-                .item.flex.mgt-24.address
-                    div 收货详情
-                    div
-                        div {{order.receiver_name}}
-                        .pdt-8 {{order.receiver_phone}}
-                        .pdt-8 {{order.receiver_address}}
-        .hr
-        .operation.fz-26.gray
-            p 转账时请备注您的联系电话，我们收到货款后会第一时间与您确认后续事宜。
-            .flex
-                .mgr.button.flex-1.bd-gray.center(@click="action('orderDetail', {id: order.order_no})") 订单详情
-                .button.flex-1.bd-gray.center(@click.stop="action('mall')") 回首页
+<template>
+    <div>
+        <div class="step1">
+            <p class="black-47 fz-32 bold mgt-48 mgb-14">第一步 转账至官方账号（银行卡或支付宝)</p>
+            <p class="gray-b3 fz-22" style="line-height: 1.4">长按账户信息可复制，如果出现单笔限额，您可以分多次转账，总金额为订单总额即可</p>
+        </div>
+        <div class="bank pdl-30 pdr-30">
+            <img src="//o0x80w5li.qnssl.com/pay/abc.png" alt="" class="mgr-10">
+            <div class="payTitle">
+                <div class="span"><span class="black-24 fz-32 bold">银行账号</span><span class="office fz-20 mgl-13">官方账号</span></div>
+                <div class="gray-b3 fz-22 mgt-11">支持柜台、网银、ATM转账</div>
+            </div>
+            <icon class="pdh-30" :name="payType === 'bk' ? 'checked' : 'uncheck'" @click="selectBank"></icon>
+        </div>
+        <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39" :class="payType === 'bk'? 'bg-f5': ''">
+            <div><span class="gray-b3 fz-26 key">户名(姓名)</span>  <span class="fz-26 dark-6b">{{data[0].name}}</span></div>
+            <div><span class="gray-b3 fz-26 key">账号(卡号)</span>  <span class="fz-26 dark-6b">{{data[0].bank_account}}</span></div>
+            <div><span class="gray-b3 fz-26 key">开户银行</span>  <span class="fz-26 dark-6b">{{data[0].bank_name}}</span></div>
+        </div>
+        <div class="bank pdl-30 pdr-30 mgt-56">
+            <img src="//o0x80w5li.qnssl.com/pay/zfb.png" alt="" class="mgr-10">
+            <div class="payTitle">
+                <div class="span"><span class="black-24 fz-32 bold">支付宝</span><span class="office fz-20 mgl-13">官方账号</span></div>
+                <div class="gray-b3 fz-22 mgt-11">支持支付宝转账至支付宝</div>
+            </div>
+            <icon class="pdh-30" :name="payType === 'ap' ? 'checked' : 'uncheck'" @click="selectZfb"></icon>
+        </div>
+        <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39 zfb" :class="payType === 'ap'? 'bg-f5': ''">
+            <div><span class="gray-b3 fz-26 key">帐户名</span>  <span class="fz-26 dark-6b">{{data[1].bank_name}}</span></div>
+            <div><span class="gray-b3 fz-26 key">账号</span>  <span class="fz-26 dark-6b">{{data[1].bank_account}}</span></div>
+        </div>
+        <div class="next  mgl-54 mgr-54 fz-36 " :class="payType ? 'nexted': ''" @click="toPayInfo">
+            下一步
+        </div>
+    </div>
 </template>
+
 <script>
-    export default {
-        name: 'pay-offline-view',
-        data() {
-            return {
-                order: {}
+
+export  default  {
+    data() {
+        return {
+            payType:'',
+            selected: true,
+            data:[]
+        }
+    },
+    created() {
+      this.getAccount()
+    },
+    methods: {
+        getAccount() {
+            this.$fetch(`balance/official_account`).then(res => {
+                this.data = res.accounts
+            })
+        },
+        selectBank() {
+            this.payType = 'bk';
+            this.selected = false;
+            if(this.payType == 'bk' && this.selected) {
+                this.payType = ''
             }
         },
-        route: {
-            data({to}) {
-                return this.$fetch(`mall/order/${to.params.id}`).then((order) => {
-                    this.order = order
-                })
+        selectZfb() {
+            this.payType = 'ap';
+            this.selected = false;
+            if(this.payType == 'ap' && this.selected) {
+                this.payType = ''
+            }
+        },
+        toPayInfo() {
+            if(this.payType) {
+                this.$router.go({name: 'pay-info',params: { order: this.$router._currentRoute.path.slice(13),accountType: this.payType }})
             }
         }
     }
+}
 </script>
+
+<style lang="stylus">
+    .step1
+        padding-left 40px
+        padding-right 50px
+        margin-bottom 70px
+    .bank
+        display -webkit-box
+        /*-webkit-box-pack start*/
+        height 80px
+        img
+            display block
+            width 80px
+            height 80px
+        .payTitle
+            display -webkit-box
+            -webkit-box-orient vertical
+            height: 80px
+            margin-top -5%
+            .office
+                display inline-block
+                width: 95px
+                height: 27px
+                text-align center
+                line-height 27px
+                background rgba(237,242,252,1)
+                color #2c66db
+        .icon
+            width: 108px
+            height: 48px
+            margin-left 267px
+    .detail
+        height: 260px
+        background rgba(247,249,252,1)
+        border-radius 24px
+        display -webkit-box
+        -webkit-box-orient vertical
+        .key
+            width: 128px
+    .zfb
+        height: 174px
+    .bg-f5
+        background rgba(245,252,245,1)
+    .next
+        color #fff
+        background rgba(232,232,232,1)
+        border-radius 40px
+        height: 80px
+        text-align center
+        line-height 80px
+        margin-top 116px
+    .nexted
+        color #fff
+        background rgba(230,23,23,1)
+</style>
