@@ -26,7 +26,7 @@
             <icon class="pdh-30" :name="payType === 'ap' ? 'checked' : 'uncheck'" @click="selectZfb"></icon>
         </div>
         <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39 zfb" :class="payType === 'ap'? 'bg-f5': ''">
-            <div><span class="gray-b3 fz-26 key">帐户名</span>  <span class="fz-26 dark-6b">{{data[1].bank_name}}</span></div>
+            <div><span class="gray-b3 fz-26 key">帐户名</span>  <span class="fz-26 dark-6b">{{data[1].name}}</span></div>
             <div><span class="gray-b3 fz-26 key">账号</span>  <span class="fz-26 dark-6b">{{data[1].bank_account}}</span></div>
         </div>
         <div class="next  mgl-54 mgr-54 fz-36 " :class="payType ? 'nexted': ''" @click="toPayInfo">
