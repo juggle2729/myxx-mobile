@@ -5,7 +5,7 @@
         </div>
         <div class="black-47 fz-40 sumbited">转账信息已提交</div>
         <div class="desc fz-28">在系统核实转账成功之前，订单状态将会保持“待支付”，系统核实后会自动更变订单状态。</div>
-        <div class="paySumbitBtn fz-36" @click="orderDetail">我知道了</div>
+        <div class="paySumbitBtn fz-36 bold" @click="orderDetail">我知道了</div>
     </div>
 </template>
 

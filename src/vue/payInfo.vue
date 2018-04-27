@@ -5,13 +5,13 @@
             <p class="gray-b3 fz-22">如果出现单笔限额，您可以分多次转账，总金额为订单总额即可</p>
         </div>
         <div class="payDetail">
-            <div><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"></div>
-            <div><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"></div>
-            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <span class="fz-30 black-24 bold">¥</span> <input class="placeholder price" type=text placeholder="请输入" v-model="amount" style="border-style:none;padding-left: 10px"></div>
+            <div><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"></div>
+            <div><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"></div>
+            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type=text placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"></div>
             <div class="line"></div>
-            <div><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30">{{order_no}}</p></div>
+            <div><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30 bold">{{order_no}}</p></div>
         </div>
-        <div class="account  mgl-54 mgr-54 fz-36 " :class="remitter_name && remitter_phone && amount ? 'accounted':'' " @click="transfer_confirm">
+        <div class="account  mgl-54 mgr-54 fz-36 bold" :class="remitter_name && remitter_phone && amount ? 'accounted':'' " @click="transfer_confirm">
             已完成转账, 提交
         </div>
         <div class="prompt" v-show="prompted">
@@ -82,8 +82,8 @@
         padding-right 81px
         .line
             width 100%
-            height 0.5px
-            background:rgba(232,234,237,1);
+            height 1px
+            background:rgba(232,234,237,.6);
             margin-top 47px
         span
             display inline-block
@@ -97,10 +97,10 @@
 
         .price
            position relative
-           .bold
+           .bold1
                position absolute
-               left: 158px
-               top: 40px
+               left: 160px
+               top: 36px
                z-index 111
 
     .account
@@ -132,7 +132,7 @@
             margin auto
             background rgba(255,255,255,1)
             .top
-                border-bottom  1px solid #E8EAED
+                border-bottom  0.5px solid #E8EAED
                 line-height 1.4
                 font-family SourceHanSansCN-Regular
             .bottom
@@ -140,7 +140,7 @@
                 -webkit-box-pack center
                 div
                     width 50%
-                    height: 85px
+                    height: 90px
                     display -webkit-box
                     -webkit-box-pack center
                     -webkit-box-orient vertical
@@ -148,5 +148,5 @@
                     box-sizing border-box
                     &:last-of-type
                         color #e61717
-                        border-left 1px solid #E8EAED
+                        border-left 0.5px solid #E8EAED
 </style>

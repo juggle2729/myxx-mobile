@@ -13,9 +13,9 @@
             <icon class="pdh-30" :name="payType === 'bk' ? 'checked' : 'uncheck'" ></icon>
         </div>
         <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39" @click="selectBank" :class="payType === 'bk'? 'bg-f5': ''">
-            <div><span class="gray-b3 fz-26 mgr-35 key">户名(姓名)</span>  <span class="fz-26 dark-6b">{{data[0].name}}</span></div>
-            <div><span class="gray-b3 fz-26 mgr-35 key">账号(卡号)</span>  <span class="fz-26 dark-6b">{{data[0].bank_account}}</span></div>
-            <div><span class="gray-b3 fz-26 mgr-35 key">开户银行</span>  <span class="fz-26 dark-6b">{{data[0].bank_name}}</span></div>
+            <div><span class="gray-b3 fz-26 mgr-35 key">户名(姓名)</span>  <span class="fz-26 dark-6b bold">{{data[0].name}}</span></div>
+            <div><span class="gray-b3 fz-26 mgr-35 key">账号(卡号)</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_account}}</span></div>
+            <div><span class="gray-b3 fz-26 mgr-35 key">开户银行</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_name}}</span></div>
         </div>
         <div class="bank pdl-30 pdr-30 mgt-56" @click="selectZfb">
             <img src="//o0x80w5li.qnssl.com/pay/zfb.png" alt="" class="mgr-10">
@@ -26,10 +26,10 @@
             <icon class="pdh-30" :name="payType === 'ap' ? 'checked' : 'uncheck'"></icon>
         </div>
         <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39 zfb" @click="selectZfb" :class="payType === 'ap'? 'bg-f5': ''">
-            <div><span class="gray-b3 fz-26 mgr-88 key_ap">帐户名</span>  <span class="fz-26 dark-6b">{{data[1].name}}</span></div>
-            <div><span class="gray-b3 fz-26 mgr-88 key_zp">账号</span>  <span class="fz-26 dark-6b">{{data[1].bank_account}}</span></div>
+            <div><span class="gray-b3 fz-26 key_ap">帐户名</span>  <span class="fz-26 bold dark-6b">{{data[1].name}}</span></div>
+            <div><span class="gray-b3 fz-26 key_ap">账号</span>  <span class="fz-26 bold dark-6b">{{data[1].bank_account}}</span></div>
         </div>
-        <div class="next  mgl-54 mgr-54 fz-36 " :class="payType ? 'nexted': ''" @click="toPayInfo">
+        <div class="next  bold mgl-54 mgr-54 fz-36 " :class="payType ? 'nexted': ''" @click="toPayInfo">
             下一步
         </div>
     </div>
@@ -81,7 +81,7 @@ export  default  {
     .step1
         padding-left 40px
         padding-right 50px
-        margin-bottom 70px
+        margin-bottom 60px
     .bank
         display -webkit-box
         /*-webkit-box-pack start*/
@@ -91,36 +91,42 @@ export  default  {
             width 80px
             height 80px
         .payTitle
+            position relative
             display -webkit-box
             -webkit-box-orient vertical
             height: 80px
             margin-top -5%
+            span
+                vertical-align bottom
             .office
                 display inline-block
                 width: 95px
                 height: 27px
                 text-align center
                 line-height 27px
+                vertical-align bottom
                 background rgba(237,242,252,1)
                 color #2c66db
         .icon
+            position absolute
+            right: 20px
             width: 108px
-            height: 48px
-            margin-left 267px
     .detail
-        height: 260px
+        height: 270px
         background rgba(247,249,252,1)
         border-radius 24px
         display -webkit-box
         -webkit-box-orient vertical
-        .key
-            display inline-block
-            width: 128px
-        .key_ap
-            display inline-block
-            width 80px
+        div
+            .key
+                display inline-block
+                width: 128px
+            .key_ap
+                display inline-block
+                width 80px
+                margin-right 88px
     .zfb
-        height: 174px
+        height: 184px
     .bg-f5
         background rgba(245,252,245,1)
     .next
