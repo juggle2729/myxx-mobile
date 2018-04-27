@@ -18,7 +18,7 @@
             }
         },
         ready() {
-            this.order_id = this.$router._currentRoute.path.slice(12, -3)
+            this.order_id = this.$router._currentRoute.path.slice(12)
         },
         methods: {
             orderDetail() {

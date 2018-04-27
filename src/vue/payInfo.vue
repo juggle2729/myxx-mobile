@@ -7,7 +7,7 @@
         <div class="payDetail">
             <div><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"></div>
             <div><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"></div>
-            <div><span class="fz-30 dark-6b">汇款金额</span> <input class="placeholder price" type=text placeholder="¥ 请输入" v-model="amount" style="border-style:none"></div>
+            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <span class="fz-30 black-24 bold">¥</span> <input class="placeholder price" type=text placeholder="请输入" v-model="amount" style="border-style:none;padding-left: 10px"></div>
             <div class="line"></div>
             <div><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30">{{order_no}}</p></div>
         </div>
@@ -57,6 +57,7 @@
                 }
             },
             transfer_toPayInfo() {
+                this.prompted = false;
                 this.$post(`balance/transfer_to_official`, {
                     remitter_name: this.remitter_name,
                     remitter_phone: this.remitter_phone,
@@ -95,11 +96,13 @@
             -webkit-box-pack justify
 
         .price
-            &:before, &:after
-                content "¥"
-                width 28px
-                height 28px
-                display inline-block
+           position relative
+           .bold
+               position absolute
+               left: 158px
+               top: 40px
+               z-index 111
+
     .account
         color #fff
         background rgba(232,232,232,1)
