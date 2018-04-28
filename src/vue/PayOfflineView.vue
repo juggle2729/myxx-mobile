@@ -13,9 +13,9 @@
             <icon class="pdh-30" :name="payType === 'bk' ? 'checked' : 'uncheck'" ></icon>
         </div>
         <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39" @click="selectBank" :class="payType === 'bk'? 'bg-f5': ''">
-            <div><span class="gray-b3 fz-26 mgr-35 key">户名(姓名)</span>  <span class="fz-26 dark-6b bold">{{data[0].name}}</span></div>
-            <div><span class="gray-b3 fz-26 mgr-35 key">账号(卡号)</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_account}}</span></div>
-            <div><span class="gray-b3 fz-26 mgr-35 key">开户银行</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_name}}</span></div>
+            <div style="height: 30px"><span class="gray-b3 fz-26 mgr-35 key">户名(姓名)</span>  <span class="fz-26 dark-6b bold">{{data[0].name}}</span></div>
+            <div style="height: 30px"><span class="gray-b3 fz-26 mgr-35 key">账号(卡号)</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_account}}</span></div>
+            <div style="height: 30px"><span class="gray-b3 fz-26 mgr-35 key">开户银行</span>  <span class="fz-26 dark-6b bold">{{data[0].bank_name}}</span></div>
         </div>
         <div class="bank pdl-30 pdr-30 mgt-56" @click="selectZfb">
             <img src="//o0x80w5li.qnssl.com/pay/zfb.png" alt="" class="mgr-10">
@@ -26,8 +26,8 @@
             <icon class="pdh-30" :name="payType === 'ap' ? 'checked' : 'uncheck'"></icon>
         </div>
         <div class="detail mgl-30 mgr-30 mgt-18 pdl-39 pdr-39 zfb" @click="selectZfb" :class="payType === 'ap'? 'bg-f5': ''">
-            <div><span class="gray-b3 fz-26 key_ap">帐户名</span>  <span class="fz-26 bold dark-6b">{{data[1].name}}</span></div>
-            <div><span class="gray-b3 fz-26 key_ap">账号</span>  <span class="fz-26 bold dark-6b">{{data[1].bank_account}}</span></div>
+            <div style="height: 30px"><span class="gray-b3 fz-26 key_ap">帐户名</span>  <span class="fz-26 bold dark-6b">{{data[1].name}}</span></div>
+            <div style="height: 30px"><span class="gray-b3 fz-26 key_ap">账号</span>  <span class="fz-26 bold dark-6b">{{data[1].bank_account}}</span></div>
         </div>
         <div class="next  bold mgl-54 mgr-54 fz-36 " :class="payType ? 'nexted': ''" @click="toPayInfo">
             下一步
@@ -56,14 +56,14 @@ export  default  {
         },
         selectBank() {
             this.payType = 'bk';
-            this.selected = !this.selected;
+            this.selected = false;
             if(this.payType == 'bk' && this.selected) {
                 this.payType = ''
             }
         },
         selectZfb() {
             this.payType = 'ap';
-            this.selected = !this.selected;
+            this.selected = false;
             if(this.payType == 'ap' && this.selected) {
                 this.payType = ''
             }
@@ -112,7 +112,7 @@ export  default  {
             right: 20px
             width: 108px
     .detail
-        height: 270px
+        height: 230px
         background rgba(247,249,252,1)
         border-radius 24px
         display -webkit-box
@@ -126,7 +126,7 @@ export  default  {
                 width 80px
                 margin-right 88px
     .zfb
-        height: 184px
+        height: 168px
     .bg-f5
         background rgba(245,252,245,1)
     .next
