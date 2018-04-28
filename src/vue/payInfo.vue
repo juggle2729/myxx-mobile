@@ -5,11 +5,11 @@
             <p class="gray-b3 fz-22">如果出现单笔限额，您可以分多次转账，总金额为订单总额即可</p>
         </div>
         <div class="payDetail">
-            <div><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"></div>
-            <div><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"></div>
-            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type="number" placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"></div>
-            <div class="line"></div>
-            <div><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30 bold">{{order_no}}</p></div>
+            <div class="name" style="height: 30px"><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterName"></div>
+            <div class="phone" style="height: 30px"><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterPhone"></div>
+            <div class="price" style="height: 30px"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type="number" placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearAmount"></div>
+            <div class="line" ></div>
+            <div style="height: 30px"><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30 bold">{{order_no}}</p></div>
         </div>
         <div class="account  mgl-54 mgr-54 fz-36 bold" :class="remitter_name && remitter_phone && amount ? 'accounted':'' " @click="transfer_confirm">
             已完成转账, 提交
@@ -67,7 +67,16 @@
                 }).then(response => {
                     this.$router.go({name: 'pay-sumbit',params:{order: this.order_no}})
                 })
-            }
+            },
+            clearRemitterName() {
+                this.remitter_name = ''
+            },
+            clearRemitterPhone() {
+                this.remitter_phone = ''
+            },
+            clearAmount() {
+                this.amount = ''
+            },
         }
     }
 </script>
@@ -84,7 +93,7 @@
             width 100%
             height 1px
             background:rgba(232,234,237,.6);
-            margin-top 47px
+            margin-top 35px
         span
             display inline-block
             width: 120px
@@ -102,7 +111,26 @@
                left: 160px
                top: 36px
                z-index 111
+           img
+               position absolute
+               right: 10px
+               top: 36px
+               width: 30px
 
+        .name
+            position relative
+            img
+                position absolute
+                width: 30px
+                right: 10px
+                top: 36px
+        .phone
+            position  relative
+            img
+                position absolute
+                right: 10px
+                top: 36px
+                width: 30px
     .account
         color #fff
         background rgba(232,232,232,1)
