@@ -7,7 +7,7 @@
         <div class="payDetail">
             <div><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"></div>
             <div><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"></div>
-            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type=text placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"></div>
+            <div class="price"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type="number" placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"></div>
             <div class="line"></div>
             <div><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30 bold">{{order_no}}</p></div>
         </div>
