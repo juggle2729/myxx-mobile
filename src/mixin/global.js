@@ -332,7 +332,7 @@ const mixin = {
         },
 
         actionToApp(to) {
-            if (this.env.isApp) return false // 非app
+            if (!this.env.isApp) return false // 非app
             let action = to.native && to.native(this.env.version)
             if (!action) return false
             action = _.isObject(action) ? _.merge(to, action) : to
