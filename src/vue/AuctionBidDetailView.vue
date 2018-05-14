@@ -11,7 +11,7 @@
 </style>
 <template lang="pug">
 .bid-detail(:class="{'pdl-32': bids.length, 'pdt-100': !env.isApp}")
-    auction-header-menu(v-if="!env.isApp")
+    auction-header-menu(v-if="!env.isApp",v-bind:number="goodsNumber")
     .fz-30.bdb.pd-32(v-for="bid in bids")
         .flex.fz-22.gray
             .flex-1 {{ bid.status === 'win' ? '竞拍成功' : '竞拍领先' }}
@@ -31,7 +31,8 @@ export default {
 
     data() {
         return {
-            bids: []
+            bids: [],
+            goodsNumber: 3,
         }
     },
 

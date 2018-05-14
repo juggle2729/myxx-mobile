@@ -14,7 +14,6 @@
             font-size: 30px
             height: 80px
             line-height: 80px
-            padding: 0 28px
             border-radius: 8px
             color: white
             background-color: #e61717

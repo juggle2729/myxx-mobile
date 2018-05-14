@@ -207,7 +207,7 @@
 </style>
 <template lang="pug">
 .auction-view(v-if="auction.id")
-    auction-header-menu
+    auction-header-menu(v-bind:number="goodsNumber")
     custom-swiper(:item="prod")
     .status-bar.flex.pdl-32.fz-26(:class="auction.status")
         .bold.pdh-12.bg-white(v-if="updating") 更新中
@@ -286,10 +286,6 @@
             deep-link(v-if="env.isShare") 没找到感兴趣的，打开美玉秀秀看看吧！
     .bg.placeholder
     .float-box.flex.fixed.fz-30.bg-white(:class="isEnd ? 'third' : 'second'")
-        .flex.flex-1.gray.shop-btn(v-link="{name: 'shop', params:{id: prod.shop.id}}")
-            icon.fz-30(name="shop")
-            .mgt-6 店铺
-        .separator
         .flex.flex-1.alarm-btn(v-if="!isEnd", :class="auction.reminded ? 'red' : 'gray'", @click="toggleAlarm")
             icon.fz-32(:name="auction.reminded ? 'alarmed' : 'alarm'")
             .mgt-6 {{ auction.reminded ? '已设置提醒' : '设置提醒' }}
@@ -297,7 +293,7 @@
         .white.fz-30.center(:class="[auction.status === 'going' ? 'bg-red' : 'bg-gray', isEnd ? 'flex-3' : 'flex-2']", @click="bidPrice") {{ operationText }}
     auction-bid-price(:show.sync="showBidPrice", :auction="auction")
     download-dialog(:show.sync="showContact")
-        .fz-36.center 参拍提醒
+        <!--.fz-36.center 参拍提醒-->
         p.mgt-40.alarm-desc 长按识别二维码，或微信搜索"美玉秀秀"后关注美玉秀秀公众号，即可及时收到参拍提醒
         .img.wechat-code.mgt-40.pd-20.bd-gray-e6
             img(src="//o0x80w5li.qnssl.com/auction/wechatQRcode.png")
@@ -355,7 +351,8 @@ export default {
             delayRemind: false,
             updating: false,
             statusUpdatedAt: '',
-            bidTimeInterval: null
+            bidTimeInterval: null,
+            goodsNumber: 3,
         }
     },
 

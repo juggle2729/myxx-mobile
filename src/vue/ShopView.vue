@@ -3,7 +3,7 @@
 @import '~style/partials/mixin'
 .shop-view
     min-height 100%
-    padding-bottom 110px
+    padding-top 100px
     > header
         border-color #ededed
         padding 52px 36px 24px
@@ -11,6 +11,11 @@
         /* autoprefixer: off */
         -webkit-box-orient: vertical;
         /* autoprefixer: on */
+        > .flex1
+            width 100%
+            display -webkit-box
+            -webkit-box-pack justify
+            box-sizing border-box
         .judge-shop
             -webkit-box-pack center
             border(a, #e61717)
@@ -24,6 +29,28 @@
             height @width
             border-radius 24px
             border 2px solid #f9f9f9
+        .flex3
+            display -webkit-box
+            -webkit-box-orient vertical
+            text-align center
+            img
+                width 36px
+                height 36px
+                display block
+        .separator
+            border(r, #d9d9d9)
+            width 1px
+            height 64px
+        .renzheng
+            width 100%
+            display -webkit-box
+            -webkit-box-pack start
+            box-sizing border-box
+            img
+                width 30px
+                height 30px
+                display block
+                margin-left   15px
         .collect
             width 140px
             padding 13px 0
@@ -100,20 +127,37 @@
 </style>
 <template lang="pug">
 .shop-view.bg
+    product-header-menu(v-bind:number="goodsNumber")
     header.bg-white.bdb.flex.relative
-        .judge-shop.red-e6.fz-24.flex.absolute(v-if="self && self.is_platform_admin", v-link="{name: 'mall-judge', params: {type: 'sh', id: shop.id}}") 评判店铺
-        .shop-logo(v-bg="shop.logo")
-        deep-link.has-icon.collect.bd-black-24.fz-24.black-24.absolute(@click="gotoDownload") 关注掌柜
-        .flex.mgt-40
+        .flex.flex1
+            .shop-logo(v-bg="shop.logo")
+            .flex
+                .flex
+                    .flex3.mgr-24.mgl-24
+                        .fz-30.black-24 {{ fans }}
+                        .black-47.fz-20.mgt-12 粉丝
+                    .separator
+                .flex
+                    .flex3.mgr-24.mgl-24(@click='follow')
+                        img(v-if="!followed",:src="'shop/guanzhu.png' | qn")
+                        img(v-if="followed",:src="'shop/yiguanzhu.png' | qn")
+                        .black-47.fz-20.mgt-12(v-if="followed") 已关注
+                        .black-47.fz-20.mgt-12(v-if="!followed") 关注
+        <!--deep-link.has-icon.collect.bd-black-24.fz-24.black-24.absolute(@click="gotoDownload") 关注掌柜-->
+        .flex.mgt-40.renzheng
             .fz-36.bold.black-24 {{ shop.shop_name }}
-            .brand-shop.mgl-10(v-if="shop.brand_shop")
-        .flex.fz-20.black-47.mgt-20
+            img(v-if="shop.brand_shop",:src="'shop/pinpaidianpu.png' | qn")
+            img(v-if="shop.shop_type == 'person'",:src="'shop/gerenrenzheng.png' | qn")
+            img(v-if="shop.shop_type == 'enterprise'",:src="'shop/yingyezhizhaorenzheng.png' | qn")
+        .flex1.mgt-25
+            .flex.mgl-10.mgr-10
+                star-rating(:rating='shop.seller_comment.comment_index[0]',:max-rating='5',:star-size='8',:increment='0.1')
+                .black-24.fz-30 {{shop.seller_comment.comment_index[0].toFixed(1)}}
+            .black-47.fz-24(@click="view = 'praise'") {{shop.seller_comment.comment_count}} 人评价 >
+        .fz-20.black-47.mgt-20.flex1
             .address.flex
                 img(:src="'shop/address.png' | qn")
                 .mgl-6.line-height-30.line-clamp-1 {{ shop.locale_name }}
-                .border.bg-gray-b3.mgh-16
-                span 粉丝:
-                span {{ shop.owner.fans_count }}
         .coupons.flex.mgt-50(v-if="shop.coupon_count")
             .coupon-labels.flex
                 .fz-20.red-e6.bd-red-f8.mgr-6.pdh-10(v-for="coupon in coupons.slice(0,3)") {{ coupon.title }}
@@ -126,10 +170,10 @@
                 span {{ tab.name }}
                 span.mgl-12.gray-8f.fz-22.number {{numbers[tab.id]}}
     component(:is="view", :shop="shop", :user-id="shop.owner.id" keep-alive)
-    .footer.flex.bdt.bg-white
-        deep-link.has-icon.flex-1.fz-36
-            .message-icon
-            .mgl-12.red-e6 联系商家
+    <!--.footer.flex.bdt.bg-white-->
+        <!--deep-link.has-icon.flex-1.fz-36-->
+            <!--.message-icon-->
+            <!--.mgl-12.red-e6 联系商家-->
 </template>
 <script>
 import shareable from 'shareable'
@@ -139,10 +183,14 @@ import Praise from 'component/ShopPraise.vue'
 // import Info from 'component/StoreInfo.vue'
 import Story from 'component/UserActivity.vue'
 import Tabs from 'component/Tabs.vue'
+import ProductHeaderMenu from 'component/productHeaderMenu.vue'
+import StarRating from 'component/StarRating.vue'
+
+
 export default {
     name: 'shop-view',
     mixins: [shareable],
-    components: { Auction, Product, Praise, Tabs, Story },
+    components: { Auction, Product, Praise, Tabs, Story,ProductHeaderMenu,StarRating},
 
     data() {
         return {
@@ -151,7 +199,6 @@ export default {
                 { id: 'product', name: '商品'},
                 { id: 'auction', name: '拍卖'},
                 { id: 'praise', name: '评价'},
-                { id: 'story', name: '动态'}
                 // { id: 'info', name: '店铺信息'}
             ],
             shop: {
@@ -163,7 +210,8 @@ export default {
                 praise: 12,
             },
             coupon_label_count: 3,
-            onTop: ''
+            onTop: '',
+            goodsNumber: 3
         }
     },
 
@@ -210,6 +258,12 @@ export default {
     computed: {
         coupons() {
             return this.shop.coupons.slice(0, this.coupon_label_count)
+        },
+        followed() {
+            return  this.shop.owner.is_followed
+        },
+        fans() {
+            return this.shop.pd_count_today
         }
     },
 
@@ -224,6 +278,22 @@ export default {
                 _.delay(() => this.adjustCouponLabels(container), 10)
             } else {
                 container.style.opacity = 1
+            }
+        },
+        follow() {
+            if (!this.followed) {
+                this.$post("users/target/"+this.$route.params.id+"/type/us/follow").then(res=>{
+                    this.action('toast', {success: 1, text: '已关注'})
+                    this.followed = !this.followed;
+                    this.fans ++
+                })
+            } else{
+                this.$delete("users/target/"+this.$route.params.id+"/type/us/follow").then(res=>{
+                    this.action('toast', {success: 1, text: '取消关注'})
+                    this.followed = !this.followed;
+                    this.fans --
+                })
+
             }
         }
     }

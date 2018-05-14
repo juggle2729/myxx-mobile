@@ -56,17 +56,17 @@
 </style>
 <template  lang="pug">
 div(:class="{'loading': loading}")
-    template(v-if="env.isShare")
-        .share-top.flex(:class="showBlackBg ? 'bg-black' : 'bg-white bdb'")
-            .logo.mgr-26
-                img(:src="(showBlackBg ? 'share-logo-white.png' : 'share-logo.png') | qn", alt="美玉秀秀")
-            .flex-1
-            deep-link
-        .share-top-placeholder
+    <!--template(v-if="env.isShare")-->
+        <!--.share-top.flex(:class="showBlackBg ? 'bg-black' : 'bg-white bdb'")-->
+            <!--.logo.mgr-26-->
+                <!--img(:src="(showBlackBg ? 'share-logo-white.png' : 'share-logo.png') | qn", alt="美玉秀秀")-->
+            <!--.flex-1-->
+            <!--deep-link-->
+        <!--.share-top-placeholder-->
     router-view
-    #user(v-if="env.isBrowser && env.isTest")
-        img(v-if="self && self.photo", @click="logout", :src="config.img + self.photo", :alt="self.nickname")
-        .fz-34(v-else, @click="login") 👤
+    <!--#user(v-if="env.isBrowser && env.isTest")-->
+        <!--img(v-if="self && self.photo", @click="logout", :src="config.img + self.photo", :alt="self.nickname")-->
+        <!--.fz-34(v-else, @click="login") 👤-->
     component(:is="popup.handler", :params.sync="popup", transition="pop")
 </template>
 <script>

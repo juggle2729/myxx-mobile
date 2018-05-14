@@ -1086,6 +1086,15 @@ export default {
             }, 'other')
         }
     },
+    '/bigPrice/:id': {
+        title: '转账汇款',
+        name: 'big_price',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('BIgPrice1.vue'))
+            }, 'other')
+        }
+    },
     '/promotion_newSpread/:id': {
         title: '已购新店铺推广包',
         name: 'shop_newSpread',

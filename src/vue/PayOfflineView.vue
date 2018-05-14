@@ -37,44 +37,44 @@
 
 <script>
 
-export  default  {
-    data() {
-        return {
-            payType:'',
-            selected: true,
-            data:[]
-        }
-    },
-    created() {
-      this.getAccount()
-    },
-    methods: {
-        getAccount() {
-            this.$fetch(`balance/official_account`).then(res => {
-                this.data = res.accounts
-            })
-        },
-        selectBank() {
-            this.payType = 'bk';
-            this.selected = false;
-            if(this.payType == 'bk' && this.selected) {
-                this.payType = ''
+    export  default  {
+        data() {
+            return {
+                payType:'',
+                selected: true,
+                data:[]
             }
         },
-        selectZfb() {
-            this.payType = 'ap';
-            this.selected = false;
-            if(this.payType == 'ap' && this.selected) {
-                this.payType = ''
-            }
+        created() {
+            this.getAccount()
         },
-        toPayInfo() {
-            if(this.payType) {
-                this.$router.go({name: 'pay-info',params: { order: this.$router._currentRoute.path.slice(13),accountType: this.payType }})
+        methods: {
+            getAccount() {
+                this.$fetch(`balance/official_account`).then(res => {
+                    this.data = res.accounts
+                })
+            },
+            selectBank() {
+                this.payType = 'bk';
+                this.selected = false;
+                if(this.payType == 'bk' && this.selected) {
+                    this.payType = ''
+                }
+            },
+            selectZfb() {
+                this.payType = 'ap';
+                this.selected = false;
+                if(this.payType == 'ap' && this.selected) {
+                    this.payType = ''
+                }
+            },
+            toPayInfo() {
+                if(this.payType) {
+                    this.$router.go({name: 'pay-info',params: { order: this.$router._currentRoute.path.slice(13),accountType: this.payType }})
+                }
             }
         }
     }
-}
 </script>
 
 <style lang="stylus">

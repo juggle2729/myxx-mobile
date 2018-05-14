@@ -15,6 +15,9 @@ bg($key)
     .balance
         .desc
             bg(balance)
+    .limit
+        desc
+            bg(limit)
     .desc
         height 38px
         margin-left 32px
@@ -44,6 +47,10 @@ bg($key)
         .quota.fz-22.gray （剩余{{ balance | price}}）
         .flex-1
         icon.pdh-30(:name="payType === 'balance' ? 'checked' : 'uncheck'")
+    .flex.item.bdb.limit(:class="{ invalid: !validBalance }", @click="")
+        .desc.fz-30.black.flex 支付限额专用
+        .quota.fz-22.gray （剩余{{ balance | price}}）
+        .flex-1 >
     .confirm.mg-32.flex.white.bg-red(@click="pay")
         .fz-30 确认支付
         .fz-36 {{ waitPayAmount | price }}

@@ -10,7 +10,7 @@
 </style>
 <template lang="pug">
 .addresses-view.bg-gray-f7(:class="{ 'has-data': !items.isEmpty }")
-    auction-header-menu
+    auction-header-menu(v-bind:number="goodsNumber")
     template(v-for="(index, item) in items")
         .hr
         address-item(:item="item", :index="index", @click="selectAddress(item)")
@@ -37,7 +37,8 @@ export default {
                 list: 'addresses',
                 params: {
                     address_type: this.type
-                }
+                },
+                goodsNumber:3
             }
         },
 

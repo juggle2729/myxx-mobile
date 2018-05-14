@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const uglify = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: ['babel-polyfill', './src/main.js'],
@@ -74,7 +75,8 @@ if (process.env.NODE_ENV === 'production') {
             hash: true
         }),
         new ExtractTextPlugin("style.css"),
-        new CommonsChunkPlugin("commons.chunk.js")
+        new CommonsChunkPlugin("commons.chunk.js"),
+        new uglify()
     ];
 } else {
     externalsPos = 3
@@ -84,6 +86,7 @@ if (process.env.NODE_ENV === 'production') {
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
+        new uglify()
     ];
     module.exports.devtool = 'source-map';
 }

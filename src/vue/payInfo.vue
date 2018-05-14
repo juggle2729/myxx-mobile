@@ -105,17 +105,17 @@
             -webkit-box-pack justify
 
         .price
-           position relative
-           .bold1
-               position absolute
-               left: 160px
-               top: 36px
-               z-index 111
-           img
-               position absolute
-               right: 10px
-               top: 36px
-               width: 30px
+            position relative
+            .bold1
+                position absolute
+                left: 160px
+                top: 36px
+                z-index 111
+            img
+                position absolute
+                right: 10px
+                top: 36px
+                width: 30px
 
         .name
             position relative

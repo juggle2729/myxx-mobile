@@ -60,7 +60,7 @@ icon($name)
 </style>
 <template lang="pug">
 .order-view(v-if="!$loadingRouteData")
-    auction-header-menu
+    auction-header-menu(v-bind:number="goodsNumber")
     .stage
     .order-status.pdv-36.fz-26.flex.bdb(@click="seeReason")
         .flex.flex-1.mgr-32.column-flex
@@ -134,7 +134,8 @@ export default {
             order: {
                 shop: {}
             },
-            showRefundOrBackHint: false
+            showRefundOrBackHint: false,
+            goodsNumber: 3,
         }
     },
 
