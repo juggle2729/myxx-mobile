@@ -7,7 +7,6 @@ dark-6b()
     background-size 48px
     padding-top 52px
 .product-view
-    padding-top 100px
     .title
         margin 41px 34px 0
         line-height 1.4
@@ -50,15 +49,15 @@ dark-6b()
         &:not(:nth-child(3n + 1))
             margin-left 7px
     .shop-component
-        padding  36px 35px 0 44px
-        /*background #f7f7f7*/
+        margin 32px 23px 0
+        background #f7f7f7
     .eight
         bg(eight-items)
         background-size 120px
         background-position center
         width 176px
         height 100%
-    .mgt8
+    .mgt-36
         padding-top 40px
         .flex:first-child
             margin 0 35px
@@ -119,25 +118,19 @@ dark-6b()
             > :nth-child(3), > :nth-child(4)
                 width calc(100% * 3/10)
         &.auction-bottom
-            > :nth-child(1)
+            > :nth-child(1), > :nth-child(2)
                 width 25%
-            > :nth-child(2)
-                width 75%
+            > :nth-child(3)
+                width 50%
     .compete
-        bg(contact_wx)
+        bg(compete)
         dark-6b()
         background-position calc(50% + 10px) 11px
     .order
-        bg(shoucang)
+        bg(order)
         dark-6b()
         background-position calc(50% - 9px) 11px
-    .order1
-        bg(yishoucang)
-        dark-6b()
-        background-position calc(50% - 9px) 11px
-    .goods
-        background-color #F47F08
-        color #ffffff
+
     /*css about auction    */
     .status-bar
         height 72px
@@ -186,18 +179,9 @@ dark-6b()
         min-height 320px
         .bdb, .bdt
             background transparent
-    .remind
-        bg(remind)
-        dark-6b()
-        background-position calc(50% + 10px) 11px
-    .reminded
-        bg(reminded)
-        dark-6b()
-        background-position calc(50% + 10px) 11px
 </style>
 <template lang="pug">
 .product-view
-    product-header-menu(v-bind:number="goodsNumber")
     .title.fz-36.black-47.bold {{prod.title}}
     .flex.fz-24.yellow-f5.promise
         .text-item 担保交易
@@ -244,7 +228,7 @@ dark-6b()
         .img-item.video(v-if="prod.video", @click.stop='play(prod.video)', v-bg='prod.video', query='vframe/jpg/offset/5/rotate/auto|imageView2/1/w/600/h/600/interlace/1')
         .img-item(v-bg.md="img", v-for="img in prod.pictures", @click="coverflow(prod.pictures, $index)")
     shop(:shop="prod.shop")
-    .mgt8.bdt.bg-gray-f7
+    .mgt-36.bdt.bg-gray-f7
         .flex.bg-white.bd.relative(@click="onPage('/help/eco-system')")
             .eight
             .separator.bdr
@@ -254,9 +238,9 @@ dark-6b()
         .products.pdh-15
             product-card(v-for="item in items", :item="item")
     .bottom.product-bottom.flex.bdt.bg-white(v-if="!isAuction")
-        .flex.compete.dar-6b.fz-22(@click="contactShop") 联系商家
-        .flex.dark-6b.fz-22(:class="collectioned ? 'order1' : 'order'",@click="collection") 收藏
-        .has-icon.flex.gray-5c.fz-28.bdl.goods(@click="joinGooods") 加入购物车
+        .flex.compete.dark-6b.fz-22(@click="onPage('/auction/compete')") 参拍
+        .flex.order.dark-6b.fz-22(@click="onPage('/order-list')") 订单
+        deep-link.has-icon.flex.gray-5c.fz-28.bdl 联系商家
         template(v-if="prod.auction")
             .flex.bg-red-e6.white.fz-28(v-link="{name: 'auction', params: {id: prod.auction.id}}") 此商品正在拍卖 >
         template(v-if="!prod.auction && isSelling")
@@ -264,8 +248,8 @@ dark-6b()
         template(v-if="!prod.auction && !isSelling")
             deep-link.has-icon.flex.bg-gray-d6.white.fz-30 已售出
     .bottom.auction-bottom.flex.bdt.bg-white(v-if="isAuction")
-        .flex.remind.dark-6b.fz-22(@click="setRemind()",v-if="!reminded") 设置提醒
-        .flex.reminded.dark-6b.fz-22(@click="setRemind()",v-if="reminded") 已设置提醒
+        .flex.compete.dark-6b.fz-22(@click="onPage('/auction/compete')") 参拍
+        .flex.order.dark-6b.fz-22(@click="onPage('/order-list')") 订单
         template(v-if="auction.status === 'going'")
             .flex.white.fz-30.bg-red-e6(@click="bidPrice") {{ operationText }}
         template(v-if="auction.status !== 'going'")
@@ -276,7 +260,6 @@ dark-6b()
 import shareable from 'shareable'
 import ProductCard from 'component/item/ProductCard.vue'
 import Shop from 'component/Shop.vue'
-import ProductHeaderMenu from 'component/productHeaderMenu.vue'
 import paging from 'paging'
 
 // import about auction
@@ -284,7 +267,7 @@ import AuctionBidPrice from 'component/AuctionBidPrice.vue'
 import AuctionBids from 'component/AuctionBids.vue'
 import date from '../util/date'
 import dateformat from 'dateformat'
-const FIVE_MINUTES = 5 * 60 * 1000;
+const FIVE_MINUTES = 5 * 60 * 1000
 export default {
     name: 'product-view',
 
@@ -294,8 +277,7 @@ export default {
         ProductCard,
         Shop,
         AuctionBids,
-        AuctionBidPrice,
-        ProductHeaderMenu
+        AuctionBidPrice
     },
 
     data() {
@@ -312,12 +294,8 @@ export default {
                 auction: {}
             },
             attrs: [],
-            //是否设置提醒
-            reminded: false,
-            //购物车
-            goodsNumber: 3,
+
             // data about auction
-            collectioned: false,
             auction: {},
             isAuction: false,
             statusUpdatedAt: '',
@@ -433,7 +411,6 @@ export default {
                 if (this.isAuction) {
                     return this.$fetch('mall/auctions/'+ this.$route.params.id).then(auction => {
                         this.updateAuctionData(auction)
-                        this.reminded =auction.reminded
                     })
                 } else {
                     return this.$fetch('mall/products/'+ this.$route.params.id).then(prod => {
@@ -552,33 +529,6 @@ export default {
                     this.statusUpdatedAt = auction.status_updated_at
                 })
             }, 1000)
-        },
-        contactShop() {
-            window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.meiyuxiuxiu.myxx'
-        },
-        collection() {
-            this.collectioned = !this.collectioned
-            if(this.collectioned) {
-                this.action('toast', {success: 1, text: '收藏成功'})
-            } else{
-                this.action('toast', {success: 1, text: '已取消收藏'})
-            }
-        },
-        joinGooods() {
-            this.goodsNumber ++
-        },
-        setRemind() {
-            if (!this.reminded) {
-                this.reminded = !this.reminded;
-                this.$post("mall/auctions/myb/"+this.$route.params.id+"/remind").then(res=>{
-                    this.action('toast', {success: 1, text: '已设置提醒'})
-                })
-            } else{
-                this.reminded = !this.reminded;
-                this.$delete("mall/auctions/myb/"+this.$route.params.id+"/remind").then(res=>{
-                    this.action('toast', {success: 1, text: '取消提醒'})
-                })
-            }
         }
     },
 
