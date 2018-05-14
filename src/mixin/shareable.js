@@ -127,7 +127,7 @@ export default {
                     data.icon = 'http://o0x80w5li.qnssl.com/logo.jpg'
                     break
                 case 'live':
-                    data.title = `【直播】直播标题，来自 直播昵称`
+                    data.title = entry.title
                     data.desc = `更多珠宝玉石精彩直播，尽在美玉秀秀。`
                     data.icon = entry.picture
                     break
