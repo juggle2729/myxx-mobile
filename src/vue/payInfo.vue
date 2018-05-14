@@ -61,7 +61,7 @@
                 this.$post(`balance/transfer_to_official`, {
                     remitter_name: this.remitter_name,
                     remitter_phone: this.remitter_phone,
-                    amount: this.amount,
+                    amount: this.amount * 100,
                     order_no: this.order_no ,
                     account_type: this.account_type
                 }).then(response => {

@@ -706,6 +706,7 @@ export default {
             } else {
                 return this.$fetch('im/token').then(({ imtoken }) => {
                     return this.$fetch('live/live/'+ this.$route.params.id).then(live => {
+                        console.log(live)
                         this.setShareData(live)
                         this.live = live
                         this.imtoken = imtoken
