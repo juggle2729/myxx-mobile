@@ -1104,6 +1104,15 @@ export default {
             }, 'other')
         }
     },
+    '/shopRead/:id' : {
+        title: '开店必读',
+        name: 'shop_read',
+        component(resolve) {
+            require.ensure([], (require) => {
+                resolve(require('shopRead.vue'))
+            }, 'other')
+        }
+    },
     '/transition': {
         title: '商品跳转中',
         name: 'transition',
