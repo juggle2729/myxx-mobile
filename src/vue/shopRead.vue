@@ -47,7 +47,7 @@ export default {
         },
         goRequestShop() {
             if(this.timer === 0) {
-                this.action('applyStore', {shopType: Number(this.$route.params.id)})
+                this.action('applyStore')
             }
         }
     }
