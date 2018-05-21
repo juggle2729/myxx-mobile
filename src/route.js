@@ -1104,7 +1104,7 @@ export default {
             }, 'other')
         }
     },
-    '/shopRead/:id' : {
+    '/shopRead' : {
         title: '开店必读',
         name: 'shop_read',
         component(resolve) {
