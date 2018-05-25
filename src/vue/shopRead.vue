@@ -20,8 +20,8 @@
                <li>
                    <div class="fz-30 bold">收费规则</div>
                    <div>1.开店0费用</div>
-                   <div>2.通过直播或专场拍卖产生的订单平台收取6%的技术服务费。<a href="https://cms.meiyuxiuxiu.com/2018/03/04/charge/">了解详情>></a></div>
-                   <div>2..除直播或专场拍卖产生的订单之外的所有订单征收0.6%的支付通道费，这部分费用由微信和支付宝收取。<a href="https://cms.meiyuxiuxiu.com/2018/03/04/charge/">了解详情>></a></div>
+                   <div>2.通过直播或专场拍卖产生的订单平台收取6%的技术服务费。<span @click="open">了解详情>></span></div>
+                   <div>2..除直播或专场拍卖产生的订单之外的所有订单征收0.6%的支付通道费，这部分费用由微信和支付宝收取。<span @click="open">了解详情>></span></div>
                </li>
                <li>
                    <div class="fz-30 bold">开店入驻流程</div>
@@ -58,6 +58,9 @@ export default {
                 self.timer--;
             }, 1000);
         },
+        open() {
+            this.action('open', {url: "https://cms.meiyuxiuxiu.com/2018/03/04/charge/"})
+        },
         back() {
             this.action('back', {step: "1"})
         },
@@ -83,7 +86,7 @@ export default {
                 margin-bottom 20px
                 div
                     line-height 1.6
-                    a
+                    span 
                         color blue
 
         .button
