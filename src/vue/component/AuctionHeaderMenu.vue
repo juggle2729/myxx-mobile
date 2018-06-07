@@ -5,8 +5,6 @@ bg($key)
     background-image url($qn + 'auction/' + $key + '.png')
 .auction-header-menu
     border(b, #e8e8e8)
-    position fixed
-    top 0
     width 100%
     height 100px
     z-index 99
