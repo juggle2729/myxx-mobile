@@ -1,5 +1,6 @@
 <style lang="stylus">
 .address-add-view
+    padding-top 100px
     .confirm
         line-height 90px
         border-radius 8px
