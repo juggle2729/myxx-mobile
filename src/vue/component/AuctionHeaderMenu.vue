@@ -65,7 +65,7 @@ export default {
             items: [
                 {
                     key: 'auction-home',
-                    name: '购物车',
+                    name: '主页',
                     path: '/auction/home',
                     login: false
                 },
