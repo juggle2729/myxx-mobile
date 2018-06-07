@@ -19,6 +19,18 @@ bg($key)
         margin-left 64px
         .icon
             line-height 0
+            position relative
+        .red-e6
+            position absolute
+            right -3px
+            top -6px
+            background-color #e61717
+            width 24px
+            height 24px
+            border-radius 50%
+            text-align center
+            line-height 24px
+            color #fff
     img
         width 48px
         height 48px
@@ -41,37 +53,26 @@ bg($key)
     .item.center.relative(v-for="item in items")
         .icon(@click="linkToMenu(item)")
             img(:src="'//o0x80w5li.qnssl.com/auction/' + item.key + '-actived-head.png'")
+            .red-e6.fz-20(v-if="item.key === 'goods'") {{number}}
         .name.fz-20.black-24.mgt-4 {{ item.name }}
         .red-dot.absolute.bg-red-e6.center.white(v-if="item.hasRedDot && waitPayOrderCount > 0") {{ waitPayOrderCount }}
 </template>
 <script>
 export default {
     name: 'auction-header-menu',
-
+    props: ['number'],
     data() {
         return {
             waitPayOrderCount: 0,
             items: [
                 {
-                    key: 'auction-home',
-                    name: '首页',
+                    key: 'goods',
+                    name: '购物车',
                     path: '/auction/home',
                     login: false
                 },
                 {
-                    key: 'compete',
-                    name: '参拍',
-                    path: '/auction/compete'
-                },
-                {
-                    key: 'order',
-                    name: '订单',
-                    path: '/order-list',
-                    cache: 'order-list',
-                    hasRedDot: true // 是否显示红点
-                },
-                {
-                    key: 'mine',
+                    key: 'myself',
                     name: '我的',
                     path: '/auction/mine',
                     cache: 'auction-mine'
