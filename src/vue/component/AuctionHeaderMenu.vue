@@ -66,13 +66,13 @@ export default {
             waitPayOrderCount: 0,
             items: [
                 {
-                    key: 'goods',
+                    key: 'auction-home',
                     name: '购物车',
                     path: '/auction/home',
                     login: false
                 },
                 {
-                    key: 'myself',
+                    key: 'mine',
                     name: '我的',
                     path: '/auction/mine',
                     cache: 'auction-mine'
