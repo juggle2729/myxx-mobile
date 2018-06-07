@@ -11,17 +11,17 @@
                </li>
                <li>
                    <div class="fz-30 bold">交易贴士</div>
-                   <div>1.商家需在24小时内发货，如有异常应与买家主动联系商家确认发货时间。<span>查看平台交易规则>></span></div>
-                   <div>2.买家申请退货后，买家只用承担退货运费，无需承担商家发货运费。<span>查看平台退货规则>></span></div>
-                   <div>3.买家付款后，钱款将进入由银行监管的第三方账户，交易成功后商家方可提现。<span>查看平台退货规则查看平台提现规则>></span></div>
-                   <div>4.商家开通这个权限就不会漏掉买家私信了。<span>查看并进行设置>></span></div>
-                   <div>5.商家这样发布商品将获得更好的曝光和推广。<span>查规范看平台商品发布规范>></span></div>
+                   <div>1.商家需在24小时内发货，如有异常应与买家主动联系商家确认发货时间。<span @click="goTradeRule">查看平台交易规则</span></div>
+                   <div>2.买家申请退货后，买家只用承担退货运费，无需承担商家发货运费。<span @click="returnGoods">查看平台退货规则</span></div>
+                   <div>3.买家付款后，钱款将进入由银行监管的第三方账户，交易成功后商家方可提现。<span @click="withdrawCash">查看平台退货规则查看平台提现规则</span></div>
+                   <div>4.商家开通这个权限就不会漏掉买家私信了。<span @click="miss">查看并进行设置</span></div>
+                   <div>5.商家这样发布商品将获得更好的曝光和推广。<span @click="productStandard">查规范看平台商品发布规范</span></div>
                </li>
                <li>
                    <div class="fz-30 bold">收费规则</div>
                    <div>1.开店0费用</div>
-                   <div>2.通过直播或专场拍卖产生的订单平台收取6%的技术服务费。<span @click="open">了解详情>></span></div>
-                   <div>2..除直播或专场拍卖产生的订单之外的所有订单征收0.6%的支付通道费，这部分费用由微信和支付宝收取。<span @click="open">了解详情>></span></div>
+                   <div>2.通过直播或专场拍卖产生的订单平台收取6%的技术服务费。<span @click="open">了解详情</span></div>
+                   <div>2..除直播或专场拍卖产生的订单之外的所有订单征收0.6%的支付通道费，这部分费用由微信和支付宝收取。<span @click="open">了解详情</span></div>
                </li>
                <li>
                    <div class="fz-30 bold">开店入驻流程</div>
@@ -68,6 +68,21 @@ export default {
             if(this.timer === 0) {
                 this.action('applyStore')
             }
+        },
+        goTradeRule() {
+            this.action('open', {url: "https://cms.meiyuxiuxiu.com/2017/10/30/trade_rule/"})
+        },
+        returnGoods() {
+             this.action('open', {url: "https://cms.meiyuxiuxiu.com/2017/10/30/return_goods/"})
+        },
+        withdrawCash() {
+            this.action('open', {url: "https://cms.meiyuxiuxiu.com/2017/10/30/withdraw_cash/"})
+        },
+        miss() {
+            this.action('open', {url: "https://cms.meiyuxiuxiu.com/2017/10/30/miss/"})
+        },
+        productStandard() {
+            this.action('open', {url: "https://cms.meiyuxiuxiu.com/2017/10/30/product_standard/"})
         }
     }
 }
