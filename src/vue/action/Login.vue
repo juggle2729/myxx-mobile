@@ -81,7 +81,7 @@ export default {
         this.$watch('formData', data => {
             if(/^1\w{10}$/.test(data.phone) && /^\w{4}$/.test(data.verify_code)) {
                 const headers = {
-                    'X-Api-Version': 'v7'
+                    'X-Api-Version': 'v36'
                 }
                 this.$http.post('users/login', data, {headers})
                     .then(({data: resp}) => {
