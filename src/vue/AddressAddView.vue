@@ -24,7 +24,7 @@
 </style>
 <template lang="pug">
 .address-add-view.bg-gray-f7
-    //- auction-header-menu(v-bind:number="goodsNumber")
+    auction-header-menu(v-bind:number="goodsNumber")
     input.bdb.flex.pdh-32.fz-30.black-24(placeholder="收货人", v-model="address.name", maxlength="12")
     input.bdb.flex.pdh-32.fz-30.black-24(placeholder="手机号码", type="tel", v-model="address.phone", maxlength="11")
     .flex.relative.bg-white
