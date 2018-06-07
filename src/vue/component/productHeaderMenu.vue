@@ -53,7 +53,7 @@
         .item.center.relative(v-for="item in items")
             .icon(@click="linkToMenu(item)")
                 img(:src="'//o0x80w5li.qnssl.com/auction/' + item.key + '.png'")
-                .red-e6.fz-20(v-if="item.key === 'goods'") {{number}}
+                //- .red-e6.fz-20(v-if="item.key === 'goods'") {{number}}
             .name.fz-20.black-24.mgt-4 {{ item.name }}
             .red-dot.absolute.bg-red-e6.center.white(v-if="item.hasRedDot && waitPayOrderCount > 0") {{ waitPayOrderCount }}
 </template>
