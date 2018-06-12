@@ -1,9 +1,8 @@
 // hosts设置
 const UA = navigator.userAgent
-
+const IsAPP = /myxx/i.test(UA)
 let [api, img, video, download] = ((env='test') => {
     env = /meiyuxiuxiu\.com$/.test(location.hostname) ? 'prod' : (/meiyuxiuxiu\.net$/.test(location.hostname) ? 'test' : env)
-    IsAPP = /myxx/i.test(UA)
     const hosts = {
         api: {
             test: '//test.api.meiyuxiuxiu.net',
@@ -22,7 +21,7 @@ let [api, img, video, download] = ((env='test') => {
             prod: /android/.test(navigator.userAgent) ? 'https://o0xal1l6l.qnssl.com/jenkins-myxx-Android-latest.apk' : 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share'
         }
     }
-    return _.map(hosts, env, IsAPP)
+    return _.map(hosts, env)
 })('test')
 
 export default {
