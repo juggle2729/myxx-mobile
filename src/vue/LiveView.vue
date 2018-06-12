@@ -456,7 +456,7 @@ p-border($w, $c) // 解决import mixin中的border冲突
         .hint(:class="showDownload ? 'fz-42' : 'fz-28'")
             .center {{ placeholder[0] }}
             .mgt-10(:class="showDownload ? 'download-desc': ''") {{ placeholder[1] }}
-            deep-link.download(v-if="showDownload") 下载美玉秀秀App
+            deep-link.download(v-if="showDownloadWeb") 下载美玉秀秀App  
     .anchor-info.flex
         .avatar(v-bg.sm="live.user.photo || 'app/avatar.png'")
         .flex-1.flex.user-info.white.mgl-11
@@ -689,8 +689,12 @@ export default {
         },
 
         showDownload() {
+            return this.placeholder && /直播尚未开始|直播已结束/.test(this.placeholder[0]) 
+        },
+
+        showDownloadWeb() {
             return this.placeholder && /直播尚未开始|直播已结束/.test(this.placeholder[0]) && !this.config.IsAPP
-        }
+        },
     },
 
     ready() {
