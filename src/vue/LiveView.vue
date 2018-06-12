@@ -689,7 +689,7 @@ export default {
         },
 
         showDownload() {
-            return this.placeholder && /直播尚未开始|直播已结束/.test(this.placeholder[0]) && !this.config.IS_APP
+            return this.placeholder && /直播尚未开始|直播已结束/.test(this.placeholder[0]) && !this.config.IsAPP
         }
     },
 

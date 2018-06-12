@@ -3,7 +3,7 @@ const UA = navigator.userAgent
 
 let [api, img, video, download] = ((env='test') => {
     env = /meiyuxiuxiu\.com$/.test(location.hostname) ? 'prod' : (/meiyuxiuxiu\.net$/.test(location.hostname) ? 'test' : env)
-    IS_APP = /myxx/i.test(UA)
+    IsAPP = /myxx/i.test(UA)
     const hosts = {
         api: {
             test: '//test.api.meiyuxiuxiu.net',
@@ -22,7 +22,7 @@ let [api, img, video, download] = ((env='test') => {
             prod: /android/.test(navigator.userAgent) ? 'https://o0xal1l6l.qnssl.com/jenkins-myxx-Android-latest.apk' : 'http://activity.meiyuxiuxiu.com/stat?source=app&way=share'
         }
     }
-    return _.map(hosts, env, IS_APP)
+    return _.map(hosts, env, IsAPP)
 })('test')
 
 export default {
@@ -30,7 +30,7 @@ export default {
     img,
     video,
     download,
-    IS_APP,
+    IsAPP,
     www: '//o0x80w5li.qnssl.com/',
     types: [
         {
