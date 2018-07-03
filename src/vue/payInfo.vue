@@ -5,11 +5,12 @@
             <p class="gray-b3 fz-22">如果出现单笔限额，您可以分多次转账，总金额为订单总额即可</p>
         </div>
         <div class="payDetail">
-            <div class="name" style="height: 30px"><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterName"></div>
-            <div class="phone" style="height: 30px"><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterPhone"></div>
+            <div class="name" style="height: 30px"><span class="fz-30 dark-6b">汇款人</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_name	" style="border-style:none;width: 180px"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterName"></div>
+            <div class="phone" style="height: 30px"><span class="fz-30 dark-6b">手机号码</span> <input class="placeholder fz-30 bold" type=text placeholder="请输入" v-model="remitter_phone" style="border-style:none;width: 180px"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearRemitterPhone"></div>
             <div class="price" style="height: 30px"><span class="fz-30 dark-6b">汇款金额</span> <p class="fz-32 black-24 bold1 bold">¥ &nbsp</p> <input class="placeholder price bold fz-30" type="number" placeholder="请输入" v-model="amount" style="border-style:none;width:120px;padding-left: 15px"><img src="//o0x80w5li.qnssl.com/pay/clear_info.png" alt="" @click="clearAmount"></div>
             <div class="line" ></div>
             <div style="height: 30px"><span class="fz-30 dark-6b">订单号</span> <p class="black-24 fz-30 bold">{{order_no}}</p></div>
+            <div class="gray-b3 fz-20 mgt-42">提示：此处信息仅能告知平台您的汇款信息，并未进行实际付款！实际付款仍然需要您通过银行或者支付宝进行转账。</div>
         </div>
         <div class="account  mgl-54 mgr-54 fz-36 bold" :class="remitter_name && remitter_phone && amount ? 'accounted':'' " @click="transfer_confirm">
             已完成转账, 提交
@@ -88,7 +89,7 @@
         margin-bottom 120px
     .payDetail
         padding-left 94px
-        padding-right 81px
+        padding-right 75px
         .line
             width 100%
             height 1px
