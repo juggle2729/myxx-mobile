@@ -27,8 +27,7 @@
             .mgt-30.flex
                 .fz-60(:class="profile.audit_status === 'succeed' ? 'green-a1' : 'red-e6'") {{ shopAuditStatus }}
                 .flex-1
-                .btn.center.bd.fz-24.line-height-50.pdh-36(v-if="profile.audit_status !== 'succeed' && profile.process_audit_status != 'unaudited_ever
-' ", :class="profile.process_audit_status === 'unaudited' ? 'gray-b3' : 'red-e6'", @click="askForAudit") {{ shopProcessStatus }}
+                .btn.center.bd.fz-24.line-height-50.pdh-36(v-if="profile.audit_status !== 'succeed' && profile.process_audit_status !== 'unaudited_ever' ", :class="profile.process_audit_status === 'unaudited' ? 'gray-b3' : 'red-e6'", @click="askForAudit") {{ shopProcessStatus }}
         template(v-if="profile.audit_status !== 'succeed'")
             .reason.bdt(v-if="profile.audit_reason")
                 .title.fz-30.black-24 审核未通过：
