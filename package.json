@@ -37,7 +37,8 @@
     "vue-loader": "^8.0.5",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-bundle-analyzer": "^2.13.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -50,6 +51,7 @@
     "vue": "^1.0.8",
     "vue-awesome-swiper": "^2.6.2",
     "vue-resource": "^1.0.3",
-    "vue-router": "github:chunzj/vue-router"
+    "vue-router": "github:chunzj/vue-router",
+    "webpack-bundle-analyzer": "^2.13.1"
   }
 }

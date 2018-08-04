@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
     entry: ['babel-polyfill', './src/main.js'],
@@ -58,6 +59,7 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
         new webpack.ProvidePlugin({_: "lodash"}),
+        new BundleAnalyzerPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false,
             compress: {
@@ -80,6 +82,7 @@ if (process.env.NODE_ENV === 'production') {
     externalsPos = 3
     module.exports.plugins = [
         new webpack.ProvidePlugin({_: "lodash"}),
+        new BundleAnalyzerPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html'
